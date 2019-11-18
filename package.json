@@ -1,11 +1,14 @@
 {
-  "name": "@asugent/ui",
+  "name": "@asurgent/ui",
   "version": "1.0.0",
   "description": "frontend - asurgent UI components",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "repository": {
     "type": "git",
