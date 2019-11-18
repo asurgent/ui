@@ -1,0 +1,43 @@
+{
+  "name": "@asugent/ui",
+  "version": "1.0.0",
+  "description": "frontend - asurgent UI components",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/asurgent/ui.git"
+  },
+  "main": "./index.js",
+  "keywords": [
+    "ui",
+    "components",
+    "layout"
+  ],
+  "author": "@hellotheremike",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asurgent/ui/issues"
+  },
+  "homepage": "https://github.com/asurgent/ui#readme",
+  "devDependencies": {
+    "@asurgent/eslint-config-asurgent": "^1.1.2",
+    "@babel/core": "^7.7.2",
+    "@storybook/addon-actions": "^5.2.6",
+    "@storybook/addon-links": "^5.2.6",
+    "@storybook/addons": "^5.2.6",
+    "@storybook/react": "^5.2.6",
+    "babel-loader": "^8.0.6",
+    "storybook": "^5.1.11"
+  },
+  "dependencies": {
+    "@storybook/addon-knobs": "^5.2.6",
+    "@storybook/addon-storysource": "^5.2.6",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "styled-components": "^4.4.1"
+  }
+}
