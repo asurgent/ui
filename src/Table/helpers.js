@@ -1,68 +1,145 @@
 import React from 'react';
 
-export const generateHeaders = (headerData, components) => {
-  const HeaderRow = components.row;
-  const HeaderCell = components.cell;
+const isObject = (item) => (item && typeof item === 'object' && !Array.isArray(item));
 
-  const headers = headerData.reduce((acc, header) => {
-    const { value } = header;
-    acc.push(<HeaderCell key={value}>{value}</HeaderCell>);
-    return acc;
-  }, []);
-
-  return <HeaderRow>{headers}</HeaderRow>;
+const mergeDeep = (target, source) => {
+  const output = { ...target };
+  if (isObject(target) && isObject(source)) {
+    Object.keys(source).forEach((key) => {
+      if (isObject(source[key])) {
+        if (!(key in target)) {
+          Object.assign(output, { [key]: source[key] });
+        } else {
+          output[key] = mergeDeep(target[key], source[key]);
+        }
+      } else {
+        Object.assign(output, { [key]: source[key] });
+      }
+    });
+  }
+  return output;
 };
 
-const generateCells = (rowConfiguration, rowData, headerData, CellComponent) => rowConfiguration(rowData)
-  .reduce((cellAcc, cell, cellIndex) => {
-    const headerProps = headerData[cellIndex] ? headerData[cellIndex].props : {};
+const tableColumnGenerator = (columnConfiguration, cellData, headerData) => {
+  const columnList = columnConfiguration(cellData);
+
+  // Make sure the cell-size lenght match with number of
+  // headers since the headers controll the grid sizing
+  return Array
+    .from({ length: headerData.length })
+    .map((_, i) => ({
+      isEvenColumn: ((i + 1) % 2) === 1,
+      data: (columnList[i] || ''),
+    }));
+};
+
+const extendCellObject = (index, cellData, newCell, headerData, rowData) => {
+  const headerProps = headerData[index] ? headerData[index].props : {};
+  const rowProps = rowData.props || {};
+  const cellProps = (cellData.props || {});
+
+  // Merge all passed props from header, row & cell
+  // Priority is cell, row, header
+  const baseProps = mergeDeep(rowProps, headerProps);
+  const overrideProps = mergeDeep(baseProps, cellProps);
+
+  // Try to figure out what's beeing passed and render accordingly
+  if (typeof cellData === 'object' && Object.prototype.hasOwnProperty.call(cellData, 'value')) {
+    Object.assign(newCell, { cell: cellData.value, props: overrideProps });
+  } else if (typeof cellData === 'string') {
+    Object.assign(newCell, { cell: cellData, props: overrideProps });
+  } else if (React.isValidElement(cellData)) {
+    Object.assign(newCell, { cell: cellData, props: overrideProps });
+  } else {
+    // If we don't match, still append an empty cell
+    // so we get an even cell count for the row
+    Object.assign(newCell, { cell: '', props: overrideProps });
+  }
+};
+
+const tableRowCellGenerator = (columnList, rowData, headerData) => columnList
+  .reduce((cellAcc, { isEvenColumn, data: cell }, cellIndex) => {
     const id = `${rowData.id}-cell-${cellIndex}`;
+    const newCell = { isEvenColumn, id };
 
     if (typeof cell === 'function') {
       const cellFnData = cell();
-
-      // If an object is returned, look if the value attr exists
-      // Also pass potential props attr
-      if (typeof cellFnData === 'object' && Object.prototype.hasOwnProperty.call(cellFnData, 'value')) {
-        // const overrideProps = { ...(cellFnData.props || {}), ...headerProps };
-        const overrideProps = { ...headerProps };
-        cellAcc.push({ cell: cellFnData.value, id, props: overrideProps });
-      } else {
-        cellAcc.push({ cell: cellFnData, id, props: headerProps });
-      }
-    } else if (typeof cell === 'object') {
-      if (Object.prototype.hasOwnProperty.call(cell, 'value')) {
-        // const overrideProps = { ...(cell.props || {}), ...headerProps };
-        const overrideProps = { ...headerProps };
-        cellAcc.push({ cell: cell.value, id, props: overrideProps });
-      } else {
-        cellAcc.push({ cell: '', id, props: headerProps });
-      }
+      extendCellObject(cellIndex, cellFnData, newCell, headerData, rowData);
     } else {
-      cellAcc.push({ cell, id, props: headerProps });
+      extendCellObject(cellIndex, cell, newCell, headerData, rowData);
     }
 
+    cellAcc.push(newCell);
     return cellAcc;
-  }, [])
-  .map(({ id, props, cell }) => <CellComponent {...props} key={id}>{cell}</CellComponent>);
+  }, []);
 
-export const generateRows = (rowData, headerData, rowConfiguration, components) => {
-  const rows = rowData.reduce((acc, cellData, index) => {
-    if (!cellData.id) {
-      const id = `row-id-${new Date().getTime()}-${index}`;
-      Object.assign(cellData, { id });
+const generateCells = (props, rowData, isEvenRow, components) => {
+  const { columnConfiguration, headerData } = props;
+
+  const Cell = components.cell;
+  const CellContent = components.content;
+
+  const columnList = tableColumnGenerator(columnConfiguration, rowData, headerData);
+  const cellsList = tableRowCellGenerator(columnList, rowData, headerData);
+
+  return cellsList
+    .map((cellData) => {
+      const {
+        id,
+        cell,
+        isEvenColumn,
+        props: cellProps,
+      } = cellData;
+
+      const classes = [
+        (isEvenRow ? 'odd-row' : 'even-row'),
+        (isEvenColumn ? 'odd-column' : 'even-column'),
+      ].join(' ');
+
+      return (
+        <Cell {...cellProps} key={id} className={classes}>
+          <CellContent>
+            {cell}
+          </CellContent>
+        </Cell>
+      );
+    });
+};
+
+const generateCard = (props, columnData, isEvenRow, components) => {
+  const { cardConfiguration } = props;
+  const content = cardConfiguration(columnData, isEvenRow);
+  const CellComponent = components.cell;
+
+  const element = (
+    <CellComponent key={`${columnData.id}-card`} cardView isEvenRow>
+      {content}
+    </CellComponent>
+  );
+
+  return element;
+};
+
+const generateRowId = (columnData, index) => {
+  if (!columnData.id) {
+    const id = `row-id-${new Date().getTime()}-${index}`;
+    Object.assign(columnData, { id });
+  }
+};
+
+export const generateRows = (props, components) => props.rowData
+  .reduce((acc, rowData, index) => {
+    generateRowId(rowData, index);
+    const { cardView } = props;
+    const isEvenRow = (index - 1) % 2;
+
+    if (cardView && typeof props.cardConfiguration === 'function') {
+      const card = generateCard(props, rowData, isEvenRow, components);
+      acc.push(card);
+    } else {
+      const cells = generateCells(props, rowData, isEvenRow, components);
+      acc.push(cells);
     }
-
-    const CellComponent = components.cell;
-    const RowComponent = components.row;
-    // Generate cells
-    const cells = generateCells(rowConfiguration, cellData, headerData, CellComponent);
-
-    // Add new row with the cells as it's children
-    acc.push(<RowComponent {...(cellData.props || {})} key={cellData.id}>{cells}</RowComponent>);
 
     return acc;
   }, []);
-
-  return rows;
-};
