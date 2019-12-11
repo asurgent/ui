@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import * as C from './Table.styled';
-import { generateRows } from './helpers';
+import { generateRows, pagination } from './helpers';
 
 import { sortDirection as directions } from '.';
+
 
 const propTypes = {
   pages: PropTypes.number,
@@ -47,6 +48,8 @@ const bodyComponents = {
   cell: C.Cell,
   content: C.TableCellContent,
 };
+
+const PAGINATION_DELTA = 5;
 
 const Table = (props) => {
   const {
@@ -93,7 +96,9 @@ const Table = (props) => {
     }
   };
 
-  const getPages = Array.from({ length: pages }).map((_, i) => i + 1);
+
+  const paginationList = pagination(activePage, pages, PAGINATION_DELTA);
+
   return (
     <C.Wrapper>
       <C.Base>
@@ -118,7 +123,7 @@ const Table = (props) => {
       { withPagination && (
         <C.Pagination>
           <C.Arrow left onClick={() => onPagination(activePage - 1)} />
-          { getPages.map((page) => (
+          { paginationList.map((page) => (
             <C.Page activePage={activePage === page} key={page} onClick={() => onPagination(page)}>
               {page}
             </C.Page>

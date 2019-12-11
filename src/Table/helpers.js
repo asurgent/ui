@@ -20,6 +20,41 @@ const mergeDeep = (target, source) => {
   return output;
 };
 
+const pageNumbersList = (currentPage, delta, totalPages) => {
+  const length = Math.max(0, Math.min(totalPages, delta));
+  const pageNumbers = (num, lenghtModifer = length) => Array
+    .from({ length: lenghtModifer }, (_, i) => (num + i));
+
+  if (currentPage < delta) {
+    const pages = pageNumbers(1);
+    return [...pages, totalPages];
+  } if (totalPages < (currentPage + delta)) {
+    const pages = pageNumbers(totalPages - delta + 1);
+    return [1, ...pages];
+  }
+
+  const padding = Math.round((delta / 2));
+  const pageBase = currentPage - padding + 1;
+  const pages = pageNumbers(pageBase, length - 1);
+  return [1, ...pages, totalPages];
+};
+
+export const pagination = (currentPage, totalPages, delta) => {
+  if (totalPages <= 1) {
+    return [1];
+  }
+
+  return pageNumbersList(currentPage, delta, totalPages)
+    .reduce((acc, page, index, origin) => {
+      acc.push(page);
+      if (((origin[index + 1]) - page) > 1) {
+        acc.push('...');
+      }
+
+      return acc;
+    }, []);
+};
+
 const tableColumnGenerator = (columnConfiguration, cellData, headerData) => {
   const columnList = columnConfiguration(cellData);
 
