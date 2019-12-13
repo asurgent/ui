@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { withTheme } from 'styled-components';
+import { RingSpinner } from 'react-spinners-kit';
 import * as C from './Table.styled';
 import { generateRows, pagination } from './helpers';
 
 import { sortDirection as directions } from '.';
 
 
-const propTypes = {
+export const propTypes = {
   pages: PropTypes.number,
   activePage: PropTypes.number,
   withHeader: PropTypes.bool,
@@ -32,9 +34,11 @@ const propTypes = {
   ]),
   cardView: PropTypes.bool,
   equalSizeColumns: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  emptystate: PropTypes.string,
 };
 
-const defaultProps = {
+export const defaultProps = {
   pages: 0,
   activePage: 0,
   cardView: false,
@@ -44,6 +48,8 @@ const defaultProps = {
   cardRowConfiguration: false,
   tableRowConfiguration: false,
   equalSizeColumns: false,
+  isLoading: false,
+  emptystate: 'No items found',
   onPagination: () => {},
   onSort: () => {},
 };
@@ -55,7 +61,7 @@ const bodyComponents = {
 
 const PAGINATION_DELTA = 5;
 
-const Table = (props) => {
+const Table = withTheme((props) => {
   const {
     rowData,
     headerData,
@@ -64,6 +70,7 @@ const Table = (props) => {
     cardRowConfiguration,
     sortDirection,
     activeSort,
+    theme,
   } = props;
 
   const [rows, setRows] = useState([]);
@@ -81,6 +88,8 @@ const Table = (props) => {
     withHeader,
     withPagination,
     equalSizeColumns,
+    isLoading,
+    emptystate,
   } = props;
 
   const onPagination = (requestedPage) => {
@@ -103,6 +112,7 @@ const Table = (props) => {
   };
 
   const paginationList = pagination(activePage, pages, PAGINATION_DELTA);
+  const noContent = rows.length === 0 && isLoading === false;
 
   return (
     <C.Wrapper>
@@ -121,7 +131,13 @@ const Table = (props) => {
               </C.Header>
             )) }
           {/* Render rows start */}
-          { rows }
+          { noContent && <C.Loading>{emptystate}</C.Loading>}
+          { !isLoading && rows }
+          { isLoading && (
+            <C.Loading>
+              <RingSpinner color={theme.brandPrimaryColor} size={32} />
+            </C.Loading>
+          )}
           {/* Render rows end */}
         </C.Content>
       </C.Base>
@@ -143,7 +159,7 @@ const Table = (props) => {
       )}
     </C.Wrapper>
   );
-};
+});
 
 Table.propTypes = propTypes;
 Table.defaultProps = defaultProps;

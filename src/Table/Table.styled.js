@@ -79,6 +79,9 @@ export const TableCellContent = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    height: 4.8rem;
+    display:flex;
+    align-items: center;
 `;
 
 
@@ -108,6 +111,13 @@ export const HeaderSort = styled(Arrow)`
     border-color: ${({ active, theme }) => (active ? theme.gray800 : theme.gray300)};
 `;
 
+export const Loading = styled.div`
+    grid-column: 1/-1;
+    padding: 1.6rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
 
 export const Content = styled.div`
     display: grid;
