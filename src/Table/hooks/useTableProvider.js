@@ -1,38 +1,43 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
-const useTableProvider = () => {
-  const actions = {
-    update: () => {},
-  };
+const tableDefaults = { result: [], page: 1, total_pages: 0 };
 
-  const tableRef = useRef(1);
-  const [tableData, setTableData] = useState({ result: [], page: 1, total_pages: 10 });
+const useTableProvider = (updateAction = (() => {})) => {
+  const [tableData, setTableData] = useState(tableDefaults);
+  const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState('');
-  const [page, setPage] = useState(1);
-
-  //   useEffect(() => {
-  //     // props.onMount({ setTickets: setTicket });
-  //   }, []);
+  const [page, setPage] = useState(tableData.page);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    console.log(page, search, tableRef);
+    if (isMounted) {
+      updateAction(page, search);
+    }
+  }, [isMounted, page]);
 
-    // actions.update(page, search);
-  }, [search, page]);
+  useEffect(() => {
+    if (isMounted) {
+      setPage(1);
+      updateAction(1, search);
+    }
+  }, [search]);
 
   return {
-    updateAction: (update) => { Object.assign(actions, { update }); },
-    onPaginate: (pageNumber) => {
-      setPage(pageNumber);
-    },
+    onPaginate: (pageNumber) => { setPage(pageNumber); },
     onSearch: (query) => {
       setSearch(query);
     },
     getActivePage: () => tableData.page,
     getPageCount: () => tableData.total_pages,
     getRowData: () => tableData.result,
+    setResponse: (response) => {
+      setIsLoading(false);
+      setTableData(response);
+    },
+    getQuery: () => search,
+    parentReady: () => { setIsMounted(true); },
+    isLoading,
     tableData,
-    tableRef,
   };
 };
 
