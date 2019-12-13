@@ -56,7 +56,6 @@ export const generateFieldComponents = (inputs, referenceList) => {
       tooltip,
       label,
       props: inputProps,
-      ...rest
     } = inputs[key];
 
     Object.assign(original, { [key]: value });
@@ -65,11 +64,10 @@ export const generateFieldComponents = (inputs, referenceList) => {
       <RequestedComponent
         ref={referenceList[key]}
         name={key}
-        value={value}
-        tooltip={tooltip}
-        label={label}
+        value={value || ''}
+        tooltip={tooltip || ''}
+        label={label || value}
         {...(inputProps || {})}
-        {...rest}
       />
     );
 

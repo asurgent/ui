@@ -12,16 +12,17 @@ import {
 
 const propTyps = {
   value: PropTypes.string,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   name: PropTypes.string.isRequired,
   tooltip: PropTypes.string.isRequired,
 };
 
 const defaultProps = {
   value: '',
+  label: '',
 };
 
-const Label = forwardRef((props) => {
+const Label = (props) => {
   const {
     label,
     name,
@@ -49,7 +50,7 @@ const Label = forwardRef((props) => {
       </Wrapper>
     </Main>
   );
-});
+};
 
 Label.defaultProps = defaultProps;
 Label.propTypes = propTyps;

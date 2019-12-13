@@ -12,7 +12,7 @@ import {
 
 const propTyps = {
   value: PropTypes.string,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   name: PropTypes.string.isRequired,
   tooltip: PropTypes.string.isRequired,
   props: PropTypes.instanceOf(Object),
@@ -20,6 +20,7 @@ const propTyps = {
 
 const defaultProps = {
   value: '',
+  label: '',
   props: {},
 };
 
