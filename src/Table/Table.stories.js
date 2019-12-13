@@ -1,7 +1,7 @@
 import React from 'react';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import Table, { sortDirection } from './index';
+import { sortDirection, Primary as Table } from './index';
 
 const CardWrapper = styled.div`
   display: flex;
@@ -48,8 +48,8 @@ export const defaultTable = () => (
     activeSort="sort-A"
     activePage={10}
     pages={10}
-    zebra
-    striped
+    zebra={boolean('Zebra', true)}
+    striped={boolean('Striped', true)}
     cardView={boolean('Card view', false)}
     withHeader={boolean('With header', true)}
     withPagination={boolean('With pagination', true)}

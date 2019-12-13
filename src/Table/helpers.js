@@ -1,5 +1,11 @@
 import React from 'react';
 
+
+export const sortDirection = {
+  asc: 1,
+  desc: 0,
+};
+
 const isObject = (item) => (item && typeof item === 'object' && !Array.isArray(item));
 
 const mergeDeep = (target, source) => {
@@ -22,21 +28,23 @@ const mergeDeep = (target, source) => {
 
 const pageNumbersList = (currentPage, delta, totalPages) => {
   const length = Math.max(0, Math.min(totalPages, delta));
+  const pageItem = (value, clickable = true) => ({ value, clickable });
   const pageNumbers = (num, lenghtModifer = length) => Array
-    .from({ length: lenghtModifer }, (_, i) => (num + i));
+    .from({ length: lenghtModifer }, (_, i) => pageItem(num + i));
 
   if (currentPage < delta) {
     const pages = pageNumbers(1);
-    return [...pages, totalPages];
-  } if (totalPages < (currentPage + delta)) {
-    const pages = pageNumbers(totalPages - delta + 1);
-    return [1, ...pages];
+    return [...pages, pageItem(totalPages)];
+  } if (totalPages < (currentPage + delta - 1)) {
+    const val = totalPages - delta + 1;
+    const pages = pageNumbers(val);
+    return [pageItem(1), ...pages];
   }
 
   const padding = Math.round((delta / 2));
   const pageBase = currentPage - padding + 1;
   const pages = pageNumbers(pageBase, length - 1);
-  return [1, ...pages, totalPages];
+  return [pageItem(1), ...pages, pageItem(totalPages)];
 };
 
 export const pagination = (currentPage, totalPages, delta) => {
@@ -44,11 +52,13 @@ export const pagination = (currentPage, totalPages, delta) => {
     return [1];
   }
 
+  const ELLIPSIS = '...';
   return pageNumbersList(currentPage, delta, totalPages)
     .reduce((acc, page, index, origin) => {
       acc.push(page);
-      if (((origin[index + 1]) - page) > 1) {
-        acc.push('...');
+      const nextItem = origin[index + 1];
+      if (nextItem && (nextItem.value - page.value) > 1) {
+        acc.push({ value: ELLIPSIS, clickable: false });
       }
 
       return acc;

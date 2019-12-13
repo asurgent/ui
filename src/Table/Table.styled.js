@@ -20,7 +20,6 @@ export const Arrow = styled.div`
   }};
 `;
 
-
 export const Wrapper = styled.div`
     width: 100%;
     max-width: 100%;
@@ -37,24 +36,32 @@ export const Pagination = styled.div`
 `;
 
 export const Page = styled.div`
-    cursor: pointer;
-    width: 2.8rem;
-    height: 2.8rem;
-    border: 1px solid ${({ theme }) => theme.gray400};
     display: flex;
+    cursor: pointer;
+    width: 2.4rem;
+    height: 2.4rem;
     justify-content: center;
     align-items: center;
-    margin-left: .4rem;
-    color: ${({ theme, activePage }) => (activePage ? theme.black : theme.gray800)};
-    background: ${({ theme, activePage }) => (activePage ? theme.white : theme.gray200)};
+    margin-left: .8rem;
+    font-size:1.2rem;
+    font-weight: 600;
+    border: 1px solid;
+    border-color: ${({ theme, activePage }) => (activePage ? theme.rgba(theme.blue400, 0.2) : 'transparent')};
+    background: ${({ theme, activePage }) => (activePage ? theme.rgba(theme.blue400, 0.1) : theme.white)};
+    color: ${({ theme }) => theme.gray800};
     border-radius: 2px;
+
+    &:hover {
+      border-color: ${({ theme, clickable }) => (clickable ? theme.rgba(theme.blue400, 0.3) : 'transparent')};
+      background: ${({ theme, clickable }) => (clickable ? theme.rgba(theme.blue400, 0.2) : 'transparent')};
+    }
 `;
 
 export const Base = styled.div`
     width: 100%;
     max-width: 100%;
     min-width: 100%;
-    overflow-x: scroll;
+    overflow-x: auto;
 `;
 
 export const Cell = styled.div`
@@ -74,41 +81,12 @@ export const TableCellContent = styled.div`
     text-overflow: ellipsis;
 `;
 
-export const Content = styled.div`
-    display: grid;
-    grid-template-columns: ${({ headerList, equalSize }) => {
-    const columnSize = 'minmax(50px, 1fr)';
-    const sizing = headerList
-      .reduce((acc, { size }) => {
-        if (equalSize) {
-          acc.push(columnSize);
-        } else {
-          acc.push(size || columnSize);
-        }
-        return acc;
-      }, []).join(' ').trim();
-
-    return sizing;
-  }};
-    grid-template-rows: auto;
-    width: fit-content;
-    min-width: 100%;
-
-    ${Cell} {
-        border-bottom: 0px solid ${({ theme }) => theme.gray600};
-        border-width: ${({ striped }) => (striped ? '1px' : '0px')};
-
-        &.even-row {
-            background: ${({ zebra, theme }) => (zebra ? theme.blue100 : theme.white)};
-        }
-    }
-`;
 
 export const Header = styled(Cell)`
     align-items: center;
     grid-column: unset;
-    border-bottom: 1px solid ${({ theme }) => theme.black};
     flex-direction: row;
+    border-color: ${({ theme }) => theme.gray300};
 `;
 
 export const HeaderContent = styled(TableCellContent)`
@@ -127,5 +105,40 @@ export const HeaderSort = styled(Arrow)`
     }
     return 'rotate(45deg)';
   }};
-    border-color: ${({ active, theme }) => (active ? theme.gray800 : theme.gray300)}
+    border-color: ${({ active, theme }) => (active ? theme.gray800 : theme.gray300)};
+`;
+
+
+export const Content = styled.div`
+    display: grid;
+    width: fit-content;
+    min-width: 100%;
+    grid-template-rows: auto;
+    grid-template-columns: ${({ headerList, equalSize }) => {
+    const columnSize = 'minmax(50px, 1fr)';
+    const sizing = headerList
+      .reduce((acc, { size }) => {
+        if (equalSize) {
+          acc.push(columnSize);
+        } else {
+          acc.push(size || columnSize);
+        }
+        return acc;
+      }, []).join(' ').trim();
+
+    return sizing;
+  }};
+
+    ${Cell} {
+        border-bottom: 0px solid ${({ theme }) => theme.gray200};
+        border-width: ${({ striped }) => (striped ? '1px' : '0px')};
+
+        &.even-row {
+            background: ${({ zebra, theme }) => (zebra ? theme.blue50 : theme.white)};
+        }
+    }
+
+    ${Header} {
+      border-width: 1px;
+    }
 `;

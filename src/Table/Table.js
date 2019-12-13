@@ -20,6 +20,8 @@ const propTypes = {
       sortKey: PropTypes.string,
     }),
   ),
+  onPagination: PropTypes.func,
+  onSort: PropTypes.func,
   tableRowConfiguration: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.bool,
@@ -42,6 +44,8 @@ const defaultProps = {
   cardRowConfiguration: false,
   tableRowConfiguration: false,
   equalSizeColumns: false,
+  onPagination: () => {},
+  onSort: () => {},
 };
 
 const bodyComponents = {
@@ -67,7 +71,7 @@ const Table = (props) => {
   useEffect(() => {
     const defaultRows = generateRows(props, bodyComponents);
     setRows(defaultRows);
-  }, [cardView]);
+  }, [rowData, cardView]);
 
   const {
     pages,
@@ -81,7 +85,9 @@ const Table = (props) => {
 
   const onPagination = (requestedPage) => {
     const page = Math.max(1, Math.min(pages, requestedPage));
-    props.onPagination(page);
+    if (page !== activePage) {
+      props.onPagination(page);
+    }
   };
 
   const onSort = (sortKey) => {
@@ -95,7 +101,6 @@ const Table = (props) => {
       props.onSort(sortKey, directions.asc);
     }
   };
-
 
   const paginationList = pagination(activePage, pages, PAGINATION_DELTA);
 
@@ -120,12 +125,17 @@ const Table = (props) => {
           {/* Render rows end */}
         </C.Content>
       </C.Base>
-      { withPagination && (
+      { withPagination && paginationList.length > 1 && (
         <C.Pagination>
           <C.Arrow left onClick={() => onPagination(activePage - 1)} />
-          { paginationList.map((page) => (
-            <C.Page activePage={activePage === page} key={page} onClick={() => onPagination(page)}>
-              {page}
+          { paginationList.map(({ value, clickable }, index) => (
+            <C.Page
+              key={`${value}-${index}`}
+              clickable={clickable}
+              activePage={activePage === value}
+              onClick={() => clickable && onPagination(value)}
+            >
+              {value }
             </C.Page>
           ))}
           <C.Arrow right onClick={() => onPagination(activePage + 1)} />
