@@ -2,8 +2,19 @@ import { useEffect, useState } from 'react';
 
 const tableDefaults = { result: [], page: 1, total_pages: 0 };
 
+const generateApiBody = ({ search, page, pageSize }) => ({
+  search_string: search,
+  filter: '',
+  facets: [],
+  order_by: [],
+  search_fields: [],
+  page_size: pageSize,
+  page,
+});
+
 const useTableProvider = (updateAction = (() => {})) => {
   const [tableData, setTableData] = useState(tableDefaults);
+  const [pageSize, setPageSize] = useState(10);
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(tableData.page);
@@ -11,14 +22,18 @@ const useTableProvider = (updateAction = (() => {})) => {
 
   useEffect(() => {
     if (isMounted) {
-      updateAction(page, search);
+      const payload = generateApiBody({ page, search, pageSize });
+      setIsLoading(true);
+      updateAction(payload);
     }
   }, [isMounted, page]);
 
   useEffect(() => {
     if (isMounted) {
+      const payload = generateApiBody({ page: 1, search, pageSize });
       setPage(1);
-      updateAction(1, search);
+      setIsLoading(true);
+      updateAction(payload);
     }
   }, [search]);
 
@@ -27,6 +42,7 @@ const useTableProvider = (updateAction = (() => {})) => {
     onSearch: (query) => {
       setSearch(query);
     },
+    setPageSize: (size) => setPageSize(size),
     getActivePage: () => tableData.page,
     getPageCount: () => tableData.total_pages,
     getRowData: () => tableData.result,
