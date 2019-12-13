@@ -1,7 +1,7 @@
-import React from 'react';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import React, { useEffect } from 'react';
+import { withKnobs, boolean, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import { sortDirection, Primary as Table } from './index';
+import * as Table from './index';
 
 const CardWrapper = styled.div`
   display: flex;
@@ -40,14 +40,31 @@ export default {
 
 const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus eu libero ut lobortis.';
 
+const rowDummyData = [
+  {
+    valueA: lorem,
+    valueB: lorem,
+    valueC: 'Im',
+    valueD: 'A Row',
+  },
+  {
+    valueA: lorem,
+    valueB: 'There',
+    valueC: 'Im',
+    valueD: 'A Row',
+  },
+];
+
 export const defaultTable = () => (
-  <Table
+  <Table.Primary
     onSort={(key, direction) => { console.log(key, direction); }}
     onPagination={(requestedPage) => { console.log(requestedPage); }}
-    sortDirection={sortDirection.asc}
+    sortDirection={Table.sortDirection.asc}
     activeSort="sort-A"
     activePage={10}
     pages={10}
+    emptystate={text('Emptystate', 'No items found')}
+    isLoading={boolean('Loading', false)}
     zebra={boolean('Zebra', true)}
     striped={boolean('Striped', true)}
     cardView={boolean('Card view', false)}
@@ -59,7 +76,6 @@ export const defaultTable = () => (
         value: lorem,
         sortKey: 'sort-A',
         size: 'minmax(30rem, 1fr)',
-        // props: { style: { background: 'magenta' } },
       },
       { value: 'B', sortKey: 'sort-B' },
       { value: 'C', sortKey: 'sort-C' },
@@ -67,24 +83,9 @@ export const defaultTable = () => (
         value: 'D',
         sortKey: 'sort-D',
         size: 'minmax(8rem, 10rem)',
-        // props: { style: { color: 'magenta' } },
       },
     ]}
-    rowData={[
-      {
-        valueA: lorem,
-        valueB: lorem,
-        valueC: 'Im',
-        valueD: 'A Row',
-      },
-      {
-        valueA: lorem,
-        valueB: 'There',
-        valueC: 'Im',
-        valueD: 'A Row',
-        // props: { style: { background: 'pink' } },
-      },
-    ]}
+    rowData={boolean('With rows', false) ? rowDummyData : []}
     cardConfiguration={(row) => <Card row={row} />}
     columnConfiguration={(row) => {
       const {
@@ -100,3 +101,53 @@ export const defaultTable = () => (
     }}
   />
 );
+
+export const apiTable = () => {
+  const updateCallbackFunction = (page, query, setter) => {
+    // do ajaxrequest based on page & query
+    // use setter to set responsedata from azure-search api
+    setter({ result: [...rowDummyData], page: 1, total_pages: 0 });
+  };
+
+  const table = Table.useTableProvider((page, query) => {
+    updateCallbackFunction(page, query, table.setResponse);
+  });
+
+  useEffect(() => {
+    table.parentReady();
+  }, []);
+
+  return (
+    <Table.Api
+      provider={table}
+      withSearch={boolean('With search', true)}
+      headerData={[
+        {
+          value: lorem,
+          sortKey: 'sort-A',
+          size: 'minmax(30rem, 1fr)',
+        },
+        { value: 'B', sortKey: 'sort-B' },
+        { value: 'C', sortKey: 'sort-C' },
+        {
+          value: 'D',
+          sortKey: 'sort-D',
+          size: 'minmax(8rem, 10rem)',
+        },
+      ]}
+      cardConfiguration={(row) => <Card row={row} />}
+      columnConfiguration={(row) => {
+        const {
+          valueA, valueB, valueC, valueD,
+        } = row;
+
+        return [
+          { value: valueB },
+          valueA,
+          () => valueC,
+          () => ({ value: valueD, props: { style: { background: 'transaprent' } } }),
+        ];
+      }}
+    />
+  );
+};
