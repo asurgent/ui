@@ -5,6 +5,7 @@ const base = styled.div`
     display: flex;
     flex-direction: column;
     margin: ${({ withMargins }) => (withMargins ? '1.6rem' : 0)};
+    padding: ${({ withPadding }) => (withPadding ? '1.6rem' : 0)};
     background: ${({ theme }) => theme.white};
     color: ${({ theme }) => theme.black};
 `;
