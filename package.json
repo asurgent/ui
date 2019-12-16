@@ -1,6 +1,6 @@
 {
   "name": "@asurgent/ui",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "frontend - asurgent UI components",
   "scripts": {
     "watch": "webpack --watch --mode production",
