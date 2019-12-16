@@ -1,11 +1,15 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js',
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'commonjs',
+  },
+  optimization: {
+    minimize: false,
   },
   module: {
     rules: [
@@ -22,7 +26,6 @@ module.exports = {
       },
     ],
   },
-  externals: {
-    react: 'commonjs react',
-  },
+  target: 'web',
+  externals: [nodeExternals()],
 };

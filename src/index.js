@@ -1,5 +1,6 @@
 import Tooltip from './Tooltip';
-import Form from './Form';
+import * as Form from './Form';
+import * as Table from './Table';
 
 import * as Button from './Button';
 import * as Block from './Block';
@@ -13,4 +14,5 @@ export {
   Modal,
   Switch,
   Tooltip,
+  Table,
 };
