@@ -1,6 +1,8 @@
 src
+lib
 node_modules
 webpack.config.js
 .babelrc
 .eslintrc.js
+.eslintignore
 .storybook
