@@ -9,7 +9,7 @@ module.exports = {
     libraryTarget: 'commonjs',
   },
   optimization: {
-    minimize: false,
+    minimize: true,
   },
   module: {
     rules: [
