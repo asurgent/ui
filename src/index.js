@@ -1,6 +1,7 @@
 import Tooltip from './Tooltip';
 import * as Form from './Form';
 import * as Table from './Table';
+import * as Tag from './Tag';
 
 import * as Button from './Button';
 import * as Block from './Block';
@@ -15,4 +16,5 @@ export {
   Switch,
   Tooltip,
   Table,
+  Tag,
 };
