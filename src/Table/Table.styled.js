@@ -100,19 +100,6 @@ export const HeaderRow = styled(Row)`
   border-top:none;
 `;
 
-export const Header = styled(Cell)`
-    align-items: center;
-    grid-column: unset;
-    flex-direction: row;
-    border-color: ${({ theme }) => theme.gray300};
-`;
-
-export const HeaderContent = styled(TableCellContent)`
-    cursor: ${({ sortKey }) => (sortKey ? 'pointer' : 'default')};
-    font-weight: 700;
-    flex: 1;
-`;
-
 export const HeaderSort = styled(Arrow)`
     height: .8rem;
     width: .8rem;
@@ -123,7 +110,25 @@ export const HeaderSort = styled(Arrow)`
     }
     return 'rotate(45deg)';
   }};
-    border-color: ${({ active, theme }) => (active ? theme.gray800 : theme.gray300)};
+    border-color: ${({ active, theme }) => (active === true ? theme.gray800 : theme.gray300)};
+`;
+
+export const Header = styled(Cell)`
+    align-items: center;
+    grid-column: unset;
+    flex-direction: row;
+    border-color: ${({ theme }) => theme.gray300};
+    cursor: ${({ sortKey }) => (sortKey ? 'pointer' : 'default')};
+    
+    ${HeaderSort} {
+      display: ${({ sortKey }) => (sortKey ? 'block' : 'none')}
+    }
+`;
+
+export const HeaderContent = styled(TableCellContent)`
+    
+    font-weight: 700;
+    flex: 1;
 `;
 
 /* Loader & empty state wrapper */
