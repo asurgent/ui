@@ -140,14 +140,20 @@ export const defaultTable = () => (
 );
 
 export const apiTable = () => {
-  const updateCallbackFunction = (page, query, setter) => {
+  const success = boolean('Successful response', true);
+  const updateCallbackFunction = (page, query, provider) => {
     // do ajaxrequest based on page & query
     // use setter to set responsedata from azure-search api
-    setter({ result: [...rowDummyData], page: 1, total_pages: 0 });
+
+    if (success) {
+      provider.setSuccessResponse({ result: [...rowDummyData], page: 1, total_pages: 0 });
+    } else {
+      provider.setFailedResponse('Could not get your things');
+    }
   };
 
   const table = Table.useTableProvider((page, query) => {
-    updateCallbackFunction(page, query, table.setResponse);
+    updateCallbackFunction(page, query, table);
   });
 
   useEffect(() => {

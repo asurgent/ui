@@ -7,6 +7,10 @@ import Table, {
 } from './Table';
 
 const getEmptystate = (provider, props) => {
+  if (provider.requestFailed) {
+    return provider.requestFailed;
+  }
+
   const base = props.emptystate;
   const query = provider.getQuery();
   if (query) {

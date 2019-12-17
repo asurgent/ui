@@ -18,6 +18,7 @@ const useTableProvider = (updateAction = (() => {}), payloadOverride = {}) => {
   const [pageSize, setPageSize] = useState(10);
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [requestFailed, setRequestFailed] = useState('');
   const [page, setPage] = useState(tableData.page);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -47,14 +48,21 @@ const useTableProvider = (updateAction = (() => {}), payloadOverride = {}) => {
     getActivePage: () => tableData.page,
     getPageCount: () => tableData.total_pages,
     getRowData: () => tableData.result,
-    setResponse: (response) => {
+    setSuccessResponse: (response) => {
       setIsLoading(false);
       setTableData(response);
+      setRequestFailed('');
+    },
+    setFailedResponse: (error) => {
+      setIsLoading(false);
+      setTableData(tableDefaults);
+      setRequestFailed(error);
     },
     getQuery: () => search,
     parentReady: () => { setIsMounted(true); },
     isLoading,
     tableData,
+    requestFailed,
   };
 };
 
