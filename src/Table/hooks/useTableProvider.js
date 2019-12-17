@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 const tableDefaults = { result: [], page: 1, total_pages: 0 };
 
-const generateApiBody = ({ search, page, pageSize }) => ({
+const generateApiBody = ({ search, page, pageSize }, payloadOverride) => ({
   search_string: search,
   filter: '',
   facets: [],
@@ -10,9 +10,10 @@ const generateApiBody = ({ search, page, pageSize }) => ({
   search_fields: [],
   page_size: pageSize,
   page,
+  ...payloadOverride,
 });
 
-const useTableProvider = (updateAction = (() => {})) => {
+const useTableProvider = (updateAction = (() => {}), payloadOverride = {}) => {
   const [tableData, setTableData] = useState(tableDefaults);
   const [pageSize, setPageSize] = useState(10);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +31,7 @@ const useTableProvider = (updateAction = (() => {})) => {
 
   useEffect(() => {
     if (isMounted) {
-      const payload = generateApiBody({ page: 1, search, pageSize });
+      const payload = generateApiBody({ page: 1, search, pageSize }, payloadOverride);
       setPage(1);
       setIsLoading(true);
       updateAction(payload);
