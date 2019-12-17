@@ -33,8 +33,14 @@ const TagCollection = ({ tags, max }) => {
           const time = new Date().getTime();
           const key = (label) => `${index}${label}${time}`;
 
-          if (typeof tag === 'object' && tag.label) {
-            return <TagSingle key={key(tag.label)} label={tag.label} />;
+          if (typeof tag === 'object' && tag.value) {
+            return (
+              <TagSingle
+                onClick={tag.onClick ? tag.onClick : false}
+                key={key(tag.value)}
+                label={tag.value}
+              />
+            );
           }
 
           return <TagSingle key={key(tag.toString())} label={tag.toString()} />;
