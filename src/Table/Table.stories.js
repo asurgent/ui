@@ -55,6 +55,39 @@ const rowDummyData = [
   },
 ];
 
+const rowComponentOverride = ({ row }) => {
+  const OverrideRow = styled(row)`
+    .column-5 {
+      display: none;
+    }
+    
+    &:hover {
+      .column-2 {
+        grid-column: 2/4;
+      }
+      .column-5 {
+        display: block;
+      }
+      .column-3,.column-4 {
+        display: none;
+      }
+    }
+  `;
+
+  return OverrideRow;
+};
+
+const cellComponentOverride = ({ cell }) => {
+  const OverrideCell = styled(cell)`
+    padding:  3.2rem .8rem;
+    &:hover {
+      background: magenta;
+    }
+  `;
+
+  return OverrideCell;
+};
+
 export const defaultTable = () => (
   <Table.Primary
     onSort={(key, direction) => { console.log(key, direction); }}
@@ -63,6 +96,8 @@ export const defaultTable = () => (
     activeSort="sort-A"
     activePage={10}
     pages={10}
+    cellComponent={cellComponentOverride}
+    rowComponent={rowComponentOverride}
     emptystate={text('Emptystate', 'No items found')}
     isLoading={boolean('Loading', false)}
     zebra={boolean('Zebra', true)}
@@ -77,7 +112,7 @@ export const defaultTable = () => (
         sortKey: 'sort-A',
         size: 'minmax(30rem, 1fr)',
       },
-      { value: 'B', sortKey: 'sort-B' },
+      { value: 'B' },
       { value: 'C', sortKey: 'sort-C' },
       {
         value: 'D',
@@ -97,6 +132,7 @@ export const defaultTable = () => (
         valueA,
         () => valueC,
         () => ({ value: valueD, props: { style: { background: 'transaprent' } } }),
+        () => ({ value: 'IM AM HIDDEN' }),
       ];
     }}
   />

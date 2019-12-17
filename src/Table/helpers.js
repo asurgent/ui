@@ -65,19 +65,6 @@ export const pagination = (currentPage, totalPages, delta) => {
     }, []);
 };
 
-const tableColumnGenerator = (columnConfiguration, cellData, headerData) => {
-  const columnList = columnConfiguration(cellData);
-
-  // Make sure the cell-size lenght match with number of
-  // headers since the headers controll the grid sizing
-  return Array
-    .from({ length: headerData.length })
-    .map((_, i) => ({
-      isEvenColumn: ((i + 1) % 2) === 1,
-      data: (columnList[i] || ''),
-    }));
-};
-
 const extendCellObject = (index, cellData, newCell, headerData, rowData) => {
   const headerProps = headerData[index] ? headerData[index].props : {};
   const rowProps = rowData.props || {};
@@ -103,9 +90,9 @@ const extendCellObject = (index, cellData, newCell, headerData, rowData) => {
 };
 
 const tableRowCellGenerator = (columnList, rowData, headerData) => columnList
-  .reduce((cellAcc, { isEvenColumn, data: cell }, cellIndex) => {
+  .reduce((cellAcc, cell, cellIndex) => {
     const id = `${rowData.id}-cell-${cellIndex}`;
-    const newCell = { isEvenColumn, id };
+    const newCell = { id };
 
     if (typeof cell === 'function') {
       const cellFnData = cell();
@@ -118,31 +105,26 @@ const tableRowCellGenerator = (columnList, rowData, headerData) => columnList
     return cellAcc;
   }, []);
 
-const generateCells = (props, rowData, isEvenRow, components) => {
+const generateCells = (props, rowData, components) => {
   const { columnConfiguration, headerData } = props;
 
-  const Cell = components.cell;
+  // Make it possible to override default styling of cells
+  const Cell = props.cellComponent ? props.cellComponent(components) : components.cell;
   const CellContent = components.content;
 
-  const columnList = tableColumnGenerator(columnConfiguration, rowData, headerData);
+  const columnList = columnConfiguration(rowData);
   const cellsList = tableRowCellGenerator(columnList, rowData, headerData);
 
   return cellsList
-    .map((cellData) => {
+    .map((cellData, i) => {
       const {
         id,
         cell,
-        isEvenColumn,
         props: cellProps,
       } = cellData;
 
-      const classes = [
-        (isEvenRow ? 'odd-row' : 'even-row'),
-        (isEvenColumn ? 'odd-column' : 'even-column'),
-      ].join(' ');
-
       return (
-        <Cell {...cellProps} key={id} className={classes}>
+        <Cell {...cellProps} key={id} className={`column-${i + 1}`}>
           <CellContent>
             {cell}
           </CellContent>
@@ -151,13 +133,13 @@ const generateCells = (props, rowData, isEvenRow, components) => {
     });
 };
 
-const generateCard = (props, columnData, isEvenRow, components) => {
+const generateCard = (props, columnData, components) => {
   const { cardConfiguration } = props;
-  const content = cardConfiguration(columnData, isEvenRow);
+  const content = cardConfiguration(columnData);
   const CellComponent = components.cell;
 
   const element = (
-    <CellComponent key={`${columnData.id}-card`} cardView isEvenRow>
+    <CellComponent key={`${columnData.id}-card`} cardView>
       {content}
     </CellComponent>
   );
@@ -176,14 +158,25 @@ export const generateRows = (props, components) => props.rowData
   .reduce((acc, rowData, index) => {
     generateRowId(rowData, index);
     const { cardView } = props;
-    const isEvenRow = (index - 1) % 2;
 
     if (cardView && typeof props.cardConfiguration === 'function') {
-      const card = generateCard(props, rowData, isEvenRow, components);
+      const card = generateCard(props, rowData, components);
       acc.push(card);
     } else {
-      const cells = generateCells(props, rowData, isEvenRow, components);
-      acc.push(cells);
+      // Make it possible to override default styling of rows
+      const Row = props.rowComponent ? props.rowComponent(components) : components.row;
+      const row = (
+        <Row
+          key={rowData.id}
+          headerList={props.headerData}
+          striped={props.striped}
+          zebra={props.zebra}
+          equalSize={props.equalSizeColumns}
+        >
+          {generateCells(props, rowData, components)}
+        </Row>
+      );
+      acc.push(row);
     }
 
     return acc;

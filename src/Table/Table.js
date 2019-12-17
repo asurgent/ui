@@ -4,7 +4,6 @@ import { withTheme } from 'styled-components';
 import { RingSpinner } from 'react-spinners-kit';
 import * as C from './Table.styled';
 import { generateRows, pagination } from './helpers';
-
 import { sortDirection as directions } from '.';
 
 
@@ -32,6 +31,14 @@ export const propTypes = {
     PropTypes.func,
     PropTypes.bool,
   ]),
+  cellComponent: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.bool,
+  ]),
+  rowComponent: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.bool,
+  ]),
   cardView: PropTypes.bool,
   equalSizeColumns: PropTypes.bool,
   isLoading: PropTypes.bool,
@@ -47,6 +54,8 @@ export const defaultProps = {
   headerData: [],
   cardRowConfiguration: false,
   tableRowConfiguration: false,
+  cellComponent: false,
+  rowComponent: false,
   equalSizeColumns: false,
   isLoading: false,
   emptystate: 'No items found',
@@ -56,6 +65,7 @@ export const defaultProps = {
 
 const bodyComponents = {
   cell: C.Cell,
+  row: C.Row,
   content: C.TableCellContent,
 };
 
@@ -68,6 +78,8 @@ const Table = withTheme((props) => {
     cardView,
     tableRowConfiguration,
     cardRowConfiguration,
+    cellComponent,
+    rowComponent,
     sortDirection,
     activeSort,
     theme,
@@ -117,19 +129,28 @@ const Table = withTheme((props) => {
   return (
     <C.Wrapper>
       <C.Base>
-        <C.Content headerList={headerData} equalSize={equalSizeColumns} zebra={zebra} striped={striped}>
+        <C.Content
+          zebra={zebra}
+          striped={striped}
+          headerList={headerData}
+          equalSize={equalSizeColumns}
+        >
           { withHeader
-            && headerData.map(({ value, sortKey }) => (
-              <C.Header key={value} onClick={() => onSort(sortKey)}>
-                <C.HeaderContent>{value}</C.HeaderContent>
-                { sortKey === activeSort && (
+            && (
+            <C.HeaderRow headerList={props.headerData} equalSize={props.equalSizeColumns} striped>
+              { headerData.map(({ value, sortKey }) => (
+                <C.Header key={value} onClick={() => onSort(sortKey)}>
+                  <C.HeaderContent sortKey={sortKey}>{value}</C.HeaderContent>
+                  { sortKey === activeSort && (
                   <C.HeaderSort active direction={sortDirection} />
-                )}
-                { sortKey && sortKey !== activeSort && (
+                  )}
+                  { sortKey && sortKey !== activeSort && (
                   <C.HeaderSort />
-                )}
-              </C.Header>
-            )) }
+                  )}
+                </C.Header>
+              )) }
+            </C.HeaderRow>
+            )}
           {/* Render rows start */}
           { noContent && <C.Loading>{emptystate}</C.Loading>}
           { !isLoading && rows }
