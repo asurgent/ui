@@ -50,5 +50,5 @@ export const tagCollectionObject = () => {
 };
 
 tagCollectionObject.story = {
-  name: 'Tag Collection from string array',
+  name: 'Tag Collection from object',
 };

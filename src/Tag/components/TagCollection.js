@@ -39,6 +39,7 @@ const TagCollection = ({ tags, max }) => {
                 onClick={tag.onClick ? tag.onClick : false}
                 key={key(tag.value)}
                 label={tag.value}
+                max={tag.max ? tag.max : 0}
               />
             );
           }
