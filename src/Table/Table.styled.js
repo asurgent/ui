@@ -70,6 +70,8 @@ export const Cell = styled.div`
     padding: .8rem;
     position: relative;
     overflow: hidden;
+    min-height: 5.6rem;
+    align-items: center;
 `;
 
 export const TableCellContent = styled.div`
@@ -78,10 +80,6 @@ export const TableCellContent = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
-    height: 4.8rem;
-    display:flex;
-    align-items: center;
 `;
 
 
@@ -123,6 +121,7 @@ export const Content = styled.div`
     display: grid;
     width: fit-content;
     min-width: 100%;
+    row-gap: .8rem;
     grid-template-rows: auto;
     grid-template-columns: ${({ headerList, equalSize }) => {
     const columnSize = 'minmax(50px, 1fr)';

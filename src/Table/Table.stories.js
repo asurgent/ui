@@ -85,7 +85,7 @@ export const defaultTable = () => (
         size: 'minmax(8rem, 10rem)',
       },
     ]}
-    rowData={boolean('With rows', false) ? rowDummyData : []}
+    rowData={boolean('With rows', true) ? rowDummyData : []}
     cardConfiguration={(row) => <Card row={row} />}
     columnConfiguration={(row) => {
       const {
