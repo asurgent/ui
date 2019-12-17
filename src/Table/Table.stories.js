@@ -118,6 +118,7 @@ export const defaultTable = () => (
         value: 'D',
         sortKey: 'sort-D',
         size: 'minmax(8rem, 10rem)',
+        props: { style: { textAlign: 'center' } },
       },
     ]}
     rowData={boolean('With rows', true) ? rowDummyData : []}
