@@ -66,7 +66,7 @@ export const Row = styled.div`
     return sizing;
   }};
 
-  border: 0px solid ${({ theme }) => theme.gray200};
+  border-bottom: 0px solid ${({ theme }) => theme.gray200};
   border-width: ${({ striped }) => (striped ? '1px' : '0px')};
   border-left: none;
   border-right: none;

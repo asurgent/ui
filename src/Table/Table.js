@@ -144,8 +144,8 @@ const Table = withTheme((props) => {
                   { sortKey === activeSort && (
                   <C.HeaderSort active direction={sortDirection} />
                   )}
-                  { sortKey && sortKey !== activeSort && (
-                  <C.HeaderSort />
+                  { sortKey !== undefined && sortKey !== activeSort && (
+                    <C.HeaderSort />
                   )}
                 </C.Header>
               )) }
