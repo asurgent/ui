@@ -40,20 +40,13 @@ export default {
 
 const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempus eu libero ut lobortis.';
 
-const rowDummyData = [
-  {
-    valueA: lorem,
-    valueB: lorem,
-    valueC: 'Im',
-    valueD: 'A Row',
-  },
-  {
-    valueA: lorem,
-    valueB: 'There',
-    valueC: 'Im',
-    valueD: 'A Row',
-  },
-];
+const rowDummyData = Array.from({ length: 5 }, () => ({
+  valueA: 'Cell 1',
+  valueB: lorem,
+  valueC: 'Cell 3',
+  valueD: 'Cell 4',
+}));
+
 
 const rowComponentOverride = ({ row }) => {
   const OverrideRow = styled(row)`
@@ -141,20 +134,21 @@ export const defaultTable = () => (
 
 export const apiTable = () => {
   const success = boolean('Successful response', true);
-  const updateCallbackFunction = (payload, provider) => {
+  const updateCallbackFunction = (payload, query, provider) => {
     // do ajaxrequest based on page & query
     // use setter to set responsedata from azure-search api
     console.log('payload', payload);
+    console.log('query', query);
 
     if (success) {
-      provider.setSuccessResponse({ result: [...rowDummyData], page: 1, total_pages: 0 });
+      provider.setSuccessResponse({ result: [...rowDummyData], page: 1, total_pages: 100 });
     } else {
       provider.setFailedResponse('Could not get your things');
     }
   };
 
-  const table = Table.useTableProvider((payload) => {
-    updateCallbackFunction(payload, table);
+  const table = Table.useTableProvider((payload, query) => {
+    updateCallbackFunction(payload, query, table);
   });
 
   useEffect(() => {
@@ -163,7 +157,7 @@ export const apiTable = () => {
     table.setFacets(['id']);
     table.setOrderBy(['modified desc']);
     table.setSearchFields(['index_column']);
-    // table.setSearchQuery('123');
+    table.setSearchQuery('Default search query');
     table.setPageNumber(10);
 
     table.parentReady();
