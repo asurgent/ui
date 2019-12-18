@@ -164,11 +164,11 @@ const Table = withTheme((props) => {
           { paginationList.map(({ value, clickable }, index) => (
             <C.Page
               key={`${value}-${index}`}
-              clickable={clickable}
+              isClickable={clickable}
               activePage={activePage === value}
               onClick={() => clickable && onPagination(value)}
             >
-              {value }
+              {value}
             </C.Page>
           ))}
           <C.Arrow right onClick={() => onPagination(activePage + 1)} />

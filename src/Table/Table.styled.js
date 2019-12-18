@@ -164,7 +164,7 @@ export const Pagination = styled.div`
 
 export const Page = styled.div`
     display: flex;
-    cursor: pointer;
+    cursor: ${({ isClickable }) => (isClickable ? 'pointer' : 'default')};
     width: 2.4rem;
     height: 2.4rem;
     justify-content: center;
@@ -179,7 +179,7 @@ export const Page = styled.div`
     border-radius: 2px;
 
     &:hover {
-      border-color: ${({ theme, clickable }) => (clickable ? theme.rgba(theme.blue400, 0.3) : 'transparent')};
-      background: ${({ theme, clickable }) => (clickable ? theme.rgba(theme.blue400, 0.2) : 'transparent')};
+      border-color: ${({ theme, isClickable }) => (isClickable ? theme.rgba(theme.blue400, 0.3) : 'transparent')};
+      background: ${({ theme, isClickable }) => (isClickable ? theme.rgba(theme.blue400, 0.2) : 'transparent')};
     }
 `;
