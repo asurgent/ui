@@ -31,13 +31,17 @@ const useTableProvider = (updateAction = (() => {})) => {
   }, [isMounted, payload]);
 
   useEffect(() => {
-    const update = Object.assign(payloadCache, { page });
-    setPayload(update);
+    if (isMounted) {
+      const update = Object.assign(payloadCache, { page });
+      setPayload(update);
+    }
   }, [page]);
 
   useEffect(() => {
-    const update = Object.assign(payloadCache, { page: 1, search_string: search });
-    setPayload(update);
+    if (isMounted) {
+      const update = Object.assign(payloadCache, { page: 1, search_string: search });
+      setPayload(update);
+    }
   }, [search]);
 
   return {
@@ -52,6 +56,7 @@ const useTableProvider = (updateAction = (() => {})) => {
     isLoading,
     tableData,
     /* User interface */
+    payload,
     parentReady: () => { setIsMounted(true); },
     setFilter: (filter) => {
       if (typeof filter === 'string') {
@@ -78,17 +83,21 @@ const useTableProvider = (updateAction = (() => {})) => {
       }
     },
     setPageNumber: (pageNumber) => {
-      if (typeof pageNumber === 'number' && pageNumber > 0) {
-        // setPage(pageNumber);
-        const update = Object.assign(payloadCache, { page: pageNumber });
-        setPayload(update);
+      if (!isMounted) {
+        if (typeof pageNumber === 'number' && pageNumber > 0) {
+          setPage(pageNumber);
+          const update = Object.assign(payloadCache, { page: pageNumber });
+          setPayload(update);
+        }
       }
     },
     setSearchQuery: (query) => {
-      if (typeof query === 'string') {
-        // setSearch(query);
-        const update = Object.assign(payloadCache, { search_string: query });
-        setPayload(update);
+      if (!isMounted) {
+        if (typeof query === 'string') {
+          setSearch(query);
+          const update = Object.assign(payloadCache, { search_string: query });
+          setPayload(update);
+        }
       }
     },
     setSuccessResponse: (response) => {
