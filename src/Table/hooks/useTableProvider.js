@@ -33,12 +33,10 @@ const useTableProvider = (updateAction = (() => {})) => {
   return {
     /* Table-component interface */
     onPaginate: (pageNumber) => {
-      const update = Object.assign(payloadCache, { page: pageNumber });
-      setPayload(update);
+      setPayload({ ...payload, page: pageNumber });
     },
     onSearch: (query) => {
-      const update = Object.assign(payloadCache, { search_string: query });
-      setPayload(update);
+      setPayload({ ...payload, search_string: query });
     },
     getActivePage: () => payload.page,
     getPageCount: () => tableData.total_pages,
@@ -76,19 +74,15 @@ const useTableProvider = (updateAction = (() => {})) => {
       }
     },
     setPageNumber: (pageNumber) => {
-      if (!isMounted) {
-        if (typeof pageNumber === 'number' && pageNumber > 0) {
-          const update = Object.assign(payloadCache, { page: pageNumber });
-          setPayload(update);
-        }
+      if (typeof pageNumber === 'number' && pageNumber > 0) {
+        const update = Object.assign(payloadCache, { page: pageNumber });
+        setPayload(update);
       }
     },
     setSearchQuery: (query) => {
-      if (!isMounted) {
-        if (typeof query === 'string') {
-          const update = Object.assign(payloadCache, { search_string: query });
-          setPayload(update);
-        }
+      if (typeof query === 'string') {
+        const update = Object.assign(payloadCache, { search_string: query });
+        setPayload(update);
       }
     },
     setSuccessResponse: (response) => {
