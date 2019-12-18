@@ -19,9 +19,9 @@ const getEmptystate = (provider, props) => {
   return base;
 };
 
-const searchForm = ({ searchLabel }) => ({
+const searchForm = ({ searchLabel }, defaultValue) => ({
   search: {
-    type: 'text', label: searchLabel, value: '',
+    type: 'text', label: searchLabel, value: defaultValue || '',
   },
 });
 
@@ -51,8 +51,8 @@ const ApiSearchTable = (props) => {
     ...rest
   } = props;
 
-  const formData = Form.useFormBuilder(searchForm(props));
   const { provider, withSearch } = props;
+  const formData = Form.useFormBuilder(searchForm(props, provider.getQuery()));
 
   return (
     <>
@@ -83,4 +83,13 @@ const ApiSearchTable = (props) => {
 ApiSearchTable.propTypes = propTypes;
 ApiSearchTable.defaultProps = defaultProps;
 
-export default ApiSearchTable;
+const TableRenderProxy = (props) => {
+  const { provider } = props;
+  if (provider.isMounted) {
+    return <ApiSearchTable {...props} />;
+  }
+
+  return null;
+};
+
+export default TableRenderProxy;
