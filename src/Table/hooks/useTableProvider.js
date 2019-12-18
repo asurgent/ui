@@ -25,16 +25,19 @@ const useTableProvider = (updateAction = (() => {})) => {
   useEffect(() => {
     if (isMounted) {
       setIsLoading(true);
-      updateAction(payload);
+      const urlQuery = `page=${page}&search=${search}`;
+      updateAction(payload, urlQuery);
     }
   }, [isMounted, payload]);
 
   useEffect(() => {
-    setPayload({ ...payload, page });
+    const update = Object.assign(payloadCache, { page });
+    setPayload(update);
   }, [page]);
 
   useEffect(() => {
-    setPayload({ ...payload, page: 1, search_string: search });
+    const update = Object.assign(payloadCache, { page: 1, search_string: search });
+    setPayload(update);
   }, [search]);
 
   return {
@@ -72,6 +75,16 @@ const useTableProvider = (updateAction = (() => {})) => {
       if (Array.isArray(searchFields)) {
         const update = Object.assign(payloadCache, { search_fields: searchFields });
         setPayload(update);
+      }
+    },
+    setPageNumber: (pageNumber) => {
+      if (typeof pageNumber === 'number' && pageNumber > 0) {
+        setPage(pageNumber);
+      }
+    },
+    setSearchQuery: (query) => {
+      if (typeof query === 'string') {
+        setSearch(query);
       }
     },
     setSuccessResponse: (response) => {
