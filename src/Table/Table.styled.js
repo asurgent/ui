@@ -144,10 +144,22 @@ export const Loading = styled.div`
 /* Pagination styling */
 
 export const Pagination = styled.div`
+    position: relative;
     display: flex;
     align-items:center;
     justify-content: flex-end;
     margin-top: 1.6rem;
+
+    &:after {
+      display: ${({ isLoading }) => (isLoading ? 'block' : 'none')};
+      position: absolute;
+      content: "";
+      background: ${({ theme }) => theme.rgba(theme.white, 0.8)};
+      left: 0;
+      right: 0;
+      top: 0; 
+      bottom:0;
+    }
 `;
 
 export const Page = styled.div`

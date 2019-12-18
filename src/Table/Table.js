@@ -159,7 +159,7 @@ const Table = withTheme((props) => {
         </C.Content>
       </C.Base>
       { withPagination && paginationList.length > 1 && (
-        <C.Pagination>
+        <C.Pagination isLoading={isLoading}>
           <C.Arrow left onClick={() => onPagination(activePage - 1)} />
           { paginationList.map(({ value, clickable }, index) => (
             <C.Page
