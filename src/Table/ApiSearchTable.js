@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as Form from '../Form';
 import Table, {
@@ -19,9 +19,9 @@ const getEmptystate = (provider, props) => {
   return base;
 };
 
-const searchForm = ({ searchLabel }, defaultValue) => ({
+const searchForm = ({ searchLabel }, provider) => ({
   search: {
-    type: 'text', label: searchLabel, value: defaultValue || '',
+    type: 'text', label: searchLabel, value: provider.getQuery(),
   },
 });
 
@@ -52,7 +52,11 @@ const ApiSearchTable = (props) => {
   } = props;
 
   const { provider, withSearch } = props;
-  const formData = Form.useFormBuilder(searchForm(props, provider.getQuery()));
+  const formData = Form.useFormBuilder(searchForm(props, provider));
+
+  useEffect(() => {
+    formData.updateField('search', { props: { disabled: provider.isLoading } });
+  }, [provider.isLoading]);
 
   return (
     <>
