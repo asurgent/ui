@@ -141,9 +141,10 @@ export const defaultTable = () => (
 
 export const apiTable = () => {
   const success = boolean('Successful response', true);
-  const updateCallbackFunction = (page, query, provider) => {
+  const updateCallbackFunction = (payload, provider) => {
     // do ajaxrequest based on page & query
     // use setter to set responsedata from azure-search api
+    console.log('payload', payload);
 
     if (success) {
       provider.setSuccessResponse({ result: [...rowDummyData], page: 1, total_pages: 0 });
@@ -152,11 +153,16 @@ export const apiTable = () => {
     }
   };
 
-  const table = Table.useTableProvider((page, query) => {
-    updateCallbackFunction(page, query, table);
+  const table = Table.useTableProvider((payload) => {
+    updateCallbackFunction(payload, table);
   });
 
   useEffect(() => {
+    // All user interfaces to interact with table provider
+    table.setFilter('Tests');
+    table.setFacets(['id']);
+    table.setOrderBy(['modified desc']);
+    table.setSearchFields(['index_column']);
     table.parentReady();
   }, []);
 

@@ -7,8 +7,8 @@ import Table, {
 } from './Table';
 
 const getEmptystate = (provider, props) => {
-  if (provider.requestFailed) {
-    return provider.requestFailed;
+  if (provider.requestFailedMessage()) {
+    return provider.requestFailedMessage();
   }
 
   const base = props.emptystate;
