@@ -87,7 +87,7 @@ const useTableProvider = (updateAction = (() => {})) => {
     setSearchQuery: (query) => {
       if (typeof query === 'string') {
         // setSearch(query);
-        const update = Object.assign(payloadCache, { search_fields: query });
+        const update = Object.assign(payloadCache, { search_string: query });
         setPayload(update);
       }
     },
