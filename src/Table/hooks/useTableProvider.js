@@ -17,44 +17,37 @@ const useTableProvider = (updateAction = (() => {})) => {
   const [payload, setPayload] = useState({ ...payloadCache });
   const [tableData, setTableData] = useState(tableDefaults);
   const [isLoading, setIsLoading] = useState(true);
-  const [search, setSearch] = useState('');
   const [requestFailed, setRequestFailed] = useState('');
-  const [page, setPage] = useState(tableData.page);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     if (isMounted) {
       setIsLoading(true);
-      const urlQuery = `page=${page}${search && `&search=${search}`}`;
+      const { page, search_string } = payload;
+      const urlQuery = `page=${page}${search_string && `&search=${search_string}`}`;
       updateAction(payload, urlQuery);
     }
   }, [isMounted, payload]);
 
-  useEffect(() => {
-    if (isMounted) {
-      const update = Object.assign(payloadCache, { page });
-      setPayload(update);
-    }
-  }, [page]);
-
-  useEffect(() => {
-    if (isMounted) {
-      const update = Object.assign(payloadCache, { page: 1, search_string: search });
-      setPayload(update);
-    }
-  }, [search]);
 
   return {
     /* Table-component interface */
-    onPaginate: (pageNumber) => { setPage(pageNumber); },
-    onSearch: (query) => { setSearch(query); },
-    getActivePage: () => tableData.page,
+    onPaginate: (pageNumber) => {
+      const update = Object.assign(payloadCache, { page: pageNumber });
+      setPayload(update);
+    },
+    onSearch: (query) => {
+      const update = Object.assign(payloadCache, { search_string: query });
+      setPayload(update);
+    },
+    getActivePage: () => payload.page,
     getPageCount: () => tableData.total_pages,
     getRowData: () => tableData.result,
-    getQuery: () => search,
+    getQuery: () => payload.search_string,
     requestFailedMessage: () => requestFailed,
     isLoading,
     tableData,
+    isMounted,
     /* User interface */
     payload,
     parentReady: () => { setIsMounted(true); },
@@ -85,7 +78,6 @@ const useTableProvider = (updateAction = (() => {})) => {
     setPageNumber: (pageNumber) => {
       if (!isMounted) {
         if (typeof pageNumber === 'number' && pageNumber > 0) {
-          setPage(pageNumber);
           const update = Object.assign(payloadCache, { page: pageNumber });
           setPayload(update);
         }
@@ -94,7 +86,6 @@ const useTableProvider = (updateAction = (() => {})) => {
     setSearchQuery: (query) => {
       if (!isMounted) {
         if (typeof query === 'string') {
-          setSearch(query);
           const update = Object.assign(payloadCache, { search_string: query });
           setPayload(update);
         }
