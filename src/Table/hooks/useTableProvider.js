@@ -16,18 +16,23 @@ const buildSearchQuery = ({
   prefix, location, page, query,
 }) => {
   const search = queryString.parse(location.search);
+  const queryKey = `${prefix && `${prefix}_`}search`;
+  const pageKey = `${prefix && `${prefix}_`}page`;
 
   Object.assign(search, {
-    [`${prefix && `${prefix}_`}page`]: page,
+    [pageKey]: page,
   });
 
   if (query) {
     Object.assign(search, {
-      [`${prefix && `${prefix}_`}search`]: query,
+      [queryKey]: query,
     });
+
+    return `?${queryString.stringify(search)}`;
   }
 
-  return `?${queryString.stringify(search)}`;
+  const { [queryKey]: _, ...rest } = search;
+  return `?${queryString.stringify(rest)}`;
 };
 
 const useTableProvider = (updateAction = (() => {})) => {
