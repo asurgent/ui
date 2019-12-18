@@ -25,7 +25,7 @@ const useTableProvider = (updateAction = (() => {})) => {
   useEffect(() => {
     if (isMounted) {
       setIsLoading(true);
-      const urlQuery = `page=${page}&search=${search}`;
+      const urlQuery = `page=${page}${search && `&search=${search}`}`;
       updateAction(payload, urlQuery);
     }
   }, [isMounted, payload]);
