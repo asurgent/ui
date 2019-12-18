@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as Form from '../Form';
-import Table, {
-  defaultProps as baseDefaultProps,
-  propTypes as basePropsTypes,
-} from './Table';
+import Table from './Table';
 
 const getEmptystate = (provider, props) => {
   if (provider.requestFailedMessage()) {
@@ -26,23 +24,34 @@ const searchForm = ({ searchLabel }, provider) => ({
 });
 
 const propTypes = {
-//   ...basePropsTypes,
-  provider: PropTypes.instanceOf(Object),
+  provider: PropTypes.instanceOf(Object).isRequired,
   withSearch: PropTypes.bool,
   searchLabel: PropTypes.string,
   emptystate: PropTypes.string,
+  useHistoryState: PropTypes.bool,
+  historyStatePrefix: PropTypes.string,
+  onPagination: PropTypes.func,
+  activePage: PropTypes.number,
+  pages: PropTypes.number,
+  rowData: PropTypes.instanceOf(Array),
 };
 
 const defaultProps = {
-//   ...baseDefaultProps,
-  provider: {},
   withSearch: true,
   searchLabel: 'Search',
   emptystate: 'No items found',
+  useHistoryState: false,
+  historyStatePrefix: '',
+  onPagination: () => {},
+  activePage: 1,
+  pages: 0,
+  rowData: [],
 };
 
 const ApiSearchTable = (props) => {
   const {
+    useHistoryState,
+    historyStatePrefix,
     onPagination,
     activePage,
     pages,
@@ -83,12 +92,20 @@ const ApiSearchTable = (props) => {
   );
 };
 
-
 ApiSearchTable.propTypes = propTypes;
 ApiSearchTable.defaultProps = defaultProps;
 
 const TableRenderProxy = (props) => {
-  const { provider } = props;
+  const { provider, useHistoryState, historyStatePrefix } = props;
+  const history = useHistory();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (useHistoryState) {
+      provider.enableHistoryState({ history, location, prefix: historyStatePrefix || '' });
+    }
+  }, []);
+
   if (provider.isMounted) {
     return <ApiSearchTable {...props} />;
   }

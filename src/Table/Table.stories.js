@@ -134,11 +134,10 @@ export const defaultTable = () => (
 
 export const apiTable = () => {
   const success = boolean('Successful response', true);
-  const updateCallbackFunction = (payload, query, provider) => {
+  const updateCallbackFunction = (payload, provider) => {
     // do ajaxrequest based on page & query
     // use setter to set responsedata from azure-search api
     console.log('payload', payload);
-    console.log('query', query);
 
     if (success) {
       provider.setSuccessResponse({ result: [...rowDummyData], page: 1, total_pages: 100 });
@@ -147,8 +146,8 @@ export const apiTable = () => {
     }
   };
 
-  const table = Table.useTableProvider((payload, query) => {
-    updateCallbackFunction(payload, query, table);
+  const table = Table.useTableProvider((payload) => {
+    updateCallbackFunction(payload, table);
   });
 
   useEffect(() => {
@@ -165,6 +164,8 @@ export const apiTable = () => {
 
   return (
     <Table.Api
+      useHistoryState
+      historyStatePrefix="tickets"
       provider={table}
       withSearch={boolean('With search', true)}
       headerData={[

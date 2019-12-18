@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import queryString from 'query-string';
 
 const tableDefaults = { result: [], page: 1, total_pages: 0 };
-
 const defaultPayload = {
   search_string: '',
   filter: '',
@@ -12,8 +12,27 @@ const defaultPayload = {
   page: 1,
 };
 
+const buildSearchQuery = ({
+  prefix, location, page, query,
+}) => {
+  const search = queryString.parse(location.search);
+
+  Object.assign(search, {
+    [`${prefix && `${prefix}_`}page`]: page,
+  });
+
+  if (query) {
+    Object.assign(search, {
+      [`${prefix && `${prefix}_`}search`]: query,
+    });
+  }
+
+  return `?${queryString.stringify(search)}`;
+};
+
 const useTableProvider = (updateAction = (() => {})) => {
   const payloadCache = { ...defaultPayload };
+  const [router, setRouter] = useState({});
   const [payload, setPayload] = useState({ ...payloadCache });
   const [tableData, setTableData] = useState(tableDefaults);
   const [isLoading, setIsLoading] = useState(true);
@@ -23,20 +42,43 @@ const useTableProvider = (updateAction = (() => {})) => {
   useEffect(() => {
     if (isMounted) {
       setIsLoading(true);
-      const { page, search_string } = payload;
-      const urlQuery = `page=${page}${search_string && `&search=${search_string}`}`;
-      updateAction(payload, urlQuery);
+      updateAction(payload);
+
+      if (Object.keys(router).length) {
+        const { page, search_string: query } = payload;
+        const { location, history, prefix } = router;
+
+        const newLocation = {
+          ...location,
+          search: buildSearchQuery({
+            prefix, location, page, query,
+          }),
+        };
+
+        history.replace(newLocation);
+      }
     }
   }, [isMounted, payload]);
 
 
-  return {
+  const hookInterfaceApi = {
     /* Table-component interface */
     onPaginate: (pageNumber) => {
       setPayload({ ...payload, page: pageNumber });
     },
     onSearch: (query) => {
       setPayload({ ...payload, search_string: query, page: 1 });
+    },
+    enableHistoryState: ({ history, location, prefix }) => {
+      setRouter({ history, location, prefix });
+
+      const {
+        [`${prefix && `${prefix}_`}search`]: search,
+        [`${prefix && `${prefix}_`}page`]: page,
+      } = queryString.parse(location.search);
+
+      hookInterfaceApi.setSearchQuery(search);
+      hookInterfaceApi.setPageNumber(parseInt(page, 10));
     },
     getActivePage: () => payload.page,
     getPageCount: () => tableData.total_pages,
@@ -96,6 +138,8 @@ const useTableProvider = (updateAction = (() => {})) => {
       setRequestFailed(error);
     },
   };
+
+  return hookInterfaceApi;
 };
 
 export default useTableProvider;
