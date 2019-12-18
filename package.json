@@ -5,11 +5,11 @@
   "scripts": {
     "watch": "webpack --watch --mode production",
     "build": "webpack --mode production",
-    "build-dev": "webpack --mode development",
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "patch": "npm run build && git add . && git commit -m 'patch-version' && npm version patch && git p && git p --tags && npm publish"
+    "patch": "npm run build && git add dist/ && git commit -m 'patch-version' && npm version patch && git p && git p --tags && npm publish",
+    "minor": "npm run build && git add dist/ && git commit -m 'minor-version' && npm version minor && git p && git p --tags && npm publish"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"

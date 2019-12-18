@@ -79,12 +79,16 @@ const useTableProvider = (updateAction = (() => {})) => {
     },
     setPageNumber: (pageNumber) => {
       if (typeof pageNumber === 'number' && pageNumber > 0) {
-        setPage(pageNumber);
+        // setPage(pageNumber);
+        const update = Object.assign(payloadCache, { page: pageNumber });
+        setPayload(update);
       }
     },
     setSearchQuery: (query) => {
       if (typeof query === 'string') {
-        setSearch(query);
+        // setSearch(query);
+        const update = Object.assign(payloadCache, { search_fields: query });
+        setPayload(update);
       }
     },
     setSuccessResponse: (response) => {

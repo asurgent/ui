@@ -163,6 +163,9 @@ export const apiTable = () => {
     table.setFacets(['id']);
     table.setOrderBy(['modified desc']);
     table.setSearchFields(['index_column']);
+    // table.setSearchQuery('123');
+    table.setPageNumber(10);
+
     table.parentReady();
   }, []);
 
