@@ -36,7 +36,7 @@ const useTableProvider = (updateAction = (() => {})) => {
       setPayload({ ...payload, page: pageNumber });
     },
     onSearch: (query) => {
-      setPayload({ ...payload, search_string: query });
+      setPayload({ ...payload, search_string: query, page: 1 });
     },
     getActivePage: () => payload.page,
     getPageCount: () => tableData.total_pages,
