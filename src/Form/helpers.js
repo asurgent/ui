@@ -67,7 +67,7 @@ export const generateFieldComponents = (inputs, referenceList) => {
         value={value || ''}
         tooltip={tooltip || ''}
         label={label || value}
-        {...(inputProps || {})}
+        props={inputProps}
       />
     );
 

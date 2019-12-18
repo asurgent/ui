@@ -48,7 +48,14 @@ const Text = forwardRef((props, ref) => {
         )}
       </Header>
       <Wrapper>
-        <input {...props.props} type="text" value={value} onChange={({ target }) => setValue(target.value)} name={name} ref={ref} />
+        <input
+          {...props.props}
+          type="text"
+          value={value}
+          onChange={({ target }) => setValue(target.value)}
+          name={name}
+          ref={ref}
+        />
       </Wrapper>
     </Main>
   );

@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
   margin: 0;
   border: 0.1rem solid;
   border-color: ${({ theme }) => theme.gray200};
-  border-radius: ${prop => (prop.status === 'error' ? '5px 5px 0px 0px' : '5px')};
+  border-radius: ${(props) => (props.status === 'error' ? '5px 5px 0px 0px' : '5px')};
   padding: 1.2rem;
   position: relative;
   box-sizing: border-box;
@@ -56,7 +56,7 @@ export const Icon = styled.i`
   cursor: pointer;
 `;
 
-const arrowSvg = theme => encodeURIComponent(`
+const arrowSvg = (theme) => encodeURIComponent(`
 <svg xmlns="http://www.w3.org/2000/svg" width="292.4" height="292.4">
   <path
     fill="${theme.gray500}" 
