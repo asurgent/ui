@@ -7,12 +7,14 @@ import { LoaderSpacer } from './Button.styled';
 import { isExternalLink, isInteralLink, isValidMail } from './helper';
 
 const propTyps = {
-  icon: PropTypes.element,
+  iconLeft: PropTypes.element,
+  iconRight: PropTypes.element,
   link: PropTypes.string,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
   children: PropTypes.oneOfType([
+    PropTypes.string,
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element),
   ]),
@@ -22,7 +24,8 @@ const propTyps = {
 };
 
 const defaultProps = {
-  icon: null,
+  iconLeft: null,
+  iconRight: null,
   link: '',
   onClick: () => {},
   disabled: false,
@@ -35,7 +38,8 @@ const defaultProps = {
 const withButtonStyle = ({ style: Component, isHollow }) => {
   const ProxyButton = (props) => {
     const {
-      icon,
+      iconRight,
+      iconLeft,
       link,
       onClick,
       disabled,
@@ -71,8 +75,9 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
     };
     const content = (
       <>
-        {icon}
+        {iconLeft}
         {children}
+        {iconRight}
         { loading && (
           <LoaderSpacer>
             <RingSpinner
