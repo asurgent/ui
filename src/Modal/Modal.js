@@ -50,7 +50,7 @@ class Modal extends Component {
               <i className="fa fa-times" aria-hidden="true" />
             </C.Close>
           )}
-          <C.ModalTitle>{title}</C.ModalTitle>
+          {title && <C.ModalTitle>{title}</C.ModalTitle>}
           <C.Content>
             {children}
           </C.Content>
