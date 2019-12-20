@@ -94,19 +94,39 @@ const getValues = (references, originalValues) => {
   return { values, dirty };
 };
 
-const useFormBuilder = (form) => {
-  const [formData, setFormData] = useState(form);
+const useFormBuilder = (formSpecification, parameters = null) => {
+  const [formData, setFormData] = useState(null);
   const [inputFileds, setInputFields] = useState([]);
   const [references, setReferences] = useState({});
   const [originalValues, setOriginalValues] = useState({});
 
   useEffect(() => {
-    const referenceList = generateReferences(formData);
-    const { fields, original } = generateFieldComponents(formData, referenceList);
+    if (Array.isArray(formSpecification) && typeof parameters === 'object') {
+      const formObject = formSpecification.reduce((acc, field) => ({
+        ...acc,
+        [field.name]: {
+          type: field.type,
+          tooltip: field.description,
+          value: parameters[field.name],
+        },
+      }), {});
+      setFormData(formObject);
+    } else if (typeof formSpecification === 'object') {
+      setFormData(formSpecification);
+    } else {
+      setFormData({});
+    }
+  }, []);
 
-    setReferences(referenceList);
-    setOriginalValues(original);
-    setInputFields(fields);
+  useEffect(() => {
+    if (formData) {
+      const referenceList = generateReferences(formData);
+      const { fields, original } = generateFieldComponents(formData, referenceList);
+
+      setReferences(referenceList);
+      setOriginalValues(original);
+      setInputFields(fields);
+    }
   }, [formData]);
 
 
