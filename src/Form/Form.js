@@ -10,6 +10,7 @@ const triggerTimer = withDelayTimer((values, name, onNewValue) => {
 const propTyps = {
   form: PropTypes.instanceOf(Object).isRequired,
   children: PropTypes.oneOfType([
+    PropTypes.func,
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element),
   ]),
@@ -64,18 +65,24 @@ const Form = (props) => {
     onSubmit(values, dirty);
   };
 
-  const onSubmitAction = () => form.getValues();
+  const onSubmitAction = () => {
+    form.getValues();
+    const { values, dirty } = form.getValues();
+    onSubmit(values, dirty);
+  };
+
+  const renderForms = Object
+    .keys(inputFileds)
+    .map((key) => (
+      <FormRow key={key}>
+        {inputFileds[key]}
+      </FormRow>
+    ));
 
   return (
     <FormStyle onChange={handleOnChange} onSubmit={handleSubmit} onBlur={handleBlur}>
-      { typeof children === 'function' && children(inputFileds, onSubmitAction) }
-      { typeof children !== 'function' && Object
-        .keys(inputFileds)
-        .map((key) => (
-          <FormRow key={key}>
-            {inputFileds[key]}
-          </FormRow>
-        ))}
+      { typeof children === 'function' && children(inputFileds, renderForms, onSubmitAction) }
+      { typeof children !== 'function' && renderForms}
     </FormStyle>
   );
 };
