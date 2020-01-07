@@ -16,7 +16,7 @@ const updateValue = (form, change) => {
 };
 
 const updateField = (form, change) => {
-  if (typeof change === 'object') {
+  if (form && typeof change === 'object') {
     const { name, value } = change;
     if (form[name]) {
       const copy = { ...form };
@@ -51,6 +51,10 @@ const updateValues = (form, list) => {
 };
 
 const updateFields = (form, list) => {
+  if (!form) {
+    return {};
+  }
+
   const copy = { ...form };
   let changed = false;
 
