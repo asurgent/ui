@@ -6,7 +6,7 @@ const base = styled.div`
     flex-direction: column;
     margin: ${({ withMargins }) => (withMargins ? '1.6rem' : 0)};
     padding: ${({ withPadding }) => (withPadding ? '3.2rem' : 0)};
-    background: ${({ theme }) => theme.white};
+    background: ${({ renderTransparent, theme }) => (renderTransparent === true ? 'transparent' : theme.white)};
     color: ${({ theme }) => theme.black};
 `;
 

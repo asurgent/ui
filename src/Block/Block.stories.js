@@ -22,8 +22,13 @@ export const borderedBlock = () => (
   <Block.Bordered>{content}</Block.Bordered>
 );
 
+
 export const plainBlock = () => (
   <Block.Plain>{content}</Block.Plain>
+);
+
+export const renderTransparentBlock = () => (
+  <Block.Plain renderTransparent>{content}</Block.Plain>
 );
 
 export const spaceBetweenBlock = () => (
@@ -61,4 +66,7 @@ spaceBetweenBlock.story = {
 };
 wrapBlock.story = {
   name: 'Wrap Block',
+};
+renderTransparentBlock.story = {
+  name: 'Transparent Block',
 };
