@@ -22,13 +22,11 @@ export const Default = styled.div`
 
 export const TagsCollection = styled.div`
     display: flex;
-    
+    flex-flow: wrap;
+    margin: -.4rem;
+
     ${Default} {
-        margin-right: .4rem;
-        
-        &:last-child {
-            margin-right: 0;
-        }
+        margin: .4rem;
     }
 `;
 export const SpillOver = styled.div`
