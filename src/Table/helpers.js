@@ -32,6 +32,11 @@ const pageNumbersList = (currentPage, delta, totalPages) => {
   const pageNumbers = (num, lenghtModifer = length) => Array
     .from({ length: lenghtModifer }, (_, i) => pageItem(num + i));
 
+  if (delta >= totalPages) {
+    const pages = pageNumbers(1);
+    return [...pages];
+  }
+
   if (currentPage < delta) {
     const pages = pageNumbers(1);
     return [...pages, pageItem(totalPages)];
@@ -49,7 +54,7 @@ const pageNumbersList = (currentPage, delta, totalPages) => {
 
 export const pagination = (currentPage, totalPages, delta) => {
   if (totalPages <= 1) {
-    return [1];
+    return [];
   }
 
   const ELLIPSIS = '...';

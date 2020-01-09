@@ -140,7 +140,7 @@ export const apiTable = () => {
     console.log('payload', payload);
 
     if (success) {
-      provider.setSuccessResponse({ result: [...rowDummyData], page: 1, total_pages: 100 });
+      provider.setSuccessResponse({ result: [...rowDummyData], page: 1, total_pages: 7 });
     } else {
       provider.setFailedResponse('Could not get your things');
     }
@@ -157,7 +157,7 @@ export const apiTable = () => {
     table.setOrderBy(['modified desc']);
     table.setSearchFields(['index_column']);
     table.setSearchQuery('Default search query');
-    table.setPageNumber(10);
+    table.setPageNumber(4);
 
     table.parentReady();
   }, []);
