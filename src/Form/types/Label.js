@@ -40,9 +40,9 @@ const Label = (props) => {
       <Header>
         <InputLabel>{label || name}</InputLabel>
         { tooltip && (
-        <Tooltip tip={tooltip}>
-          <Icon className="far fa-question-circle" />
-        </Tooltip>
+          <Tooltip tip={tooltip}>
+            <Icon className="far fa-question-circle" />
+          </Tooltip>
         )}
       </Header>
       <Wrapper style={{ opacity: '.4' }}>

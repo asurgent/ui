@@ -42,9 +42,9 @@ const Text = forwardRef((props, ref) => {
       <Header>
         <Label>{label || name}</Label>
         { tooltip && (
-        <Tooltip tip={tooltip}>
-          <Icon className="far fa-question-circle" />
-        </Tooltip>
+          <Tooltip tip={tooltip}>
+            <Icon className="far fa-question-circle" />
+          </Tooltip>
         )}
       </Header>
       <Wrapper>
