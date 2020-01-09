@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useLocation } from 'react-router-dom';
 import { RingSpinner } from 'react-spinners-kit';
+import Tooltip from '../Tooltip/index';
 import { LoaderSpacer } from './Button.styled';
 import { isExternalLink, isInteralLink, isValidMail } from './helper';
 
@@ -19,6 +20,8 @@ const propTyps = {
     PropTypes.arrayOf(PropTypes.element),
   ]),
   mailto: PropTypes.string,
+  tooltip: PropTypes.string,
+  passLocationState: PropTypes.bool,
   history: PropTypes.instanceOf(Object).isRequired,
   theme: PropTypes.instanceOf(Object).isRequired,
 };
@@ -32,8 +35,9 @@ const defaultProps = {
   loading: false,
   children: null,
   mailto: '',
+  tooltip: null,
+  passLocationState: false,
 };
-
 
 const withButtonStyle = ({ style: Component, isHollow }) => {
   const ProxyButton = (props) => {
@@ -48,8 +52,11 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
       mailto,
       history,
       theme,
+      tooltip,
+      passLocationState,
     } = props;
 
+    const location = useLocation();
     const isValidLink = (link && (isExternalLink(link) || isInteralLink(link)));
     const isValidMailto = mailto && (isValidMail(mailto));
 
@@ -61,7 +68,12 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
 
         if (isValidLink && isInteralLink(link)) {
           event.preventDefault();
-          history.push(link);
+
+          if (passLocationState) {
+            history.push(`${link}${location.search}`);
+          } else {
+            history.push(link);
+          }
         }
       } else {
         event.preventDefault();
@@ -73,6 +85,7 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
       className: disabled ? 'disabled' : null,
       onClick: handleClick,
     };
+
     const content = (
       <>
         {iconLeft}
@@ -93,10 +106,17 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
     if (isValidLink || isValidMailto) {
       const Link = Component.withComponent('a');
       const upddatedAttrs = { ...attrs };
+
       if (isValidLink) {
-        Object.assign(upddatedAttrs, {
-          href: link,
-        });
+        if (passLocationState) {
+          Object.assign(upddatedAttrs, {
+            href: `${link}${location.search}`,
+          });
+        } else {
+          Object.assign(upddatedAttrs, {
+            href: link,
+          });
+        }
       } else if (isValidMailto) {
         Object.assign(upddatedAttrs, {
           href: `mailto:${mailto}`,
@@ -111,12 +131,16 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
       }
 
       return (
-        <Link {...upddatedAttrs}>{content}</Link>
+        <Tooltip tip={tooltip}>
+          <Link {...upddatedAttrs}>
+            {content}
+          </Link>
+        </Tooltip>
       );
     }
 
     return (
-      <Component {...attrs}>{content}</Component>
+      <Tooltip tip={tooltip}><Component {...attrs}>{content}</Component></Tooltip>
     );
   };
 

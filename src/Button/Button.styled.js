@@ -72,6 +72,31 @@ export const Primary = styled.div`
     }
 `;
 
+export const Icon = styled.div`
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: 0.2s;
+    text-align: center;
+    white-space: normal;
+    font-weight: bold;
+    letter-spacing: 0.12rem;
+    text-transform: uppercase;
+    text-decoration: none;    
+    font-size: 1.6rem;
+    color: ${({ theme }) => theme.black};
+
+    &:hover {
+        cursor: pointer;
+        background: ${({ theme }) => theme.gray100};
+    }
+`;
+
 export const Secondary = styled.div`
     ${(props) => defaultStyle(props)}
     background: ${({ theme }) => theme.brandSecondaryColor};

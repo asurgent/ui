@@ -6,6 +6,14 @@ const content = 'Button';
 
 export default { title: 'UI Components|Buttons' };
 
+export const iconButton = () => (
+  <Button.Icon tooltip="Hello" saveLinkState link="/test" icon={<i className="fa fa-times" aria-hidden="true" />} />
+);
+
+iconButton.story = {
+  name: 'Icon Button',
+};
+
 export const primaryButton = () => (
   <Button.Primary>{content}</Button.Primary>
 );
