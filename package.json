@@ -56,6 +56,7 @@
   "dependencies": {
     "@storybook/addon-knobs": "^5.2.8",
     "query-string": "^6.9.0",
+    "randomcolor": "^0.5.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router": "^5.1.2",

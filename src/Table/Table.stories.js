@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
-import { withKnobs, boolean, text } from '@storybook/addon-knobs';
+import {
+  withKnobs, boolean, text, number,
+} from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import * as Table from './index';
 
@@ -88,7 +90,7 @@ export const defaultTable = () => (
     sortDirection={Table.sortDirection.asc}
     activeSort="sort-A"
     activePage={10}
-    pages={10}
+    pages={number('Pages', 10)}
     cellComponent={cellComponentOverride}
     rowComponent={rowComponentOverride}
     emptystate={text('Emptystate', 'No items found')}
@@ -140,7 +142,7 @@ export const apiTable = () => {
     console.log('payload', payload);
 
     if (success) {
-      provider.setSuccessResponse({ result: [...rowDummyData], page: 1, total_pages: 7 });
+      provider.setSuccessResponse({ result: [...rowDummyData], page: 2, total_pages: 2 });
     } else {
       provider.setFailedResponse('Could not get your things');
     }
@@ -157,7 +159,7 @@ export const apiTable = () => {
     table.setOrderBy(['modified desc']);
     table.setSearchFields(['index_column']);
     table.setSearchQuery('Default search query');
-    table.setPageNumber(4);
+    table.setPageNumber(2);
 
     table.parentReady();
   }, []);
