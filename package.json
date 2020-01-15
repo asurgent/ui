@@ -8,8 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "patch": "npm run build && git add dist/ && git commit -m 'patch-version' && npm version patch && git p && git p --tags && npm publish",
-    "minor": "npm run build && git add dist/ && git commit -m 'minor-version' && npm version minor && git p && git p --tags && npm publish",
+    "deploy-storybook": "storybook-to-ghpages",
+    "patch": "npm run build && git add dist/ && git commit -m 'patch-version' && npm version patch && git p && git p --tags && npm publish && npm run deploy-storybook",
+    "minor": "npm run build && git add dist/ && git commit -m 'minor-version' && npm version minor && git p && git p --tags && npm publish && npm run deploy-storybook",
     "copy": "npm run build && cp ./dist/index.js ./../cloudops-portal/node_modules/@asurgent/ui/dist/"
   },
   "publishConfig": {
@@ -47,6 +48,7 @@
     "@storybook/addon-storysource": "^5.2.8",
     "@storybook/addons": "^5.2.8",
     "@storybook/react": "^5.2.8",
+    "@storybook/storybook-deployer": "^2.8.1",
     "babel-loader": "^8.0.6",
     "babel-plugin-styled-components": "^1.10.6",
     "webpack": "^4.41.2",
