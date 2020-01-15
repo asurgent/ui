@@ -9,6 +9,7 @@ import * as Block from './Block';
 import * as Modal from './Modal';
 import * as Switch from './Switch';
 import * as UserImage from './UserImage';
+import * as Moment from './Moment';
 
 export {
   Button,
@@ -21,4 +22,5 @@ export {
   Tag,
   ErrorBoundary,
   UserImage,
+  Moment,
 };
