@@ -112,8 +112,10 @@ const useFormBuilder = (formSpecification, parameters = null) => {
           type: field.type,
           tooltip: field.description,
           value: parameters[field.name],
+          options: parameters[field.options],
         },
       }), {});
+
       setFormData(formObject);
     } else if (typeof formSpecification === 'object') {
       setFormData(formSpecification);
