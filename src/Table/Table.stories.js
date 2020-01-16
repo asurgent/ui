@@ -139,7 +139,7 @@ export const apiTable = () => {
   const updateCallbackFunction = (payload, provider) => {
     // do ajaxrequest based on page & query
     // use setter to set responsedata from azure-search api
-    console.log('payload', payload);
+    // console.log(payload);
 
     if (success) {
       provider.setSuccessResponse({ result: [...rowDummyData], page: 2, total_pages: 2 });
@@ -156,7 +156,7 @@ export const apiTable = () => {
     // All user interfaces to interact with table provider
     table.setFilter('Tests');
     table.setFacets(['id']);
-    table.setOrderBy(['modified desc']);
+    // table.setOrderBy(['gurka desc']);
     table.setSearchFields(['index_column']);
     table.setSearchQuery('Default search query');
     table.setPageNumber(2);
@@ -170,6 +170,14 @@ export const apiTable = () => {
       historyStatePrefix="tickets"
       provider={table}
       withSearch={boolean('With search', true)}
+      sortKeys={[
+        { value: 'created', label: 'Created' },
+        {
+          value: 'modified', label: 'Modified', default: true, direction: 123,
+        },
+        { value: 'closed', label: 'Closed' },
+        { value: 'due', label: 'Due' },
+      ]}
       headerData={[
         {
           value: lorem,

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { sortDirection } from './index';
+import { sortDirection } from './helpers';
 
 export const Arrow = styled.div`
     border: solid black;

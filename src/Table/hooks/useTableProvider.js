@@ -13,14 +13,16 @@ const defaultPayload = {
 };
 
 const buildSearchQuery = ({
-  prefix, location, page, query,
+  prefix, location, page, query, sort,
 }) => {
   const search = queryString.parse(location.search);
   const queryKey = `${prefix && `${prefix}_`}search`;
   const pageKey = `${prefix && `${prefix}_`}page`;
+  const sortKey = `${prefix && `${prefix}_`}sort`;
 
   Object.assign(search, {
     [pageKey]: page,
+    [sortKey]: sort,
   });
 
   if (query) {
@@ -43,6 +45,7 @@ const useTableProvider = (updateAction = (() => {})) => {
   const [isLoading, setIsLoading] = useState(true);
   const [requestFailed, setRequestFailed] = useState('');
   const [isMounted, setIsMounted] = useState(false);
+  const [triggerUpdate, setTriggerUpdate] = useState(0);
 
   useEffect(() => {
     if (isMounted) {
@@ -50,29 +53,37 @@ const useTableProvider = (updateAction = (() => {})) => {
       updateAction(payload);
 
       if (Object.keys(router).length) {
-        const { page, search_string: query } = payload;
+        const { page, search_string: query, order_by: sort } = payload;
         const { location, history, prefix } = router;
 
         const newLocation = {
           ...location,
           search: buildSearchQuery({
-            prefix, location, page, query,
+            prefix, location, page, query, sort,
           }),
         };
+        console.log(newLocation);
 
         history.replace(newLocation);
       }
     }
-  }, [isMounted, payload]);
+  }, [isMounted, triggerUpdate]);
 
+  const trigger = () => { setTriggerUpdate(triggerUpdate + 1); };
 
   const hookInterfaceApi = {
     /* Table-component interface */
     onPaginate: (pageNumber) => {
       setPayload({ ...payload, page: pageNumber });
+      trigger();
     },
     onSearch: (query) => {
       setPayload({ ...payload, search_string: query, page: 1 });
+      trigger();
+    },
+    onSort: (orderBy) => {
+      setPayload({ ...payload, order_by: orderBy });
+      trigger();
     },
     enableHistoryState: ({ history, location, prefix }) => {
       setRouter({ history, location, prefix });
@@ -80,10 +91,12 @@ const useTableProvider = (updateAction = (() => {})) => {
       const {
         [`${prefix && `${prefix}_`}search`]: search,
         [`${prefix && `${prefix}_`}page`]: page,
+        [`${prefix && `${prefix}_`}sort`]: sort,
       } = queryString.parse(location.search);
 
       hookInterfaceApi.setSearchQuery(search);
       hookInterfaceApi.setPageNumber(parseInt(page, 10));
+      hookInterfaceApi.setOrderBy([sort]);
     },
     getActivePage: () => payload.page,
     getPageCount: () => tableData.total_pages,
@@ -142,6 +155,7 @@ const useTableProvider = (updateAction = (() => {})) => {
       setTableData(tableDefaults);
       setRequestFailed(error);
     },
+    update: () => { trigger(); },
   };
 
   return hookInterfaceApi;

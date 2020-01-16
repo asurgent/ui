@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import React from 'react';
 import PropTypes from 'prop-types';
-import * as Form from '../Form';
-import Table from './Table';
+import TableControlls from './components/TableControlls';
+import Table from '../Table';
 
 const getEmptystate = (provider, props) => {
   if (provider.requestFailedMessage()) {
@@ -17,62 +16,55 @@ const getEmptystate = (provider, props) => {
   return base;
 };
 
-const searchForm = ({ searchLabel }, provider) => ({
-  search: {
-    type: 'text', label: searchLabel, value: provider.getQuery(),
-  },
-});
 
 const propTypes = {
   provider: PropTypes.instanceOf(Object).isRequired,
   withSearch: PropTypes.bool,
   searchLabel: PropTypes.string,
   emptystate: PropTypes.string,
-  useHistoryState: PropTypes.bool,
-  historyStatePrefix: PropTypes.string,
   onPagination: PropTypes.func,
   activePage: PropTypes.number,
   pages: PropTypes.number,
   rowData: PropTypes.instanceOf(Array),
+  sortKeys: PropTypes.instanceOf(Array),
+  initialSort: PropTypes.instanceOf(Object),
 };
 
 const defaultProps = {
   withSearch: true,
   searchLabel: 'Search',
   emptystate: 'No items found',
-  useHistoryState: false,
-  historyStatePrefix: '',
   onPagination: () => {},
   activePage: 1,
   pages: 0,
   rowData: [],
+  sortKeys: [],
+  initialSort: null,
 };
 
 const ApiSearchTable = (props) => {
   const {
-    useHistoryState,
-    historyStatePrefix,
     onPagination,
     activePage,
     pages,
     rowData,
     emptystate,
+    sortKeys,
+    initialSort,
+    searchLabel,
     ...rest
   } = props;
 
   const { provider, withSearch } = props;
-  const formData = Form.useFormBuilder(searchForm(props, provider));
-
-  useEffect(() => {
-    formData.updateField('search', { props: { disabled: provider.isLoading } });
-  }, [provider.isLoading]);
 
   return (
     <>
       { withSearch && (
-        <Form.Primary
-          form={formData}
-          onNewValue={(values) => { provider.onSearch(values.search); }}
+        <TableControlls
+          provider={provider}
+          sortKeys={sortKeys}
+          initialSort={initialSort}
+          searchLabel={searchLabel}
         />
       )}
       <Table
@@ -84,8 +76,6 @@ const ApiSearchTable = (props) => {
         activePage={provider.getActivePage()}
         pages={provider.getPageCount()}
         rowData={provider.getRowData()}
-        // sortDirection={sortDirection.asc}
-        // activeSort=""
         {...rest}
       />
     </>
@@ -95,22 +85,4 @@ const ApiSearchTable = (props) => {
 ApiSearchTable.propTypes = propTypes;
 ApiSearchTable.defaultProps = defaultProps;
 
-const TableRenderProxy = (props) => {
-  const { provider, useHistoryState, historyStatePrefix } = props;
-  const history = useHistory();
-  const location = useLocation();
-
-  useEffect(() => {
-    if (useHistoryState) {
-      provider.enableHistoryState({ history, location, prefix: historyStatePrefix || '' });
-    }
-  }, []);
-
-  if (provider.isMounted) {
-    return <ApiSearchTable {...props} />;
-  }
-
-  return null;
-};
-
-export default TableRenderProxy;
+export default ApiSearchTable;

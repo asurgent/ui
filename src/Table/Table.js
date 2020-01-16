@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import { RingSpinner } from 'react-spinners-kit';
 import * as C from './Table.styled';
-import { generateRows, pagination } from './helpers';
-import { sortDirection as directions } from '.';
+import { generateRows, pagination, sortDirection as directions } from './helpers';
 
 
 export const propTypes = {
