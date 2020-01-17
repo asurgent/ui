@@ -1,40 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { sortDirection as direction } from '../../helpers';
-import { sortDirectionToString, parseInitialSort } from '../helpers';
+import { sortDirectionToString } from '../helpers';
 import * as Form from '../../../Form';
 import * as Button from '../../../Button';
 import * as C from './TableControlls.styled';
 
-const searchForm = (searchLabel, sortKeys, provider) => ({
+const searchForm = (searchLabel, provider) => ({
   search: {
     type: 'text', label: searchLabel, value: provider.getQuery(),
   },
   sortDirection: {
-    type: 'select', label: 'sort', options: sortKeys,
+    type: 'select', label: 'sort', options: provider.getSortKeys(),
   },
 });
 
 const propTypes = {
   provider: PropTypes.instanceOf(Object).isRequired,
-  initialSort: PropTypes.instanceOf(Object),
   searchLabel: PropTypes.string,
-  sortKeys: PropTypes.instanceOf(Array),
 };
 
 const defaultProps = {
   searchLabel: '',
-  sortKeys: [],
-  initialSort: null,
 };
 
 const TableControlls = (props) => {
-  const {
-    provider, searchLabel, sortKeys, initialSort,
-  } = props;
-
-  const formData = Form.useFormBuilder(searchForm(searchLabel, sortKeys, provider));
-  const [sort, setSort] = useState(parseInitialSort(initialSort));
+  const { provider, searchLabel } = props;
+  const formData = Form.useFormBuilder(searchForm(searchLabel, provider));
+  const [sort, setSort] = useState(provider.getSortDirectionInt());
 
   useEffect(() => {
     formData.updateField('search', { props: { disabled: provider.isLoading } });
@@ -44,7 +37,7 @@ const TableControlls = (props) => {
   useEffect(() => {
     const { values: { sortDirection } } = formData.getValues();
     if (sortDirection) {
-      provider.onSort([`${sortDirection} ${sortDirectionToString(sort)}`]);
+      provider.onSort({ value: sortDirection, direction: sortDirectionToString(sort) });
       provider.update();
     }
   }, [sort]);
@@ -53,7 +46,7 @@ const TableControlls = (props) => {
     <Form.Primary
       form={formData}
       onNewValue={(values) => {
-        provider.onSort([`${values.sortDirection} ${sortDirectionToString(sort)}`]);
+        provider.onSort({ value: values.sortDirection, direction: sortDirectionToString(sort) });
         provider.onSearch(values.search);
         provider.update();
       }}
@@ -62,7 +55,7 @@ const TableControlls = (props) => {
         <>
           <C.StyleForm>
             {search}
-            { sortDirection && initialSort && (
+            { sortDirection && (
               <div className="sort">
                 {sortDirection}
                 <Button.Icon

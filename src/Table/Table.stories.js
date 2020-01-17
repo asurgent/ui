@@ -139,7 +139,7 @@ export const apiTable = () => {
   const updateCallbackFunction = (payload, provider) => {
     // do ajaxrequest based on page & query
     // use setter to set responsedata from azure-search api
-    // console.log(payload);
+    console.log(payload);
 
     if (success) {
       provider.setSuccessResponse({ result: [...rowDummyData], page: 2, total_pages: 2 });
@@ -158,7 +158,7 @@ export const apiTable = () => {
     table.setFacets(['id']);
     // table.setOrderBy(['gurka desc']);
     table.setSearchFields(['index_column']);
-    table.setSearchQuery('Default search query');
+    // table.setSearchQuery('Default search query');
     table.setPageNumber(2);
 
     table.parentReady();

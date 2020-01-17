@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, useHistory } from 'react-router-dom';
 import ApiSearchTable from './ApiSearchTable';
-import { getDefaultSort, generatePayloadSortString } from './helpers';
 
 const propTypes = {
   provider: PropTypes.instanceOf(Object).isRequired,
@@ -26,13 +25,10 @@ const TableRenderProxy = (props) => {
   } = props;
   const history = useHistory();
   const location = useLocation();
-  const [initialSort, setInitialSort] = useState(null);
 
   useEffect(() => {
     if (sortKeys && Array.isArray(sortKeys) && sortKeys.length) {
-      const deaultSort = getDefaultSort(sortKeys);
-
-      setInitialSort(deaultSort);
+      provider.setSortKeys(sortKeys);
     }
 
     if (useHistoryState) {
@@ -41,7 +37,7 @@ const TableRenderProxy = (props) => {
   }, []);
 
   if (provider.isMounted) {
-    return <ApiSearchTable {...props} initialSort={initialSort} />;
+    return <ApiSearchTable {...props} />;
   }
 
   return null;

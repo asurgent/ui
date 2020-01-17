@@ -1,5 +1,19 @@
 import { useEffect, useState } from 'react';
 import queryString from 'query-string';
+import { sortDirection } from '../helpers';
+
+// make sure our format is passed around in the app
+export const parseSortDirectionToInt = (direction) => {
+  if (direction) {
+    if (direction === 'asc') {
+      return sortDirection.asc;
+    }
+
+    return sortDirection.desc;
+  }
+
+  return sortDirection.desc;
+};
 
 const tableDefaults = { result: [], page: 1, total_pages: 0 };
 const defaultPayload = {
@@ -19,11 +33,23 @@ const buildSearchQuery = ({
   const queryKey = `${prefix && `${prefix}_`}search`;
   const pageKey = `${prefix && `${prefix}_`}page`;
   const sortKey = `${prefix && `${prefix}_`}sort`;
+  const directionKey = `${prefix && `${prefix}_`}sort_dir`;
 
   Object.assign(search, {
     [pageKey]: page,
-    [sortKey]: sort,
   });
+  const { currentSort } = sort;
+  if (currentSort.value !== undefined) {
+    Object.assign(search, {
+      [sortKey]: currentSort.value,
+    });
+
+    if (currentSort.direction !== undefined) {
+      Object.assign(search, {
+        [directionKey]: currentSort.direction,
+      });
+    }
+  }
 
   if (query) {
     Object.assign(search, {
@@ -39,13 +65,17 @@ const buildSearchQuery = ({
 
 const useTableProvider = (updateAction = (() => {})) => {
   const payloadCache = { ...defaultPayload };
+  const sortCache = { currentSort: {}, sortKeys: {} };
+
   const [router, setRouter] = useState({});
   const [payload, setPayload] = useState({ ...payloadCache });
+  const [sort, setSort] = useState({ ...sortCache });
   const [tableData, setTableData] = useState(tableDefaults);
   const [isLoading, setIsLoading] = useState(true);
   const [requestFailed, setRequestFailed] = useState('');
   const [isMounted, setIsMounted] = useState(false);
   const [triggerUpdate, setTriggerUpdate] = useState(0);
+
 
   useEffect(() => {
     if (isMounted) {
@@ -53,7 +83,7 @@ const useTableProvider = (updateAction = (() => {})) => {
       updateAction(payload);
 
       if (Object.keys(router).length) {
-        const { page, search_string: query, order_by: sort } = payload;
+        const { page, search_string: query } = payload;
         const { location, history, prefix } = router;
 
         const newLocation = {
@@ -62,8 +92,6 @@ const useTableProvider = (updateAction = (() => {})) => {
             prefix, location, page, query, sort,
           }),
         };
-        console.log(newLocation);
-
         history.replace(newLocation);
       }
     }
@@ -82,33 +110,56 @@ const useTableProvider = (updateAction = (() => {})) => {
       trigger();
     },
     onSort: (orderBy) => {
-      setPayload({ ...payload, order_by: orderBy });
+      setSort({ ...sort, currentSort: orderBy });
       trigger();
     },
     enableHistoryState: ({ history, location, prefix }) => {
       setRouter({ history, location, prefix });
-
       const {
         [`${prefix && `${prefix}_`}search`]: search,
         [`${prefix && `${prefix}_`}page`]: page,
-        [`${prefix && `${prefix}_`}sort`]: sort,
+        [`${prefix && `${prefix}_`}sort`]: sortKey,
+        [`${prefix && `${prefix}_`}sort_dir`]: direction,
       } = queryString.parse(location.search);
 
       hookInterfaceApi.setSearchQuery(search);
       hookInterfaceApi.setPageNumber(parseInt(page, 10));
-      hookInterfaceApi.setOrderBy([sort]);
+      hookInterfaceApi.setInitailSortOrder({ value: sortKey, direction });
+
+      if (sortKey !== undefined && Array.isArray(sortCache.sortKeys)) {
+        const newSortKeys = sortCache
+          .sortKeys
+          .reduce((acc, { direction: removeA, default: removeB, ...rest }) => {
+            if (sortKey === rest.value) {
+              return [{ ...rest, default: true, direction: direction || 'desc' }, ...acc];
+            }
+
+            return [{ ...rest }, ...acc];
+          }, []);
+
+        hookInterfaceApi.setSortKeys(newSortKeys);
+      }
     },
     getActivePage: () => payload.page,
     getPageCount: () => tableData.total_pages,
     getRowData: () => tableData.result,
     getQuery: () => payload.search_string,
+    getSortKey: () => sort.currentSort.value,
+    getSortDirection: () => sort.currentSort.direction,
+    getSortDirectionInt: () => parseSortDirectionToInt(sort.currentSort.direction),
+    getSortKeys: () => sort.sortKeys,
     requestFailedMessage: () => requestFailed,
+    parentReady: () => { setIsMounted(true); },
     isLoading,
     tableData,
     isMounted,
-    /* User interface */
     payload,
-    parentReady: () => { setIsMounted(true); },
+    /*
+      User interface.
+      Calld upon pre render, that why we use payloadCahce.
+      Because the payload-state wont be update until a re-render
+      and after render payload cache will be reset to default
+    */
     setFilter: (filter) => {
       if (typeof filter === 'string') {
         const update = Object.assign(payloadCache, { filter });
@@ -127,6 +178,7 @@ const useTableProvider = (updateAction = (() => {})) => {
         setPayload(update);
       }
     },
+
     setSearchFields: (searchFields) => {
       if (Array.isArray(searchFields)) {
         const update = Object.assign(payloadCache, { search_fields: searchFields });
@@ -145,6 +197,19 @@ const useTableProvider = (updateAction = (() => {})) => {
         setPayload(update);
       }
     },
+    setSortKeys: (sortKeys) => {
+      const update = Object.assign(sortCache, { sortKeys });
+      setSort(update);
+    },
+    setInitailSortOrder: (orderByObject) => {
+      if (typeof orderByObject === 'object') {
+        const update = Object.assign(sortCache, { currentSort: orderByObject });
+        setSort(update);
+      }
+    },
+    /*
+      Table callback functions
+    */
     setSuccessResponse: (response) => {
       setIsLoading(false);
       setTableData(response);

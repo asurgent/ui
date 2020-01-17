@@ -26,8 +26,6 @@ const propTypes = {
   activePage: PropTypes.number,
   pages: PropTypes.number,
   rowData: PropTypes.instanceOf(Array),
-  sortKeys: PropTypes.instanceOf(Array),
-  initialSort: PropTypes.instanceOf(Object),
 };
 
 const defaultProps = {
@@ -38,8 +36,6 @@ const defaultProps = {
   activePage: 1,
   pages: 0,
   rowData: [],
-  sortKeys: [],
-  initialSort: null,
 };
 
 const ApiSearchTable = (props) => {
@@ -49,8 +45,6 @@ const ApiSearchTable = (props) => {
     pages,
     rowData,
     emptystate,
-    sortKeys,
-    initialSort,
     searchLabel,
     ...rest
   } = props;
@@ -62,8 +56,6 @@ const ApiSearchTable = (props) => {
       { withSearch && (
         <TableControlls
           provider={provider}
-          sortKeys={sortKeys}
-          initialSort={initialSort}
           searchLabel={searchLabel}
         />
       )}
