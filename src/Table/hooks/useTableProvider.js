@@ -80,7 +80,7 @@ const useTableProvider = (updateAction = (() => {})) => {
   useEffect(() => {
     if (isMounted) {
       setIsLoading(true);
-      updateAction(payload);
+      updateAction({ ...payload, order_by: [`${sort.currentSort.value} ${sort.currentSort.direction}`] });
 
       if (Object.keys(router).length) {
         const { page, search_string: query } = payload;
@@ -131,7 +131,12 @@ const useTableProvider = (updateAction = (() => {})) => {
           .sortKeys
           .reduce((acc, { direction: removeA, default: removeB, ...rest }) => {
             if (sortKey === rest.value) {
-              return [{ ...rest, default: true, direction: direction || 'desc' }, ...acc];
+              const newSort = { ...rest, default: true, direction: direction || 'desc' };
+              Object.assign(payloadCache, {
+                order_by: [`${newSort.value} ${newSort.direction}`],
+              });
+
+              return [newSort, ...acc];
             }
 
             return [{ ...rest }, ...acc];

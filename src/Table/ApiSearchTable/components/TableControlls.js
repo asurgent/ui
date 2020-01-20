@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { sortDirection as direction } from '../../helpers';
-import { sortDirectionToString } from '../helpers';
 import * as Form from '../../../Form';
 import * as Button from '../../../Button';
 import * as C from './TableControlls.styled';
@@ -27,7 +26,7 @@ const defaultProps = {
 const TableControlls = (props) => {
   const { provider, searchLabel } = props;
   const formData = Form.useFormBuilder(searchForm(searchLabel, provider));
-  const [sort, setSort] = useState(provider.getSortDirectionInt());
+  const [sort, setSort] = useState(provider.getSortDirection());
 
   useEffect(() => {
     formData.updateField('search', { props: { disabled: provider.isLoading } });
@@ -37,7 +36,7 @@ const TableControlls = (props) => {
   useEffect(() => {
     const { values: { sortDirection } } = formData.getValues();
     if (sortDirection) {
-      provider.onSort({ value: sortDirection, direction: sortDirectionToString(sort) });
+      provider.onSort({ value: sortDirection, direction: sort });
       provider.update();
     }
   }, [sort]);
@@ -46,7 +45,7 @@ const TableControlls = (props) => {
     <Form.Primary
       form={formData}
       onNewValue={(values) => {
-        provider.onSort({ value: values.sortDirection, direction: sortDirectionToString(sort) });
+        provider.onSort({ value: values.sortDirection, direction: sort });
         provider.onSearch(values.search);
         provider.update();
       }}

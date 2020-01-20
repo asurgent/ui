@@ -2,8 +2,8 @@ import React from 'react';
 
 
 export const sortDirection = {
-  asc: 1,
-  desc: 0,
+  asc: 'asc',
+  desc: 'desc',
 };
 
 const isObject = (item) => (item && typeof item === 'object' && !Array.isArray(item));
