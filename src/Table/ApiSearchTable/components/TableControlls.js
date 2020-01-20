@@ -54,7 +54,7 @@ const TableControlls = (props) => {
         <>
           <C.StyleForm>
             {search}
-            { sortDirection && (
+            { sortDirection && provider.hasSortyKeys() && (
               <div className="sort">
                 {sortDirection}
                 <Button.Icon

@@ -38,6 +38,7 @@ const buildSearchQuery = ({
   Object.assign(search, {
     [pageKey]: page,
   });
+
   const { currentSort } = sort;
   if (currentSort.value !== undefined) {
     Object.assign(search, {
@@ -65,7 +66,7 @@ const buildSearchQuery = ({
 
 const useTableProvider = (updateAction = (() => {})) => {
   const payloadCache = { ...defaultPayload };
-  const sortCache = { currentSort: {}, sortKeys: {} };
+  const sortCache = { currentSort: {}, sortKeys: [] };
 
   const [router, setRouter] = useState({});
   const [payload, setPayload] = useState({ ...payloadCache });
@@ -80,7 +81,13 @@ const useTableProvider = (updateAction = (() => {})) => {
   useEffect(() => {
     if (isMounted) {
       setIsLoading(true);
-      updateAction({ ...payload, order_by: [`${sort.currentSort.value} ${sort.currentSort.direction}`] });
+      const update = { ...payload };
+      if (sort.currentSort.value && sort.currentSort.direction) {
+        Object.assign(update, {
+          order_by: [`${sort.currentSort.value} ${sort.currentSort.direction}`],
+        });
+      }
+      updateAction(update);
 
       if (Object.keys(router).length) {
         const { page, search_string: query } = payload;
@@ -124,7 +131,6 @@ const useTableProvider = (updateAction = (() => {})) => {
 
       hookInterfaceApi.setSearchQuery(search);
       hookInterfaceApi.setPageNumber(parseInt(page, 10));
-      hookInterfaceApi.setInitailSortOrder({ value: sortKey, direction });
 
       if (sortKey !== undefined && Array.isArray(sortCache.sortKeys)) {
         const newSortKeys = sortCache
@@ -149,6 +155,7 @@ const useTableProvider = (updateAction = (() => {})) => {
     getPageCount: () => tableData.total_pages,
     getRowData: () => tableData.result,
     getQuery: () => payload.search_string,
+    hasSortyKeys: () => sort.sortKeys.length > 0,
     getSortKey: () => sort.currentSort.value,
     getSortDirection: () => sort.currentSort.direction,
     getSortDirectionInt: () => parseSortDirectionToInt(sort.currentSort.direction),
@@ -183,7 +190,6 @@ const useTableProvider = (updateAction = (() => {})) => {
         setPayload(update);
       }
     },
-
     setSearchFields: (searchFields) => {
       if (Array.isArray(searchFields)) {
         const update = Object.assign(payloadCache, { search_fields: searchFields });
@@ -203,8 +209,25 @@ const useTableProvider = (updateAction = (() => {})) => {
       }
     },
     setSortKeys: (sortKeys) => {
-      const update = Object.assign(sortCache, { sortKeys });
-      setSort(update);
+      if (Array.isArray(sortKeys) && sortKeys.length > 0) {
+        const hasDefaultSort = sortKeys.find((item) => item.default);
+        const update = Object.assign(sortCache, { sortKeys });
+        if (hasDefaultSort === undefined) {
+          const { value } = sortKeys[0];
+
+          Object.assign(sortKeys[0], {
+            default: true,
+            direction: sortDirection.desc,
+          });
+          Object.assign(sortCache, { currentSort: { value, direction: sortDirection.desc } });
+        } else {
+          const { value, direction } = hasDefaultSort;
+          const sanitizeDirection = (direction === sortDirection.desc || direction === sortDirection.asc) ? direction : sortDirection.desc;
+          Object.assign(sortCache, { currentSort: { value, direction: sanitizeDirection } });
+        }
+
+        setSort(update);
+      }
     },
     setInitailSortOrder: (orderByObject) => {
       if (typeof orderByObject === 'object') {
