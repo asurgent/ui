@@ -157,9 +157,9 @@ export const apiTable = () => {
     table.setFilter('Tests');
     table.setFacets(['id']);
     // table.setOrderBy(['gurka desc']);
-    table.setSearchFields(['index_column']);
+    // table.setSearchFields(['index_column']);
     // table.setSearchQuery('Default search query');
-    table.setPageNumber(2);
+    // table.setPageNumber(2);
 
     table.parentReady();
   }, []);
