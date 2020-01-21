@@ -27,6 +27,8 @@ const TableControlls = (props) => {
   const { provider, searchLabel } = props;
   const formData = Form.useFormBuilder(searchForm(searchLabel, provider));
   const [sort, setSort] = useState(provider.getSortDirection());
+  const [sortKey, setSortKey] = useState(provider.getSortDirection());
+  const [query, setQuery] = useState(provider.getQuery());
 
   useEffect(() => {
     formData.updateField('search', { props: { disabled: provider.isLoading } });
@@ -34,20 +36,25 @@ const TableControlls = (props) => {
   }, [provider.isLoading]);
 
   useEffect(() => {
-    const { values: { sortDirection } } = formData.getValues();
-    if (sortDirection) {
-      provider.onSort({ value: sortDirection, direction: sort });
-      provider.update();
+    const { dirty } = formData.getValues();
+    if (dirty) {
+      provider.onSort({ value: sortKey, direction: sort });
     }
-  }, [sort]);
+  }, [sort, sortKey]);
+
+  useEffect(() => {
+    const { dirty } = formData.getValues();
+    if (dirty) {
+      provider.onSearch(query);
+    }
+  }, [query]);
 
   return (
     <Form.Primary
       form={formData}
       onNewValue={(values) => {
-        provider.onSort({ value: values.sortDirection, direction: sort });
-        provider.onSearch(values.search);
-        provider.update();
+        setSortKey(values.sortDirection);
+        setQuery(values.search);
       }}
     >
       {({ search, sortDirection }) => (
