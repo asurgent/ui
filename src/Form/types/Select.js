@@ -25,6 +25,19 @@ const defaultProps = {
   props: {},
 };
 
+
+const getDefaultSort = (sortKeys) => {
+  const sort = sortKeys.find(({ default: sortByDefault }) => sortByDefault);
+
+  if (sort) {
+    return sort.value;
+  }
+
+  const first = sortKeys[0];
+  return first.value;
+};
+
+
 const Select = forwardRef((props, ref) => {
   const {
     label,
@@ -38,6 +51,10 @@ const Select = forwardRef((props, ref) => {
   useEffect(() => {
     setValue(props.value);
   }, [props.value]);
+
+  useEffect(() => {
+    setValue(getDefaultSort(options));
+  }, []);
 
   return (
     <Main>
@@ -66,7 +83,7 @@ const Select = forwardRef((props, ref) => {
               disabledPreFix,
               disabledPostFix,
             }) => (
-              <option key={value} value={optionValue} disabled={disabled}>
+              <option key={`${optionLabel}-${value}`} value={optionValue} disabled={disabled}>
                 {disabled && disabledPreFix}
                 {optionLabel}
                 {disabled && disabledPostFix}

@@ -10,6 +10,9 @@ const formObj = {
   search: {
     type: 'text', label: 'Test', value: '123',
   },
+  sortDirection: {
+    type: 'select', label: 'sort', options: [{ value: 1, label: 'one' }, { value: 2, label: 'two' }],
+  },
 };
 
 const specs = [{
