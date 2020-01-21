@@ -1,238 +1,161 @@
 import { useEffect, useState } from 'react';
 import queryString from 'query-string';
-import { sortDirection } from '../helpers';
-
-// make sure our format is passed around in the app
-export const parseSortDirectionToInt = (direction) => {
-  if (direction) {
-    if (direction === 'asc') {
-      return sortDirection.asc;
-    }
-
-    return sortDirection.desc;
-  }
-
-  return sortDirection.desc;
-};
+import sqp from 'search-query-parser';
+import {
+  changeDefaultSort,
+  generatePayload,
+  buildSearchQuery,
+  getDefaultSortItem,
+} from './helpers';
 
 const tableDefaults = { result: [], page: 1, total_pages: 0 };
-const defaultPayload = {
-  search_string: '',
+const cacheDefaults = {
+  page: 1,
+  searchQuery: '',
+  sortKeys: [],
+  filters: [],
   filter: '',
   facets: [],
-  order_by: [],
-  search_fields: [],
-  page_size: 10,
-  page: 1,
-};
-
-const buildSearchQuery = ({
-  prefix, location, page, query, sort,
-}) => {
-  const search = queryString.parse(location.search);
-  const queryKey = `${prefix && `${prefix}_`}search`;
-  const pageKey = `${prefix && `${prefix}_`}page`;
-  const sortKey = `${prefix && `${prefix}_`}sort`;
-  const directionKey = `${prefix && `${prefix}_`}sort_dir`;
-
-  Object.assign(search, {
-    [pageKey]: page,
-  });
-
-  const { currentSort } = sort;
-  if (currentSort.value !== undefined) {
-    Object.assign(search, {
-      [sortKey]: currentSort.value,
-    });
-
-    if (currentSort.direction !== undefined) {
-      Object.assign(search, {
-        [directionKey]: currentSort.direction,
-      });
-    }
-  }
-
-  if (query) {
-    Object.assign(search, {
-      [queryKey]: query,
-    });
-
-    return `?${queryString.stringify(search)}`;
-  }
-
-  const { [queryKey]: _, ...rest } = search;
-  return `?${queryString.stringify(rest)}`;
+  currentSort: { value: null, direction: null },
 };
 
 const useTableProvider = (updateAction = (() => {})) => {
-  const payloadCache = { ...defaultPayload };
-  const sortCache = { currentSort: {}, sortKeys: [] };
+  const preRenderState = { ...cacheDefaults };
+  const [currentState, setCurrentState] = useState({ ...preRenderState });
 
   const [router, setRouter] = useState({});
-  const [payload, setPayload] = useState({ ...payloadCache });
-  const [sort, setSort] = useState({ ...sortCache });
   const [tableData, setTableData] = useState(tableDefaults);
   const [isLoading, setIsLoading] = useState(true);
   const [requestFailed, setRequestFailed] = useState('');
   const [isMounted, setIsMounted] = useState(false);
-  const [triggerUpdate, setTriggerUpdate] = useState(0);
-
 
   useEffect(() => {
     if (isMounted) {
       setIsLoading(true);
-      const update = { ...payload };
-      if (sort.currentSort.value && sort.currentSort.direction) {
-        Object.assign(update, {
-          order_by: [`${sort.currentSort.value} ${sort.currentSort.direction}`],
-        });
-      }
-      updateAction(update);
+      updateAction(generatePayload(currentState));
 
       if (Object.keys(router).length) {
-        const { page, search_string: query } = payload;
         const { location, history, prefix } = router;
-
         const newLocation = {
           ...location,
-          search: buildSearchQuery({
-            prefix, location, page, query, sort,
-          }),
+          search: buildSearchQuery(prefix, location, currentState),
         };
         history.replace(newLocation);
       }
     }
-  }, [isMounted, triggerUpdate]);
+  }, [isMounted, currentState]);
 
-  const trigger = () => { setTriggerUpdate(triggerUpdate + 1); };
 
   const hookInterfaceApi = {
     /* Table-component interface */
     onPaginate: (pageNumber) => {
-      setPayload({ ...payload, page: pageNumber });
-      trigger();
+      setCurrentState({ ...currentState, page: pageNumber });
     },
-    onSearch: (query) => {
-      setPayload({ ...payload, search_string: query, page: 1 });
-      trigger();
+    // ToTo @ Mike. Fix!
+    // Both search an sort are triggered by table-controller
+    // cause they share the same form and will trigger two set actions
+    onSearch: (searchQuery) => {
+      setCurrentState({ ...currentState, searchQuery, page: 1 });
     },
-    onSort: (orderBy) => {
-      setSort({ ...sort, currentSort: orderBy });
-      trigger();
+    onSort: (currentSort) => {
+      setCurrentState({ ...currentState, currentSort });
     },
     enableHistoryState: ({ history, location, prefix }) => {
       setRouter({ history, location, prefix });
       const {
-        [`${prefix && `${prefix}_`}search`]: search,
-        [`${prefix && `${prefix}_`}page`]: page,
-        [`${prefix && `${prefix}_`}sort`]: sortKey,
-        [`${prefix && `${prefix}_`}sort_dir`]: direction,
+        [`${prefix && `${prefix}_`}q`]: tableState,
       } = queryString.parse(location.search);
 
-      hookInterfaceApi.setSearchQuery(search);
-      hookInterfaceApi.setPageNumber(parseInt(page, 10));
+      const options = { keywords: ['page', 'sort', 'filter'] };
+      const searchQueryObj = sqp.parse(tableState, options);
 
-      if (sortKey !== undefined && Array.isArray(sortCache.sortKeys)) {
-        const newSortKeys = sortCache
-          .sortKeys
-          .reduce((acc, { direction: removeA, default: removeB, ...rest }) => {
-            if (sortKey === rest.value) {
-              const newSort = { ...rest, default: true, direction: direction || 'desc' };
-              Object.assign(payloadCache, {
-                order_by: [`${newSort.value} ${newSort.direction}`],
-              });
+      const { text: query, page, sort } = searchQueryObj;
 
-              return [newSort, ...acc];
-            }
-
-            return [{ ...rest }, ...acc];
-          }, []);
-
-        hookInterfaceApi.setSortKeys(newSortKeys);
+      if (query !== undefined && query) {
+        hookInterfaceApi.setSearchQuery(query);
+      }
+      if (page !== undefined) {
+        hookInterfaceApi.setPageNumber(parseInt(page, 10));
+      }
+      if (sort !== undefined && sort) {
+        const [key, direction] = sort.split('-');
+        hookInterfaceApi.setInitailSortOrder(key, direction);
       }
     },
-    getActivePage: () => payload.page,
     getPageCount: () => tableData.total_pages,
     getRowData: () => tableData.result,
-    getQuery: () => payload.search_string,
-    hasSortyKeys: () => sort.sortKeys.length > 0,
-    getSortKey: () => sort.currentSort.value,
-    getSortDirection: () => sort.currentSort.direction,
-    getSortDirectionInt: () => parseSortDirectionToInt(sort.currentSort.direction),
-    getSortKeys: () => sort.sortKeys,
+    getActivePage: () => currentState.page,
+    getQuery: () => currentState.searchQuery,
+    hasSortyKeys: () => currentState.sortKeys.length > 0,
+    getSortKey: () => currentState.currentSort.value,
+    getSortDirection: () => currentState.currentSort.direction,
+    getSortKeys: () => currentState.sortKeys,
     requestFailedMessage: () => requestFailed,
     parentReady: () => { setIsMounted(true); },
     isLoading,
     tableData,
     isMounted,
-    payload,
+    currentState,
     /*
       User interface.
-      Calld upon pre render, that why we use payloadCahce.
-      Because the payload-state wont be update until a re-render
-      and after render payload cache will be reset to default
+      Calld upon pre render, that why we use currentStateCahce.
+      Because the currentState-state wont be update until a re-render
+      and after render currentState cache will be reset to default
     */
     setFilter: (filter) => {
       if (typeof filter === 'string') {
-        const update = Object.assign(payloadCache, { filter });
-        setPayload(update);
+        const update = Object.assign(preRenderState, { filter });
+        setCurrentState(update);
       }
     },
     setFacets: (facets) => {
       if (Array.isArray(facets)) {
-        const update = Object.assign(payloadCache, { facets });
-        setPayload(update);
+        const update = Object.assign(preRenderState, { facets });
+        setCurrentState(update);
       }
     },
     setOrderBy: (orderBy) => {
       if (Array.isArray(orderBy)) {
-        const update = Object.assign(payloadCache, { order_by: orderBy });
-        setPayload(update);
+        const update = Object.assign(preRenderState, { orderBy });
+        setCurrentState(update);
       }
     },
     setSearchFields: (searchFields) => {
       if (Array.isArray(searchFields)) {
-        const update = Object.assign(payloadCache, { search_fields: searchFields });
-        setPayload(update);
+        const update = Object.assign(preRenderState, { searchFields });
+        setCurrentState(update);
       }
     },
     setPageNumber: (pageNumber) => {
       if (typeof pageNumber === 'number' && pageNumber > 0) {
-        const update = Object.assign(payloadCache, { page: pageNumber });
-        setPayload(update);
+        const update = Object.assign(preRenderState, { page: pageNumber });
+        setCurrentState(update);
       }
     },
-    setSearchQuery: (query) => {
-      if (typeof query === 'string') {
-        const update = Object.assign(payloadCache, { search_string: query });
-        setPayload(update);
+    setSearchQuery: (searchQuery) => {
+      if (typeof searchQuery === 'string') {
+        const update = Object.assign(preRenderState, { searchQuery });
+        setCurrentState(update);
       }
     },
     setSortKeys: (sortKeys) => {
       if (Array.isArray(sortKeys) && sortKeys.length > 0) {
-        const hasDefaultSort = sortKeys.find((item) => item.default);
-        const update = Object.assign(sortCache, { sortKeys });
-        if (hasDefaultSort === undefined) {
-          const { value } = sortKeys[0];
-
-          Object.assign(sortKeys[0], {
-            default: true,
-            direction: sortDirection.desc,
-          });
-          Object.assign(sortCache, { currentSort: { value, direction: sortDirection.desc } });
-        } else {
-          const { value, direction } = hasDefaultSort;
-          const sanitizeDirection = (direction === sortDirection.desc || direction === sortDirection.asc) ? direction : sortDirection.desc;
-          Object.assign(sortCache, { currentSort: { value, direction: sanitizeDirection } });
-        }
-
-        setSort(update);
+        const { value, direction } = getDefaultSortItem(sortKeys);
+        const update = Object.assign(preRenderState, {
+          sortKeys,
+          currentSort: { value, direction },
+        });
+        setCurrentState(update);
       }
     },
-    setInitailSortOrder: (orderByObject) => {
-      if (typeof orderByObject === 'object') {
-        const update = Object.assign(sortCache, { currentSort: orderByObject });
-        setSort(update);
+    setInitailSortOrder: (key, direction) => {
+      if (key && direction) {
+        const newSortKeys = changeDefaultSort(key, direction, preRenderState.sortKeys);
+        const update = Object.assign(preRenderState, {
+          currentSort: { value: key, direction },
+          sortKeys: newSortKeys,
+        });
+        setCurrentState(update);
       }
     },
     /*
@@ -248,7 +171,7 @@ const useTableProvider = (updateAction = (() => {})) => {
       setTableData(tableDefaults);
       setRequestFailed(error);
     },
-    update: () => { trigger(); },
+    update: () => {},
   };
 
   return hookInterfaceApi;
