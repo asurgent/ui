@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { FormStyle, FormRow } from './Form.styled';
 import { withDelayTimer } from './helpers';
 
-const triggerTimer = withDelayTimer((values, name, onNewValue) => {
-  onNewValue(values, name);
+const triggerTimer = withDelayTimer((values, dirty, dirtyItems, onNewValue) => {
+  onNewValue(values, dirty, dirtyItems);
 }, 950);
 
 const propTyps = {
@@ -46,29 +46,29 @@ const Form = (props) => {
 
   const handleOnChange = (event) => {
     const { name } = event.target;
-    const { values, dirty } = form.getValues();
+    const { values, dirty, dirtyItems } = form.getValues();
 
-    triggerTimer(values, dirty, onNewValue);
-    onChange(values, dirty, name);
+    triggerTimer(values, dirty, dirtyItems, onNewValue);
+    onChange(values, dirty, dirtyItems, name);
   };
 
   const handleBlur = (event) => {
     const { name } = event.target;
-    const { values, dirty } = form.getValues();
+    const { values, dirty, dirtyItems } = form.getValues();
 
-    onFocusChange(values, dirty, name);
+    onFocusChange(values, dirty, dirtyItems, name);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { values, dirty } = form.getValues();
-    onSubmit(values, dirty);
+    const { values, dirty, dirtyItems } = form.getValues();
+    onSubmit(values, dirty, dirtyItems);
   };
 
   const onSubmitAction = () => {
     form.getValues();
-    const { values, dirty } = form.getValues();
-    onSubmit(values, dirty);
+    const { values, dirty, dirtyItems } = form.getValues();
+    onSubmit(values, dirty, dirtyItems);
   };
 
   const renderForms = Object

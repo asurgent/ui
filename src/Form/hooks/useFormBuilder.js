@@ -76,6 +76,7 @@ const updateFields = (form, list) => {
 
 const getValues = (references, originalValues) => {
   let dirty = false;
+  const dirtyItems = {};
   const keys = (Object.keys(references) || []);
   const values = keys.reduce((acc, key) => {
     if (references[key] && references[key].current) {
@@ -83,6 +84,9 @@ const getValues = (references, originalValues) => {
 
       if (value !== originalValues[key]) {
         dirty = true;
+        Object.assign(dirtyItems, { [key]: true });
+      } else {
+        Object.assign(dirtyItems, { [key]: false });
       }
 
       return {
@@ -95,7 +99,7 @@ const getValues = (references, originalValues) => {
   }, {});
 
 
-  return { values, dirty };
+  return { values, dirty, dirtyItems };
 };
 
 const useFormBuilder = (formSpecification, parameters = null) => {
