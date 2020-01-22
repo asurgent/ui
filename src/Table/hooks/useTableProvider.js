@@ -19,6 +19,7 @@ const cacheDefaults = {
   currentSort: { value: null, direction: null },
 };
 
+
 const useTableProvider = (updateAction = (() => {})) => {
   const preRenderState = { ...cacheDefaults };
   const [currentState, setCurrentState] = useState({ ...preRenderState });
@@ -44,7 +45,6 @@ const useTableProvider = (updateAction = (() => {})) => {
       }
     }
   }, [isMounted, currentState]);
-
 
   const hookInterfaceApi = {
     /* Table-component interface */
@@ -77,7 +77,7 @@ const useTableProvider = (updateAction = (() => {})) => {
       if (page !== undefined) {
         hookInterfaceApi.setPageNumber(parseInt(page, 10));
       }
-      if (sort !== undefined && sort) {
+      if (hookInterfaceApi.hasSortyKeys() && sort !== undefined && sort) {
         const [key, direction] = sort.split('-');
         hookInterfaceApi.setInitailSortOrder(key, direction);
       }
@@ -173,6 +173,7 @@ const useTableProvider = (updateAction = (() => {})) => {
     },
     update: () => {},
   };
+
 
   return hookInterfaceApi;
 };
