@@ -1,6 +1,6 @@
 # Asurgent UI components
 
-This library contains the basic set of asurgent's components. It exposes React API compatible components.
+This library contains the basic set of asurgent's components. It exposes React API compatible components. Latest is deployed to [github pages](https://asurgent.github.io/ui)
 
 ## Install
 
