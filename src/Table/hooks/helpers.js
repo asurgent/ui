@@ -30,16 +30,23 @@ export const changeDefaultSort = (key, direction, sortKeys) => sortKeys
 
 export const generatePayload = (state) => {
   const sort = state.currentSort;
-  return {
+  const payload = {
     ...payloadDefaults,
     page: state.page,
     search_string: state.searchQuery,
     filter: state.filter,
     facets: state.facets,
-    order_by: [`${sort.value} ${sort.direction}`],
+    order_by: [],
     search_fields: [],
     page_size: 10,
   };
+  if (sort.value && sort.direction) {
+    Object.assign(payload, {
+      order_by: [`${sort.value} ${sort.direction}`],
+    });
+  }
+
+  return payload;
 };
 
 const parseQueryArrayToString = (queryList) => queryList
@@ -65,7 +72,7 @@ export const buildSearchQuery = (
     { value: `${searchQuery}`, valid: !!searchQuery },
     {
       value: `sort:${currentSort.value}-${currentSort.direction}`,
-      valid: currentSort.value !== undefined && currentSort.direction !== undefined,
+      valid: currentSort.value && currentSort.direction,
     },
   ];
 
