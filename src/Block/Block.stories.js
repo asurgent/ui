@@ -45,6 +45,12 @@ export const wrapBlock = () => (
   </Block.Wrap>
 );
 
+export const errorBlock = () => (
+  <Block.Error title="Error ocurred">
+    <p>Somethigns broken</p>
+  </Block.Error>
+);
+
 
 centerBlock.story = {
   name: 'Center Block',

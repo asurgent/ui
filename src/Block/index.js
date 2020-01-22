@@ -19,3 +19,4 @@ export {
 };
 
 export { default as Emptystate } from './BlockEmptyState';
+export { default as Error } from './BlockErrorMessage';
