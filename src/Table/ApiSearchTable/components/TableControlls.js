@@ -27,7 +27,7 @@ const TableControlls = (props) => {
   const { provider, searchLabel } = props;
   const formData = Form.useFormBuilder(searchForm(searchLabel, provider));
   const [sort, setSort] = useState(provider.getSortDirection());
-  const [sortKey, setSortKey] = useState(provider.getSortDirection());
+  const [sortKey, setSortKey] = useState(provider.getSortKey());
   const [query, setQuery] = useState(provider.getQuery());
 
   useEffect(() => {
