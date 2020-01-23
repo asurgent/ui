@@ -22,7 +22,7 @@ const cacheDefaults = {
 
 const useTableProvider = (updateAction = (() => {})) => {
   const preRenderState = { ...cacheDefaults };
-  const [currentState, setCurrentState] = useState({ ...preRenderState });
+  const [currentState, setCurrentState] = useState({ ...preRenderState, initated: false });
 
   const [router, setRouter] = useState({});
   const [tableData, setTableData] = useState(tableDefaults);
@@ -46,19 +46,27 @@ const useTableProvider = (updateAction = (() => {})) => {
     }
   }, [isMounted, currentState]);
 
+  const updateState = (update) => {
+    setCurrentState({ ...currentState, ...update, initated: true });
+  };
+
+  const updateInitalState = (update) => {
+    setCurrentState(Object.assign(preRenderState, update));
+  };
+
   const hookInterfaceApi = {
     /* Table-component interface */
     onPaginate: (pageNumber) => {
-      setCurrentState({ ...currentState, page: pageNumber });
+      updateState({ page: pageNumber });
     },
     // ToTo @ Mike. Fix!
     // Both search an sort are triggered by table-controller
     // cause they share the same form and will trigger two set actions
     onSearch: (searchQuery) => {
-      setCurrentState({ ...currentState, searchQuery, page: 1 });
+      updateState({ searchQuery, page: 1 });
     },
     onSort: (currentSort) => {
-      setCurrentState({ ...currentState, currentSort });
+      updateState({ currentSort });
     },
     enableHistoryState: ({ history, location, prefix }) => {
       setRouter({ history, location, prefix });
@@ -77,7 +85,7 @@ const useTableProvider = (updateAction = (() => {})) => {
       if (page !== undefined) {
         hookInterfaceApi.setPageNumber(parseInt(page, 10));
       }
-      if (hookInterfaceApi.hasSortyKeys() && sort !== undefined && sort) {
+      if (hookInterfaceApi.hasPreRenderSortyKeys() && sort !== undefined && sort) {
         const [key, direction] = sort.split('-');
         hookInterfaceApi.setInitailSortOrder(key, direction);
       }
@@ -87,6 +95,7 @@ const useTableProvider = (updateAction = (() => {})) => {
     getActivePage: () => currentState.page,
     getQuery: () => currentState.searchQuery,
     hasSortyKeys: () => currentState.sortKeys.length > 0,
+    hasPreRenderSortyKeys: () => preRenderState.sortKeys.length > 0,
     getSortKey: () => currentState.currentSort.value,
     getSortDirection: () => currentState.currentSort.direction,
     getSortKeys: () => currentState.sortKeys,
@@ -104,58 +113,50 @@ const useTableProvider = (updateAction = (() => {})) => {
     */
     setFilter: (filter) => {
       if (typeof filter === 'string') {
-        const update = Object.assign(preRenderState, { filter });
-        setCurrentState(update);
+        updateInitalState({ filter });
       }
     },
     setFacets: (facets) => {
       if (Array.isArray(facets)) {
-        const update = Object.assign(preRenderState, { facets });
-        setCurrentState(update);
+        updateInitalState({ facets });
       }
     },
     setOrderBy: (orderBy) => {
       if (Array.isArray(orderBy)) {
-        const update = Object.assign(preRenderState, { orderBy });
-        setCurrentState(update);
+        updateInitalState({ orderBy });
       }
     },
     setSearchFields: (searchFields) => {
       if (Array.isArray(searchFields)) {
-        const update = Object.assign(preRenderState, { searchFields });
-        setCurrentState(update);
+        updateInitalState({ searchFields });
       }
     },
     setPageNumber: (pageNumber) => {
       if (typeof pageNumber === 'number' && pageNumber > 0) {
-        const update = Object.assign(preRenderState, { page: pageNumber });
-        setCurrentState(update);
+        updateInitalState({ page: pageNumber });
       }
     },
     setSearchQuery: (searchQuery) => {
       if (typeof searchQuery === 'string') {
-        const update = Object.assign(preRenderState, { searchQuery });
-        setCurrentState(update);
+        updateInitalState({ searchQuery });
       }
     },
     setSortKeys: (sortKeys) => {
       if (Array.isArray(sortKeys) && sortKeys.length > 0) {
         const { value, direction } = getDefaultSortItem(sortKeys);
-        const update = Object.assign(preRenderState, {
+        updateInitalState({
           sortKeys,
           currentSort: { value, direction },
         });
-        setCurrentState(update);
       }
     },
     setInitailSortOrder: (key, direction) => {
       if (key && direction) {
         const newSortKeys = changeDefaultSort(key, direction, preRenderState.sortKeys);
-        const update = Object.assign(preRenderState, {
+        updateInitalState({
           currentSort: { value: key, direction },
           sortKeys: newSortKeys,
         });
-        setCurrentState(update);
       }
     },
     /*
