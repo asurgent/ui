@@ -4,7 +4,7 @@ import { withTheme } from 'styled-components';
 import { withRouter, useLocation } from 'react-router-dom';
 import { RingSpinner } from 'react-spinners-kit';
 import Tooltip from '../Tooltip/index';
-import { LoaderSpacer } from './Button.styled';
+import { Spacer } from './Button.styled';
 import { isExternalLink, isInteralLink, isValidMail } from './helper';
 
 const propTyps = {
@@ -88,16 +88,16 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
 
     const content = (
       <>
-        {iconLeft}
+        {iconLeft && <Spacer right>{iconLeft}</Spacer>}
         {children}
-        {iconRight}
+        {iconRight && <Spacer left>{iconRight}</Spacer>}
         { loading && (
-          <LoaderSpacer>
+          <Spacer left>
             <RingSpinner
               color={isHollow ? theme.brandPrimaryColor : theme.white}
               size={15}
             />
-          </LoaderSpacer>
+          </Spacer>
         )}
       </>
     );

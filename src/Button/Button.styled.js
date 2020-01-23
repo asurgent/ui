@@ -47,8 +47,9 @@ const defaultStyle = () => `
     }
 `;
 
-export const LoaderSpacer = styled.span`
-    margin-left: .4rem;
+export const Spacer = styled.span`
+    margin-left: ${({ left }) => (left ? '.4rem' : 0)};
+    margin-right: ${({ right }) => (right ? '.4rem' : 0)};
 `;
 
 export const Plain = styled.div`
