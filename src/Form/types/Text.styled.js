@@ -18,7 +18,8 @@ export const Wrapper = styled.div`
   position: relative;
   box-sizing: border-box;
   min-height: 4.7rem;
-
+  background: ${({ theme }) => theme.white};
+  
   input,textarea, select {
     width: 100%;
     max-width: 100%; 
