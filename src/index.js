@@ -1,5 +1,6 @@
-import Tooltip from './Tooltip';
 import ErrorBoundary from './ErrorBoundary';
+import * as Tooltip from './Tooltip';
+import * as Shield from './Shield';
 import * as Form from './Form';
 import * as Table from './Table';
 import * as Tag from './Tag';
@@ -23,4 +24,5 @@ export {
   ErrorBoundary,
   UserImage,
   Moment,
+  Shield,
 };
