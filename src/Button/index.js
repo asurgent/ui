@@ -13,7 +13,7 @@ const Icon = ({ icon, ...props }) => {
   const Button = withButtonStyle({ style: Styles.Icon });
 
   return (
-    <Button iconRight={icon} {...props} />
+    <Button mainIcon={icon} {...props} />
   );
 };
 
