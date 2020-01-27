@@ -1,6 +1,6 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Tooltip from '../../Tooltip';
+import * as Tooltip from '../../Tooltip';
 
 import {
   Main, Wrapper, Label, Header, Icon,
@@ -38,9 +38,9 @@ const TextArea = forwardRef((props, ref) => {
       <Header>
         <Label>{label || name}</Label>
         { tooltip && (
-          <Tooltip tip={tooltip}>
+          <Tooltip.Middle tip={tooltip}>
             <Icon className="far fa-question-circle" />
-          </Tooltip>
+          </Tooltip.Middle>
         )}
       </Header>
       <Wrapper>

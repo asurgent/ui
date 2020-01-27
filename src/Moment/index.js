@@ -1,15 +1,15 @@
 import React from 'react';
-import Tooltip from '../Tooltip';
+import * as Tooltip from '../Tooltip';
 import * as m from './momentParsers';
 
 const Component = (timeFormat) => ({ timestamp, format = '' }) => {
   if (m.isValid(timestamp)) {
     return (
-      <Tooltip tip={m.full(timestamp)}>
+      <Tooltip.Middle tip={m.full(timestamp)}>
         <span className="timestamp">
           {timeFormat(timestamp, format)}
         </span>
-      </Tooltip>
+      </Tooltip.Middle>
     );
   }
 

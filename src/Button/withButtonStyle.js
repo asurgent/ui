@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import { withRouter, useLocation } from 'react-router-dom';
 import { RingSpinner } from 'react-spinners-kit';
-import Tooltip from '../Tooltip/index';
+import * as Tooltip from '../Tooltip/index';
 import { Spacer } from './Button.styled';
 import { isExternalLink, isInteralLink, isValidMail } from './helper';
 
 const propTyps = {
   iconLeft: PropTypes.element,
   iconRight: PropTypes.element,
+  mainIcon: PropTypes.element,
   link: PropTypes.string,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
@@ -29,6 +30,7 @@ const propTyps = {
 const defaultProps = {
   iconLeft: null,
   iconRight: null,
+  mainIcon: null,
   link: '',
   onClick: () => {},
   disabled: false,
@@ -44,6 +46,7 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
     const {
       iconRight,
       iconLeft,
+      mainIcon,
       link,
       onClick,
       disabled,
@@ -88,6 +91,7 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
 
     const content = (
       <>
+        {mainIcon && mainIcon }
         {iconLeft && <Spacer right>{iconLeft}</Spacer>}
         {children}
         {iconRight && <Spacer left>{iconRight}</Spacer>}
@@ -131,16 +135,16 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
       }
 
       return (
-        <Tooltip tip={tooltip}>
+        <Tooltip.Middle tip={tooltip}>
           <Link {...upddatedAttrs}>
             {content}
           </Link>
-        </Tooltip>
+        </Tooltip.Middle>
       );
     }
 
     return (
-      <Tooltip tip={tooltip}><Component {...attrs}>{content}</Component></Tooltip>
+      <Tooltip.Middle tip={tooltip}><Component {...attrs}>{content}</Component></Tooltip.Middle>
     );
   };
 

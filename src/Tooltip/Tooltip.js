@@ -4,11 +4,16 @@ import ReactDOM from 'react-dom';
 import * as C from './Tooltip.styled';
 
 const modalRoot = document.getElementById('tooltip-root');
-
+const positions = {
+  middle: 'middle',
+  right: 'right',
+};
 
 class Tooltip extends Component {
     state = {
-      show: false, top: 0, left: 0, ref: createRef(),
+      show: false,
+      position: { left: 0, top: 0 },
+      ref: createRef(),
     }
 
     showTooltip = ({ currentTarget }) => {
@@ -16,14 +21,22 @@ class Tooltip extends Component {
         const {
           x, top, height, width,
         } = currentTarget.getBoundingClientRect();
-        const left = x + (width / 2);
+        const position = {};
+        const spacing = 5;
 
-        this.setState({ show: true, left, top: top + height + 5 });
+        if (this.props.position === positions.middle) {
+          Object.assign(position, { left: x + (width / 2), top: top + height + spacing });
+        } else if (this.props.position === positions.right) {
+          Object.assign(position, { left: x + width + spacing, top: top + (height / 2) });
+        }
+
+
+        this.setState({ show: true, position });
       }
     }
 
     hideTooltip = () => {
-      this.setState({ show: false, left: 0, top: 0 });
+      this.setState({ show: false, position: { left: 0, top: 0 } });
     }
 
     renderChildren = (children) => {
@@ -44,14 +57,17 @@ class Tooltip extends Component {
 
     render() {
       const { tip: tooltipMessage, children } = this.props;
-      const { top, left, show } = this.state;
+      const { position, show } = this.state;
+
+      const isMiddle = this.props.position === positions.middle;
+      const isRight = this.props.position === positions.right;
 
       return (
         <>
           {tooltipMessage ? this.renderChildren(children) : children}
           { show === true && tooltipMessage
             && ReactDOM.createPortal(
-              <C.TooltipWrapper style={{ top, left }}>{tooltipMessage}</C.TooltipWrapper>,
+              <C.TooltipWrapper middle={isMiddle} right={isRight} style={position}>{tooltipMessage}</C.TooltipWrapper>,
               modalRoot,
             )}
         </>
@@ -64,12 +80,14 @@ class Tooltip extends Component {
 Tooltip.propTypes = {
   children: PropTypes.element,
   tip: PropTypes.string,
+  position: PropTypes.string,
 };
 
 // Proptypes
 Tooltip.defaultProps = {
   children: null,
   tip: '',
+  position: positions.middle,
 };
 
 export default Tooltip;
