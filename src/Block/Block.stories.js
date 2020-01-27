@@ -51,6 +51,12 @@ export const errorBlock = () => (
   </Block.Error>
 );
 
+export const emptyState = () => (
+  <Block.Emptystate title="Error ocurred">
+    <p>Somethigns broken</p>
+  </Block.Emptystate>
+);
+
 
 centerBlock.story = {
   name: 'Center Block',

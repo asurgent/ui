@@ -4,16 +4,16 @@ import { Errorstate as Wrapper } from './Block.styled';
 
 const propTyps = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  children: PropTypes.any.isRequired,
 };
 
-const Emptystate = ({ title, children, ...props }) => (
+const ErrorMessage = ({ title, children, ...props }) => (
   <Wrapper {...props}>
     {title && <b className="title">{title}</b>}
-    <p>{children}</p>
+    {children}
   </Wrapper>
 );
 
-Emptystate.propTypes = propTyps;
+ErrorMessage.propTypes = propTyps;
 
-export default Emptystate;
+export default ErrorMessage;

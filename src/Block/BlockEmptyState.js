@@ -5,14 +5,14 @@ import { Emptystate as Wrapper } from './Block.styled';
 
 const propTyps = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  children: PropTypes.any.isRequired,
 };
 
-const Emptystate = ({ title, description }) => (
+const Emptystate = ({ title, children }) => (
   <Wrapper>
     <IconNoTickets width="21.2rem" height="21.2rem" />
     <h4>{title}</h4>
-    <p>{description}</p>
+    {children}
   </Wrapper>
 );
 
