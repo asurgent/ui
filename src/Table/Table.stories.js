@@ -127,7 +127,7 @@ export const defaultTable = () => (
         { value: valueB },
         valueA,
         () => valueC,
-        () => ({ value: valueD, props: { style: { background: 'transaprent' } } }),
+        () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
         () => ({ value: 'IM AM HIDDEN' }),
       ];
     }}
@@ -202,7 +202,7 @@ export const apiTable = () => {
           { value: valueB },
           valueA,
           () => valueC,
-          () => ({ value: valueD, props: { style: { background: 'transaprent' } } }),
+          () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
         ];
       }}
     />
