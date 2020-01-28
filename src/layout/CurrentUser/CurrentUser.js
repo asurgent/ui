@@ -5,13 +5,24 @@ import * as U from './CurrentUser.styled';
 import * as UserImage from '../../UserImage';
 import * as Button from '../../Button';
 
+const propTypes = {
+  children: PropTypes.func,
+  imageLink: PropTypes.string,
+  name: PropTypes.string,
+  email: PropTypes.string,
+};
+
 const defaultProps = {
   children: (() => {}),
+  imageLink: '',
+  name: '',
+  email: '',
 };
 
 const UserDropdown = ({
   name,
   email,
+  imageLink,
   children,
 }) => {
   const [open, setOpen] = useState(false);
@@ -24,6 +35,7 @@ const UserDropdown = ({
           size="3.2rem"
           name={name}
           email={email}
+          href={imageLink}
         />
         <U.Name>
           {name}
@@ -43,6 +55,7 @@ const UserDropdown = ({
   );
 };
 
+UserDropdown.propTypes = propTypes;
 UserDropdown.defaultProps = defaultProps;
 
 export default UserDropdown;

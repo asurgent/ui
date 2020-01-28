@@ -21,7 +21,7 @@ const Layout = ({ provider, children }) => {
   const navigation = provider.getNavigationItems();
   const languages = provider.getAvaliableLanguages();
   const selectedLanguage = provider.getCurrentLanguage();
-  const { name, email } = provider.getUser();
+  const { name, email, imageLink } = provider.getUser();
 
 
   return (
@@ -31,7 +31,7 @@ const Layout = ({ provider, children }) => {
       </C.Logo>
 
       <C.Top>
-        <CurrentUser name={name} email={email}>
+        <CurrentUser name={name} email={email} imageLink={imageLink}>
           {({ onClose }) => (
             <DropdownMenu
               onChangeLanguage={provider.onChangeLanguage}
@@ -41,6 +41,7 @@ const Layout = ({ provider, children }) => {
               selectedLanguage={selectedLanguage}
               name={name}
               email={email}
+              imageLink={imageLink}
               onClose={onClose}
             />
           )}
@@ -70,4 +71,3 @@ Layout.defaultProps = defaultProps;
 Layout.displayName = '@asurgent.ui.Layout.Main';
 
 export default Layout;
-{ /* */ }

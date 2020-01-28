@@ -23,6 +23,7 @@ const parseLangauges = (langList, selectedLanguage) => langList
 const propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  imageLink: PropTypes.string,
   navigationList: PropTypes.instanceOf(Array).isRequired,
   languages: PropTypes.instanceOf(Array).isRequired,
   selectedLanguage: PropTypes.string.isRequired,
@@ -35,11 +36,13 @@ const propTypes = {
 const defaultProps = {
   translations: {},
   onClose: (() => {}),
+  imageLink: '',
 };
 
 const DropdownMenu = ({
   name,
   email,
+  imageLink,
   languages,
   navigationList,
   selectedLanguage,
@@ -89,6 +92,7 @@ const DropdownMenu = ({
                 size="10rem"
                 name={name}
                 email={email}
+                href={imageLink}
               />
               <b>{name}</b>
               <p>{email}</p>
