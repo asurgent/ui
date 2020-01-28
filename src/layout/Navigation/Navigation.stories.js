@@ -21,11 +21,17 @@ export const navigation = () => (
       withLabel={boolean('With labels', false)}
       navigationList={[
         {
-          label: 'Dashbaord', tooltip: 'Dashboard', active: true, icon: (<Dashboard fontSize="large" />),
+          label: 'Dashbaord', tooltip: 'Dashboard', active: true, icon: (<Dashboard fontSize="large" />), link: '/test',
         },
-        { label: 'Explore', tooltip: 'Explore Environment', icon: (<Explore fontSize="large" />) },
-        { label: 'Tickets', tooltip: 'View tickets', icon: (<Comment fontSize="large" />) },
-        { label: 'Docs', tooltip: 'Documentation', icon: (<LibraryBooks fontSize="large" />) },
+        {
+          label: 'Explore', tooltip: 'Explore Environment', icon: (<Explore fontSize="large" />), link: '/test',
+        },
+        {
+          label: 'Tickets', tooltip: 'View tickets', icon: (<Comment fontSize="large" />), link: '/test',
+        },
+        {
+          label: 'Docs', tooltip: 'Documentation', icon: (<LibraryBooks fontSize="large" />),
+        },
       ]}
     />
 
