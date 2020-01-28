@@ -23,6 +23,7 @@ const UserPhoto = (props) => {
     email,
     square,
     href,
+    className,
   } = props;
   const [url, setUrl] = useState('');
   const [imageExists, setImageExists] = useState(false);
@@ -40,7 +41,7 @@ const UserPhoto = (props) => {
   };
 
   return (
-    <Wrapper size={size} square={square} email={email}>
+    <Wrapper size={size} square={square} email={email} className={className}>
       <Picture
         alt="user-photo"
         imageExists={imageExists}
@@ -57,9 +58,19 @@ const UserPhoto = (props) => {
 
 UserPhoto.propTypes = {
   size: PropTypes.string,
+  name: PropTypes.string,
+  email: PropTypes.string,
+  square: PropTypes.string,
+  href: PropTypes.string,
+  className: PropTypes.string,
 };
 UserPhoto.defaultProps = {
   size: '2.4rem',
+  name: '',
+  email: '',
+  square: '',
+  href: '',
+  className: '',
 };
 
 export default UserPhoto;
