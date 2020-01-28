@@ -4,8 +4,8 @@ export const Logo = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: ${({ theme }) => theme.blue800};
-    border-bottom: 1px solid ${({ theme }) => theme.blue800};
+    background: ${({ theme }) => theme.blue700};
+    border-bottom: 1px solid ${({ theme }) => theme.blue700};
     filter: drop-shadow(0 1px 6px ${({ theme }) => theme.rgba(theme.black, 0.2)});
 
     svg {
@@ -33,13 +33,6 @@ export const Left = styled.div`
     padding-top: 2.4rem;
 `;
 
-export const NavigationItem = styled.div`
-    margin: .8rem 0;
-
-    i {
-        color: #fff;
-    }
-`;
 
 export const Content = styled.div`
     background: ${({ theme }) => theme.gray200};
@@ -52,6 +45,7 @@ export const Content = styled.div`
     width: 100%;
     max-width: 100%;
     min-width: 100%;
+    overflow-x: hidden;
 `;
 
 export const Main = styled.div`
@@ -63,10 +57,15 @@ export const Main = styled.div`
 
     grid-template-columns: 6rem 1fr 1fr;
     grid-template-rows: 6rem 1fr;
-    grid-row-gap: 0;
     grid-template-areas: 
         "logo top top"
-        "left main main";
+        "main main main";
+
+    @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
+        grid-template-areas: 
+            "logo top top"
+            "left main main";
+    }   
 
     ${Logo} {
         grid-area: logo;
@@ -78,6 +77,11 @@ export const Main = styled.div`
 
     ${Left} {
         grid-area: left;
+        display: none;
+
+        @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
+            display: flex;
+        } 
     }
 
     ${Content} {

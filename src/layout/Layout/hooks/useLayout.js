@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
 
-const useLayout = ({ navigationList, user, avaliableLanguages }) => {
+const useLayout = ({
+  navigationList, user, avaliableLanguages, onLogout, onChangeLanguage, currentLanguage,
+}) => {
   const [layoutData, setLayoutData] = useState({
     navigationList,
     avaliableLanguages,
+    currentLanguage,
     user,
   });
+
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -19,7 +23,10 @@ const useLayout = ({ navigationList, user, avaliableLanguages }) => {
     getUser: () => layoutData.user,
     getNavigationItems: () => layoutData.navigationList,
     getAvaliableLanguages: () => layoutData.avaliableLanguages || [],
+    getCurrentLanguage: () => layoutData.currentLanguage || '',
     parentReady: () => { setIsMounted(true); },
+    onLogout: (onLogout || (() => {})),
+    onChangeLanguage: (onChangeLanguage || (() => {})),
   };
 };
 

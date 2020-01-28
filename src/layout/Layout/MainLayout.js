@@ -1,11 +1,10 @@
-
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import * as Button from '../../Button';
-import * as Tooltip from '../../Tooltip';
 import IconAsurget from '../../icons/IconAsurget';
-import UserDropdown from '../UserDropdown';
+import CurrentUser from '../CurrentUser';
+import DropdownMenu from '../DropdownMenu';
 import * as C from './MainLayout.styled';
+import Navigation from '../Navigation';
 
 const propTypes = {
   provider: PropTypes.instanceOf(Object).isRequired,
@@ -21,7 +20,9 @@ const defaultProps = {};
 const Layout = ({ provider, children }) => {
   const navigation = provider.getNavigationItems();
   const languages = provider.getAvaliableLanguages();
+  const selectedLanguage = provider.getCurrentLanguage();
   const { name, email } = provider.getUser();
+
 
   return (
     <C.Main>
@@ -30,25 +31,31 @@ const Layout = ({ provider, children }) => {
       </C.Logo>
 
       <C.Top>
-        <UserDropdown
-          languages={languages}
-          name={name}
-          email={email}
-        />
+        <CurrentUser name={name} email={email}>
+          {({ onClose }) => (
+            <DropdownMenu
+              onChangeLanguage={provider.onChangeLanguage}
+              onLogout={provider.onLogout}
+              languages={languages}
+              navigationList={navigation}
+              selectedLanguage={selectedLanguage}
+              name={name}
+              email={email}
+              onClose={onClose}
+            />
+          )}
+        </CurrentUser>
       </C.Top>
 
       <C.Left>
-        {
-            navigation.map(({ icon, label, link }) => (
-              <Tooltip.Right tip={label} key={label}>
-                <C.NavigationItem>
-                  <Button.Plain link={link}>
-                    {icon}
-                  </Button.Plain>
-                </C.NavigationItem>
-              </Tooltip.Right>
-            ))
-        }
+        <Navigation
+          theme={(theme) => ({
+            activeBackground: theme.blue800,
+            activeLinkColor: theme.white,
+            linkColor: theme.white,
+          })}
+          navigationList={navigation}
+        />
       </C.Left>
 
       <C.Content>
@@ -63,3 +70,4 @@ Layout.defaultProps = defaultProps;
 Layout.displayName = '@asurgent.ui.Layout.Main';
 
 export default Layout;
+{ /* */ }
