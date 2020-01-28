@@ -46,6 +46,14 @@ plainButton.story = {
   name: 'Plain Button',
 };
 
+export const transparentButton = () => (
+  <Button.Transparent>{content}</Button.Transparent>
+);
+
+transparentButton.story = {
+  name: 'Transparent Button',
+};
+
 export const rejectButton = () => (
   <Button.Reject>{content}</Button.Reject>
 );

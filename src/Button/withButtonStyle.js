@@ -16,12 +16,14 @@ const propTyps = {
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
   children: PropTypes.oneOfType([
+    PropTypes.any,
     PropTypes.string,
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element),
   ]),
   mailto: PropTypes.string,
   tooltip: PropTypes.string,
+  className: PropTypes.string,
   passLocationState: PropTypes.bool,
   history: PropTypes.instanceOf(Object).isRequired,
   theme: PropTypes.instanceOf(Object).isRequired,
@@ -38,6 +40,7 @@ const defaultProps = {
   children: null,
   mailto: '',
   tooltip: null,
+  className: '',
   passLocationState: false,
 };
 
@@ -57,6 +60,7 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
       theme,
       tooltip,
       passLocationState,
+      className,
     } = props;
 
     const location = useLocation();
@@ -85,7 +89,7 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
     };
 
     const attrs = {
-      className: disabled ? 'disabled' : null,
+      className: [(disabled ? 'disabled' : null), className].join(' ').trim(),
       onClick: handleClick,
     };
 

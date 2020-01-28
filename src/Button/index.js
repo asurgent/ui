@@ -7,6 +7,7 @@ const Secondary = withButtonStyle({ style: Styles.Secondary });
 const Hollow = withButtonStyle({ style: Styles.Hollow, isHollow: true });
 const Plain = withButtonStyle({ style: Styles.Plain });
 const Reject = withButtonStyle({ style: Styles.Reject });
+const Transparent = withButtonStyle({ style: Styles.Transparent });
 
 
 const Icon = ({ icon, ...props }) => {
@@ -24,4 +25,5 @@ export {
   Plain,
   Reject,
   Icon,
+  Transparent,
 };
