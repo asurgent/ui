@@ -11,7 +11,8 @@ export const MenuWrapper = styled.div`
 
 export const DesktopMenu = styled.div`
     position: absolute;
-    width: 280px;
+    width: auto;
+    min-width: 28rem;
     height: auto;
     padding: 2.4rem;
     border-radius: 5px;
