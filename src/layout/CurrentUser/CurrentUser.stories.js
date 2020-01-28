@@ -8,7 +8,9 @@ import {
 import CurrentUser from './index';
 
 export const currentUser = () => (
-  <div style={{ height: '100vh' }}>
+  <div style={{ height: '100vh', textAlign: 'center' }}>
+    <p>Try in mobile view</p>
+
     <CurrentUser
       selectedLanguage="sv"
       navigationList={[

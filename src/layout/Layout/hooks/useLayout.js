@@ -1,30 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-const useLayout = ({
-  navigationList, user, avaliableLanguages, onLogout, onChangeLanguage, currentLanguage,
-}) => {
-  const [layoutData, setLayoutData] = useState({
+const useLayout = (config) => {
+  const {
+    user,
     navigationList,
     avaliableLanguages,
     currentLanguage,
+    onLogout,
+    onChangeLanguage,
+  } = config;
+
+  const [layoutData] = useState({
     user,
+    navigationList,
+    avaliableLanguages,
+    currentLanguage,
   });
-
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    if (isMounted) {
-      console.log('ready');
-    }
-  }, [isMounted, layoutData]);
-
 
   return {
     getUser: () => layoutData.user,
     getNavigationItems: () => layoutData.navigationList,
     getAvaliableLanguages: () => layoutData.avaliableLanguages || [],
     getCurrentLanguage: () => layoutData.currentLanguage || '',
-    parentReady: () => { setIsMounted(true); },
     onLogout: (onLogout || (() => {})),
     onChangeLanguage: (onChangeLanguage || (() => {})),
   };

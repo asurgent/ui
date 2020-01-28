@@ -9,6 +9,8 @@ import DropdownMenu from './index';
 
 export const dropdownMenu = () => (
   <div style={{ height: '100vh' }}>
+    <p>Try in mobile view</p>
+
     <DropdownMenu
       selectedLanguage="sv"
       navigationList={[
