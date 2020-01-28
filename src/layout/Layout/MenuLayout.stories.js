@@ -5,7 +5,7 @@ import {
 import {
   Dashboard, Explore, Comment, LibraryBooks,
 } from '@material-ui/icons';
-import Layout, { useLayout } from './index';
+import { Main, useLayout } from './index';
 import { Omnibar, LeftActions, RightActions } from '../Omnibar';
 
 export const mainLayout = () => {
@@ -16,11 +16,17 @@ export const mainLayout = () => {
     },
     navigationList: [
       {
-        label: 'Dashbaord', tooltip: 'Dashbaord', active: true, icon: (<Dashboard fontSize="large" />),
+        label: 'Dashbaord', tooltip: 'Dashbaord', active: true, icon: (<Dashboard fontSize="large" />), link: '/test',
       },
-      { label: 'Explore', tooltip: 'Explore', icon: (<Explore fontSize="large" />) },
-      { label: 'Tickets', tooltip: 'Tickets', icon: (<Comment fontSize="large" />) },
-      { label: 'Docs', tooltip: 'Docs', icon: (<LibraryBooks fontSize="large" />) },
+      {
+        label: 'Explore', tooltip: 'Explore', icon: (<Explore fontSize="large" />), link: '/test',
+      },
+      {
+        label: 'Tickets', tooltip: 'Tickets', icon: (<Comment fontSize="large" />), link: '/test',
+      },
+      {
+        label: 'Docs', tooltip: 'Docs', icon: (<LibraryBooks fontSize="large" />), link: '/test',
+      },
     ],
     currentLangauge: 'sv',
     avaliableLanguages: [{ value: 'en', label: 'English' }, { value: 'sv', label: 'Swedish' }],
@@ -29,14 +35,14 @@ export const mainLayout = () => {
   });
 
   return (
-    <Layout provider={provider}>
+    <Main provider={provider}>
       <Omnibar>
         <LeftActions>LEFT</LeftActions>
         <RightActions>RIGHT</RightActions>
       </Omnibar>
       <h1>Random image</h1>
       <img src="https://i.picsum.photos/id/270/1000/1000.jpg" />
-    </Layout>
+    </Main>
   );
 };
 

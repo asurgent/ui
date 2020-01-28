@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const Omnibar = styled.div`
+    z-index: 1;
+    position: relative;
     background: ${({ theme }) => theme.white};
     filter: drop-shadow(0 1px 3px ${({ theme }) => theme.rgba(theme.black, 0.2)});
     height: 6rem;
@@ -8,7 +10,6 @@ export const Omnibar = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    
 `;
 
 export const LeftActions = styled.div`

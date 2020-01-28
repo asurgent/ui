@@ -10,7 +10,7 @@ const useLayout = (config) => {
     onChangeLanguage,
   } = config;
 
-  const [layoutData] = useState({
+  const [layoutData, setLayoutData] = useState({
     user,
     navigationList,
     avaliableLanguages,
@@ -19,8 +19,10 @@ const useLayout = (config) => {
 
   return {
     getUser: () => layoutData.user,
+    setUser: (name, email) => setLayoutData({ ...layoutData, user: { name, email } }),
     getNavigationItems: () => layoutData.navigationList,
     getAvaliableLanguages: () => layoutData.avaliableLanguages || [],
+    setCurrentLanguage: (lang) => setLayoutData({ ...layoutData, currentLanguage: lang }),
     getCurrentLanguage: () => layoutData.currentLanguage || '',
     onLogout: (onLogout || (() => {})),
     onChangeLanguage: (onChangeLanguage || (() => {})),
