@@ -22,7 +22,6 @@ export const Top = styled.div`
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    z-index: 1;
 `;
 
 export const Left = styled.div`
@@ -46,6 +45,8 @@ export const Content = styled.div`
     max-width: 100%;
     min-width: 100%;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
 `;
 
 export const Main = styled.div`

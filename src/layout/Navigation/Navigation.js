@@ -14,20 +14,19 @@ const Navigation = ({
   theme,
   withLabel,
   navigationList,
+  onNavigate,
 }) => (
   <ThemeProvider theme={mergeThemes(theme)}>
     <C.Wrapper>
       {
             navigationList.map(({
-              icon, tooltip, link, active, label,
+              icon, tooltip, link, label,
             }) => (
               <Tooltip.Right tip={tooltip} key={tooltip}>
-                <C.NavigationItem active={active}>
-                  <Button.Plain link={link}>
-                    {icon}
-                    {' '}
-                    {withLabel && (<span>{label}</span>)}
-                  </Button.Plain>
+                <C.NavigationItem to={link} onClick={onNavigate}>
+                  {icon}
+                  {' '}
+                  {withLabel && (<span>{label}</span>)}
                 </C.NavigationItem>
               </Tooltip.Right>
             ))

@@ -2,37 +2,55 @@ import React, { useEffect } from 'react';
 import {
   withKnobs, boolean, text, number,
 } from '@storybook/addon-knobs';
-import {
-  Dashboard, Explore, Comment, LibraryBooks,
-} from '@material-ui/icons';
+import * as Icons from '@material-ui/icons';
 import { Main, useLayout } from './index';
 import { Omnibar, LeftActions, RightActions } from '../Omnibar';
 
+const navigationList = (t, customerId) => [
+  {
+    label: t('linkDashboardLabel'),
+    tooltip: t('linkDashboardTooltip'),
+    active: true,
+    icon: (<Icons.Dashboard fontSize="large" />),
+    link: '/dashboard',
+  },
+  {
+    label: t('linkExploreLabel'),
+    tooltip: t('linkExploreTooltip'),
+    icon: (<Icons.Explore fontSize="large" />),
+    link: `/my-environment/${customerId || ''}`,
+  },
+  {
+    label: t('linkTicketsLabel'),
+    tooltip: t('linkTicketsTooltip'),
+    icon: (<Icons.Comment fontSize="large" />),
+    link: '/tickets',
+  },
+];
+
+const avaliableLanguages = (translator, selected) => [
+  { value: 'en', label: translator('english'), default: selected === 'en' },
+  { value: 'sv', label: translator('swedish'), default: selected === 'sv' },
+];
+
 export const mainLayout = () => {
   const provider = useLayout({
-    user: {
-      name: 'Test User',
-      email: 'test@mail.com',
-    },
-    navigationList: [
-      {
-        label: 'Dashbaord', tooltip: 'Dashbaord', active: true, icon: (<Dashboard fontSize="large" />), link: '/test',
-      },
-      {
-        label: 'Explore', tooltip: 'Explore', icon: (<Explore fontSize="large" />), link: '/test',
-      },
-      {
-        label: 'Tickets', tooltip: 'Tickets', icon: (<Comment fontSize="large" />), link: '/test',
-      },
-      {
-        label: 'Docs', tooltip: 'Docs', icon: (<LibraryBooks fontSize="large" />), link: '/test',
-      },
-    ],
-    currentLangauge: 'sv',
-    avaliableLanguages: [{ value: 'en', label: 'English' }, { value: 'sv', label: 'Swedish' }],
+    translator: (t) => t,
+    navigationListConstructor: navigationList,
+    avaliableLanguagesConstructor: avaliableLanguages,
     onLogout: () => { console.log('Logout action'); },
     onChangeLanguage: (lang) => { console.log(`Selected language: ${lang}`); },
   });
+
+  useEffect(() => {
+    provider.setCurrentLanguage('sv');
+    provider.setCustomerId('123');
+    provider.setUser({
+      name: 'Test',
+      email: 'test@mail.com',
+      imageLink: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
+    });
+  }, []);
 
   return (
     <Main provider={provider}>

@@ -1,29 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const useLayout = (config) => {
   const {
-    user,
-    navigationList,
-    avaliableLanguages,
-    currentLanguage,
+    translator,
+    navigationListConstructor,
+    avaliableLanguagesConstructor,
     onLogout,
     onChangeLanguage,
   } = config;
 
-  const [layoutData, setLayoutData] = useState({
-    user,
-    navigationList,
-    avaliableLanguages,
-    currentLanguage,
-  });
+  const [userState, setUserState] = useState({ name: '', email: '', imageLink: '' });
+  const [customerIdState, setCustomerIdState] = useState('');
+  const [selectedLanguageState, setSelectedLanguageState] = useState(config.currentLanguage || '');
 
   return {
-    getUser: () => layoutData.user,
-    setUser: (name, email) => setLayoutData({ ...layoutData, user: { name, email } }),
-    getNavigationItems: () => layoutData.navigationList,
-    getAvaliableLanguages: () => layoutData.avaliableLanguages || [],
-    setCurrentLanguage: (lang) => setLayoutData({ ...layoutData, currentLanguage: lang }),
-    getCurrentLanguage: () => layoutData.currentLanguage || '',
+    setUser: ({ name, email, imageLink }) => setUserState({ name, email, imageLink }),
+    setCurrentLanguage: (language) => setSelectedLanguageState(language),
+    setCustomerId: (customerId) => setCustomerIdState(customerId),
+    getUser: () => userState,
+    getNavigationItems: () => navigationListConstructor(translator, customerIdState),
+    getAvaliableLanguages: () => avaliableLanguagesConstructor(translator, selectedLanguageState),
+    getMenuTranslations: () => ({
+      languageSelector: translator('menuLanguageSelector'),
+      logout: translator('menuButtonLogout'),
+      menu: translator('menuButtonMenu'),
+      settings: translator('menuButtonSettings'),
+    }),
+    getCurrentLanguage: () => selectedLanguageState,
+    getCustomerId: () => customerIdState,
     onLogout: (onLogout || (() => {})),
     onChangeLanguage: (onChangeLanguage || (() => {})),
   };

@@ -18,6 +18,7 @@ export const navigation = () => (
         menuItemsSpacing: text('theme-override | menuItemsSpacing', '.4rem'),
         menuFontSize: text('theme-override | menuFontSize', '1.6rem'),
       })}
+      onNavigate={() => { console.log('navigate'); }}
       withLabel={boolean('With labels', false)}
       navigationList={[
         {
@@ -30,7 +31,7 @@ export const navigation = () => (
           label: 'Tickets', tooltip: 'View tickets', icon: (<Comment fontSize="large" />), link: '/test',
         },
         {
-          label: 'Docs', tooltip: 'Documentation', icon: (<LibraryBooks fontSize="large" />),
+          label: 'Docs', tooltip: 'Documentation', icon: (<LibraryBooks fontSize="large" />), link: '/',
         },
       ]}
     />

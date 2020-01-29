@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as Icon from '@material-ui/icons';
 import * as U from './DropdownMenu.styled';
@@ -10,15 +10,6 @@ import Navigation from '../Navigation';
 
 const MENU_TAB = 'menu_tab';
 const SETTINGS_TAB = 'settings_tab';
-
-const parseLangauges = (langList, selectedLanguage) => langList
-  .reduce((acc, item) => {
-    if (item.value === selectedLanguage) {
-      Object.assign(item, { default: true });
-    }
-
-    return [...acc, item];
-  }, []);
 
 const propTypes = {
   name: PropTypes.string.isRequired,
@@ -50,16 +41,22 @@ const DropdownMenu = ({
   translations,
   onLogout,
   onClose,
+  onNavigate,
 }) => {
   const [mobileMenuTab, setMobileMenuTab] = useState(MENU_TAB);
+
 
   const langaugeForm = Form.useFormBuilder({
     selectLanguage: {
       type: 'select',
-      label: (translations.languageSelector || 'Language'),
-      options: parseLangauges(languages, selectedLanguage),
+      label: (translations.languageSelector || 'Language'),
+      options: languages,
     },
   });
+
+  useEffect(() => {
+    langaugeForm.updateField('selectLanguage', { options: languages });
+  }, [selectedLanguage]);
 
   return (
     <Shield.Dark onClick={onClose}>
@@ -109,7 +106,7 @@ const DropdownMenu = ({
                   {Array.isArray(navigationList) && (
                     <Navigation
                       withLabel
-                      largeFont
+                      onNavigate={onNavigate}
                       theme={(theme) => ({
                         activeBackground: theme.white,
                         activeLinkColor: theme.blue700,

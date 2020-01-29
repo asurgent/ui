@@ -50,7 +50,6 @@ const UserDropdown = ({
       </U.Mobile>
 
       {open && (children({ onClose: () => { setOpen(false); } }))}
-
     </U.Wrapper>
   );
 };

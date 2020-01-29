@@ -23,7 +23,6 @@ const Layout = ({ provider, children }) => {
   const selectedLanguage = provider.getCurrentLanguage();
   const { name, email, imageLink } = provider.getUser();
 
-
   return (
     <C.Main>
       <C.Logo>
@@ -34,11 +33,13 @@ const Layout = ({ provider, children }) => {
         <CurrentUser name={name} email={email} imageLink={imageLink}>
           {({ onClose }) => (
             <DropdownMenu
+              onNavigate={onClose}
               onChangeLanguage={provider.onChangeLanguage}
               onLogout={provider.onLogout}
               languages={languages}
               navigationList={navigation}
               selectedLanguage={selectedLanguage}
+              translations={provider.getMenuTranslations()}
               name={name}
               email={email}
               imageLink={imageLink}

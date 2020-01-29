@@ -15,11 +15,20 @@ export const dropdownMenu = () => (
       selectedLanguage="sv"
       navigationList={[
         {
-          label: 'Dashbaord', tooltip: 'Dashboard', active: true, icon: (<Dashboard fontSize="large" />),
+          label: 'Dashbaord',
+          tooltip: 'Dashboard',
+          icon: (<Dashboard fontSize="large" />),
+          link: '/',
         },
-        { label: 'Explore', tooltip: 'Explore Environment', icon: (<Explore fontSize="large" />) },
-        { label: 'Tickets', tooltip: 'View tickets', icon: (<Comment fontSize="large" />) },
-        { label: 'Documentation', tooltip: 'Documentation', icon: (<LibraryBooks fontSize="large" />) },
+        {
+          label: 'Explore', tooltip: 'Explore Environment', icon: (<Explore fontSize="large" />), link: '/',
+        },
+        {
+          label: 'Tickets', tooltip: 'View tickets', icon: (<Comment fontSize="large" />), link: '/',
+        },
+        {
+          label: 'Documentation', tooltip: 'Documentation', icon: (<LibraryBooks fontSize="large" />), link: '/',
+        },
       ]}
       translations={{
         languageSelector: 'Språk',
