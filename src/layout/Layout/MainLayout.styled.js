@@ -67,6 +67,7 @@ export const Main = styled.div`
             "logo top top"
             "left main main";
     }   
+    
 
     ${Logo} {
         grid-area: logo;

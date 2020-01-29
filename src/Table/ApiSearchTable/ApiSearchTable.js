@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TableControlls from './components/TableControlls';
+import TableSearchBar from '../TableSearchBar';
 import Table from '../Table';
 
 const getEmptystate = (provider, props) => {
@@ -54,7 +54,7 @@ const ApiSearchTable = (props) => {
   return (
     <>
       { withSearch && (
-        <TableControlls
+        <TableSearchBar
           provider={provider}
           searchLabel={searchLabel}
         />

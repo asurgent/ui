@@ -208,3 +208,37 @@ export const apiTable = () => {
     />
   );
 };
+
+export const pagination = () => (
+  <Table.Pagination
+    isLoading={boolean('isLoading', false)}
+    onPagination={(page) => console.log(`requested page: ${page}`)}
+    activePage={number('active page', 1)}
+    pages={number('total pages', 10)}
+  />
+);
+
+export const searchBar = () => {
+  const table = Table.useTableProvider((payload) => {
+    console.log(payload);
+  });
+
+  useEffect(() => {
+    table.setSortKeys([
+      { value: 'created', label: 'Created' },
+      {
+        value: 'modified', label: 'Modified', default: true, direction: 123,
+      },
+      { value: 'closed', label: 'Closed' },
+      { value: 'due', label: 'Due' },
+    ]);
+    table.parentReady();
+  }, []);
+
+  return (
+    <Table.SearchBar
+      provider={table}
+      searchLabel="Search here"
+    />
+  );
+};
