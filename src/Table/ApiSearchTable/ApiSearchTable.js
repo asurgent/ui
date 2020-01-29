@@ -21,6 +21,7 @@ const propTypes = {
   provider: PropTypes.instanceOf(Object).isRequired,
   withSearch: PropTypes.bool,
   searchLabel: PropTypes.string,
+  sortLabel: PropTypes.string,
   emptystate: PropTypes.string,
   onPagination: PropTypes.func,
   activePage: PropTypes.number,
@@ -31,6 +32,7 @@ const propTypes = {
 const defaultProps = {
   withSearch: true,
   searchLabel: 'Search',
+  sortLabel: 'Sort',
   emptystate: 'No items found',
   onPagination: () => {},
   activePage: 1,
@@ -46,6 +48,7 @@ const ApiSearchTable = (props) => {
     rowData,
     emptystate,
     searchLabel,
+    sortLabel,
     ...rest
   } = props;
 
@@ -56,6 +59,7 @@ const ApiSearchTable = (props) => {
       { withSearch && (
         <TableSearchBar
           provider={provider}
+          sortLabel={sortLabel}
           searchLabel={searchLabel}
         />
       )}

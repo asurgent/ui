@@ -5,27 +5,29 @@ import * as Form from '../../Form';
 import * as Button from '../../Button';
 import * as C from './TableSearchBar.styled';
 
-const searchForm = (searchLabel, provider) => ({
+const searchForm = (searchLabel, sortLabel, provider) => ({
   search: {
     type: 'text', label: searchLabel, value: provider.getQuery(),
   },
   sortDirection: {
-    type: 'select', label: 'sort', options: provider.getSortKeys(),
+    type: 'select', label: sortLabel, options: provider.getSortKeys(),
   },
 });
 
 const propTypes = {
   provider: PropTypes.instanceOf(Object).isRequired,
   searchLabel: PropTypes.string,
+  sortLabel: PropTypes.string,
 };
 
 const defaultProps = {
   searchLabel: '',
+  sortLabel: '',
 };
 
 const TableSearchBar = (props) => {
-  const { provider, searchLabel } = props;
-  const formData = Form.useFormBuilder(searchForm(searchLabel, provider));
+  const { provider, searchLabel, sortLabel } = props;
+  const formData = Form.useFormBuilder(searchForm(searchLabel, sortLabel, provider));
   const [sort, setSort] = useState(provider.getSortDirection());
   const [sortKey, setSortKey] = useState(provider.getSortKey());
   const [query, setQuery] = useState(provider.getQuery());
