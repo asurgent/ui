@@ -20,10 +20,14 @@ const Navigation = ({
     <C.Wrapper>
       {
             navigationList.map(({
-              icon, tooltip, link, label,
+              icon,
+              tooltip,
+              link,
+              label,
+              isActive,
             }) => (
               <Tooltip.Right tip={tooltip} key={tooltip}>
-                <C.NavigationItem to={link} onClick={onNavigate}>
+                <C.NavigationItem to={link} onClick={onNavigate} isActive={isActive}>
                   {icon}
                   {' '}
                   {withLabel && (<span>{label}</span>)}
