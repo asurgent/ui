@@ -51,7 +51,7 @@ class Tooltip extends Component {
         (child) => React.cloneElement(child, {
           onMouseEnter: this.showTooltip,
           onMouseLeave: this.hideTooltip,
-          tooltipRef: ref,
+          ref,
         }));
     }
 
