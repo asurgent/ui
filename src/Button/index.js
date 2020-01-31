@@ -1,13 +1,13 @@
-import ButtonStyleProxy from './ButtonStyleProxy';
+import withButtonStyle from './hoc/withButtonStyle';
 import Icon from './ButtonIcon';
 import * as Styles from './Button.styled';
 
-const Primary = ButtonStyleProxy({ style: Styles.Primary });
-const Secondary = ButtonStyleProxy({ style: Styles.Secondary });
-const Hollow = ButtonStyleProxy({ style: Styles.Hollow, isHollow: true });
-const Plain = ButtonStyleProxy({ style: Styles.Plain });
-const Reject = ButtonStyleProxy({ style: Styles.Reject });
-const Transparent = ButtonStyleProxy({ style: Styles.Transparent });
+const Primary = withButtonStyle({ style: Styles.Primary });
+const Secondary = withButtonStyle({ style: Styles.Secondary });
+const Hollow = withButtonStyle({ style: Styles.Hollow, isHollow: true });
+const Plain = withButtonStyle({ style: Styles.Plain });
+const Reject = withButtonStyle({ style: Styles.Reject });
+const Transparent = withButtonStyle({ style: Styles.Transparent });
 
 Primary.displayName = '@asurgent.ui.Button.Primary';
 Secondary.displayName = '@asurgent.ui.Button.Secondary';

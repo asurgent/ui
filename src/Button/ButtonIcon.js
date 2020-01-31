@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ButtonStyleProxy from './ButtonStyleProxy';
+import withButtonStyle from './hoc/withButtonStyle';
 import * as Styles from './Button.styled';
 
 const propTypes = {
@@ -11,7 +11,7 @@ const propTypes = {
 };
 
 const ButtonIcon = ({ icon, ...props }) => {
-  const Button = ButtonStyleProxy({ style: Styles.Icon });
+  const Button = withButtonStyle({ style: Styles.Icon });
 
   return (
     <Button mainIcon={icon} {...props} />

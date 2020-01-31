@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import { withRouter, useLocation } from 'react-router-dom';
 import { RingSpinner } from 'react-spinners-kit';
-import * as Tooltip from '../Tooltip/index';
-import { Spacer } from './Button.styled';
-import { isExternalLink, isInteralLink, isValidMail } from './helper';
+import * as Tooltip from '../../Tooltip/index';
+import * as Styles from '../Button.styled';
+import { isExternalLink, isInteralLink, isValidMail } from '../helper';
 
 const propTyps = {
   iconLeft: PropTypes.element,
@@ -43,12 +43,12 @@ const defaultProps = {
   passLocationState: false,
 };
 
-const ButtonStyleProxy = ({ style: Component, isHollow }) => {
+const withButtonStyle = ({ style: Component, isHollow }) => {
   const ProxyButton = (props) => {
     const {
+      mainIcon,
       iconRight,
       iconLeft,
-      mainIcon,
       link,
       onClick,
       disabled,
@@ -95,16 +95,16 @@ const ButtonStyleProxy = ({ style: Component, isHollow }) => {
     const content = (
       <>
         {mainIcon && mainIcon }
-        {iconLeft && <Spacer right>{iconLeft}</Spacer>}
+        {iconLeft && <Styles.Spacer right>{iconLeft}</Styles.Spacer>}
         {children}
-        {iconRight && <Spacer left>{iconRight}</Spacer>}
+        {iconRight && <Styles.Spacer left>{iconRight}</Styles.Spacer>}
         { loading && (
-          <Spacer left>
+          <Styles.Spacer left>
             <RingSpinner
               color={isHollow ? theme.brandPrimaryColor : theme.white}
               size={15}
             />
-          </Spacer>
+          </Styles.Spacer>
         )}
       </>
     );
@@ -157,4 +157,4 @@ const ButtonStyleProxy = ({ style: Component, isHollow }) => {
   return withTheme(withRouter(ProxyButton));
 };
 
-export default ButtonStyleProxy;
+export default withButtonStyle;

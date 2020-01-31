@@ -1,10 +1,8 @@
 import React from 'react';
 import {
-  withKnobs, boolean, text, number,
+  withKnobs, boolean, text,
 } from '@storybook/addon-knobs';
-import {
-  Dashboard, Explore, Comment, LibraryBooks,
-} from '@material-ui/icons';
+import * as Icon from '@material-ui/icons';
 import Navigation from './index';
 
 export const navigation = () => (
@@ -25,18 +23,18 @@ export const navigation = () => (
           label: 'Dashbaord',
           tooltip: 'Dashboard',
           active: true,
-          icon: (<Dashboard fontSize="large" />),
+          icon: (<Icon.Dashboard fontSize="large" />),
           link: '/',
           isActive: (match, location) => true,
         },
         {
-          label: 'Explore', tooltip: 'Explore Environment', icon: (<Explore fontSize="large" />), link: '/test2',
+          label: 'Explore', tooltip: 'Explore Environment', icon: (<Icon.Explore fontSize="large" />), link: '/test2',
         },
         {
-          label: 'Tickets', tooltip: 'View tickets', icon: (<Comment fontSize="large" />), link: '/test3',
+          label: 'Tickets', tooltip: 'View tickets', icon: (<Icon.Comment fontSize="large" />), link: '/test3',
         },
         {
-          label: 'Docs', tooltip: 'Documentation', icon: (<LibraryBooks fontSize="large" />), link: '/test4',
+          label: 'Docs', tooltip: 'Documentation', icon: (<Icon.LibraryBooks fontSize="large" />), link: '/test4',
         },
       ]}
     />
