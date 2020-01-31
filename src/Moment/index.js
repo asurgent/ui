@@ -16,8 +16,23 @@ const Component = (timeFormat) => ({ timestamp, format = '' }) => {
   return timeFormat;
 };
 
-export const DateTime = Component(m.dateTime);
-export const Date = Component(m.date);
-export const Full = Component(m.full);
-export const Ago = Component(m.ago);
-export const Custom = Component(m.custom);
+const DateTime = Component(m.dateTime);
+const Date = Component(m.date);
+const Full = Component(m.full);
+const Ago = Component(m.ago);
+const Custom = Component(m.custom);
+
+DateTime.displayName = '@asurgent.ui.moment.DateTime';
+Date.displayName = '@asurgent.ui.moment.Date';
+Full.displayName = '@asurgent.ui.moment.Full';
+Ago.displayName = '@asurgent.ui.moment.Ago';
+Custom.displayName = '@asurgent.ui.moment.Custom';
+
+
+export {
+  DateTime,
+  Date,
+  Full,
+  Ago,
+  Custom,
+};

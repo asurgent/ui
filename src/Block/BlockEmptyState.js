@@ -3,9 +3,16 @@ import PropTypes from 'prop-types';
 import IconNoTickets from '../icons/IconNoTickets';
 import { Emptystate as Wrapper } from './Block.styled';
 
-const propTyps = {
+const propTypes = {
   title: PropTypes.string.isRequired,
-  children: PropTypes.any.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
+};
+
+const defaultProps = {
+  children: null,
 };
 
 const Emptystate = ({ title, children }) => (
@@ -16,6 +23,8 @@ const Emptystate = ({ title, children }) => (
   </Wrapper>
 );
 
-Emptystate.propTypes = propTyps;
+Emptystate.propTypes = propTypes;
+Emptystate.defaultProps = defaultProps;
+Emptystate.displayName = '@asurgent.ui.Block.Emptystate';
 
 export default Emptystate;

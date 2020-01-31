@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const AsurgentLogoAlt = (props) => (
+export const AsurgentLogo = (props) => (
   <svg id="Lager_1" data-name="Lager 1" version={1} {...props} viewBox="0 0 489.02 285.29">
     <path
       className="cls-1"
@@ -9,4 +9,6 @@ export const AsurgentLogoAlt = (props) => (
     />
   </svg>
 );
-export default AsurgentLogoAlt;
+
+AsurgentLogo.displayName = '@asurgent.ui.icon.AsurgentLogo';
+export default AsurgentLogo;

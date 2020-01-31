@@ -1,4 +1,7 @@
-const pageNumbersList = (currentPage, delta, totalPages) => {
+const pageNumbersList = (currentPage, totalPages, delta) => {
+  const current = Math.max(0, Math.min(totalPages, currentPage));
+  console.log(current);
+
   const length = Math.max(0, Math.min(totalPages, delta));
   const pageItem = (value, clickable = true) => ({ value, clickable });
   const pageNumbers = (num, lenghtModifer = length) => Array
@@ -9,17 +12,17 @@ const pageNumbersList = (currentPage, delta, totalPages) => {
     return [...pages];
   }
 
-  if (currentPage < delta) {
+  if (current < delta) {
     const pages = pageNumbers(1);
     return [...pages, pageItem(totalPages)];
-  } if (totalPages < (currentPage + delta - 1)) {
+  } if (totalPages < (current + delta - 1)) {
     const val = totalPages - delta + 1;
     const pages = pageNumbers(val);
     return [pageItem(1), ...pages];
   }
 
   const padding = Math.round((delta / 2));
-  const pageBase = currentPage - padding + 1;
+  const pageBase = current - padding + 1;
   const pages = pageNumbers(pageBase, length - 1);
   return [pageItem(1), ...pages, pageItem(totalPages)];
 };
@@ -30,7 +33,7 @@ const pagination = (currentPage, totalPages, delta) => {
   }
 
   const ELLIPSIS = '...';
-  return pageNumbersList(currentPage, delta, totalPages)
+  return pageNumbersList(currentPage, totalPages, delta)
     .reduce((acc, page, index, origin) => {
       acc.push(page);
       const nextItem = origin[index + 1];

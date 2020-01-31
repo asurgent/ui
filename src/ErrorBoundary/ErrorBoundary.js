@@ -1,23 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 const propTypes = {
   children: PropTypes.oneOfType([
-    PropTypes.any,
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
   fallback: PropTypes.oneOfType([
-    PropTypes.any,
     PropTypes.string,
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
   ]),
 };
 
 const defaultProps = {
-  fallback: '',
+  fallback: null,
 };
 
 class ErrorBoundary extends React.Component {
@@ -51,5 +48,6 @@ class ErrorBoundary extends React.Component {
 
 ErrorBoundary.propTypes = propTypes;
 ErrorBoundary.defaultProps = defaultProps;
+ErrorBoundary.displayName = '@asurgent.ui.ErrorBoundary';
 
 export default ErrorBoundary;

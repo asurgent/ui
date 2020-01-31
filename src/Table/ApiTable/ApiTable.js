@@ -40,7 +40,7 @@ const defaultProps = {
   rowData: [],
 };
 
-const ApiSearchTable = (props) => {
+const ApiTable = (props) => {
   const {
     onPagination,
     activePage,
@@ -78,7 +78,8 @@ const ApiSearchTable = (props) => {
   );
 };
 
-ApiSearchTable.propTypes = propTypes;
-ApiSearchTable.defaultProps = defaultProps;
+ApiTable.propTypes = propTypes;
+ApiTable.defaultProps = defaultProps;
+ApiTable.displayName = '@asurgent.ui.Table.Api';
 
-export default ApiSearchTable;
+export default ApiTable;

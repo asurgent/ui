@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, useHistory } from 'react-router-dom';
-import ApiSearchTable from './ApiSearchTable';
+import ApiTable from './ApiTable';
 
 const propTypes = {
   provider: PropTypes.instanceOf(Object).isRequired,
@@ -16,7 +16,7 @@ const defaultProps = {
   sortKeys: [],
 };
 
-const TableRenderProxy = (props) => {
+const ApiTableProxy = (props) => {
   const {
     provider,
     useHistoryState,
@@ -37,13 +37,14 @@ const TableRenderProxy = (props) => {
   }, []);
 
   if (provider.isMounted) {
-    return <ApiSearchTable {...props} />;
+    return <ApiTable {...props} />;
   }
 
   return null;
 };
 
-TableRenderProxy.propTypes = propTypes;
-TableRenderProxy.defaultProps = defaultProps;
+ApiTableProxy.propTypes = propTypes;
+ApiTableProxy.defaultProps = defaultProps;
+ApiTableProxy.displayName = '@asurgent.ui.Table.Proxy.Api';
 
-export default TableRenderProxy;
+export default ApiTableProxy;

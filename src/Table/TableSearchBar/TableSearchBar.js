@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import * as Icon from '@material-ui/icons';
 import { sortDirection as direction } from '../helpers';
 import * as Form from '../../Form';
 import * as Button from '../../Button';
@@ -71,7 +72,7 @@ const TableSearchBar = (props) => {
                 <Button.Icon
                   disabled={provider.isLoading}
                   onClick={() => setSort(sort === direction.asc ? direction.desc : direction.asc)}
-                  icon={<i className={`fas fa-sort-amount-${sort === direction.asc ? 'up' : 'down'}`} />}
+                  icon={sort === direction.asc ? <Icon.ArrowDownward /> : <Icon.ArrowUpward />}
                 />
               </C.SortInput>
             )}
@@ -84,5 +85,6 @@ const TableSearchBar = (props) => {
 
 TableSearchBar.propTypes = propTypes;
 TableSearchBar.defaultProps = defaultProps;
+TableSearchBar.displayName = '@asurgent.ui.Table.Searchbar';
 
 export default TableSearchBar;

@@ -13,9 +13,8 @@ const propTypes = {
   onClose: PropTypes.func,
   withoutHeader: PropTypes.bool,
   children: PropTypes.oneOfType([
-    PropTypes.any,
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
   ]),
 };
 

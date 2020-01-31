@@ -1,5 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TablePagination from './TablePagination';
+
+const propTypes = {
+  provider: PropTypes.instanceOf(Object),
+};
+
+const defaultProps = {
+  provider: null,
+};
 
 const TablePaginationProxy = (props) => {
   const { provider } = props;
@@ -27,5 +36,9 @@ const TablePaginationProxy = (props) => {
 
   return null;
 };
+
+TablePaginationProxy.propTypes = propTypes;
+TablePaginationProxy.defaultProps = defaultProps;
+TablePaginationProxy.displayName = '@asurgent.ui.Table.Proxy.Pagination';
 
 export default TablePaginationProxy;

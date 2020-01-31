@@ -16,10 +16,9 @@ const propTyps = {
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
   children: PropTypes.oneOfType([
-    PropTypes.any,
     PropTypes.string,
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
   ]),
   mailto: PropTypes.string,
   tooltip: PropTypes.string,
@@ -44,7 +43,7 @@ const defaultProps = {
   passLocationState: false,
 };
 
-const withButtonStyle = ({ style: Component, isHollow }) => {
+const ButtonStyleProxy = ({ style: Component, isHollow }) => {
   const ProxyButton = (props) => {
     const {
       iconRight,
@@ -158,4 +157,4 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
   return withTheme(withRouter(ProxyButton));
 };
 
-export default withButtonStyle;
+export default ButtonStyleProxy;

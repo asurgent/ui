@@ -16,6 +16,26 @@ const GetUserInitials = (fullName) => {
   return '';
 };
 
+
+const propTypes = {
+  size: PropTypes.string,
+  name: PropTypes.string,
+  email: PropTypes.string,
+  square: PropTypes.string,
+  href: PropTypes.string,
+  className: PropTypes.string,
+};
+
+
+const defaultProps = {
+  size: '2.4rem',
+  name: '',
+  email: '',
+  square: '',
+  href: '',
+  className: '',
+};
+
 const UserPhoto = (props) => {
   const {
     size,
@@ -56,21 +76,8 @@ const UserPhoto = (props) => {
   );
 };
 
-UserPhoto.propTypes = {
-  size: PropTypes.string,
-  name: PropTypes.string,
-  email: PropTypes.string,
-  square: PropTypes.string,
-  href: PropTypes.string,
-  className: PropTypes.string,
-};
-UserPhoto.defaultProps = {
-  size: '2.4rem',
-  name: '',
-  email: '',
-  square: '',
-  href: '',
-  className: '',
-};
+UserPhoto.propTypes = propTypes;
+UserPhoto.defaultProps = defaultProps;
+UserPhoto.displayName = '@asurgent.ui.UserPhoto';
 
 export default UserPhoto;

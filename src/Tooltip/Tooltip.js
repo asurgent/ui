@@ -9,34 +9,50 @@ const positions = {
   right: 'right',
 };
 
+const propTypes = {
+  children: PropTypes.element,
+  tip: PropTypes.string,
+  position: PropTypes.string,
+};
+
+const defaultProps = {
+  tip: '',
+  position: positions.middle,
+  children: null,
+};
+
 class Tooltip extends Component {
     state = {
       show: false,
-      position: { left: 0, top: 0 },
+      coordinates: { left: 0, top: 0 },
       ref: createRef(),
     }
 
     showTooltip = ({ currentTarget }) => {
       if (currentTarget != null) {
         const {
-          x, top, height, width,
+          x,
+          top,
+          height,
+          width,
         } = currentTarget.getBoundingClientRect();
-        const position = {};
+        const { position } = this.props;
+        const coordinates = {};
         const spacing = 5;
 
-        if (this.props.position === positions.middle) {
-          Object.assign(position, { left: x + (width / 2), top: top + height + spacing });
-        } else if (this.props.position === positions.right) {
-          Object.assign(position, { left: x + width + spacing, top: top + (height / 2) });
+        if (position === positions.middle) {
+          Object.assign(coordinates, { left: x + (width / 2), top: top + height + spacing });
+        } else if (position === positions.right) {
+          Object.assign(coordinates, { left: x + width + spacing, top: top + (height / 2) });
         }
 
 
-        this.setState({ show: true, position });
+        this.setState({ show: true, coordinates });
       }
     }
 
     hideTooltip = () => {
-      this.setState({ show: false, position: { left: 0, top: 0 } });
+      this.setState({ show: false, coordinates: { left: 0, top: 0 } });
     }
 
     renderChildren = (children) => {
@@ -56,18 +72,18 @@ class Tooltip extends Component {
     }
 
     render() {
-      const { tip: tooltipMessage, children } = this.props;
-      const { position, show } = this.state;
+      const { tip: tooltipMessage, children, position } = this.props;
+      const { coordinates, show } = this.state;
 
-      const isMiddle = this.props.position === positions.middle;
-      const isRight = this.props.position === positions.right;
+      const isMiddle = position === positions.middle;
+      const isRight = position === positions.right;
 
       return (
         <>
           {tooltipMessage ? this.renderChildren(children) : children}
           { show === true && tooltipMessage
             && ReactDOM.createPortal(
-              <C.TooltipWrapper middle={isMiddle} right={isRight} style={position}>{tooltipMessage}</C.TooltipWrapper>,
+              <C.TooltipWrapper middle={isMiddle} right={isRight} style={coordinates}>{tooltipMessage}</C.TooltipWrapper>,
               modalRoot,
             )}
         </>
@@ -75,19 +91,8 @@ class Tooltip extends Component {
     }
 }
 
-
-// Proptypes
-Tooltip.propTypes = {
-  children: PropTypes.element,
-  tip: PropTypes.string,
-  position: PropTypes.string,
-};
-
-// Proptypes
-Tooltip.defaultProps = {
-  children: null,
-  tip: '',
-  position: positions.middle,
-};
+Tooltip.propTypes = propTypes;
+Tooltip.defaultProps = defaultProps;
+Tooltip.displayName = '@asurgent.ui.Tooltip';
 
 export default Tooltip;

@@ -1,5 +1,5 @@
 import Table from './Table';
-import Api from './ApiSearchTable';
+import Api from './ApiTable';
 import SearchBar from './TableSearchBar';
 import Pagination from './TablePagination';
 import useTableProvider from './hooks/useTableProvider';

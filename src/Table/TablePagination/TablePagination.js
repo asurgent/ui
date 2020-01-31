@@ -14,13 +14,14 @@ const propTypes = {
 
 const defaultProps = {};
 
-const TableControlls = ({
+const TablePagination = ({
   isLoading,
   activePage,
   onPagination,
   pages,
 }) => {
   const paginationList = pagination(activePage, pages, PAGINATION_DELTA);
+
   if (paginationList && paginationList.length <= 1) {
     return null;
   }
@@ -43,7 +44,8 @@ const TableControlls = ({
   );
 };
 
-TableControlls.propTypes = propTypes;
-TableControlls.defaultProps = defaultProps;
+TablePagination.propTypes = propTypes;
+TablePagination.defaultProps = defaultProps;
+TablePagination.displayName = '@asurgent.ui.Table.Pagination';
 
-export default TableControlls;
+export default TablePagination;

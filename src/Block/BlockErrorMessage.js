@@ -2,9 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Errorstate as Wrapper } from './Block.styled';
 
-const propTyps = {
+const propTypes = {
   title: PropTypes.string.isRequired,
-  children: PropTypes.any.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
+};
+
+const defaultProps = {
+  children: null,
 };
 
 const ErrorMessage = ({ title, children, ...props }) => (
@@ -14,6 +21,8 @@ const ErrorMessage = ({ title, children, ...props }) => (
   </Wrapper>
 );
 
-ErrorMessage.propTypes = propTyps;
+ErrorMessage.propTypes = propTypes;
+ErrorMessage.defaultProps = defaultProps;
+ErrorMessage.displayName = '@asurgent.ui.Block.ErrorMessage';
 
 export default ErrorMessage;
