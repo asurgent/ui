@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as Form from './index';
 import * as Button from '../Button';
 import * as Block from '../Block';
@@ -124,5 +124,25 @@ export const apiForm = () => {
         </>
       )}
     </Form.Primary>
+  );
+};
+
+
+export const updateForm = () => {
+  const formData = Form.useFormBuilder(formObj);
+
+  useEffect(() => {
+    formData.updateField('sortDirection', {
+      value: 2,
+    });
+  }, []);
+
+  return (
+    <Form.Primary
+      form={formData}
+      onNewValue={(values) => {
+        console.log(values);
+      }}
+    />
   );
 };
