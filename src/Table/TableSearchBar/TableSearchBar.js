@@ -8,10 +8,10 @@ import * as C from './TableSearchBar.styled';
 
 const searchForm = (searchLabel, sortLabel, provider) => ({
   search: {
-    type: 'text', label: searchLabel, value: provider.getQuery(),
+    type: 'text', label: searchLabel, value: provider.getQuery(), noLabel: true,
   },
   sortDirection: {
-    type: 'select', label: sortLabel, options: provider.getSortKeys(),
+    type: 'select', label: sortLabel, options: provider.getSortKeys(), noLabel: true,
   },
 });
 

@@ -5,8 +5,8 @@ export const Omnibar = styled.div`
     position: relative;
     background: ${({ theme }) => theme.white};
     filter: drop-shadow(0 1px 3px ${({ theme }) => theme.rgba(theme.black, 0.2)});
-    height: 6rem;
-    min-height: fit-content;
+    min-height: 9.5rem;
+    height: fit-content;
     padding: 2.4rem;
     display: flex;
     align-items: center;

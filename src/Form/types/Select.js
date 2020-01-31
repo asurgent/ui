@@ -23,6 +23,7 @@ const defaultProps = {
   value: '',
   label: '',
   props: {},
+  noLabel: false,
 };
 
 
@@ -48,6 +49,7 @@ const Select = forwardRef((props, ref) => {
     name,
     tooltip,
     options,
+    noLabel,
   } = props;
 
   const [value, setValue] = useState('');
@@ -63,7 +65,7 @@ const Select = forwardRef((props, ref) => {
   return (
     <Main>
       <Header>
-        <Label>{label || name}</Label>
+        { noLabel === false && <Label>{label || name}</Label>}
         { tooltip && (
           <Tooltip.Middle tip={tooltip}>
             <Icon className="far fa-question-circle" />

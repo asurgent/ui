@@ -133,6 +133,7 @@ export const updateForm = () => {
 
   useEffect(() => {
     formData.updateField('sortDirection', {
+      noLabel: true,
       value: 2,
     });
   }, []);

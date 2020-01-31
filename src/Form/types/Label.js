@@ -15,11 +15,13 @@ const propTyps = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   tooltip: PropTypes.string.isRequired,
+  noLabel: PropTypes.bool,
 };
 
 const defaultProps = {
   value: '',
   label: '',
+  noLabel: false,
 };
 
 const Label = (props) => {
@@ -27,6 +29,7 @@ const Label = (props) => {
     label,
     name,
     tooltip,
+    noLabel,
   } = props;
 
   const [value, setValue] = useState('');
@@ -38,7 +41,7 @@ const Label = (props) => {
   return (
     <Main>
       <Header>
-        <InputLabel>{label || name}</InputLabel>
+        { noLabel === false && <InputLabel>{label || name}</InputLabel>}
         { tooltip && (
           <Tooltip.Middle tip={tooltip}>
             <Icon className="far fa-question-circle" />
