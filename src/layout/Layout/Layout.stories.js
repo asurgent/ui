@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  withKnobs, boolean, text, number,
-} from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import * as Icons from '@material-ui/icons';
 import { Main, useLayout } from './index';
 import { Omnibar, LeftActions, RightActions } from '../Omnibar';
@@ -59,6 +57,7 @@ export const mainLayout = () => {
         <RightActions>RIGHT</RightActions>
       </Omnibar>
       <h1>Random image</h1>
+      <img src="https://i.picsum.photos/id/270/1000/1000.jpg" />
       <img src="https://i.picsum.photos/id/270/1000/1000.jpg" />
     </Main>
   );

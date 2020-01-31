@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import IconAsurget from '../../icons/IconAsurget';
 import CurrentUser from '../CurrentUser';
 import DropdownMenu from '../DropdownMenu';
-import * as C from './MainLayout.styled';
+import * as C from './Layout.styled';
 import Navigation from '../Navigation';
 
 const propTypes = {
   provider: PropTypes.instanceOf(Object).isRequired,
   children: PropTypes.oneOfType([
-    PropTypes.any,
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
 };
 
@@ -69,6 +68,6 @@ const Layout = ({ provider, children }) => {
 
 Layout.propTypes = propTypes;
 Layout.defaultProps = defaultProps;
-Layout.displayName = '@asurgent.ui.Layout.Main';
+Layout.displayName = '@asurgent.ui.layout.Main';
 
 export default Layout;

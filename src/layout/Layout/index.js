@@ -1,4 +1,4 @@
-import Layout from './MainLayout';
+import Layout from './Layout';
 import useLayout from './hooks/useLayout';
 
 export {

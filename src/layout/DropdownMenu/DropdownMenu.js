@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import * as Icon from '@material-ui/icons';
 import * as U from './DropdownMenu.styled';
@@ -18,6 +18,7 @@ const propTypes = {
   navigationList: PropTypes.instanceOf(Array).isRequired,
   languages: PropTypes.instanceOf(Array).isRequired,
   selectedLanguage: PropTypes.string.isRequired,
+  onNavigate: PropTypes.func.isRequired,
   onChangeLanguage: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onClose: PropTypes.func,
@@ -45,18 +46,14 @@ const DropdownMenu = ({
 }) => {
   const [mobileMenuTab, setMobileMenuTab] = useState(MENU_TAB);
 
-
   const langaugeForm = Form.useFormBuilder({
     selectLanguage: {
       type: 'select',
       label: (translations.languageSelector || 'Language'),
+      value: selectedLanguage,
       options: languages,
     },
   });
-
-  useEffect(() => {
-    langaugeForm.updateField('selectLanguage', { options: languages });
-  }, [selectedLanguage]);
 
   return (
     <Shield.Dark onClick={onClose}>
@@ -150,5 +147,6 @@ const DropdownMenu = ({
 
 DropdownMenu.propTypes = propTypes;
 DropdownMenu.defaultProps = defaultProps;
+DropdownMenu.displayName = '@asurgent.ui.layout.DropdownMenu';
 
 export default DropdownMenu;

@@ -29,7 +29,12 @@ const useLayout = (config) => {
     getCurrentLanguage: () => selectedLanguageState,
     getCustomerId: () => customerIdState,
     onLogout: (onLogout || (() => {})),
-    onChangeLanguage: (onChangeLanguage || (() => {})),
+    onChangeLanguage: (language) => {
+      if (onChangeLanguage) {
+        onChangeLanguage(language);
+      }
+      setSelectedLanguageState(language);
+    },
   };
 };
 
