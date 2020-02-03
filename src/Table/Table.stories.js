@@ -236,9 +236,11 @@ export const searchBar = () => {
   }, []);
 
   return (
-    <Table.SearchBar
-      provider={table}
-      searchLabel="Search here"
-    />
+    <div style={{ background: 'pink', width: '100%' }}>
+      <Table.SearchBar
+        provider={table}
+        searchLabel="Search here"
+      />
+    </div>
   );
 };

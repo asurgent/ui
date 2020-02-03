@@ -49,34 +49,37 @@ export const generateReferences = (inputs) => {
 
 export const generateFieldComponents = (inputs, referenceList) => {
   const original = {};
-  const fields = Object.keys(inputs).reduce((acc, key) => {
-    const {
-      type,
-      value,
-      tooltip,
-      label,
-      options,
-      noLabel = false,
-      props: inputProps,
-    } = inputs[key];
+  const fields = Object.keys(inputs)
+    .reduce((acc, key) => {
+      const {
+        type,
+        value,
+        tooltip,
+        placeholder,
+        label,
+        options,
+        noLabel = false,
+        props: inputProps,
+      } = inputs[key];
 
-    Object.assign(original, { [key]: value });
-    const RequestedComponent = getInputComponent(type);
-    const Component = (
-      <RequestedComponent
-        ref={referenceList[key]}
-        name={key}
-        value={value || ''}
-        tooltip={tooltip || ''}
-        label={label}
-        noLabel={noLabel}
-        props={inputProps}
-        options={options}
-      />
-    );
+      Object.assign(original, { [key]: value });
+      const RequestedComponent = getInputComponent(type);
+      const Component = (
+        <RequestedComponent
+          ref={referenceList[key]}
+          name={key}
+          value={value || ''}
+          tooltip={tooltip || ''}
+          placeholder={placeholder || ''}
+          label={label}
+          noLabel={noLabel}
+          props={inputProps}
+          options={options}
+        />
+      );
 
-    return Object.assign(acc, { [key]: Component });
-  }, {});
+      return Object.assign(acc, { [key]: Component });
+    }, {});
 
   return { fields, original };
 };

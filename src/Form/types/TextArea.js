@@ -11,6 +11,8 @@ const propTyps = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   tooltip: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  noLabel: PropTypes.bool,
   props: PropTypes.instanceOf(Object),
 };
 
@@ -26,6 +28,7 @@ const TextArea = forwardRef((props, ref) => {
     label,
     name,
     tooltip,
+    placeholder,
     noLabel,
   } = props;
 
@@ -37,19 +40,22 @@ const TextArea = forwardRef((props, ref) => {
 
   return (
     <Main>
-      <Header>
-        { noLabel === false && <Label>{label || name}</Label>}
-        { tooltip && (
+      { noLabel === false && (
+        <Header>
+          <Label>{label || name}</Label>
+          { tooltip && (
           <Tooltip.Middle tip={tooltip}>
             <Icon className="far fa-question-circle" />
           </Tooltip.Middle>
-        )}
-      </Header>
+          )}
+        </Header>
+      )}
       <Wrapper>
         <textarea
           {...props.props}
           type="text"
           value={value}
+          placeholder={placeholder}
           onChange={({ target }) => setValue(target.value)}
           name={name}
           ref={ref}

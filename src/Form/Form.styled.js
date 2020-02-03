@@ -16,5 +16,6 @@ export const FormStyle = styled.form`
 
 export const FormRow = styled.div`
     display: block;
+    margin-bottom: 1.6rem;
     width: 100%;
 `;

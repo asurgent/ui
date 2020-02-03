@@ -8,6 +8,7 @@ export const StyleForm = styled.div`
     display: grid;
     grid-template-columns: 1fr;
     grid-column-gap: 1.6rem;
+    grid-row-gap: .8rem;
 
     ${SortInput} {
       display: flex;

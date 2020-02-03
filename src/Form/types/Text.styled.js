@@ -6,7 +6,6 @@ export const Main = styled.div`
   max-width: 100%; 
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.6rem;
 `;
 
 export const Wrapper = styled.div`
@@ -27,6 +26,10 @@ export const Wrapper = styled.div`
     outline: none;
     appearance: none; 
 
+    &::placeholder {
+      opacity: 0.4
+    }
+    
     &:focus,
     &.hasValue {
       outline: none;

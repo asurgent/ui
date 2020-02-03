@@ -40,14 +40,16 @@ const Label = (props) => {
 
   return (
     <Main>
+      { noLabel === false && (
       <Header>
-        { noLabel === false && <InputLabel>{label || name}</InputLabel>}
+        <InputLabel>{label || name}</InputLabel>
         { tooltip && (
-          <Tooltip.Middle tip={tooltip}>
-            <Icon className="far fa-question-circle" />
-          </Tooltip.Middle>
+        <Tooltip.Middle tip={tooltip}>
+          <Icon className="far fa-question-circle" />
+        </Tooltip.Middle>
         )}
       </Header>
+      )}
       <Wrapper style={{ opacity: '.4' }}>
         { value }
       </Wrapper>
