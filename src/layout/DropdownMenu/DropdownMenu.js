@@ -14,6 +14,7 @@ const SETTINGS_TAB = 'settings_tab';
 const propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  customerName: PropTypes.string.isRequired,
   imageLink: PropTypes.string,
   navigationList: PropTypes.instanceOf(Array).isRequired,
   languages: PropTypes.instanceOf(Array).isRequired,
@@ -35,6 +36,7 @@ const DropdownMenu = ({
   name,
   email,
   imageLink,
+  customerName,
   languages,
   navigationList,
   selectedLanguage,
@@ -60,8 +62,8 @@ const DropdownMenu = ({
       <U.MenuWrapper>
         <U.Desktop>
           <U.DesktopMenu>
-            <b>{name}</b>
-            <p>{email}</p>
+            <b>{email}</b>
+            <small>{customerName}</small>
             <Form.Primary
               form={langaugeForm}
               onNewValue={(values) => {
@@ -88,8 +90,8 @@ const DropdownMenu = ({
                 email={email}
                 href={imageLink}
               />
-              <b>{name}</b>
-              <p>{email}</p>
+              <b>{email}</b>
+              <small>{customerName}</small>
               <Button.Transparent onClick={onLogout}>
                 <Icon.ExitToApp className="exit-icon" fontSize="large" />
                 {' '}

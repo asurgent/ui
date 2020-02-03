@@ -21,6 +21,12 @@ export const DesktopMenu = styled.div`
     border: 1px solid ${({ theme }) => theme.gray200};
     top: 100%;
     right: 0;
+    
+    small {
+        display: block;
+        margin-top: .8rem;
+        margin-bottom: 1.6rem;
+    }
 `;
 
 export const DesktopMenuFooter = styled.div`
@@ -55,6 +61,7 @@ export const MobileMenu = styled.div`
 
         b {
             margin-top: 1.6rem;
+            margin-bottom: .8rem;
         }
     }
     .menu {

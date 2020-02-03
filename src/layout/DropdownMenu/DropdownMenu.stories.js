@@ -38,6 +38,7 @@ export const dropdownMenu = () => (
       }}
       languages={[{ value: 'en', label: 'English' }, { value: 'sv', label: 'Swedish' }]}
       name="Kalle Anka"
+      customerName="Google"
       email="test@mail.com"
       onChangeLanguage={(lang) => console.log(lang)}
       onLogout={() => console.log('logout action')}
