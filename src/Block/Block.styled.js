@@ -57,7 +57,7 @@ export const Emptystate = styled(base)`
 export const Errorstate = styled(base)`
     justify-content: center;
     align-items: flex-start;
-    padding: 1.6rem;
+    padding: 1.6rem !important;
     flex-direction: column;
     background: ${({ theme }) => theme.rgba(theme.ruby800, 0.25)};;
     border: 1px solid ${({ theme }) => theme.rgba(theme.ruby800, 0.8)};
