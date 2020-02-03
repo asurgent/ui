@@ -17,7 +17,7 @@ export const Logo = styled.div`
 export const Top = styled.div`
     background: ${({ theme }) => theme.white};
     border-bottom: 1px solid ${({ theme }) => theme.gray300};
-    padding: 2.4rem;
+    padding: 1.6rem;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;

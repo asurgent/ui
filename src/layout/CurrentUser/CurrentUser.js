@@ -10,6 +10,7 @@ const propTypes = {
   imageLink: PropTypes.string,
   name: PropTypes.string,
   email: PropTypes.string,
+  customerName: PropTypes.string,
 };
 
 const defaultProps = {
@@ -17,6 +18,7 @@ const defaultProps = {
   imageLink: '',
   name: '',
   email: '',
+  customerName: '',
 };
 
 const UserDropdown = ({
@@ -24,6 +26,7 @@ const UserDropdown = ({
   email,
   imageLink,
   children,
+  customerName,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -38,7 +41,8 @@ const UserDropdown = ({
           href={imageLink}
         />
         <U.Name>
-          {name}
+          <b>{name}</b>
+          <small>{customerName}</small>
         </U.Name>
         <Button.Icon
           onClick={() => setOpen(!open)}

@@ -43,6 +43,7 @@ export const mainLayout = () => {
   useEffect(() => {
     provider.setCurrentLanguage('sv');
     provider.setCustomerId('123');
+    provider.setCustomerName('asurgent');
     provider.setUser({
       name: 'Test',
       email: 'test@mail.com',

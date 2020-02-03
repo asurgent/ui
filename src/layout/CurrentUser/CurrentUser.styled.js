@@ -9,11 +9,22 @@ export const Wrapper = styled.div`
 
 export const Name = styled.div`
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     font-family: Lato;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 16px;
     margin: 0 1.6rem;
+
+    b {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 1.6rem;
+    }
+
+    small {
+        color: ${({ theme }) => theme.gray700};
+        font-size: 1.2rem;
+    }
+    
 `;
 
 

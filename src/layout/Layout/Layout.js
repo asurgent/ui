@@ -21,6 +21,7 @@ const Layout = ({ provider, children }) => {
   const languages = provider.getAvaliableLanguages();
   const selectedLanguage = provider.getCurrentLanguage();
   const { name, email, imageLink } = provider.getUser();
+  const customerName = provider.getCustomerName();
 
   return (
     <C.Main>
@@ -29,7 +30,7 @@ const Layout = ({ provider, children }) => {
       </C.Logo>
 
       <C.Top>
-        <CurrentUser name={name} email={email} imageLink={imageLink}>
+        <CurrentUser name={name} email={email} imageLink={imageLink} customerName={customerName}>
           {({ onClose }) => (
             <DropdownMenu
               onNavigate={onClose}

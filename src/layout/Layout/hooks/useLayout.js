@@ -11,12 +11,14 @@ const useLayout = (config) => {
 
   const [userState, setUserState] = useState({ name: '', email: '', imageLink: '' });
   const [customerIdState, setCustomerIdState] = useState('');
+  const [customerNameState, setCustomerNameState] = useState('');
   const [selectedLanguageState, setSelectedLanguageState] = useState(config.currentLanguage || '');
 
   return {
     setUser: ({ name, email, imageLink }) => setUserState({ name, email, imageLink }),
     setCurrentLanguage: (language) => setSelectedLanguageState(language),
     setCustomerId: (customerId) => setCustomerIdState(customerId),
+    setCustomerName: (customerName) => setCustomerNameState(customerName),
     getUser: () => userState,
     getNavigationItems: () => navigationListConstructor(translator, customerIdState),
     getAvaliableLanguages: () => avaliableLanguagesConstructor(translator, selectedLanguageState),
@@ -28,6 +30,7 @@ const useLayout = (config) => {
     }),
     getCurrentLanguage: () => selectedLanguageState,
     getCustomerId: () => customerIdState,
+    getCustomerName: () => customerNameState,
     onLogout: (onLogout || (() => {})),
     onChangeLanguage: (language) => {
       if (onChangeLanguage) {
