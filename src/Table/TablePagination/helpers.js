@@ -1,7 +1,5 @@
 const pageNumbersList = (currentPage, totalPages, delta) => {
   const current = Math.max(0, Math.min(totalPages, currentPage));
-  console.log(current);
-
   const length = Math.max(0, Math.min(totalPages, delta));
   const pageItem = (value, clickable = true) => ({ value, clickable });
   const pageNumbers = (num, lenghtModifer = length) => Array
