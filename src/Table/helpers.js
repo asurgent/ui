@@ -1,5 +1,5 @@
 import React from 'react';
-
+import * as Button from '../Button';
 
 export const sortDirection = {
   asc: 'asc',
@@ -125,7 +125,8 @@ export const generateRows = (props, components) => props.rowData
       acc.push(card);
     } else {
       // Make it possible to override default styling of rows
-      const Row = props.rowComponent ? props.rowComponent(components) : components.row;
+      const Row = props.rowComponent ? props.rowComponent(components, rowData) : components.row;
+
       const row = (
         <Row
           key={rowData.id}
@@ -137,7 +138,23 @@ export const generateRows = (props, components) => props.rowData
           {generateCells(props, rowData, components)}
         </Row>
       );
-      acc.push(row);
+
+      if (props.clickRowConfigutation) {
+        const clickRow = props.clickRowConfigutation(rowData);
+        if (typeof clickRow === 'object') {
+          const { link, onClick } = clickRow;
+          const linkRow = (
+            <Button.TableRow key={rowData.id} link={link} onClick={onClick}>
+              {row}
+            </Button.TableRow>
+          );
+          acc.push(linkRow);
+        } else {
+          acc.push(row);
+        }
+      } else {
+        acc.push(row);
+      }
     }
 
     return acc;

@@ -76,6 +76,7 @@ const Table = withTheme((props) => {
     rowData,
     headerData,
     cardView,
+    // clickRowConfigutation
     // tableRowConfiguration,
     // cardRowConfiguration,
     // cellComponent,

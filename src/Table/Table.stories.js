@@ -118,6 +118,7 @@ export const defaultTable = () => (
     ]}
     rowData={boolean('With rows', true) ? rowDummyData : []}
     cardConfiguration={(row) => <Card row={row} />}
+    clickRowConfigutation={(row) => ({ link: '/', onClick: () => { console.log(`Click row: ${row.id}`); } })}
     columnConfiguration={(row) => {
       const {
         valueA, valueB, valueC, valueD,

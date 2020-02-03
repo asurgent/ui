@@ -66,6 +66,14 @@ export const Plain = styled.div`
     text-decoration: underline;
 `;
 
+
+export const TableRow = styled.div`
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    color: ${({ theme }) => theme.black};
+`;
+
 export const Primary = styled.div`
     ${(props) => defaultStyle(props)}
     background: ${({ theme }) => theme.brandPrimaryColor};
