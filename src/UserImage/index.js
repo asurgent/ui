@@ -7,7 +7,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  square: '',
+  square: true,
 };
 
 const Square = ({ square, ...props }) => <UserPhoto square {...props} />;

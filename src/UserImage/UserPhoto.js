@@ -21,7 +21,7 @@ const propTypes = {
   size: PropTypes.string,
   name: PropTypes.string,
   email: PropTypes.string,
-  square: PropTypes.string,
+  square: PropTypes.bool,
   href: PropTypes.string,
   className: PropTypes.string,
 };
@@ -31,7 +31,7 @@ const defaultProps = {
   size: '2.4rem',
   name: '',
   email: '',
-  square: '',
+  square: false,
   href: '',
   className: '',
 };
