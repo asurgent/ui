@@ -12,8 +12,8 @@ export const Omnibar = styled.div`
     padding: .8rem;
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
-        min-height: 9.5rem;
-        padding: 2.4rem;
+        min-height: 8rem;
+        padding: 1.6rem;
     }   
 `;
 
