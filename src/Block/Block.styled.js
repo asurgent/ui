@@ -6,9 +6,13 @@ const base = styled.div`
     display: flex;
     flex-direction: column;
     margin: ${({ withMargins }) => (withMargins ? '1.6rem' : 0)};
-    padding: ${({ withPadding }) => (withPadding ? '3.2rem' : 0)};
+    padding: ${({ withPadding }) => (withPadding ? '1.6rem' : 0)};
     background: ${({ renderTransparent, theme }) => (renderTransparent === true ? 'transparent' : theme.white)};
     color: ${({ theme }) => theme.black};
+    
+    @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
+        padding: ${({ withPadding }) => (withPadding ? '3.2rem' : 0)};
+    }
 `;
 
 export const Left = styled(base)`
