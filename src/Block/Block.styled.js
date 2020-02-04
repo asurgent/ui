@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const base = styled.div`
+export const BaseBlock = styled.div`
     position: relative;
     width: ${({ autoWidth }) => (autoWidth ? 'auto' : '100%')};
     display: flex;
@@ -15,46 +15,46 @@ const base = styled.div`
     }
 `;
 
-export const Left = styled(base)`
+export const Left = styled(BaseBlock)`
     align-items: flex-start;
 `;
 
-export const Center = styled(base)`
+export const Center = styled(BaseBlock)`
     align-items: center;
 `;
 
-export const Right = styled(base)`
+export const Right = styled(BaseBlock)`
     align-items: flex-end;
 `;
 
-export const Plain = styled(base)`
+export const Plain = styled(BaseBlock)`
     align-items: flex-start;
 `;
 
-export const Bordered = styled(base)`
+export const Bordered = styled(BaseBlock)`
     background: ${({ theme }) => theme.white};
     filter: drop-shadow(0 1px 6px ${({ theme }) => theme.rgba(theme.black, 0.2)});
     border-radius: 5px;
 `;
 
-export const SpaceBetween = styled(base)`
+export const SpaceBetween = styled(BaseBlock)`
     justify-content: space-between;
     flex-direction: row;
     align-items: unset;
 `;
 
-export const Wrap = styled(base)`   
+export const Wrap = styled(BaseBlock)`   
     flex-wrap: wrap;
     flex-direction: unset;
 `;
 
-export const Emptystate = styled(base)`
+export const Emptystate = styled(BaseBlock)`
     justify-content: center;
     align-items: center;
     flex-direction: column;
 `;
 
-export const Errorstate = styled(base)`
+export const Errorstate = styled(BaseBlock)`
     justify-content: center;
     align-items: flex-start;
     padding: 1.6rem !important;

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import * as Icons from '@material-ui/icons';
 import { Main, useLayout } from './index';
+import * as Block from '../../Block';
 import { Omnibar, LeftActions, RightActions } from '../Omnibar';
 
 const navigationList = (t, customerId) => [
@@ -57,9 +58,17 @@ export const mainLayout = () => {
         <LeftActions>LEFT</LeftActions>
         <RightActions>RIGHT</RightActions>
       </Omnibar>
-      <h1>Random image</h1>
-      <img src="https://i.picsum.photos/id/270/1000/1000.jpg" />
-      <img src="https://i.picsum.photos/id/270/1000/1000.jpg" />
+      <Block.Center>
+        <Block.Center>
+        Hello
+        </Block.Center>
+
+        <h1>Random image</h1>
+      </Block.Center>
+      <Block.Center>
+
+        <img src="https://i.picsum.photos/id/270/1000/1000.jpg" />
+      </Block.Center>
     </Main>
   );
 };

@@ -5,7 +5,7 @@ export const Omnibar = styled.div`
     z-index: 1;
     position: sticky;
     background: ${({ theme }) => theme.white};
-    filter: drop-shadow(0 1px 3px ${({ theme }) => theme.rgba(theme.black, 0.2)});
+    box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
     display: flex;
     align-items: center;
     justify-content: space-evenly;

@@ -40,6 +40,7 @@ export const dropdownMenu = () => (
       name="Kalle Anka"
       customerName="Google"
       email="test@mail.com"
+      onNavigate={() => console.log('on navigate')}
       onChangeLanguage={(lang) => console.log(lang)}
       onLogout={() => console.log('logout action')}
     />

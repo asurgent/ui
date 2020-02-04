@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BaseBlock } from '../../Block/Block.styled';
 
 export const Logo = styled.div`
     display: flex;
@@ -6,7 +7,8 @@ export const Logo = styled.div`
     align-items: center;
     background: ${({ theme }) => theme.blue700};
     border-bottom: 1px solid ${({ theme }) => theme.blue700};
-    filter: drop-shadow(0 1px 6px ${({ theme }) => theme.rgba(theme.black, 0.2)});
+    /* filter: drop-shadow(0 1px 6px ${({ theme }) => theme.rgba(theme.black, 0.2)}); */
+    box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
 
     svg {
         fill: ${({ theme }) => theme.white};
@@ -47,6 +49,11 @@ export const Content = styled.div`
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
+
+    > ${BaseBlock}:last-of-type {
+        box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
+        margin-bottom: 3.2rem;
+    }
 `;
 
 export const Main = styled.div`
