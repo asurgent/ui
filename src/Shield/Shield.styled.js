@@ -26,5 +26,6 @@ export const Overlay = styled.div`
 
     &+ * {
         z-index: 1000;
+        position: relative;
     }
 `;

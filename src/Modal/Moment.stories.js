@@ -7,7 +7,7 @@ import * as Modal from './index';
 
 export default { title: 'UI Components|Modal', decorators: [withKnobs] };
 
-export const fullDateTimeFormat = () => (
+export const primaryModal = () => (
   <>
     <Modal.Primary
       title="Modal Title"
