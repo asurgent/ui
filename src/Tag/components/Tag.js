@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as Icon from '@material-ui/icons';
 import * as Button from '../../Button';
 
 const propTypes = {
@@ -30,9 +31,7 @@ const Tag = ({
     <Styled>
       <div className="label">{parsedLabel}</div>
       { onDelete && (
-        <Button.Plain onClick={onDelete}>
-          <i className="fa fa-times" aria-hidden="true" />
-        </Button.Plain>
+        <Button.Icon icon={<Icon.Close />} onClick={onDelete} />
       )}
     </Styled>
   );
@@ -40,5 +39,6 @@ const Tag = ({
 
 Tag.defaultProps = defaultProps;
 Tag.propTypes = propTypes;
+Tag.displayName = '@asurgent.ui.Tag';
 
 export default Tag;

@@ -16,6 +16,26 @@ const GetUserInitials = (fullName) => {
   return '';
 };
 
+
+const propTypes = {
+  size: PropTypes.string,
+  name: PropTypes.string,
+  email: PropTypes.string,
+  square: PropTypes.bool,
+  href: PropTypes.string,
+  className: PropTypes.string,
+};
+
+
+const defaultProps = {
+  size: '2.4rem',
+  name: '',
+  email: '',
+  square: false,
+  href: '',
+  className: '',
+};
+
 const UserPhoto = (props) => {
   const {
     size,
@@ -23,6 +43,7 @@ const UserPhoto = (props) => {
     email,
     square,
     href,
+    className,
   } = props;
   const [url, setUrl] = useState('');
   const [imageExists, setImageExists] = useState(false);
@@ -40,7 +61,7 @@ const UserPhoto = (props) => {
   };
 
   return (
-    <Wrapper size={size} square={square} email={email}>
+    <Wrapper size={size} square={square} email={email} className={className}>
       <Picture
         alt="user-photo"
         imageExists={imageExists}
@@ -55,11 +76,8 @@ const UserPhoto = (props) => {
   );
 };
 
-UserPhoto.propTypes = {
-  size: PropTypes.string,
-};
-UserPhoto.defaultProps = {
-  size: '2.4rem',
-};
+UserPhoto.propTypes = propTypes;
+UserPhoto.defaultProps = defaultProps;
+UserPhoto.displayName = '@asurgent.ui.UserPhoto';
 
 export default UserPhoto;

@@ -3,24 +3,26 @@ import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import { withRouter, useLocation } from 'react-router-dom';
 import { RingSpinner } from 'react-spinners-kit';
-import Tooltip from '../Tooltip/index';
-import { Spacer } from './Button.styled';
-import { isExternalLink, isInteralLink, isValidMail } from './helper';
+import * as Tooltip from '../../Tooltip/index';
+import * as Styles from '../Button.styled';
+import { isExternalLink, isInteralLink, isValidMail } from '../helper';
 
 const propTyps = {
   iconLeft: PropTypes.element,
   iconRight: PropTypes.element,
+  mainIcon: PropTypes.element,
   link: PropTypes.string,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
   children: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
   ]),
   mailto: PropTypes.string,
   tooltip: PropTypes.string,
+  className: PropTypes.string,
   passLocationState: PropTypes.bool,
   history: PropTypes.instanceOf(Object).isRequired,
   theme: PropTypes.instanceOf(Object).isRequired,
@@ -29,6 +31,7 @@ const propTyps = {
 const defaultProps = {
   iconLeft: null,
   iconRight: null,
+  mainIcon: null,
   link: '',
   onClick: () => {},
   disabled: false,
@@ -36,12 +39,14 @@ const defaultProps = {
   children: null,
   mailto: '',
   tooltip: null,
+  className: '',
   passLocationState: false,
 };
 
 const withButtonStyle = ({ style: Component, isHollow }) => {
   const ProxyButton = (props) => {
     const {
+      mainIcon,
       iconRight,
       iconLeft,
       link,
@@ -54,6 +59,7 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
       theme,
       tooltip,
       passLocationState,
+      className,
     } = props;
 
     const location = useLocation();
@@ -82,22 +88,23 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
     };
 
     const attrs = {
-      className: disabled ? 'disabled' : null,
+      className: [(disabled ? 'disabled' : null), className].join(' ').trim(),
       onClick: handleClick,
     };
 
     const content = (
       <>
-        {iconLeft && <Spacer right>{iconLeft}</Spacer>}
+        {mainIcon && mainIcon }
+        {iconLeft && <Styles.Spacer right>{iconLeft}</Styles.Spacer>}
         {children}
-        {iconRight && <Spacer left>{iconRight}</Spacer>}
+        {iconRight && <Styles.Spacer left>{iconRight}</Styles.Spacer>}
         { loading && (
-          <Spacer left>
+          <Styles.Spacer left>
             <RingSpinner
               color={isHollow ? theme.brandPrimaryColor : theme.white}
               size={15}
             />
-          </Spacer>
+          </Styles.Spacer>
         )}
       </>
     );
@@ -131,16 +138,16 @@ const withButtonStyle = ({ style: Component, isHollow }) => {
       }
 
       return (
-        <Tooltip tip={tooltip}>
+        <Tooltip.Middle tip={tooltip}>
           <Link {...upddatedAttrs}>
             {content}
           </Link>
-        </Tooltip>
+        </Tooltip.Middle>
       );
     }
 
     return (
-      <Tooltip tip={tooltip}><Component {...attrs}>{content}</Component></Tooltip>
+      <Tooltip.Middle tip={tooltip}><Component {...attrs}>{content}</Component></Tooltip.Middle>
     );
   };
 

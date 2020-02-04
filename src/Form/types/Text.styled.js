@@ -6,7 +6,6 @@ export const Main = styled.div`
   max-width: 100%; 
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.6rem;
 `;
 
 export const Wrapper = styled.div`
@@ -18,7 +17,8 @@ export const Wrapper = styled.div`
   position: relative;
   box-sizing: border-box;
   min-height: 4.7rem;
-
+  background: ${({ theme }) => theme.white};
+  
   input,textarea, select {
     width: 100%;
     max-width: 100%; 
@@ -26,6 +26,10 @@ export const Wrapper = styled.div`
     outline: none;
     appearance: none; 
 
+    &::placeholder {
+      opacity: 0.4
+    }
+    
     &:focus,
     &.hasValue {
       outline: none;

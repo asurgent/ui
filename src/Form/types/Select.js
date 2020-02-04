@@ -1,6 +1,6 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Tooltip from '../../Tooltip';
+import * as Tooltip from '../../Tooltip';
 
 import {
   Main,
@@ -23,18 +23,23 @@ const defaultProps = {
   value: '',
   label: '',
   props: {},
+  noLabel: false,
 };
 
 
 const getDefaultSort = (sortKeys) => {
-  const sort = sortKeys.find(({ default: sortByDefault }) => sortByDefault);
+  if (Array.isArray(sortKeys) && sortKeys.length > 0) {
+    const sort = sortKeys.find(({ default: sortByDefault }) => sortByDefault);
 
-  if (sort) {
-    return sort.value;
+    if (sort) {
+      return sort.value;
+    }
+
+    const first = sortKeys[0];
+    return first.value;
   }
 
-  const first = sortKeys[0];
-  return first.value;
+  return null;
 };
 
 
@@ -44,13 +49,14 @@ const Select = forwardRef((props, ref) => {
     name,
     tooltip,
     options,
+    noLabel,
   } = props;
 
   const [value, setValue] = useState('');
 
   useEffect(() => {
     setValue(props.value);
-  }, [props.value]);
+  }, [props.value, props.options]);
 
   useEffect(() => {
     setValue(getDefaultSort(options));
@@ -58,14 +64,16 @@ const Select = forwardRef((props, ref) => {
 
   return (
     <Main>
-      <Header>
-        <Label>{label || name}</Label>
-        { tooltip && (
-          <Tooltip tip={tooltip}>
+      { noLabel === false && (
+        <Header>
+          <Label>{label || name}</Label>
+          { tooltip && (
+          <Tooltip.Middle tip={tooltip}>
             <Icon className="far fa-question-circle" />
-          </Tooltip>
-        )}
-      </Header>
+          </Tooltip.Middle>
+          )}
+        </Header>
+      )}
       <SelectWrapper>
         <select
           {...props.props}

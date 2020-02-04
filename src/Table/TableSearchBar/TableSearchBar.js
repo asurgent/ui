@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { sortDirection as direction } from '../../helpers';
-import * as Form from '../../../Form';
-import * as Button from '../../../Button';
-import * as C from './TableControlls.styled';
+import * as Icon from '@material-ui/icons';
+import { sortDirection as direction } from '../helpers';
+import * as Form from '../../Form';
+import * as Button from '../../Button';
+import * as C from './TableSearchBar.styled';
 
 const searchForm = (searchLabel, provider) => ({
   search: {
-    type: 'text', label: searchLabel, value: provider.getQuery(),
+    type: 'text', placeholder: searchLabel, value: provider.getQuery(), noLabel: true,
   },
   sortDirection: {
-    type: 'select', label: 'sort', options: provider.getSortKeys(),
+    type: 'select', options: provider.getSortKeys(), noLabel: true,
   },
 });
 
@@ -23,7 +24,7 @@ const defaultProps = {
   searchLabel: '',
 };
 
-const TableControlls = (props) => {
+const TableSearchBar = (props) => {
   const { provider, searchLabel } = props;
   const formData = Form.useFormBuilder(searchForm(searchLabel, provider));
   const [sort, setSort] = useState(provider.getSortDirection());
@@ -60,16 +61,18 @@ const TableControlls = (props) => {
       {({ search, sortDirection }) => (
         <>
           <C.StyleForm>
-            {search}
+            <C.SearchInput>
+              {search}
+            </C.SearchInput>
             { sortDirection && provider.hasSortyKeys() && (
-              <div className="sort">
+              <C.SortInput>
                 {sortDirection}
                 <Button.Icon
                   disabled={provider.isLoading}
                   onClick={() => setSort(sort === direction.asc ? direction.desc : direction.asc)}
-                  icon={<i className={`fas fa-sort-amount-${sort === direction.asc ? 'up' : 'down'}`} />}
+                  icon={sort === direction.asc ? <Icon.ArrowDownward /> : <Icon.ArrowUpward />}
                 />
-              </div>
+              </C.SortInput>
             )}
           </C.StyleForm>
         </>
@@ -78,7 +81,8 @@ const TableControlls = (props) => {
   );
 };
 
-TableControlls.propTypes = propTypes;
-TableControlls.defaultProps = defaultProps;
+TableSearchBar.propTypes = propTypes;
+TableSearchBar.defaultProps = defaultProps;
+TableSearchBar.displayName = '@asurgent.ui.Table.Searchbar';
 
-export default TableControlls;
+export default TableSearchBar;

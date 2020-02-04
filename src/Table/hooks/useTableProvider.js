@@ -11,6 +11,7 @@ import {
 const tableDefaults = { result: [], page: 1, total_pages: 0 };
 const cacheDefaults = {
   page: 1,
+  size: 10,
   searchQuery: '',
   sortKeys: [],
   filters: [],
@@ -119,6 +120,11 @@ const useTableProvider = (updateAction = (() => {})) => {
     setFacets: (facets) => {
       if (Array.isArray(facets)) {
         updateInitalState({ facets });
+      }
+    },
+    setPageSize: (size) => {
+      if (size && size > 10) {
+        updateInitalState({ size });
       }
     },
     setOrderBy: (orderBy) => {

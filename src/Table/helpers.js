@@ -1,5 +1,5 @@
 import React from 'react';
-
+import * as Button from '../Button';
 
 export const sortDirection = {
   asc: 'asc',
@@ -24,50 +24,6 @@ const mergeDeep = (target, source) => {
     });
   }
   return output;
-};
-
-const pageNumbersList = (currentPage, delta, totalPages) => {
-  const length = Math.max(0, Math.min(totalPages, delta));
-  const pageItem = (value, clickable = true) => ({ value, clickable });
-  const pageNumbers = (num, lenghtModifer = length) => Array
-    .from({ length: lenghtModifer }, (_, i) => pageItem(num + i));
-
-  if (delta >= totalPages) {
-    const pages = pageNumbers(1);
-    return [...pages];
-  }
-
-  if (currentPage < delta) {
-    const pages = pageNumbers(1);
-    return [...pages, pageItem(totalPages)];
-  } if (totalPages < (currentPage + delta - 1)) {
-    const val = totalPages - delta + 1;
-    const pages = pageNumbers(val);
-    return [pageItem(1), ...pages];
-  }
-
-  const padding = Math.round((delta / 2));
-  const pageBase = currentPage - padding + 1;
-  const pages = pageNumbers(pageBase, length - 1);
-  return [pageItem(1), ...pages, pageItem(totalPages)];
-};
-
-export const pagination = (currentPage, totalPages, delta) => {
-  if (totalPages <= 1) {
-    return [];
-  }
-
-  const ELLIPSIS = '...';
-  return pageNumbersList(currentPage, delta, totalPages)
-    .reduce((acc, page, index, origin) => {
-      acc.push(page);
-      const nextItem = origin[index + 1];
-      if (nextItem && (nextItem.value - page.value) > 1) {
-        acc.push({ value: ELLIPSIS, clickable: false });
-      }
-
-      return acc;
-    }, []);
 };
 
 const extendCellObject = (index, cellData, newCell, headerData, rowData) => {
@@ -169,7 +125,8 @@ export const generateRows = (props, components) => props.rowData
       acc.push(card);
     } else {
       // Make it possible to override default styling of rows
-      const Row = props.rowComponent ? props.rowComponent(components) : components.row;
+      const Row = props.rowComponent ? props.rowComponent(components, rowData) : components.row;
+
       const row = (
         <Row
           key={rowData.id}
@@ -181,7 +138,23 @@ export const generateRows = (props, components) => props.rowData
           {generateCells(props, rowData, components)}
         </Row>
       );
-      acc.push(row);
+
+      if (props.clickRowConfigutation) {
+        const clickRow = props.clickRowConfigutation(rowData);
+        if (typeof clickRow === 'object') {
+          const { link, onClick } = clickRow;
+          const linkRow = (
+            <Button.TableRow key={rowData.id} link={link} onClick={onClick}>
+              {row}
+            </Button.TableRow>
+          );
+          acc.push(linkRow);
+        } else {
+          acc.push(row);
+        }
+      } else {
+        acc.push(row);
+      }
     }
 
     return acc;

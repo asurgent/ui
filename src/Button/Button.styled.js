@@ -48,6 +48,9 @@ const defaultStyle = () => `
 `;
 
 export const Spacer = styled.span`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-left: ${({ left }) => (left ? '.4rem' : 0)};
     margin-right: ${({ right }) => (right ? '.4rem' : 0)};
 `;
@@ -61,6 +64,14 @@ export const Plain = styled.div`
     padding: 0;
     color: ${({ theme }) => theme.black};
     text-decoration: underline;
+`;
+
+
+export const TableRow = styled.div`
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    color: ${({ theme }) => theme.black};
 `;
 
 export const Primary = styled.div`
@@ -105,6 +116,18 @@ export const Secondary = styled.div`
  
     &:active,&:visited {
         color: ${(props) => props.theme.white};
+    }
+`;
+
+export const Transparent = styled.div`
+    ${(props) => defaultStyle(props)}
+    background: transparent;
+    border: none;
+    color: ${(props) => props.theme.black};
+    border-radius: 0;
+ 
+    &:active,&:visited {
+        color: ${(props) => props.theme.gray800};
     }
 `;
 

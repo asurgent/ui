@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import { RingSpinner } from 'react-spinners-kit';
+import TablePagination from './TablePagination';
 import * as C from './Table.styled';
-import { generateRows, pagination, sortDirection as directions } from './helpers';
+import { generateRows, sortDirection as directions } from './helpers';
 
 
 export const propTypes = {
@@ -68,17 +69,18 @@ const bodyComponents = {
   content: C.TableCellContent,
 };
 
-const PAGINATION_DELTA = 5;
+// const PAGINATION_DELTA = 5;
 
 const Table = withTheme((props) => {
   const {
     rowData,
     headerData,
     cardView,
-    tableRowConfiguration,
-    cardRowConfiguration,
-    cellComponent,
-    rowComponent,
+    // clickRowConfigutation
+    // tableRowConfiguration,
+    // cardRowConfiguration,
+    // cellComponent,
+    // rowComponent,
     sortDirection,
     activeSort,
     theme,
@@ -122,7 +124,6 @@ const Table = withTheme((props) => {
     }
   };
 
-  const paginationList = pagination(activePage, pages, PAGINATION_DELTA);
   const noContent = rows.length === 0 && isLoading === false;
 
   return (
@@ -157,21 +158,13 @@ const Table = withTheme((props) => {
           {/* Render rows end */}
         </C.Content>
       </C.Base>
-      { withPagination && paginationList.length > 1 && (
-        <C.Pagination isLoading={isLoading}>
-          <C.Arrow left onClick={() => onPagination(activePage - 1)} />
-          { paginationList.map(({ value, clickable }, index) => (
-            <C.Page
-              key={`${value}-${index}`}
-              isClickable={clickable}
-              activePage={activePage === value}
-              onClick={() => clickable && onPagination(value)}
-            >
-              {value}
-            </C.Page>
-          ))}
-          <C.Arrow right onClick={() => onPagination(activePage + 1)} />
-        </C.Pagination>
+      { withPagination && (
+        <TablePagination
+          isLoading={isLoading}
+          onPagination={onPagination}
+          activePage={activePage}
+          pages={pages}
+        />
       )}
     </C.Wrapper>
   );

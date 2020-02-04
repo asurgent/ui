@@ -3,19 +3,28 @@ import PropTypes from 'prop-types';
 import IconNoTickets from '../icons/IconNoTickets';
 import { Emptystate as Wrapper } from './Block.styled';
 
-const propTyps = {
+const propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
 };
 
-const Emptystate = ({ title, description }) => (
+const defaultProps = {
+  children: null,
+};
+
+const Emptystate = ({ title, children }) => (
   <Wrapper>
     <IconNoTickets width="21.2rem" height="21.2rem" />
     <h4>{title}</h4>
-    <p>{description}</p>
+    {children}
   </Wrapper>
 );
 
-Emptystate.propTypes = propTyps;
+Emptystate.propTypes = propTypes;
+Emptystate.defaultProps = defaultProps;
+Emptystate.displayName = '@asurgent.ui.Block.Emptystate';
 
 export default Emptystate;

@@ -46,6 +46,7 @@
     "@storybook/addon-knobs": "^5.2.8",
     "@storybook/addon-links": "^5.2.8",
     "@storybook/addon-storysource": "^5.2.8",
+    "@storybook/addon-viewport": "^5.3.9",
     "@storybook/addons": "^5.2.8",
     "@storybook/react": "^5.2.8",
     "@storybook/storybook-deployer": "^2.8.1",
@@ -56,6 +57,8 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
+    "@material-ui/core": "^4.9.0",
+    "@material-ui/icons": "^4.5.1",
     "@storybook/addon-knobs": "^5.2.8",
     "moment": "^2.24.0",
     "query-string": "^6.9.0",

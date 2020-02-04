@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as Form from './index';
 import * as Button from '../Button';
 import * as Block from '../Block';
@@ -8,7 +8,7 @@ export default { title: 'UI Components|Form' };
 
 const formObj = {
   search: {
-    type: 'text', label: 'Test', value: '123',
+    type: 'text', label: 'Test', placeholder: 'Hello',
   },
   sortDirection: {
     type: 'select', label: 'sort', options: [{ value: 1, label: 'one' }, { value: 2, label: 'two' }],
@@ -124,5 +124,26 @@ export const apiForm = () => {
         </>
       )}
     </Form.Primary>
+  );
+};
+
+
+export const updateForm = () => {
+  const formData = Form.useFormBuilder(formObj);
+
+  useEffect(() => {
+    formData.updateField('sortDirection', {
+      noLabel: true,
+      value: 2,
+    });
+  }, []);
+
+  return (
+    <Form.Primary
+      form={formData}
+      onNewValue={(values) => {
+        console.log(values);
+      }}
+    />
   );
 };

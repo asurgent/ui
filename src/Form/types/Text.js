@@ -1,6 +1,6 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Tooltip from '../../Tooltip';
+import * as Tooltip from '../../Tooltip';
 
 import {
   Main,
@@ -15,6 +15,8 @@ const propTyps = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   tooltip: PropTypes.string.isRequired,
+  noLabel: PropTypes.bool,
+  placeholder: PropTypes.string.isRequired,
   props: PropTypes.instanceOf(Object),
 };
 
@@ -22,6 +24,7 @@ const defaultProps = {
   value: '',
   label: '',
   props: {},
+  noLabel: false,
 };
 
 const Text = forwardRef((props, ref) => {
@@ -29,6 +32,8 @@ const Text = forwardRef((props, ref) => {
     label,
     name,
     tooltip,
+    placeholder,
+    noLabel,
   } = props;
 
   const [value, setValue] = useState('');
@@ -39,19 +44,22 @@ const Text = forwardRef((props, ref) => {
 
   return (
     <Main>
-      <Header>
-        <Label>{label || name}</Label>
-        { tooltip && (
-          <Tooltip tip={tooltip}>
+      { noLabel === false && (
+        <Header>
+          <Label>{label || name}</Label>
+          { tooltip && (
+          <Tooltip.Middle tip={tooltip}>
             <Icon className="far fa-question-circle" />
-          </Tooltip>
-        )}
-      </Header>
+          </Tooltip.Middle>
+          )}
+        </Header>
+      )}
       <Wrapper>
         <input
           {...props.props}
           type="text"
           value={value}
+          placeholder={placeholder}
           onChange={({ target }) => setValue(target.value)}
           name={name}
           ref={ref}

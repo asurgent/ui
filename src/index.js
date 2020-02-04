@@ -1,5 +1,6 @@
-import Tooltip from './Tooltip';
 import ErrorBoundary from './ErrorBoundary';
+import * as Tooltip from './Tooltip';
+import * as Shield from './Shield';
 import * as Form from './Form';
 import * as Table from './Table';
 import * as Tag from './Tag';
@@ -10,6 +11,9 @@ import * as Modal from './Modal';
 import * as Switch from './Switch';
 import * as UserImage from './UserImage';
 import * as Moment from './Moment';
+
+import * as Layout from './layout/Layout';
+import * as Omnibar from './layout/Omnibar';
 
 export {
   Button,
@@ -23,4 +27,7 @@ export {
   ErrorBoundary,
   UserImage,
   Moment,
+  Shield,
+  Layout,
+  Omnibar,
 };

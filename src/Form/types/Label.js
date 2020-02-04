@@ -1,6 +1,6 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Tooltip from '../../Tooltip';
+import * as Tooltip from '../../Tooltip';
 
 import {
   Icon,
@@ -15,11 +15,13 @@ const propTyps = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   tooltip: PropTypes.string.isRequired,
+  noLabel: PropTypes.bool,
 };
 
 const defaultProps = {
   value: '',
   label: '',
+  noLabel: false,
 };
 
 const Label = (props) => {
@@ -27,6 +29,7 @@ const Label = (props) => {
     label,
     name,
     tooltip,
+    noLabel,
   } = props;
 
   const [value, setValue] = useState('');
@@ -37,14 +40,16 @@ const Label = (props) => {
 
   return (
     <Main>
+      { noLabel === false && (
       <Header>
         <InputLabel>{label || name}</InputLabel>
         { tooltip && (
-          <Tooltip tip={tooltip}>
-            <Icon className="far fa-question-circle" />
-          </Tooltip>
+        <Tooltip.Middle tip={tooltip}>
+          <Icon className="far fa-question-circle" />
+        </Tooltip.Middle>
         )}
       </Header>
+      )}
       <Wrapper style={{ opacity: '.4' }}>
         { value }
       </Wrapper>

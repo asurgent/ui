@@ -1,23 +1,38 @@
 import React from 'react';
-import Tooltip from '../Tooltip';
+import * as Tooltip from '../Tooltip';
 import * as m from './momentParsers';
 
 const Component = (timeFormat) => ({ timestamp, format = '' }) => {
   if (m.isValid(timestamp)) {
     return (
-      <Tooltip tip={m.full(timestamp)}>
+      <Tooltip.Middle tip={m.full(timestamp)}>
         <span className="timestamp">
           {timeFormat(timestamp, format)}
         </span>
-      </Tooltip>
+      </Tooltip.Middle>
     );
   }
 
   return timeFormat;
 };
 
-export const DateTime = Component(m.dateTime);
-export const Date = Component(m.date);
-export const Full = Component(m.full);
-export const Ago = Component(m.ago);
-export const Custom = Component(m.custom);
+const DateTime = Component(m.dateTime);
+const Date = Component(m.date);
+const Full = Component(m.full);
+const Ago = Component(m.ago);
+const Custom = Component(m.custom);
+
+DateTime.displayName = '@asurgent.ui.moment.DateTime';
+Date.displayName = '@asurgent.ui.moment.Date';
+Full.displayName = '@asurgent.ui.moment.Full';
+Ago.displayName = '@asurgent.ui.moment.Ago';
+Custom.displayName = '@asurgent.ui.moment.Custom';
+
+
+export {
+  DateTime,
+  Date,
+  Full,
+  Ago,
+  Custom,
+};

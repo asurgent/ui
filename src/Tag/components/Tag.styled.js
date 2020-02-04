@@ -23,6 +23,7 @@ export const Default = styled.div`
 export const TagsCollection = styled.div`
     display: flex;
     flex-flow: wrap;
+    align-items: center;
     margin: -.4rem;
 
     ${Default} {

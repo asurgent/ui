@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
+import * as Icon from '@material-ui/icons';
 import * as C from './Modal.styled';
 import {
   modalRoot,
@@ -13,9 +14,8 @@ const propTypes = {
   onClose: PropTypes.func,
   withoutHeader: PropTypes.bool,
   children: PropTypes.oneOfType([
-    PropTypes.any,
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
   ]),
 };
 
@@ -48,7 +48,7 @@ class Modal extends Component {
         <C.Modal>
           { !withoutHeader && (
             <C.Close onClick={onClose}>
-              <i className="fa fa-times" aria-hidden="true" />
+              <Icon.Close fontSize="large" />
             </C.Close>
           )}
           {title && <C.ModalTitle>{title}</C.ModalTitle>}

@@ -1,5 +1,5 @@
-import React from 'react';
-import withButtonStyle from './withButtonStyle';
+import withButtonStyle from './hoc/withButtonStyle';
+import Icon from './ButtonIcon';
 import * as Styles from './Button.styled';
 
 const Primary = withButtonStyle({ style: Styles.Primary });
@@ -7,15 +7,16 @@ const Secondary = withButtonStyle({ style: Styles.Secondary });
 const Hollow = withButtonStyle({ style: Styles.Hollow, isHollow: true });
 const Plain = withButtonStyle({ style: Styles.Plain });
 const Reject = withButtonStyle({ style: Styles.Reject });
+const Transparent = withButtonStyle({ style: Styles.Transparent });
+const TableRow = withButtonStyle({ style: Styles.TableRow });
 
-
-const Icon = ({ icon, ...props }) => {
-  const Button = withButtonStyle({ style: Styles.Icon });
-
-  return (
-    <Button iconRight={icon} {...props} />
-  );
-};
+Primary.displayName = '@asurgent.ui.Button.Primary';
+Secondary.displayName = '@asurgent.ui.Button.Secondary';
+Hollow.displayName = '@asurgent.ui.Button.Hollow';
+Plain.displayName = '@asurgent.ui.Button.Plain';
+Reject.displayName = '@asurgent.ui.Button.Reject';
+Transparent.displayName = '@asurgent.ui.Button.Transparent';
+TableRow.displayName = '@asurgent.ui.Button.TableRow';
 
 export {
   Primary,
@@ -24,4 +25,6 @@ export {
   Plain,
   Reject,
   Icon,
+  Transparent,
+  TableRow,
 };

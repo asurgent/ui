@@ -102,31 +102,30 @@ const getValues = (references, originalValues) => {
   return { values, dirty, dirtyItems };
 };
 
+const initalValue = (formSpecification, parameters = null) => {
+  if (Array.isArray(formSpecification) && typeof parameters === 'object') {
+    const formObject = formSpecification.reduce((acc, field) => ({
+      ...acc,
+      [field.name]: {
+        type: field.type,
+        tooltip: field.description,
+        value: parameters[field.name],
+        options: parameters[field.options],
+      },
+    }), {});
+
+    return formObject;
+  } if (typeof formSpecification === 'object') {
+    return JSON.parse(JSON.stringify(formSpecification));
+  }
+  return {};
+};
+
 const useFormBuilder = (formSpecification, parameters = null) => {
-  const [formData, setFormData] = useState(null);
+  const [formData, setFormData] = useState(initalValue(formSpecification, parameters));
   const [inputFileds, setInputFields] = useState([]);
   const [references, setReferences] = useState({});
   const [originalValues, setOriginalValues] = useState({});
-
-  useEffect(() => {
-    if (Array.isArray(formSpecification) && typeof parameters === 'object') {
-      const formObject = formSpecification.reduce((acc, field) => ({
-        ...acc,
-        [field.name]: {
-          type: field.type,
-          tooltip: field.description,
-          value: parameters[field.name],
-          options: parameters[field.options],
-        },
-      }), {});
-
-      setFormData(formObject);
-    } else if (typeof formSpecification === 'object') {
-      setFormData(formSpecification);
-    } else {
-      setFormData({});
-    }
-  }, []);
 
   useEffect(() => {
     if (formData) {

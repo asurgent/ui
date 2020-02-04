@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TableControlls from './components/TableControlls';
+import TableSearchBar from '../TableSearchBar';
 import Table from '../Table';
 
 const getEmptystate = (provider, props) => {
@@ -38,7 +38,7 @@ const defaultProps = {
   rowData: [],
 };
 
-const ApiSearchTable = (props) => {
+const ApiTable = (props) => {
   const {
     onPagination,
     activePage,
@@ -54,7 +54,7 @@ const ApiSearchTable = (props) => {
   return (
     <>
       { withSearch && (
-        <TableControlls
+        <TableSearchBar
           provider={provider}
           searchLabel={searchLabel}
         />
@@ -74,7 +74,8 @@ const ApiSearchTable = (props) => {
   );
 };
 
-ApiSearchTable.propTypes = propTypes;
-ApiSearchTable.defaultProps = defaultProps;
+ApiTable.propTypes = propTypes;
+ApiTable.defaultProps = defaultProps;
+ApiTable.displayName = '@asurgent.ui.Table.Api';
 
-export default ApiSearchTable;
+export default ApiTable;

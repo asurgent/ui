@@ -38,7 +38,7 @@ export const generatePayload = (state) => {
     facets: state.facets,
     order_by: [],
     search_fields: [],
-    page_size: 10,
+    page_size: state.size,
   };
   if (sort.value && sort.direction) {
     Object.assign(payload, {

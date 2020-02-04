@@ -118,6 +118,7 @@ export const defaultTable = () => (
     ]}
     rowData={boolean('With rows', true) ? rowDummyData : []}
     cardConfiguration={(row) => <Card row={row} />}
+    clickRowConfigutation={(row) => ({ link: '/', onClick: () => { console.log(`Click row: ${row.id}`); } })}
     columnConfiguration={(row) => {
       const {
         valueA, valueB, valueC, valueD,
@@ -127,7 +128,7 @@ export const defaultTable = () => (
         { value: valueB },
         valueA,
         () => valueC,
-        () => ({ value: valueD, props: { style: { background: 'transaprent' } } }),
+        () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
         () => ({ value: 'IM AM HIDDEN' }),
       ];
     }}
@@ -202,9 +203,45 @@ export const apiTable = () => {
           { value: valueB },
           valueA,
           () => valueC,
-          () => ({ value: valueD, props: { style: { background: 'transaprent' } } }),
+          () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
         ];
       }}
     />
+  );
+};
+
+export const pagination = () => (
+  <Table.Pagination
+    isLoading={boolean('isLoading', false)}
+    onPagination={(page) => console.log(`requested page: ${page}`)}
+    activePage={number('active page', 1)}
+    pages={number('total pages', 10)}
+  />
+);
+
+export const searchBar = () => {
+  const table = Table.useTableProvider((payload) => {
+    console.log(payload);
+  });
+
+  useEffect(() => {
+    table.setSortKeys([
+      { value: 'created', label: 'Created' },
+      {
+        value: 'modified', label: 'Modified', default: true, direction: 123,
+      },
+      { value: 'closed', label: 'Closed' },
+      { value: 'due', label: 'Due' },
+    ]);
+    table.parentReady();
+  }, []);
+
+  return (
+    <div style={{ background: 'pink', width: '100%' }}>
+      <Table.SearchBar
+        provider={table}
+        searchLabel="Search here"
+      />
+    </div>
   );
 };
