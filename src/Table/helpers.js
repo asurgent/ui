@@ -144,9 +144,9 @@ export const generateRows = (props, components) => props.rowData
         if (typeof clickRow === 'object') {
           const { link, onClick } = clickRow;
           const linkRow = (
-            <Button.TableRow key={rowData.id} link={link} onClick={onClick}>
+            <Button.Plain key={rowData.id} link={link} onClick={onClick}>
               {row}
-            </Button.TableRow>
+            </Button.Plain>
           );
           acc.push(linkRow);
         } else {

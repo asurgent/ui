@@ -8,7 +8,8 @@ const Hollow = withButtonStyle({ style: Styles.Hollow, isHollow: true });
 const Plain = withButtonStyle({ style: Styles.Plain });
 const Reject = withButtonStyle({ style: Styles.Reject });
 const Transparent = withButtonStyle({ style: Styles.Transparent });
-const TableRow = withButtonStyle({ style: Styles.TableRow });
+const Link = withButtonStyle({ style: Styles.Link });
+const Create = withButtonStyle({ style: Styles.Create });
 
 Primary.displayName = '@asurgent.ui.Button.Primary';
 Secondary.displayName = '@asurgent.ui.Button.Secondary';
@@ -16,7 +17,7 @@ Hollow.displayName = '@asurgent.ui.Button.Hollow';
 Plain.displayName = '@asurgent.ui.Button.Plain';
 Reject.displayName = '@asurgent.ui.Button.Reject';
 Transparent.displayName = '@asurgent.ui.Button.Transparent';
-TableRow.displayName = '@asurgent.ui.Button.TableRow';
+Link.displayName = '@asurgent.ui.Button.Link';
 
 export {
   Primary,
@@ -26,5 +27,6 @@ export {
   Reject,
   Icon,
   Transparent,
-  TableRow,
+  Link,
+  Create,
 };

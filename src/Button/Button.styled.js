@@ -10,14 +10,13 @@ const defaultStyle = () => `
     transition: 0.2s;
     text-align: center;
     padding: 0.9rem 1.6rem;
-    border-radius: 5px;
     border: 1px solid transparent;
     white-space: normal;
-    font-weight: bold;
     letter-spacing: 0.12rem;
-    text-transform: uppercase;
+    text-transform: capitalize;
     text-decoration: none;    
     font-size: 1.4rem;
+    border-radius: 3px;
 
     &:before {
         position: absolute;
@@ -55,7 +54,7 @@ export const Spacer = styled.span`
     margin-right: ${({ right }) => (right ? '.4rem' : 0)};
 `;
 
-export const Plain = styled.div`
+export const Link = styled.div`
     cursor: pointer;
     display: inline-block;
     border: none;
@@ -67,7 +66,7 @@ export const Plain = styled.div`
 `;
 
 
-export const TableRow = styled.div`
+export const Plain = styled.div`
     cursor: pointer;
     margin: 0;
     padding: 0;
@@ -134,6 +133,16 @@ export const Transparent = styled.div`
 export const Reject = styled.div`
     ${(props) => defaultStyle(props)}
     background: ${({ theme }) => theme.ruby800};
+    color: ${(props) => props.theme.white};
+ 
+    &:active,&:visited {
+        color: ${(props) => props.theme.white};
+    }
+`;
+
+export const Create = styled.div`
+    ${(props) => defaultStyle(props)}
+    background: ${({ theme }) => '#13be69'};
     color: ${(props) => props.theme.white};
  
     &:active,&:visited {

@@ -27,6 +27,10 @@ export const plainButton = () => (
   <Button.Plain>{content}</Button.Plain>
 );
 
+export const linkButton = () => (
+  <Button.Link>{content}</Button.Link>
+);
+
 export const transparentButton = () => (
   <Button.Transparent>{content}</Button.Transparent>
 );
