@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { BaseBlock } from '../../Block/Block.styled';
+import * as User from '../CurrentUser/CurrentUser.styled';
 
 export const Logo = styled.div`
     display: flex;
@@ -20,10 +21,14 @@ export const Top = styled.div`
     background: ${({ theme }) => theme.white};
     border-bottom: 1px solid ${({ theme }) => theme.gray300};
     padding: 1.6rem;
-    display: flex;
+    display:flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+
+    ${User.Wrapper} {
+        margin-left: 3.2rem;
+    }
 `;
 
 export const Left = styled.div`

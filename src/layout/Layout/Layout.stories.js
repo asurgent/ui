@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
+import { withKnobs, boolean } from '@storybook/addon-knobs';
 import * as Icons from '@material-ui/icons';
 import { Main, useLayout } from './index';
 import * as Block from '../../Block';
+import * as Modal from '../../Modal';
 import { Omnibar, LeftActions, RightActions } from '../Omnibar';
 
 const navigationList = (t, customerId) => [
@@ -32,11 +33,31 @@ const avaliableLanguages = (translator, selected) => [
   { value: 'sv', label: translator('swedish'), default: selected === 'sv' },
 ];
 
+const createList = (translator, selected) => [
+  {
+    title: 'Ticket',
+    description: 'create a new ticket',
+    icon: (Icons.ConfirmationNumber),
+    onClick: () => {
+      console.log('create ticket');
+    },
+  },
+  {
+    title: 'Service window',
+    description: 'setup a new service window',
+    icon: (Icons.Timer),
+    onClick: () => {
+      console.log('create ticket');
+    },
+  },
+];
+
 export const mainLayout = () => {
   const provider = useLayout({
     translator: (t) => t,
     navigationListConstructor: navigationList,
     avaliableLanguagesConstructor: avaliableLanguages,
+    createListConstructor: createList,
     onLogout: () => { console.log('Logout action'); },
     onChangeLanguage: (lang) => { console.log(`Selected language: ${lang}`); },
   });
@@ -49,6 +70,7 @@ export const mainLayout = () => {
       name: 'Test',
       email: 'test@mail.com',
       imageLink: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
+      isAdmin: true,
     });
   }, []);
 
@@ -66,7 +88,9 @@ export const mainLayout = () => {
         <h1>Random image</h1>
       </Block.Center>
       <Block.Center>
-
+        <Modal.Primary isOpen={boolean('open', false)}>
+          hello
+        </Modal.Primary>
         <img src="https://i.picsum.photos/id/270/1000/1000.jpg" />
       </Block.Center>
     </Main>
