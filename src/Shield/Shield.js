@@ -13,12 +13,14 @@ const propTypes = {
     PropTypes.arrayOf(PropTypes.node),
   ]),
   onClick: PropTypes.func,
+  shieldIsUp: PropTypes.bool,
 };
 
 const defaultProps = {
   dark: false,
   backgroundColor: null,
   children: null,
+  shieldIsUp: true,
   onClick: () => {},
 };
 
@@ -27,13 +29,17 @@ const Shield = ({
   backgroundColor,
   children,
   onClick,
+  shieldIsUp,
 }) => (
   <>
-    <Overlay
-      dark={dark}
-      onClick={onClick}
-      backgroundColor={backgroundColor}
-    />
+    {shieldIsUp && (
+      <Overlay
+
+        dark={dark}
+        onClick={onClick}
+        backgroundColor={backgroundColor}
+      />
+    )}
     {children}
   </>
 );
