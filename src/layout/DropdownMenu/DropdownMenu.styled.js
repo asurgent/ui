@@ -3,10 +3,6 @@ import styled from 'styled-components';
 export const MenuWrapper = styled.div`
     background: white;
     position: relative;
-
-    .exit-icon {
-        margin-right: .8rem;
-    }
 `;
 
 export const DesktopMenu = styled.div`
@@ -17,8 +13,10 @@ export const DesktopMenu = styled.div`
     padding: 2.4rem;
     border-radius: 5px;
     margin-top: .8rem;  
+    transform: translateY(10px);
     background: ${({ theme }) => theme.white};
     border: 1px solid ${({ theme }) => theme.gray200};
+    box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
     top: 100%;
     right: 0;
     

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import randomcolor from 'randomcolor';
 
 export const Wrapper = styled.div`
+  user-select: none;
   font-size: ${(prop) => prop.size};
   width: ${(prop) => prop.size};
   height: ${(prop) => prop.size};
