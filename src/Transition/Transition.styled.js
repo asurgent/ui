@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
 export const FadeIn = styled.div`
-    /* position: relative;
-    height: 100vh;
-    width: 100vw;
-    position: absolute; */
+    position: relative;
+    z-index: 2;
     transition: ${({ timeout }) => `${parseInt(timeout, 10) / 1000}s`};
     opacity: ${({ state }) => {
     switch (state) {
@@ -24,6 +22,6 @@ export const FadeIn = styled.div`
 
 export const FadeInSlideDown = styled(FadeIn)`
     transform: translateY(
-    ${({ state }) => (state === 'entering' || state === 'entered' ? 10 : 0)}px
+    ${({ state }) => (state === 'entering' || state === 'entered' ? 20 : 0)}px
     );
 `;

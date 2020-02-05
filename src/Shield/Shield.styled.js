@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Overlay = styled.div`
     top: 0;
     left: 0;
-    z-index: 999;
+    z-index: 1;
     position: fixed;
     background: ${({ theme, backgroundColor, dark }) => {
     if (typeof backgroundColor === 'function') {
@@ -25,7 +25,7 @@ export const Overlay = styled.div`
     align-items: center;
 
     &+ * {
-        z-index: 1000;
+        z-index: 2;
         position: relative;
     }
 `;
