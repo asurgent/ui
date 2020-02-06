@@ -152,7 +152,7 @@ const Table = withTheme((props) => {
           { !isLoading && rows }
           { isLoading && (
             <C.Loading>
-              <RingSpinner color={theme.brandPrimaryColor} size={32} />
+              <RingSpinner color={theme.blue400} size={32} />
             </C.Loading>
           )}
           {/* Render rows end */}
