@@ -1,6 +1,6 @@
 import { darken } from 'polished';
+import withMapProps from 'high-order-components/withMapProps';
 import withStyle from './withStyle';
-import withMapProps from '../../high-order-components/withMapProps';
 import * as C from './Button.styled';
 
 const Primary = withStyle((theme) => ({

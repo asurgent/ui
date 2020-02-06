@@ -15,7 +15,7 @@ const withTheme = (themeOverrides = {}) => (Target) => {
     </ThemeProvider>
   );
 
-  WithTheme.displayName = wrapDisplayName(Target, 'withTheme');
+  // WithTheme.displayName = wrapDisplayName(Target, 'withTheme');
 
   return WithTheme;
 };
