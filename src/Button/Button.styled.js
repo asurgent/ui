@@ -1,48 +1,76 @@
 import styled from 'styled-components';
+import { lighten, darken } from 'polished';
 
-// Kinda wacky thing to do, but whatever.
-const defaultStyle = () => `
+export const Button = styled.div`
+    border: 1px solid ${({ theme }) => theme.borderColor};
+    background: ${({ theme }) => theme.backgroundColor};
+    color: ${({ theme }) => (theme.textColor ? theme.textColor : theme.white)};
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    white-space: nowrap;
-    transition: 0.2s;
-    text-align: center;
-    padding: 0.9rem 1.6rem;
-    border: 1px solid transparent;
+    transition: 0.03s;
     white-space: normal;
-    letter-spacing: 0.12rem;
-    text-transform: capitalize;
-    text-decoration: none;    
-    font-size: 1.4rem;
+    padding: 1.2rem 1.4rem;
     border-radius: 3px;
 
-    &:before {
-        position: absolute;
-        background: hsla(255, 0%, 100%, 0);
-        z-index: 2;
-        display: block;
-        content: '';
-        top: -1px;
-        right: -1px;
-        bottom: -1px;
-        left: -1px;
-        border-radius: 5px;
-        transition: 0.2s;
-      }
+    .label {
+        /* OLD */
+        text-transform: uppercase;
+        font-weight: bold;
+
+        font-family: 'Lato', sans-serif;
+        text-align: center;
+        letter-spacing: 0.13rem;
+        text-decoration: none;    
+        font-size: 1.4rem;
+
+        /* text-transform: lowercase; */
+         /* &:first-letter  {
+            text-transform: uppercase;
+        } */       
+    }
+
+    &:visited {
+        border: 1px solid ${({ theme }) => theme.borderColor};
+        background: ${({ theme }) => theme.backgroundColor};
+        color: ${({ theme }) => (theme.textColor ? theme.textColor : theme.white)};
+    }
 
     &:hover {
         cursor: pointer;
+        border-color: ${({ theme }) => lighten(0.03, theme.borderColor)};
+        background: ${({ theme }) => lighten(0.03, theme.backgroundColor)};
+        color: ${({ theme }) => lighten(0.03, (theme.textColor ? theme.textColor : theme.white))};
+    }
 
-        &:before {
-            background: hsla(255, 0%, 100%, 0.05);
-        }
+    &:active {
+        border-color: ${({ theme }) => darken(0.03, theme.borderColor)};
+        background: ${({ theme }) => darken(0.03, theme.backgroundColor)};
+        color: ${({ theme }) => darken(0.03, (theme.textColor ? theme.textColor : theme.white))};
     }
 
     &.disabled {
         cursor: not-allowed;
-        opacity: 0.5;
+
+        &:active,&:hover {
+            border: 1px solid ${({ theme }) => theme.borderColor};
+            background: ${({ theme }) => theme.backgroundColor};
+            color: ${({ theme }) => (theme.textColor ? theme.textColor : theme.white)};
+        }
+
+        &:before {
+            content: '';
+            position: absolute;
+            background: ${({ theme }) => theme.rgba(theme.white, 0.5)};
+            display: block;
+            top: -1px;
+            right: -1px;
+            bottom: -1px;
+            left: -1px;
+            border-radius: 3px;
+            transition: 0.2s;
+        }
     }
 `;
 
@@ -54,6 +82,13 @@ export const Spacer = styled.span`
     margin-right: ${({ right }) => (right ? '.4rem' : 0)};
 `;
 
+export const Plain = styled.div`
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    color: ${({ theme }) => theme.black};
+`;
+
 export const Link = styled.div`
     cursor: pointer;
     display: inline-block;
@@ -63,24 +98,6 @@ export const Link = styled.div`
     padding: 0;
     color: ${({ theme }) => theme.black};
     text-decoration: underline;
-`;
-
-
-export const Plain = styled.div`
-    cursor: pointer;
-    margin: 0;
-    padding: 0;
-    color: ${({ theme }) => theme.black};
-`;
-
-export const Primary = styled.div`
-    ${(props) => defaultStyle(props)}
-    background: ${({ theme }) => theme.brandPrimaryColor};
-    color: ${(props) => props.theme.white};
- 
-    &:active,&:visited {
-        color: ${(props) => props.theme.white};
-    }
 `;
 
 export const Icon = styled.div`
@@ -105,58 +122,5 @@ export const Icon = styled.div`
     &:hover {
         cursor: pointer;
         background: ${({ theme }) => theme.gray100};
-    }
-`;
-
-export const Secondary = styled.div`
-    ${(props) => defaultStyle(props)}
-    background: ${({ theme }) => theme.brandSecondaryColor};
-    color: ${(props) => props.theme.white};
- 
-    &:active,&:visited {
-        color: ${(props) => props.theme.white};
-    }
-`;
-
-export const Transparent = styled.div`
-    ${(props) => defaultStyle(props)}
-    background: transparent;
-    border: none;
-    color: ${(props) => props.theme.black};
-    border-radius: 0;
- 
-    &:active,&:visited {
-        color: ${(props) => props.theme.gray800};
-    }
-`;
-
-export const Reject = styled.div`
-    ${(props) => defaultStyle(props)}
-    background: ${({ theme }) => theme.ruby800};
-    color: ${(props) => props.theme.white};
- 
-    &:active,&:visited {
-        color: ${(props) => props.theme.white};
-    }
-`;
-
-export const Create = styled.div`
-    ${(props) => defaultStyle(props)}
-    background: ${({ theme }) => '#13be69'};
-    color: ${(props) => props.theme.white};
- 
-    &:active,&:visited {
-        color: ${(props) => props.theme.white};
-    }
-`;
-
-export const Hollow = styled.div`
-    ${(props) => defaultStyle(props)}
-    color: ${(props) => props.theme.brandPrimaryColor};
-    background: ${({ theme }) => theme.white};
-    border-color: ${({ theme }) => theme.brandPrimaryColor};
- 
-    &:active,&:visited {
-        color: ${(props) => props.theme.brandPrimaryColor};
     }
 `;
