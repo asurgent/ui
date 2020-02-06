@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 export const MenuWrapper = styled.div`
-    background: white;
-    position: relative;
+    @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
+        position: absolute;
+        right: 20px;
+    }   
 `;
 
 export const DesktopMenu = styled.div`

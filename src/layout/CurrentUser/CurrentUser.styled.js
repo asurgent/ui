@@ -1,10 +1,15 @@
 import styled from 'styled-components';
+import * as Button from '../../Button/Button.styled';
 
 export const Wrapper = styled.div`
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: center;
+    ${Button.Plain} {
+        span {
+            display: flex;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+        }
+    }
 `;
 
 export const Name = styled.div`

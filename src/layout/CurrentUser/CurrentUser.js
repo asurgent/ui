@@ -33,20 +33,19 @@ const UserDropdown = ({
   return (
     <U.Wrapper>
       <U.Desktop>
-        <UserImage.Circle
-          size="3.2rem"
-          name={name}
-          email={email}
-          href={imageLink}
-        />
-        <U.Name>
-          <b>{name}</b>
-          <small>{customerName}</small>
-        </U.Name>
-        <Button.Icon
-          onClick={() => setOpen(!open)}
-          icon={open ? <Icon.ExpandLess fontSize="large" /> : <Icon.ExpandMore fontSize="large" />}
-        />
+        <Button.Plain onClick={() => setOpen(!open)}>
+          <UserImage.Circle
+            size="3.2rem"
+            name={name}
+            email={email}
+            href={imageLink}
+          />
+          <U.Name>
+            <b>{name}</b>
+            <small>{customerName}</small>
+          </U.Name>
+          <Button.Icon icon={open ? <Icon.ExpandLess fontSize="large" /> : <Icon.ExpandMore fontSize="large" />} />
+        </Button.Plain>
       </U.Desktop>
       <U.Mobile>
         <Button.Icon onClick={() => setOpen(true)} icon={<Icon.Menu fontSize="large" />} />
