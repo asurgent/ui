@@ -12,6 +12,7 @@ export const dropdownMenu = () => (
     <p>Try in mobile view</p>
 
     <DropdownMenu
+      isOpen={boolean('open', false)}
       selectedLanguage="sv"
       navigationList={[
         {

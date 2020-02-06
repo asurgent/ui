@@ -15,7 +15,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        include: path.resolve(__dirname, 'src'),
+        include: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'high-order-components')],
         exclude: /(node_modules|bower_components|build)/,
         use: {
           loader: 'babel-loader',
@@ -28,4 +28,9 @@ module.exports = {
   },
   target: 'web',
   externals: [nodeExternals()],
+  resolve: {
+    alias: {
+      'high-order-components': path.resolve(__dirname, 'high-order-components'),
+    },
+  },
 };

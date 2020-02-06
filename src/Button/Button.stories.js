@@ -1,18 +1,22 @@
 
 import React from 'react';
 import * as Icon from '@material-ui/icons';
+import {
+  withKnobs, boolean,
+} from '@storybook/addon-knobs';
 import * as Button from './index';
 
-const content = 'Button';
+const content = 'Button text ';
 
-export default { title: 'UI Components|Buttons' };
+export default { title: 'UI Components|Buttons', decorators: [withKnobs] };
+
 
 export const iconButton = () => (
-  <Button.Icon tooltip="Hello" saveLinkState link="/test" icon={<i className="fa fa-times" aria-hidden="true" />} />
+  <Button.Icon tooltip="Hello" saveLinkState link="/test" icon={<Icon.ConfirmationNumber fontSize="large" />} />
 );
 
 export const primaryButton = () => (
-  <Button.Primary>{content}</Button.Primary>
+  <Button.Primary loading={boolean('loading', true)}>{content}</Button.Primary>
 );
 
 export const secondaryButton = () => (
@@ -23,8 +27,16 @@ export const hollowButton = () => (
   <Button.Hollow>{content}</Button.Hollow>
 );
 
+export const hrefButton = () => (
+  <Button.Primary disabled link="https://google.com">{content}</Button.Primary>
+);
+
 export const plainButton = () => (
   <Button.Plain>{content}</Button.Plain>
+);
+
+export const linkButton = () => (
+  <Button.Link>{content}</Button.Link>
 );
 
 export const transparentButton = () => (
@@ -33,4 +45,8 @@ export const transparentButton = () => (
 
 export const rejectButton = () => (
   <Button.Reject>{content}</Button.Reject>
+);
+
+export const acceptButton = () => (
+  <Button.Create>{content}</Button.Create>
 );

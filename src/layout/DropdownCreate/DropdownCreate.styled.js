@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
 export const MenuWrapper = styled.div`
-    @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
-        position: absolute;
-        right: 20px;
-    }   
+    background: white;
+    position: relative;
 `;
 
 export const DesktopMenu = styled.div`
@@ -12,28 +10,24 @@ export const DesktopMenu = styled.div`
     width: auto;
     min-width: 28rem;
     height: auto;
-    padding: 2.4rem;
-    border-radius: 5px;
+    padding: 1.6rem;
     margin-top: .8rem;  
+    top: 100%;
     transform: translateY(10px);
+    right: 0;
+    border-radius: 5px;
     background: ${({ theme }) => theme.white};
     border: 1px solid ${({ theme }) => theme.gray200};
     box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
-    top: 100%;
-    right: 0;
     
     small {
         display: block;
         margin-top: .8rem;
         margin-bottom: 1.6rem;
     }
+    
 `;
 
-export const DesktopMenuFooter = styled.div`
-    margin-top: 1.6rem;
-    border-top: 1px solid ${({ theme }) => theme.gray300};;
-    padding-top: 1.6rem;
-`;
 
 export const MobileMenu = styled.div`
     position: fixed;
@@ -51,46 +45,47 @@ export const MobileMenu = styled.div`
         right: 2.4rem;
         top: 2.4rem;
     }
-    .user {
-        padding: 2.4rem;
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding-bottom: 1.6rem;
 
-        b {
-            margin-top: 1.6rem;
-            margin-bottom: .8rem;
-        }
+`;
+
+export const CreateTitle = styled.div``;
+export const CreateDescription = styled.div`
+    color: ${({ theme }) => theme.gray600};
+    font-size: 1.2rem;
+`;
+
+export const CreateItem = styled.div`
+    display: grid;
+    grid-template-columns: 3.2rem 1fr;
+    grid-template-areas: 
+        "logo title"
+        "logo desc";
+    padding: .8rem;
+    border-radius: 3px;
+
+    &:hover {
+        background: ${({ theme }) => theme.gray100};
     }
-    .menu {
-        flex: 1;
-        overflow-y: auto;
-        padding: 2.4rem;
-        justify-content: center;
-        display: flex;
+
+    .create-icon {
+        grid-area: logo;
+        align-self: center;
+        font-weight: bold;
+    }
+    ${CreateTitle} {
+        grid-area: title;
+    }
+
+    ${CreateDescription} {
+        grid-area: desc;
     }
 `;
 
-export const TabButton = styled.div`
-    cursor:pointer;
-    width: 100%;
-    padding: 1.6rem;
-    font-size: 1.4rem;
-    font-weight: bold;
-    background: ${({ active, theme }) => (active ? theme.white : theme.gray300)};
-    text-transform: uppercase;
-    text-align: center;
-`;
 
-export const Tabs = styled.div`
-    height: auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+export const MobileContent = styled.div`
+    margin-top: 1.6rem;
+    padding: 2.4rem;
 `;
-
 
 export const Mobile = styled.div`
     display: flex;

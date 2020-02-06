@@ -1,42 +1,49 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
+import withTheme from 'high-order-components/withTheme';
+import PropTypes from 'prop-types';
 import * as C from './Navigation.styled';
 import * as Tooltip from '../../Tooltip';
-import * as Button from '../../Button';
 
-const mergeThemes = (theme) => (originTheme) => {
-  const newTheme = theme(originTheme);
+const propTypes = {
+  theme: PropTypes.instanceOf(Object).isRequired, // Passed to high-order-components/withTheme
+  navigationList: PropTypes.instanceOf(Array).isRequired,
+  withLabel: PropTypes.bool,
+  onNavigate: PropTypes.func,
+};
 
-  return { ...originTheme, ...newTheme };
+const defaultProps = {
+  withLabel: false,
+  onNavigate: (() => {}),
 };
 
 const Navigation = ({
-  theme,
   withLabel,
   navigationList,
   onNavigate,
 }) => (
-  <ThemeProvider theme={mergeThemes(theme)}>
-    <C.Wrapper>
-      {
-            navigationList.map(({
-              icon,
-              tooltip,
-              link,
-              label,
-              isActive,
-            }) => (
-              <Tooltip.Right tip={tooltip} key={tooltip}>
-                <C.NavigationItem to={link} onClick={onNavigate} isActive={isActive}>
-                  {icon}
-                  {' '}
-                  {withLabel && (<span>{label}</span>)}
-                </C.NavigationItem>
-              </Tooltip.Right>
-            ))
-        }
-    </C.Wrapper>
-  </ThemeProvider>
+  <C.Wrapper>
+    {
+      navigationList.map(({
+        icon,
+        tooltip,
+        link,
+        label,
+        isActive,
+      }) => (
+        <Tooltip.Right tip={tooltip} key={tooltip}>
+          <C.NavigationItem to={link} onClick={onNavigate} isActive={isActive}>
+            {icon}
+            {' '}
+            {withLabel && (<span>{label}</span>)}
+          </C.NavigationItem>
+        </Tooltip.Right>
+      ))
+    }
+  </C.Wrapper>
 );
 
-export default Navigation;
+Navigation.propTypes = propTypes;
+Navigation.defaultProps = defaultProps;
+Navigation.displayName = '@asurgent.ui.layout.Navigation';
+
+export default withTheme()(Navigation);

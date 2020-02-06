@@ -1,17 +1,26 @@
 import styled from 'styled-components';
 
 export const Modal = styled.div`
-  width: 50%;
-  height: auto;
-  min-height: 200px;
-  max-height: 80vh;
-  padding: 3.2rem 0;
-  border-radius: 5px;
-  position: relative;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   overflow: hidden;
   background: ${({ theme }) => theme.white};
   display: flex;
   flex-direction: column;
+  padding: 1.6rem;
+
+  @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
+    padding: 3.2rem 0;
+    border-radius: 5px;
+    position: relative;
+    width: 50%;
+    height: auto;
+    min-height: 200px;
+    max-height: 80vh;
+  }
 `;
 
 export const ModalTitle = styled.h2`
@@ -32,7 +41,12 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  padding: 0 3.2rem;
+  margin-top: 3.2rem;
+  
+
+  @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
+    padding: 0 3.2rem;
+  }
 `;
 
 export const Close = styled.div`
@@ -56,7 +70,7 @@ export const Close = styled.div`
 export const Overlay = styled.div`
   top: 0;
   left: 0;
-  z-index: 999;
+  z-index: 2;
   position: fixed;
   height: -webkit-fill-available-;
   background: rgba(0, 0, 0, 0.3);

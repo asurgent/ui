@@ -8,11 +8,14 @@ import {
   fixateBodyScroll,
   releaseBodyScroll,
 } from './helpers';
+import * as Transition from '../Transition';
+
 
 const propTypes = {
   title: PropTypes.string,
   onClose: PropTypes.func,
   withoutHeader: PropTypes.bool,
+  isOpen: PropTypes.bool.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
@@ -41,22 +44,25 @@ class Modal extends Component {
       title,
       onClose,
       withoutHeader,
+      isOpen,
     } = this.props;
 
     return ReactDOM.createPortal(
-      <C.Overlay>
-        <C.Modal>
-          { !withoutHeader && (
+      <Transition.FadeIn isVisible={isOpen} timeout={50}>
+        <C.Overlay>
+          <C.Modal>
+            { !withoutHeader && (
             <C.Close onClick={onClose}>
               <Icon.Close fontSize="large" />
             </C.Close>
-          )}
-          {title && <C.ModalTitle>{title}</C.ModalTitle>}
-          <C.Content>
-            {children}
-          </C.Content>
-        </C.Modal>
-      </C.Overlay>,
+            )}
+            {title && <C.ModalTitle>{title}</C.ModalTitle>}
+            <C.Content>
+              {children}
+            </C.Content>
+          </C.Modal>
+        </C.Overlay>
+      </Transition.FadeIn>,
       modalRoot,
     );
   }

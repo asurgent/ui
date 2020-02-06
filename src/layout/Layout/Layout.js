@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import * as Icons from '@material-ui/icons';
 import IconAsurget from '../../icons/IconAsurget';
 import CurrentUser from '../CurrentUser';
 import DropdownMenu from '../DropdownMenu';
+import DropdownCreate from '../DropdownCreate';
+import * as Button from '../../Button';
 import * as C from './Layout.styled';
 import Navigation from '../Navigation';
 
@@ -16,11 +19,36 @@ const propTypes = {
 
 const defaultProps = {};
 
+const CreateList = ({ shouldShow, createList, translations }) => {
+  const [createOpen, setCreateOpen] = useState(false);
+
+  if (!shouldShow) {
+    return null;
+  }
+  return (
+    <>
+      <Button.Create
+        onClick={() => setCreateOpen(true)}
+        iconRight={createOpen ? <Icons.ExpandLess /> : <Icons.ExpandMore />}
+      >
+        {translations.create}
+      </Button.Create>
+      <DropdownCreate
+        onClose={() => setCreateOpen(false)}
+        isOpen={createOpen}
+        createActionList={createList}
+      />
+    </>
+  );
+};
+
 const Layout = ({ provider, children }) => {
   const navigation = provider.getNavigationItems();
   const languages = provider.getAvaliableLanguages();
   const selectedLanguage = provider.getCurrentLanguage();
-  const { name, email, imageLink } = provider.getUser();
+  const {
+    name, email, imageLink, isAdmin,
+  } = provider.getUser();
   const customerName = provider.getCustomerName();
 
   return (
@@ -30,20 +58,32 @@ const Layout = ({ provider, children }) => {
       </C.Logo>
 
       <C.Top>
-        <CurrentUser name={name} email={email} imageLink={imageLink} customerName={customerName}>
-          {({ onClose }) => (
+        <CreateList
+          shouldShow={isAdmin}
+          createList={provider.getCreateList()}
+          translations={provider.getMenuTranslations()}
+        />
+        <CurrentUser
+          name={name}
+          email={email}
+          imageLink={imageLink}
+          customerName={customerName}
+        >
+          {({ onClose, isOpen }) => (
             <DropdownMenu
-              onNavigate={onClose}
-              onChangeLanguage={provider.onChangeLanguage}
-              onLogout={provider.onLogout}
-              languages={languages}
-              navigationList={navigation}
-              selectedLanguage={selectedLanguage}
-              translations={provider.getMenuTranslations()}
               name={name}
               email={email}
+              customerName={customerName}
               imageLink={imageLink}
               onClose={onClose}
+              isOpen={isOpen}
+              languages={languages}
+              navigationList={navigation}
+              onNavigate={onClose}
+              selectedLanguage={selectedLanguage}
+              translations={provider.getMenuTranslations()}
+              onChangeLanguage={provider.onChangeLanguage}
+              onLogout={provider.onLogout}
             />
           )}
         </CurrentUser>
