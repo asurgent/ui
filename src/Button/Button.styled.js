@@ -15,9 +15,9 @@ export const Button = styled.div`
     border-radius: 3px;
 
     .label {
-        /* OLD */
-        text-transform: uppercase;
-        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         font-family: 'Lato', sans-serif;
         text-align: center;
@@ -25,10 +25,15 @@ export const Button = styled.div`
         text-decoration: none;    
         font-size: 1.4rem;
 
+        /* NEW */
         /* text-transform: lowercase; */
          /* &:first-letter  {
             text-transform: uppercase;
-        } */       
+        } */
+
+        /* OLD */
+        text-transform: uppercase;
+        font-weight: bold;
     }
 
     &:visited {
