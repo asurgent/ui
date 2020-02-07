@@ -27,9 +27,11 @@ const mergeDeep = (target, source) => {
 };
 
 const extendCellObject = (index, cellData, newCell, headerData, rowData) => {
+  const renderCell = headerData[index] ? (Object.prototype.hasOwnProperty.call(headerData[index], 'render') ? headerData[index].render : true) : true;
   const headerProps = headerData[index] ? headerData[index].props : {};
   const rowProps = rowData.props || {};
   const cellProps = (cellData.props || {});
+  Object.assign(newCell, { render: renderCell });
 
   // Merge all passed props from header, row & cell
   // Priority is cell, row, header
@@ -63,6 +65,7 @@ const tableRowCellGenerator = (columnList, rowData, headerData) => columnList
     }
 
     cellAcc.push(newCell);
+
     return cellAcc;
   }, []);
 
@@ -81,8 +84,13 @@ const generateCells = (props, rowData, components) => {
       const {
         id,
         cell,
+        render,
         props: cellProps,
       } = cellData;
+
+      if (!render) {
+        return null;
+      }
 
       return (
         <Cell {...cellProps} key={id} className={`column-${i + 1}`}>

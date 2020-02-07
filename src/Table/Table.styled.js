@@ -54,7 +54,11 @@ export const Row = styled.div`
   grid-template-columns: ${({ headerList, equalSize }) => {
     const columnSize = 'minmax(50px, 1fr)';
     const sizing = headerList
-      .reduce((acc, { size }) => {
+      .reduce((acc, { size, render = true }) => {
+        if (!render) {
+          return acc;
+        }
+
         if (equalSize) {
           acc.push(columnSize);
         } else {

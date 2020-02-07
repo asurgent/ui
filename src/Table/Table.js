@@ -139,13 +139,17 @@ const Table = withTheme((props) => {
           {
             withHeaderSort && (
               <C.HeaderRow headerList={props.headerData} equalSize={props.equalSizeColumns} striped>
-                { headerData.map(({ value, sortKey, props: headerProps }) => (
+                { headerData.map(({
+                  value, render = true, sortKey, props: headerProps,
+                }) => (
+                  render && (
                   <C.Header {...(headerProps || {})} key={value} onClick={() => sortKey && onSort(sortKey)} sortKey={sortKey}>
                     <C.HeaderContent sortKey={sortKey}>{value}</C.HeaderContent>
                     { sortKey !== undefined && (
                     <C.HeaderSort active={sortKey === activeSort} direction={sortDirection} />
                     )}
                   </C.Header>
+                  )
                 )) }
               </C.HeaderRow>
             )
@@ -154,9 +158,11 @@ const Table = withTheme((props) => {
             withHeaderLabels && !withHeaderSort && (
               <C.HeaderRow headerList={props.headerData} equalSize={props.equalSizeColumns} striped>
                 { headerData.map(({ value, render = true, props: headerProps }) => (
+                  render && (
                   <C.Header {...(headerProps || {})} key={value}>
-                    {render && <C.HeaderLabel>{value}</C.HeaderLabel>}
+                    <C.HeaderLabel>{value}</C.HeaderLabel>
                   </C.Header>
+                  )
                 )) }
               </C.HeaderRow>
             )

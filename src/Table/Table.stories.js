@@ -167,47 +167,50 @@ export const apiTable = () => {
   }, []);
 
   return (
-    <Table.Api
-      useHistoryState
-      historyStatePrefix="tickets"
-      provider={table}
-      withSearch={boolean('With search', true)}
-      sortKeys={[
-        { value: 'created', label: 'Created' },
-        {
-          value: 'modified', label: 'Modified', default: true, direction: 123,
-        },
-        { value: 'closed', label: 'Closed' },
-        { value: 'due', label: 'Due' },
-      ]}
-      headerData={[
-        {
-          value: lorem,
-          sortKey: 'sort-A',
-          size: 'minmax(30rem, 1fr)',
-        },
-        { value: 'B', sortKey: 'sort-B' },
-        { value: 'C', sortKey: 'sort-C' },
-        {
-          value: 'D',
-          sortKey: 'sort-D',
-          size: 'minmax(8rem, 10rem)',
-        },
-      ]}
-      cardConfiguration={(row) => <Card row={row} />}
-      columnConfiguration={(row) => {
-        const {
-          valueA, valueB, valueC, valueD,
-        } = row;
+    <div style={{ padding: '3.2rem' }}>
+      <Table.Api
+        withHeaderLabels
+        useHistoryState
+        historyStatePrefix="tickets"
+        provider={table}
+        withSearch={boolean('With search', true)}
+        sortKeys={[
+          { value: 'created', label: 'Created' },
+          {
+            value: 'modified', label: 'Modified', default: true, direction: 123,
+          },
+          { value: 'closed', label: 'Closed' },
+          { value: 'due', label: 'Due' },
+        ]}
+        headerData={[
+          {
+            value: lorem,
+            sortKey: 'sort-A',
+            size: 'minmax(30rem, 1fr)',
+          },
+          { value: 'B', sortKey: 'sort-B' },
+          { value: 'C', sortKey: 'sort-C', render: false },
+          {
+            value: 'D',
+            sortKey: 'sort-D',
+            size: 'minmax(8rem, 10rem)',
+          },
+        ]}
+        cardConfiguration={(row) => <Card row={row} />}
+        columnConfiguration={(row) => {
+          const {
+            valueA, valueB, valueC, valueD,
+          } = row;
 
-        return [
-          { value: valueB },
-          valueA,
-          () => valueC,
-          () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
-        ];
-      }}
-    />
+          return [
+            { value: valueB },
+            valueA,
+            () => valueC,
+            () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
+          ];
+        }}
+      />
+    </div>
   );
 };
 
