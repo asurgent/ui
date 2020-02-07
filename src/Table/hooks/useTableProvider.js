@@ -24,6 +24,7 @@ const cacheDefaults = {
 const useTableProvider = (updateAction = (() => {})) => {
   const preRenderState = { ...cacheDefaults };
   const [currentState, setCurrentState] = useState({ ...preRenderState, initated: false });
+  const [filterState, setFilterState] = useState([]);
 
   const [router, setRouter] = useState({});
   const [tableData, setTableData] = useState(tableDefaults);
@@ -147,6 +148,13 @@ const useTableProvider = (updateAction = (() => {})) => {
         updateInitalState({ searchQuery });
       }
     },
+    setFilterOption: (filter) => {
+      if (Array.isArray(filter) && filter.length > 0) {
+        setFilterState(filter);
+      }
+    },
+    getFilter: () => filterState,
+    hasFilter: () => filterState.length > 0,
     setSortKeys: (sortKeys) => {
       if (Array.isArray(sortKeys) && sortKeys.length > 0) {
         const { value, direction } = getDefaultSortItem(sortKeys);

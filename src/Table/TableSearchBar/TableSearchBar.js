@@ -4,6 +4,7 @@ import * as Icon from '@material-ui/icons';
 import { sortDirection as direction } from '../helpers';
 import * as Form from '../../Form';
 import * as Button from '../../Button';
+import TableFilter from '../TableFilter';
 import * as C from './TableSearchBar.styled';
 
 const searchForm = (searchLabel, provider) => ({
@@ -55,20 +56,21 @@ const TableSearchBar = (props) => {
   }, [searchLabel]);
 
   return (
-    <Form.Primary
-      form={formData}
-      onNewValue={(values) => {
-        setSortKey(values.sortDirection);
-        setQuery(values.search);
-      }}
-    >
-      {({ search, sortDirection }) => (
-        <>
-          <C.StyleForm>
-            <C.SearchInput>
-              {search}
-            </C.SearchInput>
-            { sortDirection && provider.hasSortyKeys() && (
+    <>
+      <Form.Primary
+        form={formData}
+        onNewValue={(values) => {
+          setSortKey(values.sortDirection);
+          setQuery(values.search);
+        }}
+      >
+        {({ search, sortDirection }) => (
+          <>
+            <C.StyleForm>
+              <C.SearchInput>
+                {search}
+              </C.SearchInput>
+              { sortDirection && provider.hasSortyKeys() && (
               <C.SortInput>
                 {sortDirection}
                 <Button.Icon
@@ -77,11 +79,18 @@ const TableSearchBar = (props) => {
                   icon={sort === direction.asc ? <Icon.ArrowDownward /> : <Icon.ArrowUpward />}
                 />
               </C.SortInput>
-            )}
-          </C.StyleForm>
-        </>
-      )}
-    </Form.Primary>
+              )}
+              {provider.hasFilter() && (
+                <C.Filter>
+                  <TableFilter provider={provider} />
+                </C.Filter>
+              )}
+            </C.StyleForm>
+          </>
+        )}
+      </Form.Primary>
+
+    </>
   );
 };
 

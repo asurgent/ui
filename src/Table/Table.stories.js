@@ -174,6 +174,10 @@ export const apiTable = () => {
         historyStatePrefix="tickets"
         provider={table}
         withSearch={boolean('With search', true)}
+        withFilter={[
+          { label: 'Gurka', facetKey: 'gurka_23', excludeable: true },
+          { label: 'Pankaka', facetKey: 'gurka_23', excludeable: false },
+        ]}
         sortKeys={[
           { value: 'created', label: 'Created' },
           {

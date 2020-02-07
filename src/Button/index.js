@@ -1,5 +1,7 @@
+import React from 'react';
 import { darken } from 'polished';
 import withMapProps from 'high-order-components/withMapProps';
+import * as Icons from '@material-ui/icons';
 import withStyle from './withStyle';
 import * as C from './Button.styled';
 
@@ -41,6 +43,13 @@ const Transparent = withStyle((theme) => ({
   spinnerColor: theme.black,
 }))(C.Button);
 
+const filterMapper = (props) => ({ iconRight: <Icons.ExpandMore />, ...props });
+const Filter = withMapProps(filterMapper)(withStyle((theme) => ({
+  backgroundColor: '#eff3f6',
+  borderColor: darken(0.1, '#eff3f6'),
+  textColor: '#24292e',
+}))(C.Filter));
+
 const Plain = withStyle()(C.Plain);
 const Link = withStyle()(C.Link);
 const mapper = ({
@@ -70,4 +79,5 @@ export {
   Transparent,
   Link,
   Create,
+  Filter,
 };

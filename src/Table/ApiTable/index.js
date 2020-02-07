@@ -22,6 +22,7 @@ const ApiTableProxy = (props) => {
     useHistoryState,
     historyStatePrefix,
     sortKeys,
+    withFilter,
   } = props;
   const history = useHistory();
   const location = useLocation();
@@ -29,6 +30,10 @@ const ApiTableProxy = (props) => {
   useEffect(() => {
     if (sortKeys && Array.isArray(sortKeys) && sortKeys.length) {
       provider.setSortKeys(sortKeys);
+    }
+
+    if (withFilter && Array.isArray(withFilter) && withFilter.length) {
+      provider.setFilterOption(withFilter);
     }
 
     if (useHistoryState) {

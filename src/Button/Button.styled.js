@@ -94,6 +94,23 @@ export const Plain = styled.div`
     color: ${({ theme }) => theme.black};
 `;
 
+export const Filter = styled(Button)`
+    padding: .5rem .8rem;
+    background-color: #eff3f6;
+    background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
+
+    &:hover {
+        border-color: ${({ theme }) => darken(0.1, theme.borderColor)};
+        background: ${({ theme }) => darken(0.02, theme.backgroundColor)};
+        background-image: linear-gradient(-180deg,${() => darken(0.02, '#fafbfc')},${() => darken(0.02, '#eff3f6')} 90%);
+        color: ${({ theme }) => darken(0.02, (theme.textColor))};
+    }
+
+    .label {
+        font-size: .9rem;
+    }
+`;
+
 export const Link = styled.div`
     cursor: pointer;
     display: inline-block;
