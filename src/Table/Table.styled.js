@@ -126,9 +126,14 @@ export const Header = styled(Cell)`
 `;
 
 export const HeaderContent = styled(TableCellContent)`
-    
     font-weight: 700;
     flex: 1;
+`;
+
+export const HeaderLabel = styled(TableCellContent)`
+    color: ${({ theme }) => theme.gray600};
+    font-weight: 600;
+    font-size: 1.2rem;
 `;
 
 /* Loader & empty state wrapper */

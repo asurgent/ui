@@ -50,6 +50,10 @@ const TableSearchBar = (props) => {
     }
   }, [query]);
 
+  useEffect(() => {
+    formData.updateField('search', { placeholder: searchLabel });
+  }, [searchLabel]);
+
   return (
     <Form.Primary
       form={formData}

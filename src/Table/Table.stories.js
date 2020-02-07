@@ -98,7 +98,8 @@ export const defaultTable = () => (
     zebra={boolean('Zebra', true)}
     striped={boolean('Striped', true)}
     cardView={boolean('Card view', false)}
-    withHeader={boolean('With header', true)}
+    withHeaderSort={boolean('With header sort', true)}
+    withHeaderLabels={boolean('With header labels', true)}
     withPagination={boolean('With pagination', true)}
     equalSizeColumns={boolean('Equal size column', false)}
     headerData={[

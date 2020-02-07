@@ -10,7 +10,8 @@ import { generateRows, sortDirection as directions } from './helpers';
 export const propTypes = {
   pages: PropTypes.number,
   activePage: PropTypes.number,
-  withHeader: PropTypes.bool,
+  withHeaderSort: PropTypes.bool,
+  withHeaderLabels: PropTypes.bool,
   withPagination: PropTypes.bool,
   rowData: PropTypes.arrayOf(
     PropTypes.instanceOf(Object),
@@ -49,7 +50,8 @@ export const defaultProps = {
   pages: 0,
   activePage: 0,
   cardView: false,
-  withHeader: true,
+  withHeaderSort: false,
+  withHeaderLabels: false,
   withPagination: true,
   headerData: [],
   cardRowConfiguration: false,
@@ -68,8 +70,6 @@ const bodyComponents = {
   row: C.Row,
   content: C.TableCellContent,
 };
-
-// const PAGINATION_DELTA = 5;
 
 const Table = withTheme((props) => {
   const {
@@ -98,7 +98,8 @@ const Table = withTheme((props) => {
     zebra,
     striped,
     activePage,
-    withHeader,
+    withHeaderSort,
+    withHeaderLabels,
     withPagination,
     equalSizeColumns,
     isLoading,
@@ -135,18 +136,31 @@ const Table = withTheme((props) => {
           headerList={headerData}
           equalSize={equalSizeColumns}
         >
-          { withHeader && (
-            <C.HeaderRow headerList={props.headerData} equalSize={props.equalSizeColumns} striped>
-              { headerData.map(({ value, sortKey, props: headerProps }) => (
-                <C.Header {...(headerProps || {})} key={value} onClick={() => sortKey && onSort(sortKey)} sortKey={sortKey}>
-                  <C.HeaderContent sortKey={sortKey}>{value}</C.HeaderContent>
-                  { sortKey !== undefined && (
+          {
+            withHeaderSort && (
+              <C.HeaderRow headerList={props.headerData} equalSize={props.equalSizeColumns} striped>
+                { headerData.map(({ value, sortKey, props: headerProps }) => (
+                  <C.Header {...(headerProps || {})} key={value} onClick={() => sortKey && onSort(sortKey)} sortKey={sortKey}>
+                    <C.HeaderContent sortKey={sortKey}>{value}</C.HeaderContent>
+                    { sortKey !== undefined && (
                     <C.HeaderSort active={sortKey === activeSort} direction={sortDirection} />
-                  )}
-                </C.Header>
-              )) }
-            </C.HeaderRow>
-          )}
+                    )}
+                  </C.Header>
+                )) }
+              </C.HeaderRow>
+            )
+          }
+          {
+            withHeaderLabels && !withHeaderSort && (
+              <C.HeaderRow headerList={props.headerData} equalSize={props.equalSizeColumns} striped>
+                { headerData.map(({ value, render = true, props: headerProps }) => (
+                  <C.Header {...(headerProps || {})} key={value}>
+                    {render && <C.HeaderLabel>{value}</C.HeaderLabel>}
+                  </C.Header>
+                )) }
+              </C.HeaderRow>
+            )
+          }
           {/* Render rows start */}
           { noContent && <C.Loading>{emptystate}</C.Loading>}
           { !isLoading && rows }
