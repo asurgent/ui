@@ -4,7 +4,6 @@ import * as Icon from '@material-ui/icons';
 import { sortDirection as direction } from '../helpers';
 import * as Form from '../../Form';
 import * as Button from '../../Button';
-import TableFilter from '../TableFilter';
 import * as C from './TableSearchBar.styled';
 
 const searchForm = (searchLabel, provider) => ({
@@ -17,11 +16,12 @@ const searchForm = (searchLabel, provider) => ({
 });
 
 const propTypes = {
-  provider: PropTypes.instanceOf(Object).isRequired,
+  provider: PropTypes.instanceOf(Object),
   searchLabel: PropTypes.string,
 };
 
 const defaultProps = {
+  provider: {},
   searchLabel: '',
 };
 
@@ -79,11 +79,6 @@ const TableSearchBar = (props) => {
                   icon={sort === direction.asc ? <Icon.ArrowDownward /> : <Icon.ArrowUpward />}
                 />
               </C.SortInput>
-              )}
-              {provider.hasFilter() && (
-                <C.Filter>
-                  <TableFilter provider={provider} />
-                </C.Filter>
               )}
             </C.StyleForm>
           </>

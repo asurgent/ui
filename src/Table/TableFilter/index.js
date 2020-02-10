@@ -1,11 +1,14 @@
 import React from 'react';
 import TableFilter from './TableFilter';
+import useFilter from '../hooks/useFilterProvider';
 
-const TableFilterProxy = (props) => {
-  const { provider } = props;
+const TableFilterProxy = ({ tableHook, filterConfiguratuion }) => {
+  const filterHook = useFilter(filterConfiguratuion, tableHook);
 
-  if (provider && provider.isMounted) {
-    return <TableFilter {...props} />;
+  if (tableHook && tableHook.isMounted) {
+    return (
+      <TableFilter filterHook={filterHook} tableHook={tableHook} />
+    );
   }
 
   return null;

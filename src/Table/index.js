@@ -2,6 +2,7 @@ import Table from './Table';
 import Api from './ApiTable';
 import SearchBar from './TableSearchBar';
 import Pagination from './TablePagination';
+import Filter from './TableFilter';
 import useTableProvider from './hooks/useTableProvider';
 import { sortDirection } from './helpers';
 
@@ -12,4 +13,5 @@ export {
   useTableProvider,
   SearchBar,
   Pagination,
+  Filter,
 };

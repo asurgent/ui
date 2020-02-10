@@ -21,10 +21,9 @@ const cacheDefaults = {
 };
 
 
-const useTableProvider = (updateAction = (() => {})) => {
+const useTableProvider = (updateAction = (() => {}), filterAction = (() => {})) => {
   const preRenderState = { ...cacheDefaults };
   const [currentState, setCurrentState] = useState({ ...preRenderState, initated: false });
-  const [filterState, setFilterState] = useState([]);
 
   const [router, setRouter] = useState({});
   const [tableData, setTableData] = useState(tableDefaults);
@@ -48,6 +47,7 @@ const useTableProvider = (updateAction = (() => {})) => {
     }
   }, [isMounted, currentState]);
 
+
   const updateState = (update) => {
     setCurrentState({ ...currentState, ...update, initated: true });
   };
@@ -60,6 +60,9 @@ const useTableProvider = (updateAction = (() => {})) => {
     /* Table-component interface */
     onPaginate: (pageNumber) => {
       updateState({ page: pageNumber });
+    },
+    onFilter: (filter) => {
+      updateState({ filter });
     },
     // ToTo @ Mike. Fix!
     // Both search an sort are triggered by table-controller
@@ -102,6 +105,14 @@ const useTableProvider = (updateAction = (() => {})) => {
     getSortDirection: () => currentState.currentSort.direction,
     getSortKeys: () => currentState.sortKeys,
     requestFailedMessage: () => requestFailed,
+    fetchFilter: (keys, callback) => {
+      const payload = {
+        ...cacheDefaults,
+        size: 1,
+        facets: [...keys],
+      };
+      filterAction(payload, callback);
+    },
     parentReady: () => { setIsMounted(true); },
     isLoading,
     tableData,
@@ -148,13 +159,6 @@ const useTableProvider = (updateAction = (() => {})) => {
         updateInitalState({ searchQuery });
       }
     },
-    setFilterOption: (filter) => {
-      if (Array.isArray(filter) && filter.length > 0) {
-        setFilterState(filter);
-      }
-    },
-    getFilter: () => filterState,
-    hasFilter: () => filterState.length > 0,
     setSortKeys: (sortKeys) => {
       if (Array.isArray(sortKeys) && sortKeys.length > 0) {
         const { value, direction } = getDefaultSortItem(sortKeys);

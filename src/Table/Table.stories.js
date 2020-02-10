@@ -149,10 +149,35 @@ export const apiTable = () => {
       provider.setFailedResponse('Could not get your things');
     }
   };
+  const updateFilterCallback = (payload, filterCallback) => {
+    // do ajaxrequest based on page & query
+    // use setter to set responsedata from azure-search api
+    console.log('payload filter', payload);
 
-  const table = Table.useTableProvider((payload) => {
-    updateCallbackFunction(payload, table);
-  });
+    filterCallback({
+      gurka: [
+        { value: '1133' },
+        { value: '123' },
+        { value: '4465' },
+        { value: '984' },
+      ],
+      pankaka: [
+        { value: '1133' },
+        { value: '123' },
+        { value: '4465' },
+        { value: '984' },
+      ],
+    });
+  };
+
+  const table = Table.useTableProvider(
+    (payload) => {
+      updateCallbackFunction(payload, table);
+    },
+    (payload, filterCallback) => {
+      updateFilterCallback(payload, filterCallback);
+    },
+  );
 
   useEffect(() => {
     // All user interfaces to interact with table provider
@@ -175,8 +200,8 @@ export const apiTable = () => {
         provider={table}
         withSearch={boolean('With search', true)}
         withFilter={[
-          { label: 'Gurka', facetKey: 'gurka_23', excludeable: true },
-          { label: 'Pankaka', facetKey: 'gurka_23', excludeable: false },
+          { label: 'Gurka', facetKey: 'gurka', excludeable: true },
+          { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
         ]}
         sortKeys={[
           { value: 'created', label: 'Created' },

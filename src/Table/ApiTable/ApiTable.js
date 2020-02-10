@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TableSearchBar from '../TableSearchBar';
+import TableFilter from '../TableFilter';
 import Table from '../Table';
 
 const getEmptystate = (provider, props) => {
@@ -26,6 +27,7 @@ const propTypes = {
   activePage: PropTypes.number,
   pages: PropTypes.number,
   rowData: PropTypes.instanceOf(Array),
+  withFilter: PropTypes.instanceOf(Array),
 };
 
 const defaultProps = {
@@ -36,6 +38,7 @@ const defaultProps = {
   activePage: 1,
   pages: 0,
   rowData: [],
+  withFilter: [],
 };
 
 const ApiTable = (props) => {
@@ -46,6 +49,7 @@ const ApiTable = (props) => {
     rowData,
     emptystate,
     searchLabel,
+    withFilter,
     ...rest
   } = props;
 
@@ -57,6 +61,12 @@ const ApiTable = (props) => {
         <TableSearchBar
           provider={provider}
           searchLabel={searchLabel}
+        />
+      )}
+      { withFilter && Array.isArray(withFilter) && withFilter.length > 0 && (
+        <TableFilter
+          tableHook={provider}
+          filterConfiguratuion={withFilter}
         />
       )}
       <Table
