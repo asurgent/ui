@@ -1,9 +1,9 @@
 import styled from 'styled-components';
+import * as Button from '../../Button/Button.styled';
 
 export const Filter = styled.div`
     /* padding:  */
 `;
-
 
 const Base = styled.div`
     display: flex;
@@ -87,6 +87,13 @@ export const Center = styled.div`
     padding: 1.6rem;
 `;
 
+
+export const Filters = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+`;
+
 export const Wrapper = styled.div`
     display: flex;
     position: relative;
@@ -94,9 +101,24 @@ export const Wrapper = styled.div`
     height: auto;
     justify-content: flex-start;
     align-items: center;
-    margin: 0.8rem 0; 
+    flex-flow: wrap;
 
     ${Filter} {
+        margin-top: 0.8rem;
         margin-right: 1rem;
+    }
+
+    ${Button.Plain} {
+        span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color:  ${({ theme }) => theme.gray700};
+
+            svg {
+                color:  ${({ theme }) => theme.black};
+                margin-right: .8rem;
+            }
+        }
     }
 `;

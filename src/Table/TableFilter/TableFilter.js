@@ -80,7 +80,6 @@ const FilterCategory = withTheme(({
     setItems(list);
   }, [filterHook.isInitated]);
 
-
   return (
     <C.Filter>
       <Button.Filter onClick={onOpen}>{label}</Button.Filter>
@@ -145,19 +144,28 @@ const FilterCategory = withTheme(({
 
 const TableFilter = ({ filterHook }) => (
   <C.Wrapper>
-    {
-        filterHook.getFilterCategories()
-          .map(({ label, facetKey }) => (
-            label && facetKey && (
-            <FilterCategory
-              key={facetKey}
-              label={label}
-              filterKey={facetKey}
-              filterHook={filterHook}
-            />
-            )
-          ))
-      }
+    <C.Filters>
+      {
+      filterHook.getFilterCategories()
+        .map(({ label, facetKey }) => (
+          label && facetKey && (
+          <FilterCategory
+            key={facetKey}
+            label={label}
+            filterKey={facetKey}
+            filterHook={filterHook}
+          />
+          )
+        ))
+    }
+    </C.Filters>
+    { filterHook.hasActiveFilter() && (
+      <Button.Plain onClick={() => filterHook.clearFilter()}>
+        <Icons.HighlightOff fontSize="large" />
+        {' '}
+        Clear Filter
+      </Button.Plain>
+    )}
   </C.Wrapper>
 );
 TableFilter.propTypes = propTypes;

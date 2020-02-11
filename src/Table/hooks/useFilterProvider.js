@@ -17,6 +17,19 @@ const useFilterProvider = (config, tableHook) => {
 
   return {
     isInitated: () => initiated,
+    hasActiveFilter: () => {
+      const items = Object.keys(selectedItems);
+      for (let i = 0; i < items.length; i++) {
+        const key = items[i];
+        const filterItems = selectedItems[key];
+
+        if (filterItems.length > 0) {
+          return true;
+        }
+      }
+
+      return false;
+    },
     fetchFilterListItems: () => {
       if (!initiated) {
         const keys = filterCategoriesConfiguration
@@ -48,6 +61,10 @@ const useFilterProvider = (config, tableHook) => {
       setSelectedItems(update);
       triggerUpdate(update);
       return true;
+    },
+    clearFilter: () => {
+      setSelectedItems({});
+      triggerUpdate({});
     },
     getFilterItemsByKey: (key) => {
       if (Object.keys(filterListItems).length

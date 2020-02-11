@@ -75,6 +75,7 @@ export const SelectWrapper = styled(Wrapper)`
   background-size: .65em auto, 100%;
   
   select {
-    padding: 1.2rem 0 1.2rem 1.2rem;
+    padding: 1.2rem;
+    padding-right: 2.7rem;
   }
 `;
