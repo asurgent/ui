@@ -1,46 +1,18 @@
 import { useState } from 'react';
-
-export const EXCLUDE = 'state:exclude';
-export const INCLUDE = 'state:include';
-export const REMOVE = 'state:remove';
+import {
+  INCLUDE, EXCLUDE, REMOVE, buildFilterQuery, buildFilterStateString,
+} from './helpers';
 
 const useFilterProvider = (config, tableHook) => {
   const [filterCategoriesConfiguration] = useState(config);
-  const [filterListItems, setFilterListItems] = useState({}); // dict of selected items. Set from URL-state
+  const [filterListItems, setFilterListItems] = useState({}); // filter items. normally set from XHR req facets
   const [selectedItems, setSelectedItems] = useState({}); // dict of selected items. Set from URL-state
   const [initiated, setInitiated] = useState(false); // if we need to load facets
 
   const triggerUpdate = (filterState) => {
-    const str = Object.keys(filterState)
-      .reduce((acc, filterKey) => {
-        if (filterState[filterKey] && filterState[filterKey].length > 0) {
-          const includes = filterState[filterKey].filter((s) => s.state === INCLUDE);
-          const excludes = filterState[filterKey].filter((s) => s.state === EXCLUDE);
-
-          const categoryFilter = [];
-
-          if (includes.length > 0) {
-            const category = includes
-              .reduce((keyState, s) => [...keyState, `${filterKey} eq '${s.key}'`], []).join(' or ');
-            categoryFilter.push(category);
-          }
-
-          if (excludes.length > 0) {
-            const category = excludes
-              .reduce((keyState, s) => [...keyState, `${filterKey} ne '${s.key}'`], []).join(' and ');
-            categoryFilter.push(category);
-          }
-
-          acc.push(`(${categoryFilter.join(') and (')})`);
-        }
-        return acc;
-      }, []);
-
-    if (str.length > 0) {
-      tableHook.onFilter(`(${str.join(') and (')})`);
-    } else {
-      tableHook.onFilter('');
-    }
+    const filter = buildFilterQuery(filterState);
+    const stateString = buildFilterStateString(filterState);
+    tableHook.onFilter(filter, stateString);
   };
 
   return {
@@ -55,6 +27,7 @@ const useFilterProvider = (config, tableHook) => {
         });
       }
     },
+    setSelectedItems: (state) => setSelectedItems(state),
     getFilterListItems: () => filterListItems,
     updateFilterItemState: (filterKey, key, state) => {
       if (Object.prototype.hasOwnProperty.call(selectedItems, filterKey)) {

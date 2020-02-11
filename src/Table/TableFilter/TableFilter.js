@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import * as Icons from '@material-ui/icons';
-// import { sortDirection as direction } from '../helpers';
 import * as Form from '../../Form';
 import * as Button from '../../Button';
 import * as Shield from '../../Shield';
@@ -11,7 +10,7 @@ import {
   EXCLUDE,
   INCLUDE,
   REMOVE,
-} from '../hooks/useFilterProvider';
+} from '../hooks/helpers';
 
 const propTypes = {
   provider: PropTypes.instanceOf(Object),

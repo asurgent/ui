@@ -4,8 +4,11 @@ import sqp from 'search-query-parser';
 import {
   changeDefaultSort,
   generatePayload,
-  buildSearchQuery,
+  parseQueryArrayToString,
   getDefaultSortItem,
+  buildFilterObjectFromState,
+  buildFilterQuery,
+  buildFilterStateString,
 } from './helpers';
 
 const tableDefaults = { result: [], page: 1, total_pages: 0 };
@@ -14,12 +17,14 @@ const cacheDefaults = {
   size: 10,
   searchQuery: '',
   sortKeys: [],
-  filters: [],
-  filter: '',
+  filterQuery: '',
+  filterState: '',
   facets: [],
   currentSort: { value: null, direction: null },
 };
 
+const urlKey = { PAGE: 'page', SORT: 'sort', FILTER: 'filter' };
+const searchKeywords = { keywords: Object.values(urlKey) };
 
 const useTableProvider = (updateAction = (() => {}), filterAction = (() => {})) => {
   const preRenderState = { ...cacheDefaults };
@@ -31,6 +36,8 @@ const useTableProvider = (updateAction = (() => {}), filterAction = (() => {})) 
   const [requestFailed, setRequestFailed] = useState('');
   const [isMounted, setIsMounted] = useState(false);
 
+  const paramKey = (prefix) => `${prefix && `${prefix}_`}q`;
+
   useEffect(() => {
     if (isMounted) {
       setIsLoading(true);
@@ -38,6 +45,39 @@ const useTableProvider = (updateAction = (() => {}), filterAction = (() => {})) 
 
       if (Object.keys(router).length) {
         const { location, history, prefix } = router;
+
+        const buildSearchQuery = () => {
+          const search = queryString.parse(location.search);
+          const {
+            filterState,
+            filterQuery,
+            currentSort,
+            searchQuery,
+            page: currentPage,
+          } = currentState;
+
+          const { PAGE, FILTER, SORT } = urlKey;
+          const tableState = [
+            { value: `${searchQuery}`, valid: !!searchQuery },
+            { value: `${PAGE}:${currentPage}`, valid: true },
+            {
+              value: `${SORT}:${currentSort.value}-${currentSort.direction}`,
+              valid: currentSort.value && currentSort.direction,
+            },
+            {
+              value: `${FILTER}:"${filterState}"`,
+              valid: filterQuery && filterQuery.length > 0,
+            },
+          ];
+
+          const param = paramKey(prefix);
+          Object.assign(search, {
+            [param]: parseQueryArrayToString(tableState),
+          });
+
+          return `?${queryString.stringify(search)}`;
+        };
+
         const newLocation = {
           ...location,
           search: buildSearchQuery(prefix, location, currentState),
@@ -61,8 +101,8 @@ const useTableProvider = (updateAction = (() => {}), filterAction = (() => {})) 
     onPaginate: (pageNumber) => {
       updateState({ page: pageNumber });
     },
-    onFilter: (filter) => {
-      updateState({ filter });
+    onFilter: (filterQuery, filterState) => {
+      updateState({ filterQuery, filterState });
     },
     // ToTo @ Mike. Fix!
     // Both search an sort are triggered by table-controller
@@ -75,17 +115,29 @@ const useTableProvider = (updateAction = (() => {}), filterAction = (() => {})) 
     },
     enableHistoryState: ({ history, location, prefix }) => {
       setRouter({ history, location, prefix });
+      const { [paramKey(prefix)]: tableState } = queryString.parse(location.search);
+
+      const searchQueryObj = sqp.parse(tableState, searchKeywords);
+
       const {
-        [`${prefix && `${prefix}_`}q`]: tableState,
-      } = queryString.parse(location.search);
-
-      const options = { keywords: ['page', 'sort', 'filter'] };
-      const searchQueryObj = sqp.parse(tableState, options);
-
-      const { text: query, page, sort } = searchQueryObj;
+        filter: encodedFilterString,
+        text: query,
+        page,
+        sort,
+      } = searchQueryObj;
 
       if (query !== undefined && query) {
         hookInterfaceApi.setSearchQuery(query);
+      }
+      if (encodedFilterString !== undefined && encodedFilterString) {
+        try {
+          const filterState = buildFilterObjectFromState(encodedFilterString);
+          const stateString = buildFilterStateString(filterState);
+          const filter = buildFilterQuery(filterState);
+          hookInterfaceApi.setFilter(filter, stateString);
+        } catch (e) {
+          hookInterfaceApi.setFilter('', '');
+        }
       }
       if (page !== undefined) {
         hookInterfaceApi.setPageNumber(parseInt(page, 10));
@@ -94,6 +146,14 @@ const useTableProvider = (updateAction = (() => {}), filterAction = (() => {})) 
         const [key, direction] = sort.split('-');
         hookInterfaceApi.setInitailSortOrder(key, direction);
       }
+    },
+    getHistoryState: (callback) => {
+      const { location, prefix } = router;
+      const { [paramKey(prefix)]: tableState } = queryString.parse(location.search);
+
+      const searchQueryObj = sqp.parse(tableState, searchKeywords);
+
+      callback(searchQueryObj);
     },
     getPageCount: () => tableData.total_pages,
     getRowData: () => tableData.result,
@@ -124,9 +184,12 @@ const useTableProvider = (updateAction = (() => {}), filterAction = (() => {})) 
       Because the currentState-state wont be update until a re-render
       and after render currentState cache will be reset to default
     */
-    setFilter: (filter) => {
-      if (typeof filter === 'string') {
-        updateInitalState({ filter });
+    setFilter: (filterQuery, filterState) => {
+      if (typeof filterQuery === 'string') {
+        updateInitalState({ filterQuery });
+      }
+      if (typeof filterState === 'string') {
+        updateInitalState({ filterState });
       }
     },
     setFacets: (facets) => {

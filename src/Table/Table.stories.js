@@ -180,9 +180,9 @@ export const apiTable = () => {
   );
 
   useEffect(() => {
-    // All user interfaces to interact with table provider
-    table.setFilter('Tests');
     table.setFacets(['id']);
+    // All user interfaces to interact with table provider
+    // table.setFilter('Tests');
     // table.setOrderBy(['gurka desc']);
     // table.setSearchFields(['index_column']);
     // table.setSearchQuery('Default search query');
