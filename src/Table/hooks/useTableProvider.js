@@ -102,7 +102,7 @@ const useTableProvider = (updateAction = (() => {}), filterAction = (() => {})) 
       updateState({ page: pageNumber });
     },
     onFilter: (filterQuery, filterState) => {
-      updateState({ filterQuery, filterState });
+      updateState({ filterQuery, filterState, page: 1 });
     },
     // ToTo @ Mike. Fix!
     // Both search an sort are triggered by table-controller
@@ -131,6 +131,7 @@ const useTableProvider = (updateAction = (() => {}), filterAction = (() => {})) 
       }
       if (encodedFilterString !== undefined && encodedFilterString) {
         try {
+          // TODO @ Cleanup categories by input filter configuration. Like removing customer_id etc
           const filterState = buildFilterObjectFromState(encodedFilterString);
           const stateString = buildFilterStateString(filterState);
           const filter = buildFilterQuery(filterState);
