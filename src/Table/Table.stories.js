@@ -139,7 +139,7 @@ export const apiTable = () => {
   const updateCallbackFunction = (payload, provider) => {
     // do ajaxrequest based on page & query
     // use setter to set responsedata from azure-search api
-    console.log(payload);
+    // console.log(payload);
 
     if (success) {
       provider.setSuccessResponse({ result: [...rowDummyData], page: 2, total_pages: 2 });
@@ -150,7 +150,7 @@ export const apiTable = () => {
   const updateFilterCallback = (payload, filterCallback) => {
     // do ajaxrequest based on page & query
     // use setter to set responsedata from azure-search api
-    console.log('payload filter', payload);
+    // console.log('payload filter', payload);
 
     filterCallback({
       gurka: [
@@ -168,23 +168,31 @@ export const apiTable = () => {
     });
   };
 
-  const table = Table.useTableProvider(
-    (payload) => {
-      updateCallbackFunction(payload, table);
-    },
-    (payload, filterCallback) => {
-      updateFilterCallback(payload, filterCallback);
-    },
-  );
+  const table = Table.useTableProvider();
+
 
   useEffect(() => {
-    table.setFacets(['id']);
-    // All user interfaces to interact with table provider
-    // table.setFilter('Tests');
-    // table.setOrderBy(['gurka desc']);
-    // table.setSearchFields(['index_column']);
-    // table.setSearchQuery('Default search query');
-    // table.setPageNumber(2);
+    table.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({ result: [...rowDummyData], page: 2, total_pages: 2 });
+    });
+
+    table.registerFilterFetchCallback((payload, onSuccess, onFail) => {
+      console.log(123);
+      onSuccess({
+        gurka: [
+          { value: '1133' },
+          { value: '123' },
+          { value: '4465' },
+          { value: '984' },
+        ],
+        pankaka: [
+          { value: '1133' },
+          { value: '123' },
+          { value: '4465' },
+          { value: '984' },
+        ],
+      });
+    });
 
     table.parentReady();
   }, []);

@@ -3,34 +3,23 @@ import PropTypes from 'prop-types';
 import TablePagination from './TablePagination';
 
 const propTypes = {
-  provider: PropTypes.instanceOf(Object),
+  tableHook: PropTypes.instanceOf(Object),
 };
 
 const defaultProps = {
-  provider: null,
+  tableHook: null,
 };
 
 const TablePaginationProxy = (props) => {
-  const { provider } = props;
+  const { tableHook } = props;
 
-  if (!provider) {
+  if (!tableHook) {
     return <TablePagination {...props} />;
   }
 
-  if (provider.isMounted) {
-    const isLoading = false;
-    const activePage = provider.getActivePage();
-    const onPagination = (requestedPage) => provider.onPaginate(requestedPage);
-    const pages = provider.getPageCount();
-
+  if (tableHook.isMounted) {
     return (
-      <TablePagination
-        isLoading={isLoading}
-        activePage={activePage}
-        onPagination={onPagination}
-        pages={pages}
-        {...props}
-      />
+      <TablePagination tableHook={tableHook} {...props} />
     );
   }
 

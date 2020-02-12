@@ -21,7 +21,6 @@ const defaultProps = {
   excluded: false,
 };
 
-
 const FilterItem = ({
   value,
   included,

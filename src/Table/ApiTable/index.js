@@ -21,17 +21,12 @@ const ApiTableProxy = (props) => {
     tableHook,
     useHistoryState,
     historyStatePrefix,
-    sortKeys,
   } = props;
 
   const history = useHistory();
   const location = useLocation();
 
   useEffect(() => {
-    if (sortKeys && Array.isArray(sortKeys) && sortKeys.length) {
-      tableHook.setSortKeys(sortKeys);
-    }
-
     if (useHistoryState) {
       tableHook.enableHistoryState({ history, location, prefix: historyStatePrefix || '' });
     }

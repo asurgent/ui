@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TableSearchBar from './TableSearchBar';
 
-
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
 };

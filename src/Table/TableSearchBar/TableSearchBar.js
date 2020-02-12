@@ -1,19 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import * as Icon from '@material-ui/icons';
-import { sortDirection as direction } from '../helpers';
-import * as Form from '../../Form';
-import * as Button from '../../Button';
-import * as C from './TableSearchBar.styled';
-
-const searchForm = (searchLabel, provider) => ({
-  search: {
-    type: 'text', placeholder: searchLabel, value: provider.getQuery(), noLabel: true,
-  },
-  sortDirection: {
-    type: 'select', options: provider.getSortKeys(), noLabel: true,
-  },
-});
+import { Primary as Form, useFormBuilder } from '../../Form';
+import useSearchbarHook from './useSearchbarHook';
 
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object),
@@ -27,65 +15,30 @@ const defaultProps = {
 
 const TableSearchBar = (props) => {
   const { tableHook, searchLabel } = props;
-  const formData = Form.useFormBuilder(searchForm(searchLabel, tableHook));
-  const [sort, setSort] = useState(tableHook.getSortDirection());
-  const [sortKey, setSortKey] = useState(tableHook.getSortKey());
-  const [query, setQuery] = useState(tableHook.getQuery());
+  const searchHook = useSearchbarHook(tableHook);
+  const formData = useFormBuilder({
+    search: {
+      type: 'text', placeholder: searchLabel, value: searchHook.getQuery(), noLabel: true,
+    },
+  });
 
   useEffect(() => {
     formData.updateField('search', { props: { disabled: tableHook.isLoading } });
-    formData.updateField('sortDirection', { props: { disabled: tableHook.isLoading } });
   }, [tableHook.isLoading]);
-
-  useEffect(() => {
-    const { dirty } = formData.getValues();
-    if (dirty) {
-      tableHook.onSort({ value: sortKey, direction: sort });
-    }
-  }, [sort, sortKey]);
-
-  useEffect(() => {
-    const { dirty } = formData.getValues();
-    if (dirty) {
-      tableHook.onSearch(query);
-    }
-  }, [query]);
 
   useEffect(() => {
     formData.updateField('search', { placeholder: searchLabel });
   }, [searchLabel]);
 
   return (
-    <>
-      <Form.Primary
-        form={formData}
-        onNewValue={(values) => {
-          setSortKey(values.sortDirection);
-          setQuery(values.search);
-        }}
-      >
-        {({ search, sortDirection }) => (
-          <>
-            <C.StyleForm>
-              <C.SearchInput>
-                {search}
-              </C.SearchInput>
-              { sortDirection && tableHook.hasSortyKeys() && (
-              <C.SortInput>
-                {sortDirection}
-                <Button.Icon
-                  disabled={tableHook.isLoading}
-                  onClick={() => setSort(sort === direction.asc ? direction.desc : direction.asc)}
-                  icon={sort === direction.asc ? <Icon.ArrowDownward /> : <Icon.ArrowUpward />}
-                />
-              </C.SortInput>
-              )}
-            </C.StyleForm>
-          </>
-        )}
-      </Form.Primary>
-
-    </>
+    <Form
+      form={formData}
+      onNewValue={(values) => {
+        searchHook.setQuery(values.search);
+      }}
+    >
+      {({ search }) => search}
+    </Form>
   );
 };
 
