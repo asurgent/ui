@@ -195,7 +195,7 @@ export const apiTable = () => {
         withHeaderLabels
         useHistoryState
         historyStatePrefix="tickets"
-        provider={table}
+        tableHook={table}
         withSearch={boolean('With search', true)}
         withFilter={[
           { label: 'Gurka', facetKey: 'gurka', excludeable: true },

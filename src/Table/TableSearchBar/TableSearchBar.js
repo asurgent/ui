@@ -16,38 +16,38 @@ const searchForm = (searchLabel, provider) => ({
 });
 
 const propTypes = {
-  provider: PropTypes.instanceOf(Object),
+  tableHook: PropTypes.instanceOf(Object),
   searchLabel: PropTypes.string,
 };
 
 const defaultProps = {
-  provider: {},
+  tableHook: {},
   searchLabel: '',
 };
 
 const TableSearchBar = (props) => {
-  const { provider, searchLabel } = props;
-  const formData = Form.useFormBuilder(searchForm(searchLabel, provider));
-  const [sort, setSort] = useState(provider.getSortDirection());
-  const [sortKey, setSortKey] = useState(provider.getSortKey());
-  const [query, setQuery] = useState(provider.getQuery());
+  const { tableHook, searchLabel } = props;
+  const formData = Form.useFormBuilder(searchForm(searchLabel, tableHook));
+  const [sort, setSort] = useState(tableHook.getSortDirection());
+  const [sortKey, setSortKey] = useState(tableHook.getSortKey());
+  const [query, setQuery] = useState(tableHook.getQuery());
 
   useEffect(() => {
-    formData.updateField('search', { props: { disabled: provider.isLoading } });
-    formData.updateField('sortDirection', { props: { disabled: provider.isLoading } });
-  }, [provider.isLoading]);
+    formData.updateField('search', { props: { disabled: tableHook.isLoading } });
+    formData.updateField('sortDirection', { props: { disabled: tableHook.isLoading } });
+  }, [tableHook.isLoading]);
 
   useEffect(() => {
     const { dirty } = formData.getValues();
     if (dirty) {
-      provider.onSort({ value: sortKey, direction: sort });
+      tableHook.onSort({ value: sortKey, direction: sort });
     }
   }, [sort, sortKey]);
 
   useEffect(() => {
     const { dirty } = formData.getValues();
     if (dirty) {
-      provider.onSearch(query);
+      tableHook.onSearch(query);
     }
   }, [query]);
 
@@ -70,11 +70,11 @@ const TableSearchBar = (props) => {
               <C.SearchInput>
                 {search}
               </C.SearchInput>
-              { sortDirection && provider.hasSortyKeys() && (
+              { sortDirection && tableHook.hasSortyKeys() && (
               <C.SortInput>
                 {sortDirection}
                 <Button.Icon
-                  disabled={provider.isLoading}
+                  disabled={tableHook.isLoading}
                   onClick={() => setSort(sort === direction.asc ? direction.desc : direction.asc)}
                   icon={sort === direction.asc ? <Icon.ArrowDownward /> : <Icon.ArrowUpward />}
                 />

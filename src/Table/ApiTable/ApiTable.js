@@ -17,9 +17,8 @@ const getEmptystate = (provider, props) => {
   return base;
 };
 
-
 const propTypes = {
-  provider: PropTypes.instanceOf(Object).isRequired,
+  tableHook: PropTypes.instanceOf(Object).isRequired,
   withSearch: PropTypes.bool,
   searchLabel: PropTypes.string,
   emptystate: PropTypes.string,
@@ -53,31 +52,31 @@ const ApiTable = (props) => {
     ...rest
   } = props;
 
-  const { provider, withSearch } = props;
+  const { tableHook, withSearch } = props;
 
   return (
     <>
       { withSearch && (
         <TableSearchBar
-          provider={provider}
+          tableHook={tableHook}
           searchLabel={searchLabel}
         />
       )}
       { withFilter && Array.isArray(withFilter) && withFilter.length > 0 && (
         <TableFilter
-          tableHook={provider}
+          tableHook={tableHook}
           filterConfiguratuion={withFilter}
         />
       )}
       <Table
-        emptystate={getEmptystate(provider, props)}
-        isLoading={provider.isLoading}
+        emptystate={getEmptystate(tableHook, props)}
+        isLoading={tableHook.isLoading}
         onPagination={(requestedPage) => {
-          provider.onPaginate(requestedPage);
+          tableHook.onPaginate(requestedPage);
         }}
-        activePage={provider.getActivePage()}
-        pages={provider.getPageCount()}
-        rowData={provider.getRowData()}
+        activePage={tableHook.getActivePage()}
+        pages={tableHook.getPageCount()}
+        rowData={tableHook.getRowData()}
         {...rest}
       />
     </>

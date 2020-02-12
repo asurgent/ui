@@ -4,7 +4,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import ApiTable from './ApiTable';
 
 const propTypes = {
-  provider: PropTypes.instanceOf(Object).isRequired,
+  tableHook: PropTypes.instanceOf(Object).isRequired,
   useHistoryState: PropTypes.bool,
   historyStatePrefix: PropTypes.string,
   sortKeys: PropTypes.instanceOf(Array),
@@ -18,7 +18,7 @@ const defaultProps = {
 
 const ApiTableProxy = (props) => {
   const {
-    provider,
+    tableHook,
     useHistoryState,
     historyStatePrefix,
     sortKeys,
@@ -28,15 +28,15 @@ const ApiTableProxy = (props) => {
 
   useEffect(() => {
     if (sortKeys && Array.isArray(sortKeys) && sortKeys.length) {
-      provider.setSortKeys(sortKeys);
+      tableHook.setSortKeys(sortKeys);
     }
 
     if (useHistoryState) {
-      provider.enableHistoryState({ history, location, prefix: historyStatePrefix || '' });
+      tableHook.enableHistoryState({ history, location, prefix: historyStatePrefix || '' });
     }
   }, []);
 
-  if (provider.isMounted) {
+  if (tableHook.isMounted) {
     return <ApiTable {...props} />;
   }
 
