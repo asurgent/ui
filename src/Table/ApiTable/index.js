@@ -23,6 +23,7 @@ const ApiTableProxy = (props) => {
     historyStatePrefix,
     sortKeys,
   } = props;
+
   const history = useHistory();
   const location = useLocation();
 

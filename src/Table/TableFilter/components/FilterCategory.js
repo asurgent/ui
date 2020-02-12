@@ -13,10 +13,12 @@ const propTypes = {
   label: PropTypes.string.isRequired,
   filterHook: PropTypes.instanceOf(Object).isRequired,
   filterKey: PropTypes.string.isRequired,
-  theme: PropTypes.instanceOf(Object).isRequired,
+  theme: PropTypes.instanceOf(Object),
 };
 
-const defaultProps = {};
+const defaultProps = {
+  theme: {},
+};
 
 const FilterCategory = withTheme(({
   label,

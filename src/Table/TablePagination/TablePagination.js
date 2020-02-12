@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import * as Icons from '@material-ui/icons';
+import * as Button from '../../Button';
 import * as C from './TablePagination.styled';
-import pagination from './helpers';
+import calcualtePaginationList from './helpers';
 
 const PAGINATION_DELTA = 5;
 
@@ -20,15 +22,24 @@ const TablePagination = ({
   onPagination,
   pages,
 }) => {
-  const paginationList = pagination(activePage, pages, PAGINATION_DELTA);
+  const [paginationList, setPaginationList] = useState([]);
 
-  if (paginationList && paginationList.length <= 1) {
+  useEffect(() => {
+    const newList = calcualtePaginationList(activePage, pages, PAGINATION_DELTA);
+    setPaginationList(newList);
+  }, [activePage, pages]);
+
+  if (paginationList && paginationList.length === 0) {
     return null;
   }
 
   return (
     <C.Pagination isLoading={isLoading}>
-      <C.Arrow left onClick={() => onPagination(activePage - 1)} />
+      <Button.Icon
+        onClick={() => onPagination(activePage - 1)}
+        icon={<Icons.NavigateBefore fontSize="large" />}
+      />
+
       { paginationList.map(({ value, clickable }, index) => (
         <C.Page
           key={`${value}-${index}`}
@@ -39,7 +50,11 @@ const TablePagination = ({
           {value}
         </C.Page>
       ))}
-      <C.Arrow right onClick={() => onPagination(activePage + 1)} />
+
+      <Button.Icon
+        onClick={() => onPagination(activePage + 1)}
+        icon={<Icons.NavigateNext fontSize="large" />}
+      />
     </C.Pagination>
   );
 };

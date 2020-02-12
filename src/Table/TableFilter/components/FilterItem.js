@@ -7,7 +7,7 @@ import {
   EXCLUDE,
   INCLUDE,
   REMOVE,
-} from '../misc/helpers';
+} from '../helpers';
 
 const propTypes = {
   value: PropTypes.string.isRequired,

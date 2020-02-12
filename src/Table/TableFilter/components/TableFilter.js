@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as Icons from '@material-ui/icons';
-import * as Button from '../../Button';
+import * as Button from '../../../Button';
 import * as C from './TableFilter.styled';
-import FilterCategory from './components/FilterCategory';
+import FilterCategory from './FilterCategory';
 
 const propTypes = {
   filterHook: PropTypes.instanceOf(Object).isRequired,

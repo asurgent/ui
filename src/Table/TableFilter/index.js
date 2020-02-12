@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import TableFilter from './TableFilter';
-import useFilter from './misc/useFilterProvider';
-import { buildFilterObjectFromState } from './misc/helpers';
+import TableFilter from './components/TableFilter';
+import useFilter from './useFilterProvider';
+import { buildFilterObjectFromState } from './helpers';
 
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,

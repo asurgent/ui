@@ -3,19 +3,7 @@ import PropTypes from 'prop-types';
 import TableSearchBar from '../TableSearchBar';
 import TableFilter from '../TableFilter';
 import Table from '../Table';
-
-const getEmptystate = (provider, props) => {
-  if (provider.requestFailedMessage()) {
-    return provider.requestFailedMessage();
-  }
-
-  const base = props.emptystate;
-  const query = provider.getQuery();
-  if (query) {
-    return `${base} for : ${query}`;
-  }
-  return base;
-};
+import getEmptystate from './helpers';
 
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
