@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { sortDirection } from './helpers';
 
 export const Arrow = styled.div`
     border: solid black;
@@ -96,48 +95,6 @@ export const TableCellContent = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-`;
-
-/* Header styling */
-
-export const HeaderRow = styled(Row)`
-  border-top:none;
-`;
-
-export const HeaderSort = styled(Arrow)`
-    height: .8rem;
-    width: .8rem;
-    margin: 0;
-    transform: ${({ direction }) => {
-    if (direction === sortDirection.asc) {
-      return 'rotate(-135deg)';
-    }
-    return 'rotate(45deg)';
-  }};
-    border-color: ${({ active, theme }) => (active === true ? theme.gray800 : theme.gray300)};
-`;
-
-export const Header = styled(Cell)`
-    align-items: center;
-    grid-column: unset;
-    flex-direction: row;
-    border-color: ${({ theme }) => theme.gray300};
-    cursor: ${({ sortKey }) => (sortKey ? 'pointer' : 'default')};
-    
-    ${HeaderSort} {
-      display: ${({ sortKey }) => (sortKey ? 'block' : 'none')}
-    }
-`;
-
-export const HeaderContent = styled(TableCellContent)`
-    font-weight: 700;
-    flex: 1;
-`;
-
-export const HeaderLabel = styled(TableCellContent)`
-    color: ${({ theme }) => theme.gray600};
-    font-weight: 600;
-    font-size: 1.2rem;
 `;
 
 /* Loader & empty state wrapper */

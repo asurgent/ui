@@ -87,8 +87,6 @@ export const defaultTable = () => (
   <Table.Primary
     onSort={(key, direction) => { console.log(key, direction); }}
     onPagination={(requestedPage) => { console.log(requestedPage); }}
-    sortDirection={Table.sortDirection.asc}
-    activeSort="sort-A"
     activePage={10}
     pages={number('Pages', 10)}
     cellComponent={cellComponentOverride}
