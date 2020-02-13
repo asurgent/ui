@@ -9,7 +9,7 @@ const usePaginationHook = (tableHook, props) => {
   const [paginationList, setPaginationList] = useState([]);
   const [totalPageCount, setTotalPageCount] = useState(1);
 
-  // Set initail value from history-state
+  // Initial setter. This will trigger Poppulate effect as well.
   useEffect(() => {
     const state = tableHook.getHistoryState();
     const { page } = state;
@@ -21,18 +21,7 @@ const usePaginationHook = (tableHook, props) => {
     setIsReady(true);
   }, []);
 
-  // set total page count when its passed trough props
-  useEffect(() => {
-    setTotalPageCount(tableHook.tableData.total_pages);
-  }, [tableHook.getTablePageCount()]);
-
-  // Rebuild pagination list when user paginates or a new totalPageCount gets set by a request
-  useEffect(() => {
-    const newList = buildPaginationArray(currentPage, totalPageCount, PAGINATION_DELTA);
-    setPaginationList(newList);
-  }, [currentPage, tableHook.getTablePageCount()]);
-
-  // Perform an table update whenever user searches
+  // Poppulate tabelHook with state for requests and URL
   useEffect(() => {
     if (isReady) {
       const request = { page: currentPage };
@@ -41,6 +30,18 @@ const usePaginationHook = (tableHook, props) => {
       tableHook.update(request, history);
     }
   }, [isReady, currentPage]);
+
+  // Update totalPageCount if request-response changes
+  useEffect(() => {
+    setTotalPageCount(tableHook.tableData.total_pages);
+  }, [tableHook.getTablePageCount()]);
+
+  // Rebuild pagination list when user paginates or a new totalPageCount
+  useEffect(() => {
+    const newList = buildPaginationArray(currentPage, totalPageCount, PAGINATION_DELTA);
+    setPaginationList(newList);
+  }, [currentPage, tableHook.getTablePageCount()]);
+
 
   const paginate = (requestedPage) => {
     const page = Math.max(1, Math.min(totalPageCount, requestedPage));

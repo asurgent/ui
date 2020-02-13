@@ -8,16 +8,18 @@ const useSearchbarHook = (sortKeyOptionsConfiguration, tableHook) => {
   const [sortKey, setSortKey] = useState(null);
   const [sortDirection, setSortDirection] = useState(null);
 
-  // Set initail value from history-state
+  // Initial setter. This will trigger Poppulate effect as well.
   useEffect(() => {
     const state = tableHook.getHistoryState();
     if (state && Object.keys(state).length) {
       const { sort } = state;
+      // Set internal state from URL if found
       if (sort !== undefined) {
         const [key, direction] = sort.split('-');
         setSortKey(key);
         setSortDirection(direction);
       } else {
+        // If we dont find a state in the url, then set defaults
         const { key, direction } = getDefaultSortItem(options);
         setSortKey(key);
         setSortDirection(direction);
@@ -27,7 +29,7 @@ const useSearchbarHook = (sortKeyOptionsConfiguration, tableHook) => {
     setIsReady(true);
   }, []);
 
-  // Perform an table update whenever user changes filter
+  // Poppulate tabelHook with state for requests and URL
   useEffect(() => {
     if (isReady && sortKey && sortDirection) {
       const request = { order_by: [`${sortKey} ${sortDirection}`] };

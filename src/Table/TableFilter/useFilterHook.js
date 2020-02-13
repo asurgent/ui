@@ -13,22 +13,21 @@ const useFilterProvider = (config, tableHook) => {
   const [filterGroups] = useState(config);
   const [selectedItems, setSelectedItems] = useState({}); // dict of selected items. Set from URL-state
 
-  // Set initail value from history-state
+
+  // Initial setter. This will trigger Poppulate effect as well.
   useEffect(() => {
     const state = tableHook.getHistoryState();
+    // Set internal state from URL if found
     if (state && Object.keys(state).length) {
       const { filter } = state;
-      // console.log('state', state);
-
       const filterObject = buildFilterObjectFromStateString(filter);
-      console.log(filterObject);
 
       setSelectedItems(filterObject);
       setIsReady(true);
     }
   }, []);
 
-  // Perform an table update whenever user searches
+  // Poppulate tabelHook with state for requests and URL
   useEffect(() => {
     if (isReady) {
       const filter = buildFilterQuery(selectedItems);
@@ -45,6 +44,7 @@ const useFilterProvider = (config, tableHook) => {
   return {
     isReady,
     filterGroups,
+    selectedItems,
     hasActiveFilter: () => {
       const items = Object.keys(selectedItems);
       for (let i = 0; i < items.length; i++) {
@@ -79,17 +79,16 @@ const useFilterProvider = (config, tableHook) => {
     clearFilter: () => {
       setSelectedItems({});
     },
-    getFilterItemsByKey: (key) => {
+    getFilterItemsByGroup: (groupKey) => {
       if (Object.keys(tableHook.filterData).length
-      && Object.prototype.hasOwnProperty.call(tableHook.filterData, key)) {
-        const filterState = selectedItems[key];
+      && Object.prototype.hasOwnProperty.call(tableHook.filterData, groupKey)) {
+        const filterState = selectedItems[groupKey];
 
         if (filterState) {
-          return tableHook.filterData[key]
+          return tableHook.filterData[groupKey]
             .reduce((acc, item) => {
               const stateItem = { ...item };
               const hasState = filterState.find(({ key: filterKey }) => filterKey === item.value);
-              console.log(filterState, stateItem);
 
               if (hasState) {
                 Object.assign(stateItem, {
@@ -101,7 +100,7 @@ const useFilterProvider = (config, tableHook) => {
               return [...acc, stateItem];
             }, []);
         }
-        return tableHook.filterData[key];
+        return tableHook.filterData[groupKey];
       }
 
       return [];

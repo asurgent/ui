@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { RingSpinner } from 'react-spinners-kit';
 import { withTheme } from 'styled-components';
@@ -8,6 +8,7 @@ import * as Shield from '../../../Shield';
 import * as C from './FilterCategory.styled';
 import * as Transition from '../../../Transition';
 import FilterItem from './FilterItem';
+import useFilterGroupHook from '../useFilterGroupHook';
 
 const propTypes = {
   label: PropTypes.string.isRequired,
@@ -28,42 +29,18 @@ const FilterCategory = withTheme(({
   filterKey,
   theme,
 }) => {
-  const [open, setOpen] = useState(false);
-  const [hasItems, setHasItems] = useState(false);
-  const [items, setItems] = useState([]);
+  const groupHook = useFilterGroupHook(tableHook, filterHook, filterKey);
   const formData = Form.useFormBuilder({
     search: {
       type: 'text', value: '', noLabel: true,
     },
   });
 
-  const searchFilterOptions = ({ search }) => {
-    const original = filterHook.getFilterItemsByKey(filterKey);
-
-    if (search) {
-      const filterd = original.filter(({ value }) => value.match(search));
-      setItems(filterd);
-    } else {
-      setItems(original);
-    }
-  };
-
-  const onOpen = () => {
-    setOpen(true);
-    tableHook.loadFilterItems(filterHook.filterGroups);
-  };
-
-  useEffect(() => {
-    const list = filterHook.getFilterItemsByKey(filterKey);
-    setHasItems(list.length > 0);
-    setItems(list);
-  }, [tableHook.filterData]);
-
   return (
     <C.FilterWrapper>
-      <Button.Filter onClick={onOpen}>{label}</Button.Filter>
-      <Shield.Transparent onClick={() => setOpen(false)} shieldIsUp={open}>
-        <Transition.FadeInSlideDown isVisible={open} timeout={80}>
+      <Button.Filter onClick={() => groupHook.setOpen(true)}>{label}</Button.Filter>
+      <Shield.Transparent onClick={() => groupHook.setOpen(false)} shieldIsUp={groupHook.isOpen()}>
+        <Transition.FadeInSlideDown isVisible={groupHook.isOpen()} timeout={80}>
           <C.Dropdown>
             { !filterHook.isReady
             && (
@@ -81,7 +58,7 @@ const FilterCategory = withTheme(({
                 <C.Search>
                   <Form.Primary
                     form={formData}
-                    onChange={searchFilterOptions}
+                    onChange={groupHook.onSearchOptions}
                   >
                     {({ search }) => (
                       <>
@@ -91,7 +68,7 @@ const FilterCategory = withTheme(({
                   </Form.Primary>
                 </C.Search>
                 {
-                  hasItems && items.length === 0 && (
+                  groupHook.hasOptions() && groupHook.getOptions().length === 0 && (
                     <C.Center>
                       <i>No matches</i>
                     </C.Center>
@@ -99,7 +76,7 @@ const FilterCategory = withTheme(({
                 }
                 <C.List>
                   {
-                    items.map(({ value, included, excluded }) => (
+                    groupHook.getOptions().map(({ value, included, excluded }) => (
                       <FilterItem
                         key={value}
                         onClick={(state) => {

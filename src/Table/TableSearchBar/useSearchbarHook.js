@@ -4,9 +4,10 @@ const useSearchbarHook = (tableHook) => {
   const [isReady, setIsReady] = useState(false);
   const [query, setQuery] = useState('');
 
-  // Set initail value from history-state
+  // Initial setter. This will trigger Poppulate effect as well.
   useEffect(() => {
     const state = tableHook.getHistoryState();
+    // Set internal state from URL if found
     if (state && Object.keys(state).length) {
       const { text } = state;
       if (text !== undefined) {
@@ -17,7 +18,7 @@ const useSearchbarHook = (tableHook) => {
     setIsReady(true);
   }, []);
 
-  // Perform an table update whenever user searches
+  // Poppulate tabelHook with state for requests and URL
   useEffect(() => {
     if (isReady) {
       const request = { search_string: `${query}` };
