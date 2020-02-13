@@ -8,6 +8,7 @@ const tableDefaults = {
   facets: [],
   total_pages: 10,
 };
+
 const defaultPayload = {
   search_string: '',
   filter: '',
@@ -19,13 +20,18 @@ const defaultPayload = {
 };
 
 const useTableProvider = () => {
+  const initializationRequestState = {};
+  const initializationHistoryState = {};
+
   const [isLoading, setIsLoading] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
 
   const [updateFilterItems, setFilterCallback] = useState(null);
   const [updateTableItems, setRowCallback] = useState(null);
-  const [requestState, setRequestState] = useState({});
+
   const [historyState, setHistoryState] = useState({});
+  const [rowRequestState, setRowRequestState] = useState({});
+  const [filterRequestState, setFilterRequestState] = useState([]);
 
   const [router, setRouter] = useState({});
   const [tableData, setTableData] = useState(tableDefaults);
@@ -34,14 +40,29 @@ const useTableProvider = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    if (isMounted && updateTableItems && Object.keys(updateTableItems).length > 0) {
+    if (isMounted && rowRequestState && Object.keys(rowRequestState).length > 0) {
       const { callback, onSuccess, onFail } = updateTableItems;
-      const payload = { ...defaultPayload, ...requestState };
+      const payload = { ...defaultPayload, ...rowRequestState };
       callback(payload, onSuccess, onFail);
 
       console.log('Fetch', payload);
     }
-  }, [isMounted, requestState]);
+  }, [isMounted, rowRequestState]);
+
+  useEffect(() => {
+    if (isMounted && filterRequestState && filterRequestState.length > 0) {
+      if (updateFilterItems && Object.keys(updateFilterItems).length > 0) {
+        const { callback, onSuccess, onFail } = updateFilterItems;
+        const payload = {
+          ...defaultPayload,
+          page_size: 1,
+          facets: [...filterRequestState].map((key) => `${key}, count:0`),
+        };
+
+        callback(payload, onSuccess, onFail);
+      }
+    }
+  }, [isMounted, filterRequestState]);
 
   useEffect(() => {
     if (Object.keys(router).length && Object.keys(historyState).length > 0) {
@@ -80,7 +101,9 @@ const useTableProvider = () => {
       if (router.location) {
         const { location } = router;
         const { q: tableState } = queryString.parse(location.search);
-        const searchQueryObj = sqp.parse(tableState, { keywords: ['sort', 'page', 'filter'] });
+        const searchQueryObj = sqp.parse(tableState, {
+          keywords: ['sort', 'page', 'filter'],
+        });
 
         if (typeof searchQueryObj === 'string') {
           return { text: searchQueryObj };
@@ -89,6 +112,9 @@ const useTableProvider = () => {
         return searchQueryObj;
       }
       return {};
+    },
+    loadFilterItems: (sortKeys) => {
+      setFilterRequestState([...sortKeys]);
     },
     requestFailedMessage: () => requestFailed,
     parentReady: () => { setIsMounted(true); },
@@ -122,10 +148,16 @@ const useTableProvider = () => {
     },
     update: (request, history) => {
       if (request) {
-        setRequestState({ ...requestState, ...request });
+        const updateRequest = Object.assign(initializationRequestState, rowRequestState, request);
+        console.log(updateRequest);
+
+        setRowRequestState(updateRequest);
       }
       if (history) {
-        setHistoryState({ ...historyState, ...history });
+        const updateHistory = Object.assign(initializationHistoryState, historyState, history);
+        console.log(updateHistory);
+
+        setHistoryState(updateHistory);
       }
     },
   };

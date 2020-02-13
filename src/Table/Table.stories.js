@@ -181,7 +181,7 @@ export const apiTable = () => {
         sortKeys={[
           { value: 'created', label: 'Created' },
           {
-            value: 'modified', label: 'Modified', default: true, direction: 123,
+            value: 'modified', label: 'Modified', default: true, direction: 'asc',
           },
           { value: 'closed', label: 'Closed' },
           { value: 'due', label: 'Due' },

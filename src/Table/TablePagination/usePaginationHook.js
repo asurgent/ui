@@ -5,7 +5,7 @@ const PAGINATION_DELTA = 5;
 
 const usePaginationHook = (tableHook, props) => {
   const [isReady, setIsReady] = useState(false);
-  const [currentPage, setCurrentPage] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const [paginationList, setPaginationList] = useState([]);
   const [totalPageCount, setTotalPageCount] = useState(1);
 
@@ -16,9 +16,6 @@ const usePaginationHook = (tableHook, props) => {
 
     if (page !== undefined) {
       setCurrentPage(parseInt(page, 10));
-      setIsReady(true);
-    } else {
-      setCurrentPage(props.currentPage);
     }
 
     setIsReady(true);
@@ -43,7 +40,7 @@ const usePaginationHook = (tableHook, props) => {
 
       tableHook.update(request, history);
     }
-  }, [currentPage]);
+  }, [isReady, currentPage]);
 
   const paginate = (requestedPage) => {
     const page = Math.max(1, Math.min(totalPageCount, requestedPage));
@@ -51,7 +48,6 @@ const usePaginationHook = (tableHook, props) => {
       if (props.onPagination) {
         props.onPagination(page);
       }
-
       setCurrentPage(page);
     }
   };

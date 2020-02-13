@@ -12,6 +12,7 @@ import FilterItem from './FilterItem';
 const propTypes = {
   label: PropTypes.string.isRequired,
   filterHook: PropTypes.instanceOf(Object).isRequired,
+  tableHook: PropTypes.instanceOf(Object).isRequired,
   filterKey: PropTypes.string.isRequired,
   theme: PropTypes.instanceOf(Object),
 };
@@ -23,6 +24,7 @@ const defaultProps = {
 const FilterCategory = withTheme(({
   label,
   filterHook,
+  tableHook,
   filterKey,
   theme,
 }) => {
@@ -48,14 +50,14 @@ const FilterCategory = withTheme(({
 
   const onOpen = () => {
     setOpen(true);
-    filterHook.fetchFilterListItems();
+    tableHook.loadFilterItems(filterHook.filterGroups);
   };
 
   useEffect(() => {
     const list = filterHook.getFilterItemsByKey(filterKey);
     setHasItems(list.length > 0);
     setItems(list);
-  }, [filterHook.isInitated]);
+  }, [tableHook.filterData]);
 
   return (
     <C.FilterWrapper>
@@ -63,13 +65,13 @@ const FilterCategory = withTheme(({
       <Shield.Transparent onClick={() => setOpen(false)} shieldIsUp={open}>
         <Transition.FadeInSlideDown isVisible={open} timeout={80}>
           <C.Dropdown>
-            { !filterHook.isInitated()
+            { !filterHook.isReady
             && (
               <C.Center>
                 <RingSpinner color={theme.blue400} size={24} />
               </C.Center>
             ) }
-            { filterHook.isInitated() && (
+            { filterHook.isReady && (
               <>
                 <C.Header>
                 Filter by

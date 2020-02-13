@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import * as H from '../helpers';
+// import * as H from '../helpers';
+import { getDefaultSortItem, directionKeys } from './helpers';
 
 const useSearchbarHook = (sortKeyOptionsConfiguration, tableHook) => {
   const [isReady, setIsReady] = useState(false);
@@ -16,6 +17,10 @@ const useSearchbarHook = (sortKeyOptionsConfiguration, tableHook) => {
         const [key, direction] = sort.split('-');
         setSortKey(key);
         setSortDirection(direction);
+      } else {
+        const { key, direction } = getDefaultSortItem(options);
+        setSortKey(key);
+        setSortDirection(direction);
       }
     }
 
@@ -24,8 +29,6 @@ const useSearchbarHook = (sortKeyOptionsConfiguration, tableHook) => {
 
   // Perform an table update whenever user changes filter
   useEffect(() => {
-    // console.log('sort', isReady, sortKey, sortDirection);
-
     if (isReady && sortKey && sortDirection) {
       const request = { order_by: [`${sortKey} ${sortDirection}`] };
       const history = { sort: `sort:${sortKey}-${sortDirection}` };
@@ -43,11 +46,11 @@ const useSearchbarHook = (sortKeyOptionsConfiguration, tableHook) => {
     setCurrentSortKey: (key) => setSortKey(key),
     getCurrentSortDirection: () => sortDirection,
     currentSortDirectionIsAscending: () => {
-      const { asc } = H.sortDirection;
+      const { asc } = directionKeys;
       return sortDirection === asc;
     },
     toggleCurrentSortDirection: (newDirection) => {
-      const { asc, desc } = H.sortDirection;
+      const { asc, desc } = directionKeys;
 
       if (newDirection) {
         setSortDirection(newDirection);

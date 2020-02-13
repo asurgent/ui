@@ -7,15 +7,16 @@ import FilterCategory from './FilterCategory';
 
 const propTypes = {
   filterHook: PropTypes.instanceOf(Object).isRequired,
+  tableHook: PropTypes.instanceOf(Object).isRequired,
 };
 
 const defaultProps = {};
 
-const TableFilter = ({ filterHook }) => (
+const TableFilter = ({ filterHook, tableHook }) => (
   <C.Wrapper>
     <C.Filters>
       {
-      filterHook.getFilterCategories()
+      filterHook.filterGroups
         .map(({ label, facetKey }) => (
           label && facetKey && (
           <FilterCategory
@@ -23,6 +24,7 @@ const TableFilter = ({ filterHook }) => (
             label={label}
             filterKey={facetKey}
             filterHook={filterHook}
+            tableHook={tableHook}
           />
           )
         ))
