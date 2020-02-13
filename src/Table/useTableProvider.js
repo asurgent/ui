@@ -20,6 +20,9 @@ const defaultPayload = {
 };
 
 const useTableProvider = () => {
+  // Holds state changes that are set simontainusly wihout a render inbetween
+  // A rerender will empty these, but without a rerender setState for rowRequestState &
+  // filterRequestState would overwrite previous value if no render is executed inbetween
   const initializationRequestState = {};
   const initializationHistoryState = {};
 
@@ -34,21 +37,30 @@ const useTableProvider = () => {
   const [filterRequestState, setFilterRequestState] = useState([]);
 
   const [router, setRouter] = useState({});
+  const [pageSize, setPageSize] = useState(10);
   const [tableData, setTableData] = useState(tableDefaults);
   const [filterData, setFilterData] = useState([]);
   const [requestFailed, setRequestFailed] = useState('');
 
+  // Is triggered whenever the state is changed by a state-changing hook as pagination, filter etc.
   useEffect(() => {
     setIsLoading(true);
     if (isMounted && rowRequestState && Object.keys(rowRequestState).length > 0) {
       const { callback, onSuccess, onFail } = updateTableItems;
-      const payload = { ...defaultPayload, ...rowRequestState };
+
+      const payload = {
+        ...defaultPayload,
+        ...rowRequestState,
+        page_size: pageSize,
+        facets: [...filterRequestState].map(({ facetKey }) => `${facetKey}, count:0`),
+      };
       callback(payload, onSuccess, onFail);
 
       console.log('Fetch', payload);
     }
   }, [isMounted, rowRequestState]);
 
+  // Is triggered when filter is opened for the first time
   useEffect(() => {
     if (isMounted && filterRequestState && filterRequestState.length > 0) {
       if (updateFilterItems && Object.keys(updateFilterItems).length > 0) {
@@ -56,7 +68,7 @@ const useTableProvider = () => {
         const payload = {
           ...defaultPayload,
           page_size: 1,
-          facets: [...filterRequestState].map((key) => `${key}, count:0`),
+          facets: [...filterRequestState].map(({ facetKey }) => `${facetKey}, count:0`),
         };
 
         callback(payload, onSuccess, onFail);
@@ -90,10 +102,12 @@ const useTableProvider = () => {
     filterData,
     updateFilterItems,
     updateTableItems,
+    setPageSize,
     getTablePageCount: () => tableData.total_pages,
     getTablePage: () => tableData.page,
     getTableRowData: () => tableData.result,
-    getFilterData: () => tableData.facets,
+    getSearchedFacets: () => tableData.facets,
+    getFilterData: () => filterData.facets,
     enableHistoryState: ({ history, location, prefix }) => {
       setRouter({ history, location, prefix });
     },
@@ -149,14 +163,10 @@ const useTableProvider = () => {
     update: (request, history) => {
       if (request) {
         const updateRequest = Object.assign(initializationRequestState, rowRequestState, request);
-        console.log(updateRequest);
-
         setRowRequestState(updateRequest);
       }
       if (history) {
         const updateHistory = Object.assign(initializationHistoryState, historyState, history);
-        console.log(updateHistory);
-
         setHistoryState(updateHistory);
       }
     },

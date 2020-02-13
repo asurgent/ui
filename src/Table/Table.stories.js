@@ -138,6 +138,7 @@ export const apiTable = () => {
   const table = Table.useTableProvider();
 
   useEffect(() => {
+    table.setPageSize(15);
     table.registerRowFetchCallback((payload, onSuccess, onFail) => {
       if (success) {
         onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });

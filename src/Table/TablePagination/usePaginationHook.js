@@ -40,7 +40,7 @@ const usePaginationHook = (tableHook, props) => {
   useEffect(() => {
     const newList = buildPaginationArray(currentPage, totalPageCount, PAGINATION_DELTA);
     setPaginationList(newList);
-  }, [currentPage, tableHook.getTablePageCount()]);
+  }, [currentPage, totalPageCount]);
 
 
   const paginate = (requestedPage) => {
