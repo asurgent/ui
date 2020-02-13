@@ -4,6 +4,7 @@ import * as Icons from '@material-ui/icons';
 import * as Button from '../../Button';
 import * as C from './TablePagination.styled';
 import calcualtePaginationList from './helpers';
+import usePaginationHook from './usePaginationHook';
 
 const PAGINATION_DELTA = 5;
 
@@ -21,7 +22,9 @@ const TablePagination = ({
   activePage,
   onPagination,
   pages,
+  tableHook,
 }) => {
+  const paginationHook = usePaginationHook(tableHook);
   const [paginationList, setPaginationList] = useState([]);
 
   useEffect(() => {

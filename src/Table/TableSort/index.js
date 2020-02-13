@@ -12,7 +12,7 @@ const defaultProps = {};
 const TableSortProxy = (props) => {
   const { tableHook } = props;
 
-  if (tableHook && tableHook.isMounted) {
+  if (tableHook) {
     return <TableSort {...props} />;
   }
 

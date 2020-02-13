@@ -14,16 +14,7 @@ const defaultProps = {};
 const TableFilterProxy = ({ tableHook, filterConfiguratuion }) => {
   const filterHook = useFilter(filterConfiguratuion, tableHook);
 
-  useEffect(() => {
-    if (tableHook.isMounted) {
-      tableHook.getHistoryState(({ filter }) => {
-        const state = buildFilterObjectFromState(filter);
-        filterHook.setSelectedItems(state);
-      });
-    }
-  }, [tableHook.isMounted]);
-
-  if (tableHook && tableHook.isMounted) {
+  if (tableHook) {
     return (
       <TableFilter filterHook={filterHook} tableHook={tableHook} />
     );

@@ -14,7 +14,7 @@ const filterJoiner = (list, joinOpperator) => {
 };
 
 
-export const buildFilterObjectFromState = (stateString) => {
+export const buildFilterObjectFromStateString = (stateString) => {
   const uri = decodeURI(stateString);
   try {
     const base64 = atob(uri);

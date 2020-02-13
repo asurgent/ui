@@ -1,36 +1,41 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import * as Icon from '@material-ui/icons';
+import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
 import { Primary as Form, useFormBuilder } from '../../Form';
 import * as Button from '../../Button';
 import useSortHook from './useSortHook';
 
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
-  searchLabel: PropTypes.string,
+  sortKeys: PropTypes.instanceOf(Array).isRequired,
 };
 
-const defaultProps = {
-  tableHook: {},
-  searchLabel: '',
-};
+const defaultProps = {};
 
 const TableSort = (props) => {
   const { tableHook, sortKeys } = props;
 
   const sortHook = useSortHook(sortKeys, tableHook);
   const formData = useFormBuilder({
-    sortDirection: {
-      type: 'select', options: sortHook.getSortKeyOptions(), noLabel: true,
+    sortKey: {
+      type: 'select', options: sortHook.getOptions(), noLabel: true,
     },
   });
 
   useEffect(() => {
-    formData.updateField('sortDirection', { props: { disabled: tableHook.isLoading } });
+    formData.updateField('sortKey', { props: { disabled: tableHook.isLoading } });
   }, [tableHook.isLoading]);
 
+
+  useEffect(() => {
+    if (sortHook.isReady) {
+      formData.updateField('sortKey', { value: sortHook.getCurrentSortKey() });
+    }
+  }, [sortHook.isReady]);
+
+
   const direction = sortHook.currentSortDirectionIsAscending();
-  if (!sortHook.hasSortKeyOptions()) {
+  if (!sortHook.hasOptions()) {
     return null;
   }
 
@@ -38,16 +43,17 @@ const TableSort = (props) => {
     <Form
       form={formData}
       onNewValue={(values) => {
-        sortHook.setCurrentSortKey(values.sortDirection);
+        const selectedSortKey = values.sortKey;
+        sortHook.setCurrentSortKey(selectedSortKey);
       }}
     >
-      {({ sortDirection }) => (
+      {({ sortKey }) => (
         <div>
-          {sortDirection}
+          {sortKey}
           <Button.Icon
             disabled={tableHook.isLoading}
             onClick={() => sortHook.toggleCurrentSortDirection()}
-            icon={direction ? <Icon.ArrowDownward /> : <Icon.ArrowUpward />}
+            icon={direction ? <ArrowDownward /> : <ArrowUpward />}
           />
         </div>
       )}

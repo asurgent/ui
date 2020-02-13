@@ -87,9 +87,9 @@ const ApiTable = (props) => {
         withPagination={false}
         {...rest}
       />
-      {/* { withPagination && (
+      { withPagination && (
         <TablePagination tableHook={tableHook} />
-      )} */}
+      )}
     </>
   );
 };

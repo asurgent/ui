@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TableSearchBar from './TableSearchBar';
+import useSearchbarHook from './useSearchbarHook';
 
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
@@ -11,9 +12,10 @@ const defaultProps = {};
 
 const TableSearchBarProxy = (props) => {
   const { tableHook } = props;
+  const searchHook = useSearchbarHook(tableHook);
 
-  if (tableHook && tableHook.isMounted) {
-    return <TableSearchBar {...props} />;
+  if (tableHook) {
+    return <TableSearchBar {...props} searchHook={searchHook} tableHook={tableHook} />;
   }
 
   return null;

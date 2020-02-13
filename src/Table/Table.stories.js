@@ -136,48 +136,18 @@ export const defaultTable = () => (
 
 export const apiTable = () => {
   const success = boolean('Successful response', true);
-  const updateCallbackFunction = (payload, provider) => {
-    // do ajaxrequest based on page & query
-    // use setter to set responsedata from azure-search api
-    // console.log(payload);
-
-    if (success) {
-      provider.setSuccessResponse({ result: [...rowDummyData], page: 2, total_pages: 2 });
-    } else {
-      provider.setFailedResponse('Could not get your things');
-    }
-  };
-  const updateFilterCallback = (payload, filterCallback) => {
-    // do ajaxrequest based on page & query
-    // use setter to set responsedata from azure-search api
-    // console.log('payload filter', payload);
-
-    filterCallback({
-      gurka: [
-        { value: '1133' },
-        { value: '123' },
-        { value: '4465' },
-        { value: '984' },
-      ],
-      pankaka: [
-        { value: '1133' },
-        { value: '123' },
-        { value: '4465' },
-        { value: '984' },
-      ],
-    });
-  };
-
   const table = Table.useTableProvider();
-
 
   useEffect(() => {
     table.registerRowFetchCallback((payload, onSuccess, onFail) => {
-      onSuccess({ result: [...rowDummyData], page: 2, total_pages: 2 });
+      if (success) {
+        onSuccess({ result: [...rowDummyData], page: 2, total_pages: 2 });
+      } else {
+        onFail('Could not get your things');
+      }
     });
 
     table.registerFilterFetchCallback((payload, onSuccess, onFail) => {
-      console.log(123);
       onSuccess({
         gurka: [
           { value: '1133' },
@@ -198,7 +168,7 @@ export const apiTable = () => {
   }, []);
 
   return (
-    <div style={{ padding: '3.2rem' }}>
+    <div style={{ padding: '3.2rem', height: '100vh', widht: '100wv' }}>
       <Table.Api
         withHeaderLabels
         useHistoryState

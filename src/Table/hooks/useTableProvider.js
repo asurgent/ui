@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react';
 import queryString from 'query-string';
 import sqp from 'search-query-parser';
 
-const urlKey = { PAGE: 'page', SORT: 'sort', FILTER: 'filter' };
 const tableDefaults = { result: [], page: 1, total_pages: 0 };
-const searchKeywords = { keywords: Object.values(urlKey) };
-
 const defaultPayload = {
   search_string: '',
   filter: '',
@@ -32,11 +29,33 @@ const useTableProvider = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    if (updateTableItems && Object.keys(updateTableItems).length > 0) {
+    if (isMounted && updateTableItems && Object.keys(updateTableItems).length > 0) {
       const { callback, onSuccess, onFail } = updateTableItems;
-      callback(defaultPayload, onSuccess, onFail);
+      const payload = { ...defaultPayload, ...requestState };
+      callback(payload, onSuccess, onFail);
+
+      console.log('Fetch', payload);
     }
   }, [isMounted, requestState]);
+
+  useEffect(() => {
+    if (Object.keys(router).length && Object.keys(historyState).length > 0) {
+      const { location, history } = router;
+
+      const buildSearchQuery = () => {
+        const search = queryString.parse(location.search);
+        const param = 'q';
+
+        Object.assign(search, {
+          [param]: Object.values(historyState).join(' '),
+        });
+
+        return `?${queryString.stringify(search)}`;
+      };
+
+      history.replace({ ...location, search: buildSearchQuery() });
+    }
+  }, [historyState]);
 
   return {
     isLoading,
@@ -51,7 +70,11 @@ const useTableProvider = () => {
     getHistoryState: () => {
       const { location } = router;
       const { q: tableState } = queryString.parse(location.search);
-      const searchQueryObj = sqp.parse(tableState, searchKeywords);
+      const searchQueryObj = sqp.parse(tableState, { keywords: ['sort', 'page', 'filter'] });
+
+      if (typeof searchQueryObj === 'string') {
+        return { text: searchQueryObj };
+      }
 
       return searchQueryObj;
     },

@@ -17,13 +17,9 @@ const TablePaginationProxy = (props) => {
     return <TablePagination {...props} />;
   }
 
-  if (tableHook.isMounted) {
-    return (
-      <TablePagination tableHook={tableHook} {...props} />
-    );
-  }
-
-  return null;
+  return (
+    <TablePagination tableHook={tableHook} {...props} />
+  );
 };
 
 TablePaginationProxy.propTypes = propTypes;

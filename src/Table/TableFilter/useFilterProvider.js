@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   INCLUDE,
   EXCLUDE,
   REMOVE,
   buildFilterQuery,
   buildFilterStateString,
+  buildFilterObjectFromStateString,
 } from './helpers';
 
 const useFilterProvider = (config, tableHook) => {
@@ -12,10 +13,20 @@ const useFilterProvider = (config, tableHook) => {
   const [selectedItems, setSelectedItems] = useState({}); // dict of selected items. Set from URL-state
   const [initiated, setInitiated] = useState(false); // if we need to load facets
 
+  // Set initail value from history-state
+  useEffect(() => {
+    const state = tableHook.getHistoryState();
+    if (state && Object.keys(state).length) {
+      const { filter } = state;
+      const filterObject = buildFilterObjectFromStateString(filter);
+      setSelectedItems(filterObject);
+    }
+  }, []);
+
   const triggerUpdate = (filterState) => {
     const filter = buildFilterQuery(filterState);
     const stateString = buildFilterStateString(filterState);
-    tableHook.onFilter(filter, stateString);
+    tableHook.update({ filter }, { filter: stateString });
   };
 
   return {
