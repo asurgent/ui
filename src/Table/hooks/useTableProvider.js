@@ -170,7 +170,7 @@ const useTableProvider = (updateAction = (() => {}), filterAction = (() => {})) 
       const payload = {
         ...cacheDefaults,
         size: 1,
-        facets: [...keys],
+        facets: [...keys].map((key) => `${key}, count:0`),
       };
       filterAction(payload, callback);
     },
