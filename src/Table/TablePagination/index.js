@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TablePagination from './TablePagination';
+import usePaginationHook from './usePaginationHook';
 
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object),
@@ -12,13 +13,14 @@ const defaultProps = {
 
 const TablePaginationProxy = (props) => {
   const { tableHook } = props;
+  const paginationHook = usePaginationHook(tableHook, props);
 
   if (!tableHook) {
-    return <TablePagination {...props} />;
+    return <TablePagination {...props} paginationHook={paginationHook} />;
   }
 
   return (
-    <TablePagination tableHook={tableHook} {...props} />
+    <TablePagination tableHook={tableHook} paginationHook={paginationHook} {...props} />
   );
 };
 

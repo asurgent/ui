@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react';
 import queryString from 'query-string';
 import sqp from 'search-query-parser';
 
-const tableDefaults = { result: [], page: 1, total_pages: 0 };
+const tableDefaults = {
+  page: 1,
+  result: [],
+  facets: [],
+  total_pages: 10,
+};
 const defaultPayload = {
   search_string: '',
   filter: '',
@@ -64,24 +69,29 @@ const useTableProvider = () => {
     filterData,
     updateFilterItems,
     updateTableItems,
+    getTablePageCount: () => tableData.total_pages,
+    getTablePage: () => tableData.page,
+    getTableRowData: () => tableData.result,
+    getFilterData: () => tableData.facets,
     enableHistoryState: ({ history, location, prefix }) => {
       setRouter({ history, location, prefix });
     },
     getHistoryState: () => {
-      const { location } = router;
-      const { q: tableState } = queryString.parse(location.search);
-      const searchQueryObj = sqp.parse(tableState, { keywords: ['sort', 'page', 'filter'] });
+      if (router.location) {
+        const { location } = router;
+        const { q: tableState } = queryString.parse(location.search);
+        const searchQueryObj = sqp.parse(tableState, { keywords: ['sort', 'page', 'filter'] });
 
-      if (typeof searchQueryObj === 'string') {
-        return { text: searchQueryObj };
+        if (typeof searchQueryObj === 'string') {
+          return { text: searchQueryObj };
+        }
+
+        return searchQueryObj;
       }
-
-      return searchQueryObj;
+      return {};
     },
     requestFailedMessage: () => requestFailed,
     parentReady: () => { setIsMounted(true); },
-    getTableRowData: () => tableData.result,
-    getFilterData: () => tableData.facets,
     registerRowFetchCallback: (callback) => {
       const onSuccess = (response) => {
         setIsLoading(false);

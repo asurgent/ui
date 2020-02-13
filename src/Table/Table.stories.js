@@ -49,7 +49,6 @@ const rowDummyData = Array.from({ length: 5 }, () => ({
   valueD: 'Cell 4',
 }));
 
-
 const rowComponentOverride = ({ row }) => {
   const OverrideRow = styled(row)`
     .column-5 {
@@ -141,7 +140,7 @@ export const apiTable = () => {
   useEffect(() => {
     table.registerRowFetchCallback((payload, onSuccess, onFail) => {
       if (success) {
-        onSuccess({ result: [...rowDummyData], page: 2, total_pages: 2 });
+        onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
       } else {
         onFail('Could not get your things');
       }
@@ -229,26 +228,16 @@ export const pagination = () => (
 );
 
 export const searchBar = () => {
-  const table = Table.useTableProvider((payload) => {
-    console.log(payload);
-  });
+  const table = Table.useTableProvider();
 
   useEffect(() => {
-    table.setSortKeys([
-      { value: 'created', label: 'Created' },
-      {
-        value: 'modified', label: 'Modified', default: true, direction: 123,
-      },
-      { value: 'closed', label: 'Closed' },
-      { value: 'due', label: 'Due' },
-    ]);
     table.parentReady();
   }, []);
 
   return (
     <div style={{ background: 'pink', width: '100%' }}>
       <Table.SearchBar
-        provider={table}
+        tableHook={table}
         searchLabel="Search here"
       />
     </div>

@@ -2,18 +2,13 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import { RingSpinner } from 'react-spinners-kit';
-import TablePagination from './TablePagination';
 import TableHeader from './TableHeader';
 import * as C from './Table.styled';
 import { generateRows } from './helpers';
 
 
 export const propTypes = {
-  pages: PropTypes.number,
-  activePage: PropTypes.number,
-  withHeaderSort: PropTypes.bool,
   withHeader: PropTypes.bool,
-  withPagination: PropTypes.bool,
   rowData: PropTypes.arrayOf(
     PropTypes.instanceOf(Object),
   ).isRequired,
@@ -23,8 +18,6 @@ export const propTypes = {
       sortKey: PropTypes.string,
     }),
   ),
-  onPagination: PropTypes.func,
-  onSort: PropTypes.func,
   tableRowConfiguration: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.bool,
@@ -48,11 +41,8 @@ export const propTypes = {
 };
 
 export const defaultProps = {
-  pages: 0,
-  activePage: 0,
   cardView: false,
   withHeader: false,
-  withPagination: true,
   headerData: [],
   cardRowConfiguration: false,
   tableRowConfiguration: false,
@@ -61,8 +51,6 @@ export const defaultProps = {
   equalSizeColumns: false,
   isLoading: false,
   emptystate: 'No items found',
-  onPagination: () => {},
-  onSort: () => {},
 };
 
 const bodyComponents = {
@@ -93,23 +81,13 @@ const Table = withTheme((props) => {
   }, [rowData, cardView]);
 
   const {
-    pages,
     zebra,
     striped,
-    activePage,
     withHeader,
-    withPagination,
     equalSizeColumns,
     isLoading,
     emptystate,
   } = props;
-
-  const onPagination = (requestedPage) => {
-    const page = Math.max(1, Math.min(pages, requestedPage));
-    if (page !== activePage) {
-      props.onPagination(page);
-    }
-  };
 
   const noContent = rows.length === 0 && isLoading === false;
 
@@ -136,14 +114,6 @@ const Table = withTheme((props) => {
           {/* Render rows end */}
         </C.Content>
       </C.Base>
-      { withPagination && (
-        <TablePagination
-          isLoading={isLoading}
-          onPagination={onPagination}
-          activePage={activePage}
-          pages={pages}
-        />
-      )}
     </C.Wrapper>
   );
 });

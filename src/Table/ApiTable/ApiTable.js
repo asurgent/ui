@@ -32,6 +32,7 @@ const propTypes = {
   pages: PropTypes.number,
   rowData: PropTypes.instanceOf(Array),
   withFilter: PropTypes.instanceOf(Array),
+  sortKeys: PropTypes.instanceOf(Array),
 };
 
 const defaultProps = {
@@ -44,6 +45,7 @@ const defaultProps = {
   pages: 0,
   rowData: [],
   withFilter: [],
+  sortKeys: [],
 };
 
 const ApiTable = (props) => {
@@ -64,22 +66,22 @@ const ApiTable = (props) => {
 
   return (
     <>
-      { withSearch && (
-        <TableSearchBar
-          tableHook={tableHook}
-          searchLabel={searchLabel}
-        />
-      )}
+      {/* { withSearch && ( */}
+      <TableSearchBar
+        tableHook={tableHook}
+        searchLabel={searchLabel}
+      />
+      {/* )} */}
       <TableSort
         tableHook={tableHook}
         sortKeys={sortKeys}
       />
-      { withFilter && Array.isArray(withFilter) && withFilter.length > 0 && (
-        <TableFilter
-          tableHook={tableHook}
-          filterConfiguratuion={withFilter}
-        />
-      )}
+      {/* { withFilter && Array.isArray(withFilter) && withFilter.length > 0 && ( */}
+      <TableFilter
+        tableHook={tableHook}
+        filterConfiguratuion={withFilter}
+      />
+      {/* )} */}
       <Table
         emptystate={getEmptystate(tableHook, props)}
         isLoading={tableHook.isLoading}
@@ -87,9 +89,9 @@ const ApiTable = (props) => {
         withPagination={false}
         {...rest}
       />
-      { withPagination && (
-        <TablePagination tableHook={tableHook} />
-      )}
+      {/* { withPagination && ( */}
+      <TablePagination tableHook={tableHook} />
+      {/* )} */}
     </>
   );
 };
