@@ -4,7 +4,7 @@ import TableSearchBar from '../TableSearchBar';
 import TableSort from '../TableSort';
 import TableFilter from '../TableFilter';
 import TablePagination from '../TablePagination';
-import Table from '../Table';
+import BaseTable from '../BaseTable';
 
 const getEmptystate = (hook, props) => {
   if (hook.requestFailedMessage()) {
@@ -48,7 +48,7 @@ const defaultProps = {
   sortKeys: [],
 };
 
-const ApiTable = (props) => {
+const Table = (props) => {
   const {
     onPagination,
     activePage,
@@ -82,7 +82,7 @@ const ApiTable = (props) => {
         filterConfiguratuion={withFilter}
       />
       {/* )} */}
-      <Table
+      <BaseTable
         emptystate={getEmptystate(tableHook, props)}
         isLoading={tableHook.isLoading}
         rowData={tableHook.getTableRowData()}
@@ -96,8 +96,8 @@ const ApiTable = (props) => {
   );
 };
 
-ApiTable.propTypes = propTypes;
-ApiTable.defaultProps = defaultProps;
-ApiTable.displayName = '@asurgent.ui.Table.Api';
+Table.propTypes = propTypes;
+Table.defaultProps = defaultProps;
+Table.displayName = '@asurgent.ui.Table.Main';
 
-export default ApiTable;
+export default Table;

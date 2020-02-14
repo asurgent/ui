@@ -5,12 +5,6 @@ export const FormStyle = styled.form`
     position: relative;
     display: flex;
     flex-direction: column;
-
-    input {
-        &:disabled {
-            color: ${({ theme }) => theme.gray400};
-        }
-    }
 `;
 
 

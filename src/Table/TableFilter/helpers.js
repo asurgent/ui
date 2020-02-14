@@ -53,9 +53,12 @@ export const buildFilterStateString = (selectedFilters) => {
       return groups;
     }, {});
 
-  const result = encodeURI(btoa(JSON.stringify(mini)));
+  if (Object.keys(mini).length > 0) {
+    const result = encodeURI(btoa(JSON.stringify(mini)));
+    return result;
+  }
 
-  return result;
+  return '';
 };
 
 export const buildFilterQuery = (selectedFilters) => {

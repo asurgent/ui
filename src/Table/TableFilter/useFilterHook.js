@@ -9,9 +9,9 @@ import {
 } from './helpers';
 
 const useFilterProvider = (config, tableHook) => {
-  const [isReady, setIsReady] = useState(false); // if we need to load facets
   const [filterGroups] = useState(config);
-  const [selectedItems, setSelectedItems] = useState({}); // dict of selected items. Set from URL-state
+  const [isReady, setIsReady] = useState(false);
+  const [selectedItems, setSelectedItems] = useState({});
 
 
   // Initial setter. This will trigger Poppulate effect as well.
@@ -23,8 +23,8 @@ const useFilterProvider = (config, tableHook) => {
       const filterObject = buildFilterObjectFromStateString(filter);
 
       setSelectedItems(filterObject);
-      setIsReady(true);
     }
+    setIsReady(true);
   }, []);
 
   // Poppulate tabelHook with state for requests and URL
@@ -34,7 +34,7 @@ const useFilterProvider = (config, tableHook) => {
       const stateString = buildFilterStateString(selectedItems);
 
       const request = { filter };
-      const history = { filter: `filter:"${stateString}"` };
+      const history = { filter: stateString ? `filter:${stateString}` : '' };
 
       tableHook.update(request, history);
     }

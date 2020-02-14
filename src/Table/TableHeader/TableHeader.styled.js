@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import * as C from '../Table.styled';
+import * as C from '../BaseTable/BaseTable.styled';
 
 export const HeaderRow = styled(C.Row)`
     border-top:none;

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import { RingSpinner } from 'react-spinners-kit';
-import TableHeader from './TableHeader';
-import * as C from './Table.styled';
+import TableHeader from '../TableHeader';
+import * as C from './BaseTable.styled';
 import { generateRows } from './helpers';
 
 
@@ -59,7 +59,7 @@ const bodyComponents = {
   content: C.TableCellContent,
 };
 
-const Table = withTheme((props) => {
+const BaseTable = withTheme((props) => {
   const {
     rowData,
     headerData,
@@ -118,7 +118,7 @@ const Table = withTheme((props) => {
   );
 });
 
-Table.propTypes = propTypes;
-Table.defaultProps = defaultProps;
+BaseTable.propTypes = propTypes;
+BaseTable.defaultProps = defaultProps;
 
-export default Table;
+export default BaseTable;

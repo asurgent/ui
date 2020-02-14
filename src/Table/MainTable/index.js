@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, useHistory } from 'react-router-dom';
-import ApiTable from './ApiTable';
+import MainTable from './MainTable';
 
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
@@ -16,7 +16,7 @@ const defaultProps = {
   sortKeys: [],
 };
 
-const ApiTableProxy = (props) => {
+const MainTableProxy = (props) => {
   const {
     tableHook,
     useHistoryState,
@@ -33,14 +33,14 @@ const ApiTableProxy = (props) => {
   }, []);
 
   if (tableHook.isMounted) {
-    return <ApiTable {...props} />;
+    return <MainTable {...props} />;
   }
 
   return null;
 };
 
-ApiTableProxy.propTypes = propTypes;
-ApiTableProxy.defaultProps = defaultProps;
-ApiTableProxy.displayName = '@asurgent.ui.Table.Proxy.Api';
+MainTableProxy.propTypes = propTypes;
+MainTableProxy.defaultProps = defaultProps;
+MainTableProxy.displayName = '@asurgent.ui.Table.Proxy.Main';
 
-export default ApiTableProxy;
+export default MainTableProxy;

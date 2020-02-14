@@ -82,12 +82,8 @@ const cellComponentOverride = ({ cell }) => {
   return OverrideCell;
 };
 
-export const defaultTable = () => (
-  <Table.Primary
-    onSort={(key, direction) => { console.log(key, direction); }}
-    onPagination={(requestedPage) => { console.log(requestedPage); }}
-    activePage={10}
-    pages={number('Pages', 10)}
+export const base = () => (
+  <Table.Base
     cellComponent={cellComponentOverride}
     rowComponent={rowComponentOverride}
     emptystate={text('Emptystate', 'No items found')}
@@ -95,8 +91,7 @@ export const defaultTable = () => (
     zebra={boolean('Zebra', true)}
     striped={boolean('Striped', true)}
     cardView={boolean('Card view', false)}
-    withHeaderSort={boolean('With header sort', true)}
-    withHeaderLabels={boolean('With header labels', true)}
+    withHeader={boolean('With header', true)}
     withPagination={boolean('With pagination', true)}
     equalSizeColumns={boolean('Equal size column', false)}
     headerData={[
@@ -133,9 +128,9 @@ export const defaultTable = () => (
   />
 );
 
-export const apiTable = () => {
+export const main = () => {
   const success = boolean('Successful response', true);
-  const table = Table.useTableProvider();
+  const table = Table.useTableHook();
 
   useEffect(() => {
     table.setPageSize(15);
@@ -169,8 +164,8 @@ export const apiTable = () => {
 
   return (
     <div style={{ padding: '3.2rem', height: '100vh', widht: '100wv' }}>
-      <Table.Api
-        withHeaderLabels
+      <Table.Main
+        withHeader
         useHistoryState
         historyStatePrefix="tickets"
         tableHook={table}
@@ -219,28 +214,35 @@ export const apiTable = () => {
   );
 };
 
-export const pagination = () => (
-  <Table.Pagination
-    isLoading={boolean('isLoading', false)}
-    onPagination={(page) => console.log(`requested page: ${page}`)}
-    activePage={number('active page', 1)}
-    pages={number('total pages', 10)}
-  />
-);
+export const pagination = () => {
+  const hook = Table.useTableHook();
+  useEffect(() => {
+    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
+    });
+    hook.parentReady();
+  }, []);
+
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Table.Pagination tableHook={hook} />
+    </div>
+  );
+};
 
 export const searchBar = () => {
-  const table = Table.useTableProvider();
+  const hook = Table.useTableHook();
 
   useEffect(() => {
-    table.parentReady();
+    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
+    });
+    hook.parentReady();
   }, []);
 
   return (
     <div style={{ background: 'pink', width: '100%' }}>
-      <Table.SearchBar
-        tableHook={table}
-        searchLabel="Search here"
-      />
+      <Table.SearchBar tableHook={hook} searchLabel="Search here" />
     </div>
   );
 };

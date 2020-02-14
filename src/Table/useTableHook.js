@@ -19,7 +19,7 @@ const defaultPayload = {
   page: 1,
 };
 
-const useTableProvider = () => {
+const useTableHook = () => {
   // Holds state changes that are set simontainusly wihout a render inbetween
   // A rerender will empty these, but without a rerender setState for rowRequestState &
   // filterRequestState would overwrite previous value if no render is executed inbetween
@@ -46,17 +46,19 @@ const useTableProvider = () => {
   useEffect(() => {
     setIsLoading(true);
     if (isMounted && rowRequestState && Object.keys(rowRequestState).length > 0) {
-      const { callback, onSuccess, onFail } = updateTableItems;
+      if (updateTableItems && Object.keys(updateTableItems).length > 0) {
+        const { callback, onSuccess, onFail } = updateTableItems;
 
-      const payload = {
-        ...defaultPayload,
-        ...rowRequestState,
-        page_size: pageSize,
-        facets: [...filterRequestState].map(({ facetKey }) => `${facetKey}, count:0`),
-      };
-      callback(payload, onSuccess, onFail);
+        const payload = {
+          ...defaultPayload,
+          ...rowRequestState,
+          page_size: pageSize,
+          facets: [...filterRequestState].map(({ facetKey }) => `${facetKey}, count:0`),
+        };
+        callback(payload, onSuccess, onFail);
 
-      console.log('Fetch', payload);
+        console.log('Fetch', payload);
+      }
     }
   }, [isMounted, rowRequestState]);
 
@@ -76,8 +78,9 @@ const useTableProvider = () => {
     }
   }, [isMounted, filterRequestState]);
 
+  // Is triggered when the filter-state is updated
   useEffect(() => {
-    if (Object.keys(router).length && Object.keys(historyState).length > 0) {
+    if (isMounted && Object.keys(router).length && Object.keys(historyState).length > 0) {
       const { location, history } = router;
 
       const buildSearchQuery = () => {
@@ -173,4 +176,4 @@ const useTableProvider = () => {
   };
 };
 
-export default useTableProvider;
+export default useTableHook;

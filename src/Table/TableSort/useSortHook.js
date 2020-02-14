@@ -18,14 +18,15 @@ const useSearchbarHook = (sortKeyOptionsConfiguration, tableHook) => {
         const [key, direction] = sort.split('-');
         setSortKey(key);
         setSortDirection(direction);
-      } else {
-        // If we dont find a state in the url, then set defaults
-        const { key, direction } = getDefaultSortItem(options);
-        setSortKey(key);
-        setSortDirection(direction);
+        setIsReady(true);
+        return;
       }
     }
 
+    // If we dont find a state in the url, then set defaults
+    const { key, direction } = getDefaultSortItem(options);
+    setSortKey(key);
+    setSortDirection(direction);
     setIsReady(true);
   }, []);
 
