@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const FilterWrapper = styled.div`
-    /* margin-right: 1rem; */
 `;
 
 export const List = styled.div`
@@ -22,7 +21,6 @@ export const Search = styled.div`
     border-top: 1px solid ${({ theme }) => theme.gray200};
     border-bottom: 1px solid ${({ theme }) => theme.gray200};
 `;
-
 
 export const Center = styled.div`
     display: flex;

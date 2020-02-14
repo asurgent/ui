@@ -125,6 +125,10 @@ export const Link = styled.div`
 export const Icon = styled.div`
     width: 3.2rem;
     height: 3.2rem;
+    min-width: 3.2rem;
+    min-height: 3.2rem;
+    max-width: 3.2rem;
+    max-height: 3.2rem;
     border-radius: 100%;
     position: relative;
     display: flex;

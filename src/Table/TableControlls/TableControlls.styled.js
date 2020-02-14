@@ -14,7 +14,7 @@ export const Controllbar = styled.div`
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         grid-template-areas: 
         "search sort"
-        "filter filter ";
+        "filter . ";
     }   
 
     .search {

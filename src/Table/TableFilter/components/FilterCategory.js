@@ -31,13 +31,18 @@ const FilterCategory = withTheme(({
   theme,
 }) => {
   const groupHook = useFilterGroupHook(tableHook, filterHook, filterKey);
-  const formData = Form.useFormBuilder({
+  const desktopForm = Form.useFormBuilder({
+    search: {
+      type: 'text', value: '', noLabel: true,
+    },
+  });
+  const mobileForm = Form.useFormBuilder({
     search: {
       type: 'text', value: '', noLabel: true,
     },
   });
 
-  const content = (
+  const content = (form) => (
     <>
       {
         !filterHook.isReady && (
@@ -54,7 +59,7 @@ const FilterCategory = withTheme(({
             </C.Header>
             <C.Search>
               <Form.Primary
-                form={formData}
+                form={form}
                 onChange={groupHook.onSearchOptions}
               >
                 {({ search }) => (search)}
@@ -89,13 +94,13 @@ const FilterCategory = withTheme(({
   );
 
   return (
-    <>
+    <C.FilterWrapper>
       <Button.Filter onClick={() => groupHook.setOpen(true)}>{label}</Button.Filter>
       <Shield.Transparent onClick={() => groupHook.setOpen(false)} shieldIsUp={groupHook.isOpen()}>
         <C.Desktop>
           <Transition.FadeInSlideDown isVisible={groupHook.isOpen()} timeout={80}>
             <C.DesktopDropdown>
-              {content}
+              {content(desktopForm)}
             </C.DesktopDropdown>
           </Transition.FadeInSlideDown>
         </C.Desktop>
@@ -104,13 +109,13 @@ const FilterCategory = withTheme(({
             <C.MobileDropdown>
               <Button.Icon className="close" onClick={() => groupHook.setOpen(false)} icon={<Icon.Close fontSize="large" />} />
               <C.MobileContent>
-                {content}
+                {content(mobileForm)}
               </C.MobileContent>
             </C.MobileDropdown>
           </Transition.FadeIn>
         </C.Mobile>
       </Shield.Transparent>
-    </>
+    </C.FilterWrapper>
   );
 });
 
