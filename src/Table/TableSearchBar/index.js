@@ -10,8 +10,7 @@ const propTypes = {
 const defaultProps = {};
 
 
-const TableSearchBarProxy = (props) => {
-  const { tableHook } = props;
+const TableSearchBarProxy = ({ tableHook, ...props }) => {
   const searchHook = useSearchbarHook(tableHook);
 
   if (tableHook) {

@@ -45,7 +45,6 @@ export const MobileMenu = styled.div`
         right: 2.4rem;
         top: 2.4rem;
     }
-
 `;
 
 export const CreateTitle = styled.div``;

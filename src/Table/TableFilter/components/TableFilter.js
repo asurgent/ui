@@ -8,12 +8,15 @@ import FilterCategory from './FilterCategory';
 const propTypes = {
   filterHook: PropTypes.instanceOf(Object).isRequired,
   tableHook: PropTypes.instanceOf(Object).isRequired,
+  className: PropTypes.string,
 };
 
-const defaultProps = {};
+const defaultProps = {
+  className: '',
+};
 
-const TableFilter = ({ filterHook, tableHook }) => (
-  <C.Wrapper>
+const TableFilter = ({ filterHook, tableHook, className }) => (
+  <C.Wrapper className={className}>
     <C.Filters>
       {
       filterHook.filterGroups

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TableSearchBar from '../TableSearchBar';
-import TableSort from '../TableSort';
-import TableFilter from '../TableFilter';
 import TablePagination from '../TablePagination';
+import Controlls from '../TableControlls';
 import BaseTable from '../BaseTable';
+import { Wrapper } from './MainTable.styled';
 
 const getEmptystate = (hook, props) => {
   if (hook.requestFailedMessage()) {
@@ -32,7 +31,7 @@ const propTypes = {
   pages: PropTypes.number,
   rowData: PropTypes.instanceOf(Array),
   withFilter: PropTypes.instanceOf(Array),
-  sortKeys: PropTypes.instanceOf(Array),
+  withSort: PropTypes.instanceOf(Array),
 };
 
 const defaultProps = {
@@ -45,7 +44,7 @@ const defaultProps = {
   pages: 0,
   rowData: [],
   withFilter: [],
-  sortKeys: [],
+  withSort: [],
 };
 
 const Table = (props) => {
@@ -58,30 +57,20 @@ const Table = (props) => {
     searchLabel,
     withFilter,
     withPagination,
-    sortKeys,
+    withSort,
     ...rest
   } = props;
 
   const { tableHook, withSearch } = props;
 
   return (
-    <>
-      {/* { withSearch && ( */}
-      <TableSearchBar
+    <Wrapper>
+      <Controlls
         tableHook={tableHook}
-        searchLabel={searchLabel}
+        withSearch={withSearch}
+        withSort={withSort}
+        withFilter={withFilter}
       />
-      {/* )} */}
-      <TableSort
-        tableHook={tableHook}
-        sortKeys={sortKeys}
-      />
-      {/* { withFilter && Array.isArray(withFilter) && withFilter.length > 0 && ( */}
-      <TableFilter
-        tableHook={tableHook}
-        filterConfiguratuion={withFilter}
-      />
-      {/* )} */}
       <BaseTable
         emptystate={getEmptystate(tableHook, props)}
         isLoading={tableHook.isLoading}
@@ -89,10 +78,10 @@ const Table = (props) => {
         withPagination={false}
         {...rest}
       />
-      {/* { withPagination && ( */}
-      <TablePagination tableHook={tableHook} />
-      {/* )} */}
-    </>
+      { withPagination && (
+        <TablePagination tableHook={tableHook} />
+      )}
+    </Wrapper>
   );
 };
 

@@ -14,6 +14,7 @@ const propTyps = {
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element),
   ]),
+  className: PropTypes.string,
   onChange: PropTypes.func,
   onSubmit: PropTypes.func,
   onFocusChange: PropTypes.func,
@@ -22,6 +23,7 @@ const propTyps = {
 
 const defaultProps = {
   children: null,
+  className: '',
   onChange: () => {},
   onSubmit: () => {},
   onFocusChange: () => {},
@@ -36,6 +38,7 @@ const Form = (props) => {
     onSubmit,
     onFocusChange,
     onNewValue,
+    className,
   } = props;
 
   if (!form || typeof form !== 'object' || !form.inputFileds) {
@@ -80,7 +83,7 @@ const Form = (props) => {
     ));
 
   return (
-    <FormStyle onChange={handleOnChange} onSubmit={handleSubmit} onBlur={handleBlur}>
+    <FormStyle onChange={handleOnChange} onSubmit={handleSubmit} onBlur={handleBlur} className={className}>
       { typeof children === 'function' && children(inputFileds, renderForms, onSubmitAction) }
       { typeof children !== 'function' && renderForms}
     </FormStyle>

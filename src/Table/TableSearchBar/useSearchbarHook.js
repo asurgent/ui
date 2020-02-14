@@ -15,6 +15,7 @@ const useSearchbarHook = (tableHook) => {
       }
     }
 
+
     setIsReady(true);
   }, []);
 
@@ -26,7 +27,7 @@ const useSearchbarHook = (tableHook) => {
 
       tableHook.update(request, history);
     }
-  }, [query]);
+  }, [query, isReady]);
 
 
   return {

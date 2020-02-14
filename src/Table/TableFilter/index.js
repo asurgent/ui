@@ -5,17 +5,17 @@ import useFilterHook from './useFilterHook';
 
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
-  filterConfiguratuion: PropTypes.instanceOf(Array).isRequired,
+  filterKeys: PropTypes.instanceOf(Array).isRequired,
 };
 
 const defaultProps = {};
 
-const TableFilterProxy = ({ tableHook, filterConfiguratuion }) => {
-  const filterHook = useFilterHook(filterConfiguratuion, tableHook);
+const TableFilterProxy = ({ tableHook, filterKeys, ...props }) => {
+  const filterHook = useFilterHook(filterKeys, tableHook);
 
   if (tableHook) {
     return (
-      <TableFilter filterHook={filterHook} tableHook={tableHook} />
+      <TableFilter filterHook={filterHook} tableHook={tableHook} {...props} />
     );
   }
 

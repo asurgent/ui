@@ -98,7 +98,6 @@ export const TableCellContent = styled.div`
 `;
 
 /* Loader & empty state wrapper */
-
 export const Loading = styled.div`
     grid-column: 1/-1;
     padding: 1.6rem 0;

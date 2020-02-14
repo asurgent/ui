@@ -6,14 +6,18 @@ const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
   searchHook: PropTypes.instanceOf(Object).isRequired,
   searchLabel: PropTypes.string,
+  className: PropTypes.string,
 };
 
 const defaultProps = {
   searchLabel: '',
+  className: '',
 };
 
 const TableSearchBar = (props) => {
-  const { tableHook, searchHook, searchLabel } = props;
+  const {
+    tableHook, searchHook, searchLabel, className,
+  } = props;
   const formData = useFormBuilder({
     search: {
       type: 'text', placeholder: searchLabel, value: '', noLabel: true,
@@ -36,6 +40,7 @@ const TableSearchBar = (props) => {
 
   return (
     <Form
+      className={className}
       form={formData}
       onNewValue={(values) => {
         searchHook.setQuery(values.search);

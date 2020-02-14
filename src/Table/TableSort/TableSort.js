@@ -3,17 +3,21 @@ import PropTypes from 'prop-types';
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
 import { Primary as Form, useFormBuilder } from '../../Form';
 import * as Button from '../../Button';
+import { SortWrapper } from './TableSort.styled';
 import useSortHook from './useSortHook';
 
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
   sortKeys: PropTypes.instanceOf(Array).isRequired,
+  className: PropTypes.string,
 };
 
-const defaultProps = {};
+const defaultProps = {
+  className: '',
+};
 
 const TableSort = (props) => {
-  const { tableHook, sortKeys } = props;
+  const { tableHook, sortKeys, className } = props;
 
   const sortHook = useSortHook(sortKeys, tableHook);
   const formData = useFormBuilder({
@@ -41,6 +45,7 @@ const TableSort = (props) => {
 
   return (
     <Form
+      className={className}
       form={formData}
       onNewValue={(values) => {
         const selectedSortKey = values.sortKey;
@@ -48,14 +53,14 @@ const TableSort = (props) => {
       }}
     >
       {({ sortKey }) => (
-        <div>
+        <SortWrapper>
           {sortKey}
           <Button.Icon
             disabled={tableHook.isLoading}
             onClick={() => sortHook.toggleCurrentSortDirection()}
             icon={direction ? <ArrowDownward /> : <ArrowUpward />}
           />
-        </div>
+        </SortWrapper>
       )}
     </Form>
   );

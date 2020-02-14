@@ -45,6 +45,7 @@ const useTableHook = () => {
   // Is triggered whenever the state is changed by a state-changing hook as pagination, filter etc.
   useEffect(() => {
     setIsLoading(true);
+
     if (isMounted && rowRequestState && Object.keys(rowRequestState).length > 0) {
       if (updateTableItems && Object.keys(updateTableItems).length > 0) {
         const { callback, onSuccess, onFail } = updateTableItems;
@@ -56,8 +57,6 @@ const useTableHook = () => {
           facets: [...filterRequestState].map(({ facetKey }) => `${facetKey}, count:0`),
         };
         callback(payload, onSuccess, onFail);
-
-        console.log('Fetch', payload);
       }
     }
   }, [isMounted, rowRequestState]);

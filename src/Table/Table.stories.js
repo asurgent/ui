@@ -5,6 +5,16 @@ import {
 import styled from 'styled-components';
 import * as Table from './index';
 
+const StoryWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3.2rem;
+  height: 100vh;
+  width: 100vh;
+  max-width: 100%;
+`;
+
 const CardWrapper = styled.div`
   display: flex;
   width: 100%;
@@ -83,49 +93,51 @@ const cellComponentOverride = ({ cell }) => {
 };
 
 export const base = () => (
-  <Table.Base
-    cellComponent={cellComponentOverride}
-    rowComponent={rowComponentOverride}
-    emptystate={text('Emptystate', 'No items found')}
-    isLoading={boolean('Loading', false)}
-    zebra={boolean('Zebra', true)}
-    striped={boolean('Striped', true)}
-    cardView={boolean('Card view', false)}
-    withHeader={boolean('With header', true)}
-    withPagination={boolean('With pagination', true)}
-    equalSizeColumns={boolean('Equal size column', false)}
-    headerData={[
-      {
-        value: lorem,
-        sortKey: 'sort-A',
-        size: 'minmax(30rem, 1fr)',
-      },
-      { value: 'B' },
-      { value: 'C', sortKey: 'sort-C' },
-      {
-        value: 'D',
-        sortKey: 'sort-D',
-        size: 'minmax(8rem, 10rem)',
-        props: { style: { textAlign: 'center' } },
-      },
-    ]}
-    rowData={boolean('With rows', true) ? rowDummyData : []}
-    cardConfiguration={(row) => <Card row={row} />}
-    clickRowConfigutation={(row) => ({ link: '/', onClick: () => { console.log(`Click row: ${row.id}`); } })}
-    columnConfiguration={(row) => {
-      const {
-        valueA, valueB, valueC, valueD,
-      } = row;
+  <StoryWrapper>
+    <Table.Base
+      cellComponent={cellComponentOverride}
+      rowComponent={rowComponentOverride}
+      emptystate={text('Emptystate', 'No items found')}
+      isLoading={boolean('Loading', false)}
+      zebra={boolean('Zebra', true)}
+      striped={boolean('Striped', true)}
+      cardView={boolean('Card view', false)}
+      withHeader={boolean('With header', true)}
+      withPagination={boolean('With pagination', true)}
+      equalSizeColumns={boolean('Equal size column', false)}
+      headerData={[
+        {
+          value: lorem,
+          sortKey: 'sort-A',
+          size: 'minmax(30rem, 1fr)',
+        },
+        { value: 'B' },
+        { value: 'C', sortKey: 'sort-C' },
+        {
+          value: 'D',
+          sortKey: 'sort-D',
+          size: 'minmax(8rem, 10rem)',
+          props: { style: { textAlign: 'center' } },
+        },
+      ]}
+      rowData={boolean('With rows', true) ? rowDummyData : []}
+      cardConfiguration={(row) => <Card row={row} />}
+      clickRowConfigutation={(row) => ({ link: '/', onClick: () => { console.log(`Click row: ${row.id}`); } })}
+      columnConfiguration={(row) => {
+        const {
+          valueA, valueB, valueC, valueD,
+        } = row;
 
-      return [
-        { value: valueB },
-        valueA,
-        () => valueC,
-        () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
-        () => ({ value: 'IM AM HIDDEN' }),
-      ];
-    }}
-  />
+        return [
+          { value: valueB },
+          valueA,
+          () => valueC,
+          () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
+          () => ({ value: 'IM AM HIDDEN' }),
+        ];
+      }}
+    />
+  </StoryWrapper>
 );
 
 export const main = () => {
@@ -163,7 +175,7 @@ export const main = () => {
   }, []);
 
   return (
-    <div style={{ padding: '3.2rem', height: '100vh', widht: '100wv' }}>
+    <StoryWrapper>
       <Table.Main
         withHeader
         useHistoryState
@@ -174,7 +186,7 @@ export const main = () => {
           { label: 'Gurka', facetKey: 'gurka', excludeable: true },
           { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
         ]}
-        sortKeys={[
+        withSort={[
           { value: 'created', label: 'Created' },
           {
             value: 'modified', label: 'Modified', default: true, direction: 'asc',
@@ -210,7 +222,7 @@ export const main = () => {
           ];
         }}
       />
-    </div>
+    </StoryWrapper>
   );
 };
 
@@ -224,9 +236,75 @@ export const pagination = () => {
   }, []);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+    <StoryWrapper>
       <Table.Pagination tableHook={hook} />
-    </div>
+    </StoryWrapper>
+  );
+};
+
+export const sort = () => {
+  const hook = Table.useTableHook();
+
+  useEffect(() => {
+    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
+    });
+    hook.parentReady();
+  }, []);
+
+  return (
+    <StoryWrapper>
+      <Table.Sort
+        tableHook={hook}
+        sortKeys={[
+          { value: 'created', label: 'Created' },
+          {
+            value: 'modified', label: 'Modified', default: true, direction: 'asc',
+          },
+          { value: 'closed', label: 'Closed' },
+          { value: 'due', label: 'Due' },
+        ]}
+      />
+    </StoryWrapper>
+  );
+};
+
+export const filter = () => {
+  const hook = Table.useTableHook();
+
+  useEffect(() => {
+    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({ });
+    });
+    hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({
+        gurka: [
+          { value: '1133' },
+          { value: '123' },
+          { value: '4465' },
+          { value: '984' },
+        ],
+        pankaka: [
+          { value: '1133' },
+          { value: '123' },
+          { value: '4465' },
+          { value: '984' },
+        ],
+      });
+    });
+    hook.parentReady();
+  }, []);
+
+  return (
+    <StoryWrapper>
+      <Table.Filter
+        tableHook={hook}
+        filterKeys={[
+          { label: 'Gurka', facetKey: 'gurka', excludeable: true },
+          { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
+        ]}
+      />
+    </StoryWrapper>
   );
 };
 
@@ -241,8 +319,57 @@ export const searchBar = () => {
   }, []);
 
   return (
-    <div style={{ background: 'pink', width: '100%' }}>
+    <StoryWrapper>
       <Table.SearchBar tableHook={hook} searchLabel="Search here" />
-    </div>
+    </StoryWrapper>
+  );
+};
+
+export const controlls = () => {
+  const hook = Table.useTableHook();
+
+  useEffect(() => {
+    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
+    });
+
+    hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({
+        gurka: [
+          { value: '1133' },
+          { value: '123' },
+          { value: '4465' },
+          { value: '984' },
+        ],
+        pankaka: [
+          { value: '1133' },
+          { value: '123' },
+          { value: '4465' },
+          { value: '984' },
+        ],
+      });
+    });
+    hook.parentReady();
+  }, []);
+
+  return (
+    <StoryWrapper>
+      <Table.Controlls
+        tableHook={hook}
+        withSearch={boolean('With search', true)}
+        withFilter={[
+          { label: 'Gurka', facetKey: 'gurka', excludeable: true },
+          { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
+        ]}
+        withSort={[
+          { value: 'created', label: 'Created' },
+          {
+            value: 'modified', label: 'Modified', default: true, direction: 'asc',
+          },
+          { value: 'closed', label: 'Closed' },
+          { value: 'due', label: 'Due' },
+        ]}
+      />
+    </StoryWrapper>
   );
 };
