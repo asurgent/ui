@@ -58,6 +58,7 @@ const Table = (props) => {
     withFilter,
     withPagination,
     withSort,
+    parseFilter,
     ...rest
   } = props;
 
@@ -70,6 +71,7 @@ const Table = (props) => {
         withSearch={withSearch}
         withSort={withSort}
         withFilter={withFilter}
+        parseFilter={parseFilter}
       />
       <BaseTable
         emptystate={getEmptystate(tableHook, props)}

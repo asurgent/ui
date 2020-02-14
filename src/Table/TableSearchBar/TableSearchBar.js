@@ -20,7 +20,7 @@ const TableSearchBar = (props) => {
   } = props;
   const formData = useFormBuilder({
     search: {
-      type: 'text', placeholder: searchLabel, value: '', noLabel: true,
+      type: 'text', placeholder: searchLabel, value: '', noLabel: true, props: { autoFocus: true },
     },
   });
 
@@ -38,16 +38,24 @@ const TableSearchBar = (props) => {
     formData.updateField('search', { placeholder: searchLabel });
   }, [searchLabel]);
 
+  useEffect(() => {
+    if (!formData.formData.search.props.disabled) {
+      formData.focusOnField('search');
+    }
+  }, [formData.formData]);
+
   return (
-    <Form
-      className={className}
-      form={formData}
-      onNewValue={(values) => {
-        searchHook.setQuery(values.search);
-      }}
-    >
-      {({ search }) => search}
-    </Form>
+    <>
+      <Form
+        form={formData}
+        className={className}
+        onKeyUpTimer={(values) => {
+          searchHook.setQuery(values.search);
+        }}
+      >
+        {({ search }) => search}
+      </Form>
+    </>
   );
 };
 

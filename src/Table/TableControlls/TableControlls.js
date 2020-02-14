@@ -27,6 +27,7 @@ const TableControlls = ({
   withSearch,
   withFilter,
   searchLabel,
+  parseFilter,
 }) => (
   <C.Controllbar>
     { withSearch && (
@@ -49,6 +50,7 @@ const TableControlls = ({
         className="filter"
         tableHook={tableHook}
         filterKeys={withFilter}
+        parseFilter={parseFilter}
       />
     )}
   </C.Controllbar>

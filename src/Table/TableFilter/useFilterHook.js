@@ -8,8 +8,8 @@ import {
   buildFilterObjectFromStateString,
 } from './helpers';
 
-const useFilterProvider = (config, tableHook) => {
-  const [filterGroups] = useState(config);
+const useFilterProvider = (filterKeys, tableHook, onFilterSelect) => {
+  const [filterGroups] = useState(filterKeys);
   const [isReady, setIsReady] = useState(false);
   const [selectedItems, setSelectedItems] = useState({});
 
@@ -30,13 +30,23 @@ const useFilterProvider = (config, tableHook) => {
   // Poppulate tabelHook with state for requests and URL
   useEffect(() => {
     if (isReady) {
-      const filter = buildFilterQuery(selectedItems);
-      const stateString = buildFilterStateString(selectedItems);
+      if (onFilterSelect && typeof onFilterSelect === 'function') {
+        const parsedItems = (onFilterSelect(selectedItems) || {});
+        const filter = buildFilterQuery(parsedItems);
+        const stateString = buildFilterStateString(selectedItems);
 
-      const request = { filter };
-      const history = { filter: stateString ? `filter:${stateString}` : '' };
+        const request = { filter };
+        const history = { filter: stateString ? `filter:${stateString}` : '' };
 
-      tableHook.update(request, history);
+        tableHook.update(request, history);
+      } else {
+        const filter = buildFilterQuery(selectedItems);
+        const stateString = buildFilterStateString(selectedItems);
+        const request = { filter };
+        const history = { filter: stateString ? `filter:${stateString}` : '' };
+
+        tableHook.update(request, history);
+      }
     }
   }, [isReady, selectedItems]);
 

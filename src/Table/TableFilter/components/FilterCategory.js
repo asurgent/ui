@@ -23,13 +23,14 @@ const defaultProps = {
   theme: {},
 };
 
-const FilterCategory = withTheme(({
-  label,
-  filterHook,
-  tableHook,
-  filterKey,
-  theme,
-}) => {
+const FilterCategory = withTheme((props) => {
+  const {
+    label,
+    filterHook,
+    tableHook,
+    filterKey,
+    theme,
+  } = props;
   const groupHook = useFilterGroupHook(tableHook, filterHook, filterKey);
   const desktopForm = Form.useFormBuilder({
     search: {
@@ -55,7 +56,7 @@ const FilterCategory = withTheme(({
         filterHook.isReady && (
           <>
             <C.Header>
-              {`Filter by ${label}`}
+              {`Filter ${label}`}
             </C.Header>
             <C.Search>
               <Form.Primary

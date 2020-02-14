@@ -147,6 +147,8 @@ export const main = () => {
   useEffect(() => {
     table.setPageSize(15);
     table.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      console.log('fetch', payload);
+
       if (success) {
         onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
       } else {
@@ -156,14 +158,14 @@ export const main = () => {
 
     table.registerFilterFetchCallback((payload, onSuccess, onFail) => {
       onSuccess({
-        gurka: [
-          { value: '1133' },
-          { value: '123' },
-          { value: '4465' },
-          { value: '984' },
+        guys: [
+          { value: 'Mike(1133)' },
+          { value: 'Keen(123)' },
+          { value: 'Ellinor(4465)' },
+          { value: 'Anton(984)' },
         ],
         pankaka: [
-          { value: '1133' },
+          { value: 'HeHe' },
           { value: '123' },
           { value: '4465' },
           { value: '984' },
@@ -182,8 +184,23 @@ export const main = () => {
         historyStatePrefix="tickets"
         tableHook={table}
         withSearch={boolean('With search', true)}
+        parseFilter={(filters) => {
+          const { guys, ...rest } = filters;
+
+          if (guys && guys.length > 0) {
+            const parsed = guys.reduce((group, item) => {
+              const [_, newKey] = item.key.match(/\((\d+)\)/);
+
+              return [...group, { ...item, key: newKey }];
+            }, []);
+
+            return { guys: parsed, ...rest };
+          }
+
+          return rest;
+        }}
         withFilter={[
-          { label: 'Gurka', facetKey: 'gurka', excludeable: true },
+          { label: 'Guys', facetKey: 'guys', excludeable: true },
           { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
         ]}
         withSort={[
@@ -274,18 +291,19 @@ export const filter = () => {
 
   useEffect(() => {
     hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      console.log('fetch', payload);
       onSuccess({ });
     });
     hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
       onSuccess({
-        gurka: [
-          { value: '1133' },
-          { value: '123' },
-          { value: '4465' },
-          { value: '984' },
+        guys: [
+          { value: 'Mike(1133)' },
+          { value: 'Keen(123)' },
+          { value: 'Ellinor(4465)' },
+          { value: 'Anton(984)' },
         ],
         pankaka: [
-          { value: '1133' },
+          { value: 'HeHe' },
           { value: '123' },
           { value: '4465' },
           { value: '984' },
@@ -300,9 +318,24 @@ export const filter = () => {
       <Table.Filter
         tableHook={hook}
         filterKeys={[
-          { label: 'Gurka', facetKey: 'gurka', excludeable: true },
+          { label: 'guys', facetKey: 'guys', excludeable: true },
           { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
         ]}
+        parseFilter={(filters) => {
+          const { guys, ...rest } = filters;
+
+          if (guys && guys.length > 0) {
+            const parsed = guys.reduce((group, item) => {
+              const [_, newKey] = item.key.match(/\((\d+)\)/);
+
+              return [...group, { ...item, key: newKey }];
+            }, []);
+
+            return { guys: parsed, ...rest };
+          }
+
+          return rest;
+        }}
       />
     </StoryWrapper>
   );

@@ -1,8 +1,6 @@
-
 export const EXCLUDE = 'ne';
 export const INCLUDE = 'nq';
 export const REMOVE = 'state:remove';
-
 
 const filterJoiner = (list, joinOpperator) => {
   if (list.length > 0) {
@@ -12,7 +10,6 @@ const filterJoiner = (list, joinOpperator) => {
 
   return '';
 };
-
 
 export const buildFilterObjectFromStateString = (stateString) => {
   const uri = decodeURI(stateString);

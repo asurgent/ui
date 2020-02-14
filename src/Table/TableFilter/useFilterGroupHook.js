@@ -29,7 +29,7 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
       const items = filterHook.getFilterItemsByGroup(filterGroupKey);
 
       if (search) {
-        const filterd = items.filter(({ value }) => value.match(search));
+        const filterd = items.filter(({ value }) => value.toLowerCase().match(search.toLowerCase()));
         setOptions(filterd);
       } else {
         setOptions(items);
