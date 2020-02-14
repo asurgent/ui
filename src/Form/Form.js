@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormStyle, FormRow } from './Form.styled';
 import { withDelayTimer } from './helpers';
 
-const triggerTimer = withDelayTimer((values, dirty, dirtyItems, onNewValue) => {
-  onNewValue(values, dirty, dirtyItems);
+const timer = (callback) => () => withDelayTimer((values, dirty, dirtyItems) => {
+  callback(values, dirty, dirtyItems);
 }, 950);
 
 const propTyps = {
@@ -18,7 +18,9 @@ const propTyps = {
   onChange: PropTypes.func,
   onSubmit: PropTypes.func,
   onFocusChange: PropTypes.func,
-  onNewValue: PropTypes.func,
+  onChangeTimer: PropTypes.func,
+  onKeyUp: PropTypes.func,
+  onKeyUpTimer: PropTypes.func,
 };
 
 const defaultProps = {
@@ -27,19 +29,26 @@ const defaultProps = {
   onChange: () => {},
   onSubmit: () => {},
   onFocusChange: () => {},
-  onNewValue: () => {},
+  onChangeTimer: () => {},
+  onKeyUp: () => {},
+  onKeyUpTimer: () => {},
 };
 
 const Form = (props) => {
   const {
     form,
     children,
-    onChange,
     onSubmit,
     onFocusChange,
-    onNewValue,
+    onChange,
+    onChangeTimer,
+    onKeyUp,
+    onKeyUpTimer,
     className,
   } = props;
+
+  const [keyPressTimer] = useState(timer(onKeyUpTimer));
+  const [changeTimer] = useState(timer(onChangeTimer));
 
   if (!form || typeof form !== 'object' || !form.inputFileds) {
     return null;
@@ -51,8 +60,16 @@ const Form = (props) => {
     const { name } = event.target;
     const { values, dirty, dirtyItems } = form.getValues();
 
-    triggerTimer(values, dirty, dirtyItems, onNewValue);
+    changeTimer(values, dirty, dirtyItems);
     onChange(values, dirty, dirtyItems, name);
+  };
+
+  const handleOnKeyUp = (event) => {
+    const { name } = event.target;
+    const { values, dirty, dirtyItems } = form.getValues();
+
+    keyPressTimer(values, dirty, dirtyItems);
+    onKeyUp(values, dirty, dirtyItems, name);
   };
 
   const handleBlur = (event) => {
@@ -83,7 +100,13 @@ const Form = (props) => {
     ));
 
   return (
-    <FormStyle onChange={handleOnChange} onSubmit={handleSubmit} onBlur={handleBlur} className={className}>
+    <FormStyle
+      onKeyUp={handleOnKeyUp}
+      onChange={handleOnChange}
+      onSubmit={handleSubmit}
+      onBlur={handleBlur}
+      className={className}
+    >
       { typeof children === 'function' && children(inputFileds, renderForms, onSubmitAction) }
       { typeof children !== 'function' && renderForms}
     </FormStyle>

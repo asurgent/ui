@@ -132,7 +132,7 @@ const useFormBuilder = (formSpecification, parameters = null) => {
       const referenceList = generateReferences(formData);
       const { fields, original } = generateFieldComponents(formData, referenceList);
 
-      setReferences(referenceList);
+      setReferences({ ...referenceList });
       setOriginalValues(original);
       setInputFields(fields);
     }
@@ -159,6 +159,13 @@ const useFormBuilder = (formSpecification, parameters = null) => {
         setFormData(update);
       }
     },
+    focusOnField: (key) => {
+      const input = references[key];
+
+      if (input && input.current) {
+        input.current.focus();
+      }
+    },
     addField: (key, field) => {
       if (Object.prototype.hasOwnProperty.call(formData, key) === false) {
         const copy = { ...formData, [key]: field };
@@ -173,6 +180,7 @@ const useFormBuilder = (formSpecification, parameters = null) => {
     },
     getValues: () => getValues(references, originalValues),
     inputFileds,
+    formData,
   };
 };
 
