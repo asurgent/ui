@@ -184,9 +184,9 @@ export const main = () => {
         historyStatePrefix="tickets"
         tableHook={table}
         withSearch={boolean('With search', true)}
-        parseFilterLabelOutput={(filterItem, filterKey) => {
+        parseFilterLabelOutput={(filter, filterKey) => {
           if (filterKey === 'guys') {
-            const user = filterItem.value.match(/^(.+)\((\d+)\)/);
+            const user = filter.match(/^(.+)\((\d+)\)/);
             if (user) {
               const [_, newKey] = user;
               return newKey;
@@ -195,9 +195,9 @@ export const main = () => {
 
           return null;
         }}
-        parseFilterRequestOutput={(filterItem, filterKey) => {
+        parseFilterRequestOutput={(filter, filterKey) => {
           if (filterKey === 'guys') {
-            const user = filterItem.key.match(/\((\d+)\)/);
+            const user = filter.match(/\((\d+)\)/);
 
             if (user) {
               const [_, newKey] = user;

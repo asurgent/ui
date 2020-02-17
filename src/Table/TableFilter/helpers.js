@@ -23,7 +23,7 @@ export const buildFilterObjectFromStateString = (stateString) => {
         if (group && group.length > 0) {
           return {
             ...groups,
-            [groupKey]: group.map(([key, state]) => ({ key, state })),
+            [groupKey]: group.map(([key, state]) => ({ value: key, state })),
           };
         }
 
@@ -43,7 +43,7 @@ export const buildFilterStateString = (selectedFilters) => {
       if (group && group.length > 0) {
         return {
           ...groups,
-          [key]: group.map((filter) => ([filter.key, filter.state])),
+          [key]: group.map((filter) => ([filter.value, filter.state])),
         };
       }
 
@@ -58,29 +58,18 @@ export const buildFilterStateString = (selectedFilters) => {
   return '';
 };
 
-export const runFunction = (parser, items, def = {}) => {
-  if (parser && typeof parser === 'function') {
-    const cloned = JSON.parse(JSON.stringify(items));
-
-    return parser(cloned);
-  }
-
-  return def;
-};
-
-
 export const buildFilterQuery = (selectedFilters, parseRequestOutput) => {
   // Helper to run parser-function (if declared). Otherwise use standard keys & values
   const runParser = (item, groupKey) => {
     if (parseRequestOutput && typeof parseRequestOutput === 'function') {
-      const parsedLabel = parseRequestOutput(item, groupKey);
+      const parsedLabel = parseRequestOutput(item.value, groupKey);
 
       if (typeof parsedLabel === 'string') {
         return parsedLabel;
       }
     }
 
-    return item.key;
+    return item.value;
   };
 
   const filterArray = Object.keys(selectedFilters)

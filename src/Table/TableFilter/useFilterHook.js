@@ -45,22 +45,10 @@ const useFilterProvider = (filterKeys, tableHook, parseRequestOutput, parseDispl
     isReady,
     filterGroups,
     selectedItems,
-    hasActiveFilter: () => {
-      const items = Object.keys(selectedItems);
-      for (let i = 0; i < items.length; i++) {
-        const key = items[i];
-        const filterItems = selectedItems[key];
-
-        if (filterItems.length > 0) {
-          return true;
-        }
-      }
-
-      return false;
-    },
+    hasActiveFilter: () => Object.values(selectedItems).some((list) => list.length > 0),
     getLabel: (item, groupKey) => {
       if (parseDisplayLabel && typeof parseDisplayLabel === 'function') {
-        const parsedLabel = parseDisplayLabel(item, groupKey);
+        const parsedLabel = parseDisplayLabel(item.value, groupKey);
 
         if (typeof parsedLabel === 'string') {
           return parsedLabel;
@@ -71,19 +59,19 @@ const useFilterProvider = (filterKeys, tableHook, parseRequestOutput, parseDispl
     },
     setSelectedItems: (state) => setSelectedItems(state),
     getFilterListItems: () => tableHook.filterData,
-    updateFilterItemState: (filterKey, key, state) => {
+    updateFilterItemState: (filterKey, filterValueTarget, state) => {
       if (Object.prototype.hasOwnProperty.call(selectedItems, filterKey)) {
         const stateList = selectedItems[filterKey];
-        const cleanUp = stateList.filter((item) => item.key !== key);
+        const cleanUp = stateList.filter((item) => item.value !== filterValueTarget);
 
         if (state !== REMOVE) {
-          cleanUp.push({ key, state });
+          cleanUp.push({ value: filterValueTarget, state });
         }
 
         const update = { ...selectedItems, [filterKey]: cleanUp };
         setSelectedItems(update);
       } else {
-        const update = { ...selectedItems, [filterKey]: [{ key, state }] };
+        const update = { ...selectedItems, [filterKey]: [{ value: filterValueTarget, state }] };
         setSelectedItems(update);
       }
     },
@@ -94,14 +82,12 @@ const useFilterProvider = (filterKeys, tableHook, parseRequestOutput, parseDispl
       if (Object.keys(tableHook.filterData).length
       && Object.prototype.hasOwnProperty.call(tableHook.filterData, groupKey)) {
         const filterState = selectedItems[groupKey];
-        // console.log(tableHook.filterData);
 
         if (filterState) {
           return tableHook.filterData[groupKey]
             .reduce((acc, item) => {
               const stateItem = { ...item };
-              const hasState = filterState.find(({ key: filterKey }) => filterKey === item.value);
-              console.log(stateItem);
+              const hasState = filterState.find((selected) => selected.value === item.value);
 
               if (hasState) {
                 Object.assign(stateItem, {
