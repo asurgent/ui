@@ -10,10 +10,10 @@ import {
 } from '../helpers';
 
 const propTypes = {
+  onClick: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   included: PropTypes.bool,
   excluded: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -27,21 +27,21 @@ const FilterItem = ({
   excluded,
   onClick,
 }) => (
-  <C.FilterItem>
-    <C.Active>
-      {included && <Icons.Check />}
-      {excluded && <Icons.Block />}
-    </C.Active>
-    <Button.Plain className="filter-label" onClick={() => onClick(included ? REMOVE : INCLUDE)}>
-      {value}
-    </Button.Plain>
-    <Button.Plain tooltip="exclude" onClick={() => onClick(excluded ? REMOVE : EXCLUDE)}>
-      <C.Exclude>
-        <Icons.RemoveCircleOutline />
-      </C.Exclude>
-    </Button.Plain>
-  </C.FilterItem>
-);
+    <C.FilterItem>
+      <C.Active>
+        {included && <Icons.Check />}
+        {excluded && <Icons.Block />}
+      </C.Active>
+      <Button.Plain className="filter-label" onClick={() => onClick(included ? REMOVE : INCLUDE)}>
+        {value}
+      </Button.Plain>
+      <Button.Plain tooltip="exclude" onClick={() => onClick(excluded ? REMOVE : EXCLUDE)}>
+        <C.Exclude>
+          <Icons.RemoveCircleOutline />
+        </C.Exclude>
+      </Button.Plain>
+    </C.FilterItem>
+  );
 
 FilterItem.propTypes = propTypes;
 FilterItem.defaultProps = defaultProps;

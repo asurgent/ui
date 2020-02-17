@@ -32,6 +32,7 @@ const FilterCategory = withTheme((props) => {
     theme,
   } = props;
   const groupHook = useFilterGroupHook(tableHook, filterHook, filterKey);
+  // ToDO: Fix so we only need one form-hook
   const desktopForm = Form.useFormBuilder({
     search: {
       type: 'text', value: '', noLabel: true,

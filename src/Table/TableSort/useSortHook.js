@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-// import * as H from '../helpers';
 import { getDefaultSortItem, directionKeys } from './helpers';
 
 const useSearchbarHook = (sortKeyOptionsConfiguration, tableHook) => {
+  // Keeps track of when component has been mounted. 
+  // After its been mounted and set to true, the initail state is set
   const [isReady, setIsReady] = useState(false);
+
   const [options, setOptions] = useState(sortKeyOptionsConfiguration);
   const [sortKey, setSortKey] = useState(null);
   const [sortDirection, setSortDirection] = useState(null);

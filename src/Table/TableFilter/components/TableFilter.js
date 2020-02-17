@@ -6,9 +6,9 @@ import * as C from './TableFilter.styled';
 import FilterCategory from './FilterCategory';
 
 const propTypes = {
+  className: PropTypes.string,
   filterHook: PropTypes.instanceOf(Object).isRequired,
   tableHook: PropTypes.instanceOf(Object).isRequired,
-  className: PropTypes.string,
 };
 
 const defaultProps = {
@@ -19,21 +19,21 @@ const TableFilter = ({ filterHook, tableHook, className }) => (
   <C.Wrapper className={className}>
     <C.Filters>
       {
-      filterHook.filterGroups
-        .map(({ label, facetKey }) => (
-          label && facetKey && (
-          <FilterCategory
-            key={facetKey}
-            label={label}
-            filterKey={facetKey}
-            filterHook={filterHook}
-            tableHook={tableHook}
-          />
-          )
-        ))
-    }
+        filterHook.filterGroups
+          .map(({ label, facetKey }) => (
+            label && facetKey && (
+              <FilterCategory
+                key={facetKey}
+                label={label}
+                filterKey={facetKey}
+                filterHook={filterHook}
+                tableHook={tableHook}
+              />
+            )
+          ))
+      }
     </C.Filters>
-    { filterHook.hasActiveFilter() && (
+    {filterHook.hasActiveFilter() && (
       <Button.Plain onClick={() => filterHook.clearFilter()}>
         <Icons.HighlightOff fontSize="large" />
         {' '}
@@ -42,6 +42,7 @@ const TableFilter = ({ filterHook, tableHook, className }) => (
     )}
   </C.Wrapper>
 );
+
 TableFilter.propTypes = propTypes;
 TableFilter.defaultProps = defaultProps;
 TableFilter.displayName = '@asurgent.ui.Table.TableFilter';

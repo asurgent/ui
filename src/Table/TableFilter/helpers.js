@@ -2,6 +2,10 @@ export const EXCLUDE = 'ne';
 export const INCLUDE = 'nq';
 export const REMOVE = 'state:remove';
 
+// A helper to join-s an array and returns every items with
+// parenteses and an join parameters
+// Eg. ['one', 'two', 'three'] with joinOpperator "and"
+// > "(one) and (two) and (three)"
 const filterJoiner = (list, joinOpperator) => {
   if (list.length > 0) {
     const filters = list.join(`) ${joinOpperator} (`);
@@ -12,8 +16,11 @@ const filterJoiner = (list, joinOpperator) => {
 };
 
 export const buildFilterObjectFromStateString = (stateString) => {
-  const uri = decodeURI(stateString);
+  // Reverse parse the stringified state by parsing the string in reversed order.
+  // 1. URI-Decode, 2. Reverse base64. 3. Parse to JSON.
+  // 4. Unminify From {g: [['key', 'state']]} to {g: [{key: 'key', state: 'state}]} objects
   try {
+    const uri = decodeURI(stateString);
     const base64 = atob(uri);
     const json = JSON.parse(base64);
 
@@ -23,7 +30,10 @@ export const buildFilterObjectFromStateString = (stateString) => {
         if (group && group.length > 0) {
           return {
             ...groups,
-            [groupKey]: group.map(([key, state]) => ({ value: key, state })),
+            [groupKey]: group.map(([key, state]) => ({
+              value: key,
+              state,
+            })),
           };
         }
 

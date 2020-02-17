@@ -9,8 +9,12 @@ import {
 } from './helpers';
 
 const useFilterProvider = (filterKeys, tableHook, parseRequestOutput, parseDisplayLabel) => {
-  const [filterGroups] = useState(filterKeys);
+  // Keeps track of when component has been mounted.
+  // After its been mounted and set to true, the initail state is set
   const [isReady, setIsReady] = useState(false);
+
+
+  const [filterGroups] = useState(filterKeys);
   const [selectedItems, setSelectedItems] = useState({});
 
 

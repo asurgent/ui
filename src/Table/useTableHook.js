@@ -26,8 +26,8 @@ const useTableHook = () => {
   const initializationRequestState = {};
   const initializationHistoryState = {};
 
+  const [isReady, setIsReady] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isMounted, setIsMounted] = useState(false);
 
   const [updateFilterItems, setFilterCallback] = useState(null);
   const [updateTableItems, setRowCallback] = useState(null);
@@ -48,7 +48,7 @@ const useTableHook = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    if (isMounted && rowRequestState && Object.keys(rowRequestState).length > 0) {
+    if (isReady && rowRequestState && Object.keys(rowRequestState).length > 0) {
       if (updateTableItems && Object.keys(updateTableItems).length > 0) {
         const { callback, onSuccess, onFail } = updateTableItems;
 
@@ -61,11 +61,11 @@ const useTableHook = () => {
         callback(payload, onSuccess, onFail);
       }
     }
-  }, [isMounted, rowRequestState]);
+  }, [isReady, rowRequestState]);
 
   // Is triggered when filter is opened for the first time
   useEffect(() => {
-    if (isMounted && filterRequestState && filterRequestState.length > 0) {
+    if (isReady && filterRequestState && filterRequestState.length > 0) {
       if (updateFilterItems && Object.keys(updateFilterItems).length > 0) {
         const { callback, onSuccess, onFail } = updateFilterItems;
         const payload = {
@@ -77,11 +77,11 @@ const useTableHook = () => {
         callback(payload, onSuccess, onFail);
       }
     }
-  }, [isMounted, filterRequestState]);
+  }, [isReady, filterRequestState]);
 
-  // Is triggered when the filter-state is updated
+  // Is triggered when historyState is updated
   useEffect(() => {
-    if (isMounted && Object.keys(router).length && Object.keys(historyState).length > 0) {
+    if (isReady && Object.keys(router).length && Object.keys(historyState).length > 0) {
       const { location, history, queryPrefix } = router;
 
       const buildSearchQuery = () => {
@@ -101,7 +101,7 @@ const useTableHook = () => {
 
   return {
     isLoading,
-    isMounted,
+    isReady,
     tableData,
     filterData,
     updateFilterItems,
@@ -112,7 +112,15 @@ const useTableHook = () => {
     getTableRowData: () => tableData.result,
     getSearchedFacets: () => tableData.facets,
     getFilterData: () => filterData.facets,
+    loadFilterItems: (sortKeys) => {
+      // Used by filterGroupHook. This will load filer-data
+      setFilterRequestState([...sortKeys]);
+    },
+    requestFailedMessage: () => requestFailed,
+    parentReady: () => { setIsReady(true); },
     enableHistoryState: ({ history, location, queryPrefix }) => {
+      // Pass and store references to react-router objects.
+      // If theses values are set, we will enable history-state support.
       setRouter({ history, location, queryPrefix });
     },
     getHistoryState: () => {
@@ -120,11 +128,14 @@ const useTableHook = () => {
         const { location, queryPrefix } = router;
         const param = getQueryParamKey(queryPrefix);
         const { [param]: tableState } = queryString.parse(location.search);
+
         // Use SQP to parse query-string and pick out the listed keywords below.
         const searchQueryObj = sqp.parse(tableState, {
           keywords: ['sort', 'page', 'filter'],
         });
 
+        // If sqp.parse doesnt match on anything it will simply return a string.
+        // In order to keep the same interface-logic we will return that in an object
         if (typeof searchQueryObj === 'string') {
           return { text: searchQueryObj };
         }
@@ -133,18 +144,14 @@ const useTableHook = () => {
       }
       return {};
     },
-    loadFilterItems: (sortKeys) => {
-      setFilterRequestState([...sortKeys]);
-    },
-    requestFailedMessage: () => requestFailed,
-    parentReady: () => { setIsMounted(true); },
     registerRowFetchCallback: (callback) => {
+      // Callback success function that changes internal states
       const onSuccess = (response) => {
         setIsLoading(false);
         setTableData(response);
         setRequestFailed('');
       };
-
+      // Callback fail function that changes internal states
       const onFail = (error) => {
         setIsLoading(false);
         setTableData(tableDefaults);
@@ -154,11 +161,12 @@ const useTableHook = () => {
       setRowCallback({ callback, onSuccess, onFail });
     },
     registerFilterFetchCallback: (callback) => {
+      // Callback success function that changes internal states
       const onSuccess = (response) => {
         setFilterData(response);
         setRequestFailed('');
       };
-
+      // Callback fail function that changes internal states
       const onFail = (error) => {
         setFilterData([]);
         setRequestFailed(error);
@@ -167,6 +175,15 @@ const useTableHook = () => {
       setFilterCallback({ callback, onSuccess, onFail });
     },
     update: (request, history) => {
+      /*
+        Workaround in order not to acceidentally overwrite a state-change from a
+        previous update during the same render-cycle.
+
+        rowRequestState & historyState holds the state render after a render-cycles.
+        So, if two updates are triggered during the same render cycle we will write to,
+        initializationRequestState & initializationHistoryState.
+        They will later assign their values to rowRequestState & historyState
+      */
       if (request) {
         const updateRequest = Object.assign(initializationRequestState, rowRequestState, request);
         setRowRequestState(updateRequest);

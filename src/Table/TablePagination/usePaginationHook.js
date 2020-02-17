@@ -4,7 +4,10 @@ import buildPaginationArray from './helpers';
 const PAGINATION_DELTA = 5;
 
 const usePaginationHook = (tableHook, props) => {
+  // Keeps track of when component has been mounted.
+  // After its been mounted and set to true, the initail state is set
   const [isReady, setIsReady] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [paginationList, setPaginationList] = useState([]);
   const [totalPageCount, setTotalPageCount] = useState(1);

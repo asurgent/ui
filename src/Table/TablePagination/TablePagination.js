@@ -4,29 +4,23 @@ import * as Icons from '@material-ui/icons';
 import * as Button from '../../Button';
 import * as C from './TablePagination.styled';
 
-
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
   paginationHook: PropTypes.instanceOf(Object).isRequired,
-  pages: PropTypes.number,
-  currentPage: PropTypes.number,
 };
 
-const defaultProps = {
-  pages: 1,
-  currentPage: 1,
-};
+const defaultProps = {};
 
 const TablePagination = ({
   tableHook, paginationHook,
 }) => (
-  <C.Pagination isLoading={tableHook.isLoading}>
-    <Button.Icon
-      onClick={() => paginationHook.nextPage()}
-      icon={<Icons.NavigateBefore fontSize="large" />}
-    />
+    <C.Pagination isLoading={tableHook.isLoading}>
+      <Button.Icon
+        onClick={() => paginationHook.nextPage()}
+        icon={<Icons.NavigateBefore fontSize="large" />}
+      />
 
-    {
+      {
         paginationHook.getPaginationList()
           .map(({ value, clickable }, index) => (
             <C.Page
@@ -40,12 +34,12 @@ const TablePagination = ({
           ))
       }
 
-    <Button.Icon
-      onClick={() => paginationHook.previousPage()}
-      icon={<Icons.NavigateNext fontSize="large" />}
-    />
-  </C.Pagination>
-);
+      <Button.Icon
+        onClick={() => paginationHook.previousPage()}
+        icon={<Icons.NavigateNext fontSize="large" />}
+      />
+    </C.Pagination>
+  );
 
 TablePagination.propTypes = propTypes;
 TablePagination.defaultProps = defaultProps;

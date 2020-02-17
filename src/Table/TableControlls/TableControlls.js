@@ -5,12 +5,11 @@ import TableSort from '../TableSort';
 import TableFilter from '../TableFilter';
 import * as C from './TableControlls.styled';
 
-
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
-  withSearch: PropTypes.bool,
   withFilter: PropTypes.instanceOf(Array),
   withSort: PropTypes.instanceOf(Array),
+  withSearch: PropTypes.bool,
   searchLabel: PropTypes.string,
   parseFilterRequestOutput: PropTypes.func,
   parseFilterLabelOutput: PropTypes.func,
@@ -34,33 +33,33 @@ const TableControlls = ({
   parseFilterRequestOutput,
   parseFilterLabelOutput,
 }) => (
-  <C.Controllbar>
-    { withSearch && (
-      <TableSearchBar
-        className="search"
-        tableHook={tableHook}
-        searchLabel={searchLabel}
-      />
-    )}
-    { withSort && Array.isArray(withSort) && withSort.length > 0
-      && (
-      <TableSort
-        className="sort"
-        tableHook={tableHook}
-        sortKeys={withSort}
-      />
+    <C.Controllbar>
+      {withSearch && (
+        <TableSearchBar
+          className="search"
+          tableHook={tableHook}
+          searchLabel={searchLabel}
+        />
       )}
-    { withFilter && Array.isArray(withFilter) && withFilter.length > 0 && (
-      <TableFilter
-        className="filter"
-        tableHook={tableHook}
-        filterKeys={withFilter}
-        parseFilterRequestOutput={parseFilterRequestOutput}
-        parseFilterLabelOutput={parseFilterLabelOutput}
-      />
-    )}
-  </C.Controllbar>
-);
+      {withSort && Array.isArray(withSort) && withSort.length > 0
+        && (
+          <TableSort
+            className="sort"
+            tableHook={tableHook}
+            sortKeys={withSort}
+          />
+        )}
+      {withFilter && Array.isArray(withFilter) && withFilter.length > 0 && (
+        <TableFilter
+          className="filter"
+          tableHook={tableHook}
+          filterKeys={withFilter}
+          parseFilterRequestOutput={parseFilterRequestOutput}
+          parseFilterLabelOutput={parseFilterLabelOutput}
+        />
+      )}
+    </C.Controllbar>
+  );
 
 
 TableControlls.propTypes = propTypes;

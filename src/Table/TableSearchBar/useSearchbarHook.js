@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 
 const useSearchbarHook = (tableHook) => {
+  // Keeps track of when component has been mounted.
+  // After its been mounted and set to true, the initail state is set
   const [isReady, setIsReady] = useState(false);
   const [query, setQuery] = useState('');
 

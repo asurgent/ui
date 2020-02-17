@@ -32,7 +32,7 @@ const MainTableProxy = (props) => {
     }
   }, []);
 
-  if (tableHook.isMounted) {
+  if (tableHook.isReady) {
     return <MainTable {...props} />;
   }
 
