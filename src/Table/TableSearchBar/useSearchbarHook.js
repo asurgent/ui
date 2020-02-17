@@ -1,5 +1,19 @@
 import { useState, useEffect } from 'react';
 
+const parseQuery = (query) => {
+  if (!query) {
+    return '';
+  }
+  const sanatize = query
+    .replace(/\*/g, '') // Remove all *
+    .replace(/\+/g, ''); // Remove all +
+
+
+  const joined = (sanatize).split(' ').join('*+');
+
+  return `${joined}*`;
+};
+
 const useSearchbarHook = (tableHook) => {
   // Keeps track of when component has been mounted.
   // After its been mounted and set to true, the initail state is set
@@ -24,7 +38,8 @@ const useSearchbarHook = (tableHook) => {
   // Poppulate tabelHook with state for requests and URL
   useEffect(() => {
     if (isReady) {
-      const request = { search_string: `${query}` };
+
+      const request = { search_string: `${parseQuery(query)}` };
       const history = { search: `${query}` };
 
       tableHook.update(request, history);
