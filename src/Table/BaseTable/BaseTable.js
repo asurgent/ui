@@ -101,12 +101,17 @@ const BaseTable = withTheme((props) => {
           equalSize={equalSizeColumns}
         >
           {
-            withHeader && <TableHeader headerData={props.headerData} equalSizeColumns={props.equalSizeColumns} />
+            withHeader && (
+              <TableHeader
+                headerData={props.headerData}
+                equalSizeColumns={props.equalSizeColumns}
+              />
+            )
           }
           {/* Render rows start */}
-          { noContent && <C.Loading>{emptystate}</C.Loading>}
-          { !isLoading && rows }
-          { isLoading && (
+          {noContent && <C.Loading>{emptystate}</C.Loading>}
+          {!isLoading && rows}
+          {isLoading && (
             <C.Loading>
               <RingSpinner color={theme.blue400} size={32} />
             </C.Loading>

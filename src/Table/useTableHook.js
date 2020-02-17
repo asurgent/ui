@@ -112,6 +112,7 @@ const useTableHook = () => {
     getTableRowData: () => tableData.result,
     getSearchedFacets: () => tableData.facets,
     getFilterData: () => filterData.facets,
+    getSearchedQuery: () => historyState.search,
     loadFilterItems: (sortKeys) => {
       // Used by filterGroupHook. This will load filer-data
       setFilterRequestState([...sortKeys]);

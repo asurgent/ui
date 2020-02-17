@@ -10,13 +10,11 @@ const getEmptystate = (hook, props) => {
     return hook.requestFailedMessage();
   }
 
-  // const base = props.emptystate;
-  // const query = provider.getQuery();
-  // if (query) {
-  //   return `${base} for : ${query}`;
-  // }
-
-  return '${base} for : ${query}';
+  const base = props.emptystate;
+  const query = hook.getSearchedQuery();
+  if (query) {
+    return `${base} for : ${query}`;
+  }
 };
 
 
@@ -41,7 +39,7 @@ const defaultProps = {
   withPagination: true,
   searchLabel: 'Search',
   emptystate: 'No items found',
-  onPagination: () => {},
+  onPagination: () => { },
   activePage: 1,
   pages: 0,
   rowData: [],
@@ -86,7 +84,7 @@ const Table = (props) => {
         withPagination={false}
         {...rest}
       />
-      { withPagination && (
+      {withPagination && (
         <TablePagination tableHook={tableHook} />
       )}
     </Wrapper>
