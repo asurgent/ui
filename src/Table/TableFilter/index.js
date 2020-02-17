@@ -6,20 +6,25 @@ import useFilterHook from './useFilterHook';
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
   filterKeys: PropTypes.instanceOf(Array).isRequired,
-  parseFilter: PropTypes.func,
+  parseFilterRequestOutput: PropTypes.func,
+  parseFilterLabelOutput: PropTypes.func,
 };
 
 const defaultProps = {
-  parseFilter: null,
+  parseFilterRequestOutput: null,
+  parseFilterLabelOutput: null,
 };
 
 const TableFilterProxy = ({
   tableHook,
   filterKeys,
-  parseFilter,
+  parseFilterRequestOutput,
+  parseFilterLabelOutput,
   ...props
 }) => {
-  const filterHook = useFilterHook(filterKeys, tableHook, parseFilter);
+  const parseLabel = parseFilterLabelOutput;
+  const parseRequest = parseFilterRequestOutput;
+  const filterHook = useFilterHook(filterKeys, tableHook, parseRequest, parseLabel);
 
   if (tableHook) {
     return (

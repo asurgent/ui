@@ -58,16 +58,42 @@ export const buildFilterStateString = (selectedFilters) => {
   return '';
 };
 
-export const buildFilterQuery = (selectedFilters) => {
+export const runFunction = (parser, items, def = {}) => {
+  if (parser && typeof parser === 'function') {
+    const cloned = JSON.parse(JSON.stringify(items));
+
+    return parser(cloned);
+  }
+
+  return def;
+};
+
+
+export const buildFilterQuery = (selectedFilters, parseRequestOutput) => {
+  // Helper to run parser-function (if declared). Otherwise use standard keys & values
+  const runParser = (item, groupKey) => {
+    if (parseRequestOutput && typeof parseRequestOutput === 'function') {
+      const parsedLabel = parseRequestOutput(item, groupKey);
+
+      if (typeof parsedLabel === 'string') {
+        return parsedLabel;
+      }
+    }
+
+    return item.key;
+  };
+
   const filterArray = Object.keys(selectedFilters)
-    .reduce((filters, filterKey) => {
-      const filterGroup = selectedFilters[filterKey];
+    .reduce((filters, groupKey) => {
+      const filterGroup = selectedFilters[groupKey];
 
       const filterTypeList = (collection, type, condition, joinOpperator) => {
         // Find all selected filters that match a certain type, eg. EXCLUDE.
         const typeList = filterGroup.filter((s) => s.state === type);
+        // Build filter string
+        const filterString = (filterItem) => `${groupKey} ${condition} '${runParser(filterItem, groupKey)}'`;
         // Build a new list with filter fomrated filter items
-        const filterList = typeList.reduce((incl, s) => [...incl, `${filterKey} ${condition} '${s.key}'`], []);
+        const filterList = typeList.reduce((incl, s) => [...incl, filterString(s)], []);
 
 
         if (filterList.length > 0) {

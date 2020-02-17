@@ -184,20 +184,29 @@ export const main = () => {
         historyStatePrefix="tickets"
         tableHook={table}
         withSearch={boolean('With search', true)}
-        parseFilter={(filters) => {
-          const { guys, ...rest } = filters;
-
-          if (guys && guys.length > 0) {
-            const parsed = guys.reduce((group, item) => {
-              const [_, newKey] = item.key.match(/\((\d+)\)/);
-
-              return [...group, { ...item, key: newKey }];
-            }, []);
-
-            return { guys: parsed, ...rest };
+        parseFilterLabelOutput={(filterItem, filterKey) => {
+          if (filterKey === 'guys') {
+            const user = filterItem.value.match(/^(.+)\((\d+)\)/);
+            if (user) {
+              const [_, newKey] = user;
+              return newKey;
+            }
           }
 
-          return rest;
+          return null;
+        }}
+        parseFilterRequestOutput={(filterItem, filterKey) => {
+          if (filterKey === 'guys') {
+            const user = filterItem.key.match(/\((\d+)\)/);
+
+            if (user) {
+              const [_, newKey] = user;
+              return newKey;
+            }
+          }
+
+          // return rest;
+          return null;
         }}
         withFilter={[
           { label: 'Guys', facetKey: 'guys', excludeable: true },
@@ -321,21 +330,8 @@ export const filter = () => {
           { label: 'guys', facetKey: 'guys', excludeable: true },
           { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
         ]}
-        parseFilter={(filters) => {
-          const { guys, ...rest } = filters;
-
-          if (guys && guys.length > 0) {
-            const parsed = guys.reduce((group, item) => {
-              const [_, newKey] = item.key.match(/\((\d+)\)/);
-
-              return [...group, { ...item, key: newKey }];
-            }, []);
-
-            return { guys: parsed, ...rest };
-          }
-
-          return rest;
-        }}
+        parseFilterLabelOutput={(filters) => filters}
+        parseFilterRequestOutput={(filters) => filters}
       />
     </StoryWrapper>
   );

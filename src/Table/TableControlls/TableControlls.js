@@ -12,6 +12,8 @@ const propTypes = {
   withFilter: PropTypes.instanceOf(Array),
   withSort: PropTypes.instanceOf(Array),
   searchLabel: PropTypes.string,
+  parseFilterRequestOutput: PropTypes.func,
+  parseFilterLabelOutput: PropTypes.func,
 };
 
 const defaultProps = {
@@ -19,6 +21,8 @@ const defaultProps = {
   withSearch: true,
   withFilter: [],
   searchLabel: 'Search',
+  parseFilterRequestOutput: null,
+  parseFilterLabelOutput: null,
 };
 
 const TableControlls = ({
@@ -27,7 +31,8 @@ const TableControlls = ({
   withSearch,
   withFilter,
   searchLabel,
-  parseFilter,
+  parseFilterRequestOutput,
+  parseFilterLabelOutput,
 }) => (
   <C.Controllbar>
     { withSearch && (
@@ -50,7 +55,8 @@ const TableControlls = ({
         className="filter"
         tableHook={tableHook}
         filterKeys={withFilter}
-        parseFilter={parseFilter}
+        parseFilterRequestOutput={parseFilterRequestOutput}
+        parseFilterLabelOutput={parseFilterLabelOutput}
       />
     )}
   </C.Controllbar>

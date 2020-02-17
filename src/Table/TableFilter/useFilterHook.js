@@ -8,7 +8,7 @@ import {
   buildFilterObjectFromStateString,
 } from './helpers';
 
-const useFilterProvider = (filterKeys, tableHook, onFilterSelect) => {
+const useFilterProvider = (filterKeys, tableHook, parseRequestOutput, parseDisplayLabel) => {
   const [filterGroups] = useState(filterKeys);
   const [isReady, setIsReady] = useState(false);
   const [selectedItems, setSelectedItems] = useState({});
@@ -27,26 +27,16 @@ const useFilterProvider = (filterKeys, tableHook, onFilterSelect) => {
     setIsReady(true);
   }, []);
 
+
   // Poppulate tabelHook with state for requests and URL
   useEffect(() => {
     if (isReady) {
-      if (onFilterSelect && typeof onFilterSelect === 'function') {
-        const parsedItems = (onFilterSelect(selectedItems) || {});
-        const filter = buildFilterQuery(parsedItems);
-        const stateString = buildFilterStateString(selectedItems);
+      const filter = buildFilterQuery(selectedItems, parseRequestOutput);
+      const stateString = buildFilterStateString(selectedItems);
+      const request = { filter };
+      const history = { filter: stateString ? `filter:${stateString}` : '' };
 
-        const request = { filter };
-        const history = { filter: stateString ? `filter:${stateString}` : '' };
-
-        tableHook.update(request, history);
-      } else {
-        const filter = buildFilterQuery(selectedItems);
-        const stateString = buildFilterStateString(selectedItems);
-        const request = { filter };
-        const history = { filter: stateString ? `filter:${stateString}` : '' };
-
-        tableHook.update(request, history);
-      }
+      tableHook.update(request, history);
     }
   }, [isReady, selectedItems]);
 
@@ -67,6 +57,17 @@ const useFilterProvider = (filterKeys, tableHook, onFilterSelect) => {
       }
 
       return false;
+    },
+    getLabel: (item, groupKey) => {
+      if (parseDisplayLabel && typeof parseDisplayLabel === 'function') {
+        const parsedLabel = parseDisplayLabel(item, groupKey);
+
+        if (typeof parsedLabel === 'string') {
+          return parsedLabel;
+        }
+      }
+
+      return item.value;
     },
     setSelectedItems: (state) => setSelectedItems(state),
     getFilterListItems: () => tableHook.filterData,
@@ -93,12 +94,14 @@ const useFilterProvider = (filterKeys, tableHook, onFilterSelect) => {
       if (Object.keys(tableHook.filterData).length
       && Object.prototype.hasOwnProperty.call(tableHook.filterData, groupKey)) {
         const filterState = selectedItems[groupKey];
+        // console.log(tableHook.filterData);
 
         if (filterState) {
           return tableHook.filterData[groupKey]
             .reduce((acc, item) => {
               const stateItem = { ...item };
               const hasState = filterState.find(({ key: filterKey }) => filterKey === item.value);
+              console.log(stateItem);
 
               if (hasState) {
                 Object.assign(stateItem, {
@@ -110,6 +113,7 @@ const useFilterProvider = (filterKeys, tableHook, onFilterSelect) => {
               return [...acc, stateItem];
             }, []);
         }
+
         return tableHook.filterData[groupKey];
       }
 

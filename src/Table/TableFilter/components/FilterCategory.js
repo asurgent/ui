@@ -75,15 +75,15 @@ const FilterCategory = withTheme((props) => {
             }
             <C.List>
               {
-                groupHook.getOptions().map(({ value, included, excluded }) => (
+                groupHook.getOptions().map((filter) => (
                   <FilterItem
-                    key={value}
+                    key={filter.value}
                     onClick={(state) => {
-                      filterHook.updateFilterItemState(filterKey, value, state);
+                      filterHook.updateFilterItemState(filterKey, filter.value, state);
                     }}
-                    included={included}
-                    excluded={excluded}
-                    value={value}
+                    included={filter.included}
+                    excluded={filter.excluded}
+                    value={filterHook.getLabel(filter, filterKey)}
                   />
                 ))
               }

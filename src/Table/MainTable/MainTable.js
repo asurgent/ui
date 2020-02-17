@@ -32,6 +32,8 @@ const propTypes = {
   rowData: PropTypes.instanceOf(Array),
   withFilter: PropTypes.instanceOf(Array),
   withSort: PropTypes.instanceOf(Array),
+  parseFilterRequestOutput: PropTypes.func,
+  parseFilterLabelOutput: PropTypes.func,
 };
 
 const defaultProps = {
@@ -45,6 +47,8 @@ const defaultProps = {
   rowData: [],
   withFilter: [],
   withSort: [],
+  parseFilterRequestOutput: null,
+  parseFilterLabelOutput: null,
 };
 
 const Table = (props) => {
@@ -58,7 +62,8 @@ const Table = (props) => {
     withFilter,
     withPagination,
     withSort,
-    parseFilter,
+    parseFilterRequestOutput: parseRequest,
+    parseFilterLabelOutput: parseLabel,
     ...rest
   } = props;
 
@@ -71,7 +76,8 @@ const Table = (props) => {
         withSearch={withSearch}
         withSort={withSort}
         withFilter={withFilter}
-        parseFilter={parseFilter}
+        parseFilterRequestOutput={parseRequest}
+        parseFilterLabelOutput={parseLabel}
       />
       <BaseTable
         emptystate={getEmptystate(tableHook, props)}
