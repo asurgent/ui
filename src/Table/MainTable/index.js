@@ -28,7 +28,7 @@ const MainTableProxy = (props) => {
 
   useEffect(() => {
     if (useHistoryState) {
-      tableHook.enableHistoryState({ history, location, prefix: historyStatePrefix || '' });
+      tableHook.enableHistoryState({ history, location, queryPrefix: historyStatePrefix || '' });
     }
   }, []);
 

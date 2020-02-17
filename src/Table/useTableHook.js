@@ -42,6 +42,8 @@ const useTableHook = () => {
   const [filterData, setFilterData] = useState([]);
   const [requestFailed, setRequestFailed] = useState('');
 
+  const getQueryParamKey = (queryPrefix) => `${queryPrefix ? `${queryPrefix}_q` : 'q'}`;
+
   // Is triggered whenever the state is changed by a state-changing hook as pagination, filter etc.
   useEffect(() => {
     setIsLoading(true);
@@ -80,11 +82,11 @@ const useTableHook = () => {
   // Is triggered when the filter-state is updated
   useEffect(() => {
     if (isMounted && Object.keys(router).length && Object.keys(historyState).length > 0) {
-      const { location, history } = router;
+      const { location, history, queryPrefix } = router;
 
       const buildSearchQuery = () => {
         const search = queryString.parse(location.search);
-        const param = 'q';
+        const param = getQueryParamKey(queryPrefix);
 
         Object.assign(search, {
           [param]: Object.values(historyState).join(' '),
@@ -110,13 +112,15 @@ const useTableHook = () => {
     getTableRowData: () => tableData.result,
     getSearchedFacets: () => tableData.facets,
     getFilterData: () => filterData.facets,
-    enableHistoryState: ({ history, location, prefix }) => {
-      setRouter({ history, location, prefix });
+    enableHistoryState: ({ history, location, queryPrefix }) => {
+      setRouter({ history, location, queryPrefix });
     },
     getHistoryState: () => {
       if (router.location) {
-        const { location } = router;
-        const { q: tableState } = queryString.parse(location.search);
+        const { location, queryPrefix } = router;
+        const param = getQueryParamKey(queryPrefix);
+        const { [param]: tableState } = queryString.parse(location.search);
+        // Use SQP to parse query-string and pick out the listed keywords below.
         const searchQueryObj = sqp.parse(tableState, {
           keywords: ['sort', 'page', 'filter'],
         });

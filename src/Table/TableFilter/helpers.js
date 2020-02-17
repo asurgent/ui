@@ -37,6 +37,10 @@ export const buildFilterObjectFromStateString = (stateString) => {
 };
 
 export const buildFilterStateString = (selectedFilters) => {
+  // Simplyfy the filter-state object in order to minimize the URL/Query-param length
+  // example Output { customer_id: [['1122', 'eq']]}
+  // This step is reverse-parsed in buildFilterObjectFromStateString()
+  // into eg. { customer_id: [{key: '1122', state: 'eq'}]}
   const mini = Object.keys(selectedFilters)
     .reduce((groups, key) => {
       const group = selectedFilters[key];
@@ -50,6 +54,14 @@ export const buildFilterStateString = (selectedFilters) => {
       return groups;
     }, {});
 
+
+  /*
+    If we have any selected filters we will preform
+    1. Stringify the minified object
+    2. Base64 encode it string
+    3. URI-encode the tring
+    4. Set to SQP value under filter-property
+  */
   if (Object.keys(mini).length > 0) {
     const result = encodeURI(btoa(JSON.stringify(mini)));
     return result;
