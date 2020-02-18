@@ -4,7 +4,7 @@ import { withTheme } from 'styled-components';
 import { RingSpinner } from 'react-spinners-kit';
 import TableHeader from '../TableHeader';
 import * as C from './BaseTable.styled';
-import { generateRows } from './helpers';
+import generateRows from './helpers';
 
 
 export const propTypes = {

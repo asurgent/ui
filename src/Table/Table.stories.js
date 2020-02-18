@@ -140,10 +140,9 @@ export const base = () => (
 
 export const main = () => {
   const success = boolean('Successful response', true);
-  const table = Table.useTableHook();
+  const table = Table.useTableHook({ page_size: 15 });
 
   useEffect(() => {
-    table.setPageSize(15);
     table.registerRowFetchCallback((payload, onSuccess, onFail) => {
       console.log('fetch', payload);
 

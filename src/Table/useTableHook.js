@@ -19,7 +19,7 @@ const defaultPayload = {
   page: 1,
 };
 
-const useTableHook = () => {
+const useTableHook = (payloadOverrides) => {
   // Holds state changes that are set simontainusly wihout a render inbetween
   // A rerender will empty these, but without a rerender setState for rowRequestState &
   // filterRequestState would overwrite previous value if no render is executed inbetween
@@ -57,6 +57,7 @@ const useTableHook = () => {
       const { callback, onSuccess, onFail } = updateTableItems;
       const payload = {
         ...defaultPayload,
+        ...payloadOverrides,
         ...rowRequestState,
         facets: [...filterRequestState].map(({ facetKey }) => `${facetKey}, count:0`),
       };
@@ -142,15 +143,6 @@ const useTableHook = () => {
     updateTableItems,
     updateFilterItems,
     thirdPartyTrigger,
-    setPageSize: (pageSize) => {
-      updateAction({ page_size: pageSize });
-    },
-    setFilter: (filter) => {
-      updateAction({ filter });
-    },
-    setOrderBy: (sort) => {
-      updateAction({ order_by: sort });
-    },
     hasTriggers: () => Object.keys(thirdPartyTrigger).length > 0,
     getRequestedPageCount: () => tableData.total_pages,
     getRequestedPageNumber: () => tableData.page,

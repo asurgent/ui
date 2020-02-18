@@ -119,7 +119,7 @@ const generateRowId = (columnData, index) => {
   }
 };
 
-export const generateRows = (props, components) => props.rowData
+const generateRows = (props, components) => props.rowData
   .reduce((acc, rowData, index) => {
     generateRowId(rowData, index);
     const { cardView } = props;
@@ -146,9 +146,9 @@ export const generateRows = (props, components) => props.rowData
       if (props.clickRowConfigutation) {
         const clickRow = props.clickRowConfigutation(rowData);
         if (typeof clickRow === 'object') {
-          const { link, onClick } = clickRow;
+          const { link, onClick, passLocationState = false } = clickRow;
           const linkRow = (
-            <Button.Plain key={rowData.id} link={link} onClick={onClick}>
+            <Button.Plain key={rowData.id} link={link} onClick={onClick} passLocationState={passLocationState}>
               {row}
             </Button.Plain>
           );
@@ -163,3 +163,5 @@ export const generateRows = (props, components) => props.rowData
 
     return acc;
   }, []);
+
+export default generateRows;
