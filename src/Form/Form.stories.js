@@ -40,7 +40,7 @@ export const simpleForm = () => {
   return (
     <Form.Primary
       form={formData}
-      onNewValue={(values) => {
+      onChangeTimer={(values) => {
         console.log(values);
       }}
     />
@@ -141,7 +141,7 @@ export const updateForm = () => {
   return (
     <Form.Primary
       form={formData}
-      onNewValue={(values) => {
+      onChangeTimer={(values) => {
         console.log(values);
       }}
     />

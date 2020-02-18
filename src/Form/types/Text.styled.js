@@ -19,12 +19,16 @@ export const Wrapper = styled.div`
   min-height: 4.7rem;
   background: ${({ theme }) => theme.white};
   
-  input,textarea, select {
+  input,textarea,select {
     width: 100%;
     max-width: 100%; 
     border: none;
     outline: none;
     appearance: none; 
+    
+    &:disabled {
+        color: ${({ theme }) => theme.gray400};
+    }
 
     &::placeholder {
       opacity: 0.4

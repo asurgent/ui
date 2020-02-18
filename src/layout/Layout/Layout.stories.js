@@ -4,6 +4,7 @@ import * as Icons from '@material-ui/icons';
 import { Main, useLayout } from './index';
 import * as Block from '../../Block';
 import * as Modal from '../../Modal';
+import * as Table from '../../Table';
 import { Omnibar, LeftActions, RightActions } from '../Omnibar';
 
 const navigationList = (t, customerId) => [
@@ -53,6 +54,7 @@ const createList = (translator, selected) => [
 ];
 
 export const mainLayout = () => {
+  const table = Table.useTableHook();
   const provider = useLayout({
     translator: (t) => t,
     navigationListConstructor: navigationList,
@@ -72,20 +74,90 @@ export const mainLayout = () => {
       imageLink: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
       isAdmin: true,
     });
+
+    table.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      const rowDummyData = Array.from({ length: 15 }, () => ({
+        valueA: 'Cell 1',
+        valueB: 'Cell 2',
+        valueC: 'Cell 3',
+        valueD: 'Cell 4',
+      }));
+      onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
+    });
+
+    table.registerFilterFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({
+        guys: [
+          { value: 'Mike(1133)' },
+          { value: 'Keen(123)' },
+          { value: 'Ellinor(4465)' },
+          { value: 'Anton(984)' },
+        ],
+        pankaka: [
+          { value: 'HeHe' },
+          { value: '123' },
+          { value: '4465' },
+          { value: '984' },
+        ],
+      });
+    });
+    table.parentReady();
   }, []);
+
 
   return (
     <Main provider={provider}>
       <Omnibar>
-        <LeftActions>LEFT</LeftActions>
-        <RightActions>RIGHT</RightActions>
+        <Table.Controlls
+          tableHook={table}
+          withFilter={[
+            { label: 'Guys', facetKey: 'guys', excludeable: true },
+            { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
+          ]}
+          withSort={[
+            { value: 'created', label: 'Created' },
+            {
+              value: 'modified', label: 'Modified', default: true, direction: 'asc',
+            },
+            { value: 'closed', label: 'Closed' },
+            { value: 'due', label: 'Due' },
+          ]}
+        />
       </Omnibar>
       <Block.Center>
-        <Block.Center>
-        Hello
-        </Block.Center>
+        <Table.Main
+          withHeader
+          useHistoryState
+          historyStatePrefix="tickets"
+          tableHook={table}
+          withSearch={false}
+          headerData={[
+            {
+              value: 'Cell 1',
+              sortKey: 'sort-A',
+              size: 'minmax(30rem, 1fr)',
+            },
+            { value: 'B', sortKey: 'sort-B' },
+            { value: 'C', sortKey: 'sort-C', render: false },
+            {
+              value: 'D',
+              sortKey: 'sort-D',
+              size: 'minmax(8rem, 10rem)',
+            },
+          ]}
+          columnConfiguration={(row) => {
+            const {
+              valueA, valueB, valueC, valueD,
+            } = row;
 
-        <h1>Random image</h1>
+            return [
+              { value: valueB },
+              valueA,
+              () => valueC,
+              () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
+            ];
+          }}
+        />
       </Block.Center>
       <Block.Center>
         <Modal.Primary isOpen={boolean('open', false)}>

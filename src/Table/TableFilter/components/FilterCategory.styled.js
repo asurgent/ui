@@ -1,35 +1,50 @@
 import styled from 'styled-components';
 
-export const MenuWrapper = styled.div`
-    background: white;
+export const FilterWrapper = styled.div`
+`;
+
+export const List = styled.div`
+    flex: 1;
+    overflow-y: scroll;   
     position: relative;
 `;
 
-export const DesktopMenu = styled.div`
+export const Header = styled.div`
+    text-transform: lowercase;
+    padding: 1.6rem;    
+    font-size: 1.4rem;    
+    color: ${({ theme }) => theme.gray500};
+`;
+
+export const Search = styled.div`
+    padding: .8rem ;
+    border-top: 1px solid ${({ theme }) => theme.gray200};
+    border-bottom: 1px solid ${({ theme }) => theme.gray200};
+`;
+
+export const Center = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.6rem;
+`;
+
+export const DesktopDropdown = styled.div`
     position: absolute;
     width: auto;
-    min-width: 28rem;
+    min-width: 32rem;
     height: auto;
-    padding: 1.6rem;
-    margin-top: .8rem;  
-    top: 100%;
-    transform: translateY(10px);
-    right: 0;
+    max-height: 32rem;
+    left: 0;
     border-radius: 5px;
     background: ${({ theme }) => theme.white};
     border: 1px solid ${({ theme }) => theme.gray200};
     box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
-    
-    small {
-        display: block;
-        margin-top: .8rem;
-        margin-bottom: 1.6rem;
-    }
-    
+    display: flex;
+    flex-direction: column;
 `;
 
-
-export const MobileMenu = styled.div`
+export const MobileDropdown = styled.div`
     position: fixed;
     top: -1px;
     bottom: -1px;
@@ -47,43 +62,10 @@ export const MobileMenu = styled.div`
     }
 `;
 
-export const CreateTitle = styled.div``;
-export const CreateDescription = styled.div`
-    color: ${({ theme }) => theme.gray600};
-    font-size: 1.2rem;
-`;
-
-export const CreateItem = styled.div`
-    display: grid;
-    grid-template-columns: 3.2rem 1fr;
-    grid-template-areas: 
-        "logo title"
-        "logo desc";
-    padding: .8rem;
-    border-radius: 3px;
-
-    &:hover {
-        background: ${({ theme }) => theme.gray100};
-    }
-
-    .create-icon {
-        grid-area: logo;
-        align-self: center;
-        font-weight: bold;
-    }
-    ${CreateTitle} {
-        grid-area: title;
-    }
-
-    ${CreateDescription} {
-        grid-area: desc;
-    }
-`;
-
 
 export const MobileContent = styled.div`
     margin-top: 1.6rem;
-    padding: 2.4rem;
+    /* padding: 2.4rem; */
 `;
 
 export const Mobile = styled.div`

@@ -40,23 +40,3 @@ export const Page = styled.div`
       background: ${({ theme, isClickable }) => (isClickable ? theme.rgba(theme.blue400, 0.2) : 'transparent')};
     }
 `;
-
-
-export const Arrow = styled.div`
-    border: solid black;
-    border-width: 0 2px 2px 0;
-    display: inline-block;
-    padding: 3px;
-    transition-duration: 0.5s;
-    height: 1rem;
-    width: 1rem;
-    margin: 0 .8rem;
-    cursor: pointer;
-
-    transform: ${({ left }) => {
-    if (left) {
-      return 'rotate(135deg)';
-    }
-    return 'rotate(-45deg)';
-  }};
-`;

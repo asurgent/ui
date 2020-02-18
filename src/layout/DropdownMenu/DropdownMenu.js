@@ -70,7 +70,7 @@ const DropdownMenu = ({
               <small>{customerName}</small>
               <Form.Primary
                 form={langaugeForm}
-                onNewValue={(values) => {
+                onChangeTimer={(values) => {
                   onChangeLanguage(values.selectLanguage);
                 }}
               />
@@ -130,7 +130,7 @@ const DropdownMenu = ({
                 <div className="menu">
                   <Form.Primary
                     form={langaugeForm}
-                    onNewValue={(values) => {
+                    onChangeTimer={(values) => {
                       onChangeLanguage(values.selectLanguage);
                     }}
                   />

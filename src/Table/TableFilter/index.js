@@ -1,27 +1,43 @@
-import React, { useEffect } from 'react';
-import TableFilter from './TableFilter';
-import useFilter from '../hooks/useFilterProvider';
-import { buildFilterObjectFromState } from '../hooks/helpers';
+import React from 'react';
+import PropTypes from 'prop-types';
+import TableFilter from './components/TableFilter';
+import useFilterHook from './useFilterHook';
 
-const TableFilterProxy = ({ tableHook, filterConfiguratuion }) => {
-  const filterHook = useFilter(filterConfiguratuion, tableHook);
+const propTypes = {
+  tableHook: PropTypes.instanceOf(Object).isRequired,
+  filterKeys: PropTypes.instanceOf(Array).isRequired,
+  parseFilterRequestOutput: PropTypes.func,
+  parseFilterLabelOutput: PropTypes.func,
+};
 
-  useEffect(() => {
-    if (tableHook.isMounted) {
-      tableHook.getHistoryState(({ filter }) => {
-        const state = buildFilterObjectFromState(filter);
-        filterHook.setSelectedItems(state);
-      });
-    }
-  }, [tableHook.isMounted]);
+const defaultProps = {
+  parseFilterRequestOutput: null,
+  parseFilterLabelOutput: null,
+};
 
-  if (tableHook && tableHook.isMounted) {
+const TableFilterProxy = ({
+  tableHook,
+  filterKeys,
+  parseFilterRequestOutput,
+  parseFilterLabelOutput,
+  ...props
+}) => {
+  const parseLabel = parseFilterLabelOutput;
+  const parseRequest = parseFilterRequestOutput;
+  const filterHook = useFilterHook(filterKeys, tableHook, parseRequest, parseLabel);
+
+  if (tableHook) {
     return (
-      <TableFilter filterHook={filterHook} tableHook={tableHook} />
+      <TableFilter filterHook={filterHook} tableHook={tableHook} {...props} />
     );
   }
 
   return null;
 };
+
+
+TableFilterProxy.propTypes = propTypes;
+TableFilterProxy.defaultProps = defaultProps;
+TableFilterProxy.displayName = '@asurgent.ui.Table.TableFilterProxyProxy';
 
 export default TableFilterProxy;

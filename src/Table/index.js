@@ -1,17 +1,21 @@
-import Table from './Table';
-import Api from './ApiTable';
+import Base from './BaseTable';
+import Main from './MainTable';
 import SearchBar from './TableSearchBar';
+import Sort from './TableSort';
 import Pagination from './TablePagination';
+import Controlls from './TableControlls';
 import Filter from './TableFilter';
-import useTableProvider from './hooks/useTableProvider';
-import { sortDirection } from './helpers';
+import useTableHook from './useTableHook';
+import { directionKeys } from './TableSort/helpers';
 
 export {
-  Api,
-  Table as Primary,
-  sortDirection,
-  useTableProvider,
-  SearchBar,
-  Pagination,
+  Main,
+  Base,
+  Sort,
   Filter,
+  SearchBar,
+  Controlls,
+  Pagination,
+  directionKeys as sortDirection,
+  useTableHook,
 };

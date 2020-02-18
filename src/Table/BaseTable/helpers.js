@@ -1,10 +1,6 @@
 import React from 'react';
-import * as Button from '../Button';
+import * as Button from '../../Button';
 
-export const sortDirection = {
-  asc: 'asc',
-  desc: 'desc',
-};
 
 const isObject = (item) => (item && typeof item === 'object' && !Array.isArray(item));
 

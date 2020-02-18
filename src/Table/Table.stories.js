@@ -5,6 +5,16 @@ import {
 import styled from 'styled-components';
 import * as Table from './index';
 
+const StoryWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3.2rem;
+  height: 100vh;
+  width: 100vh;
+  max-width: 100%;
+`;
+
 const CardWrapper = styled.div`
   display: flex;
   width: 100%;
@@ -49,7 +59,6 @@ const rowDummyData = Array.from({ length: 5 }, () => ({
   valueD: 'Cell 4',
 }));
 
-
 const rowComponentOverride = ({ row }) => {
   const OverrideRow = styled(row)`
     .column-5 {
@@ -83,130 +92,130 @@ const cellComponentOverride = ({ cell }) => {
   return OverrideCell;
 };
 
-export const defaultTable = () => (
-  <Table.Primary
-    onSort={(key, direction) => { console.log(key, direction); }}
-    onPagination={(requestedPage) => { console.log(requestedPage); }}
-    sortDirection={Table.sortDirection.asc}
-    activeSort="sort-A"
-    activePage={10}
-    pages={number('Pages', 10)}
-    cellComponent={cellComponentOverride}
-    rowComponent={rowComponentOverride}
-    emptystate={text('Emptystate', 'No items found')}
-    isLoading={boolean('Loading', false)}
-    zebra={boolean('Zebra', true)}
-    striped={boolean('Striped', true)}
-    cardView={boolean('Card view', false)}
-    withHeaderSort={boolean('With header sort', true)}
-    withHeaderLabels={boolean('With header labels', true)}
-    withPagination={boolean('With pagination', true)}
-    equalSizeColumns={boolean('Equal size column', false)}
-    headerData={[
-      {
-        value: lorem,
-        sortKey: 'sort-A',
-        size: 'minmax(30rem, 1fr)',
-      },
-      { value: 'B' },
-      { value: 'C', sortKey: 'sort-C' },
-      {
-        value: 'D',
-        sortKey: 'sort-D',
-        size: 'minmax(8rem, 10rem)',
-        props: { style: { textAlign: 'center' } },
-      },
-    ]}
-    rowData={boolean('With rows', true) ? rowDummyData : []}
-    cardConfiguration={(row) => <Card row={row} />}
-    clickRowConfigutation={(row) => ({ link: '/', onClick: () => { console.log(`Click row: ${row.id}`); } })}
-    columnConfiguration={(row) => {
-      const {
-        valueA, valueB, valueC, valueD,
-      } = row;
+export const base = () => (
+  <StoryWrapper>
+    <Table.Base
+      cellComponent={cellComponentOverride}
+      rowComponent={rowComponentOverride}
+      emptystate={text('Emptystate', 'No items found')}
+      isLoading={boolean('Loading', false)}
+      zebra={boolean('Zebra', true)}
+      striped={boolean('Striped', true)}
+      cardView={boolean('Card view', false)}
+      withHeader={boolean('With header', true)}
+      withPagination={boolean('With pagination', true)}
+      equalSizeColumns={boolean('Equal size column', false)}
+      headerData={[
+        {
+          value: lorem,
+          sortKey: 'sort-A',
+          size: 'minmax(30rem, 1fr)',
+        },
+        { value: 'B' },
+        { value: 'C', sortKey: 'sort-C' },
+        {
+          value: 'D',
+          sortKey: 'sort-D',
+          size: 'minmax(8rem, 10rem)',
+          props: { style: { textAlign: 'center' } },
+        },
+      ]}
+      rowData={boolean('With rows', true) ? rowDummyData : []}
+      cardConfiguration={(row) => <Card row={row} />}
+      clickRowConfigutation={(row) => ({ link: '/', onClick: () => { console.log(`Click row: ${row.id}`); } })}
+      columnConfiguration={(row) => {
+        const {
+          valueA, valueB, valueC, valueD,
+        } = row;
 
-      return [
-        { value: valueB },
-        valueA,
-        () => valueC,
-        () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
-        () => ({ value: 'IM AM HIDDEN' }),
-      ];
-    }}
-  />
+        return [
+          { value: valueB },
+          valueA,
+          () => valueC,
+          () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
+          () => ({ value: 'IM AM HIDDEN' }),
+        ];
+      }}
+    />
+  </StoryWrapper>
 );
 
-export const apiTable = () => {
+export const main = () => {
   const success = boolean('Successful response', true);
-  const updateCallbackFunction = (payload, provider) => {
-    // do ajaxrequest based on page & query
-    // use setter to set responsedata from azure-search api
-    console.log(payload);
-
-    if (success) {
-      provider.setSuccessResponse({ result: [...rowDummyData], page: 2, total_pages: 2 });
-    } else {
-      provider.setFailedResponse('Could not get your things');
-    }
-  };
-  const updateFilterCallback = (payload, filterCallback) => {
-    // do ajaxrequest based on page & query
-    // use setter to set responsedata from azure-search api
-    console.log('payload filter', payload);
-
-    filterCallback({
-      gurka: [
-        { value: '1133' },
-        { value: '123' },
-        { value: '4465' },
-        { value: '984' },
-      ],
-      pankaka: [
-        { value: '1133' },
-        { value: '123' },
-        { value: '4465' },
-        { value: '984' },
-      ],
-    });
-  };
-
-  const table = Table.useTableProvider(
-    (payload) => {
-      updateCallbackFunction(payload, table);
-    },
-    (payload, filterCallback) => {
-      updateFilterCallback(payload, filterCallback);
-    },
-  );
+  const table = Table.useTableHook();
 
   useEffect(() => {
-    table.setFacets(['id']);
-    // All user interfaces to interact with table provider
-    // table.setFilter('Tests');
-    // table.setOrderBy(['gurka desc']);
-    // table.setSearchFields(['index_column']);
-    // table.setSearchQuery('Default search query');
-    // table.setPageNumber(2);
+    table.setPageSize(15);
+    table.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      console.log('fetch', payload);
+
+      if (success) {
+        onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
+      } else {
+        onFail('Could not get your things');
+      }
+    });
+
+    table.registerFilterFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({
+        guys: [
+          { value: 'Mike(1133)' },
+          { value: 'Keen(123)' },
+          { value: 'Ellinor(4465)' },
+          { value: 'Anton(984)' },
+        ],
+        pankaka: [
+          { value: 'HeHe' },
+          { value: '123' },
+          { value: '4465' },
+          { value: '984' },
+        ],
+      });
+    });
 
     table.parentReady();
   }, []);
 
   return (
-    <div style={{ padding: '3.2rem' }}>
-      <Table.Api
-        withHeaderLabels
+    <StoryWrapper>
+      <Table.Main
+        withHeader
         useHistoryState
         historyStatePrefix="tickets"
-        provider={table}
+        tableHook={table}
         withSearch={boolean('With search', true)}
+        parseFilterLabelOutput={(filter, filterKey) => {
+          if (filterKey === 'guys') {
+            const user = filter.match(/^(.+)\((\d+)\)/);
+            if (user) {
+              const [_, newKey] = user;
+              return newKey;
+            }
+          }
+
+          return null;
+        }}
+        parseFilterRequestOutput={(filter, filterKey) => {
+          if (filterKey === 'guys') {
+            const user = filter.match(/\((\d+)\)/);
+
+            if (user) {
+              const [_, newKey] = user;
+              return newKey;
+            }
+          }
+
+          // return rest;
+          return null;
+        }}
         withFilter={[
-          { label: 'Gurka', facetKey: 'gurka', excludeable: true },
+          { label: 'Guys', facetKey: 'guys', excludeable: true },
           { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
         ]}
-        sortKeys={[
+        withSort={[
           { value: 'created', label: 'Created' },
           {
-            value: 'modified', label: 'Modified', default: true, direction: 123,
+            value: 'modified', label: 'Modified', default: true, direction: 'asc',
           },
           { value: 'closed', label: 'Closed' },
           { value: 'due', label: 'Due' },
@@ -239,42 +248,157 @@ export const apiTable = () => {
           ];
         }}
       />
-    </div>
+    </StoryWrapper>
   );
 };
 
-export const pagination = () => (
-  <Table.Pagination
-    isLoading={boolean('isLoading', false)}
-    onPagination={(page) => console.log(`requested page: ${page}`)}
-    activePage={number('active page', 1)}
-    pages={number('total pages', 10)}
-  />
-);
-
-export const searchBar = () => {
-  const table = Table.useTableProvider((payload) => {
-    console.log(payload);
-  });
-
+export const pagination = () => {
+  const hook = Table.useTableHook();
   useEffect(() => {
-    table.setSortKeys([
-      { value: 'created', label: 'Created' },
-      {
-        value: 'modified', label: 'Modified', default: true, direction: 123,
-      },
-      { value: 'closed', label: 'Closed' },
-      { value: 'due', label: 'Due' },
-    ]);
-    table.parentReady();
+    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
+    });
+    hook.parentReady();
   }, []);
 
   return (
-    <div style={{ background: 'pink', width: '100%' }}>
-      <Table.SearchBar
-        provider={table}
-        searchLabel="Search here"
+    <StoryWrapper>
+      <Table.Pagination tableHook={hook} />
+    </StoryWrapper>
+  );
+};
+
+export const sort = () => {
+  const hook = Table.useTableHook();
+
+  useEffect(() => {
+    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
+    });
+    hook.parentReady();
+  }, []);
+
+  return (
+    <StoryWrapper>
+      <Table.Sort
+        tableHook={hook}
+        sortKeys={[
+          { value: 'created', label: 'Created' },
+          {
+            value: 'modified', label: 'Modified', default: true, direction: 'asc',
+          },
+          { value: 'closed', label: 'Closed' },
+          { value: 'due', label: 'Due' },
+        ]}
       />
-    </div>
+    </StoryWrapper>
+  );
+};
+
+export const filter = () => {
+  const hook = Table.useTableHook();
+
+  useEffect(() => {
+    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      console.log('fetch', payload);
+      onSuccess({ });
+    });
+    hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({
+        guys: [
+          { value: 'Mike(1133)' },
+          { value: 'Keen(123)' },
+          { value: 'Ellinor(4465)' },
+          { value: 'Anton(984)' },
+        ],
+        pankaka: [
+          { value: 'HeHe' },
+          { value: '123' },
+          { value: '4465' },
+          { value: '984' },
+        ],
+      });
+    });
+    hook.parentReady();
+  }, []);
+
+  return (
+    <StoryWrapper>
+      <Table.Filter
+        tableHook={hook}
+        filterKeys={[
+          { label: 'guys', facetKey: 'guys', excludeable: true },
+          { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
+        ]}
+        parseFilterLabelOutput={(filters) => filters}
+        parseFilterRequestOutput={(filters) => filters}
+      />
+    </StoryWrapper>
+  );
+};
+
+export const searchBar = () => {
+  const hook = Table.useTableHook();
+
+  useEffect(() => {
+    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
+    });
+    hook.parentReady();
+  }, []);
+
+  return (
+    <StoryWrapper>
+      <Table.SearchBar tableHook={hook} searchLabel="Search here" />
+    </StoryWrapper>
+  );
+};
+
+export const controlls = () => {
+  const hook = Table.useTableHook();
+
+  useEffect(() => {
+    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
+    });
+
+    hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({
+        gurka: [
+          { value: '1133' },
+          { value: '123' },
+          { value: '4465' },
+          { value: '984' },
+        ],
+        pankaka: [
+          { value: '1133' },
+          { value: '123' },
+          { value: '4465' },
+          { value: '984' },
+        ],
+      });
+    });
+    hook.parentReady();
+  }, []);
+
+  return (
+    <StoryWrapper>
+      <Table.Controlls
+        tableHook={hook}
+        withSearch={boolean('With search', true)}
+        withFilter={[
+          { label: 'Gurka', facetKey: 'gurka', excludeable: true },
+          { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
+        ]}
+        withSort={[
+          { value: 'created', label: 'Created' },
+          {
+            value: 'modified', label: 'Modified', default: true, direction: 'asc',
+          },
+          { value: 'closed', label: 'Closed' },
+          { value: 'due', label: 'Due' },
+        ]}
+      />
+    </StoryWrapper>
   );
 };

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, useHistory } from 'react-router-dom';
-import ApiTable from './ApiTable';
+import MainTable from './MainTable';
 
 const propTypes = {
-  provider: PropTypes.instanceOf(Object).isRequired,
+  tableHook: PropTypes.instanceOf(Object).isRequired,
   useHistoryState: PropTypes.bool,
   historyStatePrefix: PropTypes.string,
   sortKeys: PropTypes.instanceOf(Array),
@@ -16,35 +16,31 @@ const defaultProps = {
   sortKeys: [],
 };
 
-const ApiTableProxy = (props) => {
+const MainTableProxy = (props) => {
   const {
-    provider,
+    tableHook,
     useHistoryState,
     historyStatePrefix,
-    sortKeys,
   } = props;
+
   const history = useHistory();
   const location = useLocation();
 
   useEffect(() => {
-    if (sortKeys && Array.isArray(sortKeys) && sortKeys.length) {
-      provider.setSortKeys(sortKeys);
-    }
-
     if (useHistoryState) {
-      provider.enableHistoryState({ history, location, prefix: historyStatePrefix || '' });
+      tableHook.enableHistoryState({ history, location, queryPrefix: historyStatePrefix || '' });
     }
   }, []);
 
-  if (provider.isMounted) {
-    return <ApiTable {...props} />;
+  if (tableHook.isReady) {
+    return <MainTable {...props} />;
   }
 
   return null;
 };
 
-ApiTableProxy.propTypes = propTypes;
-ApiTableProxy.defaultProps = defaultProps;
-ApiTableProxy.displayName = '@asurgent.ui.Table.Proxy.Api';
+MainTableProxy.propTypes = propTypes;
+MainTableProxy.defaultProps = defaultProps;
+MainTableProxy.displayName = '@asurgent.ui.Table.Proxy.Main';
 
-export default ApiTableProxy;
+export default MainTableProxy;

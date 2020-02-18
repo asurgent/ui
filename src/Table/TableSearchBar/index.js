@@ -1,14 +1,27 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TableSearchBar from './TableSearchBar';
+import useSearchbarHook from './useSearchbarHook';
 
-const TableSearchBarProxy = (props) => {
-  const { provider } = props;
+const propTypes = {
+  tableHook: PropTypes.instanceOf(Object).isRequired,
+};
 
-  if (provider && provider.isMounted) {
-    return <TableSearchBar {...props} />;
+const defaultProps = {};
+
+
+const TableSearchBarProxy = ({ tableHook, ...props }) => {
+  const searchHook = useSearchbarHook(tableHook);
+
+  if (tableHook) {
+    return <TableSearchBar {...props} searchHook={searchHook} tableHook={tableHook} />;
   }
 
   return null;
 };
+
+TableSearchBarProxy.propTypes = propTypes;
+TableSearchBarProxy.defaultProps = defaultProps;
+TableSearchBarProxy.displayName = '@asurgent.ui.Table.TableSearchBarProxy';
 
 export default TableSearchBarProxy;

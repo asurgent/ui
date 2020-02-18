@@ -1,40 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TablePagination from './TablePagination';
+import usePaginationHook from './usePaginationHook';
 
 const propTypes = {
-  provider: PropTypes.instanceOf(Object),
+  tableHook: PropTypes.instanceOf(Object),
 };
 
 const defaultProps = {
-  provider: null,
+  tableHook: null,
 };
 
 const TablePaginationProxy = (props) => {
-  const { provider } = props;
+  const { tableHook } = props;
+  const paginationHook = usePaginationHook(tableHook, props);
 
-  if (!provider) {
-    return <TablePagination {...props} />;
+  if (!tableHook) {
+    return <TablePagination {...props} paginationHook={paginationHook} />;
   }
 
-  if (provider.isMounted) {
-    const isLoading = false;
-    const activePage = provider.getActivePage();
-    const onPagination = (requestedPage) => provider.onPaginate(requestedPage);
-    const pages = provider.getPageCount();
-
-    return (
-      <TablePagination
-        isLoading={isLoading}
-        activePage={activePage}
-        onPagination={onPagination}
-        pages={pages}
-        {...props}
-      />
-    );
-  }
-
-  return null;
+  return (
+    <TablePagination tableHook={tableHook} paginationHook={paginationHook} {...props} />
+  );
 };
 
 TablePaginationProxy.propTypes = propTypes;

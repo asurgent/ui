@@ -1,90 +1,60 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import * as Icon from '@material-ui/icons';
-import { sortDirection as direction } from '../helpers';
-import * as Form from '../../Form';
-import * as Button from '../../Button';
-import * as C from './TableSearchBar.styled';
-
-const searchForm = (searchLabel, provider) => ({
-  search: {
-    type: 'text', placeholder: searchLabel, value: provider.getQuery(), noLabel: true,
-  },
-  sortDirection: {
-    type: 'select', options: provider.getSortKeys(), noLabel: true,
-  },
-});
+import { Primary as Form, useFormBuilder } from '../../Form';
 
 const propTypes = {
-  provider: PropTypes.instanceOf(Object),
+  tableHook: PropTypes.instanceOf(Object).isRequired,
+  searchHook: PropTypes.instanceOf(Object).isRequired,
   searchLabel: PropTypes.string,
+  className: PropTypes.string,
 };
 
 const defaultProps = {
-  provider: {},
   searchLabel: '',
+  className: '',
 };
 
 const TableSearchBar = (props) => {
-  const { provider, searchLabel } = props;
-  const formData = Form.useFormBuilder(searchForm(searchLabel, provider));
-  const [sort, setSort] = useState(provider.getSortDirection());
-  const [sortKey, setSortKey] = useState(provider.getSortKey());
-  const [query, setQuery] = useState(provider.getQuery());
+  const {
+    tableHook, searchHook, searchLabel, className,
+  } = props;
+  const formData = useFormBuilder({
+    search: {
+      type: 'text', placeholder: searchLabel, value: '', noLabel: true, props: { autoFocus: true },
+    },
+  });
 
   useEffect(() => {
-    formData.updateField('search', { props: { disabled: provider.isLoading } });
-    formData.updateField('sortDirection', { props: { disabled: provider.isLoading } });
-  }, [provider.isLoading]);
+    formData.updateField('search', { props: { disabled: tableHook.isLoading } });
+  }, [tableHook.isLoading]);
 
   useEffect(() => {
-    const { dirty } = formData.getValues();
-    if (dirty) {
-      provider.onSort({ value: sortKey, direction: sort });
+    if (searchHook.isReady) {
+      formData.updateField('search', { value: searchHook.getQuery() });
     }
-  }, [sort, sortKey]);
-
-  useEffect(() => {
-    const { dirty } = formData.getValues();
-    if (dirty) {
-      provider.onSearch(query);
-    }
-  }, [query]);
+  }, [searchHook.isReady]);
 
   useEffect(() => {
     formData.updateField('search', { placeholder: searchLabel });
   }, [searchLabel]);
 
+  useEffect(() => {
+    if (!formData.formData.search.props.disabled) {
+      formData.focusOnField('search');
+    }
+  }, [formData.formData]);
+
   return (
     <>
-      <Form.Primary
+      <Form
         form={formData}
-        onNewValue={(values) => {
-          setSortKey(values.sortDirection);
-          setQuery(values.search);
+        className={className}
+        onKeyUpTimer={(values) => {
+          searchHook.setQuery(values.search);
         }}
       >
-        {({ search, sortDirection }) => (
-          <>
-            <C.StyleForm>
-              <C.SearchInput>
-                {search}
-              </C.SearchInput>
-              { sortDirection && provider.hasSortyKeys() && (
-              <C.SortInput>
-                {sortDirection}
-                <Button.Icon
-                  disabled={provider.isLoading}
-                  onClick={() => setSort(sort === direction.asc ? direction.desc : direction.asc)}
-                  icon={sort === direction.asc ? <Icon.ArrowDownward /> : <Icon.ArrowUpward />}
-                />
-              </C.SortInput>
-              )}
-            </C.StyleForm>
-          </>
-        )}
-      </Form.Primary>
-
+        {({ search }) => search}
+      </Form>
     </>
   );
 };
