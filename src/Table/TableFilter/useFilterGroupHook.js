@@ -14,7 +14,7 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
       tableHook.loadFilterItems(filterHook.filterGroups);
       setIsReady(true);
     }
-    if (!open) {
+    if (open) {
       const items = filterHook.getFilterItemsByGroup(filterGroupKey);
       setOptions(items);
     }

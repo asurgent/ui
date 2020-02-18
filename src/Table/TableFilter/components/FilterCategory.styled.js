@@ -7,6 +7,17 @@ export const List = styled.div`
     flex: 1;
     overflow-y: scroll;   
     position: relative;
+
+    &:after {
+        display:  ${({ disabled }) => (disabled ? 'block' : 'none')};
+        content: " ";
+        background: ${({ theme }) => theme.rgba(theme.white, 0.8)};
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
 `;
 
 export const Header = styled.div`

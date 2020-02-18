@@ -92,6 +92,11 @@ export const Plain = styled.div`
     margin: 0;
     padding: 0;
     color: ${({ theme }) => theme.black};
+
+    &.disabled {
+        cursor: not-allowed;
+        opacity: .5;
+    }
 `;
 
 export const Filter = styled(Button)`

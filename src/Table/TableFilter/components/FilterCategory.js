@@ -74,7 +74,7 @@ const FilterCategory = withTheme((props) => {
                 </C.Center>
               )
             }
-            <C.List>
+            <C.List disabled={tableHook.isLoading}>
               {
                 groupHook.getOptions().map((filter) => (
                   <FilterItem
