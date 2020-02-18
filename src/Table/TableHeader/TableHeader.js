@@ -16,10 +16,10 @@ const TableHeader = ({
   equalSizeColumns,
 }) => (
   <C.HeaderRow headerList={headerData} equalSize={equalSizeColumns} striped>
-    { headerData.map(({ value, render = true, props: headerProps }) => (
+    { headerData.map(({ render = true, ...head }) => (
       render && (
-        <C.Header {...(headerProps || {})} key={value}>
-          <C.HeaderLabel>{value}</C.HeaderLabel>
+        <C.Header {...(head.props || {})} key={head.key || head.label}>
+          <C.HeaderLabel>{head.label}</C.HeaderLabel>
         </C.Header>
       )
     )) }

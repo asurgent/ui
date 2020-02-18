@@ -35,16 +35,16 @@ const propTypes = {
 };
 
 const defaultProps = {
-  withSearch: true,
-  withPagination: true,
+  withSearch: false,
+  withPagination: false,
+  withFilter: [],
+  withSort: [],
   searchLabel: 'Search',
   emptystate: 'No items found',
   onPagination: () => { },
   activePage: 1,
   pages: 0,
   rowData: [],
-  withFilter: [],
-  withSort: [],
   parseFilterRequestOutput: null,
   parseFilterLabelOutput: null,
 };

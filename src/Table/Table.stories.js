@@ -107,15 +107,13 @@ export const base = () => (
       equalSizeColumns={boolean('Equal size column', false)}
       headerData={[
         {
-          value: lorem,
-          sortKey: 'sort-A',
+          label: lorem,
           size: 'minmax(30rem, 1fr)',
         },
-        { value: 'B' },
-        { value: 'C', sortKey: 'sort-C' },
+        { label: 'B', key: 'test' },
+        { label: 'C', sortKey: 'sort-C' },
         {
-          value: 'D',
-          sortKey: 'sort-D',
+          label: 'D',
           size: 'minmax(8rem, 10rem)',
           props: { style: { textAlign: 'center' } },
         },
@@ -222,16 +220,15 @@ export const main = () => {
         ]}
         headerData={[
           {
-            value: lorem,
-            sortKey: 'sort-A',
+            label: lorem,
             size: 'minmax(30rem, 1fr)',
           },
-          { value: 'B', sortKey: 'sort-B' },
-          { value: 'C', sortKey: 'sort-C', render: false },
+          { label: 'B', key: 'test' },
+          { label: 'C', sortKey: 'sort-C' },
           {
-            value: 'D',
-            sortKey: 'sort-D',
+            label: 'D',
             size: 'minmax(8rem, 10rem)',
+            props: { style: { textAlign: 'center' } },
           },
         ]}
         cardConfiguration={(row) => <Card row={row} />}
@@ -399,6 +396,89 @@ export const controlls = () => {
           { value: 'due', label: 'Due' },
         ]}
       />
+    </StoryWrapper>
+  );
+};
+
+
+export const separate = () => {
+  const hook = Table.useTableHook();
+
+  useEffect(() => {
+    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      console.log('fetch', payload);
+
+      onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
+    });
+    hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
+      onSuccess({
+        gurka: [
+          { value: '1133' },
+          { value: '123' },
+          { value: '4465' },
+          { value: '984' },
+        ],
+        pankaka: [
+          { value: '1133' },
+          { value: '123' },
+          { value: '4465' },
+          { value: '984' },
+        ],
+      });
+    });
+    hook.parentReady();
+  }, []);
+
+  return (
+    <StoryWrapper>
+      <Table.Controlls
+        tableHook={hook}
+        withSearch={boolean('With search', true)}
+        withFilter={[
+          { label: 'Gurka', facetKey: 'gurka', excludeable: true },
+          { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
+        ]}
+        withSort={[
+          { value: 'created', label: 'Created' },
+          {
+            value: 'modified', label: 'Modified', default: true, direction: 'asc',
+          },
+          { value: 'closed', label: 'Closed' },
+          { value: 'due', label: 'Due' },
+        ]}
+      />
+      <Table.Main
+        withHeader
+        useHistoryState
+        historyStatePrefix="tickets"
+        tableHook={hook}
+        headerData={[
+          {
+            label: lorem,
+            size: 'minmax(30rem, 1fr)',
+          },
+          { label: 'B', key: 'test' },
+          { label: 'C', sortKey: 'sort-C' },
+          {
+            label: 'D',
+            size: 'minmax(8rem, 10rem)',
+            props: { style: { textAlign: 'center' } },
+          },
+        ]}
+        columnConfiguration={(row) => {
+          const {
+            valueA, valueB, valueC, valueD,
+          } = row;
+
+          return [
+            { value: valueB },
+            valueA,
+            () => valueC,
+            () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
+          ];
+        }}
+      />
+      <Table.Pagination tableHook={hook} />
     </StoryWrapper>
   );
 };
