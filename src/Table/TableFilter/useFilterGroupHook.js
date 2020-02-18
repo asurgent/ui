@@ -28,7 +28,7 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
   useEffect(() => {
     const items = filterHook.getFilterItemsByGroup(filterGroupKey);
     setOptions(items);
-  }, [tableHook.filterData, filterHook.selectedItems]);
+  }, [tableHook.getAllFilters(), filterHook.selectedItems]);
 
   return {
     isReady,

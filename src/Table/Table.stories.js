@@ -148,7 +148,11 @@ export const main = () => {
       console.log('fetch', payload);
 
       if (success) {
-        onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
+        onSuccess({
+          result: [...rowDummyData],
+          page: 2,
+          total_pages: 20,
+        });
       } else {
         onFail('Could not get your things');
       }
@@ -408,21 +412,40 @@ export const separate = () => {
     hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
       console.log('fetch', payload);
 
-      onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
+      onSuccess({
+        result: [...rowDummyData],
+        page: 2,
+        total_pages: 20,
+        facets: {
+          guys: [
+            { value: 'Mike(1133)', count: 1 },
+            { value: 'Keen(123)', count: 1 },
+            { value: 'Ellinor(4465)', count: 1 },
+            { value: 'Anton(984)', count: 1 },
+          ],
+          pankaka: [
+            { value: 'HeHe', count: 1 },
+            { value: '123', count: 1 },
+            { value: '4465', count: 1 },
+            { value: '984', count: 1 },
+          ],
+        },
+      });
     });
+
     hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
       onSuccess({
-        gurka: [
-          { value: '1133' },
-          { value: '123' },
-          { value: '4465' },
-          { value: '984' },
+        guys: [
+          { value: 'Mike(1133)', count: 23 },
+          { value: 'Keen(123)', count: 23 },
+          { value: 'Ellinor(4465)', count: 23 },
+          { value: 'Anton(984)', count: 23 },
         ],
         pankaka: [
-          { value: '1133' },
-          { value: '123' },
-          { value: '4465' },
-          { value: '984' },
+          { value: 'HeHe', count: 23 },
+          { value: '123', count: 23 },
+          { value: '4465', count: 23 },
+          { value: '984', count: 23 },
         ],
       });
     });
@@ -435,7 +458,7 @@ export const separate = () => {
         tableHook={hook}
         withSearch={boolean('With search', true)}
         withFilter={[
-          { label: 'Gurka', facetKey: 'gurka', excludeable: true },
+          { label: 'Guys', facetKey: 'guys', excludeable: true },
           { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
         ]}
         withSort={[
@@ -450,6 +473,7 @@ export const separate = () => {
       <Table.Main
         withHeader
         useHistoryState
+        withControlls={false}
         historyStatePrefix="tickets"
         tableHook={hook}
         headerData={[

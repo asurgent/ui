@@ -125,8 +125,8 @@ const useTableHook = () => {
     getRequestedPageNumber: () => tableData.page,
     getTablePage: () => tableData.page,
     getTableRowData: () => tableData.result,
-    getSearchedFacets: () => tableData.facets,
-    getFilterData: () => filterData.facets,
+    getScopedFilters: () => tableData.facets,
+    getAllFilters: () => filterData,
     getSearchedQuery: () => historyState.search,
     loadFilterItems: (sortKeys) => {
       // Used by filterGroupHook. This will load filer-data

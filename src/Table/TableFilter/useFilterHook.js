@@ -74,7 +74,6 @@ const useFilterProvider = (filterKeys, tableHook, parseRequestOutput, parseDispl
       return item.value;
     },
     setSelectedItems: (state) => setSelectedItems(state),
-    getFilterListItems: () => tableHook.filterData,
     updateFilterItemState: (filterKey, filterValueTarget, state) => {
       if (Object.prototype.hasOwnProperty.call(selectedItems, filterKey)) {
         const stateList = selectedItems[filterKey];
@@ -95,12 +94,14 @@ const useFilterProvider = (filterKeys, tableHook, parseRequestOutput, parseDispl
       setSelectedItems({});
     },
     getFilterItemsByGroup: (groupKey) => {
-      if (Object.keys(tableHook.filterData).length
-      && Object.prototype.hasOwnProperty.call(tableHook.filterData, groupKey)) {
+      const allFilters = tableHook.getAllFilters();
+
+      if (Object.keys(allFilters).length
+      && Object.prototype.hasOwnProperty.call(allFilters, groupKey)) {
         const filterState = selectedItems[groupKey];
 
         if (filterState) {
-          return tableHook.filterData[groupKey]
+          return allFilters[groupKey]
             .reduce((acc, item) => {
               const stateItem = { ...item };
               const hasState = filterState.find((selected) => selected.value === item.value);
