@@ -30,11 +30,13 @@ const propTypes = {
   rowData: PropTypes.instanceOf(Array),
   withFilter: PropTypes.instanceOf(Array),
   withSort: PropTypes.instanceOf(Array),
+  withControlls: PropTypes.bool,
   parseFilterRequestOutput: PropTypes.func,
   parseFilterLabelOutput: PropTypes.func,
 };
 
 const defaultProps = {
+  withControlls: true,
   withSearch: false,
   withPagination: false,
   withFilter: [],
@@ -60,23 +62,25 @@ const Table = (props) => {
     withFilter,
     withPagination,
     withSort,
+    withControlls,
     parseFilterRequestOutput: parseRequest,
     parseFilterLabelOutput: parseLabel,
     ...rest
   } = props;
 
-  const { tableHook, withSearch } = props;
+  const { tableHook } = props;
 
   return (
     <Wrapper>
-      <Controlls
-        tableHook={tableHook}
-        withSearch={withSearch}
-        withSort={withSort}
-        withFilter={withFilter}
-        parseFilterRequestOutput={parseRequest}
-        parseFilterLabelOutput={parseLabel}
-      />
+      {withControlls && (
+        <Controlls
+          tableHook={tableHook}
+          withSort={withSort}
+          withFilter={withFilter}
+          parseFilterRequestOutput={parseRequest}
+          parseFilterLabelOutput={parseLabel}
+        />
+      )}
       <BaseTable
         emptystate={getEmptystate(tableHook, props)}
         isLoading={tableHook.isLoading}

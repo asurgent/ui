@@ -10,7 +10,7 @@ export const Header = styled(C.Cell)`
     grid-column: unset;
     flex-direction: row;
     border-color: ${({ theme }) => theme.gray300};
-    cursor: ${({ sortKey }) => (sortKey ? 'pointer' : 'default')};
+    min-height: unset;
 `;
 
 export const HeaderLabel = styled(C.TableCellContent)`
