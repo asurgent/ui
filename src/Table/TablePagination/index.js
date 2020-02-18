@@ -4,24 +4,20 @@ import TablePagination from './TablePagination';
 import usePaginationHook from './usePaginationHook';
 
 const propTypes = {
-  tableHook: PropTypes.instanceOf(Object),
+  tableHook: PropTypes.instanceOf(Object).isRequired,
 };
 
-const defaultProps = {
-  tableHook: null,
-};
+const defaultProps = {};
 
 const TablePaginationProxy = (props) => {
   const { tableHook } = props;
   const paginationHook = usePaginationHook(tableHook, props);
 
-  if (!tableHook) {
-    return <TablePagination {...props} paginationHook={paginationHook} />;
+  if (tableHook && tableHook.isReady) {
+    return <TablePagination tableHook={tableHook} paginationHook={paginationHook} {...props} />;
   }
 
-  return (
-    <TablePagination tableHook={tableHook} paginationHook={paginationHook} {...props} />
-  );
+  return null;
 };
 
 TablePaginationProxy.propTypes = propTypes;

@@ -6,7 +6,8 @@ const parseQuery = (query) => {
   }
   const sanatize = query
     .replace(/\*/g, '') // Remove all *
-    .replace(/\+/g, ''); // Remove all +
+    .replace(/\+/g, '') // Remove all +
+    .replace(/-/g, '+'); // Replace all - with +
 
 
   const joined = (sanatize).split(' ').join('*+');
@@ -22,23 +23,24 @@ const useSearchbarHook = (tableHook) => {
 
   // Initial setter. This will trigger Poppulate effect as well.
   useEffect(() => {
-    const state = tableHook.getHistoryState();
-    // Set internal state from URL if found
-    if (state && Object.keys(state).length) {
-      const { text } = state;
-      if (text !== undefined) {
-        setQuery(text);
+    if (tableHook.isReady) {
+      const state = tableHook.getHistoryState();
+      // Set internal state from URL if found
+      if (state && Object.keys(state).length) {
+        const { text } = state;
+        if (text !== undefined) {
+          setQuery(text);
+        }
       }
+
+
+      setIsReady(true);
     }
-
-
-    setIsReady(true);
-  }, []);
+  }, [tableHook.isReady]);
 
   // Poppulate tabelHook with state for requests and URL
   useEffect(() => {
     if (isReady) {
-
       const request = { search_string: `${parseQuery(query)}` };
       const history = { search: `${query}` };
 

@@ -14,15 +14,17 @@ const usePaginationHook = (tableHook, props) => {
 
   // Initial setter. This will trigger Poppulate effect as well.
   useEffect(() => {
-    const state = tableHook.getHistoryState();
-    const { page } = state;
+    if (tableHook.isReady) {
+      const state = tableHook.getHistoryState();
+      const { page } = state;
 
-    if (page !== undefined) {
-      setCurrentPage(parseInt(page, 10));
+      if (page !== undefined) {
+        setCurrentPage(parseInt(page, 10));
+      }
+
+      setIsReady(true);
     }
-
-    setIsReady(true);
-  }, []);
+  }, [tableHook.isReady]);
 
   // Poppulate tabelHook with state for requests and URL
   useEffect(() => {

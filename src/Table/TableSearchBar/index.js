@@ -13,7 +13,7 @@ const defaultProps = {};
 const TableSearchBarProxy = ({ tableHook, ...props }) => {
   const searchHook = useSearchbarHook(tableHook);
 
-  if (tableHook) {
+  if (tableHook && tableHook.isReady) {
     return <TableSearchBar {...props} searchHook={searchHook} tableHook={tableHook} />;
   }
 

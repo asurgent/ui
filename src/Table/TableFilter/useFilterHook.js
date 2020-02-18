@@ -20,16 +20,18 @@ const useFilterProvider = (filterKeys, tableHook, parseRequestOutput, parseDispl
 
   // Initial setter. This will trigger Poppulate effect as well.
   useEffect(() => {
-    const state = tableHook.getHistoryState();
-    // Set internal state from URL if found
-    if (state && Object.keys(state).length) {
-      const { filter } = state;
-      const filterObject = buildFilterObjectFromStateString(filter);
+    if (tableHook.isReady) {
+      const state = tableHook.getHistoryState();
+      // Set internal state from URL if found
+      if (state && Object.keys(state).length) {
+        const { filter } = state;
+        const filterObject = buildFilterObjectFromStateString(filter);
 
-      setSelectedItems(filterObject);
+        setSelectedItems(filterObject);
+      }
+      setIsReady(true);
     }
-    setIsReady(true);
-  }, []);
+  }, [tableHook.isReady]);
 
 
   // Poppulate tabelHook with state for requests and URL

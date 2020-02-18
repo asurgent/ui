@@ -26,7 +26,7 @@ const TableFilterProxy = ({
   const parseRequest = parseFilterRequestOutput;
   const filterHook = useFilterHook(filterKeys, tableHook, parseRequest, parseLabel);
 
-  if (tableHook) {
+  if (tableHook && tableHook.isReady) {
     return (
       <TableFilter filterHook={filterHook} tableHook={tableHook} {...props} />
     );
