@@ -41,7 +41,6 @@ const useTableHook = () => {
   const [thirdPartyTrigger, setThirdPartyTrigger] = useState({});
 
   const [router, setRouter] = useState({});
-  const [pageSize, setPageSize] = useState(10);
   const [tableData, setTableData] = useState(tableDefaults);
   const [filterData, setFilterData] = useState([]);
   const [requestFailed, setRequestFailed] = useState('');
@@ -59,7 +58,6 @@ const useTableHook = () => {
       const payload = {
         ...defaultPayload,
         ...rowRequestState,
-        page_size: pageSize,
         facets: [...filterRequestState].map(({ facetKey }) => `${facetKey}, count:0`),
       };
       callback(payload, onSuccess, onFail);
@@ -101,25 +99,58 @@ const useTableHook = () => {
       history.replace({ ...location, search: buildSearchQuery() });
     }
   }, [historyState]);
-
-  // Third party-hooks will have their effects run first.
-  // So after everyone has executed their desired actions we empyt the state
-  // So old instructuons wont execute again.
+  /*
+    Third party-hooks will have their effects run first.
+    So after everyone has executed their desired actions we empyt the state
+    So old instructuons wont execute again.
+  */
   useEffect(() => {
     if (isReady && Object.keys(thirdPartyTrigger).length > 0) {
       setThirdPartyTrigger({});
     }
   }, [thirdPartyTrigger]);
 
+  /*
+    Workaround in order not to acceidentally overwrite a state-change from a
+    previous update during the same render-cycle.
+
+    rowRequestState & historyState holds the state render after a render-cycles.
+    So, if two updates are triggered during the same render cycle we will write to,
+    initializationRequestState & initializationHistoryState.
+    They will later assign their values to rowRequestState & historyState
+  */
+  const updateAction = (request, history, trigger) => {
+    if (request) {
+      const updateRequest = Object.assign(initializationRequestState, rowRequestState, request);
+      setRowRequestState(updateRequest);
+    }
+    if (history) {
+      const updateHistory = Object.assign(initializationHistoryState, historyState, history);
+      setHistoryState(updateHistory);
+    }
+    if (trigger) {
+      const updateTrigger = Object.assign(initializationThirdPartyTrigger, thirdPartyTrigger, trigger);
+      setThirdPartyTrigger(updateTrigger);
+    }
+  };
+
   return {
     isLoading,
     isReady,
     tableData,
     filterData,
-    setPageSize,
     updateTableItems,
     updateFilterItems,
     thirdPartyTrigger,
+    setPageSize: (pageSize) => {
+      updateAction({ page_size: pageSize });
+    },
+    setFilter: (filter) => {
+      updateAction({ filter });
+    },
+    setOrderBy: (sort) => {
+      updateAction({ order_by: sort });
+    },
     hasTriggers: () => Object.keys(thirdPartyTrigger).length > 0,
     getRequestedPageCount: () => tableData.total_pages,
     getRequestedPageNumber: () => tableData.page,
@@ -190,29 +221,7 @@ const useTableHook = () => {
 
       setFilterCallback({ callback, onSuccess, onFail });
     },
-    update: (request, history, trigger) => {
-      /*
-        Workaround in order not to acceidentally overwrite a state-change from a
-        previous update during the same render-cycle.
-
-        rowRequestState & historyState holds the state render after a render-cycles.
-        So, if two updates are triggered during the same render cycle we will write to,
-        initializationRequestState & initializationHistoryState.
-        They will later assign their values to rowRequestState & historyState
-      */
-      if (request) {
-        const updateRequest = Object.assign(initializationRequestState, rowRequestState, request);
-        setRowRequestState(updateRequest);
-      }
-      if (history) {
-        const updateHistory = Object.assign(initializationHistoryState, historyState, history);
-        setHistoryState(updateHistory);
-      }
-      if (trigger) {
-        const updateTrigger = Object.assign(initializationThirdPartyTrigger, thirdPartyTrigger, trigger);
-        setThirdPartyTrigger(updateTrigger);
-      }
-    },
+    update: updateAction,
   };
 };
 
