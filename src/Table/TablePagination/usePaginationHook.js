@@ -7,6 +7,7 @@ const usePaginationHook = (tableHook, props) => {
   // Keeps track of when component has been mounted.
   // After its been mounted and set to true, the initail state is set
   const [isReady, setIsReady] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [paginationList, setPaginationList] = useState([]);
@@ -26,9 +27,38 @@ const usePaginationHook = (tableHook, props) => {
     }
   }, [tableHook.isReady]);
 
+  // Listening to change triggers from other hooks
+  // If this happens, we set the interal state to isResetting
+  // And ONLY perform a tableHook.update from this effect,
+  // and not in the "poppulate" effect bellow
+  useEffect(() => {
+    if (tableHook.isReady && tableHook.hasTriggers()) {
+      const { page } = tableHook.thirdPartyTrigger;
+      if (page !== undefined) {
+        const request = { page: 1 };
+        const history = { page: `page:${1}` };
+
+        tableHook.update(request, history);
+        setCurrentPage(parseInt(page, 10));
+        setIsResetting(true);
+      }
+    }
+  }, [tableHook.hasTriggers()]);
+
+
+  // After this render-cycle, reset the reset-state so
+  // hook will trigger updates on user-actions again
+  useEffect(() => {
+    if (isResetting) {
+      setIsResetting(false);
+    }
+  }, [isResetting]);
+
   // Poppulate tabelHook with state for requests and URL
   useEffect(() => {
-    if (isReady) {
+    // Check if we are in a reset-cycle initated by tableHook.hasTriggers()
+    // In that case DONT trigger another tableHook.update since it will use the old page value
+    if (isReady && isResetting === false) {
       const request = { page: currentPage };
       const history = { page: `page:${currentPage}` };
 
@@ -38,8 +68,8 @@ const usePaginationHook = (tableHook, props) => {
 
   // Update totalPageCount if request-response changes
   useEffect(() => {
-    setTotalPageCount(tableHook.tableData.total_pages);
-  }, [tableHook.getTablePageCount()]);
+    setTotalPageCount(tableHook.getRequestedPageCount());
+  }, [tableHook.getRequestedPageCount()]);
 
   // Rebuild pagination list when user paginates or a new totalPageCount
   useEffect(() => {
@@ -66,6 +96,7 @@ const usePaginationHook = (tableHook, props) => {
     onPaginate: () => tableHook.update({ page: currentPage }),
     getActivePage: () => currentPage,
     getPaginationList: () => paginationList,
+    hasPagination: () => paginationList.length > 1,
     nextPage: () => {
       const page = currentPage + 1;
       paginate(page);

@@ -25,16 +25,20 @@ const useTableHook = () => {
   // filterRequestState would overwrite previous value if no render is executed inbetween
   const initializationRequestState = {};
   const initializationHistoryState = {};
+  const initializationThirdPartyTrigger = {};
 
   const [isReady, setIsReady] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const [updateFilterItems, setFilterCallback] = useState(null);
-  const [updateTableItems, setRowCallback] = useState(null);
+  const [updateTableItems, setRowCallback] = useState({});
 
   const [historyState, setHistoryState] = useState({});
   const [rowRequestState, setRowRequestState] = useState({});
   const [filterRequestState, setFilterRequestState] = useState([]);
+
+  // Independent state that enables a hook to message another hook to change its state
+  const [thirdPartyTrigger, setThirdPartyTrigger] = useState({});
 
   const [router, setRouter] = useState({});
   const [pageSize, setPageSize] = useState(10);
@@ -47,21 +51,20 @@ const useTableHook = () => {
   // Is triggered whenever the state is changed by a state-changing hook as pagination, filter etc.
   useEffect(() => {
     setIsLoading(true);
-
-    if (isReady && rowRequestState && Object.keys(rowRequestState).length > 0) {
-      if (updateTableItems && Object.keys(updateTableItems).length > 0) {
-        const { callback, onSuccess, onFail } = updateTableItems;
-
-        const payload = {
-          ...defaultPayload,
-          ...rowRequestState,
-          page_size: pageSize,
-          facets: [...filterRequestState].map(({ facetKey }) => `${facetKey}, count:0`),
-        };
-        callback(payload, onSuccess, onFail);
-      }
+    if (isReady && rowRequestState
+      && Object.keys(updateTableItems).length > 0
+      && Object.keys(rowRequestState).length > 0
+      && Object.keys(thirdPartyTrigger).length === 0) {
+      const { callback, onSuccess, onFail } = updateTableItems;
+      const payload = {
+        ...defaultPayload,
+        ...rowRequestState,
+        page_size: pageSize,
+        facets: [...filterRequestState].map(({ facetKey }) => `${facetKey}, count:0`),
+      };
+      callback(payload, onSuccess, onFail);
     }
-  }, [isReady, rowRequestState]);
+  }, [isReady, rowRequestState, thirdPartyTrigger]);
 
   // Is triggered when filter is opened for the first time
   useEffect(() => {
@@ -99,15 +102,27 @@ const useTableHook = () => {
     }
   }, [historyState]);
 
+  // Third party-hooks will have their effects run first.
+  // So after everyone has executed their desired actions we empyt the state
+  // So old instructuons wont execute again.
+  useEffect(() => {
+    if (isReady && Object.keys(thirdPartyTrigger).length > 0) {
+      setThirdPartyTrigger({});
+    }
+  }, [thirdPartyTrigger]);
+
   return {
     isLoading,
     isReady,
     tableData,
     filterData,
-    updateFilterItems,
-    updateTableItems,
     setPageSize,
-    getTablePageCount: () => tableData.total_pages,
+    updateTableItems,
+    updateFilterItems,
+    thirdPartyTrigger,
+    hasTriggers: () => Object.keys(thirdPartyTrigger).length > 0,
+    getRequestedPageCount: () => tableData.total_pages,
+    getRequestedPageNumber: () => tableData.page,
     getTablePage: () => tableData.page,
     getTableRowData: () => tableData.result,
     getSearchedFacets: () => tableData.facets,
@@ -175,7 +190,7 @@ const useTableHook = () => {
 
       setFilterCallback({ callback, onSuccess, onFail });
     },
-    update: (request, history) => {
+    update: (request, history, trigger) => {
       /*
         Workaround in order not to acceidentally overwrite a state-change from a
         previous update during the same render-cycle.
@@ -192,6 +207,10 @@ const useTableHook = () => {
       if (history) {
         const updateHistory = Object.assign(initializationHistoryState, historyState, history);
         setHistoryState(updateHistory);
+      }
+      if (trigger) {
+        const updateTrigger = Object.assign(initializationThirdPartyTrigger, thirdPartyTrigger, trigger);
+        setThirdPartyTrigger(updateTrigger);
       }
     },
   };

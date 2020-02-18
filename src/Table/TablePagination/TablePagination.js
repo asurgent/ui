@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import * as Icons from '@material-ui/icons';
 import * as Button from '../../Button';
@@ -12,34 +12,38 @@ const propTypes = {
 const defaultProps = {};
 
 const TablePagination = ({
-  tableHook, paginationHook,
+  tableHook,
+  paginationHook,
 }) => (
+  paginationHook.hasPagination() && (
     <C.Pagination isLoading={tableHook.isLoading}>
       <Button.Icon
-        onClick={() => paginationHook.nextPage()}
+        onClick={paginationHook.previousPage}
         icon={<Icons.NavigateBefore fontSize="large" />}
       />
 
       {
-        paginationHook.getPaginationList()
-          .map(({ value, clickable }, index) => (
-            <C.Page
-              key={`${value}-${index}`}
-              isClickable={clickable}
-              activePage={paginationHook.getActivePage() === value}
-              onClick={() => clickable && paginationHook.setPage(value)}
-            >
-              {value}
-            </C.Page>
-          ))
-      }
+          paginationHook.getPaginationList()
+            .map(({ value, clickable }, index) => (
+              <C.Page
+                key={`${value}-${index}`}
+                isClickable={clickable}
+                activePage={paginationHook.getActivePage() === value}
+                onClick={() => clickable && paginationHook.setPage(value)}
+              >
+                {value}
+              </C.Page>
+            ))
+        }
 
       <Button.Icon
-        onClick={() => paginationHook.previousPage()}
+        onClick={paginationHook.nextPage}
         icon={<Icons.NavigateNext fontSize="large" />}
       />
+
     </C.Pagination>
-  );
+  )
+);
 
 TablePagination.propTypes = propTypes;
 TablePagination.defaultProps = defaultProps;

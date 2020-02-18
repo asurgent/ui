@@ -9,7 +9,6 @@ const parseQuery = (query) => {
     .replace(/\+/g, '') // Remove all +
     .replace(/-/g, '+'); // Replace all - with +
 
-
   const joined = (sanatize).split(' ').join('*+');
 
   return `${joined}*`;
@@ -19,6 +18,7 @@ const useSearchbarHook = (tableHook) => {
   // Keeps track of when component has been mounted.
   // After its been mounted and set to true, the initail state is set
   const [isReady, setIsReady] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
   const [query, setQuery] = useState('');
 
   // Initial setter. This will trigger Poppulate effect as well.
@@ -33,18 +33,36 @@ const useSearchbarHook = (tableHook) => {
         }
       }
 
-
       setIsReady(true);
     }
   }, [tableHook.isReady]);
+
+  useEffect(() => {
+    if (tableHook.isReady && tableHook.hasTriggers()) {
+      // Execute change component has been target from another hook
+      const { search } = tableHook.thirdPartyTrigger;
+      if (search !== undefined) {
+        setQuery(search);
+      }
+    }
+  }, [tableHook.hasTriggers()]);
 
   // Poppulate tabelHook with state for requests and URL
   useEffect(() => {
     if (isReady) {
       const request = { search_string: `${parseQuery(query)}` };
       const history = { search: `${query}` };
+      const trigger = { page: 1 };
 
-      tableHook.update(request, history);
+      // Check if this is the first render-cycle
+      // Then we want to set page to 1.
+      if (isDirty) {
+        tableHook.update(request, history, trigger);
+      } else {
+        // Otherwise it's controlled by the URL or component
+        tableHook.update(request, history);
+        setIsDirty(true);
+      }
     }
   }, [query, isReady]);
 

@@ -12,7 +12,7 @@ const useFilterProvider = (filterKeys, tableHook, parseRequestOutput, parseDispl
   // Keeps track of when component has been mounted.
   // After its been mounted and set to true, the initail state is set
   const [isReady, setIsReady] = useState(false);
-
+  const [isDirty, setIsDirty] = useState(false);
 
   const [filterGroups] = useState(filterKeys);
   const [selectedItems, setSelectedItems] = useState({});
@@ -39,10 +39,20 @@ const useFilterProvider = (filterKeys, tableHook, parseRequestOutput, parseDispl
     if (isReady) {
       const filter = buildFilterQuery(selectedItems, parseRequestOutput);
       const stateString = buildFilterStateString(selectedItems);
+
       const request = { filter };
       const history = { filter: stateString ? `filter:${stateString}` : '' };
+      const trigger = { page: 1 };
 
-      tableHook.update(request, history);
+      // Check if this is the first render-cycle
+      // Then we want to set page to 1.
+      if (isDirty) {
+        tableHook.update(request, history, trigger);
+      } else {
+        // Otherwise it's controlled by the URL or component
+        tableHook.update(request, history);
+        setIsDirty(true);
+      }
     }
   }, [isReady, selectedItems]);
 

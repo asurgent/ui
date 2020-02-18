@@ -4,11 +4,11 @@ import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
 import { Primary as Form, useFormBuilder } from '../../Form';
 import * as Button from '../../Button';
 import { SortWrapper } from './TableSort.styled';
-import useSortHook from './useSortHook';
+
 
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
-  sortKeys: PropTypes.instanceOf(Array).isRequired,
+  sortHook: PropTypes.instanceOf(Object).isRequired,
   className: PropTypes.string,
 };
 
@@ -17,9 +17,7 @@ const defaultProps = {
 };
 
 const TableSort = (props) => {
-  const { tableHook, sortKeys, className } = props;
-
-  const sortHook = useSortHook(sortKeys, tableHook);
+  const { tableHook, sortHook, className } = props;
   const formData = useFormBuilder({
     sortKey: {
       type: 'select', options: sortHook.getOptions(), noLabel: true,
