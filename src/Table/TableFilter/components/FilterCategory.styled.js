@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 
-export const FilterWrapper = styled.div`
-`;
+export const FilterWrapper = styled.div``;
 
-export const List = styled.div`
-    flex: 1;
+export const ListWrapper = styled.div`
+    flex:1;
+    display: flex;
+    position: relative;
+    overflow:hidden;
+    height: 20rem;
 
-      &:after {
+    &:after {
         display:  ${({ disabled }) => (disabled ? 'block' : 'none')};
         content: " ";
         background: ${({ theme }) => theme.rgba(theme.white, 0.8)};
@@ -41,7 +44,7 @@ export const Center = styled.div`
 export const DesktopDropdown = styled.div`
     position: absolute;
     width: auto;
-    min-width: 32rem;
+    min-width: 40rem;
     height: auto;
     max-height: 32rem;
     left: 0;
@@ -50,7 +53,7 @@ export const DesktopDropdown = styled.div`
     border: 1px solid ${({ theme }) => theme.gray200};
     box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
     display: flex;
-    flex-direction: column;
+    flex-direction: column;  
 `;
 
 export const MobileDropdown = styled.div`

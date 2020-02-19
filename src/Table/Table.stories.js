@@ -305,7 +305,7 @@ export const filter = () => {
     });
     hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
       onSuccess({
-        guys: Array.from({ length: 1000 }, (_, i) => ({
+        guys: Array.from({ length: 100 }, (_, i) => ({
           value: `Item ${i}`,
         })),
         pankaka: [

@@ -19,7 +19,7 @@ export const Exclude = styled(Base)`
 export const FilterItem = styled.div`
     display: flex;
     flex-direction: row;
-    border-bottom: 1px solid ${({ theme }) => theme.gray200};   
+    border-bottom: 1px solid ${({ theme }) => theme.gray200};       
 
     .filter-label {
         flex: 1;
@@ -31,6 +31,11 @@ export const FilterItem = styled.div`
         justify-content: flex-start;
         align-items: center;
         padding: 1.6rem;
+
+        max-width: 29.5rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
     &:hover {

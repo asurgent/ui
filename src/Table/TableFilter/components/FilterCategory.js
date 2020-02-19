@@ -76,23 +76,25 @@ const FilterCategory = withTheme((props) => {
                 </C.Center>
               )
             }
-            {
-              groupHook.getOptions().length > 0 && (
-                <VirtualRender.List rowHeight={48} items={groupHook.getOptions()} style={{ flex: 1 }}>
-                  {(filter, key) => (
-                    <FilterItem
-                      key={key}
-                      onClick={(state) => {
-                        filterHook.updateFilterItemState(filterKey, filter.value, state);
-                      }}
-                      included={filter.included}
-                      excluded={filter.excluded}
-                      value={filterHook.getLabel(filter, filterKey)}
-                    />
-                  )}
-                </VirtualRender.List>
-              )
-            }
+            <C.ListWrapper>
+              {
+                groupHook.getOptions().length > 0 && (
+                  <VirtualRender.List rowHeight={48} items={groupHook.getOptions()} style={{ flex: 1 }}>
+                    {(filter, key) => (
+                      <FilterItem
+                        key={key}
+                        onClick={(state) => {
+                          filterHook.updateFilterItemState(filterKey, filter.value, state);
+                        }}
+                        included={filter.included}
+                        excluded={filter.excluded}
+                        value={filterHook.getLabel(filter, filterKey)}
+                      />
+                    )}
+                  </VirtualRender.List>
+                )
+              }
+            </C.ListWrapper>
           </>
         )
       }
