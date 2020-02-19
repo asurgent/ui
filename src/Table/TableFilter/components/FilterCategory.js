@@ -4,6 +4,7 @@ import { RingSpinner } from 'react-spinners-kit';
 import { withTheme } from 'styled-components';
 import * as Icon from '@material-ui/icons';
 import * as Form from '../../../Form';
+import * as VirtualRender from '../../../VirtualRender';
 import * as Button from '../../../Button';
 import * as Shield from '../../../Shield';
 import * as C from './FilterCategory.styled';
@@ -62,7 +63,8 @@ const FilterCategory = withTheme((props) => {
             <C.Search>
               <Form.Primary
                 form={form}
-                onChange={groupHook.onSearchOptions}
+                msTimer={200}
+                onKeyUpTimer={groupHook.onSearchOptions}
               >
                 {({ search }) => (search)}
               </Form.Primary>
@@ -74,21 +76,23 @@ const FilterCategory = withTheme((props) => {
                 </C.Center>
               )
             }
-            <C.List disabled={tableHook.isLoading}>
-              {
-                groupHook.getOptions().map((filter) => (
-                  <FilterItem
-                    key={filter.value}
-                    onClick={(state) => {
-                      filterHook.updateFilterItemState(filterKey, filter.value, state);
-                    }}
-                    included={filter.included}
-                    excluded={filter.excluded}
-                    value={filterHook.getLabel(filter, filterKey)}
-                  />
-                ))
-              }
-            </C.List>
+            {
+              groupHook.getOptions().length > 0 && (
+                <VirtualRender.List rowHeight={48} items={groupHook.getOptions()} style={{ flex: 1 }}>
+                  {(filter, key) => (
+                    <FilterItem
+                      key={key}
+                      onClick={(state) => {
+                        filterHook.updateFilterItemState(filterKey, filter.value, state);
+                      }}
+                      included={filter.included}
+                      excluded={filter.excluded}
+                      value={filterHook.getLabel(filter, filterKey)}
+                    />
+                  )}
+                </VirtualRender.List>
+              )
+            }
           </>
         )
       }

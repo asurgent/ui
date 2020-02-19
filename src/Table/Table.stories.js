@@ -305,12 +305,9 @@ export const filter = () => {
     });
     hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
       onSuccess({
-        guys: [
-          { value: 'Mike(1133)' },
-          { value: 'Keen(123)' },
-          { value: 'Ellinor(4465)' },
-          { value: 'Anton(984)' },
-        ],
+        guys: Array.from({ length: 1000 }, (_, i) => ({
+          value: `Item ${i}`,
+        })),
         pankaka: [
           { value: 'HeHe' },
           { value: '123' },
@@ -364,12 +361,7 @@ export const controlls = () => {
 
     hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
       onSuccess({
-        gurka: [
-          { value: '1133' },
-          { value: '123' },
-          { value: '4465' },
-          { value: '984' },
-        ],
+        gurka: Array.from({ length: 20 }, (_, i) => ({ value: i })),
         pankaka: [
           { value: '1133' },
           { value: '123' },

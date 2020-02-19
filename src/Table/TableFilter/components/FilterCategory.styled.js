@@ -5,10 +5,8 @@ export const FilterWrapper = styled.div`
 
 export const List = styled.div`
     flex: 1;
-    overflow-y: scroll;   
-    position: relative;
 
-    &:after {
+      &:after {
         display:  ${({ disabled }) => (disabled ? 'block' : 'none')};
         content: " ";
         background: ${({ theme }) => theme.rgba(theme.white, 0.8)};
@@ -65,18 +63,21 @@ export const MobileDropdown = styled.div`
     border: 1px solid ${({ theme }) => theme.gray200};
     display: flex;
     flex-direction: column;
+    
 
     .close {
         position: absolute;
-        right: 2.4rem;
-        top: 2.4rem;
+        right: 1.6rem;
+        top: 1.6rem;
     }
 `;
 
 
 export const MobileContent = styled.div`
-    margin-top: 1.6rem;
-    /* padding: 2.4rem; */
+    max-height: 100vh;
+    padding-top: 2.4rem;
+    display: flex;
+    flex-direction: column;
 `;
 
 export const Mobile = styled.div`

@@ -5,8 +5,24 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
   // After its been mounted and set to true, the initail state is set
   const [isReady, setIsReady] = useState(false);
 
+  const [search, setSearch] = useState('');
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
+
+  const filterItemsBySearch = () => {
+    const items = filterHook.getFilterItemsByGroup(filterGroupKey);
+    if (search) {
+      const filterd = items
+        .filter(({ value }) => value
+          .toString()
+          .toLowerCase()
+          .match(search.toString().toLowerCase()));
+
+      setOptions(filterd);
+    } else {
+      setOptions(items);
+    }
+  };
 
   // Initial setter. This will trigger a fetch if no filter-items have been loaded
   useEffect(() => {
@@ -15,10 +31,17 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
       setIsReady(true);
     }
     if (open) {
-      const items = filterHook.getFilterItemsByGroup(filterGroupKey);
-      setOptions(items);
+      filterItemsBySearch();
+    } else {
+      setSearch('');
     }
   }, [open]);
+
+  useEffect(() => {
+    if (open) {
+      filterItemsBySearch();
+    }
+  }, [search]);
 
 
   // @ToDo: This could possibly be refactored and the
@@ -26,30 +49,17 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
   // Update internal state whenever selectedItems are changes in order to
   // render the correct state in the UI.
   useEffect(() => {
-    const items = filterHook.getFilterItemsByGroup(filterGroupKey);
-    setOptions(items);
+    filterItemsBySearch();
   }, [tableHook.getAllFilters(), filterHook.selectedItems]);
 
   return {
     isReady,
     setOpen: (state) => setOpen(state),
     isOpen: () => open,
-    hasOptions: () => options.length > 0,
+    hasOptions: () => filterHook.getFilterItemsByGroup(filterGroupKey).length > 0,
     getOptions: () => options,
     onSearchOptions: ({ search }) => {
-      const items = filterHook.getFilterItemsByGroup(filterGroupKey);
-
-      if (search) {
-        const filterd = items
-          .filter(({ value }) => value
-            .toString()
-            .toLowerCase()
-            .match(search.toString().toLowerCase()));
-
-        setOptions(filterd);
-      } else {
-        setOptions(items);
-      }
+      setSearch(search);
     },
   };
 };

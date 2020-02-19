@@ -27,21 +27,21 @@ const FilterItem = ({
   excluded,
   onClick,
 }) => (
-    <C.FilterItem>
-      <C.Active>
-        {included && <Icons.Check />}
-        {excluded && <Icons.Block />}
-      </C.Active>
-      <Button.Plain className="filter-label" onClick={() => onClick(included ? REMOVE : INCLUDE)}>
-        {value}
-      </Button.Plain>
+  <C.FilterItem>
+    <C.Active>
+      {included && <Icons.Check />}
+      {excluded && <Icons.Block />}
+    </C.Active>
+    <Button.Plain className="filter-label" onClick={() => onClick(included ? REMOVE : INCLUDE)}>
+      {value}
+    </Button.Plain>
+    <C.Exclude>
       <Button.Plain tooltip="exclude" onClick={() => onClick(excluded ? REMOVE : EXCLUDE)}>
-        <C.Exclude>
-          <Icons.RemoveCircleOutline />
-        </C.Exclude>
+        <Icons.RemoveCircleOutline />
       </Button.Plain>
-    </C.FilterItem>
-  );
+    </C.Exclude>
+  </C.FilterItem>
+);
 
 FilterItem.propTypes = propTypes;
 FilterItem.defaultProps = defaultProps;
