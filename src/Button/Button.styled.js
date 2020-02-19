@@ -125,6 +125,15 @@ export const Link = styled.div`
     padding: 0;
     color: ${({ theme }) => theme.black};
     text-decoration: underline;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 `;
 
 export const Icon = styled.div`

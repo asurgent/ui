@@ -36,7 +36,7 @@ export const plainButton = () => (
 );
 
 export const linkButton = () => (
-  <Button.Link>{content}</Button.Link>
+  <Button.Link iconLeft={<Icon.ConfirmationNumber fontSize="medium" />}>{content}</Button.Link>
 );
 
 export const transparentButton = () => (
