@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { FormStyle, FormRow } from './Form.styled';
 import { withDelayTimer } from './helpers';
 
-const timer = (callback) => () => withDelayTimer((values, dirty, dirtyItems) => {
+const timer = (callback, msTimer) => () => withDelayTimer((values, dirty, dirtyItems) => {
   callback(values, dirty, dirtyItems);
-}, 950);
+}, msTimer);
 
 const propTyps = {
+  msTimer: PropTypes.number,
   form: PropTypes.instanceOf(Object).isRequired,
   children: PropTypes.oneOfType([
     PropTypes.func,
@@ -24,6 +25,7 @@ const propTyps = {
 };
 
 const defaultProps = {
+  msTimer: 950,
   children: null,
   className: '',
   onChange: () => {},
@@ -38,6 +40,7 @@ const Form = (props) => {
   const {
     form,
     children,
+    msTimer,
     onSubmit,
     onFocusChange,
     onChange,
@@ -47,8 +50,8 @@ const Form = (props) => {
     className,
   } = props;
 
-  const [keyPressTimer] = useState(timer(onKeyUpTimer));
-  const [changeTimer] = useState(timer(onChangeTimer));
+  const [keyPressTimer] = useState(timer(onKeyUpTimer, msTimer));
+  const [changeTimer] = useState(timer(onChangeTimer, msTimer));
 
   if (!form || typeof form !== 'object' || !form.inputFileds) {
     return null;

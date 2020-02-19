@@ -42,8 +42,9 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
       if (search) {
         const filterd = items
           .filter(({ value }) => value
+            .toString()
             .toLowerCase()
-            .match(search.toLowerCase()));
+            .match(search.toString().toLowerCase()));
 
         setOptions(filterd);
       } else {
