@@ -24,7 +24,7 @@ const defaultProps = {
   theme: {},
 };
 
-const FilterCategory = withTheme((props) => {
+const FilterCategory = (props) => {
   const {
     label,
     filterHook,
@@ -48,14 +48,14 @@ const FilterCategory = withTheme((props) => {
   const content = (form) => (
     <>
       {
-        !filterHook.isReady && (
+        tableHook.isFilterLoading && (
           <C.Center>
             <RingSpinner color={theme.blue400} size={24} />
           </C.Center>
         )
       }
       {
-        filterHook.isReady && (
+        !tableHook.isFilterLoading && filterHook.isReady && (
           <>
             <C.Header>
               {`Filter ${label}`}
@@ -63,7 +63,7 @@ const FilterCategory = withTheme((props) => {
             <C.Search>
               <Form.Primary
                 form={form}
-                msTimer={200}
+                msTimer={150}
                 onKeyUpTimer={groupHook.onSearchOptions}
               >
                 {({ search }) => (search)}
@@ -125,10 +125,10 @@ const FilterCategory = withTheme((props) => {
       </Shield.Transparent>
     </C.FilterWrapper>
   );
-});
+};
 
 FilterCategory.propTypes = propTypes;
 FilterCategory.defaultProps = defaultProps;
 FilterCategory.displayName = '@asurgent.ui.Table.TableFilter.FilterCategory';
 
-export default FilterCategory;
+export default withTheme(FilterCategory);

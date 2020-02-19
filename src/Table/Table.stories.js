@@ -304,17 +304,17 @@ export const filter = () => {
       onSuccess({ });
     });
     hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
-      onSuccess({
-        guys: Array.from({ length: 100 }, (_, i) => ({
-          value: `Item ${i}`,
-        })),
-        pankaka: [
-          { value: 'HeHe' },
-          { value: '123' },
-          { value: '4465' },
-          { value: '984' },
-        ],
-      });
+      // onSuccess({
+      //   guys: Array.from({ length: 100 }, (_, i) => ({
+      //     value: `Item ${i}`,
+      //   })),
+      //   pankaka: [
+      //     { value: 'HeHe' },
+      //     { value: '123' },
+      //     { value: '4465' },
+      //     { value: '984' },
+      //   ],
+      // });
     });
     hook.parentReady();
   }, []);

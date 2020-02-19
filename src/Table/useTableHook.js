@@ -29,6 +29,7 @@ const useTableHook = (payloadOverrides) => {
 
   const [isReady, setIsReady] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFilterLoading, setFilterLoading] = useState(true);
 
   const [updateFilterItems, setFilterCallback] = useState(null);
   const [updateTableItems, setRowCallback] = useState({});
@@ -67,6 +68,7 @@ const useTableHook = (payloadOverrides) => {
 
   // Is triggered when filter is opened for the first time
   useEffect(() => {
+    setFilterLoading(true);
     if (isReady && filterRequestState && filterRequestState.length > 0) {
       if (updateFilterItems && Object.keys(updateFilterItems).length > 0) {
         const { callback, onSuccess, onFail } = updateFilterItems;
@@ -136,8 +138,9 @@ const useTableHook = (payloadOverrides) => {
   };
 
   return {
-    isLoading,
     isReady,
+    isLoading,
+    isFilterLoading,
     tableData,
     filterData,
     updateTableItems,
@@ -202,11 +205,13 @@ const useTableHook = (payloadOverrides) => {
     registerFilterFetchCallback: (callback) => {
       // Callback success function that changes internal states
       const onSuccess = (response) => {
+        setFilterLoading(false);
         setFilterData(response);
         setRequestFailed('');
       };
       // Callback fail function that changes internal states
       const onFail = (error) => {
+        setFilterLoading(false);
         setFilterData([]);
         setRequestFailed(error);
       };
