@@ -304,17 +304,17 @@ export const filter = () => {
       onSuccess({ });
     });
     hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
-      // onSuccess({
-      //   guys: Array.from({ length: 100 }, (_, i) => ({
-      //     value: `Item ${i}`,
-      //   })),
-      //   pankaka: [
-      //     { value: 'HeHe' },
-      //     { value: '123' },
-      //     { value: '4465' },
-      //     { value: '984' },
-      //   ],
-      // });
+      onSuccess({
+        guys: Array.from({ length: 100 }, (_, i) => ({
+          value: `Item ${i}`,
+        })),
+        pankaka: [
+          { value: 'HeHe' },
+          { value: '123' },
+          { value: '4465' },
+          { value: '984' },
+        ],
+      });
     });
     hook.parentReady();
   }, []);
@@ -401,7 +401,7 @@ export const separate = () => {
 
   useEffect(() => {
     hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
-      console.log('fetch', payload);
+      console.log('fetch row', payload);
 
       onSuccess({
         result: [...rowDummyData],
@@ -425,6 +425,7 @@ export const separate = () => {
     });
 
     hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
+      console.log('fetch facet', payload);
       onSuccess({
         guys: [
           { value: 'Mike(1133)', count: 23 },

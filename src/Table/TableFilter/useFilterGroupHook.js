@@ -26,7 +26,7 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
 
   // Initial setter. This will trigger a fetch if no filter-items have been loaded
   useEffect(() => {
-    if (!isReady) {
+    if (!isReady && open) {
       tableHook.loadFilterItems(filterHook.filterGroups);
       setIsReady(true);
     }
