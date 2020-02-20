@@ -8,7 +8,7 @@ import {
   buildFilterObjectFromStateString,
 } from './helpers';
 
-const useFilterProvider = (filterKeys, tableHook, parseRequestOutput, parseDisplayLabel) => {
+const useFilterProvider = (filterKeys, tableHook, parser) => {
   // Keeps track of when component has been mounted.
   // After its been mounted and set to true, the initail state is set
   const [isReady, setIsReady] = useState(false);
@@ -37,12 +37,20 @@ const useFilterProvider = (filterKeys, tableHook, parseRequestOutput, parseDispl
   // Poppulate tabelHook with state for requests and URL
   useEffect(() => {
     if (isReady) {
-      const filter = buildFilterQuery(selectedItems, parseRequestOutput);
+      const filter = buildFilterQuery(selectedItems, parser.filterItem);
       const stateString = buildFilterStateString(selectedItems);
 
       const request = { filter };
       const history = { filter: stateString ? `filter:${stateString}` : '' };
       const trigger = { page: 1 };
+
+      if (parser.requestString && typeof parser.requestString === 'function') {
+        const requestString = parser.requestString(filter);
+
+        if (typeof requestString === 'string') {
+          Object.assign(request, { filter: requestString });
+        }
+      }
 
       // Check if this is the first render-cycle
       // Then we want to set page to 1.
@@ -63,8 +71,8 @@ const useFilterProvider = (filterKeys, tableHook, parseRequestOutput, parseDispl
     selectedItems,
     hasActiveFilter: () => Object.values(selectedItems).some((list) => list.length > 0),
     getLabel: (item, groupKey) => {
-      if (parseDisplayLabel && typeof parseDisplayLabel === 'function') {
-        const parsedLabel = parseDisplayLabel(item.value, groupKey);
+      if (parser.label && typeof parser.label === 'function') {
+        const parsedLabel = parser.label(item.value, groupKey);
 
         if (typeof parsedLabel === 'string') {
           return parsedLabel;

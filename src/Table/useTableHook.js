@@ -68,18 +68,21 @@ const useTableHook = (payloadOverrides) => {
 
   // Is triggered when filter is opened for the first time
   useEffect(() => {
-    setFilterLoading(true);
-    if (isReady && filterRequestState && filterRequestState.length > 0) {
-      if (updateFilterItems && Object.keys(updateFilterItems).length > 0) {
-        const { callback, onSuccess, onFail } = updateFilterItems;
-        const payload = {
-          ...defaultPayload,
-          page_size: 1,
-          facets: [...filterRequestState].map(({ facetKey }) => `${facetKey}, count:0`),
-        };
+    if (isReady
+      && updateFilterItems
+      && filterRequestState
+      && filterData.length === 0
+      && filterRequestState.length > 0
+      && Object.keys(updateFilterItems).length > 0) {
+      setFilterLoading(true);
+      const { callback, onSuccess, onFail } = updateFilterItems;
+      const payload = {
+        ...defaultPayload,
+        page_size: 1,
+        facets: [...filterRequestState].map(({ facetKey }) => `${facetKey}, count:0`),
+      };
 
-        callback(payload, onSuccess, onFail);
-      }
+      callback(payload, onSuccess, onFail);
     }
   }, [isReady, filterRequestState]);
 

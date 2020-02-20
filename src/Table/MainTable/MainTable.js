@@ -31,7 +31,8 @@ const propTypes = {
   withFilter: PropTypes.instanceOf(Array),
   withSort: PropTypes.instanceOf(Array),
   withControlls: PropTypes.bool,
-  parseFilterRequestOutput: PropTypes.func,
+  parseFilterRequestStringOutput: PropTypes.func,
+  parseFilterItemRequestOutput: PropTypes.func,
   parseFilterLabelOutput: PropTypes.func,
 };
 
@@ -47,7 +48,8 @@ const defaultProps = {
   activePage: 1,
   pages: 0,
   rowData: [],
-  parseFilterRequestOutput: null,
+  parseFilterRequestStringOutput: null,
+  parseFilterItemRequestOutput: null,
   parseFilterLabelOutput: null,
 };
 
@@ -63,7 +65,8 @@ const Table = (props) => {
     withPagination,
     withSort,
     withControlls,
-    parseFilterRequestOutput: parseRequest,
+    parseFilterRequestStringOutput: parseRequest,
+    parseFilterItemRequestOutput: parseRequestItem,
     parseFilterLabelOutput: parseLabel,
     ...rest
   } = props;
@@ -77,7 +80,8 @@ const Table = (props) => {
           tableHook={tableHook}
           withSort={withSort}
           withFilter={withFilter}
-          parseFilterRequestOutput={parseRequest}
+          parseFilterRequestStringOutput={parseRequest}
+          parseFilterItemRequestOutput={parseRequestItem}
           parseFilterLabelOutput={parseLabel}
         />
       )}

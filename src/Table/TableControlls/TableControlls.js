@@ -11,7 +11,8 @@ const propTypes = {
   withSort: PropTypes.instanceOf(Array),
   withSearch: PropTypes.bool,
   searchLabel: PropTypes.string,
-  parseFilterRequestOutput: PropTypes.func,
+  parseFilterRequestStringOutput: PropTypes.func,
+  parseFilterItemRequestOutput: PropTypes.func,
   parseFilterLabelOutput: PropTypes.func,
 };
 
@@ -20,7 +21,8 @@ const defaultProps = {
   withSearch: true,
   withFilter: [],
   searchLabel: 'Search',
-  parseFilterRequestOutput: null,
+  parseFilterRequestStringOutput: null,
+  parseFilterItemRequestOutput: null,
   parseFilterLabelOutput: null,
 };
 
@@ -30,18 +32,19 @@ const TableControlls = ({
   withSearch,
   withFilter,
   searchLabel,
-  parseFilterRequestOutput,
+  parseFilterRequestStringOutput,
+  parseFilterItemRequestOutput,
   parseFilterLabelOutput,
 }) => (
-    <C.Controllbar>
-      {withSearch && (
-        <TableSearchBar
-          className="search"
-          tableHook={tableHook}
-          searchLabel={searchLabel}
-        />
-      )}
-      {withSort && Array.isArray(withSort) && withSort.length > 0
+  <C.Controllbar>
+    {withSearch && (
+    <TableSearchBar
+      className="search"
+      tableHook={tableHook}
+      searchLabel={searchLabel}
+    />
+    )}
+    {withSort && Array.isArray(withSort) && withSort.length > 0
         && (
           <TableSort
             className="sort"
@@ -49,17 +52,18 @@ const TableControlls = ({
             sortKeys={withSort}
           />
         )}
-      {withFilter && Array.isArray(withFilter) && withFilter.length > 0 && (
-        <TableFilter
-          className="filter"
-          tableHook={tableHook}
-          filterKeys={withFilter}
-          parseFilterRequestOutput={parseFilterRequestOutput}
-          parseFilterLabelOutput={parseFilterLabelOutput}
-        />
-      )}
-    </C.Controllbar>
-  );
+    {withFilter && Array.isArray(withFilter) && withFilter.length > 0 && (
+    <TableFilter
+      className="filter"
+      tableHook={tableHook}
+      filterKeys={withFilter}
+      parseFilterRequestStringOutput={parseFilterRequestStringOutput}
+      parseFilterItemRequestOutput={parseFilterItemRequestOutput}
+      parseFilterLabelOutput={parseFilterLabelOutput}
+    />
+    )}
+  </C.Controllbar>
+);
 
 
 TableControlls.propTypes = propTypes;

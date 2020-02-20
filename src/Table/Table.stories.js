@@ -196,7 +196,7 @@ export const main = () => {
 
           return null;
         }}
-        parseFilterRequestOutput={(filter, filterKey) => {
+        parseFilterItemRequestOutput={(filter, filterKey) => {
           if (filterKey === 'guys') {
             const user = filter.match(/\((\d+)\)/);
 
@@ -205,9 +205,13 @@ export const main = () => {
               return newKey;
             }
           }
-
-          // return rest;
           return null;
+        }}
+        parseFilterRequestStringOutput={(filterString) => {
+          if (filterString) {
+            return `${filterString} and (entity_id eq '123')`;
+          }
+          return `(entity_id eq '123')`;
         }}
         withFilter={[
           { label: 'Guys', facetKey: 'guys', excludeable: true },
@@ -328,7 +332,7 @@ export const filter = () => {
           { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
         ]}
         parseFilterLabelOutput={(filters) => filters}
-        parseFilterRequestOutput={(filters) => filters}
+        parseFilterItemRequestOutput={(filters) => filters}
       />
     </StoryWrapper>
   );
