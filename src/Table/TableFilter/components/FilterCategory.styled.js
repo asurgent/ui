@@ -7,7 +7,6 @@ export const ListWrapper = styled.div`
     display: flex;
     position: relative;
     overflow:hidden;
-    height: 20rem;
 
     &:after {
         display:  ${({ disabled }) => (disabled ? 'block' : 'none')};
@@ -46,7 +45,7 @@ export const DesktopDropdown = styled.div`
     width: auto;
     min-width: 40rem;
     height: auto;
-    max-height: 32rem;
+    max-height: 50rem;
     left: 0;
     border-radius: 5px;
     background: ${({ theme }) => theme.white};

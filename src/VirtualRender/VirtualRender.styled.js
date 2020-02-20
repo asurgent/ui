@@ -2,8 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     width: auto;
-    /* min-width: 100%; */
-    height: 100%;
+    height: initial;
     overflow-y: scroll;
 `;
 
