@@ -80,11 +80,11 @@ export const buildFilterStateString = (selectedFilters) => {
   return '';
 };
 
-export const buildFilterQuery = (selectedFilters, parseRequestOutput) => {
+export const buildFilterQuery = (selectedFilters, parseRequestItemOutput, parseRequestKeyOutput) => {
   // Helper to run parser-function (if declared). Otherwise use standard keys & values
-  const runParser = (item, groupKey) => {
-    if (parseRequestOutput && typeof parseRequestOutput === 'function') {
-      const parsedLabel = parseRequestOutput(item.value, groupKey);
+  const parseRequestItem = (item, groupKey) => {
+    if (parseRequestItemOutput && typeof parseRequestItemOutput === 'function') {
+      const parsedLabel = parseRequestItemOutput(item.value, groupKey);
 
       if (typeof parsedLabel === 'string') {
         return parsedLabel;
@@ -94,15 +94,28 @@ export const buildFilterQuery = (selectedFilters, parseRequestOutput) => {
     return item.value;
   };
 
+  const parseRequestKey = (groupKey) => {
+    if (parseRequestKeyOutput && typeof parseRequestKeyOutput === 'function') {
+      const parsedLabel = parseRequestKeyOutput(groupKey);
+
+      if (typeof parsedLabel === 'string') {
+        return parsedLabel;
+      }
+    }
+
+    return groupKey;
+  };
+
   const filterArray = Object.keys(selectedFilters)
     .reduce((filters, groupKey) => {
       const filterGroup = selectedFilters[groupKey];
+      const outputGroupKey = parseRequestKey(groupKey);
 
       const filterTypeList = (collection, type, condition, joinOpperator) => {
         // Find all selected filters that match a certain type, eg. EXCLUDE.
         const typeList = filterGroup.filter((s) => s.state === type);
         // Build filter string
-        const filterString = (filterItem) => `${groupKey} ${condition} '${runParser(filterItem, groupKey)}'`;
+        const filterString = (filterItem) => `${outputGroupKey} ${condition} '${parseRequestItem(filterItem, groupKey)}'`;
         // Build a new list with filter fomrated filter items
         const filterList = typeList.reduce((incl, s) => [...incl, filterString(s)], []);
 

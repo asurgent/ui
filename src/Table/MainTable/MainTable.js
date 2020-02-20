@@ -33,6 +33,7 @@ const propTypes = {
   withControlls: PropTypes.bool,
   parseFilterRequestStringOutput: PropTypes.func,
   parseFilterItemRequestOutput: PropTypes.func,
+  parseFilterKeyRequestOutput: PropTypes.func,
   parseFilterLabelOutput: PropTypes.func,
 };
 
@@ -50,6 +51,7 @@ const defaultProps = {
   rowData: [],
   parseFilterRequestStringOutput: null,
   parseFilterItemRequestOutput: null,
+  parseFilterKeyRequestOutput: null,
   parseFilterLabelOutput: null,
 };
 
@@ -65,9 +67,10 @@ const Table = (props) => {
     withPagination,
     withSort,
     withControlls,
-    parseFilterRequestStringOutput: parseRequest,
-    parseFilterItemRequestOutput: parseRequestItem,
-    parseFilterLabelOutput: parseLabel,
+    parseFilterRequestStringOutput,
+    parseFilterItemRequestOutput,
+    parseFilterKeyRequestOutput,
+    parseFilterLabelOutput,
     ...rest
   } = props;
 
@@ -80,9 +83,10 @@ const Table = (props) => {
           tableHook={tableHook}
           withSort={withSort}
           withFilter={withFilter}
-          parseFilterRequestStringOutput={parseRequest}
-          parseFilterItemRequestOutput={parseRequestItem}
-          parseFilterLabelOutput={parseLabel}
+          parseFilterRequestStringOutput={parseFilterRequestStringOutput}
+          parseFilterItemRequestOutput={parseFilterItemRequestOutput}
+          parseFilterKeyRequestOutput={parseFilterKeyRequestOutput}
+          parseFilterLabelOutput={parseFilterLabelOutput}
         />
       )}
       <BaseTable

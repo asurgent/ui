@@ -12,6 +12,7 @@ const propTypes = {
   withSearch: PropTypes.bool,
   searchLabel: PropTypes.string,
   parseFilterRequestStringOutput: PropTypes.func,
+  parseFilterKeyRequestOutput: PropTypes.func,
   parseFilterItemRequestOutput: PropTypes.func,
   parseFilterLabelOutput: PropTypes.func,
 };
@@ -22,6 +23,7 @@ const defaultProps = {
   withFilter: [],
   searchLabel: 'Search',
   parseFilterRequestStringOutput: null,
+  parseFilterKeyRequestOutput: null,
   parseFilterItemRequestOutput: null,
   parseFilterLabelOutput: null,
 };
@@ -33,6 +35,7 @@ const TableControlls = ({
   withFilter,
   searchLabel,
   parseFilterRequestStringOutput,
+  parseFilterKeyRequestOutput,
   parseFilterItemRequestOutput,
   parseFilterLabelOutput,
 }) => (
@@ -58,6 +61,7 @@ const TableControlls = ({
       tableHook={tableHook}
       filterKeys={withFilter}
       parseFilterRequestStringOutput={parseFilterRequestStringOutput}
+      parseFilterKeyRequestOutput={parseFilterKeyRequestOutput}
       parseFilterItemRequestOutput={parseFilterItemRequestOutput}
       parseFilterLabelOutput={parseFilterLabelOutput}
     />

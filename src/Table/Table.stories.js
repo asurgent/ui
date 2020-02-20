@@ -196,6 +196,12 @@ export const main = () => {
 
           return null;
         }}
+        parseFilterKeyRequestOutput={(filterKey) => {
+          if (filterKey === 'guys') {
+            return 'BOSS';
+          }
+          return null;
+        }}
         parseFilterItemRequestOutput={(filter, filterKey) => {
           if (filterKey === 'guys') {
             const user = filter.match(/\((\d+)\)/);
@@ -333,6 +339,7 @@ export const filter = () => {
         ]}
         parseFilterLabelOutput={(filters) => filters}
         parseFilterItemRequestOutput={(filters) => filters}
+        parseFilterKeyRequestOutput={(filters) => filters}
       />
     </StoryWrapper>
   );

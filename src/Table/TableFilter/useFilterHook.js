@@ -37,7 +37,7 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
   // Poppulate tabelHook with state for requests and URL
   useEffect(() => {
     if (isReady) {
-      const filter = buildFilterQuery(selectedItems, parser.filterItem);
+      const filter = buildFilterQuery(selectedItems, parser.filterItem, parser.filterKey);
       const stateString = buildFilterStateString(selectedItems);
 
       const request = { filter };

@@ -8,12 +8,14 @@ const propTypes = {
   filterKeys: PropTypes.instanceOf(Array).isRequired,
   parseFilterRequestStringOutput: PropTypes.func,
   parseFilterItemRequestOutput: PropTypes.func,
+  parseFilterKeyRequestOutput: PropTypes.func,
   parseFilterLabelOutput: PropTypes.func,
 };
 
 const defaultProps = {
   parseFilterRequestStringOutput: null,
   parseFilterItemRequestOutput: null,
+  parseFilterKeyRequestOutput: null,
   parseFilterLabelOutput: null,
 };
 
@@ -22,14 +24,17 @@ const TableFilterProxy = ({
   filterKeys,
   parseFilterRequestStringOutput,
   parseFilterItemRequestOutput,
+  parseFilterKeyRequestOutput,
   parseFilterLabelOutput,
   ...props
 }) => {
   const parsers = {
     filterItem: parseFilterItemRequestOutput,
+    filterKey: parseFilterKeyRequestOutput,
     label: parseFilterLabelOutput,
     requestString: parseFilterRequestStringOutput,
   };
+
   const filterHook = useFilterHook(filterKeys, tableHook, parsers);
 
   if (tableHook && tableHook.isReady) {
