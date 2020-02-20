@@ -60,7 +60,7 @@ const useTableHook = (payloadOverrides) => {
         ...defaultPayload,
         ...payloadOverrides,
         ...rowRequestState,
-        facets: [...filterRequestState].map(({ facetKey }) => `${facetKey}, count:0`),
+        facets: [],
       };
       callback(payload, onSuccess, onFail);
     }
