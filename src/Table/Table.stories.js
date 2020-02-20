@@ -442,6 +442,7 @@ export const separate = () => {
           { value: '123', count: 23 },
           { value: '4465', count: 23 },
           { value: '984', count: 23 },
+          { value: '', count: 23 },
         ],
       });
     });
@@ -453,6 +454,13 @@ export const separate = () => {
       <Table.Controlls
         tableHook={hook}
         withSearch={boolean('With search', true)}
+        parseFilterLabelOutput={(filter, filterKey) => {
+          if (filter === '') {
+            return 'Missing';
+          }
+
+          return null;
+        }}
         withFilter={[
           { label: 'Guys', facetKey: 'guys', excludeable: true },
           { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },

@@ -13,10 +13,17 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
     const items = filterHook.getFilterItemsByGroup(filterGroupKey);
     if (search) {
       const filterd = items
-        .filter(({ value }) => value
-          .toString()
-          .toLowerCase()
-          .match(search.toString().toLowerCase()));
+        .filter((item) => {
+          const label = filterHook.getLabel(item, filterGroupKey);
+
+          if (label) {
+            return label
+              .toString()
+              .toLowerCase()
+              .match(search.toString().toLowerCase());
+          }
+          return false;
+        });
 
       setOptions(filterd);
     } else {
