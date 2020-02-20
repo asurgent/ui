@@ -19,7 +19,7 @@ const defaultPayload = {
   page: 1,
 };
 
-const useTableHook = (payloadOverrides) => {
+const useTableHook = (payloadOverrides, filterPayloadOverrides) => {
   // Holds state changes that are set simontainusly wihout a render inbetween
   // A rerender will empty these, but without a rerender setState for rowRequestState &
   // filterRequestState would overwrite previous value if no render is executed inbetween
@@ -78,6 +78,7 @@ const useTableHook = (payloadOverrides) => {
       const { callback, onSuccess, onFail } = updateFilterItems;
       const payload = {
         ...defaultPayload,
+        ...filterPayloadOverrides,
         page_size: 1,
         facets: [...filterRequestState].map(({ facetKey }) => `${facetKey}, count:0`),
       };
