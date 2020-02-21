@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as Icons from '@material-ui/icons';
 import * as Button from '../../../Button';
-import * as C from './FilterItems.styled';
+import * as C from './FilterItem.styled';
 import {
   EXCLUDE,
   INCLUDE,
@@ -14,11 +14,13 @@ const propTypes = {
   value: PropTypes.string.isRequired,
   included: PropTypes.bool,
   excluded: PropTypes.bool,
+  matched: PropTypes.bool,
 };
 
 const defaultProps = {
   included: false,
   excluded: false,
+  matched: true,
 };
 
 const FilterItem = ({
@@ -26,8 +28,9 @@ const FilterItem = ({
   included,
   excluded,
   onClick,
+  matched,
 }) => (
-  <C.FilterItem>
+  <C.FilterItem matched={matched}>
     <C.Active>
       {included && <Icons.Check />}
       {excluded && <Icons.Block />}

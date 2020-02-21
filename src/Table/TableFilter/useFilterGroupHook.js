@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { buildFilterQuery } from './helpers';
 
 const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
   // Keeps track of when component has been mounted.
@@ -11,6 +12,7 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
 
   const filterItemsBySearch = () => {
     const items = filterHook.getFilterItemsByGroup(filterGroupKey);
+
     if (search) {
       const filterd = items
         .filter((item) => {
@@ -33,12 +35,15 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
 
   // Initial setter. This will trigger a fetch if no filter-items have been loaded
   useEffect(() => {
-    if (!isReady && open) {
-      tableHook.loadFilterItems(filterHook.filterGroups);
-      setIsReady(true);
-    }
     if (open) {
       filterItemsBySearch();
+      // Ommit the targetd group from the selected-items object and generate
+      // a request-string that excludes the targeted group
+      const { [filterGroupKey]: current, ...rest } = filterHook.selectedItems;
+      const requestString = buildFilterQuery(rest);
+
+      tableHook.loadFilterForKey(filterGroupKey, requestString);
+      setIsReady(true);
     } else {
       setSearch('');
     }

@@ -19,7 +19,8 @@ export const Exclude = styled(Base)`
 export const FilterItem = styled.div`
     display: flex;
     flex-direction: row;
-    border-bottom: 1px solid ${({ theme }) => theme.gray200};       
+    border-bottom: 1px solid ${({ theme }) => theme.gray200};    
+    opacity: ${({ matched }) => (matched ? 1 : 0.5)};
 
     .filter-label {
         flex: 1;

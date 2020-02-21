@@ -22,7 +22,7 @@ const defaultPayload = {
 const useTableHook = (payloadOverrides, filterPayloadOverrides) => {
   // Holds state changes that are set simontainusly wihout a render inbetween
   // A rerender will empty these, but without a rerender setState for rowRequestState &
-  // filterRequestState would overwrite previous value if no render is executed inbetween
+  // filterRequestKeyState would overwrite previous value if no render is executed inbetween
   const initializationRequestState = {};
   const initializationHistoryState = {};
   const initializationThirdPartyTrigger = {};
@@ -36,7 +36,7 @@ const useTableHook = (payloadOverrides, filterPayloadOverrides) => {
 
   const [historyState, setHistoryState] = useState({});
   const [rowRequestState, setRowRequestState] = useState({});
-  const [filterRequestState, setFilterRequestState] = useState([]);
+  const [filterRequestKeyState, setFilterRequestKeyState] = useState({});
 
   // Independent state that enables a hook to message another hook to change its state
   const [thirdPartyTrigger, setThirdPartyTrigger] = useState({});
@@ -70,22 +70,23 @@ const useTableHook = (payloadOverrides, filterPayloadOverrides) => {
   useEffect(() => {
     if (isReady
       && updateFilterItems
-      && filterRequestState
-      && filterData.length === 0
-      && filterRequestState.length > 0
+      && filterRequestKeyState.filterKey
       && Object.keys(updateFilterItems).length > 0) {
       setFilterLoading(true);
       const { callback, onSuccess, onFail } = updateFilterItems;
+      const { filterKey, requestString } = filterRequestKeyState;
       const payload = {
         ...defaultPayload,
         ...filterPayloadOverrides,
-        page_size: 1,
-        facets: [...filterRequestState].map(({ facetKey }) => `${facetKey}, count:0`),
+        filter: requestString,
+        search_string: rowRequestState.search_string,
+        page_size: 0,
+        facets: [`${filterKey}, count:0`],
       };
 
       callback(payload, onSuccess, onFail);
     }
-  }, [isReady, filterRequestState]);
+  }, [isReady, filterRequestKeyState]);
 
   // Is triggered when historyState is updated
   useEffect(() => {
@@ -158,9 +159,9 @@ const useTableHook = (payloadOverrides, filterPayloadOverrides) => {
     getScopedFilters: () => tableData.facets,
     getAllFilters: () => filterData,
     getSearchedQuery: () => historyState.search,
-    loadFilterItems: (sortKeys) => {
+    loadFilterForKey: (filterKey, requestString) => {
       // Used by filterGroupHook. This will load filer-data
-      setFilterRequestState([...sortKeys]);
+      setFilterRequestKeyState({ filterKey, requestString });
     },
     requestFailedMessage: () => requestFailed,
     parentReady: () => { setIsReady(true); },

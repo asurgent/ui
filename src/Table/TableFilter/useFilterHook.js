@@ -102,30 +102,47 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
       setSelectedItems({});
     },
     getFilterItemsByGroup: (groupKey) => {
+      // Keep track of all items we found in the retrived list.
+      // In order to know wich ones were not returned by the selected ones
+      const matchedKeyInFilterList = [];
+
       const allFilters = tableHook.getAllFilters();
 
       if (Object.keys(allFilters).length
       && Object.prototype.hasOwnProperty.call(allFilters, groupKey)) {
-        const filterState = selectedItems[groupKey];
+        const selectedInGroup = selectedItems[groupKey];
 
-        if (filterState) {
-          return allFilters[groupKey]
+        // If there is no selected items there is no need in the following step
+        if (selectedInGroup && selectedInGroup.length > 0) {
+          // Remove the selected items from the retrived filter set.
+          // We will add them in the beginning of the array at return instead
+          // That way we will also be able to show items that have
+          // been selected but not returned in the filter set
+          const unselectedInGroup = allFilters[groupKey]
             .reduce((acc, item) => {
-              const stateItem = { ...item };
-              const hasState = filterState.find((selected) => selected.value === item.value);
-
-              if (hasState) {
-                Object.assign(stateItem, {
-                  included: hasState.state === INCLUDE,
-                  excluded: hasState.state === EXCLUDE,
-                });
+              if (selectedInGroup.find((selected) => selected.value === item.value)) {
+                matchedKeyInFilterList.push(item);
+                return acc;
               }
 
-              return [...acc, stateItem];
+              return [...acc, item];
             }, []);
+
+          // Decorate the filter item with a 'matched' attribute.
+          // That means, if this filter item is pressent in the current filter-segmentation for this group
+          const parsedSelectedInGroup = selectedInGroup.reduce((acc, item) => {
+            if (matchedKeyInFilterList.find(({ value }) => value === item.value)) {
+              Object.assign(item, { matched: true });
+            } else {
+              Object.assign(item, { matched: false });
+            }
+            return [...acc, item];
+          }, []);
+
+          return [...parsedSelectedInGroup, ...unselectedInGroup];
         }
 
-        return tableHook.filterData[groupKey];
+        return allFilters[groupKey];
       }
 
       return [];

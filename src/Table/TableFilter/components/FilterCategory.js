@@ -11,6 +11,7 @@ import * as C from './FilterCategory.styled';
 import * as Transition from '../../../Transition';
 import FilterItem from './FilterItem';
 import useFilterGroupHook from '../useFilterGroupHook';
+import { EXCLUDE, INCLUDE } from '../helpers';
 
 const propTypes = {
   label: PropTypes.string.isRequired,
@@ -86,8 +87,9 @@ const FilterCategory = (props) => {
                         onClick={(state) => {
                           filterHook.updateFilterItemState(filterKey, filter.value, state);
                         }}
-                        included={filter.included}
-                        excluded={filter.excluded}
+                        matched={filter.matched}
+                        included={filter.state === INCLUDE}
+                        excluded={filter.state === EXCLUDE}
                         value={filterHook.getLabel(filter, filterKey)}
                       />
                     )}
