@@ -10,13 +10,70 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
 
+  const getGroupFilter = () => {
+    // Keep track of all items we found in the retrived list.
+    // In order to know wich ones were not returned by the selected ones
+    const matchedKeyInFilterList = [];
+    const allFilters = tableHook.getAllFilters();
+
+    if (Object.keys(allFilters).length
+    && Object.prototype.hasOwnProperty.call(allFilters, filterGroupKey)) {
+      const selectedInGroup = filterHook.getSelectedItemsByKey(filterGroupKey);
+      const groupFilter = allFilters[filterGroupKey].map((item) => ({ ...item, matched: true }));
+      // If there is no selected items there is no need in the following step
+      if (selectedInGroup && selectedInGroup.length > 0) {
+        // Remove the selected items from the retrived filter set.
+        // We will add them in the beginning of the array at return instead
+        // That way we will also be able to show items that have
+        // been selected but not returned in the filter set
+        const unselectedInGroup = groupFilter
+          .reduce((acc, item) => {
+            if (selectedInGroup.find((selected) => selected.value === item.value)) {
+              matchedKeyInFilterList.push(item);
+              return acc;
+            }
+
+            return [...acc, item];
+          }, []);
+
+        // Decorate the filter item with a 'matched' attribute.
+        // That means, if this filter item is pressent in the
+        // current filter-segmentation for this group
+        const parsedSelectedInGroup = selectedInGroup.reduce((acc, item) => {
+          const matched = matchedKeyInFilterList.find(({ value }) => value === item.value);
+
+          return [...acc, { ...item, matched }];
+        }, []);
+
+        return [...parsedSelectedInGroup, ...unselectedInGroup];
+      }
+
+      return groupFilter;
+    }
+
+    return [];
+  };
+
+  const getLabel = (filterItem) => {
+    const parser = filterHook.getParser();
+    if (parser && parser.label && typeof parser.label === 'function') {
+      const parsedLabel = parser.label(filterItem.value, filterGroupKey);
+
+      if (typeof parsedLabel === 'string') {
+        return parsedLabel;
+      }
+    }
+
+    return filterItem.value;
+  };
+
   const filterItemsBySearch = () => {
-    const items = filterHook.getFilterItemsByGroup(filterGroupKey);
+    const items = getGroupFilter();
 
     if (search) {
       const filterd = items
         .filter((item) => {
-          const label = filterHook.getLabel(item, filterGroupKey);
+          const label = getLabel(item);
 
           if (label) {
             return label
@@ -39,13 +96,14 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
       filterItemsBySearch();
       // Ommit the targetd group from the selected-items object and generate
       // a request-string that excludes the targeted group
-      const { [filterGroupKey]: current, ...rest } = filterHook.selectedItems;
+      const { [filterGroupKey]: current, ...rest } = filterHook.getSelectedItems();
       const requestString = buildFilterQuery(rest);
 
       tableHook.loadFilterForKey(filterGroupKey, requestString);
       setIsReady(true);
     } else {
       setSearch('');
+      setIsReady(false);
     }
   }, [open]);
 
@@ -53,25 +111,17 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
     if (open) {
       filterItemsBySearch();
     }
-  }, [search]);
-
-
-  // @ToDo: This could possibly be refactored and the
-  // state of a group could be completley owned by this hook
-  // Update internal state whenever selectedItems are changes in order to
-  // render the correct state in the UI.
-  useEffect(() => {
-    filterItemsBySearch();
-  }, [tableHook.getAllFilters(), filterHook.selectedItems]);
+  }, [tableHook.getAllFilters(), filterHook.getSelectedItems(), search]);
 
   return {
     isReady,
     setOpen: (state) => setOpen(state),
     isOpen: () => open,
-    hasOptions: () => filterHook.getFilterItemsByGroup(filterGroupKey).length > 0,
+    hasOptions: () => getGroupFilter().length > 0,
     getOptions: () => options,
-    onSearchOptions: ({ search }) => {
-      setSearch(search);
+    getGroupKey: () => filterGroupKey,
+    onSearchOptions: ({ searchQuery }) => {
+      setSearch(searchQuery);
     },
   };
 };

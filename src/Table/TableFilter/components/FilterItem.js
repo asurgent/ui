@@ -3,48 +3,40 @@ import PropTypes from 'prop-types';
 import * as Icons from '@material-ui/icons';
 import * as Button from '../../../Button';
 import * as C from './FilterItem.styled';
-import {
-  EXCLUDE,
-  INCLUDE,
-  REMOVE,
-} from '../helpers';
+import useFilterItemHook from '../useFilterItemHook';
 
 const propTypes = {
-  onClick: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
-  included: PropTypes.bool,
-  excluded: PropTypes.bool,
-  matched: PropTypes.bool,
+  filterItem: PropTypes.instanceOf(Object).isRequired,
+  groupHook: PropTypes.instanceOf(Object).isRequired,
+  filterHook: PropTypes.instanceOf(Object).isRequired,
 };
 
-const defaultProps = {
-  included: false,
-  excluded: false,
-  matched: true,
-};
+const defaultProps = {};
 
 const FilterItem = ({
-  value,
-  included,
-  excluded,
-  onClick,
-  matched,
-}) => (
-  <C.FilterItem matched={matched}>
-    <C.Active>
-      {included && <Icons.Check />}
-      {excluded && <Icons.Block />}
-    </C.Active>
-    <Button.Plain className="filter-label" onClick={() => onClick(included ? REMOVE : INCLUDE)}>
-      {value}
-    </Button.Plain>
-    <C.Exclude>
-      <Button.Plain tooltip="exclude" onClick={() => onClick(excluded ? REMOVE : EXCLUDE)}>
-        <Icons.RemoveCircleOutline />
+  filterItem,
+  groupHook,
+  filterHook,
+}) => {
+  const hook = useFilterItemHook(filterItem, groupHook, filterHook);
+
+  return (
+    <C.FilterItem matched={hook.isMatched()}>
+      <C.Active>
+        {hook.isIncluded() && <Icons.Check />}
+        {hook.isExcluded() && <Icons.Block />}
+      </C.Active>
+      <Button.Plain className="filter-label" onClick={hook.setStateInclude}>
+        {hook.getLabel()}
       </Button.Plain>
-    </C.Exclude>
-  </C.FilterItem>
-);
+      <C.Exclude>
+        <Button.Plain tooltip="exclude" onClick={hook.setStateExclude}>
+          <Icons.RemoveCircleOutline />
+        </Button.Plain>
+      </C.Exclude>
+    </C.FilterItem>
+  );
+};
 
 FilterItem.propTypes = propTypes;
 FilterItem.defaultProps = defaultProps;

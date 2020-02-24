@@ -19,7 +19,7 @@ const TableFilter = ({ filterHook, tableHook, className }) => (
   <C.Wrapper className={className}>
     <C.Filters>
       {
-        filterHook.filterGroups
+        filterHook.getFilterGroups()
           .map(({ label, facetKey }) => (
             label && facetKey && (
               <FilterCategory

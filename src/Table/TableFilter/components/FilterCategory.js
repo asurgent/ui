@@ -84,13 +84,9 @@ const FilterCategory = (props) => {
                     {(filter, key) => (
                       <FilterItem
                         key={key}
-                        onClick={(state) => {
-                          filterHook.updateFilterItemState(filterKey, filter.value, state);
-                        }}
-                        matched={filter.matched}
-                        included={filter.state === INCLUDE}
-                        excluded={filter.state === EXCLUDE}
-                        value={filterHook.getLabel(filter, filterKey)}
+                        filterItem={filter}
+                        groupHook={groupHook}
+                        filterHook={filterHook}
                       />
                     )}
                   </VirtualRender.List>
