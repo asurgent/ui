@@ -83,6 +83,7 @@ const Table = (props) => {
           tableHook={tableHook}
           withSort={withSort}
           withFilter={withFilter}
+          searchLabel={searchLabel}
           parseFilterRequestStringOutput={parseFilterRequestStringOutput}
           parseFilterItemRequestOutput={parseFilterItemRequestOutput}
           parseFilterKeyRequestOutput={parseFilterKeyRequestOutput}

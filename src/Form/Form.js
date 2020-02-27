@@ -18,9 +18,11 @@ const propTyps = {
   className: PropTypes.string,
   onChange: PropTypes.func,
   onSubmit: PropTypes.func,
-  onFocusChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
   onChangeTimer: PropTypes.func,
   onKeyUp: PropTypes.func,
+  onKeyDown: PropTypes.func,
   onKeyUpTimer: PropTypes.func,
 };
 
@@ -30,9 +32,11 @@ const defaultProps = {
   className: '',
   onChange: () => {},
   onSubmit: () => {},
-  onFocusChange: () => {},
+  onFocus: () => {},
+  onBlur: () => {},
   onChangeTimer: () => {},
   onKeyUp: () => {},
+  onKeyDown: () => {},
   onKeyUpTimer: () => {},
 };
 
@@ -42,10 +46,12 @@ const Form = (props) => {
     children,
     msTimer,
     onSubmit,
-    onFocusChange,
+    onFocus,
+    onBlur,
     onChange,
     onChangeTimer,
     onKeyUp,
+    onKeyDown,
     onKeyUpTimer,
     className,
   } = props;
@@ -75,11 +81,26 @@ const Form = (props) => {
     onKeyUp(values, dirty, dirtyItems, name);
   };
 
+  const handleOnKeyDown = (event) => {
+    const { name } = event.target;
+    const { values, dirty, dirtyItems } = form.getValues();
+
+    keyPressTimer(values, dirty, dirtyItems);
+    onKeyDown(event, values, dirty, dirtyItems, name);
+  };
+
   const handleBlur = (event) => {
     const { name } = event.target;
     const { values, dirty, dirtyItems } = form.getValues();
 
-    onFocusChange(values, dirty, dirtyItems, name);
+    onBlur(values, dirty, dirtyItems, name);
+  };
+
+  const handleFocus = (event) => {
+    const { name } = event.target;
+    const { values, dirty, dirtyItems } = form.getValues();
+
+    onFocus(values, dirty, dirtyItems, name);
   };
 
   const handleSubmit = (event) => {
@@ -105,8 +126,10 @@ const Form = (props) => {
   return (
     <FormStyle
       onKeyUp={handleOnKeyUp}
+      onKeyDown={handleOnKeyDown}
       onChange={handleOnChange}
       onSubmit={handleSubmit}
+      onFocus={handleFocus}
       onBlur={handleBlur}
       className={className}
     >
