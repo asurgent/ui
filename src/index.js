@@ -11,6 +11,7 @@ import * as Modal from './Modal';
 import * as Switch from './Switch';
 import * as UserImage from './UserImage';
 import * as Moment from './Moment';
+import CronEditor from './CronEditor';
 
 import * as Layout from './layout/Layout';
 import * as Omnibar from './layout/Omnibar';
@@ -30,4 +31,5 @@ export {
   Shield,
   Layout,
   Omnibar,
+  CronEditor,
 };
