@@ -62,6 +62,8 @@
     "@material-ui/icons": "^4.5.1",
     "@material-ui/pickers": "^3.2.10",
     "@storybook/addon-knobs": "^5.2.8",
+    "cron-converter": "^1.0.0",
+    "cron-parser": "^2.13.0",
     "cronstrue": "^1.91.0",
     "moment": "^2.24.0",
     "polished": "^3.4.4",

@@ -41,6 +41,30 @@ export const MonthSlector = styled(WeekSelector)`
     grid-template-rows: repeat(5, 1fr);
 `;
 
+export const Editor = styled.div``;
+
+export const Text = styled.div`
+    margin-bottom: .8rem;
+    font-size: 1.4rem;
+`;
+
+export const Columns = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+
+export const Title = styled.h6`
+    margin: 0;
+    padding: 0;
+`;
+
+export const Output = styled.div`
+    border-left: 1px solid ${({ theme }) => theme.gray300};
+    border-width: ${({ withBorder }) => (withBorder ? 1 : 0)};
+    margin-left: ${({ withBorder }) => (withBorder ? '1.6rem' : '')};
+    padding-left: ${({ withBorder }) => (withBorder ? '1.6rem' : '')};
+`;
+
 export const Day = styled.div`
     width: 100%;
     height: 4rem;

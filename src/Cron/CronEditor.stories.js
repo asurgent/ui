@@ -3,7 +3,7 @@ import {
   withKnobs, boolean, text, number,
 } from '@storybook/addon-knobs';
 
-import CronEditor from './index';
+import * as Cron from './index';
 
 export default {
   title: 'UI Components|CronEditor',
@@ -12,11 +12,11 @@ export default {
 
 
 export const main = () => (
-  <CronEditor
-    end={new Date()}
-    start={new Date()}
+  <Cron.Editor
+    end="2017-05-24"
+    start="2017-05-24"
     duration="6324"
-    expression="0 53 12 * * MON,WED,TUE,SUN#2"
+    expression="*/5 * * * *"
     onChange={(c) => {
       console.log(c);
     }}
