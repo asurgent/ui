@@ -100,9 +100,7 @@ const CronEditor = ({
               return `${weekList[parseInt(day, 10)]}`;
             }
 
-            return day
-              .substr(0, 3)
-              .toUpperCase();
+            return day;
           });
 
         setWeekDaysRepeat(weekDaysRepeatParse);
@@ -133,32 +131,42 @@ const CronEditor = ({
   }, [isReady, cronExpression]);
 
   useEffect(() => {
-    const hours = startDate.hours();
-    const minutes = startDate.minutes();
-    if (repeat === 'month') {
-      const days = monthDaysRepeat.join(',') || '*';
-      const times = everyMonth > 0 ? `/${everyMonth}` : '';
+    if (startDate) {
+      const hours = startDate.hours();
+      const minutes = startDate.minutes();
+      if (repeat === 'month') {
+        const days = monthDaysRepeat.join(',') || '*';
+        const times = everyMonth > 0 ? `/${everyMonth}` : '';
 
-      setCronExpression(`${minutes} ${hours} ${days} *${times} *`);
-    } else if (repeat === 'week') {
-      const days = weekDaysRepeat.join(',');
-      const times = everyWeek > 0 ? `#${everyWeek}` : '';
+        setCronExpression(`${minutes} ${hours} ${days} *${times} *`);
+      } else if (repeat === 'week') {
+        const days = weekDaysRepeat.join(',');
+        const times = everyWeek > 0 ? `#${everyWeek}` : '';
 
-      setCronExpression(`${minutes} ${hours} * * ${days}${times}`);
+        setCronExpression(`${minutes} ${hours} * * ${days}${times}`);
+      }
     }
   }, [startDate, weekDaysRepeat, everyMonth, everyWeek, monthDaysRepeat, repeat]);
 
   const handleStartDateChange = (date) => {
-    setStartDate(date.local());
+    if (date) {
+      setStartDate(date.local());
 
-    if (date >= endDate) {
-      setEndDate(date.local());
+      if (date >= endDate) {
+        setEndDate(date.local());
+      }
+    } else {
+      setStartDate(date);
     }
   };
 
   const handleEndDateChange = (date) => {
-    if (date >= startDate) {
-      setEndDate(date.local());
+    if (date) {
+      if (date >= startDate) {
+        setEndDate(date.local());
+      }
+    } else {
+      setEndDate(date);
     }
   };
 
@@ -180,7 +188,6 @@ const CronEditor = ({
               />
               <KeyboardTimePicker
                 ampm={false}
-                type="time"
                 minutesStep={5}
                 label="Start time"
                 value={startDate}
