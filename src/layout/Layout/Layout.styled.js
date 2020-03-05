@@ -41,8 +41,8 @@ export const Left = styled.div`
 
 
 export const Content = styled.div`
-    background: ${({ theme }) => theme.gray200};
-    position: relative; 
+    background: ${({ theme }) => theme.white};
+    position: relative;
     overflow-y: auto;
     overflow-x: auto;
     height: 100%;
@@ -56,7 +56,6 @@ export const Content = styled.div`
     flex-direction: column;
 
     > ${BaseBlock}:last-of-type {
-        box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
         margin-bottom: 3.2rem;
     }
 `;
@@ -70,24 +69,24 @@ export const Main = styled.div`
 
     grid-template-columns: 6rem 1fr 1fr;
     grid-template-rows: 6rem 1fr;
-    grid-template-areas: 
+    grid-template-areas:
         "logo top top"
         "main main main";
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
-        grid-template-areas: 
+        grid-template-areas:
             "logo top top"
             "left main main";
-    }   
-    
+    }
+
 
     ${Logo} {
         grid-area: logo;
-    } 
+    }
 
     ${Top} {
         grid-area: top;
-    } 
+    }
 
     ${Left} {
         grid-area: left;
@@ -95,10 +94,10 @@ export const Main = styled.div`
 
         @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
             display: flex;
-        } 
+        }
     }
 
     ${Content} {
         grid-area: main;
-    } 
+    }
 `;
