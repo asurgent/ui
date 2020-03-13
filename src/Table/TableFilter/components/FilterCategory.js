@@ -11,13 +11,13 @@ import * as C from './FilterCategory.styled';
 import * as Transition from '../../../Transition';
 import FilterItem from './FilterItem';
 import useFilterGroupHook from '../useFilterGroupHook';
-import { EXCLUDE, INCLUDE } from '../helpers';
 
 const propTypes = {
   label: PropTypes.string.isRequired,
   filterHook: PropTypes.instanceOf(Object).isRequired,
   tableHook: PropTypes.instanceOf(Object).isRequired,
   filterKey: PropTypes.string.isRequired,
+  multiSelect: PropTypes.bool.isRequired,
   theme: PropTypes.instanceOf(Object),
 };
 
@@ -31,10 +31,11 @@ const FilterCategory = (props) => {
     filterHook,
     tableHook,
     filterKey,
+    multiSelect,
     theme,
   } = props;
   const groupHook = useFilterGroupHook(tableHook, filterHook, filterKey);
-  // ToDO: Fix so we only need one form-hook
+  // ToDO: Fix so we only need one form-hook
   const desktopForm = Form.useFormBuilder({
     search: {
       type: 'text', value: '', noLabel: true,
@@ -84,6 +85,7 @@ const FilterCategory = (props) => {
                     {(filter, key) => (
                       <FilterItem
                         key={key}
+                        multiSelect={multiSelect}
                         filterItem={filter}
                         groupHook={groupHook}
                         filterHook={filterHook}

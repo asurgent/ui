@@ -3,6 +3,7 @@ import {
   buildFilterQuery,
   buildFilterStateString,
   buildFilterObjectFromStateString,
+  INCLUDE,
 } from './helpers';
 
 const useFilterProvider = (filterKeys, tableHook, parser) => {
@@ -18,14 +19,32 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
   // Initial setter. This will trigger Poppulate effect as well.
   useEffect(() => {
     if (tableHook.isReady) {
-      const state = tableHook.getHistoryState();
-      // Set internal state from URL if found
-      if (state && Object.keys(state).length) {
-        const { filter } = state;
-        const filterObject = buildFilterObjectFromStateString(filter);
+      const getHistoryState = () => {
+        const state = tableHook.getHistoryState();
+        // Set internal state from URL if found
+        if (state && Object.keys(state).length) {
+          const { filter } = state;
+          const filterObject = buildFilterObjectFromStateString(filter);
 
-        setSelectedItems(filterObject);
-      }
+          return filterObject;
+        }
+
+        return {};
+      };
+
+      const selectedItemsCache = { ...getHistoryState() };
+      const categoryDefaultValues = filterKeys.filter(({ defaultSelect }) => defaultSelect);
+
+      categoryDefaultValues.forEach(({ facetKey, defaultSelect, multiSelect = true }) => {
+        if (!selectedItemsCache[facetKey] || (selectedItemsCache[facetKey].length === 0)) {
+          Object.assign(selectedItemsCache, {
+            [facetKey]: [{ value: `${defaultSelect}`, state: INCLUDE, isMultiSelect: multiSelect }],
+          });
+        }
+      });
+
+      setSelectedItems(selectedItemsCache);
+
       setIsReady(true);
     }
   }, [tableHook.isReady]);
@@ -68,10 +87,25 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
     getSelectedItems: () => selectedItems,
     getSelectedItemsByKey: (groupKey) => selectedItems[groupKey],
     getFilterGroups: () => filterGroups,
-    hasActiveFilter: () => Object.values(selectedItems).some((list) => list.length > 0),
+    hasActiveFilter: () => Object.values(selectedItems)
+      .some((list) => (
+        list.length > 0
+        && list.some(({ isMultiSelect }) => isMultiSelect))),
     setSelectedItems: (state) => setSelectedItems(state),
     clearFilter: () => {
-      setSelectedItems({});
+      const categoryDefaultValues = filterKeys.filter(({ defaultSelect }) => defaultSelect);
+      const selected = Object.keys(selectedItems)
+        .reduce((acc, groupKey) => {
+          if (categoryDefaultValues.some(({ facetKey }) => facetKey === groupKey)) {
+            const group = selectedItems[groupKey];
+
+            return { ...group, [groupKey]: group };
+          }
+
+          return acc;
+        }, {});
+
+      setSelectedItems(selected);
     },
   };
 };

@@ -36,19 +36,42 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
             return [...acc, item];
           }, []);
 
+
         // Decorate the filter item with a 'matched' attribute.
         // That means, if this filter item is pressent in the
         // current filter-segmentation for this group
         const parsedSelectedInGroup = selectedInGroup.reduce((acc, item) => {
           const matched = matchedKeyInFilterList.find(({ value }) => value === item.value);
+          if (matched) {
+            acc.matched.push({ ...item, matched });
+          } else {
+            acc.unmatched.push({ ...item, matched });
+          }
+          return acc;
+        }, { matched: [], unmatched: [] });
 
-          return [...acc, { ...item, matched }];
-        }, []);
+        const { matched, unmatched } = parsedSelectedInGroup;
+        const returnList = [];
 
-        return [...parsedSelectedInGroup, ...unselectedInGroup];
+        if (matched.length > 0) {
+          returnList.push({ value: 'selected', label: true });
+          returnList.push(matched);
+        }
+
+        if (unmatched.length > 0) {
+          returnList.push({ value: 'selected (unmatched)', label: true });
+          returnList.push(unmatched);
+        }
+
+        if (unselectedInGroup.length > 0) {
+          returnList.push({ value: 'unselected', label: true });
+          returnList.push(unselectedInGroup);
+        }
+
+        return returnList.flat();
       }
 
-      return groupFilter;
+      return [{ value: 'unselected', label: true }, ...groupFilter];
     }
 
     return [];

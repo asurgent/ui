@@ -5,7 +5,7 @@ import {
   INCLUDE,
 } from './helpers';
 
-const useFilterProvider = (filterItem, groupHook, filterHook) => {
+const useFilterProvider = (filterItem, groupHook, filterHook, isMultiSelect) => {
   const [state, setState] = useState(filterItem);
   const [matched, setMatched] = useState(filterItem);
 
@@ -19,24 +19,31 @@ const useFilterProvider = (filterItem, groupHook, filterHook) => {
     const filterGroupKey = groupHook.getGroupKey();
     const selectedItems = filterHook.getSelectedItems();
 
-    if (Object.prototype.hasOwnProperty.call(selectedItems, filterGroupKey)) {
-      const stateList = selectedItems[filterGroupKey];
-      const cleanUp = stateList.filter((item) => item.value !== filterValueTarget);
+    if (isMultiSelect) {
+      if (Object.prototype.hasOwnProperty.call(selectedItems, filterGroupKey)) {
+        const stateList = selectedItems[filterGroupKey];
+        const cleanUp = stateList.filter((item) => item.value !== filterValueTarget);
 
-      if (newState !== REMOVE) {
-        cleanUp.push({ value: filterValueTarget, state: newState });
+        if (newState !== REMOVE) {
+          cleanUp.push({ value: filterValueTarget, state: newState, isMultiSelect });
+        }
+
+        const update = { ...selectedItems, [filterGroupKey]: cleanUp };
+        filterHook.setSelectedItems(update);
+      } else {
+        const update = {
+          ...selectedItems,
+          [filterGroupKey]: [{
+            value: filterValueTarget,
+            state: newState,
+            isMultiSelect,
+          }],
+        };
+        filterHook.setSelectedItems(update);
       }
-
-      const update = { ...selectedItems, [filterGroupKey]: cleanUp };
-      filterHook.setSelectedItems(update);
-    } else {
-      const update = {
-        ...selectedItems,
-        [filterGroupKey]: [{
-          value: filterValueTarget,
-          state: newState,
-        }],
-      };
+    } else if (newState !== REMOVE) {
+      const selected = [{ value: filterValueTarget, state: newState, isMultiSelect }];
+      const update = { ...selectedItems, [filterGroupKey]: selected };
       filterHook.setSelectedItems(update);
     }
   };

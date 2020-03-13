@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   withKnobs, boolean, text, number,
 } from '@storybook/addon-knobs';
@@ -315,9 +315,10 @@ export const filter = () => {
     });
     hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
       onSuccess({
-        guys: Array.from({ length: 100 }, (_, i) => ({
-          value: `Item ${i}`,
-        })),
+        guys: [{ value: '1' },
+          ...Array.from({ length: 100 }, (_, i) => ({
+            value: `Item ${i}`,
+          }))],
         pankaka: [
           { value: 'HeHe' },
           { value: '123' },
@@ -334,8 +335,10 @@ export const filter = () => {
       <Table.Filter
         tableHook={hook}
         filterKeys={[
-          { label: 'guys', facetKey: 'guys', excludeable: true },
-          { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
+          {
+            label: 'guys', facetKey: 'guys', multiSelect: false, defaultSelect: 1,
+          },
+          { label: 'Pankaka', facetKey: 'pankaka' },
         ]}
         parseFilterLabelOutput={(filters) => filters}
         parseFilterItemRequestOutput={(filters) => filters}
@@ -409,6 +412,18 @@ export const controlls = () => {
 
 export const separate = () => {
   const hook = Table.useTableHook();
+  const [add, setAdd] = useState([]);
+  const [renderAdd, setRenderAdd] = useState([]);
+
+  useEffect(() => {
+    setRenderAdd(new Set([...renderAdd, ...add]));
+  }, [add]);
+
+  const clicker = (row) => ({
+    onClick: () => {
+      setAdd([...add, row.id]);
+    },
+  });
 
   useEffect(() => {
     hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
@@ -458,6 +473,11 @@ export const separate = () => {
 
   return (
     <StoryWrapper>
+      <pre>
+        <code>
+          {Array.from(renderAdd).map((a) => `${a}\n`)}
+        </code>
+      </pre>
       <Table.Controlls
         tableHook={hook}
         withSearch={boolean('With search', true)}
@@ -487,6 +507,7 @@ export const separate = () => {
         withControlls={false}
         historyStatePrefix="tickets"
         tableHook={hook}
+        clickRowConfigutation={(row) => clicker(row)}
         headerData={[
           {
             label: lorem,

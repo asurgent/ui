@@ -46,3 +46,20 @@ export const FilterItem = styled.div`
         }
     }
 `;
+
+export const Label = styled.div`
+    flex: 1;
+    display: block;
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1.6rem;
+    max-width: 29.5rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    background: ${({ theme }) => theme.gray50};
+`;

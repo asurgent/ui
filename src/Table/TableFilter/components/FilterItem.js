@@ -9,6 +9,7 @@ const propTypes = {
   filterItem: PropTypes.instanceOf(Object).isRequired,
   groupHook: PropTypes.instanceOf(Object).isRequired,
   filterHook: PropTypes.instanceOf(Object).isRequired,
+  multiSelect: PropTypes.bool.isRequired,
 };
 
 const defaultProps = {};
@@ -17,23 +18,35 @@ const FilterItem = ({
   filterItem,
   groupHook,
   filterHook,
+  multiSelect,
 }) => {
-  const hook = useFilterItemHook(filterItem, groupHook, filterHook);
+  const hook = useFilterItemHook(filterItem, groupHook, filterHook, multiSelect);
 
   return (
     <C.FilterItem matched={hook.isMatched()}>
-      <C.Active>
-        {hook.isIncluded() && <Icons.Check />}
-        {hook.isExcluded() && <Icons.Block />}
-      </C.Active>
-      <Button.Plain className="filter-label" onClick={hook.setStateInclude}>
-        {hook.getLabel()}
-      </Button.Plain>
-      <C.Exclude>
-        <Button.Plain tooltip="exclude" onClick={hook.setStateExclude}>
-          <Icons.RemoveCircleOutline />
+      {!filterItem.label && (
+        <C.Active>
+          {hook.isIncluded() && <Icons.Check />}
+          {hook.isExcluded() && <Icons.Block />}
+        </C.Active>
+      )}
+      {!filterItem.label && (
+        <Button.Plain className="filter-label" onClick={hook.setStateInclude}>
+          {hook.getLabel()}
         </Button.Plain>
-      </C.Exclude>
+      )}
+      {filterItem.label && (
+        <C.Label>
+          {hook.getLabel()}
+        </C.Label>
+      )}
+      { multiSelect && !filterItem.label && (
+        <C.Exclude>
+          <Button.Plain tooltip="exclude" onClick={hook.setStateExclude}>
+            <Icons.RemoveCircleOutline />
+          </Button.Plain>
+        </C.Exclude>
+      )}
     </C.FilterItem>
   );
 };

@@ -1,5 +1,5 @@
 export const EXCLUDE = 'ne';
-export const INCLUDE = 'nq';
+export const INCLUDE = 'eq';
 export const REMOVE = 'state:remove';
 
 // A helper to join-s an array and returns every items with
