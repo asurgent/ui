@@ -59,7 +59,7 @@ const CronEditor = ({
   const [everyWeek, setEveryWeek] = useState(1);
   const [everyMonth, setEveryMonth] = useState(1);
 
-  const [weekDaysRepeat, setWeekDaysRepeat] = useState(['MON']);
+  const [weekDayRepeat, setWeekDayRepeat] = useState('MON');
   const [monthDaysRepeat, setMonthDaysRepeat] = useState([]);
 
   useEffect(() => {
@@ -91,19 +91,14 @@ const CronEditor = ({
     }
 
     if (weeek) {
-      const [weekDays, repeatEveryWeek] = weeek.split('#');
+      const [weekDay, repeatEveryWeek] = weeek.split('#');
       setEveryWeek(parseInt((repeatEveryWeek || 1), 10));
-      if (weekDays && weekDays !== '*' && weekDays.split(',').length) {
-        const weekDaysRepeatParse = weekDays.split(',')
-          .map((day) => {
-            if (Number.isInteger(parseInt(day, 10))) {
-              return `${weekList[parseInt(day, 10)]}`;
-            }
-
-            return day;
-          });
-
-        setWeekDaysRepeat(weekDaysRepeatParse);
+      if (weekDay && weekDay !== '*' && (Number.isInteger(parseInt(weekDay, 10)) || weekDay.length === 3)) {
+        if (Number.isInteger(parseInt(weekDay, 10))) {
+          setWeekDayRepeat(weekList[parseInt(weekDay, 10)]);
+        } else {
+          setWeekDayRepeat(weekDay);
+        }
       }
     }
     setIsReady(true);
@@ -140,13 +135,12 @@ const CronEditor = ({
 
         setCronExpression(`${minutes} ${hours} ${days} *${times} *`);
       } else if (repeat === 'week') {
-        const days = weekDaysRepeat.join(',');
         const times = everyWeek > 0 ? `#${everyWeek}` : '';
 
-        setCronExpression(`${minutes} ${hours} * * ${days}${times}`);
+        setCronExpression(`${minutes} ${hours} * * ${weekDayRepeat}${times}`);
       }
     }
-  }, [startDate, weekDaysRepeat, everyMonth, everyWeek, monthDaysRepeat, repeat]);
+  }, [startDate, weekDayRepeat, everyMonth, everyWeek, monthDaysRepeat, repeat]);
 
   const handleStartDateChange = (date) => {
     if (date) {
@@ -243,8 +237,11 @@ const CronEditor = ({
           <RepeatWeek
             repeat={repeat}
             everyWeek={everyWeek}
-            weekDaysRepeat={weekDaysRepeat}
-            onChange={(event) => {
+            weekDayRepeat={weekDayRepeat}
+            onChange={(day) => {
+              setWeekDayRepeat(day);
+            }}
+            onChangeTimes={(event) => {
               const { value } = event.target;
               const parsedValue = Math.max(0, Math.min(5, value));
 
@@ -252,14 +249,6 @@ const CronEditor = ({
                 setEveryWeek('');
               } else {
                 setEveryWeek(parsedValue);
-              }
-            }}
-            onChangeTimes={(day) => {
-              if (weekDaysRepeat.includes(day)) {
-                const newWeekDaysRepeat = weekDaysRepeat.filter((d) => d !== day);
-                setWeekDaysRepeat(newWeekDaysRepeat);
-              } else {
-                setWeekDaysRepeat([...weekDaysRepeat, day]);
               }
             }}
           />
@@ -304,7 +293,13 @@ const CronEditor = ({
             repeat={repeat}
             endRepeatDate={endRepeatDate}
             onChange={(date) => {
-              setEndRepeatDate(date);
+              if (date) {
+                if (date >= startDate) {
+                  setEndRepeatDate(date.local());
+                }
+              } else {
+                setEndRepeatDate(date);
+              }
             }}
           />
 

@@ -3,6 +3,7 @@ import cronstrue from 'cronstrue';
 import Cron from 'cron-converter';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import * as Moment from '../../Moment';
 import * as C from '../CronEditor.styled';
 
 const propTypes = {
@@ -52,11 +53,9 @@ const RepeatOutput = ({
       </C.Text>
       <C.Title>Next run</C.Title>
       {
-            getNextExecutionList(cronExpression, startDate)
-              .map((e) => (
-                <C.Text key={e}>{e}</C.Text>
-              ))
-          }
+          getNextExecutionList(cronExpression, startDate)
+            .map((e) => (<Moment.DateTime timestamp={e} key={e} />))
+        }
     </C.Label>
   </C.Output>
 );

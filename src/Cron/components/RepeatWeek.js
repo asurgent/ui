@@ -8,7 +8,7 @@ export const weekList = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 const propTypes = {
   repeat: PropTypes.string.isRequired,
   everyWeek: PropTypes.number.isRequired,
-  weekDaysRepeat: PropTypes.instanceOf(Array).isRequired,
+  weekDayRepeat: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onChangeTimes: PropTypes.func.isRequired,
 };
@@ -19,7 +19,7 @@ const defaultProps = {};
 const RepeatWeek = ({
   repeat,
   everyWeek,
-  weekDaysRepeat,
+  weekDayRepeat,
   onChange,
   onChangeTimes,
 }) => {
@@ -28,7 +28,7 @@ const RepeatWeek = ({
       <>
         <C.Label>
             Every
-          <TextField label="" type="number" value={everyWeek} onChange={onChange} />
+          <TextField label="" type="number" value={everyWeek} onChange={onChangeTimes} />
             week(s) on:
         </C.Label>
 
@@ -38,8 +38,8 @@ const RepeatWeek = ({
               .map((day) => (
                 <C.Day
                   key={day}
-                  selected={weekDaysRepeat.includes(day)}
-                  onClick={() => onChangeTimes(day)}
+                  selected={weekDayRepeat === day}
+                  onClick={() => onChange(day)}
                 >
                   {day[0]}
                 </C.Day>
