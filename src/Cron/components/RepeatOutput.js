@@ -22,7 +22,7 @@ const getNextExecutionList = (expression, startDate) => {
     cronInstance.fromString(expression);
     const interval = cronInstance.schedule(moment(startDate).local());
 
-    return Array.from({ length: 4 }, () => {
+    return Array.from({ length: 3 }, () => {
       try {
         return interval.next().format();
       } catch (e) {
