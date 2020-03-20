@@ -16,6 +16,22 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
     const matchedKeyInFilterList = [];
     const allFilters = tableHook.getAllFilters();
 
+
+    const compare = (a, b) => {
+      // Use toUpperCase() to ignore character casing
+      const bandA = a.value.toUpperCase();
+      const bandB = b.value.toUpperCase();
+
+      let comparison = 0;
+      if (bandA > bandB) {
+        comparison = 1;
+      } else if (bandA < bandB) {
+        comparison = -1;
+      }
+      return comparison;
+    };
+
+
     if (Object.keys(allFilters).length
     && Object.prototype.hasOwnProperty.call(allFilters, filterGroupKey)) {
       const selectedInGroup = filterHook.getSelectedItemsByKey(filterGroupKey);
@@ -54,18 +70,18 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
         const returnList = [];
 
         if (matched.length > 0) {
-          returnList.push({ value: 'selected', label: true });
-          returnList.push(matched);
+          returnList.push({ value: 'selected', label: true, static: true });
+          returnList.push(matched.sort(compare));
         }
 
         if (unmatched.length > 0) {
-          returnList.push({ value: 'selected (unmatched)', label: true });
-          returnList.push(unmatched);
+          returnList.push({ value: 'selected (unmatched)', label: true, static: true });
+          returnList.push(unmatched.sort(compare));
         }
 
         if (unselectedInGroup.length > 0) {
-          returnList.push({ value: 'unselected', label: true });
-          returnList.push(unselectedInGroup);
+          returnList.push({ value: 'unselected', label: true, static: true });
+          returnList.push(unselectedInGroup.sort(compare));
         }
 
         return returnList.flat();
@@ -96,6 +112,10 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
     if (search) {
       const filterd = items
         .filter((item) => {
+          if (item.static === true) {
+            return true;
+          }
+
           const label = getLabel(item);
 
           if (label) {
