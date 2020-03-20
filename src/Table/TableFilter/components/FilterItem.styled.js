@@ -49,6 +49,7 @@ export const FilterItem = styled.div`
 
 export const Label = styled.div`
     flex: 1;
+    min-width: 100%;
     display: block;
     text-align: left;
     font-size: 1.1rem;

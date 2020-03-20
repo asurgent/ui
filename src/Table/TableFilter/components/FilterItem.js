@@ -40,7 +40,7 @@ const FilterItem = ({
           {hook.getLabel()}
         </C.Label>
       )}
-      { multiSelect && !filterItem.label && (
+      { multiSelect && !filterItem.label && !filterItem.static && (
         <C.Exclude>
           <Button.Plain tooltip="exclude" onClick={hook.setStateExclude}>
             <Icons.RemoveCircleOutline />
