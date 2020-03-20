@@ -21,6 +21,19 @@ export const Arrow = styled.div`
 
 /* Content styling */
 
+export const Count = styled.div`
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    display: flex;
+    color: ${({ theme }) => theme.gray600};
+    font-weight: 400;
+    font-size: 1rem;
+    align-items: flex-end;
+    flex-direction: column;
+    padding: .8rem 0;
+`;
+
 export const Wrapper = styled.div`
     width: 100%;
     max-width: 100%;

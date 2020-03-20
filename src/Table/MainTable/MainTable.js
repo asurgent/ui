@@ -35,6 +35,7 @@ const propTypes = {
   parseFilterItemRequestOutput: PropTypes.func,
   parseFilterKeyRequestOutput: PropTypes.func,
   parseFilterLabelOutput: PropTypes.func,
+  displayCount: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -53,6 +54,7 @@ const defaultProps = {
   parseFilterItemRequestOutput: null,
   parseFilterKeyRequestOutput: null,
   parseFilterLabelOutput: null,
+  displayCount: false,
 };
 
 const Table = (props) => {
@@ -91,6 +93,8 @@ const Table = (props) => {
         />
       )}
       <BaseTable
+        displayCount={props.displayCount}
+        itemCount={tableHook.getItemCount()}
         emptystate={getEmptystate(tableHook, props)}
         isLoading={tableHook.isLoading}
         rowData={tableHook.getTableRowData()}

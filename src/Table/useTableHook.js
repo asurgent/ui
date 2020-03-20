@@ -7,6 +7,7 @@ const tableDefaults = {
   result: [],
   facets: [],
   total_pages: 10,
+  total_count: 0,
 };
 
 const defaultPayload = {
@@ -165,6 +166,7 @@ const useTableHook = (payloadOverrides) => {
     getTableRowData: () => tableData.result,
     getScopedFilters: () => tableData.facets,
     getAllFilters: () => filterData,
+    getItemCount: () => tableData.total_count,
     getSearchedQuery: () => historyState.search,
     loadFilterForKey: (filterKey, requestString) => {
       // Used by filterGroupHook. This will load filer-data

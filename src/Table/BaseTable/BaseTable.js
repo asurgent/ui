@@ -38,6 +38,8 @@ export const propTypes = {
   equalSizeColumns: PropTypes.bool,
   isLoading: PropTypes.bool,
   emptystate: PropTypes.string,
+  itemCount: PropTypes.number,
+  displayCount: PropTypes.bool.isRequired,
 };
 
 export const defaultProps = {
@@ -51,6 +53,7 @@ export const defaultProps = {
   equalSizeColumns: false,
   isLoading: false,
   emptystate: 'No items found',
+  itemCount: 0,
 };
 
 const bodyComponents = {
@@ -64,6 +67,7 @@ const BaseTable = withTheme((props) => {
     rowData,
     headerData,
     cardView,
+    itemCount,
     // clickRowConfigutation
     // tableRowConfiguration,
     // cardRowConfiguration,
@@ -87,6 +91,7 @@ const BaseTable = withTheme((props) => {
     equalSizeColumns,
     isLoading,
     emptystate,
+    displayCount,
   } = props;
 
   const noContent = rows.length === 0 && isLoading === false;
@@ -94,6 +99,7 @@ const BaseTable = withTheme((props) => {
   return (
     <C.Wrapper>
       <C.Base>
+        {displayCount && <C.Count>{`${itemCount} results`}</C.Count>}
         <C.Content
           zebra={zebra}
           striped={striped}
