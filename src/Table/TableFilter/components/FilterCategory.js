@@ -37,12 +37,12 @@ const FilterCategory = (props) => {
   const groupHook = useFilterGroupHook(tableHook, filterHook, filterKey);
   // ToDO: Fix so we only need one form-hook
   const desktopForm = Form.useFormBuilder({
-    search: {
+    searchQuery: {
       type: 'text', value: '', noLabel: true,
     },
   });
   const mobileForm = Form.useFormBuilder({
-    search: {
+    searchQuery: {
       type: 'text', value: '', noLabel: true,
     },
   });
@@ -68,16 +68,9 @@ const FilterCategory = (props) => {
                 msTimer={150}
                 onKeyUpTimer={groupHook.onSearchOptions}
               >
-                {({ search }) => (search)}
+                {({ searchQuery }) => (searchQuery)}
               </Form.Primary>
             </C.Search>
-            {
-              groupHook.hasOptions() && groupHook.getOptions().length === 0 && (
-                <C.Center>
-                  <i>No matches</i>
-                </C.Center>
-              )
-            }
             <C.ListWrapper>
               {
                 groupHook.getOptions().length > 0 && (
