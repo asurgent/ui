@@ -19,7 +19,7 @@ const defaultPayload = {
   page: 1,
 };
 
-const useTableHook = (payloadOverrides, filterPayloadOverrides) => {
+const useTableHook = (payloadOverrides) => {
   // Holds state changes that are set simontainusly wihout a render inbetween
   // A rerender will empty these, but without a rerender setState for rowRequestState &
   // filterRequestKeyState would overwrite previous value if no render is executed inbetween
@@ -58,10 +58,14 @@ const useTableHook = (payloadOverrides, filterPayloadOverrides) => {
       const { callback, onSuccess, onFail } = updateTableItems;
       const payload = {
         ...defaultPayload,
-        ...payloadOverrides,
         ...rowRequestState,
         facets: [],
       };
+
+      if (payloadOverrides && typeof payloadOverrides === 'function') {
+        Object.assign(payload, payloadOverrides(payload));
+      }
+
       callback(payload, onSuccess, onFail);
     }
   }, [isReady, rowRequestState, thirdPartyTrigger]);
@@ -77,12 +81,15 @@ const useTableHook = (payloadOverrides, filterPayloadOverrides) => {
       const { filterKey, requestString } = filterRequestKeyState;
       const payload = {
         ...defaultPayload,
-        ...filterPayloadOverrides,
         filter: requestString,
         search_string: rowRequestState.search_string,
         page_size: 0,
         facets: [`${filterKey}, count:0`],
       };
+
+      if (payloadOverrides && typeof payloadOverrides === 'function') {
+        Object.assign(payload, payloadOverrides(payload));
+      }
 
       callback(payload, onSuccess, onFail);
     }
