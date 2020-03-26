@@ -1,5 +1,6 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import * as Icons from '@material-ui/icons';
 import * as Tooltip from '../../Tooltip';
 
 import {
@@ -98,6 +99,7 @@ const Select = forwardRef((props, ref) => {
               </option>
             ))}
         </select>
+        <Icons.ArrowDropDown className="down-arrow" fontSize="large" />
       </SelectWrapper>
     </Main>
   );

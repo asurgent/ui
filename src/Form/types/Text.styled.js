@@ -64,22 +64,23 @@ export const Icon = styled.i`
   cursor: pointer;
 `;
 
-const arrowSvg = (theme) => encodeURIComponent(`
-<svg xmlns="http://www.w3.org/2000/svg" width="292.4" height="292.4">
-  <path
-    fill="${theme.gray500}" 
-    d="M287 69.4a17.6 17.6 0 0 0-13-5.4H18.4c-5 0-9.3 1.8-12.9 5.4A17.6 17.6 0 0 0 0 82.2c0 5 1.8 9.3 5.4 12.9l128 127.9c3.6 3.6 7.8 5.4 12.8 5.4s9.2-1.8 12.8-5.4L287 95c3.5-3.5 5.4-7.8 5.4-12.8 0-5-1.9-9.2-5.5-12.8z"/>
-</svg>`);
-
 export const SelectWrapper = styled(Wrapper)`
   padding: 0;
-  background-image: url('data:image/svg+xml;charset=US-ASCII, ${({ theme }) => arrowSvg(theme)}');
-  background-repeat: no-repeat, repeat;
-  background-position: right .7em top 50%, 0 0;
-  background-size: .65em auto, 100%;
+  display: flex;
+  position: relative;
+  grid-template-columns:  1fr 3rem;
+  justify-content: center;
+  align-items: center;
+  
+  .down-arrow {
+    position:absolute;
+    right: .8rem;
+  }
   
   select {
+    z-index: 1;
     padding: 1.2rem;
-    padding-right: 2.7rem;
+    padding-right: 3.2rem;
+    background: transparent;
   }
 `;
