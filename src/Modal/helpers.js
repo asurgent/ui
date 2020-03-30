@@ -4,7 +4,7 @@ export const fixateBodyScroll = (windowRef) => {
     const { body } = document;
     const scrollY = (window.pageYOffset || document.scrollTop) - (document.clientTop || 0);
 
-    body.style.position = 'fixed';
+    // body.style.position = 'fixed';
     body.style.top = `-${scrollY}px`;
   }
 };

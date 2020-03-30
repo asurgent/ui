@@ -53,11 +53,11 @@ const Layout = ({ provider, children }) => {
 
   return (
     <C.Main>
-      <C.Logo>
-        <IconAsurget />
-      </C.Logo>
-
       <C.Top>
+        <C.Logo>
+          <IconAsurget />
+        </C.Logo>
+
         <CreateList
           shouldShow={isAdmin}
           createList={provider.getCreateList()}

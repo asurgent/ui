@@ -2,7 +2,7 @@ import { configure, addDecorator } from "@storybook/react"
 import { setConsoleOptions, withConsole } from '@storybook/addon-console';
 import themeDecorator from "./decorators/themeDecorator"
 import routerDecorator from "./decorators/routerDecorator"
-import flexboxDecorator from "./decorators/flexboxDecorator"
+// import flexboxDecorator from "./decorators/flexboxDecorator"
 
 setConsoleOptions({
     panelExclude: [],
@@ -10,7 +10,7 @@ setConsoleOptions({
 
 addDecorator(themeDecorator);
 addDecorator(routerDecorator);
-addDecorator(flexboxDecorator);
+// addDecorator(flexboxDecorator);
 addDecorator((storyFn, context) => withConsole()(storyFn)(context));
 
 
