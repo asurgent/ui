@@ -163,7 +163,9 @@ export const mainLayout = () => {
         <Modal.Primary isOpen={boolean('open', false)}>
           hello
         </Modal.Primary>
-        <img src="https://i.picsum.photos/id/270/1000/1000.jpg" />
+      </Block.Center>
+      <Block.Center>
+        <Table.Pagination tableHook={table} />
       </Block.Center>
     </Main>
   );

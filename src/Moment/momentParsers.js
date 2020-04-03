@@ -4,7 +4,7 @@ moment.defineLocale('sv', {
   relativeTime: {
     future: 'om %s',
     past: '%s sedan',
-    s: 'några dekunder sedan',
+    s: 'några sekunder',
     ss: '%d sekunder',
     m: 'en minut',
     mm: '%d minuter',

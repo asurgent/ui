@@ -12,7 +12,7 @@ export const Logo = styled.div`
     justify-content: center;
     align-items: center;
     background: ${({ theme }) => theme.blue700};
-    border-bottom: 1px solid ${({ theme }) => theme.blue700};
+    margin-bottom: -1px;
     box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
 
     svg {
@@ -29,11 +29,10 @@ export const Top = styled.div`
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-
     position: fixed;
     z-index: 2;
     width: 100%;
-    box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
+    border-bottom: 1px solid ${({ theme }) => theme.gray300};
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         position: relative;
@@ -58,7 +57,6 @@ export const Left = styled.div`
 
 export const Content = styled.div`
     background: ${({ theme }) => theme.white};
-    border-top: 1px solid ${({ theme }) => theme.gray300};
     position: relative;
     overflow-y: auto;
     overflow-x: auto;
@@ -72,6 +70,8 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: 1.6rem;
+    -webkit-transform: translate3d(0,0,0);
+    
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         margin-top: 0;
