@@ -11,6 +11,12 @@ const content = 'Button text ';
 export default { title: 'UI Components|Buttons', decorators: [withKnobs] };
 
 
+export const saveToFileButton = () => (
+  <>
+    <Button.Icon saveToFilename="some_file" tooltip="Saves from promise" saveToJson={() => new Promise((r) => r(['a', 'b']))} icon={<Icon.ConfirmationNumber fontSize="large" />} />
+    <Button.Icon saveToFilename="another_file" tooltip="Saves from object" saveToJson={() => ['a', 'b']} icon={<Icon.ConfirmationNumber fontSize="large" />} />
+  </>
+);
 export const iconButton = () => (
   <Button.Icon tooltip="Hello" saveLinkState link="/test" icon={<Icon.ConfirmationNumber fontSize="large" />} />
 );

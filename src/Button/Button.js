@@ -4,7 +4,9 @@ import { useLocation } from 'react-router-dom';
 import { RingSpinner } from 'react-spinners-kit';
 import * as Tooltip from '../Tooltip/index';
 import * as Styles from './Button.styled';
-import { isExternalLink, isInteralLink, isValidMail } from './helper';
+import {
+  isExternalLink, isInteralLink, isValidMail, fileSaver,
+} from './helper';
 
 const propTyps = {
   iconLeft: PropTypes.element,
@@ -12,6 +14,8 @@ const propTyps = {
   mainIcon: PropTypes.element,
   link: PropTypes.string,
   onClick: PropTypes.func,
+  saveToJson: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
+  saveToFilename: PropTypes.string,
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
   children: PropTypes.oneOfType([
@@ -34,6 +38,8 @@ const defaultProps = {
   mainIcon: null,
   link: '',
   onClick: () => {},
+  saveToJson: false,
+  saveToFilename: '',
   disabled: false,
   loading: false,
   children: null,
@@ -59,6 +65,8 @@ const Button = (props) => {
     passLocationState,
     className,
     theme,
+    saveToJson,
+    saveToFilename,
     renderStyle: Style,
   } = props;
 
@@ -66,11 +74,20 @@ const Button = (props) => {
   const isValidLink = (link && (isExternalLink(link) || isInteralLink(link)));
   const isValidMailto = mailto && (isValidMail(mailto));
 
-  const handleClick = (event) => {
+  const handleClick = async (event) => {
     if (!disabled) {
+      if (saveToJson && typeof saveToJson === 'function') {
+        const result = await saveToJson();
+        fileSaver(result, saveToFilename, {
+          type: 'application/json',
+          fileExtension: 'json',
+        });
+      }
+
       if (onClick) {
         onClick(event);
       }
+
 
       if (isValidLink && isInteralLink(link)) {
         event.preventDefault();

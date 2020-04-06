@@ -163,4 +163,9 @@ export const Icon = styled.div`
         cursor: pointer;
         background: ${({ theme }) => theme.gray100};
     }
+
+    &.disabled {
+        cursor: not-allowed;
+        opacity: .5;
+    }
 `;
