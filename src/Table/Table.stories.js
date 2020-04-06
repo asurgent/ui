@@ -185,6 +185,7 @@ export const main = () => {
         useHistoryState
         historyStatePrefix="tickets"
         tableHook={table}
+        exportFileName={text('export file name', 'export_file_name')}
         withSearch={boolean('With search', true)}
         parseFilterLabelOutput={(filter, filterKey) => {
           if (filterKey === 'guys') {
