@@ -151,6 +151,7 @@ export const main = () => {
           result: [...rowDummyData],
           page: 2,
           total_pages: 20,
+          total_count: 1000,
         });
       } else {
         onFail('Could not get your things');
@@ -370,7 +371,9 @@ export const controlls = () => {
 
   useEffect(() => {
     hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
-      onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
+      onSuccess({
+        result: [...rowDummyData], page: 2, total_pages: 20, total_count: 1000,
+      });
     });
 
     hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {

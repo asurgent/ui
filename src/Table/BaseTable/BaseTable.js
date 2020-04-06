@@ -2,12 +2,20 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import { RingSpinner } from 'react-spinners-kit';
+import * as Icons from '@material-ui/icons';
 import TableHeader from '../TableHeader';
+import * as Button from '../../Button';
 import * as C from './BaseTable.styled';
 import generateRows from './helpers';
 
 
 export const propTypes = {
+  canExportResults: PropTypes.bool,
+  exportFileName: PropTypes.string,
+  exportResultsAction: PropTypes.oneOfType(
+    PropTypes.func,
+    PropTypes.bool,
+  ),
   withHeader: PropTypes.bool,
   rowData: PropTypes.arrayOf(
     PropTypes.instanceOf(Object),
@@ -44,6 +52,8 @@ export const propTypes = {
 
 export const defaultProps = {
   cardView: false,
+  canExportResults: false,
+  exportResultsAction: false,
   withHeader: false,
   headerData: [],
   cardRowConfiguration: false,
@@ -54,6 +64,7 @@ export const defaultProps = {
   isLoading: false,
   emptystate: 'No items found',
   itemCount: 0,
+  exportFileName: '',
 };
 
 const bodyComponents = {
@@ -92,6 +103,9 @@ const BaseTable = withTheme((props) => {
     isLoading,
     emptystate,
     displayCount,
+    canExportResults,
+    exportResultsAction,
+    exportFileName,
   } = props;
 
   const noContent = rows.length === 0 && isLoading === false;
@@ -99,7 +113,20 @@ const BaseTable = withTheme((props) => {
   return (
     <C.Wrapper>
       <C.Base>
-        {displayCount && <C.Count>{`${itemCount} results`}</C.Count>}
+        { displayCount && (
+          <C.Count>
+            { canExportResults && exportResultsAction && (
+              <Button.Icon
+                disabled={itemCount === 0}
+                saveToFilename={exportFileName}
+                tooltip="Export"
+                saveToJson={exportResultsAction}
+                icon={<Icons.SaveAlt fontSize="small" />}
+              />
+            )}
+            {`${itemCount} results`}
+          </C.Count>
+        )}
         <C.Content
           zebra={zebra}
           striped={striped}

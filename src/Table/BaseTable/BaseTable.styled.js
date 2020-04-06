@@ -29,8 +29,9 @@ export const Count = styled.div`
     color: ${({ theme }) => theme.gray600};
     font-weight: 400;
     font-size: 1rem;
-    align-items: flex-end;
-    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: row;
     padding: .8rem 0;
 `;
 
