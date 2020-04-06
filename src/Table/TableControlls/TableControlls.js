@@ -40,31 +40,30 @@ const TableControlls = ({
   parseFilterLabelOutput,
 }) => (
   <C.Controllbar>
-    {withSearch && (
-    <TableSearchBar
-      className="search"
-      tableHook={tableHook}
-      searchLabel={searchLabel}
-    />
+    { withSearch && (
+      <TableSearchBar
+        className="search"
+        tableHook={tableHook}
+        searchLabel={searchLabel}
+      />
     )}
-    {withSort && Array.isArray(withSort) && withSort.length > 0
-        && (
-          <TableSort
-            className="sort"
-            tableHook={tableHook}
-            sortKeys={withSort}
-          />
-        )}
-    {withFilter && Array.isArray(withFilter) && withFilter.length > 0 && (
-    <TableFilter
-      className="filter"
-      tableHook={tableHook}
-      filterKeys={withFilter}
-      parseFilterRequestStringOutput={parseFilterRequestStringOutput}
-      parseFilterKeyRequestOutput={parseFilterKeyRequestOutput}
-      parseFilterItemRequestOutput={parseFilterItemRequestOutput}
-      parseFilterLabelOutput={parseFilterLabelOutput}
-    />
+    { withSort && Array.isArray(withSort) && withSort.length > 0 && (
+      <TableSort
+        className="sort"
+        tableHook={tableHook}
+        sortKeys={withSort}
+      />
+    )}
+    { withFilter && Array.isArray(withFilter) && withFilter.length > 0 && (
+      <TableFilter
+        className="filter"
+        tableHook={tableHook}
+        filterKeys={withFilter}
+        parseFilterRequestStringOutput={parseFilterRequestStringOutput}
+        parseFilterKeyRequestOutput={parseFilterKeyRequestOutput}
+        parseFilterItemRequestOutput={parseFilterItemRequestOutput}
+        parseFilterLabelOutput={parseFilterLabelOutput}
+      />
     )}
   </C.Controllbar>
 );

@@ -29,6 +29,7 @@ const useTableHook = (payloadOverrides) => {
   const initializationThirdPartyTrigger = {};
 
   const [isReady, setIsReady] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isFilterLoading, setFilterLoading] = useState(true);
 
@@ -160,6 +161,7 @@ const useTableHook = (payloadOverrides) => {
     updateFilterItems,
     thirdPartyTrigger,
     hasTriggers: () => Object.keys(thirdPartyTrigger).length > 0,
+    isExporting: () => isExporting,
     getRequestedPageCount: () => tableData.total_pages,
     getRequestedPageNumber: () => tableData.page,
     getTablePage: () => tableData.page,
@@ -199,6 +201,50 @@ const useTableHook = (payloadOverrides) => {
         return searchQueryObj;
       }
       return {};
+    },
+    exportSearchResult: async () => {
+      const totalPages = tableData.total_pages;
+      const result = [];
+      setIsExporting(true);
+
+      if (totalPages > 1) {
+        const itemCount = tableData.total_count;
+        const maxItemsPerRequest = 999;
+        const resuestPageSize = itemCount > maxItemsPerRequest ? maxItemsPerRequest : itemCount;
+        const pages = Math.ceil(itemCount / maxItemsPerRequest);
+
+        const { callback } = updateTableItems;
+        const { requestString } = filterRequestKeyState;
+        const payload = {
+          ...defaultPayload,
+          filter: requestString,
+          search_string: rowRequestState.search_string,
+          page_size: 0,
+        };
+
+        if (payloadOverrides && typeof payloadOverrides === 'function') {
+          Object.assign(payload, payloadOverrides(payload));
+        }
+
+        Object.assign(payload, { page_size: resuestPageSize, facets: [] });
+
+        const req = (page) => new Promise((resolve) => {
+          const requestPayload = Object.assign(payload, { page });
+          const success = (e) => { resolve(e.result); };
+          const reject = (e) => { };
+          callback(requestPayload, success, reject);
+        });
+
+        for (let i = 1; i <= pages; i++) {
+          const res = await req(i);
+          result.push(res);
+        }
+      } else {
+        result.push(tableData.result);
+      }
+      setIsExporting(false);
+
+      return result.flat();
     },
     registerRowFetchCallback: (callback) => {
       // Callback success function that changes internal states

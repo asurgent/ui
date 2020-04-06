@@ -1,9 +1,16 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import { RingSpinner } from 'react-spinners-kit';
+import { withTheme } from 'styled-components';
 import TablePagination from '../TablePagination';
 import Controlls from '../TableControlls';
 import BaseTable from '../BaseTable';
-import { Wrapper } from './MainTable.styled';
+
+import { Wrapper, Loader } from './MainTable.styled';
+import * as Shield from '../../Shield';
+
+const modalRoot = document.getElementById('tooltip-root');
 
 const getEmptystate = (hook, props) => {
   if (hook.requestFailedMessage()) {
@@ -19,6 +26,7 @@ const getEmptystate = (hook, props) => {
 
 
 const propTypes = {
+  theme: PropTypes.instanceOf(Object).isRequired,
   tableHook: PropTypes.instanceOf(Object).isRequired,
   withSearch: PropTypes.bool,
   withPagination: PropTypes.bool,
@@ -36,6 +44,7 @@ const propTypes = {
   parseFilterKeyRequestOutput: PropTypes.func,
   parseFilterLabelOutput: PropTypes.func,
   displayCount: PropTypes.bool,
+  exportFileName: PropTypes.string,
 };
 
 const defaultProps = {
@@ -54,11 +63,13 @@ const defaultProps = {
   parseFilterItemRequestOutput: null,
   parseFilterKeyRequestOutput: null,
   parseFilterLabelOutput: null,
-  displayCount: false,
+  displayCount: true,
+  exportFileName: '',
 };
 
 const Table = (props) => {
   const {
+    theme,
     onPagination,
     activePage,
     pages,
@@ -73,6 +84,8 @@ const Table = (props) => {
     parseFilterItemRequestOutput,
     parseFilterKeyRequestOutput,
     parseFilterLabelOutput,
+    displayCount,
+    exportFileName,
     ...rest
   } = props;
 
@@ -80,7 +93,17 @@ const Table = (props) => {
 
   return (
     <Wrapper>
-      {withControlls && (
+      { tableHook.isExporting() && (
+        ReactDOM.createPortal(
+          <Shield.Dark>
+            <Loader>
+              <RingSpinner color={theme.blue400} size={50} />
+            </Loader>
+          </Shield.Dark>,
+          modalRoot,
+        )
+      )}
+      { withControlls && (
         <Controlls
           tableHook={tableHook}
           withSort={withSort}
@@ -93,7 +116,10 @@ const Table = (props) => {
         />
       )}
       <BaseTable
-        displayCount={props.displayCount}
+        canExportResults
+        exportResultsAction={() => tableHook.exportSearchResult()}
+        exportFileName={exportFileName}
+        displayCount={displayCount}
         itemCount={tableHook.getItemCount()}
         emptystate={getEmptystate(tableHook, props)}
         isLoading={tableHook.isLoading}
@@ -112,4 +138,4 @@ Table.propTypes = propTypes;
 Table.defaultProps = defaultProps;
 Table.displayName = '@asurgent.ui.Table.Main';
 
-export default Table;
+export default withTheme(Table);
