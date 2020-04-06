@@ -34,11 +34,9 @@ export const Wrapper = styled.div`
 export const Filters = styled.div`
     grid-area: filters;
     display: flex;
+    flex-wrap: wrap;
     > * {
-        margin-left: .6rem;
-
-        &:first-child{
-            margin-left: 0;
-        }
+        margin-right: .6rem;
+        margin-bottom: .6rem;
     }
 `;
