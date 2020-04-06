@@ -12,10 +12,10 @@ import generateRows from './helpers';
 export const propTypes = {
   canExportResults: PropTypes.bool,
   exportFileName: PropTypes.string,
-  exportResultsAction: PropTypes.oneOfType(
+  exportResultsAction: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.bool,
-  ),
+  ]),
   withHeader: PropTypes.bool,
   rowData: PropTypes.arrayOf(
     PropTypes.instanceOf(Object),
@@ -47,7 +47,7 @@ export const propTypes = {
   isLoading: PropTypes.bool,
   emptystate: PropTypes.string,
   itemCount: PropTypes.number,
-  displayCount: PropTypes.bool.isRequired,
+  displayCount: PropTypes.bool,
 };
 
 export const defaultProps = {
@@ -65,6 +65,7 @@ export const defaultProps = {
   emptystate: 'No items found',
   itemCount: 0,
   exportFileName: '',
+  displayCount: false,
 };
 
 const bodyComponents = {
