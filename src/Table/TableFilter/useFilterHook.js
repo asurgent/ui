@@ -14,6 +14,7 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
 
   const [filterGroups] = useState(filterKeys);
   const [selectedItems, setSelectedItems] = useState({});
+  const [hasSelectedItems, setHasSelectedItems] = useState(false);
 
 
   // Initial setter. This will trigger Poppulate effect as well.
@@ -78,6 +79,18 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
         setIsDirty(true);
       }
     }
+
+    const hasSelected = Object.keys(selectedItems).some((key) => {
+      const list = selectedItems[key];
+      const category = filterKeys.find(({ facetKey }) => facetKey === key);
+
+      // Look if there is items in the selected group
+      // But dont include if its not a multiselect (aka singleSelect) filter.
+      // Since a singleSelect MUST have a value, it cant be cleared.
+      return (list.length > 0) && category.multiSelect !== false;
+    });
+
+    setHasSelectedItems(hasSelected);
   }, [isReady, selectedItems]);
 
 
@@ -87,10 +100,7 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
     getSelectedItems: () => selectedItems,
     getSelectedItemsByKey: (groupKey) => selectedItems[groupKey],
     getFilterGroups: () => filterGroups,
-    hasActiveFilter: () => Object.values(selectedItems)
-      .some((list) => (
-        list.length > 0
-        && list.some(({ isMultiSelect }) => isMultiSelect))),
+    hasActiveFilter: () => hasSelectedItems,
     setSelectedItems: (state) => setSelectedItems(state),
     clearFilter: () => {
       const categoryDefaultValues = filterKeys.filter(({ defaultSelect }) => defaultSelect);

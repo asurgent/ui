@@ -222,8 +222,10 @@ export const main = () => {
           return `(entity_id eq '123')`;
         }}
         withFilter={[
-          { label: 'Guys', facetKey: 'guys', excludeable: true },
-          { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
+          {
+            label: 'Guys', facetKey: 'guys', multiSelect: false, defaultSelect: 'Mike(1133)',
+          },
+          { label: 'Pankaka', facetKey: 'pankaka' },
         ]}
         withSort={[
           { value: 'created', label: 'Created' },
@@ -397,8 +399,8 @@ export const controlls = () => {
         tableHook={hook}
         withSearch={boolean('With search', true)}
         withFilter={[
-          { label: 'Gurka', facetKey: 'gurka', excludeable: true },
-          { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
+          { label: 'Gurka', facetKey: 'gurka' },
+          { label: 'Pankaka', facetKey: 'pankaka' },
         ]}
         withSort={[
           { value: 'created', label: 'Created' },
@@ -493,8 +495,8 @@ export const separate = () => {
           return null;
         }}
         withFilter={[
-          { label: 'Guys', facetKey: 'guys', excludeable: true },
-          { label: 'Pankaka', facetKey: 'pankaka', excludeable: false },
+          { label: 'Guys', facetKey: 'guys' },
+          { label: 'Pankaka', facetKey: 'pankaka' },
         ]}
         withSort={[
           { value: 'created', label: 'Created' },
