@@ -14,6 +14,8 @@ describe('Tag', () => {
       <Single {...props} />,
     );
 
+    console.log(123);
+
     const label = getByText(props.label);
     expect(label).toBeDefined();
   });
