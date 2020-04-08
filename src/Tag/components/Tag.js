@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Icon from '@material-ui/icons';
+import Close from '@material-ui/icons/Close';
 import * as Button from '../../Button';
 
 const propTypes = {
@@ -31,7 +31,7 @@ const Tag = ({
     <Styled>
       <div className="label">{parsedLabel}</div>
       { onDelete && (
-        <Button.Icon icon={<Icon.Close />} onClick={onDelete} />
+        <Button.Icon icon={<Close />} onClick={onDelete} />
       )}
     </Styled>
   );

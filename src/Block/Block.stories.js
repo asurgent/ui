@@ -2,43 +2,43 @@
 import React from 'react';
 import * as Block from './index';
 
-const content = 'Hello there im in a block';
+const storyContent = 'Hello there im in a block';
 
 export default { title: 'UI Components|Block' };
 
-export const centerBlock = () => (
+export const centerBlock = (content = storyContent) => (
   <Block.Center>{content}</Block.Center>
 );
 
-export const leftBlock = () => (
+export const leftBlock = (content = storyContent) => (
   <Block.Left>{content}</Block.Left>
 );
 
-export const rightBlock = () => (
+export const rightBlock = (content = storyContent) => (
   <Block.Right>{content}</Block.Right>
 );
 
-export const borderedBlock = () => (
+export const borderedBlock = (content = storyContent) => (
   <Block.Bordered>{content}</Block.Bordered>
 );
 
 
-export const plainBlock = () => (
+export const plainBlock = (content = storyContent) => (
   <Block.Plain>{content}</Block.Plain>
 );
 
-export const renderTransparentBlock = () => (
+export const renderTransparentBlock = (content = storyContent) => (
   <Block.Plain renderTransparent>{content}</Block.Plain>
 );
 
-export const spaceBetweenBlock = () => (
+export const spaceBetweenBlock = (content = storyContent) => (
   <Block.SpaceBetween>
     <span>{content}</span>
     <span>{content}</span>
   </Block.SpaceBetween>
 );
 
-export const wrapBlock = () => (
+export const wrapBlock = (content = storyContent) => (
   <Block.Wrap>
     <span>{content}</span>
     <span>{content}</span>

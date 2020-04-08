@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 import { lighten, darken } from 'polished';
+/*
+    lighten and darken-funcs needs to have format
+    "({theme}) => X && lighten(0.1, X)"
+    just having
+    "({theme}) => lighten(0.1, X)"
+    throws test errors
+*/
 
 export const Button = styled.div`
     border: 1px solid ${({ theme }) => theme.borderColor};
@@ -44,14 +51,14 @@ export const Button = styled.div`
 
     &:hover {
         cursor: pointer;
-        border-color: ${({ theme }) => lighten(0.03, theme.borderColor)};
-        background: ${({ theme }) => lighten(0.03, theme.backgroundColor)};
+        border-color: ${({ theme }) => theme.borderColor && lighten(0.03, theme.borderColor)};
+        background: ${({ theme }) => theme.backgroundColor && lighten(0.03, theme.backgroundColor)};
         color: ${({ theme }) => lighten(0.03, (theme.textColor ? theme.textColor : theme.white))};
     }
 
     &:active {
-        border-color: ${({ theme }) => darken(0.03, theme.borderColor)};
-        background: ${({ theme }) => darken(0.03, theme.backgroundColor)};
+        border-color: ${({ theme }) => theme.borderColor && darken(0.03, theme.borderColor)};
+        background: ${({ theme }) => theme.backgroundColor && darken(0.03, theme.backgroundColor)};
         color: ${({ theme }) => darken(0.03, (theme.textColor ? theme.textColor : theme.white))};
     }
 

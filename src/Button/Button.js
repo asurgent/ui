@@ -116,7 +116,7 @@ const Button = (props) => {
       <span className="label">{children}</span>
       {iconRight && <Styles.Spacer left>{iconRight}</Styles.Spacer>}
       { loading && (
-      <Styles.Spacer left>
+      <Styles.Spacer left data-testid="ring-spinner">
         <RingSpinner color={theme.spinnerColor} size={15} />
       </Styles.Spacer>
       )}
