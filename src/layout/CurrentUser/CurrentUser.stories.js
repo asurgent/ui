@@ -1,7 +1,7 @@
+/* eslint-disable no-console */
+
 import React from 'react';
-import {
-  withKnobs, boolean, text, number,
-} from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import {
   Dashboard, Explore, Comment, LibraryBooks,
 } from '@material-ui/icons';

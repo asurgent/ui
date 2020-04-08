@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Controllbar = styled.div`
+const Controllbar = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: 1fr auto;
@@ -27,3 +27,5 @@ export const Controllbar = styled.div`
         grid-area: filter;
     } 
 `;
+
+export { Controllbar as default };

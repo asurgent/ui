@@ -5,7 +5,7 @@ import { Wrapper, Picture } from './UserPhoto.styled';
 const GetUserInitials = (fullName) => {
   const match = (/^(\w).*\b(\w).*?|^(\w{2}).*?$/g).exec(`${fullName}`);
   if (match) {
-    const [_, fist, second, single] = match;
+    const [, fist, second, single] = match;
 
     if (single) {
       return single;

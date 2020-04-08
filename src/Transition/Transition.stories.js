@@ -9,7 +9,7 @@ export const fadeIn = () => {
 
   return (
     <div style={{ height: '100vh' }}>
-      <button onClick={() => setOpen(!open)}>{open ? 'hide' : 'show'}</button>
+      <button type="button" onClick={() => setOpen(!open)}>{open ? 'hide' : 'show'}</button>
       <Transitions.FadeIn isVisible={open}>
         <p>Hello</p>
       </Transitions.FadeIn>
@@ -23,7 +23,7 @@ export const fadeInSlideDown = () => {
 
   return (
     <div style={{ height: '100vh' }}>
-      <button onClick={() => setOpen(!open)}>{open ? 'hide' : 'show'}</button>
+      <button type="button" onClick={() => setOpen(!open)}>{open ? 'hide' : 'show'}</button>
       <Transitions.FadeInSlideDown isVisible={open}>
         <p>Hello</p>
       </Transitions.FadeInSlideDown>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import * as Button from '../../Button/Button.styled';
 
-export const SortWrapper = styled.div`
+const SortWrapper = styled.div`
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -10,3 +10,5 @@ export const SortWrapper = styled.div`
         margin: 0 .6rem;
     }
 `;
+
+export default SortWrapper;

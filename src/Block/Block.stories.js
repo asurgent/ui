@@ -53,7 +53,7 @@ export const errorBlock = () => (
 
 export const emptyState = () => (
   <Block.Emptystate title="Error ocurred">
-    <p>Somethigns broken</p>
+    <p>Somethings broken</p>
   </Block.Emptystate>
 );
 

@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import {
-  withKnobs, boolean, text, number,
-} from '@storybook/addon-knobs';
+/* eslint-disable no-console */
+
+import React from 'react';
+import { withKnobs } from '@storybook/addon-knobs';
 
 import * as Cron from './index';
 

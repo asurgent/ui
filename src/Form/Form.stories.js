@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 
 import React, { useEffect } from 'react';
 import * as Form from './index';
@@ -29,7 +30,7 @@ const specs = [{
   description_translation_key: 'property-validation-auto-action-976c9ae5-0575-4e72-8471-498df585f7b9-ticketNote-description',
 }];
 
-const values = {
+const ticketValues = {
   ticketNote: 'Hello there',
   ticketStatus: 'Pending',
 };
@@ -105,7 +106,7 @@ export const advancedRender = () => {
 };
 
 export const apiForm = () => {
-  const formData = Form.useFormBuilder(specs, values);
+  const formData = Form.useFormBuilder(specs, ticketValues);
 
   return (
     <Form.Primary

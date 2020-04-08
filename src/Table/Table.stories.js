@@ -1,6 +1,10 @@
+/* eslint-disable no-console */
+/* eslint-disable camelcase */
+
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
-  withKnobs, boolean, text, number,
+  withKnobs, boolean, text,
 } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import * as Table from './index';
@@ -32,6 +36,14 @@ const CardWrapper = styled.div`
   }
 `;
 
+const propTypes = {
+  row: PropTypes.instanceOf(Object),
+};
+
+const defaultProps = {
+  row: {},
+};
+
 const Card = ({ row }) => {
   const { valueD, valueA } = row;
 
@@ -44,6 +56,9 @@ const Card = ({ row }) => {
     </CardWrapper>
   );
 };
+
+Card.propTypes = propTypes;
+Card.defaultProps = defaultProps;
 
 export default {
   title: 'UI Components|Table',
@@ -158,7 +173,7 @@ export const main = () => {
       }
     });
 
-    table.registerFilterFetchCallback((payload, onSuccess, onFail) => {
+    table.registerFilterFetchCallback((payload, onSuccess) => {
       onSuccess({
         guys: [
           { value: 'Mike(1133)' },
@@ -191,7 +206,7 @@ export const main = () => {
           if (filterKey === 'guys') {
             const user = filter.match(/^(.+)\((\d+)\)/);
             if (user) {
-              const [_, newKey] = user;
+              const [, newKey] = user;
               return newKey;
             }
           }
@@ -209,7 +224,7 @@ export const main = () => {
             const user = filter.match(/\((\d+)\)/);
 
             if (user) {
-              const [_, newKey] = user;
+              const [, newKey] = user;
               return newKey;
             }
           }
@@ -269,7 +284,7 @@ export const main = () => {
 export const pagination = () => {
   const hook = Table.useTableHook();
   useEffect(() => {
-    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+    hook.registerRowFetchCallback((payload, onSuccess) => {
       onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
     });
     hook.parentReady();
@@ -286,7 +301,7 @@ export const sort = () => {
   const hook = Table.useTableHook();
 
   useEffect(() => {
-    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+    hook.registerRowFetchCallback((payload, onSuccess) => {
       onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
     });
     hook.parentReady();
@@ -313,11 +328,11 @@ export const filter = () => {
   const hook = Table.useTableHook();
 
   useEffect(() => {
-    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+    hook.registerRowFetchCallback((payload, onSuccess) => {
       console.log('fetch', payload);
       onSuccess({ });
     });
-    hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
+    hook.registerFilterFetchCallback((payload, onSuccess) => {
       onSuccess({
         guys: [{ value: '1' },
           ...Array.from({ length: 100 }, (_, i) => ({
@@ -356,7 +371,7 @@ export const searchBar = () => {
   const hook = Table.useTableHook();
 
   useEffect(() => {
-    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+    hook.registerRowFetchCallback((payload, onSuccess) => {
       onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
     });
     hook.parentReady();
@@ -373,13 +388,13 @@ export const controlls = () => {
   const hook = Table.useTableHook();
 
   useEffect(() => {
-    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+    hook.registerRowFetchCallback((payload, onSuccess) => {
       onSuccess({
         result: [...rowDummyData], page: 2, total_pages: 20, total_count: 1000,
       });
     });
 
-    hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
+    hook.registerFilterFetchCallback((payload, onSuccess) => {
       onSuccess({
         gurka: Array.from({ length: 20 }, (_, i) => ({ value: i })),
         pankaka: [
@@ -432,7 +447,7 @@ export const separate = () => {
   });
 
   useEffect(() => {
-    hook.registerRowFetchCallback((payload, onSuccess, onFail) => {
+    hook.registerRowFetchCallback((payload, onSuccess) => {
       console.log('fetch row', payload);
 
       onSuccess({
@@ -456,7 +471,7 @@ export const separate = () => {
       });
     });
 
-    hook.registerFilterFetchCallback((payload, onSuccess, onFail) => {
+    hook.registerFilterFetchCallback((payload, onSuccess) => {
       console.log('fetch facet', payload);
       onSuccess({
         guys: [
@@ -487,8 +502,8 @@ export const separate = () => {
       <Table.Controlls
         tableHook={hook}
         withSearch={boolean('With search', true)}
-        parseFilterLabelOutput={(filter, filterKey) => {
-          if (filter === '') {
+        parseFilterLabelOutput={(tableFilter) => {
+          if (tableFilter === '') {
             return 'Missing';
           }
 

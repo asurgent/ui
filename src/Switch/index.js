@@ -1,1 +1,3 @@
-export { default as Primary } from './Switch';
+import Primary from './Switch';
+
+export default Primary;

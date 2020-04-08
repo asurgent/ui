@@ -1,1 +1,3 @@
-export { default as Primary } from './Modal';
+import Modal from './Modal';
+
+export default Modal;

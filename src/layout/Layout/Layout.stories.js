@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import React, { useEffect } from 'react';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import * as Icons from '@material-ui/icons';
@@ -5,7 +7,7 @@ import { Main, useLayout } from './index';
 import * as Block from '../../Block';
 import * as Modal from '../../Modal';
 import * as Table from '../../Table';
-import { Omnibar, LeftActions, RightActions } from '../Omnibar';
+import { Omnibar } from '../Omnibar';
 
 const navigationList = (t, customerId) => [
   {
@@ -34,7 +36,7 @@ const avaliableLanguages = (translator, selected) => [
   { value: 'sv', label: translator('swedish'), default: selected === 'sv' },
 ];
 
-const createList = (translator, selected) => [
+const createList = () => [
   {
     title: 'Ticket',
     description: 'create a new ticket',
@@ -75,7 +77,7 @@ export const mainLayout = () => {
       isAdmin: true,
     });
 
-    table.registerRowFetchCallback((payload, onSuccess, onFail) => {
+    table.registerRowFetchCallback((payload, onSuccess) => {
       const rowDummyData = Array.from({ length: 15 }, () => ({
         valueA: 'Cell 1',
         valueB: 'Cell 2',
@@ -85,7 +87,7 @@ export const mainLayout = () => {
       onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
     });
 
-    table.registerFilterFetchCallback((payload, onSuccess, onFail) => {
+    table.registerFilterFetchCallback((payload, onSuccess) => {
       onSuccess({
         guys: [
           { value: 'Mike(1133)' },

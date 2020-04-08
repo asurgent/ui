@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const TooltipWrapper = styled.div`
+const TooltipWrapper = styled.div`
   top: 0;
   left: 0;
   z-index: 3;
@@ -8,13 +8,7 @@ export const TooltipWrapper = styled.div`
   background-color: #161616;
   padding: .8rem;
   border-radius: 3px;
-  transform: ${({ middle, right }) => {
-    if (middle) {
-      return 'translateX(-50%)';
-    } if (right) {
-      return 'translateY(-50%)';
-    }
-  }};
+  transform: ${({ middle }) => (middle ? 'translateX(-50%)' : 'translateY(-50%)')};
   
   color: #ffffff;
   display: none;
@@ -23,3 +17,5 @@ export const TooltipWrapper = styled.div`
     display: block;
   }
 `;
+
+export { TooltipWrapper as default };

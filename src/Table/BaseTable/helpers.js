@@ -23,7 +23,16 @@ const mergeDeep = (target, source) => {
 };
 
 const extendCellObject = (index, cellData, newCell, headerData, rowData) => {
-  const renderCell = headerData[index] ? (Object.prototype.hasOwnProperty.call(headerData[index], 'render') ? headerData[index].render : true) : true;
+  let renderCell;
+  if (headerData[index]) {
+    if (Object.prototype.hasOwnProperty.call(headerData[index], 'render')) {
+      renderCell = headerData[index].render;
+    } else {
+      renderCell = true;
+    }
+  } else {
+    renderCell = true;
+  }
   const headerProps = headerData[index] ? headerData[index].props : {};
   const rowProps = rowData.props || {};
   const cellProps = (cellData.props || {});
@@ -148,7 +157,12 @@ const generateRows = (props, components) => props.rowData
         if (typeof clickRow === 'object') {
           const { link, onClick, passLocationState = false } = clickRow;
           const linkRow = (
-            <Button.Plain key={rowData.id} link={link} onClick={onClick} passLocationState={passLocationState}>
+            <Button.Plain
+              key={rowData.id}
+              link={link}
+              onClick={onClick}
+              passLocationState={passLocationState}
+            >
               {row}
             </Button.Plain>
           );

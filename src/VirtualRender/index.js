@@ -1,3 +1,3 @@
 import VirtualRender from './VirtualRender';
 
-export { VirtualRender as List };
+export { VirtualRender as default };

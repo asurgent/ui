@@ -79,10 +79,11 @@ const CronEditor = ({
     if (cronList.length === 6) {
       cronList.pop();
     }
-    const [minutes, hours, days, month, weeek] = cronList;
+
+    const [, , days, month, weeek] = cronList;
 
     if (month) {
-      const [_, repeatEveryMonth] = month.split('/');
+      const [, repeatEveryMonth] = month.split('/');
       setEveryMonth(parseInt((repeatEveryMonth || 1), 10));
     }
 
@@ -306,7 +307,12 @@ const CronEditor = ({
         </ThemeProvider>
       </C.Editor>
       {repeat !== 'never' && (
-        <RepeatOutput withBorder repeat={repeat} cronExpression={cronExpression} startDate={startDate} />
+        <RepeatOutput
+          withBorder
+          repeat={repeat}
+          cronExpression={cronExpression}
+          startDate={startDate}
+        />
       )}
 
     </C.Columns>

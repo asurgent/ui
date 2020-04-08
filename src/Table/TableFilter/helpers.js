@@ -80,7 +80,11 @@ export const buildFilterStateString = (selectedFilters) => {
   return '';
 };
 
-export const buildFilterQuery = (selectedFilters, parseRequestItemOutput, parseRequestKeyOutput) => {
+export const buildFilterQuery = (
+  selectedFilters,
+  parseRequestItemOutput,
+  parseRequestKeyOutput,
+) => {
   // Helper to run parser-function (if declared). Otherwise use standard keys & values
   const parseRequestItem = (item, groupKey) => {
     if (parseRequestItemOutput && typeof parseRequestItemOutput === 'function') {

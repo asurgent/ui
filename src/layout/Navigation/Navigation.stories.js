@@ -1,3 +1,5 @@
+/* esling-disable no-console */
+
 import React from 'react';
 import {
   withKnobs, boolean, text,
@@ -25,7 +27,7 @@ export const navigation = () => (
           active: true,
           icon: (<Icon.Dashboard fontSize="large" />),
           link: '/',
-          isActive: (match, location) => true,
+          isActive: () => true,
         },
         {
           label: 'Explore', tooltip: 'Explore Environment', icon: (<Icon.Explore fontSize="large" />), link: '/test2',

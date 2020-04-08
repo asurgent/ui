@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as Tooltip from '../../Tooltip';
 
@@ -30,13 +30,14 @@ const Label = (props) => {
     name,
     tooltip,
     noLabel,
+    value,
   } = props;
 
-  const [value, setValue] = useState('');
+  const [labelValue, setLabelValue] = useState('');
 
   useEffect(() => {
-    setValue(props.value);
-  }, [props.value]);
+    setLabelValue(value);
+  }, [value]);
 
   return (
     <Main>
@@ -51,7 +52,7 @@ const Label = (props) => {
       </Header>
       )}
       <Wrapper style={{ opacity: '.4' }}>
-        { value }
+        { labelValue }
       </Wrapper>
     </Main>
   );
