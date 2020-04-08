@@ -25,4 +25,4 @@ jobs:
       - run: npm test
         env:
           CI: true
-          NODE_AUTH_TOKEN: ${{github.token}}
+          NODE_AUTH_TOKEN: ${{secrets.npm_key}}
