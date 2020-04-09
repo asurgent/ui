@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+export default {};
+
 const TooltipWrapper = styled.div`
   top: 0;
   left: 0;
@@ -18,4 +20,4 @@ const TooltipWrapper = styled.div`
   }
 `;
 
-export { TooltipWrapper as default };
+export { TooltipWrapper };
