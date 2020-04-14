@@ -1,9 +1,8 @@
-/* eslint-disable no-console */
-
 import React from 'react';
 import {
   withKnobs, boolean,
 } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import {
   Dashboard, Explore, Comment, LibraryBooks,
 } from '@material-ui/icons';
@@ -43,9 +42,9 @@ export const dropdownMenu = () => (
       name="Kalle Anka"
       customerName="Google"
       email="test@mail.com"
-      onNavigate={() => console.log('on navigate')}
-      onChangeLanguage={(lang) => console.log(lang)}
-      onLogout={() => console.log('logout action')}
+      onNavigate={action('on navigate')}
+      onChangeLanguage={(lang) => action('Changed language')(lang)}
+      onLogout={action('logout action')}
     />
   </div>
 );

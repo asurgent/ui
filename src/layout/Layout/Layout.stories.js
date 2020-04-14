@@ -1,7 +1,6 @@
-/* eslint-disable no-console */
-
 import React, { useEffect } from 'react';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import * as Icons from '@material-ui/icons';
 import { Main, useLayout } from './index';
 import * as Block from '../../Block';
@@ -36,22 +35,19 @@ const avaliableLanguages = (translator, selected) => [
   { value: 'sv', label: translator('swedish'), default: selected === 'sv' },
 ];
 
+// createList = (translator, selected) =>
 const createList = () => [
   {
     title: 'Ticket',
     description: 'create a new ticket',
     icon: (Icons.ConfirmationNumber),
-    onClick: () => {
-      console.log('create ticket');
-    },
+    onClick: action('create ticket'),
   },
   {
     title: 'Service window',
     description: 'setup a new service window',
     icon: (Icons.Timer),
-    onClick: () => {
-      console.log('create ticket');
-    },
+    onClick: action('create ticket'),
   },
 ];
 
@@ -62,8 +58,8 @@ export const mainLayout = () => {
     navigationListConstructor: navigationList,
     avaliableLanguagesConstructor: avaliableLanguages,
     createListConstructor: createList,
-    onLogout: () => { console.log('Logout action'); },
-    onChangeLanguage: (lang) => { console.log(`Selected language: ${lang}`); },
+    onLogout: action('Logout action'),
+    onChangeLanguage: (lang) => action('Selected language')(lang),
   });
 
   useEffect(() => {
@@ -77,6 +73,7 @@ export const mainLayout = () => {
       isAdmin: true,
     });
 
+    //  registerRowFetchCallback => (payload, onSuccess, onFail)
     table.registerRowFetchCallback((payload, onSuccess) => {
       const rowDummyData = Array.from({ length: 15 }, () => ({
         valueA: 'Cell 1',
@@ -87,6 +84,7 @@ export const mainLayout = () => {
       onSuccess({ result: [...rowDummyData], page: 2, total_pages: 20 });
     });
 
+    // registerFilterFetchCallback => (payload, onSuccess, onFail)
     table.registerFilterFetchCallback((payload, onSuccess) => {
       onSuccess({
         guys: [

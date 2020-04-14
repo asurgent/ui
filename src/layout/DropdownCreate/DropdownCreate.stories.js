@@ -1,7 +1,6 @@
-/* eslint-disable no-console */
-
 import React, { useState } from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import { Dashboard } from '@material-ui/icons';
 import DropdownCreate from './index';
 
@@ -51,9 +50,7 @@ export const dropdownCreate = () => {
             title: 'Ticket',
             description: 'create a new ticket',
             icon: (Dashboard),
-            onClick: () => {
-              console.log('create ticket');
-            },
+            onClick: action('create ticket'),
           },
         ]}
       />

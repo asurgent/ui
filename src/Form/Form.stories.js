@@ -1,6 +1,5 @@
-/* eslint-disable no-console */
-
 import React, { useEffect } from 'react';
+import { action } from '@storybook/addon-actions';
 import * as Form from './index';
 import * as Button from '../Button';
 import * as Block from '../Block';
@@ -41,9 +40,7 @@ export const simpleForm = () => {
   return (
     <Form.Primary
       form={formData}
-      onChangeTimer={(values) => {
-        console.log(values);
-      }}
+      onChangeTimer={(values) => action()('Changed', values)}
     />
   );
 };
@@ -54,9 +51,7 @@ export const defaultForm = () => {
   return (
     <Form.Primary
       form={formData}
-      onSubmit={(values) => {
-        console.log(values);
-      }}
+      onSubmit={(values) => action()('Submitted', values)}
     >
       {(inputList, renderFields, onSubmitAction) => (
         <>
@@ -77,9 +72,7 @@ export const advancedRender = () => {
   return (
     <Form.Primary
       form={formData}
-      onSubmit={(values) => {
-        console.log(values);
-      }}
+      onSubmit={(values) => action()('Submitted', values)}
     >
       {(inputList, renderFields, onSubmitAction) => (
         <>
@@ -111,9 +104,7 @@ export const apiForm = () => {
   return (
     <Form.Primary
       form={formData}
-      onSubmit={(values) => {
-        console.log(values);
-      }}
+      onSubmit={(values) => action()('Submitted', values)}
     >
       {(inputList, renderFields, onSubmitAction) => (
         <>
@@ -142,9 +133,7 @@ export const updateForm = () => {
   return (
     <Form.Primary
       form={formData}
-      onChangeTimer={(values) => {
-        console.log(values);
-      }}
+      onChangeTimer={(values) => action()('Updated', values)}
     />
   );
 };
