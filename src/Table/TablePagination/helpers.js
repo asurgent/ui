@@ -32,7 +32,8 @@ const pageNumbersList = (currentPage, totalPages, delta) => {
   // Here we will return the numbers after the second ellipsis
   // Eg:
   // pageItem(1) => 1
-  // pageNumbers(10 - delta + 1) => [6,7,8,9,10] (Max-lenght is delta, thats why we only get 5-items)
+  // pageNumbers(10 - delta + 1) => [6,7,8,9,10] (
+  // Max-length is delta, thats why we only get 5-items)
   // result > [1,6,7,(8),9,10]
   if (totalPages < (current + delta - 1)) {
     const val = totalPages - delta + 1;

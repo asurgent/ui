@@ -1,8 +1,8 @@
-
 import React from 'react';
 import {
   withKnobs, number, text, boolean,
 } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import * as Tag from './index';
 
 
@@ -11,7 +11,7 @@ export default { title: 'UI Components|Tag', decorators: [withKnobs] };
 export const singeTag = () => (
   <>
     <Tag.Single
-      onDelete={boolean('Has delete action', false) ? (() => console.log('click')) : false}
+      onDelete={boolean('Has delete action', false) ? (action('click')) : false}
       label={text('Tag label', 'Tag')}
       max={number('Max letter count (0 is unlimited)', 0)}
     />
@@ -40,7 +40,7 @@ tagCollection.story = {
 export const tagCollectionObject = () => {
   const tags = Array.from({ length: 10 }, (_, i) => ({
     value: `Tag-${i}`,
-    onClick: (() => console.log(`Tag-${i}`)),
+    onClick: (() => action('click')(`Tag-${i}`)),
   }));
   return (
     <>

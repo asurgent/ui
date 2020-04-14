@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  withKnobs, boolean, text, number,
+  withKnobs,
 } from '@storybook/addon-knobs';
 import * as Tooltip from './index';
 

@@ -1,5 +1,5 @@
-
 import React, { useEffect } from 'react';
+import { action } from '@storybook/addon-actions';
 import * as Form from './index';
 import * as Button from '../Button';
 import * as Block from '../Block';
@@ -29,7 +29,7 @@ const specs = [{
   description_translation_key: 'property-validation-auto-action-976c9ae5-0575-4e72-8471-498df585f7b9-ticketNote-description',
 }];
 
-const values = {
+const ticketValues = {
   ticketNote: 'Hello there',
   ticketStatus: 'Pending',
 };
@@ -40,9 +40,7 @@ export const simpleForm = () => {
   return (
     <Form.Primary
       form={formData}
-      onChangeTimer={(values) => {
-        console.log(values);
-      }}
+      onChangeTimer={(values) => action()('Changed', values)}
     />
   );
 };
@@ -53,9 +51,7 @@ export const defaultForm = () => {
   return (
     <Form.Primary
       form={formData}
-      onSubmit={(values) => {
-        console.log(values);
-      }}
+      onSubmit={(values) => action()('Submitted', values)}
     >
       {(inputList, renderFields, onSubmitAction) => (
         <>
@@ -76,9 +72,7 @@ export const advancedRender = () => {
   return (
     <Form.Primary
       form={formData}
-      onSubmit={(values) => {
-        console.log(values);
-      }}
+      onSubmit={(values) => action()('Submitted', values)}
     >
       {(inputList, renderFields, onSubmitAction) => (
         <>
@@ -105,14 +99,12 @@ export const advancedRender = () => {
 };
 
 export const apiForm = () => {
-  const formData = Form.useFormBuilder(specs, values);
+  const formData = Form.useFormBuilder(specs, ticketValues);
 
   return (
     <Form.Primary
       form={formData}
-      onSubmit={(values) => {
-        console.log(values);
-      }}
+      onSubmit={(values) => action()('Submitted', values)}
     >
       {(inputList, renderFields, onSubmitAction) => (
         <>
@@ -141,9 +133,7 @@ export const updateForm = () => {
   return (
     <Form.Primary
       form={formData}
-      onChangeTimer={(values) => {
-        console.log(values);
-      }}
+      onChangeTimer={(values) => action()('Updated', values)}
     />
   );
 };

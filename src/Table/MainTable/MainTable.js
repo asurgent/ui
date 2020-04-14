@@ -16,12 +16,13 @@ const getEmptystate = (hook, props) => {
   if (hook.requestFailedMessage()) {
     return hook.requestFailedMessage();
   }
-
-  const base = props.emptystate;
+  const { emptystate } = props;
+  const base = emptystate;
   const query = hook.getSearchedQuery();
   if (query) {
     return `${base} for : ${query}`;
   }
+  return null;
 };
 
 

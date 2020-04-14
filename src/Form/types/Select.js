@@ -18,6 +18,7 @@ const propTyps = {
   tooltip: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)).isRequired,
   props: PropTypes.instanceOf(Object),
+  noLabel: PropTypes.bool,
 };
 
 const defaultProps = {

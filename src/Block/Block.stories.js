@@ -2,43 +2,42 @@
 import React from 'react';
 import * as Block from './index';
 
-const storyContent = 'Hello there im in a block';
+const content = 'Hello there im in a block';
 
 export default { title: 'UI Components|Block' };
 
-export const centerBlock = (content = storyContent) => (
+export const centerBlock = () => (
   <Block.Center>{content}</Block.Center>
 );
 
-export const leftBlock = (content = storyContent) => (
+export const leftBlock = () => (
   <Block.Left>{content}</Block.Left>
 );
 
-export const rightBlock = (content = storyContent) => (
+export const rightBlock = () => (
   <Block.Right>{content}</Block.Right>
 );
 
-export const borderedBlock = (content = storyContent) => (
+export const borderedBlock = () => (
   <Block.Bordered>{content}</Block.Bordered>
 );
 
-
-export const plainBlock = (content = storyContent) => (
+export const plainBlock = () => (
   <Block.Plain>{content}</Block.Plain>
 );
 
-export const renderTransparentBlock = (content = storyContent) => (
+export const renderTransparentBlock = () => (
   <Block.Plain renderTransparent>{content}</Block.Plain>
 );
 
-export const spaceBetweenBlock = (content = storyContent) => (
+export const spaceBetweenBlock = () => (
   <Block.SpaceBetween>
     <span>{content}</span>
     <span>{content}</span>
   </Block.SpaceBetween>
 );
 
-export const wrapBlock = (content = storyContent) => (
+export const wrapBlock = () => (
   <Block.Wrap>
     <span>{content}</span>
     <span>{content}</span>
@@ -53,7 +52,7 @@ export const errorBlock = () => (
 
 export const emptyState = () => (
   <Block.Emptystate title="Error ocurred">
-    <p>Somethigns broken</p>
+    <p>Somethings broken</p>
   </Block.Emptystate>
 );
 

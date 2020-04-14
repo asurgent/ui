@@ -7,13 +7,20 @@ import * as Shield from '../../Shield';
 import * as Transition from '../../Transition';
 
 
-const propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  createActionList: PropTypes.instanceOf(Array).isRequired,
-  onClose: PropTypes.func.isRequired,
+const btnPropTypes = {
+  onClick: PropTypes.func,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  onClose: PropTypes.func,
+  icon: PropTypes.instanceOf(Object),
 };
-
-const defaultProps = {};
+const btnDefaultProps = {
+  onClick: null,
+  title: '',
+  description: '',
+  onClose: null,
+  icon: null,
+};
 
 const CreateItemButton = ({
   onClick,
@@ -30,6 +37,17 @@ const CreateItemButton = ({
     </U.CreateItem>
   </Button.Plain>
 );
+
+CreateItemButton.propTypes = btnPropTypes;
+CreateItemButton.defaultProps = btnDefaultProps;
+
+const dropdownPropTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  createActionList: PropTypes.instanceOf(Array).isRequired,
+  onClose: PropTypes.func.isRequired,
+};
+
+const dropdownDefaultProps = {};
 
 const DropdownCreate = ({
   createActionList,
@@ -87,8 +105,8 @@ const DropdownCreate = ({
 
 );
 
-DropdownCreate.propTypes = propTypes;
-DropdownCreate.defaultProps = defaultProps;
+DropdownCreate.propTypes = dropdownPropTypes;
+DropdownCreate.defaultProps = dropdownDefaultProps;
 DropdownCreate.displayName = '@asurgent.ui.layout.DropdownCreate';
 
 export default DropdownCreate;

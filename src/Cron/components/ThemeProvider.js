@@ -1,5 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const propTypes = {
+  children: PropTypes.instanceOf(Object),
+};
+
+const defaultProps = {
+  children: null,
+};
 
 const theme = createMuiTheme({
   palette: {
@@ -28,4 +37,6 @@ const CustomThemeProvider = ({ children }) => (
   </ThemeProvider>
 );
 
+CustomThemeProvider.propTypes = propTypes;
+CustomThemeProvider.defaultProps = defaultProps;
 export default CustomThemeProvider;

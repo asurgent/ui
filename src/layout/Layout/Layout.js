@@ -19,6 +19,18 @@ const propTypes = {
 
 const defaultProps = {};
 
+const createListPropTypes = {
+  shouldShow: PropTypes.bool,
+  createList: PropTypes.func,
+  translations: PropTypes.instanceOf(Object),
+};
+
+const createListDefaultProps = {
+  shouldShow: true,
+  createList: null,
+  translations: null,
+};
+
 const CreateList = ({ shouldShow, createList, translations }) => {
   const [createOpen, setCreateOpen] = useState(false);
 
@@ -41,6 +53,9 @@ const CreateList = ({ shouldShow, createList, translations }) => {
     </>
   );
 };
+
+CreateList.propTypes = createListPropTypes;
+CreateList.defaultProps = createListDefaultProps;
 
 const Layout = ({ provider, children }) => {
   const navigation = provider.getNavigationItems();

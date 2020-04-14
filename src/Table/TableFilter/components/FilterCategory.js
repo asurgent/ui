@@ -74,7 +74,11 @@ const FilterCategory = (props) => {
             <C.ListWrapper>
               {
                 groupHook.getOptions().length > 0 && (
-                  <VirtualRender.List rowHeight={48} items={groupHook.getOptions()} style={{ flex: 1 }}>
+                  <VirtualRender.List
+                    rowHeight={48}
+                    items={groupHook.getOptions()}
+                    style={{ flex: 1 }}
+                  >
                     {(filter, key) => (
                       <FilterItem
                         key={key}

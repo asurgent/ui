@@ -83,7 +83,13 @@ class Tooltip extends Component {
           {tooltipMessage ? this.renderChildren(children) : children}
           { show === true && tooltipMessage
             && ReactDOM.createPortal(
-              <C.TooltipWrapper middle={isMiddle} right={isRight} style={coordinates}>{tooltipMessage}</C.TooltipWrapper>,
+              <C.TooltipWrapper
+                middle={isMiddle}
+                right={isRight}
+                style={coordinates}
+              >
+                {tooltipMessage}
+              </C.TooltipWrapper>,
               modalRoot,
             )}
         </>
