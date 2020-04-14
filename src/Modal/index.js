@@ -1,3 +1,3 @@
-import Modal from './Modal';
+/* eslint-disable import/prefer-default-export */
 
-export default Modal;
+export { default as Primary } from './Modal';

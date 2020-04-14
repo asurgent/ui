@@ -1,5 +1,7 @@
 import React from 'react';
-import { withKnobs, number } from '@storybook/addon-knobs';
+import {
+  withKnobs, number,
+} from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import * as VirtualRender from './index';
 

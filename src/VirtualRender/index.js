@@ -1,3 +1,5 @@
+/* eslint-disable import/prefer-default-export */
+
 import VirtualRender from './VirtualRender';
 
-export { VirtualRender as default };
+export { VirtualRender as List };

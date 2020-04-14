@@ -1,6 +1,8 @@
+/* eslint-disable import/prefer-default-export */
+
 import styled from 'styled-components';
 
-const Controllbar = styled.div`
+export const Controllbar = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: 1fr auto;
@@ -27,5 +29,3 @@ const Controllbar = styled.div`
         grid-area: filter;
     } 
 `;
-
-export { Controllbar as default };
