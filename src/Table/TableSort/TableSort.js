@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
 import { Primary as Form, useFormBuilder } from '../../Form';
 import * as Button from '../../Button';
-import SortWrapper from './TableSort.styled';
+import { SortWrapper } from './TableSort.styled';
 
 
 const propTypes = {

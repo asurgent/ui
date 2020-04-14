@@ -1,8 +1,8 @@
+/* eslint-disable import/prefer-default-export */
+
 import styled from 'styled-components';
 
-export default {};
-
-const TooltipWrapper = styled.div`
+export const TooltipWrapper = styled.div`
   top: 0;
   left: 0;
   z-index: 3;
@@ -19,5 +19,3 @@ const TooltipWrapper = styled.div`
     display: block;
   }
 `;
-
-export { TooltipWrapper };

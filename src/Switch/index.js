@@ -1,3 +1,3 @@
-import Primary from './Switch';
+/* eslint-disable import/prefer-default-export */
 
-export default Primary;
+export { default as Primary } from './Switch';
