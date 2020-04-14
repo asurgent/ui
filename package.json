@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/asurgent/ui#readme",
   "devDependencies": {
-    "@asurgent/eslint-config-asurgent": "^1.1.2",
+    "@asurgent/eslint-config-asurgent": "^1.1.4",
     "@babel/cli": "^7.7.4",
     "@babel/core": "^7.7.4",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
