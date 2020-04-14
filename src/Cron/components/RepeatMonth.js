@@ -24,9 +24,9 @@ const RepeatMonth = ({
     return (
       <>
         <C.Label>
-          Every
+          {`Every  `}
           <TextField type="number" label="" value={everyMonth} onChange={onChange} />
-          month(s) on:
+          {`  month(s) on:`}
         </C.Label>
         <C.MonthSlector>
           {
