@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Primary as Form, useFormBuilder } from '../../Form';
+import * as C from './TableSearchBar.styled';
 
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
@@ -25,7 +26,11 @@ const TableSearchBar = (props) => {
   });
 
   useEffect(() => {
-    formData.updateField('search', { props: { disabled: tableHook.isLoading } });
+    if (tableHook.isLoading) {
+      formData.blurField('search');
+    } else {
+      formData.focusOnField('search');
+    }
   }, [tableHook.isLoading]);
 
   useEffect(() => {
@@ -38,14 +43,8 @@ const TableSearchBar = (props) => {
     formData.updateField('search', { placeholder: searchLabel });
   }, [searchLabel]);
 
-  useEffect(() => {
-    if (!formData.formData.search.props.disabled) {
-      formData.focusOnField('search');
-    }
-  }, [formData.formData]);
-
   return (
-    <>
+    <C.SearchBarContainer>
       <Form
         form={formData}
         className={className}
@@ -55,7 +54,8 @@ const TableSearchBar = (props) => {
       >
         {({ search }) => search}
       </Form>
-    </>
+      {tableHook.isLoading && <C.SearchBarBlocker />}
+    </C.SearchBarContainer>
   );
 };
 
