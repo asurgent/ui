@@ -31,6 +31,19 @@ export const fadeInSlideDown = () => {
   );
 };
 
+export const fadeInSlideDownOnDesktop = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div style={{ height: '100vh' }}>
+      <button type="button" onClick={() => setOpen(!open)}>{open ? 'hide' : 'show'}</button>
+      <Transitions.FadeInSlideDownOnDesktop isVisible={open}>
+        <p>Hello slide on desktop</p>
+      </Transitions.FadeInSlideDownOnDesktop>
+    </div>
+  );
+};
+
 export default {
   title: 'Ui Components|Transitions',
   decorators: [withKnobs],
