@@ -9,3 +9,7 @@ export default { title: 'UI Components|Loader', decorators: [withKnobs] };
 export const loader = () => (
   <Loader.Ring size={number('Size', 100)} color={text('Color', '#239dd9')} />
 );
+
+loader.story = {
+  name: 'Ring Loader',
+};
