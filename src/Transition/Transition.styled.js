@@ -25,3 +25,11 @@ export const FadeInSlideDown = styled(FadeIn)`
     ${({ state }) => (state === 'entering' || state === 'entered' ? 20 : 0)}px
     );
 `;
+
+export const FadeInSlideDownOnDesktop = styled(FadeIn)`
+  @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
+      transform: translateY(
+      ${({ state }) => (state === 'entering' || state === 'entered' ? 20 : 0)}px
+      );
+  }
+`;
