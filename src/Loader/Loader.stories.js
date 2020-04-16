@@ -7,7 +7,7 @@ import * as Loader from './index';
 export default { title: 'UI Components|Loader', decorators: [withKnobs] };
 
 export const loader = () => (
-  <Loader.Ring size={number('Size', 100)} color={text('Color', '#239dd9')} />
+  <Loader.Ring size={number('Size', 100)} speed={number('Speed', 2)} color={text('Color', '#239dd9')} />
 );
 
 loader.story = {

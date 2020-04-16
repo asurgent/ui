@@ -14,13 +14,9 @@ const defaultProps = {
   speed: 2,
 };
 
-const Loader = ({ size, color, speed }) => (
-  <>
-    <C.Wrapper size={size}>
-      <C.Ring size={size} color={color} speed={speed} />
-    </C.Wrapper>
-  </>
-);
+const Loader = ({
+  size, color, speed,
+}) => (<C.Ring size={size} color={color} speed={speed} />);
 
 Loader.propTypes = propTypes;
 Loader.defaultProps = defaultProps;
