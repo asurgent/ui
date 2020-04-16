@@ -1,3 +1,1 @@
-import Loader from './Loader';
-
-export { Loader as Ring };
+export { default as Ring } from './Loader';
