@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { buildFilterQuery } from './helpers';
+import translation from './TableFilter.translation';
 
 const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
   // Keeps track of when component has been mounted.
@@ -31,7 +32,7 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
       return comparison;
     };
 
-
+    const { t } = translation;
     if (Object.keys(allFilters).length
     && Object.prototype.hasOwnProperty.call(allFilters, filterGroupKey)) {
       const selectedInGroup = filterHook.getSelectedItemsByKey(filterGroupKey);
@@ -70,24 +71,24 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
         const returnList = [];
 
         if (matched.length > 0) {
-          returnList.push({ value: 'selected', label: true, static: true });
+          returnList.push({ value: t('selected', 'asurgentui'), label: true, static: true });
           returnList.push(matched.sort(compare));
         }
 
         if (unmatched.length > 0) {
-          returnList.push({ value: 'selected (unmatched)', label: true, static: true });
+          returnList.push({ value: t('unmatched', 'asurgentui'), label: true, static: true });
           returnList.push(unmatched.sort(compare));
         }
 
         if (unselectedInGroup.length > 0) {
-          returnList.push({ value: 'unselected', label: true, static: true });
+          returnList.push({ value: t('unselected', 'asurgentui'), label: true, static: true });
           returnList.push(unselectedInGroup.sort(compare));
         }
 
         return returnList.flat();
       }
 
-      return [{ value: 'unselected', label: true }, ...groupFilter];
+      return [{ value: t('unselected', 'asurgentui'), label: true }, ...groupFilter];
     }
 
     return [];
