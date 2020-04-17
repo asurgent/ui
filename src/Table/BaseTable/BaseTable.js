@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
-import { RingSpinner } from 'react-spinners-kit';
 import * as Icons from '@material-ui/icons';
+import * as Spinner from '../../Spinner';
 import TableHeader from '../TableHeader';
 import * as Button from '../../Button';
 import * as C from './BaseTable.styled';
 import generateRows from './helpers';
-
 
 export const propTypes = {
   canExportResults: PropTypes.bool,
@@ -147,7 +146,7 @@ const BaseTable = withTheme((props) => {
           {!isLoading && rows}
           {isLoading && (
             <C.Loading>
-              <RingSpinner color={theme.blue400} size={32} />
+              <Spinner.Ring size={32} color={theme.blue400} />
             </C.Loading>
           )}
           {/* Render rows end */}

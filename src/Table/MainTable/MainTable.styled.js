@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
 `;
 
-export const Loader = styled.div`
+export const TableLoader = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;

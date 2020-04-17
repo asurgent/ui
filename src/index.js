@@ -6,7 +6,7 @@ import * as Table from './Table';
 import * as Tag from './Tag';
 
 import * as Button from './Button';
-import * as Loader from './Loader';
+import * as Spinner from './Spinner';
 import * as Block from './Block';
 import * as Modal from './Modal';
 import * as Switch from './Switch';
@@ -19,7 +19,7 @@ import * as Omnibar from './layout/Omnibar';
 
 export {
   Button,
-  Loader,
+  Spinner,
   Block,
   Form,
   Modal,
