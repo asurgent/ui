@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { RingSpinner } from 'react-spinners-kit';
 import { withTheme } from 'styled-components';
 import * as Icon from '@material-ui/icons';
+import * as Loader from '../../../Loader';
 import * as Form from '../../../Form';
 import * as VirtualRender from '../../../VirtualRender';
 import * as Button from '../../../Button';
@@ -51,7 +51,7 @@ const FilterCategory = (props) => {
             {
               tableHook.isFilterLoading && (
                 <C.Center>
-                  <RingSpinner color={theme.blue400} size={24} />
+                  <Loader.Ring size={24} color={theme.blue400} />
                 </C.Center>
               )
             }
