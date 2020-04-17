@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
-import * as Loader from '../../Loader';
+import * as Spinner from '../../Spinner';
 import TablePagination from '../TablePagination';
 import Controlls from '../TableControlls';
 import BaseTable from '../BaseTable';
@@ -98,7 +98,7 @@ const Table = (props) => {
         ReactDOM.createPortal(
           <Shield.Dark>
             <TableLoader>
-              <Loader.Ring size={50} color={theme.blue400} />
+              <Spinner.Ring size={50} color={theme.blue400} />
             </TableLoader>
           </Shield.Dark>,
           modalRoot,

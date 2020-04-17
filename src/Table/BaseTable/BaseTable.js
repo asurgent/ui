@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import * as Icons from '@material-ui/icons';
-import * as Loader from '../../Loader';
+import * as Spinner from '../../Spinner';
 import TableHeader from '../TableHeader';
 import * as Button from '../../Button';
 import * as C from './BaseTable.styled';
@@ -146,7 +146,7 @@ const BaseTable = withTheme((props) => {
           {!isLoading && rows}
           {isLoading && (
             <C.Loading>
-              <Loader.Ring size={32} color={theme.blue400} />
+              <Spinner.Ring size={32} color={theme.blue400} />
             </C.Loading>
           )}
           {/* Render rows end */}

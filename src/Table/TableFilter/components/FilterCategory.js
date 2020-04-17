@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import * as Icon from '@material-ui/icons';
-import * as Loader from '../../../Loader';
+import * as Spinner from '../../../Spinner';
 import * as Form from '../../../Form';
 import * as VirtualRender from '../../../VirtualRender';
 import * as Button from '../../../Button';
@@ -51,7 +51,7 @@ const FilterCategory = (props) => {
             {
               tableHook.isFilterLoading && (
                 <C.Center>
-                  <Loader.Ring size={24} color={theme.blue400} />
+                  <Spinner.Ring size={24} color={theme.blue400} />
                 </C.Center>
               )
             }

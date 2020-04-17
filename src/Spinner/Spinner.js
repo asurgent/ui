@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as C from './Loader.styled';
+import * as C from './Spinner.styled';
 
 const propTypes = {
   size: PropTypes.number,
@@ -14,11 +14,11 @@ const defaultProps = {
   speed: 2,
 };
 
-const Loader = ({
+const Spinner = ({
   size, color, speed,
 }) => (<C.Ring size={size} color={color} speed={speed} />);
 
-Loader.propTypes = propTypes;
-Loader.defaultProps = defaultProps;
+Spinner.propTypes = propTypes;
+Spinner.defaultProps = defaultProps;
 
-export default Loader;
+export default Spinner;
