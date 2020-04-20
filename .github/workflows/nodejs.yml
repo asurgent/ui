@@ -23,9 +23,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
           scope: '@asurgent'
-      - run: echo "${{secrets.PAT_NPM_KEY}}"
+      - run: echo $NODE_AUTH_TOKEN
       - run: npm ci
       - run: npm test
         env:
           CI: true
-          NODE_AUTH_TOKEN: ${{secrets.PAT_NPM_KEY}}
+          NODE_AUTH_TOKEN: 5e5762c1b1a29a79b5465c882daaa56d596b9129
