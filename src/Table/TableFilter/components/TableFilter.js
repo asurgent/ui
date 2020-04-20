@@ -4,6 +4,9 @@ import * as Icons from '@material-ui/icons';
 import * as Button from '../../../Button';
 import * as C from './TableFilter.styled';
 import FilterCategory from './FilterCategory';
+import translation from '../TableFilter.translation';
+
+const { t } = translation;
 
 const propTypes = {
   className: PropTypes.string,
@@ -14,6 +17,7 @@ const propTypes = {
 const defaultProps = {
   className: '',
 };
+
 
 const TableFilter = ({ filterHook, tableHook, className }) => (
   <C.Wrapper className={className}>
@@ -37,8 +41,7 @@ const TableFilter = ({ filterHook, tableHook, className }) => (
     {filterHook.hasActiveFilter() && (
       <Button.Plain onClick={() => filterHook.clearFilter()} disabled={tableHook.isLoading}>
         <Icons.HighlightOff fontSize="large" />
-        {' '}
-        Clear Filter
+        {` ${t('clear', 'asurgentui')}`}
       </Button.Plain>
     )}
   </C.Wrapper>

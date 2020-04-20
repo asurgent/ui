@@ -1,3 +1,5 @@
+import * as i18n from '../lib/i18n';
+
 import ErrorBoundary from './ErrorBoundary';
 import * as Tooltip from './Tooltip';
 import * as Shield from './Shield';
@@ -18,6 +20,7 @@ import * as Layout from './layout/Layout';
 import * as Omnibar from './layout/Omnibar';
 
 export {
+  i18n,
   Button,
   Spinner,
   Block,

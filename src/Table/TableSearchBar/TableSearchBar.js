@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Primary as Form, useFormBuilder } from '../../Form';
 import * as C from './TableSearchBar.styled';
+import translation from './TableSearchbar.translation';
+
 
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
@@ -19,9 +21,10 @@ const TableSearchBar = (props) => {
   const {
     tableHook, searchHook, searchLabel, className,
   } = props;
+  const { t } = translation;
   const formData = useFormBuilder({
     search: {
-      type: 'text', placeholder: searchLabel, value: '', noLabel: true, props: { autoFocus: true },
+      type: 'text', placeholder: searchLabel || t('placeholder', 'asurgentui'), value: '', noLabel: true, props: { autoFocus: true },
     },
   });
 
@@ -40,7 +43,7 @@ const TableSearchBar = (props) => {
   }, [searchHook.isReady]);
 
   useEffect(() => {
-    formData.updateField('search', { placeholder: searchLabel });
+    formData.updateField('search', { placeholder: searchLabel || t('placeholder', 'asurgentui') });
   }, [searchLabel]);
 
   return (
