@@ -1,15 +1,11 @@
 import React from 'react';
-import {
-  withKnobs, boolean, text, number,
-} from '@storybook/addon-knobs';
+import { withKnobs, boolean } from '@storybook/addon-knobs';
 import ErrorBoundary from './index';
 
 export default { title: 'UI Components|Error Boundary', decorators: [withKnobs] };
 
 const FaulthyComponent = () => {
   throw new Error('Break');
-
-  return 'I will break;';
 };
 
 const Fallback = () => (

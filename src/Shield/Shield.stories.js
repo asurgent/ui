@@ -1,13 +1,11 @@
 import React from 'react';
-import {
-  withKnobs, boolean, text, number,
-} from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import * as Shield from './index';
-
 
 export const darkShield = () => (
   <div style={{ height: '100vh' }}>
-    <Shield.Dark onClick={() => { console.log('Clicked'); }}>
+    <Shield.Dark onClick={action('Clicked')}>
       <h1 style={{ background: 'pink', padding: '2rem' }}>
         Click outside me!
       </h1>
@@ -17,7 +15,7 @@ export const darkShield = () => (
 
 export const transparentShield = () => (
   <div style={{ height: '100vh' }}>
-    <Shield.Transparent onClick={() => { console.log('Clicked'); }}>
+    <Shield.Transparent onClick={action('Clicked')}>
       <h1 style={{ background: 'pink', padding: '2rem' }}>
         Click outside me!
       </h1>
@@ -27,7 +25,7 @@ export const transparentShield = () => (
 
 export const customColorShield = () => (
   <div style={{ height: '100vh' }}>
-    <Shield.Custom backgroundColor={(theme) => theme.rgba(theme.blue900, 0.8)} onClick={() => { console.log('Clicked'); }}>
+    <Shield.Custom backgroundColor={(theme) => theme.rgba(theme.blue900, 0.8)} onClick={action('Clicked')}>
       <h1 style={{ background: 'pink', padding: '2rem' }}>
         Click outside me!
       </h1>

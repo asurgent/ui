@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
-  withKnobs, boolean, text, number,
+  withKnobs, number,
 } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import * as VirtualRender from './index';

@@ -138,10 +138,16 @@ const DropdownMenu = ({
               )}
 
               <U.Tabs>
-                <U.TabButton active={mobileMenuTab === MENU_TAB} onClick={() => setMobileMenuTab(MENU_TAB)}>
+                <U.TabButton
+                  active={mobileMenuTab === MENU_TAB}
+                  onClick={() => setMobileMenuTab(MENU_TAB)}
+                >
                   {translations.menu || 'Menu'}
                 </U.TabButton>
-                <U.TabButton active={mobileMenuTab === SETTINGS_TAB} onClick={() => setMobileMenuTab(SETTINGS_TAB)}>
+                <U.TabButton
+                  active={mobileMenuTab === SETTINGS_TAB}
+                  onClick={() => setMobileMenuTab(SETTINGS_TAB)}
+                >
                   {translations.settings || 'Settings'}
                 </U.TabButton>
               </U.Tabs>

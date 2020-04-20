@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import {
-  withKnobs, boolean, text, number,
-} from '@storybook/addon-knobs';
-import {
-  Dashboard, Explore, Comment, LibraryBooks,
-} from '@material-ui/icons';
-import { Transition } from 'react-transition-group';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import { withKnobs } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
+import { Dashboard } from '@material-ui/icons';
 import DropdownCreate from './index';
 
-
-const Translate = styled.div`
+/* const Translate = styled.div`
     transition: 0.5000s;
     position: absolute;
     transform: translateY(
@@ -40,15 +34,14 @@ const FadeDown = ({ translate, children }) => (
       </Translate>
     )}
   </Transition>
-);
-
+); */
 
 export const dropdownCreate = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <div style={{ height: '100vh' }}>
-      <button onClick={() => setOpen(true)}>Open</button>
+      <button type="button" onClick={() => setOpen(true)}>Open</button>
       <DropdownCreate
         onClose={() => setOpen(false)}
         isOpen={open}
@@ -57,9 +50,7 @@ export const dropdownCreate = () => {
             title: 'Ticket',
             description: 'create a new ticket',
             icon: (Dashboard),
-            onClick: () => {
-              console.log('create ticket');
-            },
+            onClick: action('create ticket'),
           },
         ]}
       />

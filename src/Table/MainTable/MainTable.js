@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { RingSpinner } from 'react-spinners-kit';
 import { withTheme } from 'styled-components';
+import * as Spinner from '../../Spinner';
 import TablePagination from '../TablePagination';
 import Controlls from '../TableControlls';
 import BaseTable from '../BaseTable';
 
-import { Wrapper, Loader } from './MainTable.styled';
+import { Wrapper, TableLoader } from './MainTable.styled';
 import * as Shield from '../../Shield';
 
 const modalRoot = document.getElementById('tooltip-root');
@@ -16,12 +16,13 @@ const getEmptystate = (hook, props) => {
   if (hook.requestFailedMessage()) {
     return hook.requestFailedMessage();
   }
-
-  const base = props.emptystate;
+  const { emptystate } = props;
+  const base = emptystate;
   const query = hook.getSearchedQuery();
   if (query) {
     return `${base} for : ${query}`;
   }
+  return null;
 };
 
 
@@ -53,8 +54,8 @@ const defaultProps = {
   withPagination: false,
   withFilter: [],
   withSort: [],
-  searchLabel: 'Search',
-  emptystate: 'No items found',
+  searchLabel: '',
+  emptystate: '',
   onPagination: () => { },
   activePage: 1,
   pages: 0,
@@ -96,9 +97,9 @@ const Table = (props) => {
       { tableHook.isExporting() && (
         ReactDOM.createPortal(
           <Shield.Dark>
-            <Loader>
-              <RingSpinner color={theme.blue400} size={50} />
-            </Loader>
+            <TableLoader>
+              <Spinner.Ring size={50} color={theme.blue400} />
+            </TableLoader>
           </Shield.Dark>,
           modalRoot,
         )

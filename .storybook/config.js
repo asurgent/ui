@@ -2,17 +2,14 @@ import { configure, addDecorator } from "@storybook/react"
 import { setConsoleOptions, withConsole } from '@storybook/addon-console';
 import themeDecorator from "./decorators/themeDecorator"
 import routerDecorator from "./decorators/routerDecorator"
-// import flexboxDecorator from "./decorators/flexboxDecorator"
-
+import i18nDecorator from "./decorators/i18nDecorator"
 setConsoleOptions({
     panelExclude: [],
 });
 
 addDecorator(themeDecorator);
 addDecorator(routerDecorator);
-// addDecorator(flexboxDecorator);
+addDecorator(i18nDecorator);
 addDecorator((storyFn, context) => withConsole()(storyFn)(context));
 
-
-// automatically import all files ending in *.stories.js
 configure(require.context('../src', true, /\.stories\.js$/), module);

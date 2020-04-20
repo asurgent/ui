@@ -21,6 +21,7 @@ export const Label = styled.div`
     justify-content: center;
     align-items: baseline;
     font-size: 1.2rem;
+    white-space: pre;
     
     input {
         margin: 0 .8rem;

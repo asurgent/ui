@@ -3,6 +3,7 @@ import {
   withKnobs, boolean, text,
 } from '@storybook/addon-knobs';
 import * as Icon from '@material-ui/icons';
+import { action } from '@storybook/addon-actions';
 import Navigation from './index';
 
 export const navigation = () => (
@@ -16,7 +17,7 @@ export const navigation = () => (
         menuItemsSpacing: text('theme-override | menuItemsSpacing', '.4rem'),
         menuFontSize: text('theme-override | menuFontSize', '1.6rem'),
       })}
-      onNavigate={() => { console.log('navigate'); }}
+      onNavigate={action('navigate')}
       withLabel={boolean('With labels', false)}
       navigationList={[
         {
@@ -25,7 +26,8 @@ export const navigation = () => (
           active: true,
           icon: (<Icon.Dashboard fontSize="large" />),
           link: '/',
-          isActive: (match, location) => true,
+          // isActive => (match, location)
+          isActive: () => true,
         },
         {
           label: 'Explore', tooltip: 'Explore Environment', icon: (<Icon.Explore fontSize="large" />), link: '/test2',

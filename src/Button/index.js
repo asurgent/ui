@@ -44,7 +44,7 @@ const Transparent = withStyle((theme) => ({
 }))(C.Button);
 
 const filterMapper = (props) => ({ iconRight: <ExpandMore />, ...props });
-const Filter = withMapProps(filterMapper)(withStyle((theme) => ({
+const Filter = withMapProps(filterMapper)(withStyle(() => ({
   backgroundColor: '#eff3f6',
   borderColor: darken(0.1, '#eff3f6'),
   textColor: '#24292e',

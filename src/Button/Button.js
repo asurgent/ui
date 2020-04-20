@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
-import { RingSpinner } from 'react-spinners-kit';
+import * as Spinner from '../Spinner';
 import * as Tooltip from '../Tooltip/index';
 import * as Styles from './Button.styled';
 import {
@@ -117,7 +117,7 @@ const Button = (props) => {
       {iconRight && <Styles.Spacer left>{iconRight}</Styles.Spacer>}
       { loading && (
       <Styles.Spacer left data-testid="ring-spinner">
-        <RingSpinner color={theme.spinnerColor} size={15} />
+        <Spinner.Ring size={15} color={theme.spinnerColor} />
       </Styles.Spacer>
       )}
     </>

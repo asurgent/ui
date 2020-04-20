@@ -1,13 +1,8 @@
-
 import React from 'react';
-import {
-  withKnobs, number, text, boolean,
-} from '@storybook/addon-knobs';
+import { withKnobs, number, text } from '@storybook/addon-knobs';
 import * as UserImage from './index';
 
-
 export default { title: 'UI Components|User Image', decorators: [withKnobs] };
-
 
 export const squareImage = () => (
   <>

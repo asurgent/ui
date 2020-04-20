@@ -20,17 +20,17 @@ export const ListWrapper = styled.div`
     }
 `;
 
-export const Header = styled.div`
-    text-transform: lowercase;
-    padding: 1.6rem;    
-    font-size: 1.4rem;    
-    color: ${({ theme }) => theme.gray500};
-`;
-
 export const Search = styled.div`
     padding: .8rem ;
-    border-top: 1px solid ${({ theme }) => theme.gray200};
-    border-bottom: 1px solid ${({ theme }) => theme.gray200};
+    background-color: ${({ theme }) => theme.gray50};
+
+    form {
+        padding-right: 4.8rem;
+
+        @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
+            padding-right: 0;
+        }
+    }
 `;
 
 export const Center = styled.div`
@@ -40,22 +40,7 @@ export const Center = styled.div`
     padding: 1.6rem;
 `;
 
-export const DesktopDropdown = styled.div`
-    position: absolute;
-    width: auto;
-    min-width: 40rem;
-    height: auto;
-    max-height: 50rem;
-    left: 0;
-    border-radius: 5px;
-    background: ${({ theme }) => theme.white};
-    border: 1px solid ${({ theme }) => theme.gray200};
-    box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
-    display: flex;
-    flex-direction: column;  
-`;
-
-export const MobileDropdown = styled.div`
+export const Dropdown = styled.div`
     position: fixed;
     top: -1px;
     bottom: -1px;
@@ -72,14 +57,28 @@ export const MobileDropdown = styled.div`
         right: 1.6rem;
         top: 1.6rem;
     }
-`;
 
-
-export const MobileContent = styled.div`
-    max-height: 100vh;
-    padding-top: 2.4rem;
-    display: flex;
-    flex-direction: column;
+    @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
+        position: absolute;
+        width: auto;
+        min-width: 40rem;
+        height: auto;
+        max-height: 50rem;
+        top: unset;
+        bottom: unset;
+        left: unset;
+        right: unset;
+        border-radius: 5px;
+        background: ${({ theme }) => theme.white};
+        border: 1px solid ${({ theme }) => theme.gray200};
+        box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
+        display: flex;
+        flex-direction: column;  
+        
+        .close {
+            display: none;
+        }
+    }
 `;
 
 export const Mobile = styled.div`
@@ -90,15 +89,4 @@ export const Mobile = styled.div`
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         display: none;
     }   
-`;
-
-
-export const Desktop = styled.div`
-    display: none;
-    align-items: center;
-    position: relative;
-
-    @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
-        display: flex;
-    }
 `;

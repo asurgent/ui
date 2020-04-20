@@ -21,7 +21,7 @@ const defaultProps = {
   withSort: [],
   withSearch: true,
   withFilter: [],
-  searchLabel: 'Search',
+  searchLabel: '',
   parseFilterRequestStringOutput: null,
   parseFilterKeyRequestOutput: null,
   parseFilterItemRequestOutput: null,

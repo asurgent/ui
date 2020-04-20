@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
-import { RingSpinner } from 'react-spinners-kit';
 import * as Icons from '@material-ui/icons';
+import * as Spinner from '../../Spinner';
 import TableHeader from '../TableHeader';
 import * as Button from '../../Button';
 import * as C from './BaseTable.styled';
 import generateRows from './helpers';
+import translation from './BaseTable.translation';
 
 
 export const propTypes = {
@@ -62,7 +63,7 @@ export const defaultProps = {
   rowComponent: false,
   equalSizeColumns: false,
   isLoading: false,
-  emptystate: 'No items found',
+  emptystate: '',
   itemCount: 0,
   exportFileName: '',
   displayCount: false,
@@ -110,7 +111,7 @@ const BaseTable = withTheme((props) => {
   } = props;
 
   const noContent = rows.length === 0 && isLoading === false;
-
+  const { t } = translation;
   return (
     <C.Wrapper>
       <C.Base>
@@ -120,12 +121,12 @@ const BaseTable = withTheme((props) => {
               <Button.Icon
                 disabled={itemCount === 0}
                 saveToFilename={exportFileName}
-                tooltip="Export"
+                tooltip={t('export', 'asurgentui')}
                 saveToJson={exportResultsAction}
                 icon={<Icons.SaveAlt fontSize="small" />}
               />
             )}
-            {`${itemCount} results`}
+            {`${itemCount} ${t('results', 'asurgentui')}`}
           </C.Count>
         )}
         <C.Content
@@ -143,11 +144,11 @@ const BaseTable = withTheme((props) => {
             )
           }
           {/* Render rows start */}
-          {noContent && <C.Loading>{emptystate}</C.Loading>}
+          {noContent && <C.Loading>{emptystate || t('emptystate', 'asurgentui')}</C.Loading>}
           {!isLoading && rows}
           {isLoading && (
             <C.Loading>
-              <RingSpinner color={theme.blue400} size={32} />
+              <Spinner.Ring size={32} color={theme.blue400} />
             </C.Loading>
           )}
           {/* Render rows end */}

@@ -27,9 +27,14 @@ const RepeatWeek = ({
     return (
       <>
         <C.Label>
-            Every
-          <TextField label="" type="number" value={everyWeek} onChange={onChangeTimes} />
-            week(s) on:
+          {`Every  `}
+          <TextField
+            label=""
+            type="number"
+            value={everyWeek}
+            onChange={onChangeTimes}
+          />
+          {`  week(s) on:`}
         </C.Label>
 
         <C.WeekSelector>

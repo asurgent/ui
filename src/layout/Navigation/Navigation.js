@@ -5,7 +5,7 @@ import * as C from './Navigation.styled';
 import * as Tooltip from '../../Tooltip';
 
 const propTypes = {
-  theme: PropTypes.instanceOf(Object), // Passed to high-order-components/withTheme
+  // theme: PropTypes.instanceOf(Object), // Passed to high-order-components/withTheme
   navigationList: PropTypes.instanceOf(Array).isRequired,
   withLabel: PropTypes.bool,
   onNavigate: PropTypes.func,

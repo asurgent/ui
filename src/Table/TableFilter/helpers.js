@@ -2,11 +2,15 @@ export const EXCLUDE = 'ne';
 export const INCLUDE = 'eq';
 export const REMOVE = 'state:remove';
 
-// A helper to join-s an array and returns every items with
-// parenteses and an join parameters
-// Eg. ['one', 'two', 'three'] with joinOpperator "and"
-// > "(one) and (two) and (three)"
+/**
+ * @param  {Array} list - List that will be joined
+ * @param  {String} joinOpperator - Will be placed between every join
+ */
 const filterJoiner = (list, joinOpperator) => {
+  // A helper to join-s an array and returns every items with
+  // parenteses and an join parameters
+  // Eg. ['one', 'two', 'three'] with joinOpperator "and"
+  // > "(one) and (two) and (three)"
   if (list.length > 0) {
     const filters = list.join(`) ${joinOpperator} (`);
     return `(${filters})`;
@@ -15,6 +19,9 @@ const filterJoiner = (list, joinOpperator) => {
   return '';
 };
 
+/**
+ * @param  {String} stateString - Contains the current state of all filters
+ */
 export const buildFilterObjectFromStateString = (stateString) => {
   // Reverse parse the stringified state by parsing the string in reversed order.
   // 1. URI-Decode, 2. Reverse base64. 3. Parse to JSON.
@@ -46,6 +53,9 @@ export const buildFilterObjectFromStateString = (stateString) => {
   }
 };
 
+/**
+ * @param  {Object} selectedFilters - State-object that will be parsed to our state string format
+ */
 export const buildFilterStateString = (selectedFilters) => {
   // Simplyfy the filter-state object in order to minimize the URL/Query-param length
   // example Output { customer_id: [['1122', 'eq']]}
@@ -80,7 +90,16 @@ export const buildFilterStateString = (selectedFilters) => {
   return '';
 };
 
-export const buildFilterQuery = (selectedFilters, parseRequestItemOutput, parseRequestKeyOutput) => {
+/**
+ * @param  {Object} selectedFilters - all selected filters
+ * @param  {Function} parseRequestItemOutput - allows implementation of table to alter request
+ * @param  {Function} parseRequestKeyOutput - allows implementation of table to alter request
+ */
+export const buildFilterQuery = (
+  selectedFilters,
+  parseRequestItemOutput,
+  parseRequestKeyOutput,
+) => {
   // Helper to run parser-function (if declared). Otherwise use standard keys & values
   const parseRequestItem = (item, groupKey) => {
     if (parseRequestItemOutput && typeof parseRequestItemOutput === 'function') {

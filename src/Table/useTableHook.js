@@ -146,7 +146,11 @@ const useTableHook = (payloadOverrides) => {
       setHistoryState(updateHistory);
     }
     if (trigger) {
-      const updateTrigger = Object.assign(initializationThirdPartyTrigger, thirdPartyTrigger, trigger);
+      const updateTrigger = Object.assign(
+        initializationThirdPartyTrigger,
+        thirdPartyTrigger,
+        trigger,
+      );
       setThirdPartyTrigger(updateTrigger);
     }
   };
@@ -231,11 +235,12 @@ const useTableHook = (payloadOverrides) => {
         const req = (page) => new Promise((resolve) => {
           const requestPayload = Object.assign(payload, { page });
           const success = (e) => { resolve(e.result); };
-          const reject = (e) => { };
+          const reject = () => { };
           callback(requestPayload, success, reject);
         });
 
-        for (let i = 1; i <= pages; i++) {
+        for (let i = 1; i <= pages; i += 1) {
+          /* eslint-disable-next-line no-await-in-loop */
           const res = await req(i);
           result.push(res);
         }
