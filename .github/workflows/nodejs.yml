@@ -21,13 +21,17 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-          auth-token: 5e5762c1b1a29a79b5465c882daaa56d596b9129
-          registry-url: "https://npm.pkg.github.com"
-          scope: "asurgent"
-      - run: echo $NODE_AUTH_TOKEN
-      - run: npm ci
-      - run: npm test
+          #auth-token: ${{secrets.NPM_KEY}}
+          #registry-url: "https://npm.pkg.github.com"
+          #scope: "asurgent"
         env:
           CI: true
           NPM_REGISTRY_URL: https://npm.pkg.github.com
-          NODE_AUTH_TOKEN: 5e5762c1b1a29a79b5465c882daaa56d596b9129
+          NODE_AUTH_TOKEN: ${{secrets.NPM_KEY}}
+      - name: Create NPMRC
+        run: |
+          echo $'registry=https://registry.npmjs.org/ \n@asurgent:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}' > ~/.npmrc
+      - name: Install
+        run: npm ci
+      - name: Test
+        run: npm test
