@@ -54,12 +54,12 @@ export const Emptystate = styled(BaseBlock)`
     flex-direction: column;
 `;
 
-export const Errorstate = styled(BaseBlock)`
+export const ErrorState = styled(BaseBlock)`
     justify-content: center;
     align-items: flex-start;
     padding: 1.6rem !important;
     flex-direction: column;
-    background: ${({ theme }) => theme.rgba(theme.ruby800, 0.25)};;
+    background: ${({ theme }) => theme.rgba(theme.ruby800, 0.25)};
     border: 1px solid ${({ theme }) => theme.rgba(theme.ruby800, 0.8)};
     border-radius: 5px;
 
@@ -82,5 +82,21 @@ export const Errorstate = styled(BaseBlock)`
         bottom: 0;
         width: .8rem;
         background: ${({ theme }) => theme.rgba(theme.ruby800, 0.8)};
+    }
+`;
+
+export const WarningState = styled(ErrorState)`
+    background: ${({ theme }) => theme.rgba(theme.gold800, 0.25)};
+    border: 1px solid ${({ theme }) => theme.rgba(theme.gold800, 0.8)};
+    &::before {
+        background: ${({ theme }) => theme.rgba(theme.gold800, 0.8)};
+    }
+`;
+
+export const InfoState = styled(ErrorState)`
+    background: ${({ theme }) => theme.rgba(theme.blue800, 0.25)};
+    border: 1px solid ${({ theme }) => theme.rgba(theme.blue800, 0.8)};
+    &::before {
+        background: ${({ theme }) => theme.rgba(theme.blue800, 0.8)};
     }
 `;

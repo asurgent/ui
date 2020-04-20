@@ -46,8 +46,21 @@ export const wrapBlock = () => (
 
 export const errorBlock = () => (
   <Block.Error title="Error ocurred">
-    <p>Somethigns broken</p>
+    <p>Something is broken</p>
   </Block.Error>
+);
+
+export const warningBlock = () => (
+  <Block.Warning title="Some warning">
+    <p>More warnings</p>
+  </Block.Warning>
+);
+
+
+export const infoBlock = () => (
+  <Block.Info title="Some information">
+    <p>Additional information</p>
+  </Block.Info>
 );
 
 export const emptyState = () => (
