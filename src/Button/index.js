@@ -52,6 +52,10 @@ const Filter = withMapProps(filterMapper)(withStyle(() => ({
 
 const Plain = withStyle()(C.Plain);
 const Link = withStyle()(C.Link);
+const Pill = withStyle((theme) => ({
+  textColor: theme.black,
+  spinnerColor: theme.black,
+}))(C.Pill);
 const mapper = ({
   icon,
   iconLeft,
@@ -68,6 +72,7 @@ Plain.displayName = '@asurgent.ui.Button.Plain';
 Reject.displayName = '@asurgent.ui.Button.Reject';
 Transparent.displayName = '@asurgent.ui.Button.Transparent';
 Link.displayName = '@asurgent.ui.Button.Link';
+Link.displayName = '@asurgent.ui.Button.Pill';
 
 export {
   Primary,
@@ -80,4 +85,5 @@ export {
   Link,
   Create,
   Filter,
+  Pill,
 };

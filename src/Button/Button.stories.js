@@ -56,3 +56,7 @@ export const rejectButton = () => (
 export const acceptButton = () => (
   <Button.Create>{content}</Button.Create>
 );
+
+export const pillButton = () => (
+  <Button.Pill>{content}</Button.Pill>
+);
