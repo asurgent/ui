@@ -35,7 +35,7 @@ const TextArea = forwardRef((props, ref) => {
   const [value, setValue] = useState('');
 
   useEffect(() => {
-    setValue(props.value);
+    setValue(props.value || '');
   }, [props.value]);
 
   return (
