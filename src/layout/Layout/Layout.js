@@ -21,13 +21,13 @@ const defaultProps = {};
 
 const createListPropTypes = {
   shouldShow: PropTypes.bool,
-  createList: PropTypes.func,
+  createList: PropTypes.instanceOf(Array),
   translations: PropTypes.instanceOf(Object),
 };
 
 const createListDefaultProps = {
   shouldShow: true,
-  createList: null,
+  createList: [],
   translations: null,
 };
 

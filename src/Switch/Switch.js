@@ -16,6 +16,7 @@ const propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element),
+    PropTypes.func,
   ]),
 };
 

@@ -176,3 +176,24 @@ export const Icon = styled.div`
         opacity: .5;
     }
 `;
+
+export const Pill = styled(Button)`
+    background: #A1F0E8;
+    box-shadow: 0px 10px 30px ${({ theme }) => theme.rgba('#A1F0E8', 0.3)};
+    border-radius: 10rem;
+    font-weight: bold;
+    padding: 2rem 3.2rem;
+
+    .label { 
+        color: ${({ theme }) => theme.textColor};
+    }
+
+    &:hover {
+        cursor: pointer;
+
+        &:before {
+            background: ${({ theme }) => theme.rgba('#c7fff9', 0.5)};
+            border-radius: 10rem;
+        }
+    }
+`;
