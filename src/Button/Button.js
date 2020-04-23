@@ -30,6 +30,7 @@ const propTyps = {
   history: PropTypes.instanceOf(Object).isRequired,
   theme: PropTypes.instanceOf(Object).isRequired,
   renderStyle: PropTypes.instanceOf(Object).isRequired,
+  type: PropTypes.string, // Add button[type="submit"] as an ovelay to native trigger in forms
 };
 
 const defaultProps = {
@@ -47,6 +48,7 @@ const defaultProps = {
   tooltip: null,
   className: '',
   passLocationState: false,
+  type: false,
 };
 
 const Button = (props) => {
@@ -67,6 +69,7 @@ const Button = (props) => {
     theme,
     saveToJson,
     saveToFilename,
+    type,
     renderStyle: Style,
   } = props;
 
@@ -156,6 +159,20 @@ const Button = (props) => {
         <Link {...upddatedAttrs}>
           {content}
         </Link>
+      </Tooltip.Middle>
+    );
+  }
+
+  // If type "submit" is true we add a button[type="submit"]
+  // overlay to trigger native submit in forms
+  if (type === 'submit') {
+    const { onClick: buttonOnClick, ...rest } = attrs;
+    return (
+      <Tooltip.Middle tip={tooltip}>
+        <Style {...rest}>
+          <button onClick={buttonOnClick} type="submit">{' '}</button>
+          {content}
+        </Style>
       </Tooltip.Middle>
     );
   }

@@ -43,27 +43,29 @@ const Transparent = withStyle((theme) => ({
   spinnerColor: theme.black,
 }))(C.Button);
 
-const filterMapper = (props) => ({ iconRight: <ExpandMore />, ...props });
-const Filter = withMapProps(filterMapper)(withStyle(() => ({
+const Pill = withStyle((theme) => ({
+  textColor: theme.black,
+  spinnerColor: theme.black,
+}))(C.Pill);
+
+const filterPropsMapper = (props) => ({ iconRight: <ExpandMore />, ...props });
+const Filter = withMapProps(filterPropsMapper)(withStyle(() => ({
   backgroundColor: '#eff3f6',
   borderColor: darken(0.1, '#eff3f6'),
   textColor: '#24292e',
 }))(C.Filter));
 
-const Plain = withStyle()(C.Plain);
-const Link = withStyle()(C.Link);
-const Pill = withStyle((theme) => ({
-  textColor: theme.black,
-  spinnerColor: theme.black,
-}))(C.Pill);
-const mapper = ({
+
+const iconPropsMapper = ({
   icon,
   iconLeft,
   iconRight,
   mainIcon,
   ...rest
 }) => ({ mainIcon: icon, ...rest });
-const Icon = (withMapProps(mapper)(withStyle()(C.Icon)));
+const Icon = (withMapProps(iconPropsMapper)(withStyle()(C.Icon)));
+const Plain = withStyle()(C.Plain);
+const Link = withStyle()(C.Link);
 
 Primary.displayName = '@asurgent.ui.Button.Primary';
 Secondary.displayName = '@asurgent.ui.Button.Secondary';
