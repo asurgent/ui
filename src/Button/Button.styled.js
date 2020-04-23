@@ -21,6 +21,15 @@ export const Button = styled.div`
     padding: 1.2rem 1.4rem;
     border-radius: 3px;
 
+    button {
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        border-color: transparent;
+        background-color: transparent;
+    }
+
     .label {
         display: flex;
         align-items: center;
@@ -31,14 +40,6 @@ export const Button = styled.div`
         letter-spacing: 0.13rem;
         text-decoration: none;    
         font-size: 1.4rem;
-
-        /* NEW */
-        /* text-transform: lowercase; */
-         /* &:first-letter  {
-            text-transform: uppercase;
-        } */
-
-        /* OLD */
         text-transform: uppercase;
         font-weight: bold;
     }
@@ -99,6 +100,17 @@ export const Plain = styled.div`
     margin: 0;
     padding: 0;
     color: ${({ theme }) => theme.black};
+    position: relative;
+    display: inline-block;
+
+    button {
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        border-color: transparent;
+        background-color: transparent;
+    }
 
     &.disabled {
         cursor: not-allowed;
@@ -110,6 +122,16 @@ export const Filter = styled(Button)`
     padding: .5rem .8rem;
     background-color: #eff3f6;
     background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
+    position: relative;
+
+    button {
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        border-color: transparent;
+        background-color: transparent;
+    }
 
     &:hover {
         border-color: ${({ theme }) => darken(0.1, theme.borderColor)};
@@ -125,7 +147,6 @@ export const Filter = styled(Button)`
 
 export const Link = styled.div`
     cursor: pointer;
-    display: inline-block;
     border: none;
     outline: none;
     margin: 0;
@@ -135,6 +156,16 @@ export const Link = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+
+    button {
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        border-color: transparent;
+        background-color: transparent;
+    }
     
     .label {
         display: flex;
@@ -166,6 +197,16 @@ export const Icon = styled.div`
     font-size: 1.6rem;
     color: ${({ theme }) => theme.black};
 
+    button {
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        position: absolute;
+        border-color: transparent;
+        background-color: transparent;
+    }
+
     &:hover {
         cursor: pointer;
         background: ${({ theme }) => theme.gray100};
@@ -178,11 +219,22 @@ export const Icon = styled.div`
 `;
 
 export const Pill = styled(Button)`
+    position: relative;
     background: #A1F0E8;
     box-shadow: 0px 10px 30px ${({ theme }) => theme.rgba('#A1F0E8', 0.3)};
     border-radius: 10rem;
     font-weight: bold;
     padding: 2rem 3.2rem;
+
+    button {
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        border-radius: 10rem;
+        position: absolute;
+        border-color: transparent;
+        background-color: transparent;
+    }
 
     .label { 
         color: ${({ theme }) => theme.textColor};
