@@ -1,6 +1,6 @@
-import translate from '../../../lib/i18n/i18n';
+import addTranslation from '../../../lib/i18n/i18n';
 
-export default translate({
+export default addTranslation({
   id: 'TableSearchBarTranslation',
   sv: {
     placeholder: 'Sök',
