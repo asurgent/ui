@@ -48,7 +48,7 @@ const defaultProps = {
   tooltip: null,
   className: '',
   passLocationState: false,
-  type: false,
+  type: '',
 };
 
 const Button = (props) => {
