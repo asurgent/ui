@@ -15,7 +15,15 @@ import * as Tooltip from '../../Tooltip';
 
 const DatePicker = forwardRef((props, ref) => {
   const {
-    label, format, name, noLabel, tooltip,
+    label,
+    format,
+    name,
+    noLabel,
+    tooltip,
+    maxDate,
+    maxDateMessage,
+    minDate,
+    minDateMessage,
   } = props;
 
   const [value, setValue] = useState(null);
@@ -43,6 +51,10 @@ const DatePicker = forwardRef((props, ref) => {
           value={value}
           fullWidth
           name={name}
+          maxDate={maxDate}
+          maxDateMessage={maxDateMessage}
+          minDate={minDate}
+          minDateMessage={minDateMessage}
           inputVariant="outlined"
           inputRef={ref}
           onChange={(e) => setValue(moment(e))}
@@ -64,6 +76,16 @@ DatePicker.propTypes = {
     PropTypes.string,
     PropTypes.instanceOf(Date),
   ]),
+  maxDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+  ]),
+  maxDateMessage: PropTypes.string,
+  minDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+  ]),
+  minDateMessage: PropTypes.string,
   noLabel: PropTypes.bool,
   tooltip: PropTypes.string,
 };
@@ -72,6 +94,10 @@ DatePicker.defaultProps = {
   label: '',
   format: 'YYYY-MM-DD',
   value: moment().local(),
+  minDate: null,
+  minDateMessage: '',
+  maxDate: null,
+  maxDateMessage: '',
   noLabel: false,
   tooltip: '',
 };
