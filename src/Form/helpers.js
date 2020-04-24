@@ -4,6 +4,7 @@ import Text from './types/Text';
 import TextArea from './types/TextArea';
 import Select from './types/Select';
 import Label from './types/Label';
+import Date from './types/Date';
 
 export const withDelayTimer = (action, timeout = 500) => {
   let timer = setTimeout(() => {}, timeout);
@@ -25,6 +26,8 @@ const getInputComponent = (type) => {
       return Select;
     case 'label':
       return Label;
+    case 'date':
+      return Date;
     default:
       return Text;
   }
