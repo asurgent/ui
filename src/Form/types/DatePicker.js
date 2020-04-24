@@ -4,7 +4,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import MomentUtils from '@date-io/moment';
 import ThemeProvider from './ThemeProvider';
-import * as C from './Date.styled';
+import * as C from './DatePicker.styled';
 
 import {
   Label,
@@ -13,29 +13,30 @@ import {
 } from './Text.styled';
 import * as Tooltip from '../../Tooltip';
 
-const Date = forwardRef((props, ref) => {
+const DatePicker = forwardRef((props, ref) => {
   const {
     label, format, name, noLabel, tooltip,
   } = props;
 
-  const [value, setValue] = useState(moment().local());
+  const [value, setValue] = useState(null);
 
   useEffect(() => {
-    setValue(props.value || '');
+    setValue(props.value || moment().local());
   }, [props.value]);
 
   return (
     <ThemeProvider>
       { noLabel === false && (
-      <Header>
-        <Label>{label || name}</Label>
-        { tooltip && (
-        <Tooltip.Middle tip={tooltip}>
-          <Icon className="far fa-question-circle" />
-        </Tooltip.Middle>
-        )}
-      </Header>
+        <Header>
+          <Label>{label || name}</Label>
+          { tooltip && (
+          <Tooltip.Middle tip={tooltip}>
+            <Icon className="far fa-question-circle" />
+          </Tooltip.Middle>
+          )}
+        </Header>
       )}
+
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <C.DatePicker
           format={format}
@@ -43,8 +44,8 @@ const Date = forwardRef((props, ref) => {
           fullWidth
           name={name}
           inputVariant="outlined"
-          ref={ref}
-          onChange={(e) => setValue(moment(e).local().utc())}
+          inputRef={ref}
+          onChange={(e) => setValue(moment(e))}
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
@@ -55,7 +56,7 @@ const Date = forwardRef((props, ref) => {
   );
 });
 
-Date.propTypes = {
+DatePicker.propTypes = {
   label: PropTypes.string,
   format: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -67,12 +68,14 @@ Date.propTypes = {
   tooltip: PropTypes.string,
 };
 
-Date.defaultProps = {
+DatePicker.defaultProps = {
   label: '',
-  format: 'DD-MM-YYYY',
-  value: '01-02-2020', // moment().local().format('YYYY-MM-DD'),
+  format: 'YYYY-MM-DD',
+  value: moment().local(),
   noLabel: false,
   tooltip: '',
 };
 
-export default Date;
+DatePicker.displayName = '@asurgent.ui.Form.Input.DatePicker';
+
+export default DatePicker;
