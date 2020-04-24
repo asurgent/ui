@@ -51,13 +51,13 @@ const DatePicker = forwardRef((props, ref) => {
           value={value}
           fullWidth
           name={name}
-          maxDate={maxDate}
+          maxDate={moment(maxDate).format(format)}
+          minDate={moment(minDate).format(format)}
           maxDateMessage={maxDateMessage}
-          minDate={minDate}
           minDateMessage={minDateMessage}
           inputVariant="outlined"
           inputRef={ref}
-          onChange={(e) => setValue(moment(e))}
+          onChange={(e) => setValue(moment(e).local())}
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
@@ -94,9 +94,9 @@ DatePicker.defaultProps = {
   label: '',
   format: 'YYYY-MM-DD',
   value: moment().local(),
-  minDate: null,
+  minDate: moment('0001-01-01').format('YYYY-MM-DD'),
   minDateMessage: '',
-  maxDate: null,
+  maxDate: moment('9999-12-31').format('YYYY-MM-DD'),
   maxDateMessage: '',
   noLabel: false,
   tooltip: '',

@@ -61,6 +61,8 @@ export const generateFieldComponents = (inputs, referenceList) => {
         placeholder,
         label,
         options,
+        minDate,
+        maxDate,
         noLabel = false,
         props: inputProps,
       } = inputs[key];
@@ -75,6 +77,8 @@ export const generateFieldComponents = (inputs, referenceList) => {
           tooltip={tooltip || ''}
           placeholder={placeholder || ''}
           label={label}
+          minDate={minDate}
+          maxDate={maxDate}
           noLabel={noLabel}
           props={inputProps}
           options={options}
