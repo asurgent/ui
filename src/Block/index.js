@@ -3,7 +3,6 @@ import {
   Left,
   Right,
   Bordered,
-  Secondary,
   Plain,
   SpaceBetween,
   Wrap,
@@ -13,7 +12,6 @@ Center.displayName = '@asurgent.ui.Block.Center';
 Left.displayName = '@asurgent.ui.Block.Left';
 Right.displayName = '@asurgent.ui.Block.Right';
 Bordered.displayName = '@asurgent.ui.Block.Bordered';
-Secondary.displayName = '@asurgent.ui.Block.Secondary';
 Plain.displayName = '@asurgent.ui.Block.Plain';
 SpaceBetween.displayName = '@asurgent.ui.Block.SpaceBetween';
 Wrap.displayName = '@asurgent.ui.Block.Wrap';
@@ -23,7 +21,6 @@ export {
   Left,
   Right,
   Bordered,
-  Secondary,
   Plain,
   SpaceBetween,
   Wrap,

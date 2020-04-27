@@ -1,10 +1,13 @@
 
 import React from 'react';
+import {
+  withKnobs, boolean,
+} from '@storybook/addon-knobs';
 import * as Block from './index';
 
 const content = 'Hello there im in a block';
 
-export default { title: 'UI Components|Block' };
+export default { title: 'UI Components|Block', decorators: [withKnobs] };
 
 export const centerBlock = () => (
   <Block.Center>{content}</Block.Center>
@@ -20,10 +23,6 @@ export const rightBlock = () => (
 
 export const borderedBlock = () => (
   <Block.Bordered>{content}</Block.Bordered>
-);
-
-export const secondaryBlock = () => (
-  <Block.Secondary withPadding>{content}</Block.Secondary>
 );
 
 export const plainBlock = () => (
@@ -49,20 +48,19 @@ export const wrapBlock = () => (
 );
 
 export const errorBlock = () => (
-  <Block.Error title="Error ocurred">
+  <Block.Error hideLeftBorder={boolean('Hide left border', true)} title="Error ocurred">
     <p>Something is broken</p>
   </Block.Error>
 );
 
 export const warningBlock = () => (
-  <Block.Warning title="Some warning">
+  <Block.Warning hideLeftBorder={boolean('Hide left border', true)} title="Some warning">
     <p>More warnings</p>
   </Block.Warning>
 );
 
-
 export const infoBlock = () => (
-  <Block.Info title="Some information">
+  <Block.Info hideLeftBorder={boolean('Hide left border', true)} title="Some information">
     <p>Additional information</p>
   </Block.Info>
 );
@@ -85,9 +83,6 @@ rightBlock.story = {
 };
 borderedBlock.story = {
   name: 'Bordered Block',
-};
-secondaryBlock.story = {
-  name: 'Secondary Block',
 };
 plainBlock.story = {
   name: 'Plain Block',

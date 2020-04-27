@@ -74,7 +74,7 @@ export const secondaryThemeForm = () => {
   const formData = Form.useFormBuilder(formObj);
 
   return (
-    <Block.Secondary withPadding>
+    <Block.Info hideLeftBorder withPadding>
       <Form.Primary
         form={formData}
         onSubmit={(values) => action()('Submitted', values)}
@@ -89,7 +89,7 @@ export const secondaryThemeForm = () => {
           </>
         )}
       </Form.Primary>
-    </Block.Secondary>
+    </Block.Info>
   );
 };
 
