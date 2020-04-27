@@ -32,7 +32,7 @@ export const Count = styled.div`
     align-items: center;
     justify-content: flex-end;
     flex-direction: row;
-    padding: .8rem 0;
+    padding: .8rem;
 `;
 
 export const Wrapper = styled.div`
