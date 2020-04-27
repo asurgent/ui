@@ -88,6 +88,7 @@ DatePicker.propTypes = {
   minDateMessage: PropTypes.string,
   noLabel: PropTypes.bool,
   tooltip: PropTypes.string,
+  props: PropTypes.instanceOf(Object),
 };
 
 DatePicker.defaultProps = {
@@ -100,6 +101,7 @@ DatePicker.defaultProps = {
   maxDateMessage: '',
   noLabel: false,
   tooltip: '',
+  props: {},
 };
 
 DatePicker.displayName = '@asurgent.ui.Form.Input.DatePicker';
