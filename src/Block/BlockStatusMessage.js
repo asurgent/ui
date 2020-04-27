@@ -8,14 +8,18 @@ const propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
+  hideLeftBorder: PropTypes.bool,
 };
 
 const defaultProps = {
   children: null,
+  hideLeftBorder: false,
 };
 
-const ErrorMessage = ({ title, children, ...props }) => (
-  <ErrorState {...props}>
+const ErrorMessage = ({
+  title, hideLeftBorder, children, ...props
+}) => (
+  <ErrorState hideLeftBorder={hideLeftBorder} {...props}>
     {title && <b className="title">{title}</b>}
     {children}
   </ErrorState>
@@ -25,8 +29,10 @@ ErrorMessage.propTypes = propTypes;
 ErrorMessage.defaultProps = defaultProps;
 ErrorMessage.displayName = '@asurgent.ui.Block.ErrorMessage';
 
-const WarningMessage = ({ title, children, ...props }) => (
-  <WarningState {...props}>
+const WarningMessage = ({
+  title, hideLeftBorder, children, ...props
+}) => (
+  <WarningState hideLeftBorder={hideLeftBorder} {...props}>
     {title && <b className="title">{title}</b>}
     {children}
   </WarningState>
@@ -36,8 +42,10 @@ WarningMessage.propTypes = propTypes;
 WarningMessage.defaultProps = defaultProps;
 WarningMessage.displayName = '@asurgent.ui.Block.WarningMessage';
 
-const InfoMessage = ({ title, children, ...props }) => (
-  <InfoState {...props}>
+const InfoMessage = ({
+  title, hideLeftBorder, children, ...props
+}) => (
+  <InfoState hideLeftBorder={hideLeftBorder} {...props}>
     {title && <b className="title">{title}</b>}
     {children}
   </InfoState>
