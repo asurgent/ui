@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { action } from '@storybook/addon-actions';
+import moment from 'moment';
 import * as Form from './index';
 import * as Button from '../Button';
 import * as Block from '../Block';
@@ -9,6 +10,9 @@ export default { title: 'UI Components|Form' };
 const formObj = {
   search: {
     type: 'text', label: 'Test', placeholder: 'Hello',
+  },
+  datepicker: {
+    type: 'datepicker', label: 'datdeLabel', name: 'datepicker', maxDate: moment().add(2, 'days'), minDate: moment().subtract(2, 'days').format(),
   },
   sortDirection: {
     type: 'select', label: 'sort', options: [{ value: 1, label: 'one' }, { value: 2, label: 'two' }],
@@ -118,7 +122,6 @@ export const apiForm = () => {
     </Form.Primary>
   );
 };
-
 
 export const updateForm = () => {
   const formData = Form.useFormBuilder(formObj);

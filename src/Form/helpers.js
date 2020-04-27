@@ -4,6 +4,7 @@ import Text from './types/Text';
 import TextArea from './types/TextArea';
 import Select from './types/Select';
 import Label from './types/Label';
+import DatePicker from './types/DatePicker';
 
 export const withDelayTimer = (action, timeout = 500) => {
   let timer = setTimeout(() => {}, timeout);
@@ -25,6 +26,8 @@ const getInputComponent = (type) => {
       return Select;
     case 'label':
       return Label;
+    case 'datepicker':
+      return DatePicker;
     default:
       return Text;
   }
@@ -58,6 +61,8 @@ export const generateFieldComponents = (inputs, referenceList) => {
         placeholder,
         label,
         options,
+        minDate,
+        maxDate,
         noLabel = false,
         props: inputProps,
       } = inputs[key];
@@ -72,6 +77,8 @@ export const generateFieldComponents = (inputs, referenceList) => {
           tooltip={tooltip || ''}
           placeholder={placeholder || ''}
           label={label}
+          minDate={minDate}
+          maxDate={maxDate}
           noLabel={noLabel}
           props={inputProps}
           options={options}
