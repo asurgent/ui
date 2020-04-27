@@ -12,7 +12,10 @@ import * as Transition from '../Transition';
 
 
 const propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+  ]),
   onClose: PropTypes.func,
   withoutHeader: PropTypes.bool,
   isOpen: PropTypes.bool.isRequired,
