@@ -4,13 +4,15 @@ import {
 } from '@material-ui/pickers';
 
 export const DatePicker = styled(KeyboardDatePicker)`
+    .MuiOutlinedInput-root {
+        background: ${({ theme }) => theme.white};
+    }
     .MuiInputBase-root input {
         box-sizing: border-box;
         min-height: 4.7rem; 
-        font-size: 1.6rem;
+        font-size: 1.6rem;    
     }
-
-    fieldset {
+    fieldset {   
         border: 0.1rem solid!important;
         border-color: ${({ theme }) => `${theme.gray200}!important`};
         border-radius: 5px!important;

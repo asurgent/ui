@@ -37,6 +37,13 @@ export const Bordered = styled(BaseBlock)`
     border-radius: 5px;
 `;
 
+export const Secondary = styled(BaseBlock)`
+    border: 1px solid;
+    border-radius: 5px;
+    background: rgba(68, 173, 225, 0.1);
+    border-color: rgba(68, 173, 225, 0.2);   
+`;
+
 export const SpaceBetween = styled(BaseBlock)`
     justify-content: space-between;
     flex-direction: row;

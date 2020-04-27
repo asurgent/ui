@@ -70,6 +70,29 @@ export const defaultForm = () => {
   );
 };
 
+export const secondaryThemeForm = () => {
+  const formData = Form.useFormBuilder(formObj);
+
+  return (
+    <Block.Secondary withPadding>
+      <Form.Primary
+        form={formData}
+        onSubmit={(values) => action()('Submitted', values)}
+      >
+        {(inputList, renderFields, onSubmitAction) => (
+          <>
+            {renderFields}
+            <Block.SpaceBetween renderTransparent>
+              <Button.Hollow>Cancel</Button.Hollow>
+              <Button.Primary onClick={onSubmitAction}>a</Button.Primary>
+            </Block.SpaceBetween>
+          </>
+        )}
+      </Form.Primary>
+    </Block.Secondary>
+  );
+};
+
 export const advancedRender = () => {
   const formData = Form.useFormBuilder(formObj);
 

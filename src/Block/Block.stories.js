@@ -22,6 +22,10 @@ export const borderedBlock = () => (
   <Block.Bordered>{content}</Block.Bordered>
 );
 
+export const secondaryBlock = () => (
+  <Block.Secondary withPadding>{content}</Block.Secondary>
+);
+
 export const plainBlock = () => (
   <Block.Plain>{content}</Block.Plain>
 );
@@ -81,6 +85,9 @@ rightBlock.story = {
 };
 borderedBlock.story = {
   name: 'Bordered Block',
+};
+secondaryBlock.story = {
+  name: 'Secondary Block',
 };
 plainBlock.story = {
   name: 'Plain Block',
