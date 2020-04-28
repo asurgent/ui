@@ -1,7 +1,7 @@
 /* eslint-env jest */
 
 import React from 'react';
-import { render, cleanup, fireEvent } from '../test-utils';
+import { render, cleanup, fireEvent } from 'test-utils';
 import * as Button from './index';
 
 afterEach(cleanup);
