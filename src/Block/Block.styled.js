@@ -6,6 +6,7 @@ export const BaseBlock = styled.div`
     display: flex;
     flex-direction: column;
     margin: ${({ withMargins }) => (withMargins ? '1.6rem' : 0)};
+    margin-bottom: ${({ withBottomMargin }) => (withBottomMargin ? '1.6rem' : 0)};
     padding: ${({ withPadding }) => (withPadding ? '1.6rem' : 0)};
     background: ${({ renderTransparent, theme }) => (renderTransparent === true ? 'transparent' : theme.white)};
     color: ${({ theme }) => theme.black};
@@ -44,7 +45,7 @@ export const SpaceBetween = styled(BaseBlock)`
 `;
 
 export const Wrap = styled(BaseBlock)`   
-    flex-wrap: wrap;
+    flex-wrap: ${({ wrapReverse }) => (wrapReverse === true ? 'wrap-reverse' : 'wrap')};
     flex-direction: unset;
 `;
 

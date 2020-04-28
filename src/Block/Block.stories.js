@@ -30,7 +30,7 @@ export const plainBlock = () => (
 );
 
 export const renderTransparentBlock = () => (
-  <Block.Plain renderTransparent>{content}</Block.Plain>
+  <Block.Plain renderTransparent={boolean('Transparent', true)}>{content}</Block.Plain>
 );
 
 export const spaceBetweenBlock = () => (
@@ -41,9 +41,9 @@ export const spaceBetweenBlock = () => (
 );
 
 export const wrapBlock = () => (
-  <Block.Wrap>
-    <span>{content}</span>
-    <span>{content}</span>
+  <Block.Wrap wrapReverse={boolean('Reverse order', false)}>
+    <span>I am block #1</span>
+    <span>I am block #2</span>
   </Block.Wrap>
 );
 
@@ -60,7 +60,12 @@ export const warningBlock = () => (
 );
 
 export const infoBlock = () => (
-  <Block.Info hideLeftBorder={boolean('Hide left border', true)} title="Some information">
+  <Block.Info
+    hideLeftBorder={boolean('Hide left border', true)}
+    withMargins={boolean('Add margin (all)', false)}
+    withBottomMargin={boolean('Add margin (bottom)', false)}
+    title="Some information"
+  >
     <p>Additional information</p>
   </Block.Info>
 );

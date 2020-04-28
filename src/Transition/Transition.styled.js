@@ -21,15 +21,15 @@ export const FadeIn = styled.div`
 `;
 
 export const FadeInSlideDown = styled(FadeIn)`
-    transform: translateY(
+   /*  transform: translateY(
     ${({ state }) => (state === 'entering' || state === 'entered' ? 20 : 0)}px
-    );
+    ); */
 `;
 
 export const FadeInSlideDownOnDesktop = styled(FadeIn)`
   @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
-      transform: translateY(
+   /*    transform: translateY(
       ${({ state }) => (state === 'entering' || state === 'entered' ? 20 : 0)}px
-      );
+      ); */
   }
 `;
