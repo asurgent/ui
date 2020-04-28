@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
-import theme from '../../lib/style/theme';
+import theme from '../lib/style/theme';
 
 const propTypes = {
   children: PropTypes.instanceOf(Object),
