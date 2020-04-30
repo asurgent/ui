@@ -11,15 +11,15 @@ export const Modal = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1.6rem;
-
+  
   @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
     padding: 3.2rem 0;
     border-radius: 5px;
     position: relative;
-    width: 50%;
-    height: auto;
-    min-height: 200px;
-    max-height: 80vh;
+    width: ${({ fullscreen }) => (fullscreen ? '100vw' : '50%')};
+    height: ${({ fullscreen }) => (fullscreen ? '100vw' : 'auto')};
+    min-width: ${({ fullscreen }) => (fullscreen ? '100vw' : '200px')};
+    max-height: ${({ fullscreen }) => (fullscreen ? '100vh' : '80vh')};
   }
 `;
 
@@ -42,7 +42,7 @@ export const Content = styled.div`
   flex-direction: column;
   overflow-y: auto;
   margin-top: 3.2rem;
-  
+  margin-bottom: ${({ withActionbar }) => (withActionbar ? '5.6rem' : '0')};
 
   @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
     padding: 0 3.2rem;
@@ -64,6 +64,15 @@ export const Close = styled.div`
     i {
         font-size: 2rem;
     }
+`;
+
+
+export const Actionbar = styled.div`
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 3.2rem;
+    width: 100%;
 `;
 
 
