@@ -9,6 +9,9 @@ import {
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import * as C from '../CronEditor.styled';
+import translation from '../CronEditor.translation';
+
+const { t } = translation;
 
 const propTypes = {
   repeat: PropTypes.string.isRequired,
@@ -34,22 +37,22 @@ const RepeatEndDate = ({
     return (
       <C.Row>
         <FormControl>
-          <InputLabel id="repeat-select-label">End repeat</InputLabel>
+          <InputLabel id="repeat-select-label">{t('end', 'asurgentui')}</InputLabel>
           <Select
             labelId="repeat-select-label"
             id="repeat-select"
             value={endRepeat}
             onChange={handleEndRepeat}
           >
-            <MenuItem value="never">Never</MenuItem>
-            <MenuItem value="date">On date</MenuItem>
+            <MenuItem value="never">{t('never', 'asurgentui')}</MenuItem>
+            <MenuItem value="date">{t('onDate', 'asurgentui')}</MenuItem>
           </Select>
         </FormControl>
         { endRepeat === 'date' && (
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <KeyboardDatePicker
             id="date-picker-dialog"
-            label="Start date"
+            label={t('endDate', 'asurgentui')}
             format="DD-MM-YYYY"
             value={endRepeatDate}
             onChange={onChange}
