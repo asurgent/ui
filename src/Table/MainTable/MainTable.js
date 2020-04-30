@@ -45,6 +45,7 @@ const propTypes = {
   parseFilterKeyRequestOutput: PropTypes.func,
   parseFilterLabelOutput: PropTypes.func,
   displayCount: PropTypes.bool,
+  canExportResults: PropTypes.bool,
   exportFileName: PropTypes.string,
 };
 
@@ -65,6 +66,7 @@ const defaultProps = {
   parseFilterKeyRequestOutput: null,
   parseFilterLabelOutput: null,
   displayCount: true,
+  canExportResults: true,
   exportFileName: '',
 };
 
@@ -87,6 +89,7 @@ const Table = (props) => {
     parseFilterLabelOutput,
     displayCount,
     exportFileName,
+    canExportResults,
     ...rest
   } = props;
 
@@ -117,7 +120,7 @@ const Table = (props) => {
         />
       )}
       <BaseTable
-        canExportResults
+        canExportResults={canExportResults}
         exportResultsAction={() => tableHook.exportSearchResult()}
         exportFileName={exportFileName}
         displayCount={displayCount}

@@ -356,7 +356,13 @@ export const filter = () => {
         tableHook={hook}
         filterKeys={[
           {
-            label: 'guys', facetKey: 'guys', multiSelect: false, defaultSelect: 1,
+            label: 'guys',
+            facetKey: 'guys',
+            multiSelect: false,
+            defaultSelect: 1,
+            onChange: (a) => {
+              action('OnChange')(a);
+            },
           },
           { label: 'Pankaka', facetKey: 'pankaka' },
         ]}
