@@ -36,7 +36,7 @@ const TagCollection = ({ tags, max }) => {
           if (typeof tag === 'object' && tag.value) {
             return (
               <TagSingle
-                onClick={tag.onClick ? tag.onClick : false}
+                onDelete={tag.onDelete ? tag.onDelete : false}
                 key={key(tag.value)}
                 label={tag.value}
                 max={tag.max ? tag.max : 0}
