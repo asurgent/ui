@@ -7,6 +7,7 @@ const modalRoot = document.getElementById('tooltip-root');
 const positions = {
   middle: 'middle',
   right: 'right',
+  left: 'left',
 };
 
 const propTypes = {
@@ -40,12 +41,14 @@ class Tooltip extends Component {
         const coordinates = {};
         const spacing = 5;
 
-        if (position === positions.middle) {
-          Object.assign(coordinates, { left: x + (width / 2), top: top + height + spacing });
-        } else if (position === positions.right) {
+        if (position === positions.right) {
           Object.assign(coordinates, { left: x + width + spacing, top: top + (height / 2) });
+        } else if (position === positions.left) {
+          Object.assign(coordinates, { left: x - spacing, top: top + (height / 2) });
+        } else {
+          // Middle
+          Object.assign(coordinates, { left: x + (width / 2), top: top + height + spacing });
         }
-
 
         this.setState({ show: true, coordinates });
       }
@@ -75,17 +78,13 @@ class Tooltip extends Component {
       const { tip: tooltipMessage, children, position } = this.props;
       const { coordinates, show } = this.state;
 
-      const isMiddle = position === positions.middle;
-      const isRight = position === positions.right;
-
       return (
         <>
           {tooltipMessage ? this.renderChildren(children) : children}
           { show === true && tooltipMessage
             && ReactDOM.createPortal(
               <C.TooltipWrapper
-                middle={isMiddle}
-                right={isRight}
+                position={position}
                 style={coordinates}
               >
                 {tooltipMessage}

@@ -8,7 +8,16 @@ export const TooltipWrapper = styled.div`
   background-color: #161616;
   padding: .8rem;
   border-radius: 3px;
-  transform: ${({ middle }) => (middle ? 'translateX(-50%)' : 'translateY(-50%)')};
+  transform: ${({ position }) => {
+    switch (position) {
+      case 'left':
+        return 'translate( -100%, -50%)';
+      case 'right':
+        return 'translateY(-50%)';
+      default:
+        return 'translateX(-50%)';
+    }
+  }};
   
   color: #ffffff;
   display: none;
