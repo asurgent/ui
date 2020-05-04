@@ -22,6 +22,13 @@ export const dateFormat = () => (
     <Moment.Date timestamp={text('timestamp', '2020-01-15T13:30:45+0200')} />
   </>
 );
+
+export const duration = () => (
+  <>
+    <Moment.Duration start={text('timestamp start ', '2020-01-15T13:30:45+0200')} end={text('timestamp end', '2020-01-18T11:20:45+0200')} />
+  </>
+);
+
 export const timeAgoFormat = () => (
   <>
     <Moment.Ago timestamp={text('timestamp', '2020-01-15T13:30:45+0200')} />

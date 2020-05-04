@@ -21,15 +21,22 @@ import RepeatMonth from './components/RepeatMonth';
 import RepeatEndDate from './components/RepeatEndDate';
 import ThemeProvider from './components/ThemeProvider';
 import RepeatWeek, { weekList } from './components/RepeatWeek';
+import translation from './CronEditor.translation';
+
+const { t } = translation;
+
 
 const propTypes = {
+  onlyCustom: PropTypes.bool,
   end: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
   ]).isRequired,
   start: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
   ]).isRequired,
   onChange: PropTypes.func.isRequired,
   duration: PropTypes.oneOfType([
@@ -39,13 +46,16 @@ const propTypes = {
   expression: PropTypes.string.isRequired,
 };
 
-const defaultProps = {};
+const defaultProps = {
+  onlyCustom: true,
+};
 
 const CronEditor = ({
   end,
   start,
   duration,
   expression,
+  onlyCustom,
   onChange,
 }) => {
   const [isReady, setIsReady] = useState(false);
@@ -173,7 +183,7 @@ const CronEditor = ({
           <C.Row>
             <MuiPickersUtilsProvider utils={MomentUtils}>
               <KeyboardDatePicker
-                label="Start date"
+                label={t('startDate', 'asurgentui')}
                 format="DD-MM-YYYY"
                 value={startDate}
                 onChange={handleStartDateChange}
@@ -184,7 +194,7 @@ const CronEditor = ({
               <KeyboardTimePicker
                 ampm={false}
                 minutesStep={5}
-                label="Start time"
+                label={t('startTime', 'asurgentui')}
                 value={startDate}
                 onChange={handleStartDateChange}
                 KeyboardButtonProps={{
@@ -196,7 +206,7 @@ const CronEditor = ({
           <C.Row>
             <MuiPickersUtilsProvider utils={MomentUtils}>
               <KeyboardDatePicker
-                label="End date"
+                label={t('endDate', 'asurgentui')}
                 format="DD-MM-YYYY"
                 value={endDate}
                 onChange={handleEndDateChange}
@@ -207,7 +217,7 @@ const CronEditor = ({
               <KeyboardTimePicker
                 ampm={false}
                 minutesStep={5}
-                label="End time"
+                label={t('endTime', 'asurgentui')}
                 value={endDate}
                 onChange={handleEndDateChange}
                 KeyboardButtonProps={{
@@ -216,24 +226,26 @@ const CronEditor = ({
               />
             </MuiPickersUtilsProvider>
           </C.Row>
-          <C.Row>
-            <FormControl>
-              <InputLabel id="repeat-select-label">Repeat</InputLabel>
-              <Select
-                labelId="repeat-select-label"
-                id="repeat-select"
-                value={repeat}
-                onChange={(event) => {
-                  setRepeat(event.target.value);
-                }}
-              >
-                <MenuItem value="never">Never</MenuItem>
-                <MenuItem value="month">Monthly</MenuItem>
-                <MenuItem value="week">Weekly</MenuItem>
-                <MenuItem value="custom">Custom</MenuItem>
-              </Select>
-            </FormControl>
-          </C.Row>
+          {!onlyCustom && (
+            <C.Row>
+              <FormControl>
+                <InputLabel id="repeat-select-label">{t('repeat', 'asurgentui')}</InputLabel>
+                <Select
+                  labelId="repeat-select-label"
+                  id="repeat-select"
+                  value={repeat}
+                  onChange={(event) => {
+                    setRepeat(event.target.value);
+                  }}
+                >
+                  <MenuItem value="never">{t('never', 'asurgentui')}</MenuItem>
+                  <MenuItem value="month">{t('monthly', 'asurgentui')}</MenuItem>
+                  <MenuItem value="week">{t('weekly', 'asurgentui')}</MenuItem>
+                  <MenuItem value="custom">{t('custom', 'asurgentui')}</MenuItem>
+                </Select>
+              </FormControl>
+            </C.Row>
+          )}
 
           <RepeatWeek
             repeat={repeat}
@@ -278,16 +290,16 @@ const CronEditor = ({
           />
 
           { repeat === 'custom' && (
-          <C.Row>
-            <TextField
-              label="Cron Expression"
-              value={cronExpression}
-              onChange={(event) => {
-                const { value } = event.target;
-                setCronExpression(value);
-              }}
-            />
-          </C.Row>
+            <C.Row>
+              <TextField
+                label={t('expression', 'asurgentui')}
+                value={cronExpression}
+                onChange={(event) => {
+                  const { value } = event.target;
+                  setCronExpression(value);
+                }}
+              />
+            </C.Row>
           )}
 
           <RepeatEndDate

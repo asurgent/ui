@@ -1,4 +1,5 @@
 import React from 'react';
+import MomentDuration from './MomentDuration';
 import * as Tooltip from '../Tooltip';
 import * as m from './momentParsers';
 
@@ -35,4 +36,5 @@ export {
   Full,
   Ago,
   Custom,
+  MomentDuration as Duration,
 };

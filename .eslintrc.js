@@ -6,7 +6,8 @@ module.exports = eslint({
         "import/resolver": {
             "alias": {
                 "map": [
-                    ['high-order-components', path.resolve(__dirname, 'high-order-components')]
+                    ['high-order-components', path.resolve(__dirname, 'high-order-components')],
+                    ['test-utils', path.resolve(__dirname, 'test-utils')]
                 ]
             }
         }

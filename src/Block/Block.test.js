@@ -1,7 +1,7 @@
 /* eslint-env jest */
 
 import React from 'react';
-import { render, cleanup } from '../test-utils';
+import { render, cleanup } from 'test-utils';
 import { Plain } from './index';
 
 afterEach(cleanup);
