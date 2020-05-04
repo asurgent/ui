@@ -19,6 +19,8 @@ export default addTranslation({
     onDate: 'Vid datum',
     exampleRuns: 'Intervall',
     nextRuns: 'Nästa exekvering',
+    every: 'Varje',
+    weeks: 'vecka på:',
   },
   en: {
     invalid: 'Invalid expression',
@@ -37,5 +39,7 @@ export default addTranslation({
     onDate: 'On date',
     exampleRuns: 'Interval',
     nextRuns: 'Next run',
+    every: 'Every',
+    weeks: 'week(s) on:',
   },
 });
