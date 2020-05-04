@@ -2,9 +2,12 @@ import React from 'react';
 import { TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import * as C from '../CronEditor.styled';
+import translation from '../CronEditor.translation';
+
 
 export const weekList = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
+const { t } = translation;
 const propTypes = {
   repeat: PropTypes.string.isRequired,
   everyWeek: PropTypes.number.isRequired,
@@ -14,7 +17,6 @@ const propTypes = {
 };
 
 const defaultProps = {};
-
 
 const RepeatWeek = ({
   repeat,
@@ -27,14 +29,14 @@ const RepeatWeek = ({
     return (
       <>
         <C.Label>
-          {`Every  `}
+          {`${t('every', 'asurgentui')} `}
           <TextField
             label=""
             type="number"
             value={everyWeek}
             onChange={onChangeTimes}
           />
-          {`  week(s) on:`}
+          {` ${t('weeks', 'asurgentui')} `}
         </C.Label>
 
         <C.WeekSelector>
