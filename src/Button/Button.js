@@ -31,6 +31,7 @@ const propTyps = {
   theme: PropTypes.instanceOf(Object).isRequired,
   renderStyle: PropTypes.instanceOf(Object).isRequired,
   type: PropTypes.string, // Add button[type="submit"] as an ovelay to native trigger in forms
+  tooltipOrientation: PropTypes.string,
 };
 
 const defaultProps = {
@@ -49,6 +50,7 @@ const defaultProps = {
   className: '',
   passLocationState: false,
   type: '',
+  tooltipOrientation: 'middle',
 };
 
 const Button = (props) => {
@@ -64,6 +66,7 @@ const Button = (props) => {
     mailto,
     history,
     tooltip,
+    tooltipOrientation,
     passLocationState,
     className,
     theme,
@@ -112,6 +115,29 @@ const Button = (props) => {
     onClick: handleClick,
   };
 
+  const TooltipWrapper = ({ children: tooltipChildren }) => {
+    switch (tooltipOrientation) {
+      case 'left':
+        return (
+          <Tooltip.Left tip={tooltip}>
+            {tooltipChildren}
+          </Tooltip.Left>
+        );
+      case 'right':
+        return (
+          <Tooltip.Right tip={tooltip}>
+            {tooltipChildren}
+          </Tooltip.Right>
+        );
+      default:
+        return (
+          <Tooltip.Middle tip={tooltip}>
+            {tooltipChildren}
+          </Tooltip.Middle>
+        );
+    }
+  };
+
   const content = (
     <>
       {mainIcon && mainIcon }
@@ -155,11 +181,11 @@ const Button = (props) => {
     }
 
     return (
-      <Tooltip.Middle tip={tooltip}>
+      <TooltipWrapper>
         <Link {...upddatedAttrs}>
           {content}
         </Link>
-      </Tooltip.Middle>
+      </TooltipWrapper>
     );
   }
 
@@ -168,21 +194,21 @@ const Button = (props) => {
   if (type === 'submit') {
     const { onClick: buttonOnClick, ...rest } = attrs;
     return (
-      <Tooltip.Middle tip={tooltip}>
+      <TooltipWrapper>
         <Style {...rest}>
           <button onClick={buttonOnClick} type="submit">{' '}</button>
           {content}
         </Style>
-      </Tooltip.Middle>
+      </TooltipWrapper>
     );
   }
 
   return (
-    <Tooltip.Middle tip={tooltip}>
+    <TooltipWrapper>
       <Style {...attrs}>
         {content}
       </Style>
-    </Tooltip.Middle>
+    </TooltipWrapper>
   );
 };
 

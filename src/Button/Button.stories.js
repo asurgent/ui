@@ -2,7 +2,7 @@
 import React from 'react';
 import * as Icon from '@material-ui/icons';
 import {
-  withKnobs, boolean,
+  withKnobs, boolean, text,
 } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import * as Button from './index';
@@ -70,4 +70,10 @@ export const acceptButton = () => (
 
 export const pillButton = () => (
   <Button.Pill>{content}</Button.Pill>
+);
+
+export const tooltipButton = () => (
+  <Button.Primary tooltip="hello" tooltipOrientation={text('orientation (middle,left,right)', 'middle')}>
+    {content}
+  </Button.Primary>
 );
