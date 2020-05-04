@@ -19,10 +19,17 @@ const propTypes = {
   filterKey: PropTypes.string.isRequired,
   multiSelect: PropTypes.bool.isRequired,
   theme: PropTypes.instanceOf(Object),
+
+  onChange: PropTypes.func,
+  onAdd: PropTypes.func,
+  onRemove: PropTypes.func,
 };
 
 const defaultProps = {
   theme: {},
+  onChange: () => {},
+  onAdd: () => {},
+  onRemove: () => {},
 };
 
 const FilterCategory = (props) => {
@@ -32,10 +39,13 @@ const FilterCategory = (props) => {
     tableHook,
     filterKey,
     multiSelect,
+    onChange,
+    onAdd,
+    onRemove,
     theme,
   } = props;
 
-  const groupHook = useFilterGroupHook(tableHook, filterHook, filterKey);
+  const groupHook = useFilterGroupHook(tableHook, filterHook, filterKey, onChange);
   const form = Form.useFormBuilder({
     searchQuery: {
       type: 'text', value: '', noLabel: true, props: { autoFocus: true },
@@ -78,6 +88,9 @@ const FilterCategory = (props) => {
                           {(filter, key) => (
                             <FilterItem
                               key={key}
+                              onChange={onChange}
+                              onAdd={onAdd}
+                              onRemove={onRemove}
                               multiSelect={multiSelect}
                               filterItem={filter}
                               groupHook={groupHook}

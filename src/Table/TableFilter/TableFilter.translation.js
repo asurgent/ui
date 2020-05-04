@@ -7,11 +7,13 @@ export default addTranslation({
     selected: 'Valda',
     unmatched: 'Valda (utan träffar)',
     unselected: 'Tillgängliga',
+    exclude: 'Exkludera',
   },
   en: {
     clear: 'Clear Filter',
     selected: 'Selected',
     unmatched: 'Selected (unmatched)',
     unselected: 'Avaliable',
+    exclude: 'Exclude',
   },
 });

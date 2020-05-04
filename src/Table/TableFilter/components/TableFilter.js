@@ -24,7 +24,12 @@ const TableFilter = ({ filterHook, tableHook, className }) => (
     <C.Filters>
       {
         filterHook.getFilterGroups()
-          .map(({ label, facetKey, multiSelect = true }) => (
+          .map(({
+            label,
+            facetKey,
+            multiSelect = true,
+            ...rest
+          }) => (
             label && facetKey && (
               <FilterCategory
                 key={facetKey}
@@ -33,6 +38,9 @@ const TableFilter = ({ filterHook, tableHook, className }) => (
                 filterKey={facetKey}
                 filterHook={filterHook}
                 tableHook={tableHook}
+                onChange={rest.onChange}
+                onAdd={rest.onAdd}
+                onRemove={rest.onRemove}
               />
             )
           ))
