@@ -7,6 +7,8 @@ export const Default = styled.div`
     border: 1px solid ${({ theme }) => theme.gray300};
     border-radius: 2px;
     background: ${({ theme }) => theme.white};
+    display: flex;
+    align-items: center;
     
     .label {
         padding: .4rem;
@@ -17,6 +19,10 @@ export const Default = styled.div`
         padding: .4rem ;
         text-decoration: none;
         border-left: 1px solid ${({ theme }) => theme.gray300};
+
+        .label {
+            display: none;
+        }
     }
 `;
 

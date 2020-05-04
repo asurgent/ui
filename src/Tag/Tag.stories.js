@@ -40,7 +40,7 @@ tagCollection.story = {
 export const tagCollectionObject = () => {
   const tags = Array.from({ length: 10 }, (_, i) => ({
     value: `Tag-${i}`,
-    onClick: (() => action('click')(`Tag-${i}`)),
+    onDelete: (() => action('click')(`Tag-${i}`)),
   }));
   return (
     <>

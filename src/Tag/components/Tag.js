@@ -31,7 +31,7 @@ const Tag = ({
     <Styled>
       <div className="label">{parsedLabel}</div>
       { onDelete && (
-        <Button.Icon icon={<Close />} onClick={onDelete} />
+        <Button.Plain className="delete" mainIcon={<Close fontSize="small" />} onClick={onDelete} />
       )}
     </Styled>
   );
