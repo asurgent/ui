@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as C from './RadioGroup.styled';
 
@@ -21,6 +21,7 @@ const Radio = ({ label, checked, onChange }) => (
     <C.RadioInput
       type="radio"
       name={label}
+      value={label}
       checked={checked}
       onChange={onChange}
     />
@@ -33,27 +34,45 @@ Radio.propTypes = radioPropTypes;
 Radio.defaultProps = radioDefaultProps;
 
 const propTypes = {
+  value: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   wrapRadios: PropTypes.bool,
 };
 
 const defaultProps = {
+  value: '',
   options: [],
   wrapRadios: false,
 };
 
-const RadioGroup = ({ options, wrapRadios }) => (
-  <C.RadioWrapper wrapRadios={wrapRadios}>
-    {options.map((opt, ind) => (
-      <Radio
-        key={opt.label || `radio-${ind}`}
-        label={opt.label}
-        checked={opt.checked}
-        onChange={opt.onChange}
-      />
-    ))}
-  </C.RadioWrapper>
-);
+const RadioGroup = forwardRef((props, ref) => {
+  const { value, options, wrapRadios } = props;
+  const [val, setVal] = useState(null);
+
+  useEffect(() => {
+    setVal(value || '');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  return (
+    <C.RadioWrapper wrapRadios={wrapRadios}>
+      {options.map((opt, ind) => (
+        <C.Label key={opt.label || `radio-${ind}`}>
+          <C.RadioInput
+            type="radio"
+            name={opt.label}
+            value={opt.value}
+            checked={val === opt.value}
+            onChange={() => setVal(opt.value)}
+            ref={val === opt.value ? ref : null}
+          />
+          <C.CheckMark />
+          <C.Text>{opt.label}</C.Text>
+        </C.Label>
+      ))}
+    </C.RadioWrapper>
+  );
+});
 
 RadioGroup.propTypes = propTypes;
 RadioGroup.defaultProps = defaultProps;

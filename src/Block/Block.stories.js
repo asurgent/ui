@@ -44,8 +44,8 @@ export const spaceBetweenBlock = () => (
 
 export const wrapBlock = () => (
   <Block.Wrap wrapReverse={boolean('Reverse order', false)}>
-    <span>I am block #1</span>
-    <span>I am block #2</span>
+    <div style={{ minWidth: '400px', border: '1px solid', padding: '1rem' }}>I am block #1 (min-width: 400px)</div>
+    <div style={{ minWidth: '400px', border: '1px solid', padding: '1rem' }}>I am block #2 (min-width: 400px)</div>
   </Block.Wrap>
 );
 

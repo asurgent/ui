@@ -5,6 +5,7 @@ import TextArea from './types/TextArea';
 import Select from './types/Select';
 import Label from './types/Label';
 import DatePicker from './types/DatePicker';
+import RadioGroup from './types/RadioGroup';
 
 export const withDelayTimer = (action, timeout = 500) => {
   let timer = setTimeout(() => {}, timeout);
@@ -28,6 +29,8 @@ const getInputComponent = (type) => {
       return Label;
     case 'datepicker':
       return DatePicker;
+    case 'radiogroup':
+      return RadioGroup;
     default:
       return Text;
   }

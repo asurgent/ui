@@ -16,7 +16,6 @@ import * as UserImage from './UserImage';
 import * as Moment from './Moment';
 import * as Cron from './Cron';
 import * as Transition from './Transition';
-import * as RadioGroup from './RadioGroup';
 
 import * as Layout from './layout/Layout';
 import * as Omnibar from './layout/Omnibar';
@@ -40,5 +39,4 @@ export {
   Omnibar,
   Cron,
   Transition,
-  RadioGroup,
 };
