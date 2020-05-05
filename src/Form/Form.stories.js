@@ -34,7 +34,7 @@ const specs = [{
 }];
 
 const ticketValues = {
-  ticketNote: 'Hedllo there',
+  ticketNote: 'Hello there',
   ticketStatus: 'Pending',
 };
 
