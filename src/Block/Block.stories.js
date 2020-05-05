@@ -1,7 +1,7 @@
 
 import React from 'react';
 import {
-  withKnobs, boolean,
+  withKnobs, boolean, number,
 } from '@storybook/addon-knobs';
 import * as Block from './index';
 
@@ -22,7 +22,9 @@ export const rightBlock = () => (
 );
 
 export const borderedBlock = () => (
-  <Block.Bordered>{content}</Block.Bordered>
+  <div style={{ height: '20vh' }}>
+    <Block.Bordered noShadow={boolean('Without shadow', false)}>{content}</Block.Bordered>
+  </div>
 );
 
 export const plainBlock = () => (
@@ -45,6 +47,25 @@ export const wrapBlock = () => (
     <span>I am block #1</span>
     <span>I am block #2</span>
   </Block.Wrap>
+);
+
+export const wrapGridBlock = () => (
+  <Block.WrapGrid
+    columnMinWidth={number('Min width of column', 500)}
+    gridGap={number('Gap between columns (unwrapped)', 20)}
+    stretchColumns={boolean('Stretch columns', false)}
+  >
+    <div style={{ border: '1px solid black' }}>
+      <div style={{ padding: '10rem' }}>
+        Block with lots of content
+      </div>
+    </div>
+    <div style={{ border: '1px solid black' }}>
+      <div style={{ padding: '2rem' }}>
+        Block with little content
+      </div>
+    </div>
+  </Block.WrapGrid>
 );
 
 export const errorBlock = () => (

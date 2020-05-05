@@ -34,7 +34,7 @@ const specs = [{
 }];
 
 const ticketValues = {
-  ticketNote: 'Hello there',
+  ticketNote: 'Hedllo there',
   ticketStatus: 'Pending',
 };
 
@@ -50,12 +50,39 @@ export const simpleForm = () => {
 };
 
 export const defaultForm = () => {
-  const formData = Form.useFormBuilder(formObj);
+  const formData = Form.useFormBuilder({
+    someText: {
+      type: 'text',
+      label: 'Some Text',
+      value: 'Hi',
+    },
+    someSelect: {
+      type: 'select',
+      label: 'Some Select',
+      options: [{ value: '1', label: 'First option', default: true }, { value: '2', label: 'Second option' }, { value: '3', label: 'Third option' }],
+    },
+    someDate: {
+      type: 'datepicker',
+      options: [],
+    },
+  });
+
+  useEffect(() => {
+    formData.updateFields([
+      { name: 'someText', value: 'Good bye' },
+      { name: 'someSelect', value: '3' },
+      { name: 'someDate', value: moment().format('YYYY-MM-DD') },
+    ]);
+    /* eslint-disable react-hooks/exhaustive-deps */
+  }, []);
 
   return (
     <Form.Primary
       form={formData}
-      onSubmit={(values) => action()('Submitted', values)}
+      onSubmit={(values, isDirty) => {
+        action()('isDirty', isDirty);
+        action()('Submitted', values);
+      }}
     >
       {(inputList, renderFields, onSubmitAction) => (
         <>
@@ -154,7 +181,7 @@ export const updateForm = () => {
       noLabel: true,
       value: 2,
     });
-  }, []);
+  }, [formData]);
 
   return (
     <Form.Primary
