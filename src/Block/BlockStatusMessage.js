@@ -15,7 +15,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  title: null,
+  title: '',
   children: null,
   hideLeftBorder: false,
   withMargins: false,
