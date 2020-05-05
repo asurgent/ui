@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ErrorState, InfoState, WarningState } from './Block.styled';
 
 const propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
@@ -15,6 +15,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  title: null,
   children: null,
   hideLeftBorder: false,
   withMargins: false,

@@ -12,10 +12,10 @@ const formObj = {
     type: 'text', label: 'Test', placeholder: 'Hello',
   },
   datepicker: {
-    type: 'datepicker', label: 'datdeLabel', name: 'datepicker', maxDate: moment().add(2, 'days'), minDate: moment().subtract(2, 'days').format(),
+    type: 'datepicker', label: 'datdeLabel', name: 'datepicker', maxDate: moment().add(2, 'days').format(), minDate: moment().subtract(2, 'days').format(),
   },
   sortDirection: {
-    type: 'select', label: 'sort', options: [{ value: 1, label: 'one' }, { value: 2, label: 'two' }],
+    type: 'select', label: 'sort', options: [{ value: '1', label: 'one' }, { value: '2', label: 'two' }],
   },
 };
 
@@ -188,7 +188,7 @@ export const updateForm = () => {
   useEffect(() => {
     formData.updateField('sortDirection', {
       noLabel: true,
-      value: 2,
+      value: '2',
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
