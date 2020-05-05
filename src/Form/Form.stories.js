@@ -73,7 +73,7 @@ export const defaultForm = () => {
       { name: 'someSelect', value: '3' },
       { name: 'someDate', value: moment().format('YYYY-MM-DD') },
     ]);
-    /* eslint-disable react-hooks/exhaustive-deps */
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);
 
   return (
