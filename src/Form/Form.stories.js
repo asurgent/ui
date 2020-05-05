@@ -190,7 +190,8 @@ export const updateForm = () => {
       noLabel: true,
       value: 2,
     });
-  }, [formData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Form.Primary
