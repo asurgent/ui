@@ -22,14 +22,10 @@ export const fadeInSlideDown = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div style={{ background: '#888' }}>
-      <h1>jag är en header</h1>
+    <div style={{ height: '100vh' }}>
       <button type="button" onClick={() => setOpen(!open)}>{open ? 'hide' : 'show'}</button>
       <Transitions.FadeInSlideDown isVisible={open}>
-        <div>
-          <p>Hello from content!</p>
-        </div>
-
+        <p>Hello from content!</p>
       </Transitions.FadeInSlideDown>
     </div>
   );
