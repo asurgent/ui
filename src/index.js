@@ -15,6 +15,7 @@ import * as Switch from './Switch';
 import * as UserImage from './UserImage';
 import * as Moment from './Moment';
 import * as Cron from './Cron';
+import * as Transition from './Transition';
 
 import * as Layout from './layout/Layout';
 import * as Omnibar from './layout/Omnibar';
@@ -37,4 +38,5 @@ export {
   Layout,
   Omnibar,
   Cron,
+  Transition,
 };

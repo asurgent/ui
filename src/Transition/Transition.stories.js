@@ -25,7 +25,7 @@ export const fadeInSlideDown = () => {
     <div style={{ height: '100vh' }}>
       <button type="button" onClick={() => setOpen(!open)}>{open ? 'hide' : 'show'}</button>
       <Transitions.FadeInSlideDown isVisible={open}>
-        <p>Hello</p>
+        <p>Hello from content!</p>
       </Transitions.FadeInSlideDown>
     </div>
   );

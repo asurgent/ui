@@ -12,10 +12,10 @@ const formObj = {
     type: 'text', label: 'Test', placeholder: 'Hello',
   },
   datepicker: {
-    type: 'datepicker', label: 'datdeLabel', name: 'datepicker', maxDate: moment().add(2, 'days'), minDate: moment().subtract(2, 'days').format(),
+    type: 'datepicker', label: 'datdeLabel', name: 'datepicker', maxDate: moment().add(2, 'days').format(), minDate: moment().subtract(2, 'days').format(),
   },
   sortDirection: {
-    type: 'select', label: 'sort', options: [{ value: 1, label: 'one' }, { value: 2, label: 'two' }],
+    type: 'select', label: 'sort', options: [{ value: '1', label: 'one' }, { value: '2', label: 'two' }],
   },
 };
 
@@ -50,12 +50,48 @@ export const simpleForm = () => {
 };
 
 export const defaultForm = () => {
-  const formData = Form.useFormBuilder(formObj);
+  const formData = Form.useFormBuilder({
+    someText: {
+      type: 'text',
+      label: 'Some Text',
+      value: 'Hi',
+    },
+    someRadioGroup: {
+      type: 'radiogroup',
+      label: 'Some Text',
+      options: [
+        { label: 'label1', value: 'value1' },
+        { label: 'label2', value: 'value2' },
+      ],
+    },
+    someSelect: {
+      type: 'select',
+      label: 'Some Select',
+      options: [{ value: '1', label: 'First option', default: true }, { value: '2', label: 'Second option' }, { value: '3', label: 'Third option' }],
+    },
+    someDate: {
+      type: 'datepicker',
+      options: [],
+    },
+  });
+
+  useEffect(() => {
+    formData.updateFields([
+      { name: 'someText', value: 'Good bye' },
+      { name: 'someRadioGroup', value: 'value2' },
+      { name: 'someSelect', value: '3' },
+      { name: 'someDate', value: moment().format('YYYY-MM-DD') },
+    ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Form.Primary
       form={formData}
-      onSubmit={(values) => action()('Submitted', values)}
+      onSubmit={(values, isDirty) => {
+        action()('isDirty', isDirty);
+        action()('Submitted', values);
+      }}
     >
       {(inputList, renderFields, onSubmitAction) => (
         <>
@@ -152,8 +188,9 @@ export const updateForm = () => {
   useEffect(() => {
     formData.updateField('sortDirection', {
       noLabel: true,
-      value: 2,
+      value: '2',
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

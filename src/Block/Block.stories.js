@@ -1,7 +1,7 @@
 
 import React from 'react';
 import {
-  withKnobs, boolean,
+  withKnobs, boolean, number,
 } from '@storybook/addon-knobs';
 import * as Block from './index';
 
@@ -22,15 +22,25 @@ export const rightBlock = () => (
 );
 
 export const borderedBlock = () => (
-  <Block.Bordered>{content}</Block.Bordered>
+  <div style={{ height: '20vh' }}>
+    <Block.Bordered noShadow={boolean('Without shadow', false)}>{content}</Block.Bordered>
+  </div>
 );
 
 export const plainBlock = () => (
   <Block.Plain>{content}</Block.Plain>
 );
 
+export const stretchBlock = () => (
+  <Block.Stretch>
+    <div style={{ border: '1px solid' }}>
+      {content}
+    </div>
+  </Block.Stretch>
+);
+
 export const renderTransparentBlock = () => (
-  <Block.Plain renderTransparent>{content}</Block.Plain>
+  <Block.Plain renderTransparent={boolean('Transparent', true)}>{content}</Block.Plain>
 );
 
 export const spaceBetweenBlock = () => (
@@ -41,10 +51,29 @@ export const spaceBetweenBlock = () => (
 );
 
 export const wrapBlock = () => (
-  <Block.Wrap>
-    <span>{content}</span>
-    <span>{content}</span>
+  <Block.Wrap wrapReverse={boolean('Reverse order', false)}>
+    <div style={{ minWidth: '400px', border: '1px solid', padding: '1rem' }}>I am block #1 (min-width: 400px)</div>
+    <div style={{ minWidth: '400px', border: '1px solid', padding: '1rem' }}>I am block #2 (min-width: 400px)</div>
   </Block.Wrap>
+);
+
+export const wrapGridBlock = () => (
+  <Block.WrapGrid
+    columnMinWidth={number('Min width of column', 500)}
+    gridGap={number('Gap between columns (unwrapped)', 20)}
+    stretchColumns={boolean('Stretch columns', false)}
+  >
+    <div style={{ border: '1px solid black' }}>
+      <div style={{ padding: '10rem' }}>
+        Block with lots of content
+      </div>
+    </div>
+    <div style={{ border: '1px solid black' }}>
+      <div style={{ padding: '2rem' }}>
+        Block with little content
+      </div>
+    </div>
+  </Block.WrapGrid>
 );
 
 export const errorBlock = () => (
@@ -60,7 +89,12 @@ export const warningBlock = () => (
 );
 
 export const infoBlock = () => (
-  <Block.Info hideLeftBorder={boolean('Hide left border', true)} title="Some information">
+  <Block.Info
+    hideLeftBorder={boolean('Hide left border', true)}
+    withMargins={boolean('Add margin (all)', false)}
+    withBottomMargin={boolean('Add margin (bottom)', false)}
+    title="Some information"
+  >
     <p>Additional information</p>
   </Block.Info>
 );

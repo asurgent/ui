@@ -9,12 +9,18 @@ const propTypes = {
     PropTypes.arrayOf(PropTypes.node),
   ]),
   hideLeftBorder: PropTypes.bool,
+  withMargins: PropTypes.bool,
+  withBottomMargin: PropTypes.bool,
+  renderTransparent: PropTypes.bool,
 };
 
 const defaultProps = {
   title: '',
   children: null,
   hideLeftBorder: false,
+  withMargins: false,
+  withBottomMargin: false,
+  renderTransparent: false,
 };
 
 const ErrorMessage = ({
