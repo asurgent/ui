@@ -31,6 +31,14 @@ export const plainBlock = () => (
   <Block.Plain>{content}</Block.Plain>
 );
 
+export const stretchBlock = () => (
+  <Block.Stretch>
+    <div style={{ border: '1px solid' }}>
+      {content}
+    </div>
+  </Block.Stretch>
+);
+
 export const renderTransparentBlock = () => (
   <Block.Plain renderTransparent={boolean('Transparent', true)}>{content}</Block.Plain>
 );
