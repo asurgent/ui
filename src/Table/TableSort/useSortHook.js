@@ -32,6 +32,7 @@ const useSearchbarHook = (sortKeyOptionsConfiguration, tableHook) => {
       setSortDirection(direction);
       setIsReady(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableHook.isReady]);
 
   // Poppulate tabelHook with state for requests and URL
@@ -42,6 +43,7 @@ const useSearchbarHook = (sortKeyOptionsConfiguration, tableHook) => {
 
       tableHook.update(request, history);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortKey, sortDirection]);
 
   return {

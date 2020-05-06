@@ -35,6 +35,7 @@ const useSearchbarHook = (tableHook) => {
 
       setIsReady(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableHook.isReady]);
 
   useEffect(() => {
@@ -45,6 +46,7 @@ const useSearchbarHook = (tableHook) => {
         setQuery(search);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableHook.hasTriggers()]);
 
   // Poppulate tabelHook with state for requests and URL
@@ -64,6 +66,7 @@ const useSearchbarHook = (tableHook) => {
         setIsDirty(true);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, isReady]);
 
 

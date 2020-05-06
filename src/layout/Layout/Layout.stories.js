@@ -102,6 +102,7 @@ export const mainLayout = () => {
       });
     });
     table.parentReady();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
