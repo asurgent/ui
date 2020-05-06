@@ -25,6 +25,7 @@ const usePaginationHook = (tableHook, props) => {
 
       setIsReady(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableHook.isReady]);
 
   // Listening to change triggers from other hooks
@@ -43,6 +44,7 @@ const usePaginationHook = (tableHook, props) => {
         setIsResetting(true);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableHook.hasTriggers()]);
 
 
@@ -64,11 +66,13 @@ const usePaginationHook = (tableHook, props) => {
 
       tableHook.update(request, history);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, currentPage]);
 
   // Update totalPageCount if request-response changes
   useEffect(() => {
     setTotalPageCount(tableHook.getRequestedPageCount());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableHook.getRequestedPageCount()]);
 
   // Rebuild pagination list when user paginates or a new totalPageCount

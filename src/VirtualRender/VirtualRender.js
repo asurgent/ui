@@ -36,6 +36,7 @@ const VirtualRender = (props) => {
   useLayoutEffect(() => {
     const height = (wrapperRef.current.offsetHeight);
     setItemRenderCount(Math.ceil((height / rowHeight)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items, index]);
 
 
@@ -52,6 +53,7 @@ const VirtualRender = (props) => {
 
   useLayoutEffect(() => {
     onScroll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
 

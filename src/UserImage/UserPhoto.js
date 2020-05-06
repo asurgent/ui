@@ -50,6 +50,7 @@ const UserPhoto = (props) => {
 
   useEffect(() => {
     setUrl(href);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onLoad = () => {

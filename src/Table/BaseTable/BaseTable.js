@@ -95,6 +95,7 @@ const BaseTable = withTheme((props) => {
   useEffect(() => {
     const defaultRows = generateRows(props, bodyComponents);
     setRows(defaultRows);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowData, cardView]);
 
   const {

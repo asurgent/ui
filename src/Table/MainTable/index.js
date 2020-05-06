@@ -30,6 +30,7 @@ const MainTableProxy = (props) => {
     if (useHistoryState) {
       tableHook.enableHistoryState({ history, location, queryPrefix: historyStatePrefix || '' });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (tableHook.isReady) {

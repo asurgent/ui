@@ -34,16 +34,19 @@ const TableSearchBar = (props) => {
     } else {
       formData.focusOnField('search');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableHook.isLoading]);
 
   useEffect(() => {
     if (searchHook.isReady) {
       formData.updateField('search', { value: searchHook.getQuery() });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchHook.isReady]);
 
   useEffect(() => {
     formData.updateField('search', { placeholder: searchLabel || t('placeholder', 'asurgentui') });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchLabel]);
 
   return (

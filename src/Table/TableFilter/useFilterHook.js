@@ -48,6 +48,7 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
 
       setIsReady(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableHook.isReady]);
 
 
@@ -91,6 +92,7 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
     });
 
     setHasSelectedItems(hasSelected);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, selectedItems]);
 
 

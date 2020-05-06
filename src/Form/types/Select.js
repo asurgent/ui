@@ -62,6 +62,7 @@ const Select = forwardRef((props, ref) => {
 
   useEffect(() => {
     setValue(getDefaultSort(options));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

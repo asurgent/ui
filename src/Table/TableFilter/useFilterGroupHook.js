@@ -149,12 +149,14 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
       setSearch('');
       setIsReady(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   useEffect(() => {
     if (open) {
       filterItemsBySearch();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableHook.getAllFilters(), filterHook.getSelectedItems(), search]);
 
   return {

@@ -26,6 +26,7 @@ const TableSort = (props) => {
 
   useEffect(() => {
     formData.updateField('sortKey', { props: { disabled: tableHook.isLoading } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableHook.isLoading]);
 
 
@@ -33,6 +34,7 @@ const TableSort = (props) => {
     if (sortHook.isReady) {
       formData.updateField('sortKey', { value: sortHook.getCurrentSortKey() });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortHook.isReady]);
 
 
