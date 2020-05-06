@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { CollectionsBookmarkOutlined } from '@material-ui/icons';
 import { generateReferences, generateFieldComponents } from '../helpers';
 
 const updateValue = (form, change) => {
@@ -102,26 +101,8 @@ const getValues = (references, originalValues) => {
 
   return { values, dirty, dirtyItems };
 };
-const getRenderableFields = (obj) => Object.assign(
-  ...Object.keys(obj)
-    .filter((key) => {
-      console.log('key', obj[key]);
-      if (obj[key].render) {
-        console.log('render found', obj[key].render);
-        const shouldShow = obj[key].render(obj);
-        console.log('shouldshow', shouldShow);
-        if (!shouldShow) {
-          return null;
-        }
-      }
-      return obj[key];
-    })
-    .map((key) => ({ [key]: obj[key] })),
-);
 
 const initalValue = (formSpecification, parameters = null) => {
-/*   console.log('formSpecification', formSpecification);
-  console.log('parameters', parameters); */
   if (Array.isArray(formSpecification) && typeof parameters === 'object') {
     const formObject = formSpecification.reduce((acc, field) => ({
       ...acc,
@@ -130,7 +111,6 @@ const initalValue = (formSpecification, parameters = null) => {
         tooltip: field.description,
         value: parameters[field.name],
         options: parameters[field.options],
-        render: parameters[field.render],
       },
     }), {});
 
@@ -141,14 +121,7 @@ const initalValue = (formSpecification, parameters = null) => {
   return {};
 };
 
-const renderField = (form, list) => {
-  console.log('form', form);
-};
-
 const useFormBuilder = (formSpecification, parameters = null) => {
-  const test = getRenderableFields(formSpecification);
-  console.log('tsest', test);
-  console.log();
   const [formData, setFormData] = useState(initalValue(formSpecification, parameters));
   const [inputFileds, setInputFields] = useState([]);
   const [references, setReferences] = useState({});
@@ -158,14 +131,11 @@ const useFormBuilder = (formSpecification, parameters = null) => {
     if (formData) {
       const referenceList = generateReferences(formData);
       const { fields, original } = generateFieldComponents(formData, referenceList);
+
       setReferences({ ...referenceList });
       setOriginalValues(original);
-      console.log('fields', fields);
-      /* const testFiltered = Object.keys(test).map(t => test[t]) */
       setInputFields(fields);
-      /* console.log('fields', fields); */
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
 
@@ -184,13 +154,6 @@ const useFormBuilder = (formSpecification, parameters = null) => {
     },
     updateFields: (list) => {
       const update = updateFields(formData, list);
-
-      if (update) {
-        setFormData(update);
-      }
-    },
-    renderField: (list) => {
-      const update = renderField(formData, list);
 
       if (update) {
         setFormData(update);
