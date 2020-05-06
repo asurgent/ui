@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import {
@@ -15,16 +15,15 @@ import {
   TextField,
 } from '@material-ui/core';
 import * as C from './CronEditor.styled';
-
 import RepeatOutput from './components/RepeatOutput';
 import RepeatMonth from './components/RepeatMonth';
 import RepeatEndDate from './components/RepeatEndDate';
 import ThemeProvider from './components/ThemeProvider';
-import RepeatWeek, { weekList } from './components/RepeatWeek';
+import RepeatWeek from './components/RepeatWeek';
 import translation from './CronEditor.translation';
+import useCronHook from './useCronHook';
 
 const { t } = translation;
-
 
 const propTypes = {
   onlyCustom: PropTypes.bool,
@@ -58,125 +57,15 @@ const CronEditor = ({
   onlyCustom,
   onChange,
 }) => {
-  const [isReady, setIsReady] = useState(false);
-  const [cronExpression, setCronExpression] = useState(expression);
-
-  const [startDate, setStartDate] = useState(moment().local());
-  const [endDate, setEndDate] = useState(moment().local());
-  const [endRepeatDate, setEndRepeatDate] = useState(moment().local());
-
-  const [repeat, setRepeat] = useState('never');
-  const [everyWeek, setEveryWeek] = useState(1);
-  const [everyMonth, setEveryMonth] = useState(1);
-
-  const [weekDayRepeat, setWeekDayRepeat] = useState('MON');
-  const [monthDaysRepeat, setMonthDaysRepeat] = useState([]);
-
-  useEffect(() => {
-    const newEnd = moment(start);
-    newEnd.add(duration, 'seconds');
-
-    setStartDate(moment(start).local());
-    setEndDate(newEnd.local());
-    setEndRepeatDate(moment(end).local());
-
-    if (expression.length > 0) {
-      setCronExpression(expression);
-      setRepeat('custom');
-    }
-
-    const cronList = expression.split(' ');
-    if (cronList.length === 6) {
-      cronList.pop();
-    }
-
-    const [, , days, month, weeek] = cronList;
-
-    if (month) {
-      const [, repeatEveryMonth] = month.split('/');
-      setEveryMonth(parseInt((repeatEveryMonth || 1), 10));
-    }
-
-    if (days && days !== '*' && days.split(',').length > 0) {
-      setMonthDaysRepeat(days.split(',').map((i) => parseInt(i, 10)));
-    }
-
-    if (weeek) {
-      const [weekDay, repeatEveryWeek] = weeek.split('#');
-      setEveryWeek(parseInt((repeatEveryWeek || 1), 10));
-      if (weekDay && weekDay !== '*' && (Number.isInteger(parseInt(weekDay, 10)) || weekDay.length === 3)) {
-        if (Number.isInteger(parseInt(weekDay, 10))) {
-          setWeekDayRepeat(weekList[parseInt(weekDay, 10)]);
-        } else {
-          setWeekDayRepeat(weekDay);
-        }
-      }
-    }
-    setIsReady(true);
-  }, []);
-
-  useEffect(() => {
-    if (isReady) {
-      const payload = {
-        start: moment(startDate).utc().toISOString(),
-        end: moment(endDate).utc().toISOString(),
-        cron_expression: '',
-        duration_in_seconds: endDate.diff(startDate, 'seconds'),
-      };
-
-      if (repeat === 'never') {
-        onChange(payload);
-      } else {
-        Object.assign(payload, {
-          end: endRepeatDate.utc().toISOString(),
-          cron_expression: cronExpression,
-        });
-        onChange(payload);
-      }
-    }
-  }, [isReady, cronExpression]);
-
-  useEffect(() => {
-    if (startDate) {
-      const hours = startDate.hours();
-      const minutes = startDate.minutes();
-      if (repeat === 'month') {
-        const days = monthDaysRepeat.join(',') || '*';
-        const times = everyMonth > 0 ? `/${everyMonth}` : '';
-
-        setCronExpression(`${minutes} ${hours} ${days} *${times} *`);
-      } else if (repeat === 'week') {
-        const times = everyWeek > 0 ? `#${everyWeek}` : '';
-
-        setCronExpression(`${minutes} ${hours} * * ${weekDayRepeat}${times}`);
-      }
-    }
-  }, [startDate, weekDayRepeat, everyMonth, everyWeek, monthDaysRepeat, repeat]);
-
-  const handleStartDateChange = (date) => {
-    if (date) {
-      setStartDate(date.local());
-
-      if (date >= endDate) {
-        setEndDate(date.local());
-      }
-    } else {
-      setStartDate(date);
-    }
-  };
-
-  const handleEndDateChange = (date) => {
-    if (date) {
-      if (date >= startDate) {
-        setEndDate(date.local());
-      }
-    } else {
-      setEndDate(date);
-    }
-  };
+  const hook = useCronHook({
+    end,
+    start,
+    duration,
+    expression,
+    onChange,
+  });
 
   return (
-
     <C.Columns>
       <C.Editor>
         <ThemeProvider>
@@ -185,8 +74,8 @@ const CronEditor = ({
               <KeyboardDatePicker
                 label={t('startDate', 'asurgentui')}
                 format="DD-MM-YYYY"
-                value={startDate}
-                onChange={handleStartDateChange}
+                value={hook.getStartDate()}
+                onChange={hook.handleStartDateChange}
                 KeyboardButtonProps={{
                   'aria-label': 'change date',
                 }}
@@ -195,8 +84,8 @@ const CronEditor = ({
                 ampm={false}
                 minutesStep={5}
                 label={t('startTime', 'asurgentui')}
-                value={startDate}
-                onChange={handleStartDateChange}
+                value={hook.getStartDate()}
+                onChange={hook.handleStartDateChange}
                 KeyboardButtonProps={{
                   'aria-label': 'change time',
                 }}
@@ -208,8 +97,8 @@ const CronEditor = ({
               <KeyboardDatePicker
                 label={t('endDate', 'asurgentui')}
                 format="DD-MM-YYYY"
-                value={endDate}
-                onChange={handleEndDateChange}
+                value={hook.getEndDate()}
+                onChange={hook.handleEndDateChange}
                 KeyboardButtonProps={{
                   'aria-label': 'change date',
                 }}
@@ -218,8 +107,8 @@ const CronEditor = ({
                 ampm={false}
                 minutesStep={5}
                 label={t('endTime', 'asurgentui')}
-                value={endDate}
-                onChange={handleEndDateChange}
+                value={hook.getEndDate()}
+                onChange={hook.handleEndDateChange}
                 KeyboardButtonProps={{
                   'aria-label': 'change time',
                 }}
@@ -233,97 +122,62 @@ const CronEditor = ({
                 <Select
                   labelId="repeat-select-label"
                   id="repeat-select"
-                  value={repeat}
-                  onChange={(event) => {
-                    setRepeat(event.target.value);
-                  }}
+                  value={hook.getRepeat()}
+                  onChange={hook.handleRepeatChange}
                 >
-                  <MenuItem value="never">{t('never', 'asurgentui')}</MenuItem>
-                  <MenuItem value="month">{t('monthly', 'asurgentui')}</MenuItem>
-                  <MenuItem value="week">{t('weekly', 'asurgentui')}</MenuItem>
-                  <MenuItem value="custom">{t('custom', 'asurgentui')}</MenuItem>
+                  {
+                    hook.getRepeatTypes()
+                      .map((type) => (
+                        <MenuItem key={type} value={type}>{t(type, 'asurgentui')}</MenuItem>
+                      ))
+                  }
                 </Select>
               </FormControl>
             </C.Row>
           )}
 
           <RepeatWeek
-            repeat={repeat}
-            everyWeek={everyWeek}
-            weekDayRepeat={weekDayRepeat}
-            onChange={(day) => {
-              setWeekDayRepeat(day);
-            }}
-            onChangeTimes={(event) => {
-              const { value } = event.target;
-              const parsedValue = Math.max(0, Math.min(5, value));
-
-              if (value === '') {
-                setEveryWeek('');
-              } else {
-                setEveryWeek(parsedValue);
-              }
-            }}
+            repeat={hook.getRepeat()}
+            everyWeek={hook.getEveryWeek()}
+            weekDayRepeat={hook.getWeekDayRepeat()}
+            onChange={hook.handleWeekDayRepeat}
+            onChangeTimes={hook.handleEveryWeek}
           />
 
           <RepeatMonth
-            repeat={repeat}
-            everyMonth={everyMonth}
-            monthDaysRepeat={monthDaysRepeat}
-            onChange={(event) => {
-              const { value } = event.target;
-              const parsedValue = Math.max(1, Math.min(12, value));
-              if (value === '') {
-                setEveryMonth('');
-              } else {
-                setEveryMonth(parsedValue);
-              }
-            }}
-            onChangeTimes={(date) => {
-              if (monthDaysRepeat.includes(date)) {
-                const newmonthDaysRepeat = monthDaysRepeat.filter((d) => d !== date);
-                setMonthDaysRepeat(newmonthDaysRepeat);
-              } else {
-                setMonthDaysRepeat([...monthDaysRepeat, date]);
-              }
-            }}
+            repeat={hook.getRepeat()}
+            everyMonth={hook.getEveryMonth()}
+            monthDaysRepeat={hook.getMonthDaysRepeat()}
+            onChange={hook.handleEveryMonthChange}
+            onChangeTimes={hook.handleMonthDaysRepeat}
           />
 
-          { repeat === 'custom' && (
+          { hook.isRepeatCustom() && (
             <C.Row>
               <TextField
                 label={t('expression', 'asurgentui')}
-                value={cronExpression}
-                onChange={(event) => {
-                  const { value } = event.target;
-                  setCronExpression(value);
-                }}
+                value={hook.getExpression()}
+                onChange={hook.handleExpressionChange}
               />
             </C.Row>
           )}
 
           <RepeatEndDate
-            repeat={repeat}
-            endRepeatDate={endRepeatDate}
-            onChange={(date) => {
-              if (date) {
-                if (date >= startDate) {
-                  setEndRepeatDate(date.local());
-                }
-              } else {
-                setEndRepeatDate(date);
-              }
-            }}
+            hook={hook}
+            repeat={hook.getRepeat()}
+            endRepeat={hook.getEndRepeat()}
+            onEndRepeatChange={hook.handleEndRepeat}
+            onChange={hook.handleEndRepeatDate}
           />
 
         </ThemeProvider>
       </C.Editor>
-      {repeat !== 'never' && (
+      {hook.isRepeatNever() && (
         <RepeatOutput
           withBorder
-          repeat={repeat}
-          cronExpression={cronExpression}
-          startDate={startDate}
+          repeat={hook.getRepeat()}
+          startDate={hook.getStartDate()}
+          cronExpression={hook.getExpression()}
         />
       )}
 

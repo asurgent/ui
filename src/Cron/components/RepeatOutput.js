@@ -1,11 +1,10 @@
 import React from 'react';
-import cronstrue from 'cronstrue';
-import Cron from 'cron-converter';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as Moment from '../../Moment';
 import * as C from '../CronEditor.styled';
 import translation from '../CronEditor.translation';
+import { getNextExecutionList, validateToString } from '../helpers';
 
 const { t } = translation;
 
@@ -27,31 +26,6 @@ const defaultProps = {
   withBorder: false,
 };
 
-const getNextExecutionList = (expression, startDate) => {
-  try {
-    const cronInstance = new Cron();
-    cronInstance.fromString(expression);
-    const interval = cronInstance.schedule(moment(startDate).local());
-
-    return Array.from({ length: 3 }, () => {
-      try {
-        return interval.next().format();
-      } catch (e) {
-        return null;
-      }
-    });
-  } catch (e) {
-    return [];
-  }
-};
-
-const validateToString = (expression) => {
-  try {
-    return cronstrue.toString(expression, { use24HourTimeFormat: true });
-  } catch (e) {
-    return false;
-  }
-};
 
 const RepeatOutput = ({
   cronExpression, startDate, withBorder,

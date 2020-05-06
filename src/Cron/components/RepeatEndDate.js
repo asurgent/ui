@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import MomentUtils from '@date-io/moment';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import {
@@ -14,26 +14,13 @@ import translation from '../CronEditor.translation';
 const { t } = translation;
 
 const propTypes = {
-  repeat: PropTypes.string.isRequired,
-  endRepeatDate: PropTypes.instanceOf(Object).isRequired,
-  onChange: PropTypes.func.isRequired,
+  hook: PropTypes.instanceOf(Object).isRequired,
 };
 
 const defaultProps = {};
 
-
-const RepeatEndDate = ({
-  repeat,
-  endRepeatDate,
-  onChange,
-}) => {
-  const [endRepeat, setEndRepeat] = useState('never');
-
-  const handleEndRepeat = (event) => {
-    setEndRepeat(event.target.value);
-  };
-
-  if (repeat !== 'never') {
+const RepeatEndDate = ({ hook }) => {
+  if (hook.isRepeatCustom() || hook.isRepeatMonth() || hook.isRepeatWeek()) {
     return (
       <C.Row>
         <FormControl>
@@ -41,26 +28,30 @@ const RepeatEndDate = ({
           <Select
             labelId="repeat-select-label"
             id="repeat-select"
-            value={endRepeat}
-            onChange={handleEndRepeat}
+            value={hook.getEndRepeat()}
+            onChange={hook.handleEndRepeat}
           >
-            <MenuItem value="never">{t('never', 'asurgentui')}</MenuItem>
-            <MenuItem value="date">{t('onDate', 'asurgentui')}</MenuItem>
+            {
+              hook.getEndRepeatTypes()
+                .map((type) => (
+                  <MenuItem key={type} value={type}>{t(type, 'asurgentui')}</MenuItem>
+                ))
+            }
           </Select>
         </FormControl>
-        { endRepeat === 'date' && (
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <KeyboardDatePicker
-            id="date-picker-dialog"
-            label={t('endDate', 'asurgentui')}
-            format="DD-MM-YYYY"
-            value={endRepeatDate}
-            onChange={onChange}
-            KeyboardButtonProps={{
-              'aria-label': 'change date',
-            }}
-          />
-        </MuiPickersUtilsProvider>
+        { hook.isEndRepeatDate() && (
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <KeyboardDatePicker
+              id="date-picker-dialog"
+              label={t('endDate', 'asurgentui')}
+              format="DD-MM-YYYY"
+              value={hook.getEndRepeatDate()}
+              onChange={hook.handleEndRepeatDate}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+            />
+          </MuiPickersUtilsProvider>
         )}
       </C.Row>
     );
