@@ -114,13 +114,12 @@ const useFormBuilder = ({
         end: null,
         cron_expression: cronExpression,
         duration_in_seconds: endDate.diff(startDate, 'seconds'),
-        valid: true,
+        valid: Boolean(validateToString(cronExpression)),
       };
 
       if (endRepeat !== REPEAT_NEVER) {
         Object.assign(payload, {
           end: moment(endRepeatDate).utc().toISOString(),
-          valid: Boolean(validateToString(cronExpression)),
         });
       }
       onChange(payload);
