@@ -55,10 +55,13 @@ export const defaultForm = () => {
       type: 'text',
       label: 'Some Text',
       value: 'Hi',
+      /* render: false, */
+      tooltip: 'hejhej',
+      render: (spec) => spec.someText.value.length > 10,
     },
     someRadioGroup: {
       type: 'radiogroup',
-      label: 'Some Text',
+      label: 'Some Radio Group',
       options: [
         { label: 'label1', value: 'value1' },
         { label: 'label2', value: 'value2' },
@@ -82,6 +85,9 @@ export const defaultForm = () => {
       { name: 'someSelect', value: '3' },
       { name: 'someDate', value: moment().format('YYYY-MM-DD') },
     ]);
+    /*  formData.renderField([
+      { name: 'someText', value: 'Good bye', render: false },
+    ]); */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
