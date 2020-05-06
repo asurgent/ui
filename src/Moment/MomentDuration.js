@@ -42,7 +42,7 @@ const getDuration = (start, end, duration) => {
 
     return moment.duration(diff);
   } if (duration && parseInt(duration, 10)) {
-    return moment.duration(parseInt(duration, 10));
+    return moment.duration({ seconds: parseInt(duration, 10) });
   }
 
   return false;
