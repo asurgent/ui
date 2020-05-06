@@ -1,7 +1,7 @@
 
 import React from 'react';
 import {
-  withKnobs, text,
+  withKnobs, text, boolean, number,
 } from '@storybook/addon-knobs';
 import * as Moment from './index';
 
@@ -23,11 +23,17 @@ export const dateFormat = () => (
   </>
 );
 
-export const duration = () => (
-  <>
-    <Moment.Duration start={text('timestamp start ', '2020-01-15T13:30:45+0200')} end={text('timestamp end', '2020-01-18T11:20:45+0200')} />
-  </>
-);
+export const durationMoment = () => {
+  const useDate = boolean('date-range', true);
+  const startDate = text('timestamp start ', '2020-01-15T13:30:45+0200');
+  const endDate = text('timestamp end', '2020-01-18T11:20:45+0200');
+  const duration = number('duration in seconds', 15000);
+  return (
+    <>
+      <Moment.Duration seconds={duration} start={useDate ? startDate : false} end={useDate ? endDate : false} />
+    </>
+  );
+};
 
 export const timeAgoFormat = () => (
   <>

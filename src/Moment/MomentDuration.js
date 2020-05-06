@@ -12,39 +12,66 @@ const propTypes = {
     PropTypes.string,
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
-  ]).isRequired,
+    PropTypes.bool,
+  ]),
   end: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
-  ]).isRequired,
+    PropTypes.bool,
+  ]),
+  seconds: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool,
+  ]),
 };
 
+const defaultProps = {
+  seconds: false,
+  start: false,
+  end: false,
+};
 
-const DurationComponent = ({ start, end }) => {
+const getDuration = (start, end, duration) => {
   if (m.isValid(start) && m.isValid(end)) {
     const startDate = moment(start);
     const endDate = moment(end);
 
     const diff = endDate.diff(startDate);
-    const duration = moment.duration(diff);
 
-    const month = duration.get('month');
-    const days = duration.get('days');
-    const hours = duration.get('hours');
-    const minutes = duration.get('minutes');
-    const seconds = duration.get('seconds');
-    const any = duration.as('seconds');
+    return moment.duration(diff);
+  } if (duration && parseInt(duration, 10)) {
+    return moment.duration(parseInt(duration, 10));
+  }
 
+  return false;
+};
+
+const generateNumbers = (duration) => ({
+  month: duration.get('month'),
+  days: duration.get('days'),
+  hours: duration.get('hours'),
+  minutes: duration.get('minutes'),
+  seconds: duration.get('seconds'),
+  any: duration.as('seconds'),
+  tooltip: duration.as('seconds'),
+});
+
+const DurationComponent = ({ start, end, seconds: durationInSeconds }) => {
+  const duration = getDuration(start, end, durationInSeconds);
+
+  if (duration) {
+    const d = generateNumbers(duration);
     return (
-      <Tooltip.Middle tip={`${duration.as('seconds')} seconds`}>
+      <Tooltip.Middle tip={`${d.tooltip} seconds`}>
         <span className="timestamp">
-          {any === 0 && t('none', 'asurgentui')}
-          {month > 0 && `${month} ${t('month', 'asurgentui')} `}
-          {days > 0 && `${days} ${t('days', 'asurgentui')} `}
-          {hours > 0 && `${hours} ${t('hours', 'asurgentui')} `}
-          {minutes > 0 && `${minutes} ${t('minutes', 'asurgentui')} `}
-          {seconds > 0 && `${seconds} ${t('seconds', 'asurgentui')}`}
+          {d.any === 0 && t('none', 'asurgentui')}
+          {d.month > 0 && `${d.month} ${t('month', 'asurgentui')} `}
+          {d.days > 0 && `${d.days} ${t('days', 'asurgentui')} `}
+          {d.hours > 0 && `${d.hours} ${t('hours', 'asurgentui')} `}
+          {d.minutes > 0 && `${d.minutes} ${t('minutes', 'asurgentui')} `}
+          {d.seconds > 0 && `${d.seconds} ${t('seconds', 'asurgentui')}`}
         </span>
       </Tooltip.Middle>
     );
@@ -53,6 +80,7 @@ const DurationComponent = ({ start, end }) => {
   return null;
 };
 
+DurationComponent.defaultProps = defaultProps;
 DurationComponent.propTypes = propTypes;
 DurationComponent.displayName = '@asurgent.ui.moment.Duration';
 
