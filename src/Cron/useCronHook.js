@@ -13,7 +13,6 @@ const END_REPEAT_NEVER = 'never';
 const END_REPEAT_DATE = 'date';
 
 const useFormBuilder = ({
-
   onChange,
   ...props
 }) => {
@@ -80,6 +79,7 @@ const useFormBuilder = ({
       }
     }
     setIsReady(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -123,9 +123,9 @@ const useFormBuilder = ({
           valid: Boolean(validateToString(cronExpression)),
         });
       }
-
       onChange(payload);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     isReady,
     cronExpression,

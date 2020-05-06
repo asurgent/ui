@@ -16,6 +16,6 @@ export const main = () => (
     start={new Date()}
     duration="6324"
     expression="*/5 * * * *"
-    onChange={(e) => console.log(e)}
+    onChange={(e) => action()('onChange', e)}
   />
 );

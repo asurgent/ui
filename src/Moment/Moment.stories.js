@@ -30,7 +30,11 @@ export const durationMoment = () => {
   const duration = number('duration in seconds', 15000);
   return (
     <>
-      <Moment.Duration seconds={duration} start={useDate ? startDate : false} end={useDate ? endDate : false} />
+      <Moment.Duration
+        seconds={duration}
+        start={useDate ? startDate : false}
+        end={useDate ? endDate : false}
+      />
     </>
   );
 };
