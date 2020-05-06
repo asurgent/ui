@@ -162,14 +162,7 @@ const CronEditor = ({
             </C.Row>
           )}
 
-          <RepeatEndDate
-            hook={hook}
-            repeat={hook.getRepeat()}
-            endRepeat={hook.getEndRepeat()}
-            onEndRepeatChange={hook.handleEndRepeat}
-            onChange={hook.handleEndRepeatDate}
-          />
-
+          <RepeatEndDate hook={hook} />
         </ThemeProvider>
       </C.Editor>
       {hook.isRepeatNever() && (
