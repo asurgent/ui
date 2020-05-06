@@ -165,15 +165,12 @@ const CronEditor = ({
           <RepeatEndDate hook={hook} />
         </ThemeProvider>
       </C.Editor>
-      {hook.isRepeatNever() && (
-        <RepeatOutput
-          withBorder
-          repeat={hook.getRepeat()}
-          startDate={hook.getStartDate()}
-          cronExpression={hook.getExpression()}
-        />
-      )}
-
+      <RepeatOutput
+        withBorder
+        repeat={hook.getRepeat()}
+        startDate={hook.getStartDate()}
+        cronExpression={hook.getExpression()}
+      />
     </C.Columns>
   );
 };
