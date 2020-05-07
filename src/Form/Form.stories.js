@@ -55,23 +55,27 @@ export const defaultForm = () => {
       type: 'text',
       label: 'Some Text',
       value: 'Hi',
+      tooltip: 'hejhej',
     },
     someRadioGroup: {
       type: 'radiogroup',
-      label: 'Some Text',
+      label: 'Some Radio Group',
       options: [
         { label: 'label1', value: 'value1' },
         { label: 'label2', value: 'value2' },
       ],
+      render: (spec) => spec.someText.length < 5,
     },
     someSelect: {
       type: 'select',
       label: 'Some Select',
       options: [{ value: '1', label: 'First option', default: true }, { value: '2', label: 'Second option' }, { value: '3', label: 'Third option' }],
+      render: (spec) => spec.someText.length > 5,
     },
     someDate: {
       type: 'datepicker',
       options: [],
+      render: (spec) => spec.someText.length === 5,
     },
   });
 
