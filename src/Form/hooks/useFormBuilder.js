@@ -102,6 +102,26 @@ const getValues = (references, originalValues) => {
   return { values, dirty, dirtyItems };
 };
 
+/*
+formSpec: spec with renderconditions,
+formData: actual inputs
+currentValues: { {specKey: currentValue}... }
+*/
+const getRenderableFields = (formSpec, formData, currentValues) => Object.assign(
+  ...Object.keys(formSpec)
+    .filter((key) => {
+      // check if the field has a renderprop
+      if (formSpec[key].render) {
+        const shouldShow = formSpec[key].render(currentValues);
+        if (!shouldShow) {
+          return null;
+        }
+      }
+      return formData[key];
+    })
+    .map((key) => ({ [key]: formData[key] })),
+);
+
 const initalValue = (formSpecification, parameters = null) => {
   if (Array.isArray(formSpecification) && typeof parameters === 'object') {
     const formObject = formSpecification.reduce((acc, field) => ({
@@ -124,6 +144,7 @@ const initalValue = (formSpecification, parameters = null) => {
 const useFormBuilder = (formSpecification, parameters = null) => {
   const [formData, setFormData] = useState(initalValue(formSpecification, parameters));
   const [inputFileds, setInputFields] = useState([]);
+  const [renderedFields, setRenderedFields] = useState([]);
   const [references, setReferences] = useState({});
   const [originalValues, setOriginalValues] = useState({});
 
@@ -131,15 +152,26 @@ const useFormBuilder = (formSpecification, parameters = null) => {
     if (formData) {
       const referenceList = generateReferences(formData);
       const { fields, original } = generateFieldComponents(formData, referenceList);
-
       setReferences({ ...referenceList });
       setOriginalValues(original);
       setInputFields(fields);
+
+      // Initial check for fields that should be rendered acc. to formSpec
+      const values = Object.keys(formData)
+        .reduce((acc, key) => ({
+          [key]: formData[key].value, ...acc,
+        }), {});
+      const render = getRenderableFields(formSpecification, fields, values);
+      setRenderedFields(render);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
-
   return {
+    renderItems: (values) => {
+      const fields = getRenderableFields(formSpecification, inputFileds, values);
+      setRenderedFields(fields);
+    },
     updateValue: (name, value) => {
       const update = updateValue(formData, { name, value });
       if (update) {
@@ -186,7 +218,7 @@ const useFormBuilder = (formSpecification, parameters = null) => {
       }
     },
     getValues: () => getValues(references, originalValues),
-    inputFileds,
+    inputFileds: renderedFields,
     formData,
   };
 };

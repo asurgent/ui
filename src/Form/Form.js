@@ -63,12 +63,13 @@ const Form = (props) => {
     return null;
   }
 
+
   const { inputFileds } = form;
 
   const handleOnChange = (event) => {
     const { name } = event.target;
     const { values, dirty, dirtyItems } = form.getValues();
-
+    form.renderItems(values);
     changeTimer(values, dirty, dirtyItems);
     onChange(values, dirty, dirtyItems, name);
   };
