@@ -155,8 +155,16 @@ const useFormBuilder = (formSpecification, parameters = null) => {
       setReferences({ ...referenceList });
       setOriginalValues(original);
       setInputFields(fields);
-      setRenderedFields(fields);
+
+      // Initial check for fields that should be rendered acc. to formSpec
+      const values = Object.keys(formData)
+        .reduce((acc, key) => ({
+          [key]: formData[key].value, ...acc,
+        }), {});
+      const render = getRenderableFields(formSpecification, fields, values);
+      setRenderedFields(render);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
   return {
