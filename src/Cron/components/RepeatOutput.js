@@ -29,28 +29,21 @@ const defaultProps = {
 
 const RepeatOutput = ({
   cronExpression, startDate, withBorder,
-}) => {
-  const parsed = validateToString(cronExpression);
-  return (
-    <C.Output withBorder={withBorder}>
-      <C.Label style={{ flexDirection: 'column' }}>
-        <C.Title>{t('exampleRuns', 'asurgentui')}</C.Title>
-        <C.Text>
-          { parsed || t('invalid', 'asurgentui')}
-        </C.Text>
-        { parsed && (
-          <>
-            <C.Title>{t('nextRuns', 'asurgentui')}</C.Title>
-            {
+}) => (
+  <C.Output withBorder={withBorder}>
+    <C.Label style={{ flexDirection: 'column' }}>
+      { validateToString(cronExpression) && (
+        <>
+          <C.Title>{t('next', 'asurgentui')}</C.Title>
+          {
             getNextExecutionList(cronExpression, startDate)
               .map((e) => (<Moment.DateTime timestamp={e} key={e} />))
           }
-          </>
-        )}
-      </C.Label>
-    </C.Output>
-  );
-};
+        </>
+      )}
+    </C.Label>
+  </C.Output>
+);
 
 RepeatOutput.propTypes = propTypes;
 RepeatOutput.defaultProps = defaultProps;

@@ -14,7 +14,7 @@ export const main = () => (
   <Cron.Editor
     end={new Date()}
     start={new Date()}
-    duration="6324"
+    duration="3600"
     expression="*/5 * * * *"
     onChange={(e) => action()('onChange', e)}
   />
