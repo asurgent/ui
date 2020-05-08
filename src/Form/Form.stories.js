@@ -79,11 +79,13 @@ export const defaultForm = () => {
       type: 'select',
       label: 'Some Select',
       options: [{ value: '1', label: 'First option', default: true }, { value: '2', label: 'Second option' }, { value: '3', label: 'Third option' }],
+      tooltip: 'tooltip',
     },
     someDate: {
       type: 'datepicker',
       options: [],
       render: (spec) => spec.someText.length < 10,
+      tooltip: 'tooltip',
     },
   });
 

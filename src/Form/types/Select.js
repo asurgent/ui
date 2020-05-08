@@ -5,7 +5,7 @@ import * as Tooltip from '../../Tooltip';
 
 import {
   Main,
-  Icon,
+  TooltipIcon,
   Label,
   Header,
   SelectWrapper,
@@ -72,7 +72,7 @@ const Select = forwardRef((props, ref) => {
           <Label>{label || name}</Label>
           { tooltip && (
           <Tooltip.Middle tip={tooltip}>
-            <Icon className="far fa-question-circle" />
+            <TooltipIcon />
           </Tooltip.Middle>
           )}
         </Header>

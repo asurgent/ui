@@ -2,6 +2,7 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as C from './RadioGroup.styled';
+import { TooltipIcon } from './Text.styled';
 import * as Tooltip from '../../Tooltip';
 
 const propTypes = {
@@ -39,7 +40,7 @@ const RadioGroup = forwardRef((props, ref) => {
         <C.Label>{label}</C.Label>
         { tooltip && (
         <Tooltip.Middle tip={tooltip}>
-          <C.Icon className="far fa-question-circle" />
+          <TooltipIcon />
         </Tooltip.Middle>
         )}
       </C.Header>

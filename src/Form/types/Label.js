@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import * as Tooltip from '../../Tooltip';
 
 import {
-  Icon,
+  TooltipIcon,
   Main,
   Label as InputLabel,
   Header,
@@ -46,7 +46,7 @@ const Label = (props) => {
         <InputLabel>{label || name}</InputLabel>
         { tooltip && (
         <Tooltip.Middle tip={tooltip}>
-          <Icon className="far fa-question-circle" />
+          <TooltipIcon />
         </Tooltip.Middle>
         )}
       </Header>
