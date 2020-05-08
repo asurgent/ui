@@ -85,7 +85,6 @@ const useFormBuilder = ({
       } else if (durationType === DURATION_DAYS) {
         Object.assign(payload, { duration_in_seconds: duration * 60 * 60 * 24 });
       }
-      console.log(payload);
 
       onChange(payload);
     }

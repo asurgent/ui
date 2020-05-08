@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import {
-  TextField,
-} from '@material-ui/core';
 import * as C from './CronEditor.styled';
 
 import StartDate from './components/StartDate';
@@ -12,11 +9,8 @@ import RepeatOutput from './components/RepeatOutput';
 import RepeatEvery from './components/RepeatEvery';
 import Occurrence from './components/Occurrence';
 import ThemeProvider from './components/ThemeProvider';
-import translation from './CronEditor.translation';
 import useCronHook from './useCronHook';
 
-
-const { t } = translation;
 
 const propTypes = {
   end: PropTypes.oneOfType([
