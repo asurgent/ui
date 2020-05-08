@@ -7,9 +7,8 @@ import * as Tooltip from '../../Tooltip';
 
 const propTypes = {
   value: PropTypes.string,
-  // label is required since it serves as an ID
-  label: PropTypes.string.isRequired,
-  noLabel: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   wrapRadios: PropTypes.bool,
   tooltip: PropTypes.string,
@@ -17,7 +16,7 @@ const propTypes = {
 
 const defaultProps = {
   value: '',
-  noLabel: false,
+  label: '',
   options: [],
   wrapRadios: false,
   tooltip: '',
@@ -25,7 +24,7 @@ const defaultProps = {
 
 const RadioGroup = forwardRef((props, ref) => {
   const {
-    value, label, noLabel, tooltip, options, wrapRadios,
+    name, value, label, tooltip, options, wrapRadios,
   } = props;
   const [val, setVal] = useState(null);
 
@@ -35,7 +34,7 @@ const RadioGroup = forwardRef((props, ref) => {
 
   return (
     <>
-      {noLabel === false && (
+      {label && (
       <C.Header>
         <C.Label>{label}</C.Label>
         { tooltip && (
@@ -48,10 +47,10 @@ const RadioGroup = forwardRef((props, ref) => {
 
       <C.RadioWrapper wrapRadios={wrapRadios}>
         {options.map((opt) => (
-          <C.Label key={label + opt.label}>
+          <C.Label key={opt.label || opt.value}>
             <C.RadioInput
               type="radio"
-              name={`${label}-${opt.label}`}
+              name={name}
               value={opt.value}
               checked={val === opt.value}
               onChange={() => setVal(opt.value)}

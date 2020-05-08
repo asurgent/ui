@@ -67,11 +67,10 @@ export const defaultForm = () => {
     },
     someRadioGroup2: {
       type: 'radiogroup',
-      label: 'Some Radio Group2',
-      noLabel: false,
+      label: 'Some Radio Group',
       options: [
-        { label: 'label1', value: 'value1' },
-        { label: 'label2', value: 'value2' },
+        { label: 'label3', value: 'value3' },
+        { label: 'label4', value: 'value4' },
       ],
       tooltip: 'tooltip',
     },
@@ -93,7 +92,7 @@ export const defaultForm = () => {
     formData.updateFields([
       { name: 'someText', value: 'Good bye' },
       { name: 'someRadioGroup', value: 'value1' },
-      { name: 'someRadioGroup2', value: 'value1' },
+      { name: 'someRadioGroup2', value: 'value4' },
       { name: 'someSelect', value: '3' },
       { name: 'someDate', value: moment().format('YYYY-MM-DD') },
     ]);
