@@ -2,75 +2,67 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as C from './RadioGroup.styled';
-
-const radioPropTypes = {
-  label: PropTypes.string,
-  checked: PropTypes.bool,
-  onChange: PropTypes.func,
-};
-
-const radioDefaultProps = {
-  label: '',
-  checked: false,
-  onChange: () => {},
-};
-
-
-const Radio = ({ label, checked, onChange }) => (
-  <C.Label>
-    <C.RadioInput
-      type="radio"
-      name={label}
-      value={label}
-      checked={checked}
-      onChange={onChange}
-    />
-    <C.CheckMark />
-    <C.Text>{label}</C.Text>
-  </C.Label>
-);
-
-Radio.propTypes = radioPropTypes;
-Radio.defaultProps = radioDefaultProps;
+import { TooltipIcon } from './Text.styled';
+import * as Tooltip from '../../Tooltip';
 
 const propTypes = {
   value: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   wrapRadios: PropTypes.bool,
+  tooltip: PropTypes.string,
 };
 
 const defaultProps = {
   value: '',
+  label: '',
   options: [],
   wrapRadios: false,
+  tooltip: '',
 };
 
 const RadioGroup = forwardRef((props, ref) => {
-  const { value, options, wrapRadios } = props;
+  const {
+    name, value, label, tooltip, options, wrapRadios,
+  } = props;
   const [val, setVal] = useState(null);
 
   useEffect(() => {
     setVal(value || '');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   return (
-    <C.RadioWrapper wrapRadios={wrapRadios}>
-      {options.map((opt, ind) => (
-        <C.Label key={opt.label || `radio-${ind}`}>
-          <C.RadioInput
-            type="radio"
-            name={opt.label}
-            value={opt.value}
-            checked={val === opt.value}
-            onChange={() => setVal(opt.value)}
-            ref={val === opt.value ? ref : null}
-          />
-          <C.CheckMark />
-          <C.Text>{opt.label}</C.Text>
-        </C.Label>
-      ))}
-    </C.RadioWrapper>
+    <>
+      {label && (
+      <C.Header>
+        <C.Label>{label}</C.Label>
+        { tooltip && (
+        <Tooltip.Middle tip={tooltip}>
+          <TooltipIcon />
+        </Tooltip.Middle>
+        )}
+      </C.Header>
+      )}
+
+      <C.RadioWrapper wrapRadios={wrapRadios}>
+        {options.map((opt) => (
+          <C.Label key={opt.label || opt.value}>
+            <C.RadioInput
+              type="radio"
+              name={name}
+              value={opt.value}
+              checked={val === opt.value}
+              onChange={() => setVal(opt.value)}
+              ref={val === opt.value ? ref : null}
+            />
+            <C.CheckMark />
+            <C.Text>{opt.label}</C.Text>
+          </C.Label>
+        ))}
+
+      </C.RadioWrapper>
+    </>
   );
 });
 

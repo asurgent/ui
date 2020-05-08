@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import * as Tooltip from '../../Tooltip';
 
 import {
-  Main, Wrapper, Label, Header, Icon,
+  Main, Wrapper, Label, Header, TooltipIcon,
 } from './Text.styled';
 
 const propTyps = {
@@ -45,7 +45,7 @@ const TextArea = forwardRef((props, ref) => {
           <Label>{label || name}</Label>
           { tooltip && (
           <Tooltip.Middle tip={tooltip}>
-            <Icon className="far fa-question-circle" />
+            <TooltipIcon />
           </Tooltip.Middle>
           )}
         </Header>

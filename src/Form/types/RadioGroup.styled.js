@@ -1,19 +1,37 @@
 import styled from 'styled-components';
 
-export const RadioWrapper = styled.div`
-    display: flex;
-    flex-direction: ${({ wrapRadios }) => (wrapRadios === true ? 'column' : 'row')};
-    align-items: flex-start;
-`;
 
 export const Label = styled.label`
     display: flex;
     position: relative;
-    justify-content: center;
-    margin: 1.6rem;
-    &:not(:first-child) {
+    align-items: center;
+    font-size: 1.4rem;
+    letter-spacing: .1rem;
+    color: ${({ theme }) => theme.gray700};
+    text-transform: capitalize;
+`;
+
+export const RadioWrapper = styled.div`
+    display: flex;
+    flex-direction: ${({ wrapRadios }) => (wrapRadios === true ? 'column' : 'row')};
+    align-items: flex-start;
+
+    ${Label}:not(:first-child) {
         margin-left: 1.6rem;
     }
+`;
+
+export const Icon = styled.i`
+  width: 1.6rem;
+  text-align: right;
+  color: ${({ theme }) => theme.gray700};
+  cursor: pointer;
+`;
+
+export const Header = styled.div`
+  margin-bottom: .8rem;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const CheckMark = styled.span`

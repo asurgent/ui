@@ -9,7 +9,7 @@ import * as C from './DatePicker.styled';
 import {
   Label,
   Header,
-  Icon,
+  TooltipIcon,
 } from './Text.styled';
 import * as Tooltip from '../../Tooltip';
 
@@ -39,7 +39,7 @@ const DatePicker = forwardRef((props, ref) => {
           <Label>{label || name}</Label>
           { tooltip && (
           <Tooltip.Middle tip={tooltip}>
-            <Icon className="far fa-question-circle" />
+            <TooltipIcon />
           </Tooltip.Middle>
           )}
         </Header>

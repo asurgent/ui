@@ -1,5 +1,6 @@
 
 import styled from 'styled-components';
+import HelpOutline from '@material-ui/icons/HelpOutline';
 
 export const Main = styled.div`
   width: 100%;
@@ -57,9 +58,7 @@ export const Header = styled.div`
   display: flex;
 `;
 
-export const Icon = styled.i`
-  width: 1.6rem;
-  text-align: right;
+export const TooltipIcon = styled(HelpOutline)`
   color: ${({ theme }) => theme.gray700};
   cursor: pointer;
 `;

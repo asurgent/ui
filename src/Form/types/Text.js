@@ -7,8 +7,9 @@ import {
   Wrapper,
   Label,
   Header,
-  Icon,
+  TooltipIcon,
 } from './Text.styled';
+
 
 const propTyps = {
   value: PropTypes.string,
@@ -49,7 +50,7 @@ const Text = forwardRef((props, ref) => {
           <Label>{label || name}</Label>
           { tooltip && (
           <Tooltip.Middle tip={tooltip}>
-            <Icon className="far fa-question-circle" />
+            <TooltipIcon />
           </Tooltip.Middle>
           )}
         </Header>

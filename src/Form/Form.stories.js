@@ -65,22 +65,34 @@ export const defaultForm = () => {
         { label: 'label2', value: 'value2' },
       ],
     },
+    someRadioGroup2: {
+      type: 'radiogroup',
+      label: 'Some Radio Group',
+      options: [
+        { label: 'label3', value: 'value3' },
+        { label: 'label4', value: 'value4' },
+      ],
+      tooltip: 'tooltip',
+    },
     someSelect: {
       type: 'select',
       label: 'Some Select',
       options: [{ value: '1', label: 'First option', default: true }, { value: '2', label: 'Second option' }, { value: '3', label: 'Third option' }],
+      tooltip: 'tooltip',
     },
     someDate: {
       type: 'datepicker',
       options: [],
       render: (spec) => spec.someText.length < 10,
+      tooltip: 'tooltip',
     },
   });
 
   useEffect(() => {
     formData.updateFields([
       { name: 'someText', value: 'Good bye' },
-      { name: 'someRadioGroup', value: 'value2' },
+      { name: 'someRadioGroup', value: 'value1' },
+      { name: 'someRadioGroup2', value: 'value4' },
       { name: 'someSelect', value: '3' },
       { name: 'someDate', value: moment().format('YYYY-MM-DD') },
     ]);
