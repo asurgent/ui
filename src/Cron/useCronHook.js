@@ -91,6 +91,8 @@ const useFormBuilder = ({
         setCronExpression(`${minutes} ${hours} * * ${weekday}`);
       } else if (repeatType === REPEAT_MONTH) {
         setCronExpression(`${minutes} ${hours} ${dayOfMonth} * *`);
+      } else if (repeatType === REPEAT_CUSTOM) {
+        setCronExpression(`* * * * *`);
       }
     } else {
       setCronExpression('');
