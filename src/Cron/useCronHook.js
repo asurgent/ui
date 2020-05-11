@@ -65,17 +65,26 @@ const useFormBuilder = ({
 
   useEffect(() => {
     if (occurrence === OCCURRENCES_UNTILL_DATE) {
-      const newEnd = moment(startDate);
-      newEnd.second(59);
-      newEnd.minutes(59);
-      newEnd.hour(23);
-      setEndDate(newEnd);
+      const newEnd = moment(endDate);
+      const durationEnd = moment(startDate).add(duration, durationType);
+      if (durationEnd > newEnd) {
+        durationEnd.second(59);
+        durationEnd.minutes(59);
+        durationEnd.hour(23);
+        setEndDate(durationEnd);
+      } else {
+        newEnd.second(59);
+        newEnd.minutes(59);
+        newEnd.hour(23);
+        setEndDate(newEnd);
+      }
     } else if (occurrence === OCCURRENCES_FOREVER) {
       setEndDate(moment('9999-12-30 23:39:59').local());
     } else {
       const newEnd = moment(startDate).add(duration, durationType);
       setEndDate(newEnd.local());
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [occurrence, startDate, durationType, duration]);
 
   useEffect(() => {
