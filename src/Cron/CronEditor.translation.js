@@ -11,7 +11,7 @@ export default addTranslation({
     hours: 'Timmar',
     minutes: 'Minuter',
 
-    duration: 'Läng på service fönster',
+    duration: 'Längd på servicefönster',
 
     end: 'Upphör',
     repeat: 'Upprepa',
