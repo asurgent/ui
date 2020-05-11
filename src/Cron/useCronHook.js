@@ -15,13 +15,23 @@ const REPEAT_WEEK = 'week';
 const REPEAT_MONTH = 'month';
 const REPEAT_CUSTOM = 'custom';
 
+const getDurationInSeconds = (durationType, duration) => {
+  if (durationType === DURATION_MINUTES) {
+    return duration * 60;
+  } if (durationType === DURATION_HOURS) {
+    return duration * 60 * 60;
+  } if (durationType === DURATION_DAYS) {
+    return duration * 60 * 60 * 24;
+  }
+
+  return 0;
+};
+
 const useFormBuilder = ({
   onChange,
   ...props
 }) => {
   const [isReady, setIsReady] = useState(false);
-
-
   const [startDate, setStartDate] = useState(moment().local());
   const [endDate, setEndDate] = useState(moment().local());
   const [duration, setDuration] = useState(60);
@@ -41,7 +51,8 @@ const useFormBuilder = ({
     setStartDate(moment(start).local());
 
     const newEnd = moment(end);
-    setDuration(durationInSeconds);
+    setDuration(durationInSeconds / 60);
+    setDurationType(DURATION_MINUTES);
     setEndDate(newEnd.local());
 
     if (expression.length > 0) {
@@ -53,20 +64,39 @@ const useFormBuilder = ({
   }, []);
 
   useEffect(() => {
+    if (occurrence === OCCURRENCES_UNTILL_DATE) {
+      const newEnd = moment(startDate);
+      newEnd.second(59);
+      newEnd.minutes(59);
+      newEnd.hour(23);
+      setEndDate(newEnd);
+    } else if (occurrence === OCCURRENCES_FOREVER) {
+      setEndDate(moment('9999-12-30 23:39:59').local());
+    } else {
+      const newEnd = moment(startDate).add(duration, durationType);
+      setEndDate(newEnd.local());
+    }
+  }, [occurrence, startDate, durationType, duration]);
+
+  useEffect(() => {
     const hours = startDate.hours();
     const minutes = startDate.minutes();
     const weekday = startDate.weekday();
     const dayOfMonth = startDate.date();
 
-    if (repeatType === REPEAT_DAY) {
-      setCronExpression(`${minutes} ${hours} * * *`);
-    } else if (repeatType === REPEAT_WEEK) {
-      setCronExpression(`${minutes} ${hours} * * ${weekday}`);
-    } else if (repeatType === REPEAT_MONTH) {
-      setCronExpression(`${minutes} ${hours} ${dayOfMonth} * *`);
+    if (occurrence !== OCCURRENCES_ONCE) {
+      if (repeatType === REPEAT_DAY) {
+        setCronExpression(`${minutes} ${hours} * * *`);
+      } else if (repeatType === REPEAT_WEEK) {
+        setCronExpression(`${minutes} ${hours} * * ${weekday}`);
+      } else if (repeatType === REPEAT_MONTH) {
+        setCronExpression(`${minutes} ${hours} ${dayOfMonth} * *`);
+      }
+    } else {
+      setCronExpression('');
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [repeatType]);
+  }, [repeatType, startDate, occurrence]);
 
   useEffect(() => {
     if (isReady) {
@@ -74,29 +104,17 @@ const useFormBuilder = ({
         start: moment(startDate).utc().toISOString(),
         end: moment(endDate).utc().toISOString(),
         cron_expression: cronExpression,
-        duration_in_seconds: 0,
+        duration_in_seconds: getDurationInSeconds(durationType, duration),
         valid: Boolean(validateToString(cronExpression)),
       };
-
-      if (durationType === DURATION_MINUTES) {
-        Object.assign(payload, { duration_in_seconds: duration * 60 });
-      } else if (durationType === DURATION_HOURS) {
-        Object.assign(payload, { duration_in_seconds: duration * 60 * 60 });
-      } else if (durationType === DURATION_DAYS) {
-        Object.assign(payload, { duration_in_seconds: duration * 60 * 60 * 24 });
-      }
 
       onChange(payload);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     isReady,
-    duration,
     cronExpression,
-    durationType,
     endDate,
-    startDate,
-    occurrence,
   ]);
 
   return {
@@ -136,14 +154,6 @@ const useFormBuilder = ({
     getRepeatType: () => repeatType,
     getOccurrence: () => occurrence,
     handleOccurrence: ({ target }) => {
-      if (target.value === OCCURRENCES_UNTILL_DATE) {
-        setEndDate(moment().local());
-      } else if (target.value === OCCURRENCES_FOREVER) {
-        setEndDate(moment('9999-12-30 23:39:59').local());
-      } else {
-        setEndDate(moment().local());
-      }
-
       setOccurrence(target.value);
     },
     handleExpressionChange: (event) => {
@@ -161,7 +171,8 @@ const useFormBuilder = ({
     },
     handleDurationChange: (event) => {
       const { value } = event.target;
-      setDuration(value);
+      const parsed = `${value}`.replace(/\D/g, '');
+      setDuration(parsed);
     },
     handleStartDateChange: (date) => {
       if (date) {
