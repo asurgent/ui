@@ -105,8 +105,14 @@ const useFormBuilder = ({
         end: moment(endDate).utc().toISOString(),
         cron_expression: cronExpression,
         duration_in_seconds: getDurationInSeconds(durationType, duration),
-        valid: Boolean(validateToString(cronExpression)),
+        valid: true,
       };
+
+      if (occurrence !== OCCURRENCES_ONCE) {
+        Object.assign(payload, {
+          valid: Boolean(validateToString(cronExpression)),
+        });
+      }
 
       onChange(payload);
     }
