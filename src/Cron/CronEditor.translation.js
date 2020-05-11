@@ -3,43 +3,57 @@ import addTranslation from '../../lib/i18n/addTranslation';
 export default addTranslation({
   id: 'CronEditor',
   sv: {
-    invalid: 'Felaktigt format',
     startDate: 'Startdatum',
     startTime: 'Starttid',
     endDate: 'Slutdatum',
-    endTime: 'Sluttid',
+
+    days: 'Dagar',
+    hours: 'Timmar',
+    minutes: 'Minuter',
+
+    duration: 'Längd på servicefönster',
+
+    end: 'Upphör',
     repeat: 'Upprepa',
-    never: 'Aldrig',
-    monthly: 'Månadsvis',
-    weekly: 'Veckovis',
+
+    expression: 'Cron Expression',
+    next: 'Kommande',
+    invalid: 'Felaktigt format',
+
+    day: 'Varje dag',
+    week: 'Varje vecka',
+    month: 'Varje månad',
     custom: 'Skräddarsy',
-    expression: 'Cron Uttryck ',
-    end: 'Avsluta upprepning',
-    ever: 'Aldrig',
+
+    never: 'Aldrig',
     date: 'Vid datum',
-    exampleRuns: 'Intervall',
-    nextRuns: 'Nästa exekvering',
-    every: 'Varje',
-    weeks: 'vecka på:',
+    once: 'Efter en gång',
   },
   en: {
-    invalid: 'Invalid expression',
     startDate: 'Start date',
     startTime: 'Start time',
     endDate: 'End date',
-    endTime: 'End time',
+
+    days: 'Days',
+    hours: 'Hours',
+    minutes: 'Minutes',
+
+    duration: 'Duration of service window',
+
+    end: 'End',
     repeat: 'Repeat',
-    never: 'Never',
-    monthly: 'Monthly',
-    weekly: 'Weekly',
-    custom: 'Custom',
+
     expression: 'Cron Expression',
-    end: 'End repeat',
-    ever: 'Never',
+    next: 'Upcoming',
+    invalid: 'Invalid format',
+
+    day: 'Every day',
+    week: 'Every week',
+    month: 'Every month',
+    custom: 'Custom',
+
+    never: 'Never',
     date: 'On date',
-    exampleRuns: 'Interval',
-    nextRuns: 'Next run',
-    every: 'Every',
-    weeks: 'week(s) on:',
+    once: 'After one time',
   },
 });
