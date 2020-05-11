@@ -101,16 +101,29 @@ const useFormBuilder = ({
   useEffect(() => {
     if (isReady) {
       const payload = {
-        start: moment(startDate).utc().toISOString(),
-        end: moment(endDate).utc().toISOString(),
-        cron_expression: cronExpression,
-        duration_in_seconds: getDurationInSeconds(durationType, duration),
         valid: true,
+        payload: {
+          start: moment(startDate).utc().toISOString(),
+          end: moment(endDate).utc().toISOString(),
+          cron_expression: cronExpression,
+          duration_in_seconds: getDurationInSeconds(durationType, duration),
+        },
+        meta: {
+          repeatType: null,
+          duration,
+          durationType,
+          occurrence,
+        },
       };
 
       if (occurrence !== OCCURRENCES_ONCE) {
         Object.assign(payload, {
           valid: Boolean(validateToString(cronExpression)),
+          repeatType,
+        });
+
+        Object.assign(payload.meta, {
+          repeatType,
         });
       }
 
