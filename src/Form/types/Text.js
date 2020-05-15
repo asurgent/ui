@@ -41,7 +41,7 @@ const Text = forwardRef((props, ref) => {
 
   useEffect(() => {
     setValue(props.value || '');
-  }, [props.value]);
+  }, [props]);
 
   return (
     <Main>

@@ -3,8 +3,10 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import MomentUtils from '@date-io/moment';
+import { normalizeDateInput } from './helpers';
 import ThemeProvider from './ThemeProvider';
 import * as C from './DatePicker.styled';
+
 
 import {
   Label,
@@ -12,6 +14,7 @@ import {
   TooltipIcon,
 } from './Text.styled';
 import * as Tooltip from '../../Tooltip';
+
 
 const DatePicker = forwardRef((props, ref) => {
   const {
@@ -26,11 +29,15 @@ const DatePicker = forwardRef((props, ref) => {
     minDateMessage,
   } = props;
 
-  const [value, setValue] = useState(null);
+  const [val, setVal] = useState('');
 
   useEffect(() => {
-    setValue(props.value || moment().local());
-  }, [props.value]);
+    setVal(props.value || '');
+  }, [props]);
+
+  const handleChange = ({ target: { value } }) => {
+    setVal((prevState) => normalizeDateInput(value, prevState.value));
+  };
 
   return (
     <ThemeProvider>
@@ -45,30 +52,49 @@ const DatePicker = forwardRef((props, ref) => {
         </Header>
       )}
 
-      <MuiPickersUtilsProvider utils={MomentUtils}>
-        <C.DatePicker
-          format={format}
-          value={value}
-          fullWidth
-          name={name}
-          maxDate={moment(maxDate).format(format)}
-          minDate={moment(minDate).format(format)}
-          maxDateMessage={maxDateMessage}
-          minDateMessage={minDateMessage}
-          inputVariant="outlined"
-          inputRef={ref}
-          onChange={(e) => setValue(moment(e).local())}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-          {...props.props}
-        />
-      </MuiPickersUtilsProvider>
+      {props.props.useNative ? (
+        <C.WrapperNative>
+          <C.DatePickerNative
+            type="text"
+            name={name}
+            value={val}
+            maxLength={10}
+            onChange={handleChange}
+            ref={ref}
+            {...props.props}
+          />
+        </C.WrapperNative>
+      ) : (
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <C.DatePicker
+            format={format}
+            defaultValue={val}
+            fullWidth
+            type="date"
+            name={name}
+            maxDate={maxDate}
+            minDate={minDate}
+            onChange={(dat) => setVal(dat)}
+            maxDateMessage={maxDateMessage}
+            minDateMessage={minDateMessage}
+            ref={ref}
+            inputVariant="outlined"
+            KeyboardButtonProps={{
+              'aria-label': 'change date',
+            }}
+            {...props.props}
+          />
+
+        </MuiPickersUtilsProvider>
+      )}
+
+
     </ThemeProvider>
   );
 });
 
 DatePicker.propTypes = {
+  useNative: PropTypes.bool,
   label: PropTypes.string,
   format: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -92,12 +118,13 @@ DatePicker.propTypes = {
 };
 
 DatePicker.defaultProps = {
+  useNative: true,
   label: '',
   format: 'YYYY-MM-DD',
-  value: moment().local(),
-  minDate: moment('0001-01-01').format('YYYY-MM-DD'),
+  value: moment().format('YYYY-MM-DD'),
+  minDate: new Date('0001-01-01'),
   minDateMessage: '',
-  maxDate: moment('9999-12-31').format('YYYY-MM-DD'),
+  maxDate: new Date('9999-12-31'),
   maxDateMessage: '',
   noLabel: false,
   tooltip: '',

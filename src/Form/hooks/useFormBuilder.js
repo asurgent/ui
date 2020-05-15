@@ -29,7 +29,6 @@ const updateField = (form, change) => {
   return false;
 };
 
-
 const updateValues = (form, list) => {
   const copy = { ...form };
   let changed = false;
@@ -81,7 +80,6 @@ const getValues = (references, originalValues) => {
   const values = keys.reduce((acc, key) => {
     if (references[key] && references[key].current) {
       const { value } = references[key].current;
-
       if (value !== originalValues[key]) {
         dirty = true;
         Object.assign(dirtyItems, { [key]: true });
@@ -101,6 +99,24 @@ const getValues = (references, originalValues) => {
 
   return { values, dirty, dirtyItems };
 };
+
+const resetValues = (formData, originalValues) => Object.keys(formData)
+  .reduce((acc, key) => {
+    if (formData[key]) {
+      const { value, ...restInput } = formData[key];
+      Object.assign(acc, {
+        [key]: {
+          value: originalValues[key],
+          ...restInput,
+        },
+      });
+    } else {
+      Object.assign(acc, {
+        [key]: formData[key],
+      });
+    }
+    return acc;
+  }, {});
 
 /*
 formSpec: spec with renderconditions,
@@ -161,13 +177,21 @@ const useFormBuilder = (formSpecification, parameters = null) => {
         .reduce((acc, key) => ({
           [key]: formData[key].value, ...acc,
         }), {});
+
       const render = getRenderableFields(formSpecification, fields, values);
       setRenderedFields(render);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
+
   return {
+    resetValues: () => {
+      const resetData = resetValues(formData, originalValues);
+      if (resetData) {
+        setFormData(resetData);
+      }
+    },
     renderItems: (values) => {
       const fields = getRenderableFields(formSpecification, inputFileds, values);
       setRenderedFields(fields);
@@ -186,7 +210,6 @@ const useFormBuilder = (formSpecification, parameters = null) => {
     },
     updateFields: (list) => {
       const update = updateFields(formData, list);
-
       if (update) {
         setFormData(update);
       }

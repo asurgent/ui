@@ -63,15 +63,18 @@ const Form = (props) => {
     return null;
   }
 
-
   const { inputFileds } = form;
 
   const handleOnChange = (event) => {
     const { name } = event.target;
-    const { values, dirty, dirtyItems } = form.getValues();
-    form.renderItems(values);
-    changeTimer(values, dirty, dirtyItems);
-    onChange(values, dirty, dirtyItems, name);
+
+    // setTimeout, 0 fix for native radiobuttons not updating correctly
+    setTimeout(() => {
+      const { values, dirty, dirtyItems } = form.getValues();
+      form.renderItems(values);
+      changeTimer(values, dirty, dirtyItems);
+      onChange(values, dirty, dirtyItems, name);
+    }, 0);
   };
 
   const handleOnKeyUp = (event) => {
@@ -111,9 +114,12 @@ const Form = (props) => {
   };
 
   const onSubmitAction = () => {
-    form.getValues();
     const { values, dirty, dirtyItems } = form.getValues();
     onSubmit(values, dirty, dirtyItems);
+  };
+
+  const onResetAction = () => {
+    form.resetValues();
   };
 
   const renderForms = Object
@@ -134,7 +140,7 @@ const Form = (props) => {
       onBlur={handleBlur}
       className={className}
     >
-      { typeof children === 'function' && children(inputFileds, renderForms, onSubmitAction) }
+      { typeof children === 'function' && children(inputFileds, renderForms, onSubmitAction, onResetAction) }
       { typeof children !== 'function' && renderForms}
     </FormStyle>
   );

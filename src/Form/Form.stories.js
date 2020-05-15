@@ -54,7 +54,6 @@ export const defaultForm = () => {
     someText: {
       type: 'text',
       label: 'Some Text',
-      value: 'Hi',
       tooltip: 'hejhej',
     },
     someRadioGroup: {
@@ -83,8 +82,12 @@ export const defaultForm = () => {
     someDate: {
       type: 'datepicker',
       options: [],
-      render: (spec) => spec.someText.length < 10,
+      render: (spec) => spec.someText && spec.someText.length < 10,
       tooltip: 'tooltip',
+      label: 'Some date',
+      props: {
+        useNative: true,
+      },
     },
   });
 
@@ -100,23 +103,27 @@ export const defaultForm = () => {
   }, []);
 
   return (
-    <Form.Primary
-      form={formData}
-      onSubmit={(values, isDirty) => {
-        action()('isDirty', isDirty);
-        action()('Submitted', values);
-      }}
-    >
-      {(inputList, renderFields, onSubmitAction) => (
-        <>
-          {renderFields}
-          <Block.SpaceBetween>
-            <Button.Hollow>Cancel</Button.Hollow>
-            <Button.Primary onClick={onSubmitAction}>a</Button.Primary>
-          </Block.SpaceBetween>
-        </>
-      )}
-    </Form.Primary>
+    <>
+      <Form.Primary
+        form={formData}
+        msTimer={15}
+        onSubmit={(values, isDirty) => {
+          action()('isDirty', isDirty);
+          action()('Submitted', values);
+        }}
+      >
+        {(inputList, renderFields, onSubmitAction, onResetAction) => (
+          <>
+            {renderFields}
+            <Block.SpaceBetween>
+              <Button.Hollow>Cancel</Button.Hollow>
+              <Button.Secondary onClick={onResetAction}>Reset</Button.Secondary>
+              <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
+            </Block.SpaceBetween>
+          </>
+        )}
+      </Form.Primary>
+    </>
   );
 };
 
@@ -134,7 +141,7 @@ export const secondaryThemeForm = () => {
             {renderFields}
             <Block.SpaceBetween renderTransparent>
               <Button.Hollow>Cancel</Button.Hollow>
-              <Button.Primary onClick={onSubmitAction}>a</Button.Primary>
+              <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
             </Block.SpaceBetween>
           </>
         )}
@@ -167,7 +174,7 @@ export const advancedRender = () => {
             }
           <Block.SpaceBetween>
             <Button.Hollow>Cancel</Button.Hollow>
-            <Button.Primary onClick={onSubmitAction}>a</Button.Primary>
+            <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
           </Block.SpaceBetween>
         </>
       )}

@@ -58,7 +58,7 @@ const Select = forwardRef((props, ref) => {
 
   useEffect(() => {
     setValue(props.value || '');
-  }, [props.value, props.options]);
+  }, [props]);
 
   useEffect(() => {
     setValue(getDefaultSort(options));

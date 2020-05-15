@@ -12,6 +12,7 @@ const propTypes = {
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   wrapRadios: PropTypes.bool,
   tooltip: PropTypes.string,
+  props: PropTypes.instanceOf(Object),
 };
 
 const defaultProps = {
@@ -20,17 +21,18 @@ const defaultProps = {
   options: [],
   wrapRadios: false,
   tooltip: '',
+  props: {},
 };
 
 const RadioGroup = forwardRef((props, ref) => {
   const {
-    name, value, label, tooltip, options, wrapRadios,
+    name, label, tooltip, options, wrapRadios,
   } = props;
   const [val, setVal] = useState(null);
 
   useEffect(() => {
-    setVal(value || '');
-  }, [value]);
+    setVal(props.value || '');
+  }, [props]);
 
   return (
     <>
@@ -44,24 +46,25 @@ const RadioGroup = forwardRef((props, ref) => {
         )}
       </C.Header>
       )}
-
-      <C.RadioWrapper wrapRadios={wrapRadios}>
-        {options.map((opt) => (
-          <C.Label key={opt.label || opt.value}>
-            <C.RadioInput
-              type="radio"
-              name={name}
-              value={opt.value}
-              checked={val === opt.value}
-              onChange={() => setVal(opt.value)}
-              ref={val === opt.value ? ref : null}
-            />
-            <C.CheckMark />
-            <C.Text>{opt.label}</C.Text>
-          </C.Label>
-        ))}
-
-      </C.RadioWrapper>
+      <C.FieldSet onChange={({ target }) => setVal(target.value)}>
+        <C.RadioWrapper wrapRadios={wrapRadios}>
+          {options.map((opt) => (
+            <C.Label key={opt.label || opt.value}>
+              <C.RadioInput
+                type="radio"
+                name={name}
+                value={opt.value}
+                checked={val === opt.value}
+                ref={val === opt.value ? ref : null}
+                readOnly
+                {...props.props}
+              />
+              <C.CheckMark />
+              <C.Text>{opt.label}</C.Text>
+            </C.Label>
+          ))}
+        </C.RadioWrapper>
+      </C.FieldSet>
     </>
   );
 });
