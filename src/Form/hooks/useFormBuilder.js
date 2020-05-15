@@ -107,20 +107,30 @@ formSpec: spec with renderconditions,
 formData: actual inputs
 currentValues: { {specKey: currentValue}... }
 */
-const getRenderableFields = (formSpec, formData, currentValues) => Object.assign(
-  ...Object.keys(formSpec)
-    .filter((key) => {
-      // check if the field has a renderprop
-      if (formSpec[key].render) {
-        const shouldShow = formSpec[key].render(currentValues);
-        if (!shouldShow) {
-          return null;
+const getRenderableFields = (formSpec, formData, currentValues) => {
+  /**
+   * In case formSpec is array, we can assume that
+   * its sent from the API and we should just render all
+   */
+  if (Array.isArray(formSpec)) {
+    return formData;
+  }
+
+  return Object.assign(
+    ...Object.keys(formSpec)
+      .filter((key) => {
+        // check if the field has a renderprop
+        if (formSpec[key].render) {
+          const shouldShow = formSpec[key].render(currentValues);
+          if (!shouldShow) {
+            return null;
+          }
         }
-      }
-      return formData[key];
-    })
-    .map((key) => ({ [key]: formData[key] })),
-);
+        return formData[key];
+      })
+      .map((key) => ({ [key]: formData[key] })),
+  );
+};
 
 const initalValue = (formSpecification, parameters = null) => {
   if (Array.isArray(formSpecification) && typeof parameters === 'object') {
@@ -161,7 +171,8 @@ const useFormBuilder = (formSpecification, parameters = null) => {
         .reduce((acc, key) => ({
           [key]: formData[key].value, ...acc,
         }), {});
-      const render = getRenderableFields(formSpecification, fields, values);
+
+      const render = getRenderableFields(formData, fields, values);
       setRenderedFields(render);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
