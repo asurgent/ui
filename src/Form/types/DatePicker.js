@@ -30,8 +30,8 @@ const DatePicker = forwardRef((props, ref) => {
   const [val, setVal] = useState('');
 
   useEffect(() => {
-    setVal(props.value || '');
-  }, [props]);
+    setVal(moment(props.value).format(format) || moment().format(format));
+  }, [format, props]);
 
   const handleChange = ({ target: { value } }) => {
     setVal((prevState) => normalizeDateInput(value, prevState.value));
@@ -97,15 +97,18 @@ DatePicker.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
   ]),
   maxDate: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
   ]),
   maxDateMessage: PropTypes.string,
   minDate: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
   ]),
   minDateMessage: PropTypes.string,
   noLabel: PropTypes.bool,
@@ -117,9 +120,9 @@ DatePicker.defaultProps = {
   label: '',
   format: 'YYYY-MM-DD',
   value: moment().format('YYYY-MM-DD'),
-  minDate: new Date('0001-01-01'),
+  minDate: moment('0001-01-01').format('YYYY-MM-DD'),
   minDateMessage: '',
-  maxDate: new Date('9999-12-31'),
+  maxDate: moment('9999-12-31').format('YYYY-MM-DD'),
   maxDateMessage: '',
   noLabel: false,
   tooltip: '',

@@ -97,7 +97,7 @@ export const defaultForm = () => {
       { name: 'someRadioGroup', value: 'value1' },
       { name: 'someRadioGroup2', value: 'value4' },
       { name: 'someSelect', value: '3' },
-      { name: 'someDate', value: moment().format('YYYY-MM-DD') },
+      { name: 'someDate', value: moment('2020-06-01').format('YYYY-MM-DD') },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
