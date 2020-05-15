@@ -86,7 +86,7 @@ export const defaultForm = () => {
       tooltip: 'tooltip',
       label: 'Some date',
       props: {
-        useNative: true,
+        usenative: 'true',
       },
     },
   });

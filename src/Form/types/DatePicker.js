@@ -6,8 +6,6 @@ import MomentUtils from '@date-io/moment';
 import { normalizeDateInput } from './helpers';
 import ThemeProvider from './ThemeProvider';
 import * as C from './DatePicker.styled';
-
-
 import {
   Label,
   Header,
@@ -52,7 +50,7 @@ const DatePicker = forwardRef((props, ref) => {
         </Header>
       )}
 
-      {props.props.useNative ? (
+      {props.props.usenative === 'true' ? (
         <C.WrapperNative>
           <C.DatePickerNative
             type="text"
@@ -68,7 +66,6 @@ const DatePicker = forwardRef((props, ref) => {
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <C.DatePicker
             format={format}
-            defaultValue={val}
             fullWidth
             type="date"
             name={name}
@@ -77,7 +74,7 @@ const DatePicker = forwardRef((props, ref) => {
             onChange={(dat) => setVal(dat)}
             maxDateMessage={maxDateMessage}
             minDateMessage={minDateMessage}
-            ref={ref}
+            inputRef={ref}
             inputVariant="outlined"
             KeyboardButtonProps={{
               'aria-label': 'change date',
@@ -94,7 +91,6 @@ const DatePicker = forwardRef((props, ref) => {
 });
 
 DatePicker.propTypes = {
-  useNative: PropTypes.bool,
   label: PropTypes.string,
   format: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -118,7 +114,6 @@ DatePicker.propTypes = {
 };
 
 DatePicker.defaultProps = {
-  useNative: true,
   label: '',
   format: 'YYYY-MM-DD',
   value: moment().format('YYYY-MM-DD'),
@@ -128,7 +123,9 @@ DatePicker.defaultProps = {
   maxDateMessage: '',
   noLabel: false,
   tooltip: '',
-  props: {},
+  props: {
+    usenative: 'true',
+  },
 };
 
 DatePicker.displayName = '@asurgent.ui.Form.Input.DatePicker';
