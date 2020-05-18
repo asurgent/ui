@@ -67,8 +67,10 @@ const Form = (props) => {
     if (form && form.setResetCallback) {
       form.setResetCallback({
         run: (resetData) => {
-          const resetValues = Object.keys(resetData).map((key) => ({ name: key, value: resetData[key].value }));
-          const resetDirtyItems = Object.keys(resetData).map((key) => ({ name: key, value: false }));
+          const resetValues = Object.keys(resetData)
+            .map((key) => ({ name: key, value: resetData[key].value }));
+          const resetDirtyItems = Object.keys(resetData)
+            .map((key) => ({ name: key, value: false }));
           onChange(resetValues, false, resetDirtyItems, null);
         },
       });
