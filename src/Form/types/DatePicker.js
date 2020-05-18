@@ -3,7 +3,6 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import MomentUtils from '@date-io/moment';
-import { normalizeDateInput } from './helpers';
 import ThemeProvider from './ThemeProvider';
 import * as C from './DatePicker.styled';
 import {
@@ -13,6 +12,7 @@ import {
 } from './Text.styled';
 import * as Tooltip from '../../Tooltip';
 
+const getStartOfDay = (val) => moment(val).startOf('day').toISOString();
 
 const DatePicker = forwardRef((props, ref) => {
   const {
@@ -27,14 +27,19 @@ const DatePicker = forwardRef((props, ref) => {
     minDateMessage,
   } = props;
 
-  const [val, setVal] = useState('');
+
+  const [value, setValue] = useState(getStartOfDay(props.value));
 
   useEffect(() => {
-    setVal(moment(props.value).format(format) || moment().format(format));
-  }, [format, props]);
+    setValue(getStartOfDay(props.value));
+  }, [props]);
 
-  const handleChange = ({ target: { value } }) => {
-    setVal((prevState) => normalizeDateInput(value, prevState.value));
+  const dispatchEvent = (d) => {
+    const input = ref.current;
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+    nativeInputValueSetter.call(input, d);
+    const inputEvent = new Event('input', { bubbles: true });
+    input.dispatchEvent(inputEvent);
   };
 
   return (
@@ -49,43 +54,27 @@ const DatePicker = forwardRef((props, ref) => {
           )}
         </Header>
       )}
-
-      {props.props.usenative === 'true' ? (
-        <C.WrapperNative>
-          <C.DatePickerNative
-            type="text"
-            name={name}
-            value={val}
-            maxLength={10}
-            onChange={handleChange}
-            ref={ref}
-            {...props.props}
-          />
-        </C.WrapperNative>
-      ) : (
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <C.DatePicker
-            format={format}
-            fullWidth
-            type="date"
-            name={name}
-            maxDate={maxDate}
-            minDate={minDate}
-            onChange={(dat) => setVal(dat)}
-            maxDateMessage={maxDateMessage}
-            minDateMessage={minDateMessage}
-            inputRef={ref}
-            inputVariant="outlined"
-            KeyboardButtonProps={{
-              'aria-label': 'change date',
-            }}
-            {...props.props}
-          />
-
-        </MuiPickersUtilsProvider>
-      )}
-
-
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <C.DatePicker
+          format={format}
+          fullWidth
+          maxDate={maxDate}
+          minDate={minDate}
+          value={value}
+          onChange={(momentDate) => {
+            setValue(getStartOfDay(momentDate));
+            dispatchEvent(getStartOfDay(momentDate));
+          }}
+          maxDateMessage={maxDateMessage}
+          minDateMessage={minDateMessage}
+          inputVariant="outlined"
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+          {...props.props}
+        />
+      </MuiPickersUtilsProvider>
+      <input type="text" style={{ display: 'none' }} readOnly name={name} value={value} ref={ref} />
     </ThemeProvider>
   );
 });
@@ -119,16 +108,14 @@ DatePicker.propTypes = {
 DatePicker.defaultProps = {
   label: '',
   format: 'YYYY-MM-DD',
-  value: moment().format('YYYY-MM-DD'),
-  minDate: moment('0001-01-01').format('YYYY-MM-DD'),
+  value: getStartOfDay(moment()),
+  minDate: moment('0001-01-01'),
   minDateMessage: '',
-  maxDate: moment('9999-12-31').format('YYYY-MM-DD'),
+  maxDate: moment('9999-12-31'),
   maxDateMessage: '',
   noLabel: false,
   tooltip: '',
-  props: {
-    usenative: 'true',
-  },
+  props: {},
 };
 
 DatePicker.displayName = '@asurgent.ui.Form.Input.DatePicker';

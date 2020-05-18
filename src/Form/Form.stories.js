@@ -85,9 +85,6 @@ export const defaultForm = () => {
       render: (spec) => spec.someText && spec.someText.length < 10,
       tooltip: 'tooltip',
       label: 'Some date',
-      props: {
-        usenative: 'true',
-      },
     },
   });
 
@@ -97,7 +94,7 @@ export const defaultForm = () => {
       { name: 'someRadioGroup', value: 'value1' },
       { name: 'someRadioGroup2', value: 'value4' },
       { name: 'someSelect', value: '3' },
-      { name: 'someDate', value: moment('2020-06-01').format('YYYY-MM-DD') },
+      { name: 'someDate', value: moment().startOf('day').toISOString() },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
