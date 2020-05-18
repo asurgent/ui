@@ -203,7 +203,7 @@ const useFormBuilder = (formSpecification, parameters = null) => {
       if (resetData) {
         setFormData(resetData);
         if (resetCallback && resetCallback.run) {
-          resetCallback.run();
+          resetCallback.run(resetData);
         }
       }
     },

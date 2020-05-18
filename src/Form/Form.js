@@ -66,9 +66,10 @@ const Form = (props) => {
   useEffect(() => {
     if (form && form.setResetCallback) {
       form.setResetCallback({
-        run: () => {
-          const { values, dirty, dirtyItems } = form.getValues();
-          onChange(values, dirty, dirtyItems, null);
+        run: (resetData) => {
+          const resetValues = Object.keys(resetData).map((key) => ({ name: key, value: resetData[key].value }));
+          const resetDirtyItems = Object.keys(resetData).map((key) => ({ name: key, value: false }));
+          onChange(resetValues, false, resetDirtyItems, null);
         },
       });
     }

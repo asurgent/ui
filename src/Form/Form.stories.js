@@ -116,6 +116,12 @@ export const defaultForm = () => {
           action()('isDirty', isDirty);
           action()('Submitted', values);
         }}
+        onChange={(values, isDirty, dirtyItems, name) => {
+          action()('Changed', name || 'form');
+          action()('Form values', values);
+          action()('Form dirty', isDirty);
+          action()('Dirty items', dirtyItems);
+        }}
       >
         {(inputList, renderFields, onSubmitAction, onResetAction, isDirty) => (
           <>
