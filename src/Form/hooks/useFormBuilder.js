@@ -173,6 +173,7 @@ const useFormBuilder = (formSpecification, parameters = null) => {
   const [renderedFields, setRenderedFields] = useState([]);
   const [references, setReferences] = useState({});
   const [originalValues, setOriginalValues] = useState({});
+  const [resetCallback, setResetCallback] = useState(null);
 
   useEffect(() => {
     if (formData) {
@@ -196,10 +197,14 @@ const useFormBuilder = (formSpecification, parameters = null) => {
 
 
   return {
+    setResetCallback,
     resetValues: () => {
       const resetData = resetValues(formData, originalValues);
       if (resetData) {
         setFormData(resetData);
+        if (resetCallback && resetCallback.run) {
+          resetCallback.run();
+        }
       }
     },
     renderItems: (values) => {

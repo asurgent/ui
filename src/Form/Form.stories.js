@@ -12,7 +12,7 @@ const formObj = {
     type: 'text', label: 'Test', placeholder: 'Hello',
   },
   datepicker: {
-    type: 'datepicker', label: 'datdeLabel', name: 'datepicker', maxDate: moment().add(2, 'days').format(), minDate: moment().subtract(2, 'days').format(),
+    type: 'datepicker', label: 'datdeLabel', name: 'datepicker', maxDate: moment().add(2, 'days').startOf('day').toISOString(), minDate: moment().subtract(2, 'days').startOf('day').toISOString(),
   },
   sortDirection: {
     type: 'select', label: 'sort', options: [{ value: '1', label: 'one' }, { value: '2', label: 'two' }],
@@ -76,7 +76,11 @@ export const defaultForm = () => {
     someSelect: {
       type: 'select',
       label: 'Some Select',
-      options: [{ value: '1', label: 'First option', default: true }, { value: '2', label: 'Second option' }, { value: '3', label: 'Third option' }],
+      options: [
+        { value: '1', label: 'First option', default: true },
+        { value: '2', label: 'Second option' },
+        { value: '3', label: 'Third option' },
+      ],
       tooltip: 'tooltip',
     },
     someDate: {
@@ -109,12 +113,12 @@ export const defaultForm = () => {
           action()('Submitted', values);
         }}
       >
-        {(inputList, renderFields, onSubmitAction, onResetAction) => (
+        {(inputList, renderFields, onSubmitAction, onResetAction, isDirty) => (
           <>
             {renderFields}
             <Block.SpaceBetween>
               <Button.Hollow>Cancel</Button.Hollow>
-              <Button.Secondary onClick={onResetAction}>Reset</Button.Secondary>
+              <Button.Secondary disabled={!isDirty()} onClick={onResetAction}>Reset</Button.Secondary>
               <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
             </Block.SpaceBetween>
           </>

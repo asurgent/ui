@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormStyle, FormRow } from './Form.styled';
 import { withDelayTimer } from './helpers';
@@ -62,6 +62,19 @@ const Form = (props) => {
   if (!form || typeof form !== 'object' || !form.inputFileds) {
     return null;
   }
+
+  useEffect(() => {
+    if (form && form.setResetCallback) {
+      form.setResetCallback({
+        run: () => {
+          const { values, dirty, dirtyItems } = form.getValues();
+          onChange(values, dirty, dirtyItems, null);
+        },
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
 
   const { inputFileds } = form;
 
@@ -130,6 +143,11 @@ const Form = (props) => {
       </FormRow>
     ));
 
+  const isDirty = () => {
+    const { dirty } = form.getValues();
+    return dirty;
+  };
+
   return (
     <FormStyle
       onKeyUp={handleOnKeyUp}
@@ -140,7 +158,7 @@ const Form = (props) => {
       onBlur={handleBlur}
       className={className}
     >
-      { typeof children === 'function' && children(inputFileds, renderForms, onSubmitAction, onResetAction) }
+      { typeof children === 'function' && children(inputFileds, renderForms, onSubmitAction, onResetAction, isDirty) }
       { typeof children !== 'function' && renderForms}
     </FormStyle>
   );
