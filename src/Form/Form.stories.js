@@ -12,7 +12,11 @@ const formObj = {
     type: 'text', label: 'Test', placeholder: 'Hello',
   },
   datepicker: {
-    type: 'datepicker', label: 'datdeLabel', name: 'datepicker', maxDate: moment().add(2, 'days').startOf('day').toISOString(), minDate: moment().subtract(2, 'days').startOf('day').toISOString(),
+    type: 'datepicker',
+    label: 'datdeLabel',
+    name: 'datepicker',
+    maxDate: moment().add(2, 'days').startOf('day').toISOString(),
+    minDate: moment().subtract(2, 'days').startOf('day').toISOString(),
   },
   sortDirection: {
     type: 'select', label: 'sort', options: [{ value: '1', label: 'one' }, { value: '2', label: 'two' }],
@@ -118,7 +122,12 @@ export const defaultForm = () => {
             {renderFields}
             <Block.SpaceBetween>
               <Button.Hollow>Cancel</Button.Hollow>
-              <Button.Secondary disabled={!isDirty()} onClick={onResetAction}>Reset</Button.Secondary>
+              <Button.Secondary
+                disabled={!isDirty()}
+                onClick={onResetAction}
+              >
+                Reset
+              </Button.Secondary>
               <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
             </Block.SpaceBetween>
           </>
