@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormStyle, FormRow } from './Form.styled';
 import { withDelayTimer } from './helpers';
@@ -63,15 +63,34 @@ const Form = (props) => {
     return null;
   }
 
+  useEffect(() => {
+    if (form && form.setResetCallback) {
+      form.setResetCallback({
+        run: (resetData) => {
+          const resetValues = Object.keys(resetData)
+            .map((key) => ({ name: key, value: resetData[key].value }));
+          const resetDirtyItems = Object.keys(resetData)
+            .map((key) => ({ name: key, value: false }));
+          onChange(resetValues, false, resetDirtyItems, null);
+        },
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
 
   const { inputFileds } = form;
 
   const handleOnChange = (event) => {
     const { name } = event.target;
-    const { values, dirty, dirtyItems } = form.getValues();
-    form.renderItems(values);
-    changeTimer(values, dirty, dirtyItems);
-    onChange(values, dirty, dirtyItems, name);
+
+    // setTimeout, 0 fix for native radiobuttons not updating correctly
+    setTimeout(() => {
+      const { values, dirty, dirtyItems } = form.getValues();
+      form.renderItems(values);
+      changeTimer(values, dirty, dirtyItems);
+      onChange(values, dirty, dirtyItems, name);
+    }, 0);
   };
 
   const handleOnKeyUp = (event) => {
@@ -111,9 +130,12 @@ const Form = (props) => {
   };
 
   const onSubmitAction = () => {
-    form.getValues();
     const { values, dirty, dirtyItems } = form.getValues();
     onSubmit(values, dirty, dirtyItems);
+  };
+
+  const onResetAction = () => {
+    form.resetValues();
   };
 
   const renderForms = Object
@@ -123,6 +145,11 @@ const Form = (props) => {
         {inputFileds[key]}
       </FormRow>
     ));
+
+  const isDirty = () => {
+    const { dirty } = form.getValues();
+    return dirty;
+  };
 
   return (
     <FormStyle
@@ -134,7 +161,7 @@ const Form = (props) => {
       onBlur={handleBlur}
       className={className}
     >
-      { typeof children === 'function' && children(inputFileds, renderForms, onSubmitAction) }
+      { typeof children === 'function' && children(inputFileds, renderForms, onSubmitAction, onResetAction, isDirty) }
       { typeof children !== 'function' && renderForms}
     </FormStyle>
   );

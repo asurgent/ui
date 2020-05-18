@@ -21,6 +21,10 @@ export const RadioWrapper = styled.div`
     }
 `;
 
+export const FieldSet = styled.fieldset`
+    border: none;
+`;
+
 export const Icon = styled.i`
   width: 1.6rem;
   text-align: right;

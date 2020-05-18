@@ -12,7 +12,11 @@ const formObj = {
     type: 'text', label: 'Test', placeholder: 'Hello',
   },
   datepicker: {
-    type: 'datepicker', label: 'datdeLabel', name: 'datepicker', maxDate: moment().add(2, 'days').format(), minDate: moment().subtract(2, 'days').format(),
+    type: 'datepicker',
+    label: 'datdeLabel',
+    name: 'datepicker',
+    maxDate: moment().add(2, 'days').startOf('day').toISOString(),
+    minDate: moment().subtract(2, 'days').startOf('day').toISOString(),
   },
   sortDirection: {
     type: 'select', label: 'sort', options: [{ value: '1', label: 'one' }, { value: '2', label: 'two' }],
@@ -54,7 +58,6 @@ export const defaultForm = () => {
     someText: {
       type: 'text',
       label: 'Some Text',
-      value: 'Hi',
       tooltip: 'hejhej',
     },
     someRadioGroup: {
@@ -77,14 +80,19 @@ export const defaultForm = () => {
     someSelect: {
       type: 'select',
       label: 'Some Select',
-      options: [{ value: '1', label: 'First option', default: true }, { value: '2', label: 'Second option' }, { value: '3', label: 'Third option' }],
+      options: [
+        { value: '1', label: 'First option', default: true },
+        { value: '2', label: 'Second option' },
+        { value: '3', label: 'Third option' },
+      ],
       tooltip: 'tooltip',
     },
     someDate: {
       type: 'datepicker',
       options: [],
-      render: (spec) => spec.someText.length < 10,
+      render: (spec) => spec.someText && spec.someText.length < 10,
       tooltip: 'tooltip',
+      label: 'Some date',
     },
   });
 
@@ -94,29 +102,44 @@ export const defaultForm = () => {
       { name: 'someRadioGroup', value: 'value1' },
       { name: 'someRadioGroup2', value: 'value4' },
       { name: 'someSelect', value: '3' },
-      { name: 'someDate', value: moment().format('YYYY-MM-DD') },
+      { name: 'someDate', value: moment().startOf('day').toISOString() },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <Form.Primary
-      form={formData}
-      onSubmit={(values, isDirty) => {
-        action()('isDirty', isDirty);
-        action()('Submitted', values);
-      }}
-    >
-      {(inputList, renderFields, onSubmitAction) => (
-        <>
-          {renderFields}
-          <Block.SpaceBetween>
-            <Button.Hollow>Cancel</Button.Hollow>
-            <Button.Primary onClick={onSubmitAction}>a</Button.Primary>
-          </Block.SpaceBetween>
-        </>
-      )}
-    </Form.Primary>
+    <>
+      <Form.Primary
+        form={formData}
+        msTimer={15}
+        onSubmit={(values, isDirty) => {
+          action()('isDirty', isDirty);
+          action()('Submitted', values);
+        }}
+        onChange={(values, isDirty, dirtyItems, name) => {
+          action()('Changed', name || 'form');
+          action()('Form values', values);
+          action()('Form dirty', isDirty);
+          action()('Dirty items', dirtyItems);
+        }}
+      >
+        {(inputList, renderFields, onSubmitAction, onResetAction, isDirty) => (
+          <>
+            {renderFields}
+            <Block.SpaceBetween>
+              <Button.Hollow>Cancel</Button.Hollow>
+              <Button.Secondary
+                disabled={!isDirty()}
+                onClick={onResetAction}
+              >
+                Reset
+              </Button.Secondary>
+              <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
+            </Block.SpaceBetween>
+          </>
+        )}
+      </Form.Primary>
+    </>
   );
 };
 
@@ -134,7 +157,7 @@ export const secondaryThemeForm = () => {
             {renderFields}
             <Block.SpaceBetween renderTransparent>
               <Button.Hollow>Cancel</Button.Hollow>
-              <Button.Primary onClick={onSubmitAction}>a</Button.Primary>
+              <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
             </Block.SpaceBetween>
           </>
         )}
@@ -167,7 +190,7 @@ export const advancedRender = () => {
             }
           <Block.SpaceBetween>
             <Button.Hollow>Cancel</Button.Hollow>
-            <Button.Primary onClick={onSubmitAction}>a</Button.Primary>
+            <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
           </Block.SpaceBetween>
         </>
       )}
