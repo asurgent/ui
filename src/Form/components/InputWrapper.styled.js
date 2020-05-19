@@ -6,6 +6,7 @@ export const Main = styled.div`
   max-width: 100%; 
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 export const Wrapper = styled.div`
@@ -92,6 +93,8 @@ export const Error = styled.div`
   letter-spacing: .1rem;
   color: ${({ theme }) => theme.ruby800};
   text-transform: capitalize;
+  position: absolute; 
+  bottom: -2rem;
 `;
 
 export const Header = styled.div`
