@@ -22,7 +22,8 @@ export const RadioWrapper = styled.div`
 
 export const FieldSet = styled.fieldset`
     border: none;
-    padding: .8rem 0;
+    margin: 0;
+    padding: 0;
 `;
 
 export const CheckMark = styled.span`

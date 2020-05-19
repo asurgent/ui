@@ -26,7 +26,7 @@ export const Wrapper = styled.div`
   border-radius: ${(props) => (props.status === 'error' ? '5px 5px 0px 0px' : '5px')};
   padding: ${({ type }) => {
     if (type === 'radiogroup') {
-      return null;
+      return '0 1.2rem';
     }
     return '1.2rem';
   }};
