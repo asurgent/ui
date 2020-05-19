@@ -11,10 +11,10 @@ export const Main = styled.div`
 
 export const Wrapper = styled.div`
   margin: 0;
-  border: 0.1rem solid;
-  border-color: ${({ theme }) => theme.gray200};
+  border: ${({ type }) => (type !== 'radiogroup' ? '0.1rem solid' : null)};
+  border-color: ${({ theme, type }) => (type !== 'radiogroup' ? theme.gray200 : null)};
   border-radius: ${(props) => (props.status === 'error' ? '5px 5px 0px 0px' : '5px')};
-  padding: 1.2rem;
+  padding: ${({ type }) => (type !== 'radiogroup' ? '1.2rem' : null)};
   position: relative;
   box-sizing: border-box;
   min-height: 4.7rem;
@@ -43,6 +43,18 @@ export const Wrapper = styled.div`
   textarea { 
     resize: vertical; 
   }
+  select {
+    z-index: 1;
+    padding-right: 3.2rem;
+    background: transparent;
+  }
+
+  .down-arrow {
+    position:absolute;
+    right: .8rem;
+  }
+  
+  
 `;
 
 export const Label = styled.div`
@@ -50,6 +62,14 @@ export const Label = styled.div`
   font-size: 1.4rem;
   letter-spacing: .1rem;
   color: ${({ theme }) => theme.gray700};
+  text-transform: capitalize;
+`;
+
+export const Error = styled.div`
+  flex: 1;
+  font-size: 1.4rem;
+  letter-spacing: .1rem;
+  color: ${({ theme }) => theme.ruby800};
   text-transform: capitalize;
 `;
 
@@ -61,25 +81,4 @@ export const Header = styled.div`
 export const TooltipIcon = styled(HelpOutline)`
   color: ${({ theme }) => theme.gray700};
   cursor: pointer;
-`;
-
-export const SelectWrapper = styled(Wrapper)`
-  padding: 0;
-  display: flex;
-  position: relative;
-  grid-template-columns:  1fr 3rem;
-  justify-content: center;
-  align-items: center;
-  
-  .down-arrow {
-    position:absolute;
-    right: .8rem;
-  }
-  
-  select {
-    z-index: 1;
-    padding: 1.2rem;
-    padding-right: 3.2rem;
-    background: transparent;
-  }
 `;

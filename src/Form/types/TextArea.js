@@ -1,35 +1,22 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import * as Tooltip from '../../Tooltip';
-
-import {
-  Main, Wrapper, Label, Header, TooltipIcon,
-} from './Text.styled';
 
 const propTyps = {
   value: PropTypes.string,
-  label: PropTypes.string,
   name: PropTypes.string.isRequired,
-  tooltip: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  noLabel: PropTypes.bool,
   props: PropTypes.instanceOf(Object),
 };
 
 const defaultProps = {
   value: '',
-  label: '',
   props: {},
-  noLabel: false,
 };
 
 const TextArea = forwardRef((props, ref) => {
   const {
-    label,
     name,
-    tooltip,
     placeholder,
-    noLabel,
   } = props;
 
   const [value, setValue] = useState('');
@@ -39,30 +26,16 @@ const TextArea = forwardRef((props, ref) => {
   }, [props.value]);
 
   return (
-    <Main>
-      { noLabel === false && (
-        <Header>
-          <Label>{label || name}</Label>
-          { tooltip && (
-          <Tooltip.Middle tip={tooltip}>
-            <TooltipIcon />
-          </Tooltip.Middle>
-          )}
-        </Header>
-      )}
-      <Wrapper>
-        <textarea
-          {...props.props}
-          type="text"
-          value={value}
-          placeholder={placeholder}
-          onChange={({ target }) => setValue(target.value)}
-          name={name}
-          ref={ref}
-          autoComplete="off"
-        />
-      </Wrapper>
-    </Main>
+    <textarea
+      {...props.props}
+      type="text"
+      value={value}
+      placeholder={placeholder}
+      onChange={({ target }) => setValue(target.value)}
+      name={name}
+      ref={ref}
+      autoComplete="off"
+    />
   );
 });
 

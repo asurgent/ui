@@ -1,11 +1,12 @@
 import React from 'react';
+import InputWrapper from './components/InputWrapper';
 
 import Text from './types/Text';
 import TextArea from './types/TextArea';
 import Select from './types/Select';
 import Label from './types/Label';
-import DatePicker from './types/DatePicker';
-import RadioGroup from './types/RadioGroup';
+import DatePicker from './types/DatePicker/index';
+import RadioGroup from './types/RadioGroup/index';
 
 export const withDelayTimer = (action, timeout = 500) => {
   let timer = setTimeout(() => {}, timeout);
@@ -67,25 +68,32 @@ export const generateFieldComponents = (inputs, referenceList) => {
         minDate,
         maxDate,
         noLabel = false,
+        error,
         props: inputProps,
       } = inputs[key];
 
       Object.assign(original, { [key]: value });
       const RequestedComponent = getInputComponent(type);
       const Component = (
-        <RequestedComponent
-          ref={referenceList[key]}
-          name={key}
-          value={value || ''}
+        <InputWrapper
+          label={label || key}
           tooltip={tooltip || ''}
-          placeholder={placeholder || ''}
-          label={label}
-          minDate={minDate}
-          maxDate={maxDate}
           noLabel={noLabel}
-          props={inputProps}
-          options={options}
-        />
+          error={error || ''}
+          type={type}
+        >
+          <RequestedComponent
+            ref={referenceList[key]}
+            name={key}
+            value={value || ''}
+            placeholder={placeholder || ''}
+            label={label}
+            minDate={minDate}
+            maxDate={maxDate}
+            props={inputProps}
+            options={options}
+          />
+        </InputWrapper>
       );
 
       return Object.assign(acc, { [key]: Component });
