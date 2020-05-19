@@ -1,11 +1,18 @@
 import React, { useEffect } from 'react';
 import { action } from '@storybook/addon-actions';
+import {
+  withKnobs, boolean,
+} from '@storybook/addon-knobs';
 import moment from 'moment';
 import * as Form from './index';
 import * as Button from '../Button';
 import * as Block from '../Block';
+import './Formstories.translation';
 
-export default { title: 'UI Components|Form' };
+export default {
+  title: 'UI Components|Form',
+  decorators: [withKnobs],
+};
 
 const formObj = {
   search: {
@@ -95,6 +102,7 @@ export const defaultForm = () => {
       label: 'Some date',
     },
   });
+  const renderErrors = boolean('render errors', false);
 
   useEffect(() => {
     formData.updateFields([
@@ -106,6 +114,21 @@ export const defaultForm = () => {
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (renderErrors) {
+      formData.errors([
+        { property: 'someText', message: 'You need some text', message_translation_key: 'asurgentui:FormStory_one' },
+        { property: 'someRadioGroup', message: 'Select something', message_translation_key: 'asurgentui:FormStory_two' },
+        { property: 'someRadioGroup2', message: 'Select something', message_translation_key: 'asurgentui:FormStory_three' },
+        { property: 'someDate', message: 'Pick a date', message_translation_key: 'key_doesnt_exist_will_fallback_on_message' },
+        { property: 'someSelect', message: 'Select more things' },
+      ]);
+    } else {
+      formData.errors([]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [renderErrors]);
 
   return (
     <>

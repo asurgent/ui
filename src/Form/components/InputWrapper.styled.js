@@ -1,4 +1,3 @@
-
 import styled from 'styled-components';
 import HelpOutline from '@material-ui/icons/HelpOutline';
 
@@ -11,14 +10,35 @@ export const Main = styled.div`
 
 export const Wrapper = styled.div`
   margin: 0;
-  border: ${({ type }) => (type !== 'radiogroup' ? '0.1rem solid' : null)};
-  border-color: ${({ theme, type }) => (type !== 'radiogroup' ? theme.gray200 : null)};
+  display: flex;
+  align-items: center;
+  border: .1rem solid;
+  border-color: ${({ theme, hasError, type }) => {
+    if (hasError) {
+      return theme.ruby800;
+    }
+    if (type === 'radiogroup') {
+      return 'transparent';
+    }
+
+    return theme.gray200;
+  }};
   border-radius: ${(props) => (props.status === 'error' ? '5px 5px 0px 0px' : '5px')};
-  padding: ${({ type }) => (type !== 'radiogroup' ? '1.2rem' : null)};
+  padding: ${({ type }) => {
+    if (type === 'radiogroup') {
+      return null;
+    }
+    return '1.2rem';
+  }};
   position: relative;
   box-sizing: border-box;
   min-height: 4.7rem;
-  background: ${({ theme }) => theme.white};
+  background: ${({ theme, hasError }) => {
+    if (hasError) {
+      return theme.ruby100;
+    }
+    return theme.white;
+  }};
   
   input,textarea,select {
     width: 100%;
@@ -67,7 +87,8 @@ export const Label = styled.div`
 
 export const Error = styled.div`
   flex: 1;
-  font-size: 1.4rem;
+  margin-top: .8rem;
+  font-size: 1.1rem;
   letter-spacing: .1rem;
   color: ${({ theme }) => theme.ruby800};
   text-transform: capitalize;

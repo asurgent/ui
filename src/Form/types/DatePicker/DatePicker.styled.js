@@ -3,7 +3,7 @@ import { KeyboardDatePicker } from '@material-ui/pickers';
 
 export const DatePicker = styled(KeyboardDatePicker)`
     .MuiOutlinedInput-root {
-        background: ${({ theme }) => theme.white};
+        background: transparent;
         padding-right: 0!important;
     }
 
@@ -19,7 +19,6 @@ export const DatePicker = styled(KeyboardDatePicker)`
         border: 0rem solid!important;
         border-color: ${({ theme }) => `${theme.gray200}!important`};
         border-radius: 5px!important;
-        
     }
 
     input {

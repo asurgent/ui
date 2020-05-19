@@ -54,7 +54,23 @@ export const generateReferences = (inputs) => {
   return referenceList;
 };
 
-export const generateFieldComponents = (inputs, referenceList) => {
+const getFieldError = (key, errors) => {
+  if (Array.isArray(errors)) {
+    const error = errors.find(({ property }) => property === key);
+    if (error) {
+      const { message, message_translation_key: translationKey } = error;
+
+      return {
+        message,
+        translationKey,
+      };
+    }
+  }
+
+  return false;
+};
+
+export const generateFieldComponents = (inputs, referenceList, errors) => {
   const original = {};
   const fields = Object.keys(inputs)
     .reduce((acc, key) => {
@@ -68,9 +84,10 @@ export const generateFieldComponents = (inputs, referenceList) => {
         minDate,
         maxDate,
         noLabel = false,
-        error,
         props: inputProps,
       } = inputs[key];
+
+      const error = getFieldError(key, errors);
 
       Object.assign(original, { [key]: value });
       const RequestedComponent = getInputComponent(type);
@@ -79,7 +96,7 @@ export const generateFieldComponents = (inputs, referenceList) => {
           label={label || key}
           tooltip={tooltip || ''}
           noLabel={noLabel}
-          error={error || ''}
+          error={error}
           type={type}
         >
           <RequestedComponent
