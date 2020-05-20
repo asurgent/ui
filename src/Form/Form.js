@@ -81,18 +81,20 @@ const Form = (props) => {
 
   const { inputFileds } = hook;
 
-  const eventTrigger = (name, timerAction, action) => {
+  const eventTrigger = (name, timerAction, action, reRender = false) => {
     setTimeout(() => {
       const { values, dirty, dirtyItems } = hook.getValues();
       setIsDirty(dirty);
-      hook.renderItems(values);
-
+      if (reRender) {
+        hook.renderItems(values);
+      }
       if (timerAction) {
         timerAction(values, dirty, dirtyItems);
       }
       action(values, dirty, dirtyItems, name);
     }, 0);
   };
+
   const onSubmitAction = () => {
     eventTrigger(null, null, onSubmit);
   };
@@ -122,7 +124,9 @@ const Form = (props) => {
       }}
       onChange={(event) => {
         const { name } = event.target;
-        eventTrigger(name, changeTimer, onChange);
+        // Will trigger a rerender of form based on
+        // input field render property
+        eventTrigger(name, changeTimer, onChange, true);
       }}
       onSubmit={(event) => {
         event.preventDefault();
