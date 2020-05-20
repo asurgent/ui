@@ -42,7 +42,7 @@ const defaultProps = {
 
 const Form = (props) => {
   const {
-    form,
+    form: hook,
     children,
     msTimer,
     onSubmit,
@@ -56,16 +56,17 @@ const Form = (props) => {
     className,
   } = props;
 
+  const [isDirty, setIsDirty] = useState(false);
   const [keyPressTimer] = useState(timer(onKeyUpTimer, msTimer));
   const [changeTimer] = useState(timer(onChangeTimer, msTimer));
 
-  if (!form || typeof form !== 'object' || !form.inputFileds) {
+  if (!hook || typeof hook !== 'object' || !hook.inputFileds) {
     return null;
   }
 
   useEffect(() => {
-    if (form && form.setResetCallback) {
-      form.setResetCallback({
+    if (hook && hook.setResetCallback) {
+      hook.setResetCallback({
         run: (resetData) => {
           const resetValues = Object.keys(resetData)
             .map((key) => ({ name: key, value: resetData[key].value }));
@@ -78,64 +79,27 @@ const Form = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { inputFileds } = hook;
 
-  const { inputFileds } = form;
-
-  const handleOnChange = (event) => {
-    const { name } = event.target;
-
-    // setTimeout, 0 fix for native radiobuttons not updating correctly
+  const eventTrigger = (name, timerAction, action) => {
     setTimeout(() => {
-      const { values, dirty, dirtyItems } = form.getValues();
-      form.renderItems(values);
-      changeTimer(values, dirty, dirtyItems);
-      onChange(values, dirty, dirtyItems, name);
+      const { values, dirty, dirtyItems } = hook.getValues();
+      setIsDirty(dirty);
+      hook.renderItems(values);
+
+      if (timerAction) {
+        timerAction(values, dirty, dirtyItems);
+      }
+      action(values, dirty, dirtyItems, name);
     }, 0);
   };
-
-  const handleOnKeyUp = (event) => {
-    const { name } = event.target;
-    const { values, dirty, dirtyItems } = form.getValues();
-
-    keyPressTimer(values, dirty, dirtyItems);
-    onKeyUp(values, dirty, dirtyItems, name);
-  };
-
-  const handleOnKeyDown = (event) => {
-    const { name } = event.target;
-    const { values, dirty, dirtyItems } = form.getValues();
-
-    keyPressTimer(values, dirty, dirtyItems);
-    onKeyDown(event, values, dirty, dirtyItems, name);
-  };
-
-  const handleBlur = (event) => {
-    const { name } = event.target;
-    const { values, dirty, dirtyItems } = form.getValues();
-
-    onBlur(values, dirty, dirtyItems, name);
-  };
-
-  const handleFocus = (event) => {
-    const { name } = event.target;
-    const { values, dirty, dirtyItems } = form.getValues();
-
-    onFocus(values, dirty, dirtyItems, name);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const { values, dirty, dirtyItems } = form.getValues();
-    onSubmit(values, dirty, dirtyItems);
-  };
-
   const onSubmitAction = () => {
-    const { values, dirty, dirtyItems } = form.getValues();
-    onSubmit(values, dirty, dirtyItems);
+    eventTrigger(null, null, onSubmit);
   };
 
   const onResetAction = () => {
-    form.resetValues();
+    setIsDirty(false);
+    hook.resetValues();
   };
 
   const renderForms = Object
@@ -146,19 +110,32 @@ const Form = (props) => {
       </FormRow>
     ));
 
-  const isDirty = () => {
-    const { dirty } = form.getValues();
-    return dirty;
-  };
-
   return (
     <FormStyle
-      onKeyUp={handleOnKeyUp}
-      onKeyDown={handleOnKeyDown}
-      onChange={handleOnChange}
-      onSubmit={handleSubmit}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
+      onKeyUp={(event) => {
+        const { name } = event.target;
+        eventTrigger(name, keyPressTimer, onKeyUp);
+      }}
+      onKeyDown={(event) => {
+        const { name } = event.target;
+        eventTrigger(name, keyPressTimer, onKeyDown);
+      }}
+      onChange={(event) => {
+        const { name } = event.target;
+        eventTrigger(name, changeTimer, onChange);
+      }}
+      onSubmit={(event) => {
+        event.preventDefault();
+        eventTrigger(null, null, onSubmit);
+      }}
+      onFocus={(event) => {
+        const { name } = event.target;
+        eventTrigger(name, null, onFocus);
+      }}
+      onBlur={(event) => {
+        const { name } = event.target;
+        eventTrigger(name, null, onBlur);
+      }}
       className={className}
     >
       { typeof children === 'function' && children(inputFileds, renderForms, onSubmitAction, onResetAction, isDirty) }
