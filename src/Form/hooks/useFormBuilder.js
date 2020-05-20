@@ -177,7 +177,7 @@ const useFormBuilder = (formSpecification, parameters = null) => {
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
-    if (formData) {
+    if (formData && Object.keys(formData).length > 0) {
       const referenceList = generateReferences(formData);
       const { fields, original } = generateFieldComponents(formData, referenceList, errors);
       setReferences({ ...referenceList });
