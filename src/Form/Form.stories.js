@@ -152,7 +152,7 @@ export const defaultForm = () => {
             <Block.SpaceBetween>
               <Button.Hollow>Cancel</Button.Hollow>
               <Button.Secondary
-                disabled={!isDirty()}
+                disabled={!isDirty}
                 onClick={onResetAction}
               >
                 Reset
