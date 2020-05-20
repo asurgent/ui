@@ -3,24 +3,15 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import MomentUtils from '@date-io/moment';
-import ThemeProvider from './ThemeProvider';
+import ThemeProvider from './DatePickerThemeProvider';
 import * as C from './DatePicker.styled';
-import {
-  Label,
-  Header,
-  TooltipIcon,
-} from './Text.styled';
-import * as Tooltip from '../../Tooltip';
 
 const getStartOfDay = (val) => moment(val).startOf('day').toISOString();
 
 const DatePicker = forwardRef((props, ref) => {
   const {
-    label,
     format,
     name,
-    noLabel,
-    tooltip,
     maxDate,
     maxDateMessage,
     minDate,
@@ -44,16 +35,6 @@ const DatePicker = forwardRef((props, ref) => {
 
   return (
     <ThemeProvider>
-      { noLabel === false && (
-        <Header>
-          <Label>{label || name}</Label>
-          { tooltip && (
-          <Tooltip.Middle tip={tooltip}>
-            <TooltipIcon />
-          </Tooltip.Middle>
-          )}
-        </Header>
-      )}
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <C.DatePicker
           format={format}

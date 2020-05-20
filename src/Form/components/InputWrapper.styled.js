@@ -1,4 +1,3 @@
-
 import styled from 'styled-components';
 import HelpOutline from '@material-ui/icons/HelpOutline';
 
@@ -7,18 +6,40 @@ export const Main = styled.div`
   max-width: 100%; 
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 export const Wrapper = styled.div`
   margin: 0;
-  border: 0.1rem solid;
-  border-color: ${({ theme }) => theme.gray200};
+  display: flex;
+  align-items: center;
+  border: .1rem solid;
+  border-color: ${({ theme, hasError, type }) => {
+    if (hasError) {
+      return theme.ruby800;
+    }
+    if (type === 'radiogroup') {
+      return 'transparent';
+    }
+
+    return theme.gray200;
+  }};
   border-radius: ${(props) => (props.status === 'error' ? '5px 5px 0px 0px' : '5px')};
-  padding: 1.2rem;
+  padding: ${({ type }) => {
+    if (type === 'radiogroup') {
+      return '0 1.2rem';
+    }
+    return '1.2rem';
+  }};
   position: relative;
   box-sizing: border-box;
   min-height: 4.7rem;
-  background: ${({ theme }) => theme.white};
+  background: ${({ theme, hasError }) => {
+    if (hasError) {
+      return theme.ruby100;
+    }
+    return theme.white;
+  }};
   
   input,textarea,select {
     width: 100%;
@@ -43,6 +64,18 @@ export const Wrapper = styled.div`
   textarea { 
     resize: vertical; 
   }
+  select {
+    z-index: 1;
+    padding-right: 3.2rem;
+    background: transparent;
+  }
+
+  .down-arrow {
+    position:absolute;
+    right: .8rem;
+  }
+  
+  
 `;
 
 export const Label = styled.div`
@@ -53,6 +86,17 @@ export const Label = styled.div`
   text-transform: capitalize;
 `;
 
+export const Error = styled.div`
+  flex: 1;
+  margin-top: .8rem;
+  font-size: 1.1rem;
+  letter-spacing: .1rem;
+  color: ${({ theme }) => theme.ruby800};
+  text-transform: capitalize;
+  position: absolute; 
+  bottom: -2rem;
+`;
+
 export const Header = styled.div`
   margin-bottom: .8rem;
   display: flex;
@@ -61,25 +105,4 @@ export const Header = styled.div`
 export const TooltipIcon = styled(HelpOutline)`
   color: ${({ theme }) => theme.gray700};
   cursor: pointer;
-`;
-
-export const SelectWrapper = styled(Wrapper)`
-  padding: 0;
-  display: flex;
-  position: relative;
-  grid-template-columns:  1fr 3rem;
-  justify-content: center;
-  align-items: center;
-  
-  .down-arrow {
-    position:absolute;
-    right: .8rem;
-  }
-  
-  select {
-    z-index: 1;
-    padding: 1.2rem;
-    padding-right: 3.2rem;
-    background: transparent;
-  }
 `;

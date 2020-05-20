@@ -174,11 +174,12 @@ const useFormBuilder = (formSpecification, parameters = null) => {
   const [references, setReferences] = useState({});
   const [originalValues, setOriginalValues] = useState({});
   const [resetCallback, setResetCallback] = useState(null);
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     if (formData) {
       const referenceList = generateReferences(formData);
-      const { fields, original } = generateFieldComponents(formData, referenceList);
+      const { fields, original } = generateFieldComponents(formData, referenceList, errors);
       setReferences({ ...referenceList });
       setOriginalValues(original);
       setInputFields(fields);
@@ -193,7 +194,7 @@ const useFormBuilder = (formSpecification, parameters = null) => {
       setRenderedFields(render);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formData]);
+  }, [formData, errors]);
 
 
   return {
@@ -255,6 +256,7 @@ const useFormBuilder = (formSpecification, parameters = null) => {
         setFormData(update);
       }
     },
+    errors: (errorsList) => setErrors(errorsList),
     getValues: () => getValues(references, originalValues),
     inputFileds: renderedFields,
     formData,

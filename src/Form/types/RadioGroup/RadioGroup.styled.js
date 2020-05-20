@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const Label = styled.label`
     display: flex;
     position: relative;
@@ -23,19 +22,8 @@ export const RadioWrapper = styled.div`
 
 export const FieldSet = styled.fieldset`
     border: none;
-`;
-
-export const Icon = styled.i`
-  width: 1.6rem;
-  text-align: right;
-  color: ${({ theme }) => theme.gray700};
-  cursor: pointer;
-`;
-
-export const Header = styled.div`
-  margin-bottom: .8rem;
-  display: flex;
-  justify-content: space-between;
+    margin: 0;
+    padding: 0;
 `;
 
 export const CheckMark = styled.span`
@@ -75,7 +63,6 @@ export const RadioInput = styled.input`
 `;
 
 export const Text = styled.span`
-    margin-left: 1.6rem;
-    /* center vertically */
+    margin-left: 2.4rem;
     line-height: 1.6rem;
 `;
