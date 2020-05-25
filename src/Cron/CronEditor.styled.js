@@ -11,6 +11,11 @@ export const Row = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: flex-end;
+
+    .MuiFormHelperText-root.Mui-error.MuiFormHelperText-filled {
+        position: absolute;
+        bottom: -2rem;
+    }
 `;
 
 export const Label = styled.div`
