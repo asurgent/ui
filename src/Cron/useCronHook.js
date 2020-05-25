@@ -213,7 +213,7 @@ const useFormBuilder = ({
       setDuration(parsed);
     },
     handleStartDateChange: (date) => {
-      if (date) {
+      if (date && date.isValid()) {
         setStartDate(date.local());
         if (date >= endDate) {
           setEndDate(date.local());
@@ -223,9 +223,11 @@ const useFormBuilder = ({
       }
     },
     handleEndDateChange: (date) => {
-      if (date) {
-        if (date >= startDate) {
+      if (date && date.isValid()) {
+        if (date.isAfter(startDate)) {
           setEndDate(date.local());
+        } else {
+          setEndDate(startDate.local());
         }
       } else {
         setEndDate(date);

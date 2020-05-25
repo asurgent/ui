@@ -41,6 +41,7 @@ const Occurrence = ({ hook }) => (
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <KeyboardDatePicker
           format="DD-MM-YYYY"
+          minDate={hook.getStartDate()}
           value={hook.getEndDate()}
           onChange={hook.handleEndDateChange}
           KeyboardButtonProps={{
