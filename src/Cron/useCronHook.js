@@ -64,9 +64,12 @@ const useFormBuilder = ({
   }, []);
 
   useEffect(() => {
-    if (occurrence === OCCURRENCES_UNTILL_DATE) {
+    if (occurrence === OCCURRENCES_UNTILL_DATE
+      && moment(startDate).isValid()
+      && moment(endDate).isValid()) {
       const newEnd = moment(endDate);
       const durationEnd = moment(startDate).add(duration, durationType);
+
       if (durationEnd > newEnd) {
         durationEnd.second(59);
         durationEnd.minutes(59);
@@ -80,20 +83,23 @@ const useFormBuilder = ({
       }
     } else if (occurrence === OCCURRENCES_FOREVER) {
       setEndDate(moment('9999-12-30 23:39:59').local());
-    } else {
+    } else if (moment(startDate).isValid()) {
       const newEnd = moment(startDate).add(duration, durationType);
       setEndDate(newEnd.local());
+    } else {
+      setEndDate(null);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [occurrence, startDate, durationType, duration]);
 
   useEffect(() => {
-    const hours = startDate.hours();
-    const minutes = startDate.minutes();
-    const weekday = startDate.weekday();
-    const dayOfMonth = startDate.date();
-
-    if (occurrence !== OCCURRENCES_ONCE) {
+    if (occurrence !== OCCURRENCES_ONCE
+      && startDate
+      && moment(startDate).isValid()) {
+      const hours = startDate.hours();
+      const minutes = startDate.minutes();
+      const weekday = startDate.weekday();
+      const dayOfMonth = startDate.date();
       if (repeatType === REPEAT_DAY) {
         setCronExpression(`${minutes} ${hours} * * *`);
       } else if (repeatType === REPEAT_WEEK) {
@@ -111,8 +117,10 @@ const useFormBuilder = ({
 
   useEffect(() => {
     if (isReady) {
+      const validDates = (moment(startDate).isValid() && moment(endDate).isValid());
+
       const payload = {
-        valid: true,
+        valid: validDates,
         payload: {
           start: moment(startDate).utc().toISOString(),
           end: moment(endDate).utc().toISOString(),
@@ -129,7 +137,7 @@ const useFormBuilder = ({
 
       if (occurrence !== OCCURRENCES_ONCE) {
         Object.assign(payload, {
-          valid: Boolean(validateToString(cronExpression)),
+          valid: Boolean(validateToString(cronExpression)) && validDates,
           repeatType,
         });
 
