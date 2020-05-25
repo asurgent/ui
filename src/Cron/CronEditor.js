@@ -61,7 +61,7 @@ const CronEditor = ({
           }
         </ThemeProvider>
       </C.Editor>
-      { hook.willRunMoreThanOnce() && (
+      { hook.willRunMoreThanOnce() && hook.getStartDate() && (
         <RepeatOutput
           withBorder
           startDate={hook.getStartDate()}
