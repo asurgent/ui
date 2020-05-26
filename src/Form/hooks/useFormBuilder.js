@@ -15,6 +15,13 @@ const updateValue = (form, change) => {
   return false;
 };
 
+const appendTranslationPrefix = (errorsList, prefix) => errorsList.map(({
+  message_translation_key: t, ...rest
+}) => ({
+  ...rest,
+  message_translation_key: `${prefix}${t}`,
+}));
+
 const updateField = (form, change) => {
   if (form && typeof change === 'object') {
     const { name, value } = change;
@@ -256,7 +263,26 @@ const useFormBuilder = (formSpecification, parameters = null) => {
         setFormData(update);
       }
     },
-    errors: (errorsList) => setErrors(errorsList),
+    errors: (errorsList, translation) => {
+      if (Array.isArray(errorsList)) {
+        // Posibility to pass object translation object
+        // that is returned from lib/i18n/addTranslation.js
+        if (translation
+          && translation instanceof Object
+          && translation.translation
+          && translation.translation.id) {
+          const withPrefix = appendTranslationPrefix(errorsList, translation.translation.id);
+          setErrors(withPrefix);
+          // Simply pass a string that will be used as prefix
+        } else if (typeof translation === 'string') {
+          const withPrefix = appendTranslationPrefix(errorsList, translation);
+          setErrors(withPrefix);
+        } else {
+          // Dont prefix
+          setErrors(errorsList);
+        }
+      }
+    },
     getValues: () => getValues(references, originalValues),
     inputFileds: renderedFields,
     formData,

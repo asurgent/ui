@@ -92,7 +92,6 @@ export const Error = styled.div`
   font-size: 1.1rem;
   letter-spacing: .1rem;
   color: ${({ theme }) => theme.ruby800};
-  text-transform: capitalize;
   position: absolute; 
   bottom: -2rem;
 `;

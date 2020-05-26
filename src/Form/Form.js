@@ -76,6 +76,11 @@ const Form = (props) => {
         },
       });
     }
+
+    // Empty errors list on unmount
+    return () => {
+      hook.errors([]);
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
