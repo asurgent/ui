@@ -267,10 +267,7 @@ const useFormBuilder = (formSpecification, parameters = null) => {
       if (Array.isArray(errorsList)) {
         // Posibility to pass object translation object
         // that is returned from lib/i18n/addTranslation.js
-        if (translation
-          && translation instanceof Object
-          && translation.translation
-          && translation.translation.id) {
+        if (translation && translation instanceof Object && translation?.translation?.id) {
           const withPrefix = appendTranslationPrefix(errorsList, translation.translation.id);
           setErrors(withPrefix);
           // Simply pass a string that will be used as prefix
