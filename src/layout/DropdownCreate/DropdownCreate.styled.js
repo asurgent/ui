@@ -6,6 +6,8 @@ export const MenuWrapper = styled.div`
 `;
 
 export const DesktopMenu = styled.div`
+    display: flex;
+    flex-direction: column;
     position: absolute;
     width: auto;
     min-width: 28rem;
@@ -25,7 +27,6 @@ export const DesktopMenu = styled.div`
         margin-top: .8rem;
         margin-bottom: 1.6rem;
     }
-    
 `;
 
 
