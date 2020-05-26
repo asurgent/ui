@@ -11,6 +11,7 @@ i18n
       resources,
       lng: 'sv',
       fallbackLng: 'sv',
+      defaultNS: 'asurgentui',
       whitelist: ['en', 'sv'],
       interpolation: {
         escapeValue: false,

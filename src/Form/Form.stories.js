@@ -7,7 +7,7 @@ import moment from 'moment';
 import * as Form from './index';
 import * as Button from '../Button';
 import * as Block from '../Block';
-import './Formstories.translation';
+import translation from './Formstories.translation';
 
 export default {
   title: 'UI Components|Form',
@@ -118,12 +118,12 @@ export const defaultForm = () => {
   useEffect(() => {
     if (renderErrors) {
       formData.errors([
-        { property: 'someText', message: 'You need some text', message_translation_key: 'asurgentui:FormStory_one' },
-        { property: 'someRadioGroup', message: 'Select something', message_translation_key: 'asurgentui:FormStory_two' },
-        { property: 'someRadioGroup2', message: 'Select something', message_translation_key: 'asurgentui:FormStory_three' },
+        { property: 'someText', message: 'You need some text', message_translation_key: 'error1' },
+        { property: 'someRadioGroup', message: 'Select something', message_translation_key: 'error2' },
+        { property: 'someRadioGroup2', message: 'Select something', message_translation_key: 'error3' },
         { property: 'someDate', message: 'Pick a date', message_translation_key: 'key_doesnt_exist_will_fallback_on_message' },
         { property: 'someSelect', message: 'Select more things' },
-      ]);
+      ], translation);
     } else {
       formData.errors([]);
     }
