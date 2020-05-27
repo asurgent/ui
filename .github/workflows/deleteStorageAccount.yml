@@ -1,0 +1,47 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Delete deployment
+
+on:
+  pull_request:
+    types: [closed]
+
+env:
+  AZURE_RESOURCE_GROUP: asurgent-cloudops-ui-rg-dev
+  AZURE_LOCATION: westeurope
+
+jobs:
+  
+  delete:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS  }} 
+
+      - name: Delete Azure resources
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            echo GITHUB_REF=${GITHUB_REF}
+            pr=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+            echo PR=$pr
+            url=$(az storage account show -g ${{env.AZURE_RESOURCE_GROUP}} -n cloudopsui${pr} --query 'primaryEndpoints.web' | tr -d '"')
+            echo url=$url 
+            echo "::set-env name=URL::$url"
+            az storage account delete -g ${{env.AZURE_RESOURCE_GROUP}} -n cloudopsui${pr} --yes
+
+      - name: comment PR
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: Deleted deployment ${{ env.URL }}
+          check_for_duplicate_msg: false  # OPTIONAL 
+
