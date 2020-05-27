@@ -51,6 +51,13 @@ jobs:
     if: github.event_name == 'pull_request'
 
     steps:
+      - name: Create NPMRC
+        run: |
+          echo $'registry=https://registry.npmjs.org/ \n@asurgent:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}' > ~/.npmrc
+
+      - name: Install
+        run: npm ci
+
       - name: Build
         run: npm run build-storybook
 
