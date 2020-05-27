@@ -76,8 +76,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            echo GITHUB_REF=${GITHUB_REF}
-            pr=$(echo ${GITHUB_REF} | cut -d '/' -f 3)
+            pr=${{github.event.pull_request.number}}
             echo PR=$pr
             az storage account create -n cloudopsui${pr} -l ${{env.AZURE_LOCATION}} -g ${{env.AZURE_RESOURCE_GROUP}} --sku Standard_LRS
             connectionString=$(az storage account show-connection-string -g ${{env.AZURE_RESOURCE_GROUP}} -n cloudopsui${pr} | jq -r '.connectionString')
