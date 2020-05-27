@@ -24,6 +24,14 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: comment PR
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: Deploying static web site. Url will be posted as a comment here when deploy is finished.
+          check_for_duplicate_msg: false  # OPTIONAL 
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -70,14 +78,6 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS  }} 
-
-      - name: comment PR
-        uses: unsplash/comment-on-pr@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          msg: Deploying static web site. Url will be posted as a comment here when deploy is finished.
-          check_for_duplicate_msg: false  # OPTIONAL 
 
       - name: Deploy Azure resources
         uses: azure/CLI@v1
