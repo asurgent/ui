@@ -54,29 +54,29 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      # - name: Use Node.js ${{ matrix.node-version }}
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     node-version: ${{ matrix.node-version }}
-      #   env:
-      #     CI: true
-      #     NPM_REGISTRY_URL: https://npm.pkg.github.com
-      #     NODE_AUTH_TOKEN: ${{secrets.NPM_KEY}}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+        env:
+          CI: true
+          NPM_REGISTRY_URL: https://npm.pkg.github.com
+          NODE_AUTH_TOKEN: ${{secrets.NPM_KEY}}
 
-      # - name: Create NPMRC
-      #   run: |
-      #     echo $'registry=https://registry.npmjs.org/ \n@asurgent:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}' > ~/.npmrc
+      - name: Create NPMRC
+        run: |
+          echo $'registry=https://registry.npmjs.org/ \n@asurgent:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}' > ~/.npmrc
 
-      # - name: Install
-      #   run: npm ci
+      - name: Install
+        run: npm ci
 
-      # - name: Build
-      #   run: npm run build-storybook
+      - name: Build
+        run: npm run build-storybook
 
-      # - name: Azure login
-      #   uses: azure/login@v1
-      #   with:
-      #     creds: ${{ secrets.AZURE_CREDENTIALS  }} 
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS  }} 
 
       - name: Create Azure resources
         uses: azure/CLI@v1
