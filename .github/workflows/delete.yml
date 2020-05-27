@@ -22,7 +22,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS  }} 
 
-      - name: Create Azure resources
+      - name: Delete Azure storage account
         uses: azure/CLI@v1
         with:
           azcliversion: latest
