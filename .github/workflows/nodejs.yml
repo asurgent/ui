@@ -102,6 +102,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: "Deployed to $URL"
+          msg: Deployed to $URL
           check_for_duplicate_msg: false  # OPTIONAL 
 
