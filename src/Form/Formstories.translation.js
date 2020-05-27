@@ -3,13 +3,13 @@ import addTranslation from '../../lib/i18n/addTranslation';
 export default addTranslation({
   id: 'FormStory',
   sv: {
-    one: 'Fält 1 fel',
-    two: 'Fält 2 fel',
-    three: 'Fält 3 fel',
+    error1: 'Fält 1 fel',
+    error2: 'Fält 2 fel',
+    error3: 'Fält 3 fel',
   },
   en: {
-    one: 'Field 1 error',
-    two: 'Field 2 error',
-    three: 'Field 3 error',
+    error1: 'Field 1 error',
+    error2: 'Field 2 error',
+    error3: 'Field 3 error',
   },
 });
