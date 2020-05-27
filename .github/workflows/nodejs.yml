@@ -97,12 +97,11 @@ jobs:
             echo url=$url
             echo "::set-env name=URL::$url"
 
-      - name: Update deployment status (success)
-        if: success()
-        uses: chrnorm/deployment-status@releases/v1
+      - name: comment PR
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          token: "${{ github.token }}"
-          target_url: ${URL}
-          state: "success"
-          deployment_id: 2
+          msg: "Deployed to ${URL}"
+          check_for_duplicate_msg: false  # OPTIONAL 
 
