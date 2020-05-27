@@ -70,7 +70,7 @@ const getFieldError = (key, errors) => {
   return false;
 };
 
-export const generateFieldComponents = (inputs, referenceList, errors) => {
+export const generateFieldComponents = (inputs, referenceList, errors, keepInputValue) => {
   const original = {};
   const fields = Object.keys(inputs)
     .reduce((acc, key) => {
@@ -87,9 +87,15 @@ export const generateFieldComponents = (inputs, referenceList, errors) => {
         props: inputProps,
       } = inputs[key];
 
+      let inputValue = value;
       const error = getFieldError(key, errors);
 
-      Object.assign(original, { [key]: value });
+      if (keepInputValue && referenceList[key]?.current) {
+        inputValue = referenceList[key].current.value;
+      }
+
+      Object.assign(original, { [key]: inputValue });
+
       const RequestedComponent = getInputComponent(type);
       const Component = (
         <InputWrapper
@@ -102,7 +108,7 @@ export const generateFieldComponents = (inputs, referenceList, errors) => {
           <RequestedComponent
             ref={referenceList[key]}
             name={key}
-            value={value || ''}
+            value={inputValue || ''}
             placeholder={placeholder || ''}
             label={label}
             minDate={minDate}

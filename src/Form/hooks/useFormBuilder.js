@@ -176,12 +176,28 @@ const initalValue = (formSpecification, parameters = null) => {
 
 const useFormBuilder = (formSpecification, parameters = null) => {
   const [formData, setFormData] = useState(initalValue(formSpecification, parameters));
-  const [inputFileds, setInputFields] = useState([]);
+  const [inputFileds, setInputFields] = useState({});
   const [renderedFields, setRenderedFields] = useState([]);
   const [references, setReferences] = useState({});
   const [originalValues, setOriginalValues] = useState({});
   const [resetCallback, setResetCallback] = useState(null);
   const [errors, setErrors] = useState([]);
+
+  // Seperate effect to render error-values on inputfields
+  // and that keeps the input-fileds current value
+  useEffect(() => {
+    if (Object.keys(references).length > 0) {
+      const { fields, original } = generateFieldComponents(formData, references, errors, true);
+      setOriginalValues(original);
+      setInputFields(fields);
+
+      const { values } = getValues(references, originalValues);
+      const render = getRenderableFields(formSpecification, fields, values);
+
+      setRenderedFields(render);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [errors]);
 
   useEffect(() => {
     if (formData && Object.keys(formData).length > 0) {
@@ -201,7 +217,7 @@ const useFormBuilder = (formSpecification, parameters = null) => {
       setRenderedFields(render);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formData, errors]);
+  }, [formData]);
 
 
   return {
