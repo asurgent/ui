@@ -104,5 +104,5 @@ jobs:
           token: "${{ github.token }}"
           target_url: ${URL}
           state: "success"
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          deployment_id: 1
 
