@@ -97,11 +97,12 @@ jobs:
             echo url=$url
             echo "::set-env name=URL::$url"
 
-      - name: Create GitHub deployment
-        if: always()
-        uses: mkrakowitzer/actions-gh-deploy@1
+      - name: Update deployment status (success)
+        if: success()
+        uses: chrnorm/deployment-status@releases/v1
         with:
-          environment: development
-          task: deploy
-          description: Deployment to ${url} ${{ job.status }}
-          transient_environment: true
+          token: "${{ github.token }}"
+          target_url: ${URL}
+          state: "success"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
