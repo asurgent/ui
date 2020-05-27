@@ -23,7 +23,8 @@ jobs:
           azcliversion: latest
           inlineScript: |
             echo GITHUB_REF=${GITHUB_REF}
+
             pr=$(echo ${GITHUB_REF} | cut -d '/' -f 3)
             echo PR=$pr
-            pr2=${{github.event.pull_request.number}}
-            echo $pr2
+
+            echo PR2=${{github.event.pull_request.number}}
