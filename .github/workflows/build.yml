@@ -71,7 +71,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS  }} 
 
-      - name: Create Azure resources
+      - name: Deploy Azure resources
         uses: azure/CLI@v1
         with:
           azcliversion: latest
