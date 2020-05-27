@@ -9,8 +9,12 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  AZURE_RESOURCE_GROUP: asurgent-cloudops-ui-rg-dev
+  AZURE_LOCATION: westeurope
+
 jobs:
- test:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -19,6 +23,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -27,12 +32,69 @@ jobs:
           CI: true
           NPM_REGISTRY_URL: https://npm.pkg.github.com
           NODE_AUTH_TOKEN: ${{secrets.NPM_KEY}}
+
       - name: Create NPMRC
         run: |
           echo $'registry=https://registry.npmjs.org/ \n@asurgent:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}' > ~/.npmrc
+
       - name: Install
         run: npm ci
+
       - name: Build
         run: npm run build
+
       - name: Test
         run: npm run ci-test
+
+      - name: Build
+        run: npm run build-storybook
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: storybook-static
+          path: storybook-static
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: storybook-static
+
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS  }} 
+
+      - name: Create Azure resources
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            echo GITHUB_REF=${GITHUB_REF}
+            pr=$(echo ${GITHUB_REF} | cut -d '/' -f 3)
+            echo PR=$pr
+            az storage account create -n cloudopsui${pr} -l ${{env.AZURE_LOCATION}} -g ${{env.AZURE_RESOURCE_GROUP}} --sku Standard_LRS
+            connectionString=$(az storage account show-connection-string -g ${{env.AZURE_RESOURCE_GROUP}} -n cloudopsui${pr} | jq -r '.connectionString')
+            echo connectionString=${connectionString:0:105}...
+            az storage blob service-properties update --account-name cloudopsui${pr} --static-website --404-document 404.html --index-document index.html --connection-string "${connectionString}"
+            az storage container create -n "\$web" --connection-string "${connectionString}"
+            az storage blob delete-batch -s "\$web" --connection-string "${connectionString}"
+            az storage blob upload-batch -d "\$web" -s storybook-static --connection-string "${connectionString}"
+            url=$(az storage account show -g ${{env.AZURE_RESOURCE_GROUP}} -n cloudopsui${pr} --query 'primaryEndpoints.web' | tr -d '"')
+            echo url=$url 
+            echo "::set-env name=URL::$url"
+
+      - name: comment PR
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: Deployed to ${{ env.URL }}
+          check_for_duplicate_msg: false  # OPTIONAL 
+
