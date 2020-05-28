@@ -28,8 +28,6 @@ export const FieldSet = styled.fieldset`
 
 export const CheckMark = styled.span`
     position: absolute;
-    top: 0px;
-    left: 0px;
     height: 2rem;
     width: 2rem;
     background-color: #fff;
