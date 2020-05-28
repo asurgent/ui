@@ -50,8 +50,8 @@ export const CheckMark = styled.span`
 `;
 
 export const RadioInput = styled.input`
-    width: 2rem;
-    height: 2rem;   
+    width: 2rem!important;
+    height: 2rem!important;   
     margin: 0; 
     /* change border color and draw the dot */
     &:checked + ${CheckMark} {
