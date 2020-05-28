@@ -41,5 +41,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           msg: Deleted deployment ${{ env.URL }}
-          check_for_duplicate_msg: false  # OPTIONAL 
+          check_for_duplicate_msg: false  # OPTIONAL Gurka
 
