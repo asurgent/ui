@@ -87,7 +87,10 @@ const getValues = (references, originalValues) => {
   const values = keys.reduce((acc, key) => {
     if (references[key] && references[key].current) {
       const { value } = references[key].current;
-      if (value !== originalValues[key]) {
+      const isNumber = references[key].current.type === 'number';
+      const handledValue = isNumber ? parseInt(value, 10) : value;
+
+      if (handledValue !== originalValues[key]) {
         dirty = true;
         Object.assign(dirtyItems, { [key]: true });
       } else {
@@ -95,14 +98,13 @@ const getValues = (references, originalValues) => {
       }
 
       return {
-        [key]: value,
+        [key]: handledValue,
         ...acc,
       };
     }
 
     return acc;
   }, {});
-
 
   return { values, dirty, dirtyItems };
 };

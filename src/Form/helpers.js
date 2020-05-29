@@ -2,6 +2,7 @@ import React from 'react';
 import InputWrapper from './components/InputWrapper';
 
 import Text from './types/Text';
+import Number from './types/Number';
 import TextArea from './types/TextArea';
 import Select from './types/Select';
 import Label from './types/Label';
@@ -22,6 +23,8 @@ const getInputComponent = (type) => {
   switch (type) {
     case 'text':
       return Text;
+    case 'number':
+      return Number;
     case 'textarea':
       return TextArea;
     case 'select':
@@ -83,6 +86,8 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
         options,
         minDate,
         maxDate,
+        minValue,
+        maxValue,
         noLabel = false,
         props: inputProps,
       } = inputs[key];
@@ -91,7 +96,10 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
       const error = getFieldError(key, errors);
 
       if (keepInputValue && referenceList[key]?.current) {
-        inputValue = referenceList[key].current.value;
+        const isNumber = referenceList[key].current.type === 'number';
+        inputValue = isNumber
+          ? parseInt(referenceList[key].current.value, 10)
+          : referenceList[key].current.value;
       }
 
       Object.assign(original, { [key]: inputValue });
@@ -108,11 +116,13 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
           <RequestedComponent
             ref={referenceList[key]}
             name={key}
-            value={inputValue || ''}
+            value={inputValue}
             placeholder={placeholder || ''}
             label={label}
             minDate={minDate}
             maxDate={maxDate}
+            minValue={minValue}
+            maxValue={maxValue}
             props={inputProps}
             options={options}
           />
