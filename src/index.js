@@ -6,6 +6,7 @@ import * as Shield from './Shield';
 import * as Form from './Form';
 import * as Table from './Table';
 import * as Tag from './Tag';
+import * as Svg from './icons';
 
 import * as Button from './Button';
 import * as Spinner from './Spinner';
@@ -39,4 +40,5 @@ export {
   Omnibar,
   Cron,
   Transition,
+  Svg,
 };
