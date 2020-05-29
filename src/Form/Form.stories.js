@@ -67,6 +67,12 @@ export const defaultForm = () => {
       label: 'Some Text',
       tooltip: 'hejhej',
     },
+    someNumber: {
+      type: 'number',
+      label: 'Some Number (max 100)',
+      tooltip: 'hejhej',
+      maxValue: 100,
+    },
     someRadioGroup: {
       type: 'radiogroup',
       label: 'Some Radio Group',
@@ -107,6 +113,7 @@ export const defaultForm = () => {
   useEffect(() => {
     formData.updateFields([
       { name: 'someText', value: 'Good bye' },
+      { name: 'someNumber', value: 10 },
       { name: 'someRadioGroup', value: 'value1' },
       { name: 'someRadioGroup2', value: 'value4' },
       { name: 'someSelect', value: '3' },
@@ -119,8 +126,9 @@ export const defaultForm = () => {
     if (renderErrors) {
       formData.errors([
         { property: 'someText', message: 'You need some text', message_translation_key: 'error1' },
-        { property: 'someRadioGroup', message: 'Select something', message_translation_key: 'error2' },
-        { property: 'someRadioGroup2', message: 'Select something', message_translation_key: 'error3' },
+        { property: 'someNumber', message: 'You need a number', message_translation_key: 'error2' },
+        { property: 'someRadioGroup', message: 'Select something', message_translation_key: 'error3' },
+        { property: 'someRadioGroup2', message: 'Select something', message_translation_key: 'error4' },
         { property: 'someDate', message: 'Pick a date', message_translation_key: 'key_doesnt_exist_will_fallback_on_message' },
         { property: 'someSelect', message: 'Select more things' },
       ], translation);
