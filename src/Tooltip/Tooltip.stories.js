@@ -8,9 +8,16 @@ const center = {
   height: '100vh', width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center',
 };
 
+const someFormattedToolTip = `Headertext blablabal:
+
+Some paragraphy text text text text text text text.
+
+Some other text.
+`;
+
 export const bottomMiddle = () => (
   <div style={center}>
-    <Tooltip.Middle tip="Hello">
+    <Tooltip.Middle tip={someFormattedToolTip}>
       <h1 style={{ display: 'inline-block' }}>Hover me</h1>
     </Tooltip.Middle>
   </div>

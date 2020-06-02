@@ -7,7 +7,7 @@ export const TooltipWrapper = styled.div`
   position: fixed;
   background-color: #161616;
   padding: .8rem;
-  border-radius: 3px;
+  border-radius: 5px;
   transform: ${({ position }) => {
     switch (position) {
       case 'left':
@@ -19,7 +19,10 @@ export const TooltipWrapper = styled.div`
     }
   }};
   
-  color: #ffffff;
+  box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
+  background: ${({ theme }) => theme.white};
+  color: ${({ theme }) => theme.black};
+  white-space: pre;
   display: none;
 
   @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {
