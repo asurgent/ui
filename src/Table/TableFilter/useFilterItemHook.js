@@ -86,7 +86,7 @@ const useFilterProvider = (filterItem, groupHook, filterHook, isMultiSelect) => 
 
       return filterItem.value;
     },
-    getCount: () => (filterItem.count ? `(${filterItem.count})` : ''),
+    getCount: () => (filterItem.count || ''),
   };
 };
 

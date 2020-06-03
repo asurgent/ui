@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as Icons from '@material-ui/icons';
 import * as C from './FilterItem.styled';
+import translation from '../TableFilter.translation';
 import useFilterItemHook from '../useFilterItemHook';
 
 const propTypes = {
@@ -14,6 +15,8 @@ const propTypes = {
 };
 
 const defaultProps = {};
+
+const { t } = translation;
 
 const FilterItem = ({
   filterItem,
@@ -47,9 +50,16 @@ const FilterItem = ({
 
       )}
       {filterItem.label && (
-      <C.Label>
-        {hook.getLabel()}
-      </C.Label>
+        <C.Labels>
+          <C.Label>
+            {hook.getLabel()}
+          </C.Label>
+          <C.Base>
+            <C.Label>
+              {t('hits')}
+            </C.Label>
+          </C.Base>
+        </C.Labels>
       )}
       { !filterItem.label && !filterItem.static && (
         <C.Base>

@@ -39,10 +39,14 @@ export const FilterLabel = styled.div`
     white-space: nowrap;
     overflow: hidden;
 `;
-
+export const Labels = styled.div`
+    width: 100%;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+`;
 export const Label = styled.div`
     flex: 1;
-    min-width: 100%;
     display: block;
     text-align: left;
     font-size: 1.1rem;
@@ -59,4 +63,5 @@ export const Label = styled.div`
 
 export const SecondaryLabel = styled(Label)`
     color: ${({ theme }) => theme.gray400};
+    font-size: 1rem;
 `;

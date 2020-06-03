@@ -8,6 +8,7 @@ export default addTranslation({
     unmatched: 'Valda (utan träffar)',
     unselected: 'Tillgängliga',
     exclude: 'Exkludera',
+    hits: 'Träffar',
   },
   en: {
     clear: 'Clear Filter',
@@ -15,5 +16,6 @@ export default addTranslation({
     unmatched: 'Selected (unmatched)',
     unselected: 'Avaliable',
     exclude: 'Exclude',
+    hits: 'Hits',
   },
 });
