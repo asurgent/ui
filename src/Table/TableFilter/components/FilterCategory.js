@@ -22,14 +22,12 @@ const propTypes = {
 
   onChange: PropTypes.func,
   onAdd: PropTypes.func,
-  onRemove: PropTypes.func,
 };
 
 const defaultProps = {
   theme: {},
   onChange: () => {},
   onAdd: () => {},
-  onRemove: () => {},
 };
 
 const FilterCategory = (props) => {
@@ -41,7 +39,6 @@ const FilterCategory = (props) => {
     multiSelect,
     onChange,
     onAdd,
-    onRemove,
     theme,
   } = props;
 
@@ -90,7 +87,6 @@ const FilterCategory = (props) => {
                               key={key}
                               onChange={onChange}
                               onAdd={onAdd}
-                              onRemove={onRemove}
                               multiSelect={multiSelect}
                               filterItem={filter}
                               groupHook={groupHook}

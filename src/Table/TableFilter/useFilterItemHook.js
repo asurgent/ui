@@ -16,6 +16,7 @@ const useFilterProvider = (filterItem, groupHook, filterHook, isMultiSelect) => 
 
   const setFilterItemState = (newState) => {
     const filterValueTarget = filterItem.value;
+    const filterCountTarget = filterItem.count;
     const filterGroupKey = groupHook.getGroupKey();
     const selectedItems = filterHook.getSelectedItems();
 
@@ -25,7 +26,9 @@ const useFilterProvider = (filterItem, groupHook, filterHook, isMultiSelect) => 
         const cleanUp = stateList.filter((item) => item.value !== filterValueTarget);
 
         if (newState !== REMOVE) {
-          cleanUp.push({ value: filterValueTarget, state: newState, isMultiSelect });
+          cleanUp.push({
+            value: filterValueTarget, count: filterCountTarget, state: newState, isMultiSelect,
+          });
         }
 
         const update = { ...selectedItems, [filterGroupKey]: cleanUp };
@@ -35,6 +38,7 @@ const useFilterProvider = (filterItem, groupHook, filterHook, isMultiSelect) => 
           ...selectedItems,
           [filterGroupKey]: [{
             value: filterValueTarget,
+            count: filterCountTarget,
             state: newState,
             isMultiSelect,
           }],
@@ -42,7 +46,9 @@ const useFilterProvider = (filterItem, groupHook, filterHook, isMultiSelect) => 
         filterHook.setSelectedItems(update);
       }
     } else if (newState !== REMOVE) {
-      const selected = [{ value: filterValueTarget, state: newState, isMultiSelect }];
+      const selected = [{
+        value: filterValueTarget, count: filterCountTarget, state: newState, isMultiSelect,
+      }];
       const update = { ...selectedItems, [filterGroupKey]: selected };
       filterHook.setSelectedItems(update);
     }
@@ -80,6 +86,7 @@ const useFilterProvider = (filterItem, groupHook, filterHook, isMultiSelect) => 
 
       return filterItem.value;
     },
+    getCount: () => (filterItem.count || ''),
   };
 };
 

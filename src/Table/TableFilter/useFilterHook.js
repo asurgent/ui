@@ -36,10 +36,23 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
       const selectedItemsCache = { ...getHistoryState() };
       const categoryDefaultValues = filterKeys.filter(({ defaultSelect }) => defaultSelect);
 
+
       categoryDefaultValues.forEach(({ facetKey, defaultSelect, multiSelect = true }) => {
+        const valueObject = {};
+
+        // if default value is: { value: x, count: y }
+        if (defaultSelect?.count) {
+          Object.assign(valueObject, { value: defaultSelect.value, count: defaultSelect.count });
+        } else {
+          // default value is: 'x'
+          Object.assign(valueObject, { value: defaultSelect });
+        }
+
         if (!selectedItemsCache[facetKey] || (selectedItemsCache[facetKey].length === 0)) {
           Object.assign(selectedItemsCache, {
-            [facetKey]: [{ value: `${defaultSelect}`, state: INCLUDE, isMultiSelect: multiSelect }],
+            [facetKey]: [{
+              ...valueObject, state: INCLUDE, isMultiSelect: multiSelect,
+            }],
           });
         }
       });
