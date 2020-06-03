@@ -51,7 +51,7 @@ const FilterItem = ({
         {hook.getLabel()}
       </C.Label>
       )}
-      { multiSelect && !filterItem.label && !filterItem.static && (
+      { !filterItem.label && !filterItem.static && (
         <C.Base>
           <C.SecondaryLabel>
             {hook.getCount()}

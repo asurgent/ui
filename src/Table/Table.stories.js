@@ -336,15 +336,17 @@ export const filter = () => {
     });
     hook.registerFilterFetchCallback((payload, onSuccess) => {
       onSuccess({
-        guys: [{ value: '1' },
-          ...Array.from({ length: 100 }, (_, i) => ({
-            value: `Item ${i}`,
-          }))],
+        guys: [
+          { value: 'Mike(1133)', count: 32 },
+          { value: 'Keen(123)', count: 4 },
+          { value: 'Ellinor(4465)', count: 26 },
+          { value: 'Anton(984)', count: 14 },
+        ],
         pankaka: [
-          { value: 'HeHe' },
-          { value: '123' },
-          { value: '4465' },
-          { value: '984' },
+          { value: 'Mike(1133)', count: 32 },
+          { value: 'Keen(123)', count: 4 },
+          { value: 'Ellinor(4465)', count: 26 },
+          { value: 'Anton(984)', count: 14 },
         ],
       });
     });
@@ -360,7 +362,7 @@ export const filter = () => {
             label: 'guys',
             facetKey: 'guys',
             multiSelect: false,
-            defaultSelect: 1,
+            defaultSelect: { value: 'Mike(1133)', count: 32 },
             onChange: (a) => {
               action('OnChange')(a);
             },
