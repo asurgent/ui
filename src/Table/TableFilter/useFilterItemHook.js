@@ -78,7 +78,7 @@ const useFilterProvider = (filterItem, groupHook, filterHook, isMultiSelect) => 
         }
       }
 
-      return filterItem.value;
+      return filterItem.count ? `${filterItem.value} - ${filterItem.count}` : filterItem.value;
     },
   };
 };
