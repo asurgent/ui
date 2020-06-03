@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as Icons from '@material-ui/icons';
-import * as Button from '../../../Button';
 import * as C from './FilterItem.styled';
 import useFilterItemHook from '../useFilterItemHook';
 
