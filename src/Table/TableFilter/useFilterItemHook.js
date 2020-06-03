@@ -25,7 +25,9 @@ const useFilterProvider = (filterItem, groupHook, filterHook, isMultiSelect) => 
         const cleanUp = stateList.filter((item) => item.value !== filterValueTarget);
 
         if (newState !== REMOVE) {
-          cleanUp.push({ value: filterValueTarget, state: newState, isMultiSelect });
+          cleanUp.push({
+            value: filterValueTarget, count: filterItem.count, state: newState, isMultiSelect,
+          });
         }
 
         const update = { ...selectedItems, [filterGroupKey]: cleanUp };
@@ -35,6 +37,7 @@ const useFilterProvider = (filterItem, groupHook, filterHook, isMultiSelect) => 
           ...selectedItems,
           [filterGroupKey]: [{
             value: filterValueTarget,
+            count: filterItem.count,
             state: newState,
             isMultiSelect,
           }],
@@ -78,8 +81,9 @@ const useFilterProvider = (filterItem, groupHook, filterHook, isMultiSelect) => 
         }
       }
 
-      return filterItem.count ? `${filterItem.value} - ${filterItem.count}` : filterItem.value;
+      return filterItem.value;
     },
+    getCount: () => (filterItem.count ? `(${filterItem.count})` : ''),
   };
 };
 

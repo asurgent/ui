@@ -40,7 +40,6 @@ const TableFilter = ({ filterHook, tableHook, className }) => (
                 tableHook={tableHook}
                 onChange={rest.onChange}
                 onAdd={rest.onAdd}
-                onRemove={rest.onRemove}
               />
             )
           ))
