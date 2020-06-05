@@ -9,7 +9,7 @@ export const Container = styled.div`
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    padding: 3.2rem 1.6rem;
+    padding: 3.2rem;
    
 
     h3 {
