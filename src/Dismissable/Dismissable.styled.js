@@ -10,17 +10,19 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     padding: 3.2rem 1.6rem;
+   
 
-  h3 {
-    margin: 0;
-  }
+    h3 {
+        margin: 0;
+    }
 `;
 
 export const ContainerPrimary = styled(Container)`
-color: ${({ theme }) => theme.white};
-  fill: ${({ theme }) => theme.gold800};
+    color: ${({ theme }) => theme.white};
+    fill: ${({ theme }) => theme.gold800};
     background: ${({ theme }) => theme.blue900};
     border: 0.1rem solid ${({ theme }) => theme.blue900};
+    margin-bottom: ${({ withBottomMargin }) => (withBottomMargin ? '1.6rem' : '0')};
 `;
 
 export const ContainerPlain = styled(Container)`
@@ -28,6 +30,7 @@ export const ContainerPlain = styled(Container)`
     color: ${({ theme }) => theme.black};
     background: ${({ theme }) => theme.white};
     border: 0.1rem solid ${({ theme }) => theme.gray300};
+    margin-bottom: ${({ withBottomMargin }) => (withBottomMargin ? '1.6rem' : '0')};
 `;
 
 

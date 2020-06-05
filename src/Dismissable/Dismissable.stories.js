@@ -32,6 +32,7 @@ export const primary = () => {
         title={text('Title', 'I am a title')}
         description={text('Description', 'I am some description')}
         fadeOutSpeed={number('Fade out speed (ms)', 500)}
+        withBottomMargin
       >
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <p>some content</p>

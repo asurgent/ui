@@ -12,15 +12,17 @@ const propTypes = {
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element,
   ]),
+  withBottomMargin: PropTypes.bool,
 };
 
 const defaultProps = {
   fadeOutSpeed: 0,
   children: null,
+  withBottomMargin: false,
 };
 
 export const DismissablePrimary = ({
-  id, title, fadeOutSpeed, children,
+  id, title, fadeOutSpeed, withBottomMargin, children,
 }) => {
   const [isDismissed, setDismissed] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
@@ -44,7 +46,7 @@ export const DismissablePrimary = ({
 
   return (
     <Transitions.FadeOut isVisible={!fadeOut} timeout={fadeOutSpeed}>
-      <C.ContainerPrimary>
+      <C.ContainerPrimary withBottomMargin={withBottomMargin}>
         <C.Header>
           <h3>{title}</h3>
           <C.Dismiss onClick={() => handleDismiss()}>
@@ -63,7 +65,7 @@ DismissablePrimary.displayName = '@asurgent.ui.Dismissable.Primary';
 
 
 export const DismissablePlain = ({
-  id, title, fadeOutSpeed, children,
+  id, title, fadeOutSpeed, withBottomMargin, children,
 }) => {
   const [isDismissed, setDismissed] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
@@ -87,7 +89,7 @@ export const DismissablePlain = ({
 
   return (
     <Transitions.FadeOut isVisible={!fadeOut} timeout={fadeOutSpeed}>
-      <C.ContainerPlain>
+      <C.ContainerPlain withBottomMargin={withBottomMargin}>
         <C.Header>
           <h3>{title}</h3>
           <C.Dismiss onClick={() => handleDismiss()}>
