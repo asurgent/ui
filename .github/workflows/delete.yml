@@ -36,7 +36,7 @@ jobs:
             az storage account delete -g ${{env.AZURE_RESOURCE_GROUP}} -n cloudopsui${pr} --yes
 
       - name: comment PR
-        uses: unsplash/comment-on-pr@master
+        uses: KeenFann/comment-on-pr@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
