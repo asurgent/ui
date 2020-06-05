@@ -1,13 +1,5 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
-const fadeOut = () => keyframes`
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-`;
 
 export const Dismiss = styled.div`
   cursor: pointer;
@@ -21,14 +13,6 @@ export const Container = styled.div`
 
   h3 {
     margin: 0;
-  }
-
-  &.fadeOut {
-    opacity: 0;
-    animation-duration: ${({ fadeOutSpeed }) => `${fadeOutSpeed / 1000}s`};
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in-out;
-    animation-name: ${fadeOut};
   }
 `;
 
