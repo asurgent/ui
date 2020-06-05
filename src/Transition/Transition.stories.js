@@ -18,6 +18,20 @@ export const fadeIn = () => {
 };
 
 
+export const fadeOut = () => {
+  const [hidden, setHidden] = useState(false);
+
+  return (
+    <div style={{ height: '100vh' }}>
+      <button type="button" onClick={() => setHidden(!hidden)}>{hidden ? 'show' : 'hide'}</button>
+      <Transitions.FadeOut isVisible={!hidden}>
+        <p>Hello</p>
+      </Transitions.FadeOut>
+    </div>
+  );
+};
+
+
 export const fadeInSlideDown = () => {
   const [open, setOpen] = useState(false);
 

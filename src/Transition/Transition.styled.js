@@ -20,6 +20,8 @@ export const FadeIn = styled.div`
   }};
 `;
 
+export const FadeOut = styled(FadeIn)``;
+
 export const FadeInSlideDown = styled(FadeIn)`
     transform: translateY(
     ${({ state }) => (state === 'entering' || state === 'entered' ? 20 : 0)}px
