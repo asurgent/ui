@@ -56,7 +56,7 @@ const FilterItem = ({
           </C.Label>
           <C.Base>
             <C.Label>
-              {t('hits')}
+              {t('hits', 'asurgentui')}
             </C.Label>
           </C.Base>
         </C.Labels>
