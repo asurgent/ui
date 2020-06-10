@@ -406,7 +406,7 @@ export const controlls = () => {
 
     hook.registerFilterFetchCallback((payload, onSuccess) => {
       onSuccess({
-        gurka: Array.from({ length: 20 }, (_, i) => ({ value: i })),
+        gurka: Array.from({ length: 20 }, (_, i) => ({ value: i.toString() })),
         pankaka: [
           { value: '1133' },
           { value: '123' },
