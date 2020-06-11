@@ -97,10 +97,10 @@ const Select = forwardRef((props, ref) => {
       <S.SelectFilter onClick={() => { groupHook.setOpen(!groupHook.isOpen()); }}>
         <S.Input
           type="text"
-          disabled
+          onChange={() => {}}
           name={name}
           ref={ref}
-          value={value}
+          value={value || ''}
           {...props.props}
         />
         <C.FilterWrapper>
