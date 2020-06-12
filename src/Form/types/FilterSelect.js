@@ -1,6 +1,4 @@
-import React, {
-  forwardRef, useState, useEffect, useRef,
-} from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import * as Icons from '@material-ui/icons';
