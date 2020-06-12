@@ -100,11 +100,10 @@ export const defaultForm = () => {
       ],
       tooltip: 'tooltip',
     },
-    someSelectFilter: {
-      type: 'select',
-      label: 'Some Selectfilter',
+    someFilterSelect: {
+      type: 'filterselect',
+      label: 'Some Filterselect',
       options: [],
-      props: { withSearch: true },
       tooltip: 'tooltip',
     },
     someDate: {
@@ -125,7 +124,7 @@ export const defaultForm = () => {
       { name: 'someRadioGroup2', value: 'value4' },
       { name: 'someSelect', value: '3' },
       {
-        name: 'someSelectFilter',
+        name: 'someFilterSelect',
         value: '3',
         options: [
           { value: '1', label: 'First option', default: true },

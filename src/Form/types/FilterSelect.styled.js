@@ -1,44 +1,16 @@
 import styled from 'styled-components';
 
+export const Input = styled.input`
+    &:disabled {
+        color: black!important;
+    }
+`;
+
+export const SelectFilter = styled.div`
+    display: flex;
+    width: 100%;
+`;
 export const FilterWrapper = styled.div``;
-
-export const ListWrapper = styled.div`
-    flex:1;
-    display: flex;
-    position: relative;
-    overflow:hidden;
-
-    &:after {
-        display:  ${({ disabled }) => (disabled ? 'block' : 'none')};
-        content: " ";
-        background: ${({ theme }) => theme.rgba(theme.white, 0.8)};
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-    }
-`;
-
-export const Search = styled.div`
-    padding: .8rem ;
-    background-color: ${({ theme }) => theme.gray50};
-
-    form {
-        padding-right: 4.8rem;
-
-        @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
-            padding-right: 0;
-        }
-    }
-`;
-
-export const Center = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.6rem;
-`;
 
 export const Dropdown = styled.div`
     position: fixed;
@@ -65,9 +37,9 @@ export const Dropdown = styled.div`
         max-height: 50rem;
         top: unset;
         bottom: unset;
-        min-width: 40rem;
-        left: unset;
-        right: unset;
+        min-width: unset;
+        left: 0;
+        right: 0;
         border-radius: 5px;
         background: ${({ theme }) => theme.white};
         border: 1px solid ${({ theme }) => theme.gray200};
@@ -80,13 +52,41 @@ export const Dropdown = styled.div`
         }
     }
 `;
+export const Search = styled.div`
+    padding: .8rem ;
+    background-color: ${({ theme }) => theme.gray50};
 
-export const Mobile = styled.div`
+    form {
+        padding-right: 4.8rem;
+
+        @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
+            padding-right: 0;
+        }
+    }
+`;
+
+export const Center = styled.div`
     display: flex;
     align-items: center;
-    position: relative;
+    justify-content: center;
+    padding: 1.6rem;
+`;
 
-    @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
-        display: none;
-    }   
+
+export const ListWrapper = styled.div`
+    flex:1;
+    display: flex;
+    position: relative;
+    overflow:hidden;
+
+    &:after {
+        display:  ${({ disabled }) => (disabled ? 'block' : 'none')};
+        content: " ";
+        background: ${({ theme }) => theme.rgba(theme.white, 0.8)};
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
 `;
