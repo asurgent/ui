@@ -6,6 +6,7 @@ import * as Spinner from '../../Spinner';
 import * as VirtualRender from '../../VirtualRender';
 import * as Shield from '../../Shield';
 import * as Transition from '../../Transition';
+/* import translation from  */
 import * as C from './FilterSelect.styled';
 import useTableHook from '../../Table/useTableHook';
 import FilterItem from '../../Table/TableFilter/components/FilterItem';
@@ -18,12 +19,14 @@ const propTyps = {
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)).isRequired,
   props: PropTypes.instanceOf(Object),
   theme: PropTypes.instanceOf(Object),
+  placeholder: PropTypes.string,
 };
 
 const defaultProps = {
   value: '',
   props: {},
   theme: {},
+  placeholder: '',
 };
 
 const FilterInput = forwardRef((props, ref) => {
@@ -31,7 +34,10 @@ const FilterInput = forwardRef((props, ref) => {
     name,
     options,
     theme,
+    placeholder,
   } = props;
+
+  const searchPlaceholder = props?.props?.searchPlaceholder;
 
   const tableHook = useTableHook();
   const [value, setValue] = useState('');
@@ -66,6 +72,7 @@ const FilterInput = forwardRef((props, ref) => {
         <C.Input
           type="text"
           disabled
+          placeholder={placeholder}
           onChange={() => {}}
           name={name}
           ref={ref}
@@ -88,6 +95,7 @@ const FilterInput = forwardRef((props, ref) => {
               <C.Search>
                 <C.FilterInput
                   type="text"
+                  placeholder={searchPlaceholder}
                   value={searchValue}
                   onChange={({ target }) => {
                     setSearchValue(target.value);
@@ -107,7 +115,11 @@ const FilterInput = forwardRef((props, ref) => {
                     <FilterItem
                       key={key}
                       multiSelect={false}
-                      onChange={({ value: filterValue }) => setValue(filterValue)}
+                      onChange={({ value: filterValue }) => {
+                        setValue(filterValue);
+                        setSearchValue('');
+                        groupHook.setOpen(false);
+                      }}
                       onAdd={() => null}
                       filterItem={filter}
                       groupHook={groupHook}

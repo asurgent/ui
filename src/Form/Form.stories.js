@@ -105,6 +105,10 @@ export const defaultForm = () => {
       label: 'Some Filterselect',
       options: [],
       tooltip: 'tooltip',
+      placeholder: 'Select something',
+      props: {
+        searchPlaceholder: 'Search in me plz',
+      },
     },
     someDate: {
       type: 'datepicker',
