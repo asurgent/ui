@@ -1,9 +1,39 @@
 import styled from 'styled-components';
 
+export const InputWrapper = styled.div`
+    width: 100%;
+    /* mock a normal select by making text not selectable */
+    position: relative;
+    user-select: none; 
+    &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+`;
+
 export const Input = styled.input`
     &:disabled {
         color: black!important;
     }
+`;
+
+export const FilterInput = styled.input`
+    margin: 0;
+    display: flex;
+    align-items: center;
+    border: .1rem solid!important;
+    border-color: ${({ theme }) => theme.gray200}!important;
+    border-radius: 5px;
+    padding: 1.2rem;
+    position: relative;
+    box-sizing: border-box;
+    min-height: 4.7rem;
+    background: ${({ theme }) => theme.white};
 `;
 
 export const SelectFilter = styled.div`

@@ -2,16 +2,14 @@ import React, {
   forwardRef, useState, useEffect, useRef,
 } from 'react';
 import PropTypes from 'prop-types';
-import Portal from '@material-ui/core/Portal';
 import { withTheme } from 'styled-components';
 import * as Icons from '@material-ui/icons';
-import * as Table from '../../Table';
 import * as Spinner from '../../Spinner';
 import * as VirtualRender from '../../VirtualRender';
 import * as Shield from '../../Shield';
 import * as Transition from '../../Transition';
 import * as C from './FilterSelect.styled';
-import * as Form from '../index';
+import useTableHook from '../../Table/useTableHook';
 import FilterItem from '../../Table/TableFilter/components/FilterItem';
 import useFilterGroupHook from '../../Table/TableFilter/useFilterGroupHook';
 import useFilterHook from '../../Table/TableFilter/useFilterHook';
@@ -37,10 +35,10 @@ const FilterInput = forwardRef((props, ref) => {
     theme,
   } = props;
 
-  // Add a portal since a form can't be a descendant of a form
-  const portalRef = useRef(null);
-  const tableHook = Table.useTableHook();
+  const tableHook = useTableHook();
   const [value, setValue] = useState('');
+
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     setValue(props.value || '');
@@ -63,23 +61,20 @@ const FilterInput = forwardRef((props, ref) => {
 
   const filterHook = useFilterHook([{ label: name, facetKey: name }], tableHook, parsers);
   const groupHook = useFilterGroupHook(tableHook, filterHook, name, () => {});
-  const form = Form.useFormBuilder({
-    searchQuery: {
-      type: 'text', value: '', noLabel: true, props: { autoFocus: true },
-    },
-  });
-  console.log('props.value', props.value);
 
   return (
-    <C.SelectFilter onClick={() => groupHook.setOpen(!groupHook.isOpen())}>
-      <C.Input
-        type="text"
-        onChange={() => {}}
-        name={name}
-        ref={ref}
-        value={value || ''}
-        {...props.props}
-      />
+    <C.SelectFilter>
+      <C.InputWrapper onClick={() => groupHook.setOpen(true)}>
+        <C.Input
+          type="text"
+          disabled
+          onChange={() => {}}
+          name={name}
+          ref={ref}
+          value={value || ''}
+          {...props.props}
+        />
+      </C.InputWrapper>
       <C.FilterWrapper>
         <Shield.Transparent
           onClick={() => groupHook.setOpen(false)}
@@ -92,23 +87,22 @@ const FilterInput = forwardRef((props, ref) => {
                 <Spinner.Ring size={24} color={theme.blue400} />
               </C.Center>
               )}
-              <C.Search ref={portalRef}>
-                <Portal container={portalRef.current}>
-                  <Form.Primary
-                    form={form}
-                    msTimer={150}
-                    onKeyUpTimer={groupHook.onSearchOptions}
-                  >
-                    {({ searchQuery }) => (searchQuery)}
-                  </Form.Primary>
-                </Portal>
+              <C.Search>
+                <C.FilterInput
+                  type="text"
+                  value={searchValue}
+                  onChange={({ target }) => {
+                    setSearchValue(target.value);
+                    groupHook.onSearchOptions({ searchQuery: target.value });
+                  }}
+                />
               </C.Search>
 
               <C.ListWrapper>
                 {groupHook.getOptions().length > 0 && (
                 <VirtualRender.List
                   rowHeight={48}
-                  items={groupHook.getOptions()}
+                  items={groupHook.getOptions().filter((opt) => opt.matched)}
                   style={{ flex: 1 }}
                 >
                   {(filter, key) => (
