@@ -22,7 +22,7 @@ export const FilterItem = styled.div`
     &:hover {
         background: ${({ theme }) => theme.gray50};
     }
-    pointer-events: ${({ canClick }) => (canClick ? 'all' : 'none')};
+    pointer-events: ${({ disabled }) => (disabled ? 'none' : 'all')};
 `;
 
 export const FilterLabel = styled.div`
