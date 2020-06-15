@@ -31,6 +31,7 @@ const FilterItem = ({
   return (
     <C.FilterItem
       matched={hook.isMatched()}
+      disabled={filterItem.static || filterItem.label}
       onClick={() => {
         onChange(filterItem);
         onAdd(filterItem);
