@@ -6,12 +6,14 @@ import * as Spinner from '../../Spinner';
 import * as VirtualRender from '../../VirtualRender';
 import * as Shield from '../../Shield';
 import * as Transition from '../../Transition';
-/* import translation from  */
+import translation from './FilterSelect.translation';
 import * as C from './FilterSelect.styled';
 import useTableHook from '../../Table/useTableHook';
 import FilterItem from '../../Table/TableFilter/components/FilterItem';
 import useFilterGroupHook from '../../Table/TableFilter/useFilterGroupHook';
 import useFilterHook from '../../Table/TableFilter/useFilterHook';
+
+const { t } = translation;
 
 const propTyps = {
   value: PropTypes.string,
@@ -24,9 +26,11 @@ const propTyps = {
 
 const defaultProps = {
   value: '',
-  props: {},
+  props: {
+    searchPlaceholder: t('searchPlaceHolder', 'asurgentui'),
+  },
   theme: {},
-  placeholder: '',
+  placeholder: t('selectPlaceholder', 'asurgentui'),
 };
 
 const FilterInput = forwardRef((props, ref) => {
@@ -37,17 +41,16 @@ const FilterInput = forwardRef((props, ref) => {
     placeholder,
   } = props;
 
-  const searchPlaceholder = props?.props?.searchPlaceholder;
-
   const tableHook = useTableHook();
-  const [value, setValue] = useState('');
 
+  const [value, setValue] = useState('');
   const [searchValue, setSearchValue] = useState('');
+  const searchPlaceholder = props?.props?.searchPlaceholder;
 
   useEffect(() => {
     setValue(props.value || '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.value]);
+  }, [props]);
 
   useEffect(() => {
     tableHook.registerFilterFetchCallback((payload, onSuccess) => {

@@ -7,7 +7,7 @@ const propTyps = {
   maxValue: PropTypes.number,
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   props: PropTypes.instanceOf(Object),
 };
 
@@ -17,6 +17,7 @@ const defaultProps = {
   maxValue: null,
   label: '',
   props: {},
+  placeholder: '',
 };
 
 const Number = forwardRef((props, ref) => {

@@ -105,7 +105,6 @@ export const defaultForm = () => {
       label: 'Some Filterselect',
       options: [],
       tooltip: 'tooltip',
-      placeholder: 'Select something',
       props: {
         searchPlaceholder: 'Search in me plz',
       },
@@ -129,9 +128,8 @@ export const defaultForm = () => {
       { name: 'someSelect', value: '3' },
       {
         name: 'someFilterSelect',
-        value: '3',
         options: [
-          { value: '1', label: 'First option', default: true },
+          { value: '1', label: 'First option' },
           { value: '2', label: 'Second option' },
           { value: '3', label: 'Third option' },
         ],
