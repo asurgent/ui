@@ -31,6 +31,7 @@ const FilterItem = ({
   return (
     <C.FilterItem
       matched={hook.isMatched()}
+      canClick={filterItem.matched}
       onClick={() => {
         onChange(filterItem);
         onAdd(filterItem);
