@@ -7,7 +7,7 @@ const combineChartDimensions = (dimensions = {}) => {
     marginTop: dimensions.marginTop || 10,
     marginRight: dimensions.marginRight || 10,
     marginBottom: dimensions.marginBottom || 40,
-    marginLeft: dimensions.marginLeft || 10,
+    marginLeft: dimensions.marginLeft || 40,
   };
   return {
     ...parsedDimensions,
@@ -29,13 +29,14 @@ const combineChartDimensions = (dimensions = {}) => {
 
 export const useChartDimensions = (passedSettings) => {
   const ref = useRef();
-  const dimensions = combineChartDimensions(passedSettings);
+  const [width, setWidth] = useState(500);
+  const [height, setHeight] = useState(200);
 
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
+  const dimensions = combineChartDimensions({ width, height });
+  // if (dimensions.width && dimensions.height) { return [ref, dimensions]; }
+
 
   useEffect(() => {
-    if (dimensions.width && dimensions.height) { return [ref, dimensions]; }
     const element = ref.current;
 
     const resizeObserver = new ResizeObserver(
@@ -43,13 +44,19 @@ export const useChartDimensions = (passedSettings) => {
         if (!Array.isArray(entries)) return;
         if (!entries.length) return;
         const entry = entries[0];
-        if (width !== entry.contentRect.width) { setWidth(entry.contentRect.width); }
-        if (height !== entry.contentRect.height) { setHeight(entry.contentRect.height); }
+
+
+        if (width !== entry.contentRect.width) {
+          setWidth(entry.contentRect.width);
+        }
+        if (height !== entry.contentRect.height) {
+          setHeight(entry.contentRect.height);
+        }
       },
     );
     resizeObserver.observe(element);
 
-    return () => resizeObserver.unobserve(element);
+    return () => { resizeObserver.unobserve(element); };
   }, [dimensions, height, width]);
 
   const newSettings = ({

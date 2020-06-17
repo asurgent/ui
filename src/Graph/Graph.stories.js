@@ -3,7 +3,9 @@ import {
   withKnobs, number,
 } from '@storybook/addon-knobs';
 import * as Graph from './index';
-
+import data from './data';
+import data2 from './data2';
+import data3 from './data3';
 
 export default {
   title: 'UI Components|Graph',
@@ -54,5 +56,10 @@ const dataset = [
 
 
 export const lineGraph = () => (
-  <Graph.Line data={dataset} />
+  <>
+    <Graph.Line data={dataset} />
+    <Graph.Line data={data} xProp="timestamp" />
+    {/* <Graph.Line data={data2} xProp="timestamp" />
+    <Graph.Line data={data3} xProp="timestamp" /> */}
+  </>
 );
