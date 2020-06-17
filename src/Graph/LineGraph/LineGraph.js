@@ -23,7 +23,7 @@ const LineGraph = ({ data, yProp, xProp }) => (
         <Axis.XPrimary dimensions={dimensions} xScale={xScale} xProp={xProp} />
         <Axis.YPrimary dimensions={dimensions} yScale={yScale} yProp={yProp} />
         {/* <Dotts xScale={xScale} yScale={yScale} data={data} yProp={yProp} xProp={xProp} /> */}
-        <Line xScale={xScale} yScale={yScale} data={sortedData} yProp={yProp} xProp={xProp} />
+        <Line xScale={xScale} yScale={yScale} data={sortedData} yProp={yProp} xProp={xProp} dimensions={dimensions} />
       </>
     )}
   </Canvas.Primary>

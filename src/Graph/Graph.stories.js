@@ -59,7 +59,7 @@ export const lineGraph = () => (
   <>
     <Graph.Line data={dataset} />
     <Graph.Line data={data} xProp="timestamp" />
-    {/* <Graph.Line data={data2} xProp="timestamp" />
-    <Graph.Line data={data3} xProp="timestamp" /> */}
+    <Graph.Line data={data2} xProp="timestamp" />
+    <Graph.Line data={data3} xProp="timestamp" />
   </>
 );
