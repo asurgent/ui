@@ -1,10 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 import moment from 'moment';
 import { useChartDimensions } from './useChartDimensions';
 import * as C from './Canvas.styled';
 import Backdrop from '../Backdrop';
+import * as Axis from '../Axis';
+import ClipPath from './ClipPath';
 
 const propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
@@ -34,11 +36,13 @@ const Canvas = ({
     }, ...acc]), [])
     .sort((a, b) => a[xProp] - b[xProp]), [data, xProp]);
 
+  const [domain, setDomain] = useState(d3.extent(sortedData, ({ [xProp]: x }) => x));
+
   const xScale = useMemo(() => (
     d3.scaleTime()
-      .domain(d3.extent(sortedData, ({ [xProp]: x }) => x))
+      .domain(domain)
       .range([0, dimensions.boundedWidth])
-  ), [sortedData, dimensions.boundedWidth, xProp]);
+  ), [dimensions.boundedWidth, domain]);
 
   const yScale = useMemo(() => {
     const [min, max] = d3.extent(sortedData, ({ [yProp]: y }) => y);
@@ -50,9 +54,11 @@ const Canvas = ({
     );
   }, [dimensions.boundedHeight, sortedData, yProp]);
 
+
   return (
     <div ref={ref} style={{ height: '200px' }}>
       <svg width={dimensions.width} height={dimensions.height}>
+        <defs />
         <C.ChartGroup dimensions={dimensions}>
           <Backdrop
             yProp={yProp}
@@ -62,7 +68,18 @@ const Canvas = ({
             data={sortedData}
             customDimensions={dimensions}
           />
-          {children(yScale, xScale, dimensions, sortedData)}
+          <Axis.XPrimary dimensions={dimensions} xScale={xScale} xProp={xProp} domain={domain} />
+          <Axis.YPrimary dimensions={dimensions} yScale={yScale} yProp={yProp} />
+          <ClipPath dimensions={dimensions}>
+            {children({
+              yScale,
+              xScale,
+              dimensions,
+              sortedData,
+              domain,
+              setDomain,
+            })}
+          </ClipPath>
         </C.ChartGroup>
       </svg>
     </div>
