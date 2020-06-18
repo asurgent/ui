@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, createRef } from 'react';
 import PropTypes from 'prop-types';
+import * as d3 from 'd3';
 
 const propTypes = {
   yScale: PropTypes.instanceOf(Object).isRequired,
@@ -8,50 +9,14 @@ const propTypes = {
 const defaultPtops = {};
 
 const YLinearAxis = ({ yScale }) => {
-  const pathData = useMemo(() => {
-    const [M, H] = yScale.range();
-    return [
-      'M', -6, M,
-      'H', 0.5,
-      'V', H,
-      'H', -6,
-    ].join(' ');
-  }, [yScale]);
+  const ref = createRef();
 
-
-  const ticks = useMemo(() => yScale
-    .ticks()
-    .map((value) => ({
-      value,
-      yOffset: yScale(value),
-    })), [yScale]);
-
+  useEffect(() => {
+    d3.select(ref.current)
+      .call(d3.axisLeft(yScale));
+  }, [ref, yScale]);
   return (
-    <g>
-      <path
-        d={pathData}
-        fill="none"
-        stroke="currentColor"
-      />
-      {ticks.map(({ value, yOffset }) => (
-        <g
-          key={value}
-          transform={`translate(-20, ${yOffset})`}
-        >
-          <line x1="15" x2="20" stroke="currentColor" />
-          <text
-            key={value}
-            style={{
-              fontSize: '10px',
-              textAnchor: 'middle',
-              transform: 'translateY(4px)',
-            }}
-          >
-            { value }
-          </text>
-        </g>
-      ))}
-    </g>
+    <g ref={ref} />
   );
 };
 

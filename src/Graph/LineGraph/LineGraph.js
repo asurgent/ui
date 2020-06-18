@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import * as Canvas from '../Canvas';
 import Line from './Line';
 import Dotts from './Dotts';
-import Zoom from '../Zoom';
+
 
 const propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
@@ -19,13 +19,16 @@ const defaultProps = {
 const LineGraph = ({ data, yProp, xProp }) => (
   <Canvas.Primary data={data} yProp={yProp} xProp={xProp}>
     {({
-      yScale, xScale, dimensions, sortedData, setDomain, domain,
+      yScale, xScale, dimensions, sortedData,
     }) => (
       <>
 
-        {/* <Dotts xScale={xScale} yScale={yScale} data={data} yProp={yProp} xProp={xProp} /> */}
-        <Line xScale={xScale} yScale={yScale} data={sortedData} yProp={yProp} xProp={xProp} dimensions={dimensions} setDomain={setDomain} />
-        <Zoom xScale={xScale} yScale={yScale} data={sortedData} yProp={yProp} xProp={xProp} dimensions={dimensions} setDomain={setDomain} />
+
+        <Line xScale={xScale} yScale={yScale} data={sortedData} yProp={yProp} xProp={xProp} dimensions={dimensions} />
+
+        {/* <Dotts xScale={xScale} yScale={yScale} data={sortedData} yProp={yProp} xProp={xProp} /> */}
+
+
       </>
     )}
   </Canvas.Primary>

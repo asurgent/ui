@@ -15,13 +15,28 @@ const propTypes = {
 
 const defaultPtops = {};
 
+const withDelayTimer = (action, timeout = 350) => {
+  let timer = setTimeout(() => {}, timeout);
+  return (...args) => {
+    timer = setTimeout(() => {
+      action(...args);
+      clearTimeout(timer);
+    }, timeout);
+  };
+};
+
+const timer = (callback, msTimer) => () => withDelayTimer((...args) => {
+  callback(...args);
+}, msTimer);
+
+
 const Line = ({
   xScale,
   data,
   xProp,
   dimensions,
-  setDomain,
-  domain,
+  onBrush,
+  children,
 }) => {
   const ref = createRef();
   const { boundedWidth, boundedHeight } = dimensions;
@@ -30,16 +45,11 @@ const Line = ({
     .extent([[0, 0], [boundedWidth, boundedHeight]]),
   [boundedHeight, boundedWidth]);
 
-  const callback = useCallback(() => {
-    const extent = d3.event.selection;
-
+  const timeout = useMemo(timer((extent) => {
     if (!extent) {
-      // if (!c) { }
-      // xScale.domain
-      setDomain(d3.extent(data, ({ [xProp]: x }) => x));
+      xScale.domain(d3.extent(data, ({ [xProp]: x }) => x));
     } else {
-      // xScale.domain
-      setDomain([
+      xScale.domain([
         xScale.invert(extent[0]),
         xScale.invert(extent[1]),
       ]);
@@ -47,18 +57,26 @@ const Line = ({
       d3.select(ref.current)
         .call(brush.move, null);
     }
-  }, [brush.move, data, ref, setDomain, xProp, xScale]);
+    onBrush();
+  }), [brush.move, data, ref, xProp, xScale]);
+
+  const callback = useCallback(() => timeout(d3.event.selection), [timeout]);
 
   useEffect(() => {
     brush.on('end', callback);
-  }, [brush, callback]);
+  }, [brush, callback, timeout]);
 
   useEffect(() => {
     d3.select(ref.current)
       .call(brush);
   }, [brush, ref]);
 
-  return (<g ref={ref} />);
+  return (
+    <>
+      {children}
+      <g ref={ref} />
+    </>
+  );
 };
 
 Line.propTypes = propTypes;
