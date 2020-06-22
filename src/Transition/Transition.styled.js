@@ -23,10 +23,15 @@ export const FadeIn = styled.div`
 export const FadeOut = styled(FadeIn)``;
 
 export const FadeInSlideDown = styled(FadeIn)`
-    transform: translateY(
-    ${({ state }) => (state === 'entering' || state === 'entered' ? 20 : 0)}px
-    );
+    transform: ${({ state, noTransform }) => {
+    if (noTransform) {
+      return 0;
+    }
+    return `${state === 'entering' || state === 'entered' ? 20 : 0}px`;
+  }
+}
 `;
+
 
 export const FadeInSlideDownOnDesktop = styled(FadeIn)`
   @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {

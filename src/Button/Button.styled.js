@@ -10,7 +10,7 @@ import { lighten, darken } from 'polished';
 
 export const Button = styled.div`
     border: 1px solid ${({ theme }) => theme.borderColor};
-    background: ${({ theme }) => theme.backgroundColor};
+    background: ${({ theme }) => theme.blue900};
     color: ${({ theme }) => (theme.textColor ? theme.textColor : theme.white)};
     position: relative;
     display: flex;
