@@ -4,7 +4,7 @@ export default addTranslation({
   id: 'dateSpan',
   sv: {
     startDate: 'Startdatum',
-    endDate: 'Slutddatum',
+    endDate: 'Slutdatum',
     never: 'Aldrig',
     naIcon: 'Ø',
     invalid: 'Ogiltig',

@@ -6,8 +6,10 @@ import translation from './NextDate.translation';
 import * as C from './NextDate.styled';
 import * as S from '../../TimeComponents.styled';
 import * as Icons from '../Icons';
+import { getMonthYear } from '../../helpers';
 
 const { t } = translation;
+
 
 const NextDate = ({
   endDate,
@@ -80,7 +82,7 @@ const NextDate = ({
           {nextRun ? (
             <C.NextDate>
               <S.TextNormal>{moment(nextRun).format('DD')}</S.TextNormal>
-              <S.TextSmall>{moment(nextRun).format('MMM YY')}</S.TextSmall>
+              <S.TextSmall>{getMonthYear(moment(nextRun))}</S.TextSmall>
             </C.NextDate>
           ) : (
             <C.ExpiredDate>

@@ -5,6 +5,7 @@ import * as C from './DateSpan.styled';
 import * as S from '../../TimeComponents.styled';
 import translation from './DateSpan.translation';
 import * as Icons from '../Icons';
+import { getMonthYear } from '../../helpers';
 
 const { t } = translation;
 
@@ -33,7 +34,7 @@ const DateSpan = ({
           {startDateValid ? (
             <>
               <S.TextNormal>{moment(startDate).format('DD')}</S.TextNormal>
-              <S.TextSmall>{moment(startDate).format('MMM YY')}</S.TextSmall>
+              <S.TextSmall>{getMonthYear(moment(startDate))}</S.TextSmall>
             </>
           ) : (
             <>
@@ -58,7 +59,7 @@ const DateSpan = ({
             ) : (
               <>
                 <S.TextNormal>{moment(endDate).format('DD')}</S.TextNormal>
-                <S.TextSmall>{moment(endDate).format('MMM YY')}</S.TextSmall>
+                <S.TextSmall>{getMonthYear(moment(endDate))}</S.TextSmall>
               </>
             )}
           </C.EndDate>

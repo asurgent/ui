@@ -6,6 +6,7 @@ import * as C from './StartEnd.styled';
 import * as S from '../../TimeComponents.styled';
 import translation from './StartEnd.translation';
 import * as Icons from '../Icons';
+import { getDay } from '../../helpers';
 
 const { t } = translation;
 
@@ -42,17 +43,18 @@ const StartEnd = ({
 
   const occasion = useMemo(() => {
     try {
-      const prevOccasion = validCronInterval.prev().toString();
-      const nextOccasion = validCronInterval.next().toString();
+      const prevOccasion = moment(validCronInterval.prev().toString());
+      const nextOccasion = moment(validCronInterval.next().toString());
+      const prevOccasionEnd = moment(prevOccasion).add(durationInSeconds, 's');
       if (isRunning) {
         return {
-          timestamp: moment(prevOccasion).add(durationInSeconds, 's').format('HH:mm'),
-          interval: moment(prevOccasion).add(durationInSeconds, 's').format('dddd'),
+          timestamp: prevOccasionEnd.format('HH:mm'),
+          interval: getDay(prevOccasionEnd),
         };
       }
       return {
-        timestamp: moment(nextOccasion).format('HH:mm'),
-        interval: moment(nextOccasion).format('dddd'),
+        timestamp: nextOccasion.format('HH:mm'),
+        interval: getDay(nextOccasion),
       };
     } catch (e) {
       return null;
@@ -61,11 +63,11 @@ const StartEnd = ({
 
   return (
     <C.StartEnd>
-      <S.TextSmall style={{ marginBottom: '1rem' }}>
+      <S.TextSmall withBottomMargin>
         {isRunning ? (t('ends', 'asurgentui')) : (t('starts', 'asurgentui'))}
       </S.TextSmall>
       <Icons.Flag active={!isExpired && validCronInterval} />
-      {!isExpired && validCronInterval ? (
+      {!isExpired && validCronInterval && occasion ? (
         <>
           <S.TextNormal>{occasion.timestamp}</S.TextNormal>
           <S.TextSmall>{occasion.interval}</S.TextSmall>
