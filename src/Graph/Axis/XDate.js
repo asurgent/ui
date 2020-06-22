@@ -5,6 +5,7 @@ import React, {
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import * as d3 from 'd3';
+import { customTick } from './helpers';
 
 const AxisGroup = styled.g`
     transform: translate${({ dimensions }) => `(0, ${dimensions.boundedHeight}px)`};
@@ -16,39 +17,6 @@ const propTypes = {
 };
 
 const defaultProps = {};
-const locale = d3.timeFormatLocale({
-  dateTime: '%a %b %e %X %Y',
-  date: '%d.%m.%Y',
-  time: '%HH:%M:%S',
-  periods: [],
-  days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-  shortDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-  months: ['Januany', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-  shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-});
-
-const formatMinute = locale.format('%I:%M');
-const formatHour = locale.format('%I %p');
-const formatDay = locale.format('%a %d');
-const formatWeek = locale.format('%b %d');
-const formatMonth = locale.format('%B');
-const formatYear = locale.format('%Y');
-
-const customTick = (date) => {
-  if (d3.timeHour(date) < date) {
-    return formatMinute(date);
-  } if (d3.timeDay(date) < date) {
-    return formatHour(date);
-  } if (d3.timeMonth(date) < date) {
-    if (d3.timeWeek(date) < date) {
-      return formatDay(date);
-    }
-    return formatWeek(date);
-  } if (d3.timeYear(date) < date) {
-    return formatMonth(date);
-  }
-  return formatYear(date);
-};
 
 const XDateAxis = ({ dimensions, xScale }) => {
   const ref = createRef();
@@ -56,7 +24,7 @@ const XDateAxis = ({ dimensions, xScale }) => {
   useEffect(() => {
     d3.select(ref.current)
       .transition()
-      .duration(1000)
+      .duration(350)
       .call(d3.axisBottom(xScale)
         .tickFormat(customTick));
   }, [ref, xScale]);

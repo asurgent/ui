@@ -4,7 +4,6 @@ import * as d3 from 'd3';
 import moment from 'moment';
 import { useChartDimensions } from './useChartDimensions';
 import * as C from './Canvas.styled';
-import Backdrop from '../Backdrop';
 
 const propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
@@ -54,17 +53,7 @@ const Canvas = ({
   return (
     <div ref={ref} style={{ height: '200px' }}>
       <svg width={dimensions.width} height={dimensions.height}>
-        <defs />
         <C.ChartGroup dimensions={dimensions}>
-          <Backdrop
-            yProp={yProp}
-            xProp={xProp}
-            xScale={xScale}
-            yScale={yScale}
-            data={sortedData}
-            customDimensions={dimensions}
-          />
-
           {children({
             yScale,
             xScale,

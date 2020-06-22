@@ -5,7 +5,7 @@ import * as C from './Backdrop.styled';
 
 const propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
-  customDimensions: PropTypes.instanceOf(Object).isRequired,
+  dimensions: PropTypes.instanceOf(Object).isRequired,
   yProp: PropTypes.string.isRequired,
   xProp: PropTypes.string.isRequired,
   yScale: PropTypes.instanceOf(Object).isRequired,
@@ -20,7 +20,7 @@ const Backdrop = ({
   xProp,
   yScale,
   xScale,
-  customDimensions,
+  dimensions,
 }) => {
   const [tooltip, setTooltip] = useState(null);
 
@@ -54,25 +54,16 @@ const Backdrop = ({
         onMouseMove={handleMouseMove}
         onMouseOver={handleMouseMove}
         onMouseOut={handleMouseOut}
-        dimensions={customDimensions}
+        dimensions={dimensions}
       />
       { tooltip && (
-        <>
-          <line
-            y1={customDimensions.boundedHeight}
-            y2={tooltip.cy}
-            x1={tooltip.cx}
-            x2={tooltip.cx}
-            stroke="magenta"
-          />
-          <line
-            x1="0"
-            x2={tooltip.cx}
-            y1={tooltip.cy}
-            y2={tooltip.cy}
-            stroke="magenta"
-          />
-        </>
+        <line
+          y1={dimensions.boundedHeight}
+          y2={0}
+          x1={tooltip.cx}
+          x2={tooltip.cx}
+          stroke="pink"
+        />
       )}
     </>
   );
