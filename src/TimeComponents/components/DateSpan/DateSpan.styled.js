@@ -34,10 +34,12 @@ export const NextDate = styled.div`
   background: white;
 `;
 export const StartDate = styled(NextDate)`
-  border-top: 0.8rem solid #13BE69;
+  border-top: 0.8rem solid ;
+  border-top-color: ${({ active }) => (active ? '#13BE69' : '#6E6E6E')};
 `;
 export const EndDate = styled(NextDate)`
-  border-top: 0.8rem solid #C6403B;
+  border-top: 0.8rem solid;
+  border-top-color: ${({ active }) => (active ? '#C6403B' : '#6E6E6E')};
 `;
 export const ExpiredDate = styled(NextDate)`
    border-top: 0.8rem solid #6E6E6E;

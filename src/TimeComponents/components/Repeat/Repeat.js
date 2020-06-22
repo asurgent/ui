@@ -32,6 +32,7 @@ const Repeat = ({ endDate, cronExpression }) => {
   }, [validCronInterval]);
 
   const repeatLabel = getRepeatInterval(intervalInSeconds);
+
   return (
     <C.Repeat>
       <S.TextSmall withBottomMargin>{t('repeats')}</S.TextSmall>
