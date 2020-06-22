@@ -1,5 +1,5 @@
 import React, {
-  useMemo, useCallback, useEffect, createRef, useState,
+  useMemo, useCallback, useEffect, createRef, useState, useLayoutEffect,
 } from 'react';
 import * as d3 from 'd3';
 import PropTypes from 'prop-types';
@@ -7,14 +7,21 @@ import PropTypes from 'prop-types';
 const propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
   xScale: PropTypes.instanceOf(Object).isRequired,
-  dimensions: PropTypes.instanceOf(Object).isRequired,
   xProp: PropTypes.string.isRequired,
-  children: PropTypes.func.isRequired,
+  yScale: PropTypes.instanceOf(Object).isRequired,
+  yProp: PropTypes.string.isRequired,
+  dimensions: PropTypes.instanceOf(Object).isRequired,
+  duration: PropTypes.number.isRequired,
+  onTooltipEvent: PropTypes.func.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]).isRequired,
 };
 
 const defaultPtops = {};
 
-const withDelayTimer = (action, timeout = 350) => {
+const withDelayTimer = (action, timeout) => {
   let timer = setTimeout(() => {}, timeout);
   return (...args) => {
     timer = setTimeout(() => {
@@ -36,10 +43,12 @@ const Zoom = ({
   xProp,
   dimensions,
   children,
+  onTooltipEvent,
+  duration,
 }) => {
   const ref = createRef();
   const [update, setUpdate] = useState(0);
-  const [disable, setDisable] = useState(false);
+  const [disable, setDisable] = useState(true);
   const [tooltip, setTooltip] = useState(null);
 
   const { boundedWidth, boundedHeight } = dimensions;
@@ -60,9 +69,9 @@ const Zoom = ({
     d3.select(ref.current)
       .call(brush.move, null);
 
-    setTimeout(() => setDisable(false), 350);
+    setTimeout(() => setDisable(false), duration);
     setUpdate(update + 1);
-  }), [brush.move, data, ref, xProp, xScale]);
+  }, duration), [brush.move, data, ref, xProp, xScale]);
 
   const callbackEnd = useCallback(() => { timeout(d3.event.selection); }, [timeout]);
   const callbackStart = useCallback(() => { setDisable(true); setTooltip(null); }, []);
@@ -76,6 +85,10 @@ const Zoom = ({
     d3.select(ref.current)
       .call(brush);
   }, [brush, ref]);
+
+  useLayoutEffect(() => {
+    setTimeout(() => setDisable(false), duration);
+  }, [duration]);
 
 
   const bisect = useMemo(() => d3.bisector(({ [xProp]: x }) => x).left, [xProp]);
@@ -92,13 +105,14 @@ const Zoom = ({
         cx: xScale(targetData[xProp]),
         cy: yScale(targetData[yProp]),
       };
-
+      onTooltipEvent(result);
       setTooltip(result);
     }
   };
 
   const handleMouseOut = () => {
     if (!disable) {
+      onTooltipEvent(null);
       setTooltip(null);
     }
   };
@@ -109,12 +123,12 @@ const Zoom = ({
         React.Children.map(children,
           (child) => React.cloneElement(child, {
             /*
-             The "update" state will be passed to child-compoenents to trigger a rerender.
+             The "update" state will be passed as "updateTick"-prop to child-compoenents to trigger a rerender.
              This will work alongside with createRef and notice a change and trigger
              the desired update-redraw function.
              I think, some kind of dark-magic makes it work anyway ¯\_(ツ)_/¯
             */
-            update,
+            updateTick: update,
           }))
       }
       { tooltip && (

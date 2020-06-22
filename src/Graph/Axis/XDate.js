@@ -14,20 +14,34 @@ const AxisGroup = styled.g`
 const propTypes = {
   dimensions: PropTypes.instanceOf(Object).isRequired,
   xScale: PropTypes.instanceOf(Object).isRequired,
+  duration: PropTypes.number.isRequired,
+  updateTick: PropTypes.number.isRequired, // Passed from Zoom.js
 };
 
 const defaultProps = {};
 
-const XDateAxis = ({ dimensions, xScale }) => {
+const XDateAxis = ({
+  dimensions, xScale, duration, updateTick,
+}) => {
   const ref = createRef();
 
+
   useEffect(() => {
-    d3.select(ref.current)
-      .transition()
-      .duration(350)
-      .call(d3.axisBottom(xScale)
-        .tickFormat(customTick));
-  }, [ref, xScale]);
+    // On first update-tick we dont want any duration/transition
+    if (updateTick === 0) {
+      d3.select(ref.current)
+        .call(d3.axisBottom(xScale)
+          .tickFormat(customTick));
+    // On the upcomming ticks the user will request other
+    // domains and we want to use duration/transition
+    } else if (updateTick !== 0) {
+      d3.select(ref.current)
+        .transition()
+        .duration(duration)
+        .call(d3.axisBottom(xScale)
+          .tickFormat(customTick));
+    }
+  }, [duration, updateTick, xScale, dimensions.width, dimensions.height, ref]);
 
   return (
     <AxisGroup ref={ref} dimensions={dimensions} />

@@ -11,12 +11,14 @@ const propTypes = {
   yScale: PropTypes.instanceOf(Object).isRequired,
   yProp: PropTypes.string.isRequired,
   xProp: PropTypes.string.isRequired,
+  duration: PropTypes.number.isRequired,
+  updateTick: PropTypes.number.isRequired, // Passed from Zoom.js
 };
 
 const defaultPtops = {};
 
 const Line = ({
-  xScale, yScale, data, yProp, xProp, dimensions,
+  xScale, yScale, data, yProp, xProp, dimensions, duration, updateTick,
 }) => {
   const ref = createRef();
   const line = useMemo(() => d3.line()
@@ -25,13 +27,23 @@ const Line = ({
   [xProp, xScale, yProp, yScale]);
 
   useEffect(() => {
-    d3.select(ref.current)
-      .select('.line')
-      .datum(data)
-      .transition()
-      .duration(350)
-      .attr('d', line);
-  }, [data, line, ref]);
+    // On first update-tick we dont want any duration/transition
+    if (updateTick === 0) {
+      d3.select(ref.current)
+        .select('.line')
+        .datum(data)
+        .attr('d', line);
+    // On the upcomming ticks the user will request other
+    // domains and we want to use duration/transition
+    } else if (updateTick !== 0) {
+      d3.select(ref.current)
+        .select('.line')
+        .datum(data)
+        .transition()
+        .duration(duration)
+        .attr('d', line);
+    }
+  }, [data, duration, line, ref, updateTick, dimensions]);
 
   return (
     <ClipPath dimensions={dimensions}>
