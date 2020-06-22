@@ -1,10 +1,9 @@
 import React, {
-  useMemo, createRef,
+  createRef,
   useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import moment from 'moment';
 import * as d3 from 'd3';
 
 const AxisGroup = styled.g`
@@ -28,8 +27,6 @@ const locale = d3.timeFormatLocale({
   shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 });
 
-// const formatMillisecond = locale.format('.%L');
-// const formatSecond = locale.format(':%S');
 const formatMinute = locale.format('%I:%M');
 const formatHour = locale.format('%I %p');
 const formatDay = locale.format('%a %d');
@@ -38,11 +35,6 @@ const formatMonth = locale.format('%B');
 const formatYear = locale.format('%Y');
 
 const customTick = (date) => {
-  // if (d3.timeSecond(date) < date) {
-  //   return formatMillisecond(date);
-  // } if (d3.timeMinute(date) < date) {
-  //   return formatSecond(date);
-  // }
   if (d3.timeHour(date) < date) {
     return formatMinute(date);
   } if (d3.timeDay(date) < date) {
@@ -63,6 +55,8 @@ const XDateAxis = ({ dimensions, xScale }) => {
 
   useEffect(() => {
     d3.select(ref.current)
+      .transition()
+      .duration(1000)
       .call(d3.axisBottom(xScale)
         .tickFormat(customTick));
   }, [ref, xScale]);

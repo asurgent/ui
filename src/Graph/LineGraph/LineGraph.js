@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as Canvas from '../Canvas';
 import Line from './Line';
+import Zoom from '../Zoom';
 import Dotts from './Dotts';
+import * as Axis from '../Axis';
+import ClipPath from '../ClipPath';
 
 
 const propTypes = {
@@ -21,15 +24,30 @@ const LineGraph = ({ data, yProp, xProp }) => (
     {({
       yScale, xScale, dimensions, sortedData,
     }) => (
-      <>
-
-
-        <Line xScale={xScale} yScale={yScale} data={sortedData} yProp={yProp} xProp={xProp} dimensions={dimensions} />
-
-        {/* <Dotts xScale={xScale} yScale={yScale} data={sortedData} yProp={yProp} xProp={xProp} /> */}
-
-
-      </>
+      <Zoom
+        xScale={xScale}
+        yScale={yScale}
+        data={sortedData}
+        yProp={yProp}
+        xProp={xProp}
+        dimensions={dimensions}
+      >
+        {(update) => (
+          <>
+            <Axis.XPrimary dimensions={dimensions} xScale={xScale} xProp={xProp} update={update} />
+            <Axis.YPrimary dimensions={dimensions} yScale={yScale} yProp={yProp} update={update} />
+            <Line
+              xScale={xScale}
+              yScale={yScale}
+              data={sortedData}
+              yProp={yProp}
+              xProp={xProp}
+              dimensions={dimensions}
+              update={update}
+            />
+          </>
+        )}
+      </Zoom>
     )}
   </Canvas.Primary>
 );

@@ -1,12 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 import moment from 'moment';
 import { useChartDimensions } from './useChartDimensions';
 import * as C from './Canvas.styled';
 import Backdrop from '../Backdrop';
-import * as Axis from '../Axis';
-import ClipPath from './ClipPath';
 
 const propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
@@ -36,13 +34,11 @@ const Canvas = ({
     }, ...acc]), [])
     .sort((a, b) => a[xProp] - b[xProp]), [data, xProp]);
 
-  const [domain, setDomain] = useState(d3.extent(sortedData, ({ [xProp]: x }) => x));
-
   const xScale = useMemo(() => (
     d3.scaleTime()
-      .domain(domain)
+      .domain(d3.extent(sortedData, ({ [xProp]: x }) => x))
       .range([0, dimensions.boundedWidth])
-  ), [dimensions.boundedWidth, domain]);
+  ), [dimensions.boundedWidth, sortedData, xProp]);
 
   const yScale = useMemo(() => {
     const [min, max] = d3.extent(sortedData, ({ [yProp]: y }) => y);
@@ -68,18 +64,13 @@ const Canvas = ({
             data={sortedData}
             customDimensions={dimensions}
           />
-          <Axis.XPrimary dimensions={dimensions} xScale={xScale} xProp={xProp} domain={domain} />
-          <Axis.YPrimary dimensions={dimensions} yScale={yScale} yProp={yProp} />
-          <ClipPath dimensions={dimensions}>
-            {children({
-              yScale,
-              xScale,
-              dimensions,
-              sortedData,
-              domain,
-              setDomain,
-            })}
-          </ClipPath>
+
+          {children({
+            yScale,
+            xScale,
+            dimensions,
+            sortedData,
+          })}
         </C.ChartGroup>
       </svg>
     </div>
