@@ -15,7 +15,7 @@ const DateSpan = ({
 }) => (
   <C.Dates>
     <C.Date>
-      <S.TextSmall style={{ marginBottom: '1rem' }}>{t('startDate')}</S.TextSmall>
+      <S.TextSmall withBottomMargin>{t('startDate', 'asurgentui')}</S.TextSmall>
       <C.StartDate>
         <S.TextNormal>{moment(startDate).format('DD')}</S.TextNormal>
         <S.TextSmall>{moment(startDate).format('MMM YY')}</S.TextSmall>
@@ -25,7 +25,7 @@ const DateSpan = ({
       <Icons.Dots active={false} />
     </C.Dots>
     <C.Date>
-      <S.TextSmall style={{ marginBottom: '1rem' }}>{t('startDate')}</S.TextSmall>
+      <S.TextSmall withBottomMargin>{t('startDate', 'asurgentui')}</S.TextSmall>
       {moment(endDate) < moment(endDateThreshold) ? (
         <C.EndDate>
           <S.TextNormal>{moment(endDate).format('DD')}</S.TextNormal>
@@ -33,8 +33,8 @@ const DateSpan = ({
         </C.EndDate>
       ) : (
         <C.EndDate>
-          <S.TextNormal>{t('naIcon')}</S.TextNormal>
-          <S.TextSmall>{t('never')}</S.TextSmall>
+          <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
+          <S.TextSmall>{t('never', 'asurgentui')}</S.TextSmall>
         </C.EndDate>
       )}
     </C.Date>

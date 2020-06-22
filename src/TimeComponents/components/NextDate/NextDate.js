@@ -46,10 +46,10 @@ const NextDate = ({
   if (!validCronInterval) {
     return (
       <C.Date>
-        <S.TextSmall style={{ marginBottom: '1rem' }}>{t('nextDate')}</S.TextSmall>
+        <S.TextSmall withBottomMargin>{t('nextDate', 'asurgentui')}</S.TextSmall>
         <C.ExpiredDate>
-          <S.TextNormal>{t('naIcon')}</S.TextNormal>
-          <S.TextSmall>{t('invalidCron')}</S.TextSmall>
+          <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
+          <S.TextSmall>{t('invalidCron', 'asurgentui')}</S.TextSmall>
         </C.ExpiredDate>
       </C.Date>
     );
@@ -58,10 +58,10 @@ const NextDate = ({
   if (hasExpired) {
     return (
       <C.Date>
-        <S.TextSmall style={{ marginBottom: '1rem' }}>{t('nextDate')}</S.TextSmall>
+        <S.TextSmall withBottomMargin>{t('nextDate', 'asurgentui')}</S.TextSmall>
         <C.ExpiredDate>
-          <S.TextNormal>{t('naIcon')}</S.TextNormal>
-          <S.TextSmall>{t('naText')}</S.TextSmall>
+          <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
+          <S.TextSmall>{t('naText', 'asurgentui')}</S.TextSmall>
         </C.ExpiredDate>
       </C.Date>
     );
@@ -69,11 +69,11 @@ const NextDate = ({
 
   return (
     <C.Date>
-      <S.TextSmall style={{ marginBottom: '1rem' }}>{t('nextDate')}</S.TextSmall>
+      <S.TextSmall withBottomMargin>{t('nextDate', 'asurgentui')}</S.TextSmall>
       {isRunning ? (
         <>
           <Icons.Spinner />
-          <S.TextSmall style={{ marginBottom: '1rem' }}>{t('ongoing')}</S.TextSmall>
+          <S.TextSmall withBottomMargin>{t('ongoing', 'asurgentui')}</S.TextSmall>
         </>
       ) : (
         <>
@@ -84,8 +84,8 @@ const NextDate = ({
             </C.NextDate>
           ) : (
             <C.ExpiredDate>
-              <S.TextNormal>{t('naIcon')}</S.TextNormal>
-              <S.TextSmall>{t('naText')}</S.TextSmall>
+              <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
+              <S.TextSmall>{t('naText', 'asurgentui')}</S.TextSmall>
             </C.ExpiredDate>
           )}
         </>

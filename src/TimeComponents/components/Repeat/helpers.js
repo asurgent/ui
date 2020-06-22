@@ -1,27 +1,29 @@
+import moment from 'moment';
 import translation from './Repeat.translation';
 
 const { t } = translation;
 
-export const getRepeatSign = (duration) => {
-  if (duration >= 31536000) {
+export const getRepeatInterval = (duration) => {
+  const momentDuration = moment.duration(duration, 'seconds');
+  if (momentDuration.years()) {
     return { short: t('yearShort', 'asurgentui'), long: t('yearLong', 'asurgentui') };
   }
-  if (duration >= 2419200) {
+  if (momentDuration.months()) {
     return { short: t('monthShort', 'asurgentui'), long: t('monthLong', 'asurgentui') };
   }
-  if (duration >= 604800) {
+  if (momentDuration.weeks()) {
     return { short: t('weekShort', 'asurgentui'), long: t('weekLong', 'asurgentui') };
   }
-  if (duration >= 86400) {
+  if (momentDuration.days()) {
     return { short: t('dayShort', 'asurgentui'), long: t('dayLong', 'asurgentui') };
   }
-  if (duration >= 3600) {
+  if (momentDuration.hours()) {
     return { short: t('hourShort', 'asurgentui'), long: t('hourLong', 'asurgentui') };
   }
-  if (duration >= 60) {
+  if (momentDuration.minutes()) {
     return { short: t('minuteShort', 'asurgentui'), long: t('minuteLong', 'asurgentui') };
   }
-  if (duration > 0) {
+  if (momentDuration.seconds()) {
     return { short: t('secondShort', 'asurgentui'), long: t('secondLong', 'asurgentui') };
   }
   return { short: t('naIcon', 'asurgentui'), long: t('naText', 'asurgentui') };

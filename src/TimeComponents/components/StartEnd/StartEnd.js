@@ -62,7 +62,7 @@ const StartEnd = ({
   return (
     <C.StartEnd>
       <S.TextSmall style={{ marginBottom: '1rem' }}>
-        {isRunning ? (t('ends')) : (t('starts'))}
+        {isRunning ? (t('ends', 'asurgentui')) : (t('starts', 'asurgentui'))}
       </S.TextSmall>
       <Icons.Flag active={!isExpired && validCronInterval} />
       {!isExpired && validCronInterval ? (
@@ -72,8 +72,8 @@ const StartEnd = ({
         </>
       ) : (
         <>
-          <S.TextNormal>{t('naIcon')}</S.TextNormal>
-          <S.TextSmall>{t('naText')}</S.TextSmall>
+          <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
+          <S.TextSmall>{t('naText', 'asurgentui')}</S.TextSmall>
         </>
       )}
 

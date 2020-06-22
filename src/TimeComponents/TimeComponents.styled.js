@@ -5,6 +5,7 @@ export const TextSmall = styled.p`
     line-height: 18px;
     text-align: center;
     text-transform: uppercase;
+    margin-bottom: ${({ withBottomMargin }) => (withBottomMargin ? '1rem!important' : '0')};
 `;
 
 export const TextNormal = styled.h4`

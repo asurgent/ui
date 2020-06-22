@@ -6,12 +6,12 @@ import * as C from '../Repeat/Repeat.styled';
 import translation from './Duration.translation';
 import * as S from '../../TimeComponents.styled';
 import * as Icons from '../Icons';
-import { getTimestamp } from '../helpers';
+import { getTimestamp } from './helpers';
 
 const { t } = translation;
 
 const Duration = ({ cronExpression, durationInSeconds, endDate }) => {
-  const interval = useMemo(() => {
+  const validCronInterval = useMemo(() => {
     try {
       return parser.parseExpression(cronExpression);
     } catch (e) {
@@ -20,33 +20,33 @@ const Duration = ({ cronExpression, durationInSeconds, endDate }) => {
   }, [cronExpression]);
 
   const previousOccasion = useMemo(() => (
-    interval ? interval.prev().toString() : null
-  ), [interval]);
+    validCronInterval ? validCronInterval.prev().toString() : null
+  ), [validCronInterval]);
 
   const isRunning = useMemo(() => (
-    interval ? moment(previousOccasion).add(durationInSeconds, 'seconds') > moment() : false
-  ), [durationInSeconds, interval, previousOccasion]);
+    validCronInterval ? moment(previousOccasion).add(durationInSeconds, 'seconds') > moment() : false
+  ), [durationInSeconds, previousOccasion, validCronInterval]);
 
   const timestamp = useMemo(() => (
-    interval ? getTimestamp(durationInSeconds, previousOccasion, isRunning) : null
-  ), [durationInSeconds, interval, isRunning, previousOccasion]);
+    validCronInterval ? getTimestamp(durationInSeconds, previousOccasion, isRunning) : null
+  ), [durationInSeconds, isRunning, previousOccasion, validCronInterval]);
 
 
   return (
     <C.Repeat>
-      <S.TextSmall style={{ marginBottom: '1rem' }}>
-        { isRunning ? t('remaining') : t('duration') }
+      <S.TextSmall withBottomMargin>
+        { isRunning ? t('remaining', 'asurgentui') : t('duration', 'asurgentui') }
       </S.TextSmall>
       <Icons.Duration active={moment(endDate) > moment()} />
-      {interval ? (
+      {validCronInterval ? (
         <>
-          <S.TextNormal>{timestamp?.number}</S.TextNormal>
-          <S.TextSmall>{timestamp?.description}</S.TextSmall>
+          <S.TextNormal>{timestamp?.value}</S.TextNormal>
+          <S.TextSmall>{timestamp?.label}</S.TextSmall>
         </>
       ) : (
         <>
-          <S.TextNormal>{t('cron')}</S.TextNormal>
-          <S.TextSmall>{t('invalid')}</S.TextSmall>
+          <S.TextNormal>{t('cron', 'asurgentui')}</S.TextNormal>
+          <S.TextSmall>{t('invalid', 'asurgentui')}</S.TextSmall>
         </>
       )}
     </C.Repeat>
