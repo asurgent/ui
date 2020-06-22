@@ -14,7 +14,7 @@ const StartEnd = ({
   cronExpression,
   durationInSeconds,
 }) => {
-  const validInterval = useMemo(() => {
+  const validCronInterval = useMemo(() => {
     try {
       return parser.parseExpression(cronExpression);
     } catch (e) {
@@ -22,36 +22,50 @@ const StartEnd = ({
     }
   }, [cronExpression]);
 
-  const previousOccasion = useMemo(() => (moment(validInterval?.prev().toString())), [validInterval]);
+  const previousOccasion = useMemo(() => {
+    try {
+      return moment(validCronInterval.prev().toString());
+    } catch (e) {
+      return null;
+    }
+  }, [validCronInterval]);
 
-  const isRunning = useMemo(() => (
-    validInterval ? previousOccasion.add(durationInSeconds, 'seconds') > moment() : false
-  ), [durationInSeconds, validInterval, previousOccasion]);
+  const isRunning = useMemo(() => {
+    try {
+      return previousOccasion.add(durationInSeconds, 'seconds') > moment();
+    } catch (e) {
+      return false;
+    }
+  }, [durationInSeconds, previousOccasion]);
 
   const isExpired = useMemo(() => moment(endDate) < moment(), [endDate]);
 
   const occasion = useMemo(() => {
-    const prevOccasion = validInterval?.prev().toString();
-    const nextOccasion = validInterval?.next().toString();
-    console.log('prevOccasion', prevOccasion);
-    console.log('nextOccasion', nextOccasion);
-    if (isRunning) {
+    try {
+      const prevOccasion = validCronInterval.prev().toString();
+      const nextOccasion = validCronInterval.next().toString();
+      if (isRunning) {
+        return {
+          timestamp: moment(prevOccasion).add(durationInSeconds, 's').format('HH:mm'),
+          interval: moment(prevOccasion).add(durationInSeconds, 's').format('dddd'),
+        };
+      }
       return {
-        timestamp: moment(prevOccasion).add(durationInSeconds, 's').format('HH:mm'),
-        interval: moment(prevOccasion).add(durationInSeconds, 's').format('dddd'),
+        timestamp: moment(nextOccasion).format('HH:mm'),
+        interval: moment(nextOccasion).format('dddd'),
       };
+    } catch (e) {
+      return null;
     }
-    return {
-      timestamp: moment(nextOccasion).format('HH:mm'),
-      interval: moment(nextOccasion).format('dddd'),
-    };
-  }, [durationInSeconds, validInterval, isRunning]);
+  }, [durationInSeconds, validCronInterval, isRunning]);
 
   return (
     <C.StartEnd>
-      <S.TextSmall style={{ marginBottom: '1rem' }}>{isRunning ? (t('ends')) : (t('starts'))}</S.TextSmall>
-      <Icons.Flag active={!isExpired && validInterval} />
-      {!isExpired && validInterval ? (
+      <S.TextSmall style={{ marginBottom: '1rem' }}>
+        {isRunning ? (t('ends')) : (t('starts'))}
+      </S.TextSmall>
+      <Icons.Flag active={!isExpired && validCronInterval} />
+      {!isExpired && validCronInterval ? (
         <>
           <S.TextNormal>{occasion.timestamp}</S.TextNormal>
           <S.TextSmall>{occasion.interval}</S.TextSmall>
@@ -68,15 +82,19 @@ const StartEnd = ({
 };
 
 StartEnd.propTypes = {
-  endDate: PropTypes.string,
+  endDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
   cronExpression: PropTypes.string,
   durationInSeconds: PropTypes.number,
 
 };
 StartEnd.defaultProps = {
-  endDate: null,
-  cronExpression: null,
-  durationInSeconds: null,
+  endDate: moment().add(1, 'week'),
+  cronExpression: '* * * * *',
+  durationInSeconds: 1800,
 };
 
 

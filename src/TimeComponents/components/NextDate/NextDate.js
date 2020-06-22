@@ -95,13 +95,17 @@ const NextDate = ({
 };
 
 NextDate.propTypes = {
-  endDate: PropTypes.string,
+  endDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
   cronExpression: PropTypes.string,
   durationInSeconds: PropTypes.number,
 
 };
 NextDate.defaultProps = {
-  endDate: moment(),
+  endDate: moment().add(1, 'week'),
   cronExpression: '* * * * *',
   durationInSeconds: 0,
 };

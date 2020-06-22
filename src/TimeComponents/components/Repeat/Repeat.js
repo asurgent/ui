@@ -10,31 +10,59 @@ import { getRepeatSign } from './helpers';
 
 const { t } = translation;
 
-const Repeat = ({ cronExpression }) => {
-  const typeOfRepeat = useMemo(() => {
+const Repeat = ({ endDate, cronExpression }) => {
+  const validCronInterval = useMemo(() => {
     try {
-      const interval = parser.parseExpression(cronExpression);
-      const next = interval.next().toString();
-      const prev = interval.prev().toString();
-      const intervalInSeconds = moment(next).diff(moment(prev), 'seconds');
-      return getRepeatSign(intervalInSeconds);
+      return parser.parseExpression(cronExpression);
+    } catch (e) {
+      return null;
+    }
+  }, [cronExpression]);
+
+  const isExpired = useMemo(() => moment(endDate) < moment(), [endDate]);
+
+  const intervalInSeconds = useMemo(() => {
+    try {
+      const next = validCronInterval.next().toString();
+      const prev = validCronInterval.prev().toString();
+      return moment(next).diff(moment(prev), 'seconds');
     } catch (e) {
       return { short: t('naIcon', 'asurgentui'), long: t('naText', 'asurgentui') };
     }
-  }, [cronExpression]);
+  }, [validCronInterval]);
+
 
   return (
     <C.Repeat>
       <S.TextSmall style={{ marginBottom: '1rem' }}>{t('repeats')}</S.TextSmall>
-      <Icons.Dots />
-      <S.TextNormal>{typeOfRepeat?.short}</S.TextNormal>
-      <S.TextSmall>{typeOfRepeat?.long}</S.TextSmall>
+      <Icons.Dots active={!isExpired} />
+      {isExpired ? (
+        <>
+          <S.TextNormal>{t('zero')}</S.TextNormal>
+          <S.TextSmall>{t('times')}</S.TextSmall>
+        </>
+      ) : (
+        <>
+          <S.TextNormal>{getRepeatSign(intervalInSeconds).short}</S.TextNormal>
+          <S.TextSmall>{getRepeatSign(intervalInSeconds).long}</S.TextSmall>
+        </>
+      )}
     </C.Repeat>
   );
 };
 
 Repeat.propTypes = {
-  cronExpression: PropTypes.string.isRequired,
+  endDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
+  cronExpression: PropTypes.string,
+};
+
+Repeat.defaultProps = {
+  endDate: moment().add(1, 'week'),
+  cronExpression: '* * * * *',
 };
 
 export default Repeat;

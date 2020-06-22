@@ -28,6 +28,9 @@ export default addTranslation({
 
     repeats: 'Repeteras',
 
+    zero: '0',
+    times: 'Gånger',
+
   },
   en: {
     yearShort: 'Y',
@@ -54,5 +57,8 @@ export default addTranslation({
     naText: 'N/A',
 
     repeats: 'Repeats',
+
+    zero: '0',
+    times: 'Times',
   },
 });

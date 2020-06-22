@@ -52,7 +52,10 @@ dateSpan.story = {
 };
 export const repeat = () => (
   <div style={{ padding: '2rem' }}>
-    <Repeat cronExpression={text('cron exp', `0 ${moment().hours()} * * *`)} />
+    <Repeat
+      endDate={text('end date', moment().add(1, 'week').toISOString())}
+      cronExpression={text('cron exp', `0 ${moment().hours()} * * *`)}
+    />
   </div>
 );
 
