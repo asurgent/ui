@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 const propTyps = {
   value: PropTypes.string,
   name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   props: PropTypes.instanceOf(Object),
 };
 
 const defaultProps = {
   value: '',
   props: {},
+  placeholder: '',
 };
 
 const TextArea = forwardRef((props, ref) => {

@@ -5,7 +5,7 @@ const propTyps = {
   value: PropTypes.string,
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   props: PropTypes.instanceOf(Object),
 };
 
@@ -13,6 +13,7 @@ const defaultProps = {
   value: '',
   label: '',
   props: {},
+  placeholder: '',
 };
 
 const Text = forwardRef((props, ref) => {

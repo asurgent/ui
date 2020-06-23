@@ -61,11 +61,11 @@ export const Dropdown = styled.div`
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
         position: absolute;
         width: auto;
-        min-width: 40rem;
         height: auto;
         max-height: 50rem;
         top: unset;
         bottom: unset;
+        min-width: 40rem;
         left: unset;
         right: unset;
         border-radius: 5px;

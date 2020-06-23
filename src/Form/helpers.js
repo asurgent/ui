@@ -5,6 +5,7 @@ import Text from './types/Text';
 import Number from './types/Number';
 import TextArea from './types/TextArea';
 import Select from './types/Select';
+import FilterSelect from './types/FilterSelect';
 import Label from './types/Label';
 import DatePicker from './types/DatePicker/index';
 import RadioGroup from './types/RadioGroup/index';
@@ -29,6 +30,8 @@ const getInputComponent = (type) => {
       return TextArea;
     case 'select':
       return Select;
+    case 'filterselect':
+      return FilterSelect;
     case 'label':
       return Label;
     case 'datepicker':
@@ -117,7 +120,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
             ref={referenceList[key]}
             name={key}
             value={inputValue}
-            placeholder={placeholder || ''}
+            placeholder={placeholder}
             label={label}
             minDate={minDate}
             maxDate={maxDate}

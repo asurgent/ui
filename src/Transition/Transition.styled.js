@@ -35,3 +35,15 @@ export const FadeInSlideDownOnDesktop = styled(FadeIn)`
       );
   }
 `;
+
+
+export const FadeInFitted = styled(FadeIn)`
+  position: absolute!important;
+  left: 0;
+  right: 0;
+  @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
+    transform: translateY(
+      ${({ state }) => (state === 'entering' || state === 'entered' ? 32 : 0)}px
+    );
+  }
+`;

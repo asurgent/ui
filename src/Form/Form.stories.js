@@ -100,6 +100,15 @@ export const defaultForm = () => {
       ],
       tooltip: 'tooltip',
     },
+    someFilterSelect: {
+      type: 'filterselect',
+      label: 'Some Filterselect',
+      options: [],
+      tooltip: 'tooltip',
+      props: {
+        searchPlaceholder: 'Search in me plz',
+      },
+    },
     someDate: {
       type: 'datepicker',
       options: [],
@@ -117,6 +126,14 @@ export const defaultForm = () => {
       { name: 'someRadioGroup', value: 'value1' },
       { name: 'someRadioGroup2', value: 'value4' },
       { name: 'someSelect', value: '3' },
+      {
+        name: 'someFilterSelect',
+        options: [
+          { value: '1', label: 'First option' },
+          { value: '2', label: 'Second option' },
+          { value: '3', label: 'Third option' },
+        ],
+      },
       { name: 'someDate', value: moment().startOf('day').toISOString() },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,10 +176,7 @@ export const defaultForm = () => {
             {renderFields}
             <Block.SpaceBetween>
               <Button.Hollow>Cancel</Button.Hollow>
-              <Button.Secondary
-                disabled={!isDirty}
-                onClick={onResetAction}
-              >
+              <Button.Secondary disabled={!isDirty} onClick={onResetAction}>
                 Reset
               </Button.Secondary>
               <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
