@@ -5,7 +5,7 @@ import * as C from './DateSpan.styled';
 import * as S from '../../TimeComponents.styled';
 import translation from './DateSpan.translation';
 import * as Icons from '../Icons';
-import { getMonthYear } from '../../helpers';
+import { parseMoment, getMonthYear } from '../../helpers';
 
 const { t } = translation;
 
@@ -14,17 +14,17 @@ const DateSpan = ({
   endDate,
   endDateThreshold,
 }) => {
-  const startDateValid = useMemo(() => moment(startDate).isValid(), [startDate]);
-  const endDateValid = useMemo(() => moment(endDate).isValid(), [endDate]);
+  const startDateValid = useMemo(() => parseMoment(startDate).isValid(), [startDate]);
+  const endDateValid = useMemo(() => parseMoment(endDate).isValid(), [endDate]);
 
   const isNever = useMemo(() => {
     if (endDateValid) {
-      return moment(endDate) > moment(endDateThreshold);
+      return parseMoment(endDate) > parseMoment(endDateThreshold);
     }
     return null;
   }, [endDate, endDateThreshold, endDateValid]);
 
-  const isActive = useMemo(() => moment(endDate) > moment(), [endDate]);
+  const isActive = useMemo(() => parseMoment(endDate) > moment(), [endDate]);
 
   return (
     <C.Dates>
@@ -33,8 +33,8 @@ const DateSpan = ({
         <C.StartDate active={isActive && startDateValid}>
           {startDateValid ? (
             <>
-              <S.TextNormal>{moment(startDate).format('DD')}</S.TextNormal>
-              <S.TextSmall>{getMonthYear(moment(startDate))}</S.TextSmall>
+              <S.TextNormal>{parseMoment(startDate).format('DD')}</S.TextNormal>
+              <S.TextSmall>{getMonthYear(parseMoment(startDate))}</S.TextSmall>
             </>
           ) : (
             <>
@@ -58,8 +58,8 @@ const DateSpan = ({
               </>
             ) : (
               <>
-                <S.TextNormal>{moment(endDate).format('DD')}</S.TextNormal>
-                <S.TextSmall>{getMonthYear(moment(endDate))}</S.TextSmall>
+                <S.TextNormal>{parseMoment(endDate).format('DD')}</S.TextNormal>
+                <S.TextSmall>{getMonthYear(parseMoment(endDate))}</S.TextSmall>
               </>
             )}
           </C.EndDate>
@@ -88,6 +88,5 @@ DateSpan.defaultProps = {
   endDate: null,
   endDateThreshold: moment().add(10, 'years'),
 };
-
 
 export default DateSpan;

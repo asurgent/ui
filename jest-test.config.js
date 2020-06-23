@@ -1,8 +1,6 @@
 module.exports = {
-  projects: [
-    '<rootDir>/jest-test.config.js',
-    '<rootDir>/jest-eslint.config.js',
-  ],
+  displayName: 'tests',
+  testMatch: ['<rootDir>/src/**/*.test.js'],
   moduleNameMapper: {
     '^test-utils(.*)$': '<rootDir>/test-utils$1',
     'test-utils': '<rootDir>/test-utils',

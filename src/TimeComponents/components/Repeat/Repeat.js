@@ -7,6 +7,7 @@ import translation from './Repeat.translation';
 import * as S from '../../TimeComponents.styled';
 import * as Icons from '../Icons';
 import { getRepeatInterval } from './helpers';
+import { parseMoment } from '../../helpers';
 
 const { t } = translation;
 
@@ -19,13 +20,13 @@ const Repeat = ({ endDate, cronExpression }) => {
     }
   }, [cronExpression]);
 
-  const isExpired = useMemo(() => moment(endDate) < moment(), [endDate]);
+  const isExpired = useMemo(() => parseMoment(endDate) < moment(), [endDate]);
 
   const intervalInSeconds = useMemo(() => {
     try {
-      const next = validCronInterval.next().toString();
-      const prev = validCronInterval.prev().toString();
-      return moment(next).diff(moment(prev), 'seconds');
+      const next = parseMoment(validCronInterval.next().toString());
+      const prev = parseMoment(validCronInterval.prev().toString());
+      return next.diff(prev, 'seconds');
     } catch (e) {
       return { short: t('naIcon', 'asurgentui'), long: t('naText', 'asurgentui') };
     }

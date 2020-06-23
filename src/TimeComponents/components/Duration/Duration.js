@@ -7,6 +7,7 @@ import translation from './Duration.translation';
 import * as S from '../../TimeComponents.styled';
 import * as Icons from '../Icons';
 import { getTimestamp } from './helpers';
+import { parseMoment } from '../../helpers';
 
 const { t } = translation;
 
@@ -20,11 +21,11 @@ const Duration = ({ cronExpression, durationInSeconds, endDate }) => {
   }, [cronExpression]);
 
   const previousOccasion = useMemo(() => (
-    validCronInterval ? validCronInterval.prev().toString() : null
+    validCronInterval ? parseMoment(validCronInterval.prev().toString()) : null
   ), [validCronInterval]);
 
   const isRunning = useMemo(() => (
-    validCronInterval ? moment(previousOccasion).add(durationInSeconds, 'seconds') > moment() : false
+    validCronInterval ? previousOccasion.add(durationInSeconds, 'seconds') > moment() : false
   ), [durationInSeconds, previousOccasion, validCronInterval]);
 
   const timestamp = useMemo(() => (
@@ -37,7 +38,7 @@ const Duration = ({ cronExpression, durationInSeconds, endDate }) => {
       <S.TextSmall withBottomMargin>
         { isRunning ? t('remaining', 'asurgentui') : t('duration', 'asurgentui') }
       </S.TextSmall>
-      <Icons.Duration active={moment(endDate) > moment()} />
+      <Icons.Duration active={parseMoment(endDate) > moment()} />
       {validCronInterval ? (
         <>
           <S.TextNormal>{timestamp?.value}</S.TextNormal>

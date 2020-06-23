@@ -6,30 +6,30 @@ import translation from './NextDate.translation';
 import * as C from './NextDate.styled';
 import * as S from '../../TimeComponents.styled';
 import * as Icons from '../Icons';
-import { getMonthYear } from '../../helpers';
+import { parseMoment, getMonthYear } from '../../helpers';
 
 const { t } = translation;
 
-
 const NextDate = ({
+  currentDate,
   endDate,
   cronExpression,
   durationInSeconds,
 }) => {
   const validCronInterval = useMemo(() => {
     try {
-      return parser.parseExpression(cronExpression);
+      return parser.parseExpression(cronExpression, { currentDate, endDate });
     } catch (e) {
       return false;
     }
-  }, [cronExpression]);
+  }, [cronExpression, currentDate, endDate]);
 
-  const hasExpired = useMemo(() => (moment(endDate) < moment()), [endDate]);
+  const hasExpired = useMemo(() => (parseMoment(endDate) < moment()), [endDate]);
 
   const nextRun = useMemo(() => {
     try {
-      const next = validCronInterval.next().toString();
-      return moment(next) < moment(endDate) ? moment(next) : null;
+      const next = parseMoment(validCronInterval.next().toString());
+      return next < parseMoment(endDate) ? next : null;
     } catch (e) {
       return null;
     }
@@ -37,17 +37,17 @@ const NextDate = ({
 
   const isRunning = useMemo(() => {
     try {
-      const previous = validCronInterval.prev().toString();
-      return moment(previous).add(durationInSeconds, 'seconds') > moment();
+      const previous = parseMoment(validCronInterval.prev().toString());
+      return previous.add(durationInSeconds, 'seconds') > moment();
     } catch (e) {
       return false;
     }
-  }, [validCronInterval, durationInSeconds]);
-
+  },
+  [durationInSeconds, validCronInterval]);
 
   if (!validCronInterval) {
     return (
-      <C.Date>
+      <C.Date data-testid="invalid-cron">
         <S.TextSmall withBottomMargin>{t('nextDate', 'asurgentui')}</S.TextSmall>
         <C.ExpiredDate>
           <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
@@ -59,7 +59,7 @@ const NextDate = ({
 
   if (hasExpired) {
     return (
-      <C.Date>
+      <C.Date data-testid="expired">
         <S.TextSmall withBottomMargin>{t('nextDate', 'asurgentui')}</S.TextSmall>
         <C.ExpiredDate>
           <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
@@ -75,28 +75,24 @@ const NextDate = ({
       {isRunning ? (
         <>
           <Icons.Spinner />
-          <S.TextSmall withBottomMargin>{t('ongoing', 'asurgentui')}</S.TextSmall>
+          <S.TextSmall data-testid="is-running" withBottomMargin>{t('ongoing', 'asurgentui')}</S.TextSmall>
         </>
       ) : (
-        <>
-          {nextRun ? (
-            <C.NextDate>
-              <S.TextNormal>{moment(nextRun).format('DD')}</S.TextNormal>
-              <S.TextSmall>{getMonthYear(moment(nextRun))}</S.TextSmall>
-            </C.NextDate>
-          ) : (
-            <C.ExpiredDate>
-              <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
-              <S.TextSmall>{t('naText', 'asurgentui')}</S.TextSmall>
-            </C.ExpiredDate>
-          )}
-        </>
+        <C.NextDate data-testid="next-run">
+          <S.TextNormal>{parseMoment(nextRun).format('DD')}</S.TextNormal>
+          <S.TextSmall>{getMonthYear(parseMoment(nextRun))}</S.TextSmall>
+        </C.NextDate>
       )}
     </C.Date>
   );
 };
 
 NextDate.propTypes = {
+  currentDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
   endDate: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
@@ -107,6 +103,7 @@ NextDate.propTypes = {
 
 };
 NextDate.defaultProps = {
+  currentDate: moment(),
   endDate: moment().add(1, 'week'),
   cronExpression: '* * * * *',
   durationInSeconds: 0,

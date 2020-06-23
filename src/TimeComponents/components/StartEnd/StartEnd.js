@@ -25,7 +25,7 @@ const StartEnd = ({
 
   const previousOccasion = useMemo(() => {
     try {
-      return moment(validCronInterval.prev().toString());
+      return moment(new Date(validCronInterval.prev().toString()));
     } catch (e) {
       return null;
     }
@@ -39,12 +39,14 @@ const StartEnd = ({
     }
   }, [durationInSeconds, previousOccasion]);
 
-  const isExpired = useMemo(() => moment(endDate) < moment(), [endDate]);
+  // new date needed for deprecation warning
+  const isExpired = useMemo(() => moment(new Date(endDate)) < moment(), [endDate]);
 
   const occasion = useMemo(() => {
     try {
-      const prevOccasion = moment(validCronInterval.prev().toString());
-      const nextOccasion = moment(validCronInterval.next().toString());
+      const prevOccasion = moment(new Date(validCronInterval.prev().toString()));
+      const nextOccasion = moment(new Date(validCronInterval.next().toString()));
+
       const prevOccasionEnd = moment(prevOccasion).add(durationInSeconds, 's');
       if (isRunning) {
         return {
@@ -66,7 +68,7 @@ const StartEnd = ({
       <S.TextSmall withBottomMargin>
         {isRunning ? (t('ends', 'asurgentui')) : (t('starts', 'asurgentui'))}
       </S.TextSmall>
-      <Icons.Flag active={!isExpired && validCronInterval} />
+      <Icons.Flag active={!isExpired && validCronInterval !== null} />
       {!isExpired && validCronInterval && occasion ? (
         <>
           <S.TextNormal>{occasion.timestamp}</S.TextNormal>
@@ -78,7 +80,6 @@ const StartEnd = ({
           <S.TextSmall>{t('naText', 'asurgentui')}</S.TextSmall>
         </>
       )}
-
     </C.StartEnd>
   );
 };
@@ -91,13 +92,12 @@ StartEnd.propTypes = {
   ]),
   cronExpression: PropTypes.string,
   durationInSeconds: PropTypes.number,
-
 };
+
 StartEnd.defaultProps = {
   endDate: moment().add(1, 'week'),
   cronExpression: '* * * * *',
   durationInSeconds: 1800,
 };
-
 
 export default StartEnd;

@@ -12,7 +12,7 @@ export default { title: 'UI Components|Time Components', decorators: [withKnobs]
 export const nextDate = () => (
   <div style={{ padding: '2rem' }}>
     <NextDate
-      endDate={text('end date', moment().add(1, 'week').toISOString())}
+      endDate={text('end date', moment().add(1, 'week').toString())}
       cronExpression={text('cron exp', `0 ${moment().hours()} * * *`)}
       durationInSeconds={number('duration in seconds', 1800)}
     />
@@ -26,7 +26,7 @@ nextDate.story = {
 export const duration = () => (
   <div style={{ padding: '2rem' }}>
     <Duration
-      endDate={text('end date', moment().add(1, 'week').toISOString())}
+      endDate={text('end date', moment().add(1, 'week').toString())}
       cronExpression={text('cron exp', `0 ${moment().hours()} * * *`)}
       durationInSeconds={number('duration in seconds', 1800)}
     />
@@ -40,9 +40,9 @@ duration.story = {
 export const dateSpan = () => (
   <div style={{ padding: '2rem' }}>
     <DateSpan
-      startDate={text('start date', moment().subtract(1, 'week').toISOString())}
-      endDate={text('end date', moment().add(1, 'week').toISOString())}
-      endDateThreshold={text('"Never"-threshold', moment().add(1, 'year').toISOString())}
+      startDate={text('start date', moment().subtract(1, 'week').toString())}
+      endDate={text('end date', moment().add(1, 'week').toString())}
+      endDateThreshold={text('"Never"-threshold', moment().add(1, 'year').toString())}
     />
   </div>
 );
@@ -53,7 +53,7 @@ dateSpan.story = {
 export const repeat = () => (
   <div style={{ padding: '2rem' }}>
     <Repeat
-      endDate={text('end date', moment().add(1, 'week').toISOString())}
+      endDate={text('end date', moment().add(1, 'week').toString())}
       cronExpression={text('cron exp', `0 ${moment().hours()} * * *`)}
     />
   </div>
@@ -66,9 +66,8 @@ repeat.story = {
 export const startEnd = () => (
   <div style={{ padding: '2rem' }}>
     <StartEnd
-      startDate={text('start date', moment().subtract(1, 'week').toISOString())}
-      endDate={text('end date', moment().add(1, 'week').toISOString())}
-      cronExpression={text('cron exp', `0 ${moment().hours()} * * *`)}
+      endDate={text('end date', moment().add(1, 'week').toString())}
+      cronExpression={text('cron exp', `0 16 * * *`)}
       durationInSeconds={number('duration in seconds', 1800)}
     />
   </div>
