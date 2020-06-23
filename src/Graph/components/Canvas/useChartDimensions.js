@@ -27,7 +27,7 @@ const combineChartDimensions = (dimensions = {}) => {
 };
 
 
-export const useChartDimensions = (passedSettings) => {
+export const useChartDimensions = () => {
   const ref = useRef();
   const [width, setWidth] = useState(500);
   const [height, setHeight] = useState(200);

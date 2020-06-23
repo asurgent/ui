@@ -1,4 +1,4 @@
-import addTranslation from '../../../lib/i18n/addTranslation';
+import addTranslation from '../../../../lib/i18n/addTranslation';
 
 export default addTranslation({
   id: 'AxisTranslations',

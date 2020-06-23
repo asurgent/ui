@@ -1,9 +1,11 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import * as Canvas from '../Canvas';
+import * as Canvas from '../components/Canvas';
 import Line from './Line';
-import Zoom from '../Zoom';
-import * as Axis from '../Axis';
+import Zoom from '../components/Zoom';
+import * as Axis from '../components/Axis';
+import * as C from './LineGraph.styled';
+
 
 const propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
@@ -42,8 +44,17 @@ const LineGraph = ({
           dimensions={dimensions}
           onTooltipEvent={handleTooltipData}
         >
-          <Axis.XPrimary dimensions={dimensions} xScale={xScale} xProp={xProp} duration={duration} />
-          <Axis.YPrimary dimensions={dimensions} yScale={yScale} yProp={yProp} />
+          <Axis.XPrimary
+            dimensions={dimensions}
+            xScale={xScale}
+            xProp={xProp}
+            duration={duration}
+          />
+          <Axis.YPrimary
+            dimensions={dimensions}
+            yScale={yScale}
+            yProp={yProp}
+          />
           <Line
             duration={duration}
             xScale={xScale}
@@ -52,6 +63,12 @@ const LineGraph = ({
             yProp={yProp}
             xProp={xProp}
             dimensions={dimensions}
+          />
+          <C.Threashold
+            y1={yScale(0.5)}
+            y2={yScale(0.5)}
+            x1={0}
+            x2={dimensions.boundedWidth}
           />
         </Zoom>
       )}
