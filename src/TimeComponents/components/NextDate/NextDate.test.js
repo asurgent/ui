@@ -52,14 +52,14 @@ describe('NextDate', () => {
   });
 
   test('Renders nextRun', () => {
-    const d = moment().set({
+    const currentDate = moment().set({
       hour: 15, minute: 50, second: 0, millisecond: 0,
     });
 
     const props = {
-      currentDate: d,
+      currentDate,
       endDate: moment().add(1, 'year'),
-      cronExpression: `0 ${d.hours()} * * *`,
+      cronExpression: `0 ${currentDate.hours()} * * *`,
       durationInSeconds: 1800, // 30 minutes
     };
 

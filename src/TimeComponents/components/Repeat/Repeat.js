@@ -11,14 +11,14 @@ import { parseMoment } from '../../helpers';
 
 const { t } = translation;
 
-const Repeat = ({ endDate, cronExpression }) => {
+const Repeat = ({ currentDate, endDate, cronExpression }) => {
   const validCronInterval = useMemo(() => {
     try {
-      return parser.parseExpression(cronExpression);
+      return parser.parseExpression(cronExpression, { currentDate, endDate });
     } catch (e) {
       return null;
     }
-  }, [cronExpression]);
+  }, [cronExpression, currentDate, endDate]);
 
   const isExpired = useMemo(() => parseMoment(endDate) < moment(), [endDate]);
 
@@ -54,6 +54,11 @@ const Repeat = ({ endDate, cronExpression }) => {
 };
 
 Repeat.propTypes = {
+  currentDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
   endDate: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
@@ -63,6 +68,7 @@ Repeat.propTypes = {
 };
 
 Repeat.defaultProps = {
+  currentDate: moment(),
   endDate: moment().add(1, 'week'),
   cronExpression: '* * * * *',
 };

@@ -11,14 +11,16 @@ import { parseMoment } from '../../helpers';
 
 const { t } = translation;
 
-const Duration = ({ cronExpression, durationInSeconds, endDate }) => {
+const Duration = ({
+  cronExpression, durationInSeconds, endDate, currentDate,
+}) => {
   const validCronInterval = useMemo(() => {
     try {
-      return parser.parseExpression(cronExpression);
+      return parser.parseExpression(cronExpression, { currentDate, endDate });
     } catch (e) {
       return false;
     }
-  }, [cronExpression]);
+  }, [cronExpression, currentDate, endDate]);
 
   const previousOccasion = useMemo(() => (
     validCronInterval ? parseMoment(validCronInterval.prev().toString()) : null
@@ -33,23 +35,33 @@ const Duration = ({ cronExpression, durationInSeconds, endDate }) => {
   ), [durationInSeconds, isRunning, previousOccasion, validCronInterval]);
 
 
+  if (!validCronInterval) {
+    return (
+      <C.Repeat>
+        <S.TextSmall withBottomMargin data-testid="invalid-cron">
+          {t('duration', 'asurgentui') }
+        </S.TextSmall>
+        <Icons.Duration active={false} />
+        <S.TextNormal>{t('cron', 'asurgentui')}</S.TextNormal>
+        <S.TextSmall>{t('invalid', 'asurgentui')}</S.TextSmall>
+      </C.Repeat>
+    );
+  }
+
   return (
     <C.Repeat>
-      <S.TextSmall withBottomMargin>
-        { isRunning ? t('remaining', 'asurgentui') : t('duration', 'asurgentui') }
-      </S.TextSmall>
-      <Icons.Duration active={parseMoment(endDate) > moment()} />
-      {validCronInterval ? (
-        <>
-          <S.TextNormal>{timestamp?.value}</S.TextNormal>
-          <S.TextSmall>{timestamp?.label}</S.TextSmall>
-        </>
+      {isRunning ? (
+        <S.TextSmall withBottomMargin data-testid="remaining">
+          {t('remaining', 'asurgentui') }
+        </S.TextSmall>
       ) : (
-        <>
-          <S.TextNormal>{t('cron', 'asurgentui')}</S.TextNormal>
-          <S.TextSmall>{t('invalid', 'asurgentui')}</S.TextSmall>
-        </>
+        <S.TextSmall withBottomMargin data-testid="duration">
+          { t('duration', 'asurgentui') }
+        </S.TextSmall>
       )}
+      <Icons.Duration active={parseMoment(endDate) > moment()} />
+      <S.TextNormal data-testid="time-value">{timestamp?.value}</S.TextNormal>
+      <S.TextSmall data-testid="time-label">{timestamp?.label}</S.TextSmall>
     </C.Repeat>
   );
 };
@@ -57,6 +69,11 @@ const Duration = ({ cronExpression, durationInSeconds, endDate }) => {
 Duration.propTypes = {
   cronExpression: PropTypes.string,
   durationInSeconds: PropTypes.number,
+  currentDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
   endDate: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
@@ -67,7 +84,8 @@ Duration.propTypes = {
 Duration.defaultProps = {
   cronExpression: '* * * * *',
   durationInSeconds: 0,
-  endDate: moment(),
+  endDate: moment().add(1, 'year'),
+  currentDate: moment(),
 };
 
 export default Duration;
