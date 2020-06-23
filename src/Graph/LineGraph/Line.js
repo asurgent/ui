@@ -2,6 +2,7 @@ import React, { useEffect, createRef, useMemo } from 'react';
 import * as d3 from 'd3';
 import PropTypes from 'prop-types';
 import * as C from './LineGraph.styled';
+
 import ClipPath from '../components/ClipPath';
 
 const propTypes = {
@@ -15,7 +16,7 @@ const propTypes = {
   updateTick: PropTypes.number.isRequired, // Passed from Zoom.js
 };
 
-const defaultPtops = {};
+const defaultProps = {};
 
 const Line = ({
   xScale,
@@ -51,15 +52,13 @@ const Line = ({
   }, [data, duration, line, ref, updateTick, dimensions]);
 
   return (
-    <ClipPath dimensions={dimensions}>
-      <g>
-        <C.Line ref={ref} className="line" />
-      </g>
+    <ClipPath dimensions={dimensions} inner>
+      <C.Line ref={ref} />
     </ClipPath>
   );
 };
 
 Line.propTypes = propTypes;
-Line.defaultPtops = defaultPtops;
+Line.defaultProps = defaultProps;
 
 export default Line;

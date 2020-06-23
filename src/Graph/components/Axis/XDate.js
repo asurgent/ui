@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import * as d3 from 'd3';
 import { customTick } from './helpers';
+import ClipPath from '../ClipPath';
 
 const AxisGroup = styled.g`
     transform: translate${({ dimensions }) => `(0, ${dimensions.boundedHeight}px)`};
@@ -44,7 +45,9 @@ const XDateAxis = ({
   }, [duration, updateTick, xScale, dimensions.width, dimensions.height, ref]);
 
   return (
-    <AxisGroup ref={ref} dimensions={dimensions} />
+    <ClipPath width={dimensions.boundedWidth + 5} x={-5} height={20} y={dimensions.boundedHeight}>
+      <AxisGroup ref={ref} dimensions={dimensions} />
+    </ClipPath>
   );
 };
 

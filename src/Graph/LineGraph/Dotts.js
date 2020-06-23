@@ -9,7 +9,7 @@ const propTypes = {
   xProp: PropTypes.string.isRequired,
 };
 
-const defaultPtops = {};
+const defaultProps = {};
 
 const Dotts = ({
   data, xScale, yScale, yProp, xProp,
@@ -34,6 +34,6 @@ const Dotts = ({
 };
 
 Dotts.propTypes = propTypes;
-Dotts.defaultPtops = defaultPtops;
+Dotts.defaultProps = defaultProps;
 
 export default Dotts;

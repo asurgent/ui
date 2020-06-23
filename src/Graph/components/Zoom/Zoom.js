@@ -19,7 +19,7 @@ const propTypes = {
   ]).isRequired,
 };
 
-const defaultPtops = {};
+const defaultProps = {};
 
 const withDelayTimer = (action, timeout) => {
   let timer = setTimeout(() => {}, timeout);
@@ -121,14 +121,15 @@ const Zoom = ({
     <>
       {
         React.Children.map(children,
-          (child) => React.cloneElement(child, {
+          (child) => child && React.cloneElement(child, {
             /*
-             The "update" state will be passed as "updateTick"-prop to child-compoenents to trigger a rerender.
-             This will work alongside with createRef and notice a change and trigger
-             the desired update-redraw function.
+             The "update" state will be passed as "updateTick"-prop to
+             child-compoenents to trigger a rerender.
+             This will work alongside with createRef and notice a change
+            and trigger the desired update-redraw function.
              I think, some kind of dark-magic makes it work anyway ¯\_(ツ)_/¯
             */
-            updateTick: update,
+            updateTick: update || 0,
           }))
       }
       { tooltip && (
@@ -154,6 +155,6 @@ const Zoom = ({
 };
 
 Zoom.propTypes = propTypes;
-Zoom.defaultPtops = defaultPtops;
+Zoom.defaultProps = defaultProps;
 
 export default Zoom;

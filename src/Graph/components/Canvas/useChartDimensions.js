@@ -11,6 +11,16 @@ const combineChartDimensions = (dimensions = {}) => {
   };
   return {
     ...parsedDimensions,
+    totalHeight: (
+      parsedDimensions.height
+      + parsedDimensions.marginTop
+      + parsedDimensions.marginBottom
+    ),
+    totalWidth: (
+      parsedDimensions.width
+      + parsedDimensions.marginLeft
+      + parsedDimensions.marginRight
+    ),
     boundedHeight: Math.max(
       parsedDimensions.height
         - parsedDimensions.marginTop
