@@ -3,7 +3,7 @@
 import React from 'react';
 import moment from 'moment';
 import { render, cleanup } from 'test-utils';
-import NextDate from './index';
+import Duration from './index';
 
 afterEach(cleanup);
 
@@ -20,7 +20,7 @@ describe('Duration', () => {
       durationInSeconds: 3600,
     };
 
-    const { queryByTestId } = render(<NextDate {...props} />);
+    const { queryByTestId } = render(<Duration {...props} />);
 
     const invalidCron = queryByTestId(/invalid-cron/);
     expect(invalidCron).toBeDefined();
@@ -39,7 +39,7 @@ describe('Duration', () => {
       durationInSeconds: 3600,
     };
 
-    const { queryByTestId } = render(<NextDate {...props} />);
+    const { queryByTestId } = render(<Duration {...props} />);
 
     const remainingDuration = queryByTestId(/remaining/);
     expect(remainingDuration).toBeDefined();
@@ -57,7 +57,7 @@ describe('Duration', () => {
       durationInSeconds: 1800,
     };
 
-    const { queryByTestId } = render(<NextDate {...props} />);
+    const { queryByTestId } = render(<Duration {...props} />);
 
     const remainingDuration = queryByTestId(/duration/);
     expect(remainingDuration).toBeDefined();
