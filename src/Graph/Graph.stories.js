@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  withKnobs, number,
-} from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import * as Graph from './index';
 import data from './data';
 import data2 from './data2';

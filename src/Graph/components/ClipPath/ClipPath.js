@@ -3,26 +3,27 @@ import PropTypes from 'prop-types';
 import * as C from './ClipPath.styled';
 
 const propTypes = {
-  height: PropTypes.number,
-  width: PropTypes.number,
   x: PropTypes.number,
   y: PropTypes.number,
+  height: PropTypes.number,
+  width: PropTypes.number,
+  dimensions: PropTypes.instanceOf(Object),
   transform: PropTypes.instanceOf(Array),
-  outer: PropTypes.bool,
-  dimensions: PropTypes.instanceOf(Object).isRequired,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
+  outer: PropTypes.bool,
 };
 
 const defaultProps = {
-  outer: false,
-  height: null,
-  width: null,
   x: 0,
   y: 0,
+  height: null,
+  width: null,
+  dimensions: {},
   transform: [],
+  outer: false,
 };
 
 const ClipPath = ({
@@ -36,7 +37,6 @@ const ClipPath = ({
   y,
 }) => {
   const id = useMemo(() => `clip${Math.random()}`, []);
-
 
   return (
     <g clipPath={`url(#${id})`}>

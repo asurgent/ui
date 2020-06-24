@@ -16,13 +16,18 @@ const propTypes = {
   dimensions: PropTypes.instanceOf(Object).isRequired,
   xScale: PropTypes.instanceOf(Object).isRequired,
   duration: PropTypes.number.isRequired,
-  updateTick: PropTypes.number.isRequired, // Passed from Zoom.js
+  updateTick: PropTypes.number, // Passed from Zoom.js
 };
 
-const defaultProps = {};
+const defaultProps = {
+  updateTick: 0,
+};
 
 const XDateAxis = ({
-  dimensions, xScale, duration, updateTick,
+  dimensions,
+  xScale,
+  duration,
+  updateTick,
 }) => {
   const ref = createRef();
 
