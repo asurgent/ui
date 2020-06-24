@@ -24,10 +24,16 @@ const YLinearAxis = ({ yScale, dashedMarkerLine, dimensions }) => {
     return null;
   }, [dashedMarkerLine, yScale]);
 
+  const ticks = useMemo(() => d3.axisLeft(yScale)
+    .tickFormat((tickVal) => (
+      tickVal >= 1000 ? `${tickVal / 1000}K` : tickVal
+    )),
+  [yScale]);
+
   useEffect(() => {
     d3.select(ref.current)
-      .call(d3.axisLeft(yScale));
-  }, [ref, yScale]);
+      .call(ticks);
+  }, [ref, ticks, yScale]);
 
   return (
     <>

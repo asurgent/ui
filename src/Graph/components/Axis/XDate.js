@@ -1,6 +1,7 @@
 import React, {
   createRef,
   useEffect,
+  useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -31,23 +32,26 @@ const XDateAxis = ({
 }) => {
   const ref = createRef();
 
+  const ticks = useMemo(() => d3
+    .axisBottom(xScale)
+    .tickFormat(customTick),
+
+  [xScale]);
 
   useEffect(() => {
     // On first update-tick we dont want any duration/transition
     if (updateTick === 0) {
       d3.select(ref.current)
-        .call(d3.axisBottom(xScale)
-          .tickFormat(customTick));
+        .call(ticks);
     // On the upcomming ticks the user will request other
     // domains and we want to use duration/transition
     } else if (updateTick !== 0) {
       d3.select(ref.current)
         .transition()
         .duration(duration)
-        .call(d3.axisBottom(xScale)
-          .tickFormat(customTick));
+        .call(ticks);
     }
-  }, [duration, updateTick, xScale, dimensions.width, dimensions.height, ref]);
+  }, [duration, updateTick, xScale, dimensions.width, dimensions.height, ref, ticks]);
 
   return (
     <ClipPath width={dimensions.boundedWidth + 5} x={-5} height={20} y={dimensions.boundedHeight}>

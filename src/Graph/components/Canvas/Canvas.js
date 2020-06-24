@@ -11,10 +11,12 @@ const propTypes = {
   customDimensions: PropTypes.instanceOf(Object),
   yProp: PropTypes.string.isRequired,
   xProp: PropTypes.string.isRequired,
+  threashold: PropTypes.number,
 };
 
 const defaultProps = {
   customDimensions: {},
+  threashold: null,
 };
 
 const Canvas = ({
@@ -23,6 +25,7 @@ const Canvas = ({
   customDimensions,
   yProp,
   xProp,
+  threashold,
 }) => {
   const [ref, dimensions] = useChartDimensions(customDimensions);
 
@@ -40,14 +43,17 @@ const Canvas = ({
   ), [dimensions.boundedWidth, sortedData, xProp]);
 
   const yScale = useMemo(() => {
-    const [min, max] = d3.extent(sortedData, ({ [yProp]: y }) => y);
+    const [min, max] = d3.extent([...sortedData, {
+      // Add threashold to list of data. In case threashold is larger/smaller than the chart-data
+      [yProp]: threashold,
+    }], ({ [yProp]: y }) => y);
 
     return (
       d3.scaleLinear()
         .domain([Math.floor(min), Math.ceil(max)])
         .range([dimensions.boundedHeight, 0])
     );
-  }, [dimensions.boundedHeight, sortedData, yProp]);
+  }, [dimensions.boundedHeight, sortedData, threashold, yProp]);
 
 
   return (

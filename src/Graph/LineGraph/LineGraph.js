@@ -32,7 +32,7 @@ const LineGraph = ({
 
 
   return (
-    <Canvas.Primary data={data} yProp={yProp} xProp={xProp}>
+    <Canvas.Primary data={data} yProp={yProp} xProp={xProp} threashold={threashold}>
       {({
         yScale,
         xScale,

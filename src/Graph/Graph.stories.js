@@ -56,7 +56,7 @@ const dataset = [
 export const lineGraph = () => (
   <>
     <Graph.Line data={dataset} threashold={8500} />
-    <Graph.Line data={data} xProp="timestamp" threashold={60} />
+    <Graph.Line data={data} xProp="timestamp" threashold={50} />
     <Graph.Line data={data2} xProp="timestamp" />
     <Graph.Line data={data3} xProp="timestamp" threashold={0.7} />
   </>
