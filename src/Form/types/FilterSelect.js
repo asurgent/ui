@@ -5,6 +5,7 @@ import * as Icons from '@material-ui/icons';
 import * as Spinner from '../../Spinner';
 import * as VirtualRender from '../../VirtualRender';
 import * as Shield from '../../Shield';
+import * as Tag from '../../Tag';
 import * as Transition from '../../Transition';
 import translation from './FilterSelect.translation';
 import * as C from './FilterSelect.styled';
@@ -85,7 +86,6 @@ const FilterInput = forwardRef((props, ref) => {
   const filterHook = useFilterHook([{ label: name, facetKey: name }], tableHook, parsers);
   const groupHook = useFilterGroupHook(tableHook, filterHook, name, () => {});
 
-
   const handleChange = ({ value: filterValue, matched }) => {
     if (multiSelect) {
       const newArr = matched === true
@@ -103,12 +103,13 @@ const FilterInput = forwardRef((props, ref) => {
     setSearchValue('');
   };
 
-
+  const showTags = multiSelect && value.length > 0;
   return (
     <C.SelectFilter>
       <C.InputWrapper onClick={() => groupHook.setOpen(true)}>
         <C.Input
           type="text"
+          hideText={showTags}
           placeholder={placeholder}
           name={name}
           ref={ref}
@@ -116,6 +117,7 @@ const FilterInput = forwardRef((props, ref) => {
           value={value}
           {...props.props}
         />
+        {showTags && <Tag.Collection tags={value.map((val) => ({ value: val }))} max={3} />}
       </C.InputWrapper>
       <C.FilterWrapper>
         <Shield.Transparent
