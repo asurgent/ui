@@ -17,6 +17,8 @@ export const InputWrapper = styled.div`
 `;
 
 export const Input = styled.input`
+    padding-right: 2rem;
+    text-overflow: ellipsis;
     &:disabled {
         color: black!important;
     }

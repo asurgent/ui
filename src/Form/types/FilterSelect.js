@@ -16,7 +16,7 @@ import useFilterHook from '../../Table/TableFilter/useFilterHook';
 const { t } = translation;
 
 const propTyps = {
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)).isRequired,
   props: PropTypes.instanceOf(Object),
@@ -26,9 +26,7 @@ const propTyps = {
 
 const defaultProps = {
   value: '',
-  props: {
-    searchPlaceholder: t('searchPlaceHolder', 'asurgentui'),
-  },
+  props: { },
   theme: {},
   placeholder: t('selectPlaceholder', 'asurgentui'),
 };
@@ -39,16 +37,25 @@ const FilterInput = forwardRef((props, ref) => {
     options,
     theme,
     placeholder,
+    props: inputProps,
   } = props;
+
+  const {
+    multiSelect = false,
+    searchPlaceholder = t('searchPlaceHolder', 'asurgentui'),
+  } = inputProps;
 
   const tableHook = useTableHook();
 
   const [value, setValue] = useState('');
   const [searchValue, setSearchValue] = useState('');
-  const searchPlaceholder = props?.props?.searchPlaceholder;
 
   useEffect(() => {
-    setValue(props.value || '');
+    if (multiSelect) {
+      setValue(props.value || []);
+    } else {
+      setValue(props.value || '');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
@@ -69,17 +76,43 @@ const FilterInput = forwardRef((props, ref) => {
   const filterHook = useFilterHook([{ label: name, facetKey: name }], tableHook, parsers);
   const groupHook = useFilterGroupHook(tableHook, filterHook, name, () => {});
 
+
+  const dispatchEvent = (d) => {
+    const input = ref.current;
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+    nativeInputValueSetter.call(input, d);
+    const inputEvent = new Event('input', { bubbles: true });
+    input.dispatchEvent(inputEvent);
+  };
+
+  const handleChange = ({ value: filterValue, matched }) => {
+    if (multiSelect) {
+      const newArr = matched === true
+        ? [...value, filterValue]
+        : value.filter((val) => val !== filterValue);
+
+      setValue(newArr);
+      dispatchEvent(newArr);
+      groupHook.onSearchOptions({ searchQuery: '' });
+    } else {
+      setValue(filterValue);
+      groupHook.setOpen(false);
+      dispatchEvent(filterValue);
+    }
+    setSearchValue('');
+  };
+
+
   return (
     <C.SelectFilter>
       <C.InputWrapper onClick={() => groupHook.setOpen(true)}>
         <C.Input
           type="text"
-          disabled
           placeholder={placeholder}
-          onChange={() => {}}
           name={name}
+          disabled
           ref={ref}
-          value={value || ''}
+          value={value}
           {...props.props}
         />
       </C.InputWrapper>
@@ -117,12 +150,8 @@ const FilterInput = forwardRef((props, ref) => {
                   {(filter, key) => (
                     <FilterItem
                       key={key}
-                      multiSelect={false}
-                      onChange={({ value: filterValue }) => {
-                        setValue(filterValue);
-                        setSearchValue('');
-                        groupHook.setOpen(false);
-                      }}
+                      multiSelect={multiSelect}
+                      onChange={handleChange}
                       onAdd={() => null}
                       filterItem={filter}
                       groupHook={groupHook}

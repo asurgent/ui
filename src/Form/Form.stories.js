@@ -100,12 +100,22 @@ export const defaultForm = () => {
       ],
       tooltip: 'tooltip',
     },
-    someFilterSelect: {
+    someFilterSelectSingle: {
       type: 'filterselect',
-      label: 'Some Filterselect',
+      label: 'Some Filterselect (single)',
       options: [],
       tooltip: 'tooltip',
       props: {
+        searchPlaceholder: 'Search in me plz',
+      },
+    },
+    someFilterSelectMulti: {
+      type: 'filterselect',
+      label: 'Some Filterselect (multi)',
+      options: [],
+      tooltip: 'tooltip',
+      props: {
+        multiSelect: true,
         searchPlaceholder: 'Search in me plz',
       },
     },
@@ -127,11 +137,19 @@ export const defaultForm = () => {
       { name: 'someRadioGroup2', value: 'value4' },
       { name: 'someSelect', value: '3' },
       {
-        name: 'someFilterSelect',
+        name: 'someFilterSelectSingle',
         options: [
           { value: '1', label: 'First option' },
           { value: '2', label: 'Second option' },
           { value: '3', label: 'Third option' },
+        ],
+      },
+      {
+        name: 'someFilterSelectMulti',
+        options: [
+          { value: 'First option', label: 'First option' },
+          { value: 'Second option', label: 'Second option' },
+          { value: 'Third option', label: 'Third option' },
         ],
       },
       { name: 'someDate', value: moment().startOf('day').toISOString() },
@@ -156,7 +174,7 @@ export const defaultForm = () => {
   }, [renderErrors]);
 
   return (
-    <>
+    <div style={{ minHeight: '120vh' }}>
       <Form.Primary
         form={formData}
         msTimer={15}
@@ -179,12 +197,13 @@ export const defaultForm = () => {
               <Button.Secondary disabled={!isDirty} onClick={onResetAction}>
                 Reset
               </Button.Secondary>
+              <Button.Primary onClick={() => console.log(formData.getValues())}>getvalues</Button.Primary>
               <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
             </Block.SpaceBetween>
           </>
         )}
       </Form.Primary>
-    </>
+    </div>
   );
 };
 
