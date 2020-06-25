@@ -18,21 +18,32 @@ const defaultProps = {
 const MarkerLine = ({ yScale, markerLines, dimensions }) => {
   const threasholdLines = useMemo(() => {
     if (Array.isArray(markerLines)) {
-      return markerLines.map((marker) => yScale(marker));
+      return markerLines.map((marker) => ({
+        y0: yScale(marker.value || marker),
+        color: marker.color || null,
+      }));
+    }
+    if (markerLines instanceof Object && markerLines.value) {
+      return [{
+        y0: yScale(markerLines.value),
+        color: markerLines.color || null,
+      }];
     }
     if (Number.isInteger(markerLines)) {
-      return [yScale(markerLines)];
+      return [{ y0: yScale(markerLines), color: null }];
     }
+
     return [];
   }, [markerLines, yScale]);
 
   return (
     <>
-      {threasholdLines.map((marker) => (
-        <C.DashedLine
-          key={marker}
-          y1={marker}
-          y2={marker}
+      {threasholdLines.map(({ y0, color }) => (
+        <C.MarkerLine
+          key={y0}
+          y1={y0}
+          y2={y0}
+          color={color}
           x1={0}
           x2={dimensions.boundedWidth}
         />

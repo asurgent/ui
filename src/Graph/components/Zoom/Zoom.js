@@ -134,12 +134,12 @@ const Zoom = ({
       }
       { tooltip && (
         <line
-          strokeWidth={2}
+          strokeWidth={1}
           y1={dimensions.boundedHeight}
           y2={0}
           x1={tooltip.cx}
           x2={tooltip.cx}
-          stroke="pink"
+          stroke="#cab83a"
         />
       )}
       <g

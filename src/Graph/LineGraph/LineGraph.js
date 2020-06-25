@@ -43,7 +43,6 @@ const LineGraph = ({
     onTooltipEvent(tooltip);
   }, [onTooltipEvent]);
 
-
   return (
     <Canvas.Primary
       data={data}
