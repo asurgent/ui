@@ -31,6 +31,15 @@ const defaultProps = {
   placeholder: t('selectPlaceholder', 'asurgentui'),
 };
 
+const dispatchEvent = (value, ref) => {
+  const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLInputElement.prototype, 'value',
+  ).set;
+  nativeInputValueSetter.call(ref.current, value);
+  const inputEvent = new Event('input', { bubbles: true });
+  ref.current.dispatchEvent(inputEvent);
+};
+
 const FilterInput = forwardRef((props, ref) => {
   const {
     name,
@@ -77,14 +86,6 @@ const FilterInput = forwardRef((props, ref) => {
   const groupHook = useFilterGroupHook(tableHook, filterHook, name, () => {});
 
 
-  const dispatchEvent = (d) => {
-    const input = ref.current;
-    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
-    nativeInputValueSetter.call(input, d);
-    const inputEvent = new Event('input', { bubbles: true });
-    input.dispatchEvent(inputEvent);
-  };
-
   const handleChange = ({ value: filterValue, matched }) => {
     if (multiSelect) {
       const newArr = matched === true
@@ -92,12 +93,12 @@ const FilterInput = forwardRef((props, ref) => {
         : value.filter((val) => val !== filterValue);
 
       setValue(newArr);
-      dispatchEvent(newArr);
+      dispatchEvent(newArr, ref);
       groupHook.onSearchOptions({ searchQuery: '' });
     } else {
       setValue(filterValue);
       groupHook.setOpen(false);
-      dispatchEvent(filterValue);
+      dispatchEvent(filterValue, ref);
     }
     setSearchValue('');
   };
@@ -110,8 +111,8 @@ const FilterInput = forwardRef((props, ref) => {
           type="text"
           placeholder={placeholder}
           name={name}
-          disabled
           ref={ref}
+          disabled
           value={value}
           {...props.props}
         />

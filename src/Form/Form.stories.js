@@ -179,6 +179,10 @@ export const defaultForm = () => {
         form={formData}
         msTimer={15}
         onSubmit={(values, isDirty) => {
+          const multiChoices = values.someFilterSelectMulti.split(',');
+          const multiValue = multiChoices.length === 1 && multiChoices[0] === '' ? [] : multiChoices;
+
+          Object.assign(values, { someFilterSelectMulti: multiValue });
           action()('isDirty', isDirty);
           action()('Submitted', values);
         }}
