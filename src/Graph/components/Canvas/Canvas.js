@@ -11,12 +11,15 @@ const propTypes = {
   customDimensions: PropTypes.instanceOf(Object),
   yProp: PropTypes.string.isRequired,
   xProp: PropTypes.string.isRequired,
-  threashold: PropTypes.number,
+  markerLines: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.instanceOf(Array),
+  ]),
 };
 
 const defaultProps = {
   customDimensions: {},
-  threashold: null,
+  markerLines: [],
 };
 
 const Canvas = ({
@@ -25,7 +28,7 @@ const Canvas = ({
   customDimensions,
   yProp,
   xProp,
-  threashold,
+  markerLines,
 }) => {
   const [ref, dimensions] = useChartDimensions(customDimensions);
 
@@ -43,17 +46,22 @@ const Canvas = ({
   ), [dimensions.boundedWidth, sortedData, xProp]);
 
   const yScale = useMemo(() => {
-    const [min, max] = d3.extent([...sortedData, {
-      // Add threashold to list of data. In case threashold is larger/smaller than the chart-data
-      [yProp]: threashold,
-    }], ({ [yProp]: y }) => y);
+    // Add markerLines to list of data. In case markerLines is larger/smaller than the chart-data
+    const treasholdValues = (Array.isArray(markerLines)
+      ? [...markerLines]
+      : [markerLines])
+      .reduce((acc, item) => [...acc, {
+        [yProp]: item,
+      }], []);
+
+    const [min, max] = d3.extent([...sortedData, ...treasholdValues], ({ [yProp]: y }) => y);
 
     return (
       d3.scaleLinear()
         .domain([Math.floor(min), Math.ceil(max)])
         .range([dimensions.boundedHeight, 0])
     );
-  }, [dimensions.boundedHeight, sortedData, threashold, yProp]);
+  }, [dimensions.boundedHeight, sortedData, markerLines, yProp]);
 
 
   return (

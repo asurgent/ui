@@ -5,13 +5,19 @@ import Line from './Line';
 import Zoom from '../components/Zoom';
 import * as Axis from '../components/Axis';
 import ClipPath from '../components/ClipPath';
+import Grid from '../components/Grid';
+import MarkerLine from '../components/MarkerLine';
 
 const propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
   yProp: PropTypes.string,
   xProp: PropTypes.string,
   duration: PropTypes.number,
-  threashold: PropTypes.number,
+  gridLines: PropTypes.number,
+  markerLines: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.instanceOf(Array),
+  ]),
   onTooltipEvent: PropTypes.func,
 };
 
@@ -19,12 +25,19 @@ const defaultProps = {
   xProp: 'date',
   yProp: 'value',
   duration: 350,
-  threashold: null,
+  gridLines: 3,
+  markerLines: null,
   onTooltipEvent: () => {},
 };
 
 const LineGraph = ({
-  data, yProp, xProp, duration, onTooltipEvent, threashold,
+  data,
+  yProp,
+  xProp,
+  duration,
+  markerLines,
+  gridLines,
+  onTooltipEvent,
 }) => {
   const handleTooltipData = useCallback((tooltip) => {
     onTooltipEvent(tooltip);
@@ -32,7 +45,12 @@ const LineGraph = ({
 
 
   return (
-    <Canvas.Primary data={data} yProp={yProp} xProp={xProp} threashold={threashold}>
+    <Canvas.Primary
+      data={data}
+      yProp={yProp}
+      xProp={xProp}
+      markerLines={markerLines}
+    >
       {({
         yScale,
         xScale,
@@ -50,7 +68,12 @@ const LineGraph = ({
             dimensions={dimensions}
             onTooltipEvent={handleTooltipData}
           >
-
+            <Grid
+              dimensions={dimensions}
+              lines={gridLines}
+              yScale={yScale}
+              xScale={xScale}
+            />
             <Axis.XPrimary
               dimensions={dimensions}
               xScale={xScale}
@@ -58,10 +81,14 @@ const LineGraph = ({
               duration={duration}
             />
             <Axis.YPrimary
-              dashedMarkerLine={threashold}
               dimensions={dimensions}
               yScale={yScale}
               yProp={yProp}
+            />
+            <MarkerLine
+              markerLines={markerLines}
+              dimensions={dimensions}
+              yScale={yScale}
             />
             <Line
               duration={duration}

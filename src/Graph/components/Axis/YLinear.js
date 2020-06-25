@@ -6,23 +6,12 @@ import * as C from './Axis.styled';
 const propTypes = {
   yScale: PropTypes.instanceOf(Object).isRequired,
   dimensions: PropTypes.instanceOf(Object).isRequired,
-  dashedMarkerLine: PropTypes.number,
 };
 
-const defaultProps = {
-  dashedMarkerLine: null,
-};
+const defaultProps = {};
 
-const YLinearAxis = ({ yScale, dashedMarkerLine, dimensions }) => {
+const YLinearAxis = ({ yScale, dimensions }) => {
   const ref = createRef();
-
-
-  const threasholdLine = useMemo(() => {
-    if (dashedMarkerLine) {
-      return yScale(dashedMarkerLine);
-    }
-    return null;
-  }, [dashedMarkerLine, yScale]);
 
   const ticks = useMemo(() => d3.axisLeft(yScale)
     .tickFormat((tickVal) => (
@@ -35,19 +24,7 @@ const YLinearAxis = ({ yScale, dashedMarkerLine, dimensions }) => {
       .call(ticks);
   }, [ref, ticks, yScale]);
 
-  return (
-    <>
-      <g ref={ref} />
-      {dashedMarkerLine !== null && (
-        <C.DashedLine
-          y1={threasholdLine}
-          y2={threasholdLine}
-          x1={0}
-          x2={dimensions.boundedWidth}
-        />
-      )}
-    </>
-  );
+  return (<g ref={ref} />);
 };
 
 
