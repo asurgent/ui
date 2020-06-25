@@ -179,8 +179,8 @@ export const defaultForm = () => {
         form={formData}
         msTimer={15}
         onSubmit={(values, isDirty) => {
-          const multiChoices = values.someFilterSelectMulti.split(',');
-          const multiValue = multiChoices.length === 1 && multiChoices[0] === '' ? [] : multiChoices;
+          const multiChoiceSplit = values.someFilterSelectMulti.split(',');
+          const multiValue = multiChoiceSplit.length === 1 && multiChoiceSplit[0] === '' ? [] : multiChoiceSplit;
 
           Object.assign(values, { someFilterSelectMulti: multiValue });
           action()('isDirty', isDirty);
@@ -201,7 +201,6 @@ export const defaultForm = () => {
               <Button.Secondary disabled={!isDirty} onClick={onResetAction}>
                 Reset
               </Button.Secondary>
-              <Button.Primary onClick={() => console.log(formData.getValues())}>getvalues</Button.Primary>
               <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
             </Block.SpaceBetween>
           </>
