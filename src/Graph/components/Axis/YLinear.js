@@ -1,16 +1,14 @@
 import React, { useMemo, useEffect, createRef } from 'react';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
-import * as C from './Axis.styled';
 
 const propTypes = {
   yScale: PropTypes.instanceOf(Object).isRequired,
-  dimensions: PropTypes.instanceOf(Object).isRequired,
 };
 
 const defaultProps = {};
 
-const YLinearAxis = ({ yScale, dimensions }) => {
+const YLinearAxis = ({ yScale }) => {
   const ref = createRef();
 
   const ticks = useMemo(() => d3.axisLeft(yScale)

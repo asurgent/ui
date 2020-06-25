@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useTheme } from 'styled-components';
 import * as Canvas from '../components/Canvas';
 import Line from './Line';
 import Zoom from '../components/Zoom';
