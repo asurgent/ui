@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
-
 import * as Transitions from './index';
-
 
 export const fadeIn = () => {
   const [open, setOpen] = useState(false);
@@ -17,7 +15,6 @@ export const fadeIn = () => {
   );
 };
 
-
 export const fadeOut = () => {
   const [hidden, setHidden] = useState(false);
 
@@ -30,7 +27,6 @@ export const fadeOut = () => {
     </div>
   );
 };
-
 
 export const fadeInSlideDown = () => {
   const [open, setOpen] = useState(false);

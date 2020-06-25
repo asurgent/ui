@@ -5,8 +5,10 @@
   "scripts": {
     "watch": "webpack --watch --mode production",
     "build": "webpack --mode production",
-    "test": "jest --watch",
-    "ci-test": "jest",
+    "test": "jest --watch --projects jest-eslint.config.js",
+    "test:all": "jest --projects jest.config.js",
+    "test:test": "jest --verbose --projects jest-test.config.js",
+    "ci-test": "jest --projects jest-eslint.config.js",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages",
