@@ -43,8 +43,6 @@ export const useChartDimensions = () => {
   const [height, setHeight] = useState(200);
 
   const dimensions = combineChartDimensions({ width, height });
-  // if (dimensions.width && dimensions.height) { return [ref, dimensions]; }
-
 
   useEffect(() => {
     const element = ref.current;

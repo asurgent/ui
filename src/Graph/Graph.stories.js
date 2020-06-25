@@ -55,9 +55,17 @@ const dataset = [
 
 export const lineGraph = () => (
   <>
-    <Graph.Line data={dataset} markerLines={10000} />
-    <Graph.Line data={data} xProp="timestamp" markerLines={[50, 10, 30]} />
-    <Graph.Line data={data2} xProp="timestamp" />
-    <Graph.Line data={data3} xProp="timestamp" markerLines={0.7} />
+    <div style={{ height: '200px' }}>
+      <Graph.Line data={dataset} markerLines={10000} />
+    </div>
+    <div style={{ height: '200px' }}>
+      <Graph.Line data={data} xProp="timestamp" markerLines={[50, 10, 30]} />
+    </div>
+    <div style={{ height: '200px' }}>
+      <Graph.Line data={data2} xProp="timestamp" />
+    </div>
+    <div style={{ height: '200px' }}>
+      <Graph.Line data={data3} xProp="timestamp" markerLines={0.7} />
+    </div>
   </>
 );

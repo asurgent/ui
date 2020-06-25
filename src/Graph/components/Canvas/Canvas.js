@@ -46,15 +46,21 @@ const Canvas = ({
   ), [dimensions.boundedWidth, sortedData, xProp]);
 
   const yScale = useMemo(() => {
-    // Add markerLines to list of data. In case markerLines is larger/smaller than the chart-data
-    const treasholdValues = (Array.isArray(markerLines)
-      ? [...markerLines]
-      : [markerLines])
-      .reduce((acc, item) => [...acc, {
-        [yProp]: item,
-      }], []);
+    // Add markerLines to list of data. In case markerLines
+    // is larger/smaller than the chart-data
+    const treasholdValues = markerLines !== null
+      ? (Array.isArray(markerLines)
+        ? [...markerLines]
+        : [markerLines])
+        .reduce((acc, item) => [...acc, {
+          [yProp]: item.value || item,
+        }], [])
+      : [];
 
-    const [min, max] = d3.extent([...sortedData, ...treasholdValues], ({ [yProp]: y }) => y);
+    const [min, max] = d3.extent([
+      ...sortedData,
+      ...treasholdValues,
+    ], ({ [yProp]: y }) => y);
 
     return (
       d3.scaleLinear()
@@ -65,7 +71,7 @@ const Canvas = ({
 
 
   return (
-    <div ref={ref} style={{ height: '200px' }}>
+    <C.Wrapper ref={ref}>
       <svg width={dimensions.width} height={dimensions.height}>
         <C.ChartGroup dimensions={dimensions}>
           {children({
@@ -76,7 +82,7 @@ const Canvas = ({
           })}
         </C.ChartGroup>
       </svg>
-    </div>
+    </C.Wrapper>
   );
 };
 

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div`
+    height: inherit;
+`;
 
 export const ChartGroup = styled.g`
     transform: translate${({ dimensions }) => `(${dimensions.marginLeft}px, ${dimensions.marginTop}px)`};
