@@ -4,7 +4,8 @@ export const InputWrapper = styled.div`
     width: 100%;
     /* mock a normal select by making text not selectable */
     position: relative;
-    user-select: none; 
+    user-select: none;
+    display: flex;
     &::after {
         content: '';
         display: block;
@@ -17,9 +18,12 @@ export const InputWrapper = styled.div`
 `;
 
 export const Input = styled.input`
+    padding-right: 2rem;
+    text-overflow: ellipsis;
     &:disabled {
         color: black!important;
     }
+    display: ${({ hideText }) => (hideText ? 'none' : 'block')};
 `;
 
 export const FilterInput = styled.input`

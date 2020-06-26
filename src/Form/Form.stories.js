@@ -100,12 +100,22 @@ export const defaultForm = () => {
       ],
       tooltip: 'tooltip',
     },
-    someFilterSelect: {
+    someFilterSelectSingle: {
       type: 'filterselect',
-      label: 'Some Filterselect',
+      label: 'Some Filterselect (single)',
       options: [],
       tooltip: 'tooltip',
       props: {
+        searchPlaceholder: 'Search in me plz',
+      },
+    },
+    someFilterSelectMulti: {
+      type: 'filterselect',
+      label: 'Some Filterselect (multi)',
+      options: [],
+      tooltip: 'tooltip',
+      props: {
+        multiSelect: true,
         searchPlaceholder: 'Search in me plz',
       },
     },
@@ -127,11 +137,26 @@ export const defaultForm = () => {
       { name: 'someRadioGroup2', value: 'value4' },
       { name: 'someSelect', value: '3' },
       {
-        name: 'someFilterSelect',
+        name: 'someFilterSelectSingle',
         options: [
           { value: '1', label: 'First option' },
           { value: '2', label: 'Second option' },
           { value: '3', label: 'Third option' },
+        ],
+      },
+      {
+        name: 'someFilterSelectMulti',
+        options: [
+          { value: 'First option', label: 'First option' },
+          { value: 'Second option', label: 'Second option' },
+          { value: 'Third option', label: 'Third option' },
+          { value: 'Fourth option', label: 'Fourth option' },
+          { value: 'Fifth option', label: 'Fifth option' },
+          { value: 'Sixth option', label: 'Sixth option' },
+          { value: 'Seventh option', label: 'Seventh option' },
+          { value: 'Eigth option', label: 'Eigth option' },
+          { value: 'Ninth option', label: 'Ninth option' },
+          { value: 'Tenth option', label: 'Tenth option' },
         ],
       },
       { name: 'someDate', value: moment().startOf('day').toISOString() },
@@ -156,11 +181,15 @@ export const defaultForm = () => {
   }, [renderErrors]);
 
   return (
-    <>
+    <div style={{ minHeight: '120vh' }}>
       <Form.Primary
         form={formData}
         msTimer={15}
         onSubmit={(values, isDirty) => {
+          const multiChoiceSplit = values.someFilterSelectMulti.split(',');
+          const multiValue = multiChoiceSplit.length === 1 && multiChoiceSplit[0] === '' ? [] : multiChoiceSplit;
+
+          Object.assign(values, { someFilterSelectMulti: multiValue });
           action()('isDirty', isDirty);
           action()('Submitted', values);
         }}
@@ -184,7 +213,7 @@ export const defaultForm = () => {
           </>
         )}
       </Form.Primary>
-    </>
+    </div>
   );
 };
 
