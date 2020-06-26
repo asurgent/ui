@@ -2,17 +2,17 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import * as Icons from '@material-ui/icons';
-import * as Spinner from '../../Spinner';
-import * as VirtualRender from '../../VirtualRender';
-import * as Shield from '../../Shield';
-import * as Tag from '../../Tag';
-import * as Transition from '../../Transition';
+import * as Spinner from '../../../Spinner';
+import * as VirtualRender from '../../../VirtualRender';
+import * as Shield from '../../../Shield';
+import * as Tag from '../../../Tag';
+import * as Transition from '../../../Transition';
 import translation from './FilterSelect.translation';
 import * as C from './FilterSelect.styled';
-import useTableHook from '../../Table/useTableHook';
-import FilterItem from '../../Table/TableFilter/components/FilterItem';
-import useFilterGroupHook from '../../Table/TableFilter/useFilterGroupHook';
-import useFilterHook from '../../Table/TableFilter/useFilterHook';
+import useTableHook from '../../../Table/useTableHook';
+import FilterItem from '../../../Table/TableFilter/components/FilterItem';
+import useFilterGroupHook from '../../../Table/TableFilter/useFilterGroupHook';
+import useFilterHook from '../../../Table/TableFilter/useFilterHook';
 
 const { t } = translation;
 
