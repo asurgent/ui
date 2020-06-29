@@ -18,7 +18,7 @@ export const Stats = styled.div`
 export const Stat = styled.div`
     height: 100%;
     margin-right: 1rem;
-    border-left: 5px solid ${({ theme, color }) => (color || 'steelblue')};
+    border-left: 5px solid ${({ color }) => (color || 'steelblue')};
     display: flex;
     align-items: flex-start;
     justify-content: center;

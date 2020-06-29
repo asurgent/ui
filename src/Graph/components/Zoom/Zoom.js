@@ -8,8 +8,6 @@ const propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
   xScale: PropTypes.instanceOf(Object).isRequired,
   xProp: PropTypes.string.isRequired,
-  yScale: PropTypes.instanceOf(Object).isRequired,
-  yProp: PropTypes.string.isRequired,
   dimensions: PropTypes.instanceOf(Object).isRequired,
   duration: PropTypes.number.isRequired,
   onTooltipEvent: PropTypes.func.isRequired,
@@ -37,8 +35,6 @@ const timer = (callback, msTimer) => () => withDelayTimer((...args) => {
 
 const Zoom = ({
   xScale,
-  yScale,
-  yProp,
   data,
   xProp,
   dimensions,

@@ -110,7 +110,7 @@ const LineGraph = ({
       </C.Graph>
       <C.Stats>
         <C.Stat>
-          <b>{dataTitle || 'Hover data'}</b>
+          <b>{dataTitle || 'Hover data'}</b>
           {tooltip[yProp]}
         </C.Stat>
         {markerLines && markerLines.map((marker) => (

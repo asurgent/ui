@@ -92,14 +92,22 @@ export const lineGraph = () => (
         markerLines={[{ value: 10000, title: 'Threashold', color: '#C62929' }]}
       />
     </div>
-    {/* <div style={{ height: '200px' }}>
-      <Graph.Line data={data} xProp="timestamp" markerLines={[50, 10, 30]} />
+    <div style={{ height: '200px' }}>
+      <Graph.Line
+        data={data}
+        xProp="timestamp"
+        markerLines={[
+          { value: 50, title: 'one', color: '#C62929' },
+          { value: 10, title: 'two', color: 'orange' },
+          { value: 20, title: 'three', color: 'magenta' },
+        ]}
+      />
     </div>
     <div style={{ height: '200px' }}>
       <Graph.Line data={data2} xProp="timestamp" />
     </div>
     <div style={{ height: '200px' }}>
-      <Graph.Line data={data3} xProp="timestamp" markerLines={0.7} />
-    </div> */}
+      <Graph.Line data={data3} xProp="timestamp" markerLines={[0.7]} />
+    </div>
   </>
 );
