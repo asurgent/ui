@@ -5,10 +5,7 @@ import * as C from './MarkerLine.styled';
 const propTypes = {
   yScale: PropTypes.instanceOf(Object).isRequired,
   dimensions: PropTypes.instanceOf(Object).isRequired,
-  markerLines: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.instanceOf(Array),
-  ]),
+  markerLines: PropTypes.instanceOf(Array),
 };
 
 const defaultProps = {

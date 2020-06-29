@@ -90,6 +90,19 @@ const Zoom = ({
     setTimeout(() => setDisable(false), duration);
   }, [duration]);
 
+  useLayoutEffect(() => {
+    const index = Math.floor(data.length / 2);
+    const targetData = data[index];
+    const result = {
+      targetData,
+      cx: xScale(targetData[xProp]),
+    };
+    onTooltipEvent(result);
+    setTooltip(result);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, xScale]);
+
 
   const bisect = useMemo(() => d3.bisector(({ [xProp]: x }) => x).left, [xProp]);
 
@@ -103,17 +116,9 @@ const Zoom = ({
       const result = {
         targetData,
         cx: xScale(targetData[xProp]),
-        cy: yScale(targetData[yProp]),
       };
       onTooltipEvent(result);
       setTooltip(result);
-    }
-  };
-
-  const handleMouseOut = () => {
-    if (!disable) {
-      onTooltipEvent(null);
-      setTooltip(null);
     }
   };
 
@@ -145,10 +150,8 @@ const Zoom = ({
       <g
         ref={ref}
         onFocus={handleMouseMove}
-        onBlur={handleMouseOut}
         onMouseMove={handleMouseMove}
         onMouseOver={handleMouseMove}
-        onMouseOut={handleMouseOut}
       />
     </>
   );

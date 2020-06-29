@@ -11,10 +11,7 @@ const propTypes = {
   customDimensions: PropTypes.instanceOf(Object),
   yProp: PropTypes.string.isRequired,
   xProp: PropTypes.string.isRequired,
-  markerLines: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.instanceOf(Array),
-  ]),
+  markerLines: PropTypes.instanceOf(Array),
 };
 
 const defaultProps = {

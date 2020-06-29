@@ -6,7 +6,7 @@ const combineChartDimensions = (dimensions = {}) => {
     ...dimensions,
     marginTop: dimensions.marginTop || 10,
     marginRight: dimensions.marginRight || 10,
-    marginBottom: dimensions.marginBottom || 40,
+    marginBottom: dimensions.marginBottom || 30,
     marginLeft: dimensions.marginLeft || 40,
   };
   return {

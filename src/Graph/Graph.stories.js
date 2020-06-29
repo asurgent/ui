@@ -85,10 +85,14 @@ export const lineGraph = () => (
     <div style={{ height: '200px' }}>
       <Graph.Line data={dataset2} />
     </div>
-    {/* <div style={{ height: '200px' }}>
-      <Graph.Line data={dataset} markerLines={10000} />
-    </div>
     <div style={{ height: '200px' }}>
+      <Graph.Line
+        dataTitle="Special data set"
+        data={dataset}
+        markerLines={[{ value: 10000, title: 'Threashold', color: '#C62929' }]}
+      />
+    </div>
+    {/* <div style={{ height: '200px' }}>
       <Graph.Line data={data} xProp="timestamp" markerLines={[50, 10, 30]} />
     </div>
     <div style={{ height: '200px' }}>

@@ -14,20 +14,19 @@ const propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
   yProp: PropTypes.string,
   xProp: PropTypes.string,
+  dataTitle: PropTypes.string,
   duration: PropTypes.number,
   gridLines: PropTypes.number,
-  markerLines: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.instanceOf(Array),
-  ]),
+  markerLines: PropTypes.instanceOf(Array),
 };
 
 const defaultProps = {
   xProp: 'date',
   yProp: 'value',
+  dataTitle: '',
   duration: 350,
   gridLines: 3,
-  markerLines: null,
+  markerLines: [],
 };
 
 const LineGraph = ({
@@ -36,6 +35,7 @@ const LineGraph = ({
   xProp,
   duration,
   markerLines,
+  dataTitle,
   gridLines,
 }) => {
   const [tooltip, setTooltip] = useState({});
@@ -110,9 +110,15 @@ const LineGraph = ({
       </C.Graph>
       <C.Stats>
         <C.Stat>
-          <b>Title</b>
+          <b>{dataTitle || 'Hover data'}</b>
           {tooltip[yProp]}
         </C.Stat>
+        {markerLines && markerLines.map((marker) => (
+          <C.Stat key={marker.title} color={marker.color}>
+            <b>{marker.title}</b>
+            {marker.value}
+          </C.Stat>
+        ))}
       </C.Stats>
     </C.Wrapper>
   );

@@ -10,15 +10,15 @@ export const Graph = styled.div`
 `;
 
 export const Stats = styled.div`
+    display: flex;
     height: 4rem;
     margin-left: 4rem;
 `;
 
 export const Stat = styled.div`
     height: 100%;
-    width: 10rem;
-    border-left: 5px solid red;
-    border-color: red;
+    margin-right: 1rem;
+    border-left: 5px solid ${({ theme, color }) => (color || 'steelblue')};
     display: flex;
     align-items: flex-start;
     justify-content: center;
