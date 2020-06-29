@@ -31,7 +31,7 @@ const Line = ({
 }) => {
   const ref = createRef();
   const line = useMemo(() => d3.line()
-    .curve(d3.curveBasis)
+    .curve(d3.curveMonotoneX)
     .x(({ [xProp]: x }) => xScale(x))
     .y(({ [yProp]: y }) => yScale(y)),
   [xProp, xScale, yProp, yScale]);

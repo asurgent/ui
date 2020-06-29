@@ -35,9 +35,10 @@ const Canvas = ({
   const sortedData = useMemo(() => data
     .reduce((acc, item) => ([{
       ...item,
+      [yProp]: Number(item[yProp]),
       [xProp]: moment(item[xProp]),
     }, ...acc]), [])
-    .sort((a, b) => a[xProp] - b[xProp]), [data, xProp]);
+    .sort((a, b) => a[xProp] - b[xProp]), [data, xProp, yProp]);
 
   const xScale = useMemo(() => (
     d3.scaleTime()

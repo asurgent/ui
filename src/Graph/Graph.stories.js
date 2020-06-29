@@ -52,10 +52,40 @@ const dataset = [
   },
 ];
 
+const dataset2 = [
+  {
+    date: '2018-04-23',
+    value: '0',
+  },
+  {
+    date: '2018-04-24',
+    value: '5',
+  },
+  {
+    date: '2018-04-25',
+    value: '10',
+  },
+  {
+    date: '2018-04-26',
+    value: '15',
+  },
+  {
+    date: '2018-04-27',
+    value: '5',
+  },
+  {
+    date: '2018-04-28',
+    value: '0',
+  },
+];
+
 
 export const lineGraph = () => (
   <>
     <div style={{ height: '200px' }}>
+      <Graph.Line data={dataset2} />
+    </div>
+    {/* <div style={{ height: '200px' }}>
       <Graph.Line data={dataset} markerLines={10000} />
     </div>
     <div style={{ height: '200px' }}>
@@ -66,6 +96,6 @@ export const lineGraph = () => (
     </div>
     <div style={{ height: '200px' }}>
       <Graph.Line data={data3} xProp="timestamp" markerLines={0.7} />
-    </div>
+    </div> */}
   </>
 );
