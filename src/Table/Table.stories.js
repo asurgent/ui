@@ -97,6 +97,15 @@ const rowComponentOverride = ({ row }) => {
   return OverrideRow;
 };
 
+const cardComponentOverride = ({ card }) => {
+  const OverrideCard = styled(card)`
+    background: magenta;
+    border: 4px solid cyan;
+    padding: 2rem;
+  `;
+  return OverrideCard;
+};
+
 const cellComponentOverride = ({ cell }) => {
   const OverrideCell = styled(cell)`
     padding:  3.2rem .8rem;
@@ -113,6 +122,7 @@ export const base = () => (
     <Table.Base
       cellComponent={cellComponentOverride}
       rowComponent={rowComponentOverride}
+      cardComponent={cardComponentOverride}
       emptystate={text('Emptystate', 'No items found')}
       isLoading={boolean('Loading', false)}
       zebra={boolean('Zebra', true)}
