@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    height: inherit;
+    height: 100%;
 `;
 
 export const ChartGroup = styled.g`

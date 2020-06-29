@@ -1,12 +1,14 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import * as Canvas from '../components/Canvas';
-import Line from './Line';
 import Zoom from '../components/Zoom';
 import * as Axis from '../components/Axis';
 import ClipPath from '../components/ClipPath';
 import Grid from '../components/Grid';
+import Line from '../components/Line';
 import MarkerLine from '../components/MarkerLine';
+
+import * as C from './LineGraph.styled';
 
 const propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
@@ -37,61 +39,30 @@ const LineGraph = ({
   gridLines,
 }) => {
   const [tooltip, setTooltip] = useState({});
-  const handleTooltipData = useCallback(({ targetData }) => {
-    if (targetData) {
-      setTooltip(targetData);
+  const handleTooltipData = useCallback((event) => {
+    if (event?.targetData) {
+      setTooltip(event.targetData);
     }
   }, []);
 
 
   return (
-    <>
-      <Canvas.Primary
-        data={data}
-        yProp={yProp}
-        xProp={xProp}
-        markerLines={markerLines}
-      >
-        {({
-          yScale,
-          xScale,
-          dimensions,
-          sortedData,
-        }) => (
-          <ClipPath dimensions={dimensions} outer>
-            <Zoom
-              duration={duration}
-              xScale={xScale}
-              yScale={yScale}
-              data={sortedData}
-              yProp={yProp}
-              xProp={xProp}
-              dimensions={dimensions}
-              onTooltipEvent={handleTooltipData}
-            >
-              <Grid
-                dimensions={dimensions}
-                lines={gridLines}
-                yScale={yScale}
-                xScale={xScale}
-              />
-              <Axis.XPrimary
-                dimensions={dimensions}
-                xScale={xScale}
-                xProp={xProp}
-                duration={duration}
-              />
-              <Axis.YPrimary
-                dimensions={dimensions}
-                yScale={yScale}
-                yProp={yProp}
-              />
-              <MarkerLine
-                markerLines={markerLines}
-                dimensions={dimensions}
-                yScale={yScale}
-              />
-              <Line
+    <C.Wrapper>
+      <C.Graph>
+        <Canvas.Primary
+          data={data}
+          yProp={yProp}
+          xProp={xProp}
+          markerLines={markerLines}
+        >
+          {({
+            yScale,
+            xScale,
+            dimensions,
+            sortedData,
+          }) => (
+            <ClipPath dimensions={dimensions} outer>
+              <Zoom
                 duration={duration}
                 xScale={xScale}
                 yScale={yScale}
@@ -99,13 +70,51 @@ const LineGraph = ({
                 yProp={yProp}
                 xProp={xProp}
                 dimensions={dimensions}
-              />
-            </Zoom>
-          </ClipPath>
-        )}
-      </Canvas.Primary>
-      {tooltip[yProp]}
-    </>
+                onTooltipEvent={handleTooltipData}
+              >
+                <Grid
+                  dimensions={dimensions}
+                  lines={gridLines}
+                  yScale={yScale}
+                  xScale={xScale}
+                />
+                <Axis.XPrimary
+                  dimensions={dimensions}
+                  xScale={xScale}
+                  xProp={xProp}
+                  duration={duration}
+                />
+                <Axis.YPrimary
+                  dimensions={dimensions}
+                  yScale={yScale}
+                  yProp={yProp}
+                />
+                <MarkerLine
+                  markerLines={markerLines}
+                  dimensions={dimensions}
+                  yScale={yScale}
+                />
+                <Line
+                  duration={duration}
+                  xScale={xScale}
+                  yScale={yScale}
+                  data={sortedData}
+                  yProp={yProp}
+                  xProp={xProp}
+                  dimensions={dimensions}
+                />
+              </Zoom>
+            </ClipPath>
+          )}
+        </Canvas.Primary>
+      </C.Graph>
+      <C.Stats>
+        <C.Stat>
+          <b>Title</b>
+          {tooltip[yProp]}
+        </C.Stat>
+      </C.Stats>
+    </C.Wrapper>
   );
 };
 

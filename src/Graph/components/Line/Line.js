@@ -1,9 +1,8 @@
 import React, { useEffect, createRef, useMemo } from 'react';
 import * as d3 from 'd3';
 import PropTypes from 'prop-types';
-import * as C from './LineGraph.styled';
-
-import ClipPath from '../components/ClipPath';
+import * as C from './Line.styled';
+import ClipPath from '../ClipPath';
 
 const propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
