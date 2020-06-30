@@ -1,3 +1,3 @@
-import Line from './LineGraph';
+import LineGraph from './LineGraph';
 
-export { Line };
+export { LineGraph };

@@ -16,6 +16,7 @@ import * as Switch from './Switch';
 import * as UserImage from './UserImage';
 import * as Moment from './Moment';
 import * as Cron from './Cron';
+import * as Graph from './Graph';
 import * as Transition from './Transition';
 import * as Dismissable from './Dismissable';
 import * as TimeComponents from './TimeComponents';
@@ -25,6 +26,7 @@ import * as Omnibar from './layout/Omnibar';
 
 export {
   i18n,
+  Graph,
   Button,
   Spinner,
   Block,
