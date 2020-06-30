@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const parseQuery = (query) => {
+const searchEngineParser = (query) => {
   if (!query) {
     return '';
   }
@@ -14,7 +14,20 @@ const parseQuery = (query) => {
   return `${joined}*`;
 };
 
-const useSearchbarHook = (tableHook) => {
+const parseRequestQuery = (query, parseSearchStringOutput) => {
+  if (parseSearchStringOutput && typeof parseSearchStringOutput === 'function') {
+    const searchFormat = `${searchEngineParser(query)}`;
+    const result = parseSearchStringOutput(searchFormat);
+
+    if (typeof result === 'string') {
+      return result;
+    }
+  }
+
+  return `${searchEngineParser(query)}`;
+};
+
+const useSearchbarHook = (tableHook, parsers) => {
   // Keeps track of when component has been mounted.
   // After its been mounted and set to true, the initail state is set
   const [isReady, setIsReady] = useState(false);
@@ -52,8 +65,8 @@ const useSearchbarHook = (tableHook) => {
   // Poppulate tabelHook with state for requests and URL
   useEffect(() => {
     if (isReady) {
-      const request = { search_string: `${parseQuery(query)}` };
-      const history = { search: `${query}` };
+      const request = { search_string: parseRequestQuery(query, parsers.parseSearchStringOutput) };
+      const history = { search: `${encodeURIComponent(query)}` };
       const trigger = { page: 1 };
 
       // Check if this is the first render-cycle
