@@ -5,7 +5,7 @@ export default addTranslation({
   sv: {
     duration: 'Varar',
     remaining: 'Kvar',
-    cron: 'CRON',
+    naIcon: 'Ø',
     invalid: 'Ogiltig',
     seconds: 'Sekunder',
     minutes: 'Minuter',
@@ -17,7 +17,7 @@ export default addTranslation({
   en: {
     duration: 'Duration',
     remaining: 'Remaining',
-    cron: 'CRON',
+    naIcon: 'Ø',
     invalid: 'Invalid',
     seconds: 'Seconds',
     minutes: 'Minutes',

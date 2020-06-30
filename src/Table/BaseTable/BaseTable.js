@@ -9,7 +9,6 @@ import * as C from './BaseTable.styled';
 import generateRows from './helpers';
 import translation from './BaseTable.translation';
 
-
 export const propTypes = {
   canExportResults: PropTypes.bool,
   exportFileName: PropTypes.string,
@@ -43,6 +42,10 @@ export const propTypes = {
     PropTypes.func,
     PropTypes.bool,
   ]),
+  cardComponent: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.bool,
+  ]),
   cardView: PropTypes.bool,
   equalSizeColumns: PropTypes.bool,
   isLoading: PropTypes.bool,
@@ -61,6 +64,7 @@ export const defaultProps = {
   tableRowConfiguration: false,
   cellComponent: false,
   rowComponent: false,
+  cardComponent: false,
   equalSizeColumns: false,
   isLoading: false,
   emptystate: '',
@@ -72,6 +76,7 @@ export const defaultProps = {
 const bodyComponents = {
   cell: C.Cell,
   row: C.Row,
+  card: C.Card,
   content: C.TableCellContent,
 };
 

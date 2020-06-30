@@ -42,7 +42,7 @@ const Duration = ({
           {t('duration', 'asurgentui') }
         </S.TextSmall>
         <Icons.Duration active={false} />
-        <S.TextNormal>{t('cron', 'asurgentui')}</S.TextNormal>
+        <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
         <S.TextSmall>{t('invalid', 'asurgentui')}</S.TextSmall>
       </C.Repeat>
     );

@@ -107,25 +107,28 @@ const generateCells = (props, rowData, components) => {
     });
 };
 
-const generateCard = (props, columnData, components) => {
-  const { cardConfiguration } = props;
-  const content = cardConfiguration(columnData);
-  const CellComponent = components.cell;
-
-  const element = (
-    <CellComponent key={`${columnData.id}-card`} cardView>
-      {content}
-    </CellComponent>
-  );
-
-  return element;
-};
-
 const generateRowId = (columnData, index) => {
   if (!columnData.id) {
     const id = `row-id-${new Date().getTime()}-${index}`;
     Object.assign(columnData, { id });
   }
+};
+
+const generateCard = (props, cardData, components) => {
+  const { cardConfiguration, cardComponent } = props;
+
+  const content = cardConfiguration(cardData);
+  const { props: cardProps } = content;
+
+  const CardContainer = cardComponent ? cardComponent(components, cardData) : components.card;
+
+  const element = (
+    <CardContainer {...cardProps} key={`${cardData.id}-card`} cardView>
+      {content}
+    </CardContainer>
+  );
+
+  return element;
 };
 
 const generateRows = (props, components) => props.rowData
@@ -139,7 +142,6 @@ const generateRows = (props, components) => props.rowData
     } else {
       // Make it possible to override default styling of rows
       const Row = props.rowComponent ? props.rowComponent(components, rowData) : components.row;
-
       const row = (
         <Row
           key={rowData.id}
