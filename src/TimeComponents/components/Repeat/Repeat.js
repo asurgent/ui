@@ -11,7 +11,9 @@ import { getRepeatInterval } from './helpers';
 
 const { t } = translation;
 
-const Repeat = ({ currentDate, endDate, cronExpression }) => {
+const Repeat = ({
+  currentDate, endDate, cronExpression, ...props
+}) => {
   const validCronInterval = useMemo(() => {
     try {
       return parser.parseExpression(cronExpression, { currentDate, endDate });
@@ -35,7 +37,7 @@ const Repeat = ({ currentDate, endDate, cronExpression }) => {
 
   if (!validCronInterval) {
     return (
-      <C.Repeat data-testid="invalid">
+      <C.Repeat data-testid="invalid" {...props}>
         <S.TextSmall withBottomMargin>{t('repeats', 'asurgentui')}</S.TextSmall>
         <Icons.Dots active={false} />
         <S.TextNormal data-testid="short-label">{t('naIcon', 'asurgentui')}</S.TextNormal>
@@ -46,7 +48,7 @@ const Repeat = ({ currentDate, endDate, cronExpression }) => {
 
   if (isExpired) {
     return (
-      <C.Repeat data-testid="repeat">
+      <C.Repeat data-testid="repeat" {...props}>
         <S.TextSmall withBottomMargin>{t('repeats', 'asurgentui')}</S.TextSmall>
         <Icons.Dots active={!isExpired} />
         <S.TextNormal data-testid="short-label">{t('zero', 'asurgentui')}</S.TextNormal>
@@ -57,7 +59,7 @@ const Repeat = ({ currentDate, endDate, cronExpression }) => {
 
   const label = getRepeatInterval(intervalInSeconds);
   return (
-    <C.Repeat data-testid="repeat">
+    <C.Repeat data-testid="repeat" {...props}>
       <S.TextSmall withBottomMargin>{t('repeats', 'asurgentui')}</S.TextSmall>
       <Icons.Dots active={!isExpired} />
       <S.TextNormal data-testid={label.short}>{t(label.short, 'asurgentui')}</S.TextNormal>

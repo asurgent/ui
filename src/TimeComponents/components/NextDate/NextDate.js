@@ -15,6 +15,7 @@ const NextDate = ({
   endDate,
   cronExpression,
   durationInSeconds,
+  ...props
 }) => {
   const validCronInterval = useMemo(() => {
     try {
@@ -47,7 +48,7 @@ const NextDate = ({
 
   if (!validCronInterval) {
     return (
-      <C.Date data-testid="invalid-cron">
+      <C.Date data-testid="invalid-cron" {...props}>
         <S.TextSmall withBottomMargin>{t('nextDate', 'asurgentui')}</S.TextSmall>
         <C.ExpiredDate>
           <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
@@ -59,7 +60,7 @@ const NextDate = ({
 
   if (hasExpired) {
     return (
-      <C.Date data-testid="expired">
+      <C.Date data-testid="expired" {...props}>
         <S.TextSmall withBottomMargin>{t('nextDate', 'asurgentui')}</S.TextSmall>
         <C.ExpiredDate>
           <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
@@ -70,7 +71,7 @@ const NextDate = ({
   }
 
   return (
-    <C.Date>
+    <C.Date {...props}>
       <S.TextSmall withBottomMargin>{t('nextDate', 'asurgentui')}</S.TextSmall>
       {isRunning ? (
         <>
