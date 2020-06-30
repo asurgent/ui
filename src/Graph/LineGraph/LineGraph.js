@@ -29,6 +29,14 @@ const defaultProps = {
   markerLines: [],
 };
 
+const capDecimals = (val) => {
+  if (!Number.isNaN(Number(val))) {
+    return (Math.round(val * 1000) / 1000);
+  }
+
+  return val;
+};
+
 const LineGraph = ({
   data,
   yProp,
@@ -111,7 +119,7 @@ const LineGraph = ({
       <C.Stats>
         <C.Stat>
           <b>{dataTitle || 'Hover data'}</b>
-          {tooltip[yProp]}
+          {capDecimals(tooltip[yProp])}
         </C.Stat>
         {markerLines && markerLines.map((marker) => (
           <C.Stat key={marker.title} color={marker.color}>
