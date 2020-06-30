@@ -137,8 +137,6 @@ const generateRows = (props, components) => props.rowData
     const { cardView } = props;
 
     if (cardView && typeof props.cardConfiguration === 'function') {
-    /*   console.log('props', props);
-      console.log('components', components); */
       const card = generateCard(props, rowData, components);
       acc.push(card);
     } else {
