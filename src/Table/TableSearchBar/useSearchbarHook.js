@@ -42,7 +42,7 @@ const useSearchbarHook = (tableHook, parsers) => {
       if (state && Object.keys(state).length) {
         const { text } = state;
         if (text !== undefined) {
-          setQuery(text);
+          setQuery(decodeURIComponent(text));
         }
       }
 
@@ -56,7 +56,7 @@ const useSearchbarHook = (tableHook, parsers) => {
       // Execute change component has been target from another hook
       const { search } = tableHook.thirdPartyTrigger;
       if (search !== undefined) {
-        setQuery(search);
+        setQuery(decodeURIComponent(search));
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
