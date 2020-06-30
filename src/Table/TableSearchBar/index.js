@@ -5,13 +5,17 @@ import useSearchbarHook from './useSearchbarHook';
 
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
+  parseSearchStringOutput: PropTypes.func,
 };
 
-const defaultProps = {};
+const defaultProps = {
+  parseSearchStringOutput: null,
+};
 
 
-const TableSearchBarProxy = ({ tableHook, ...props }) => {
-  const searchHook = useSearchbarHook(tableHook);
+const TableSearchBarProxy = ({ tableHook, parseSearchStringOutput, ...props }) => {
+  const parsers = { parseSearchStringOutput };
+  const searchHook = useSearchbarHook(tableHook, parsers);
 
   if (tableHook && tableHook.isReady) {
     return <TableSearchBar {...props} searchHook={searchHook} tableHook={tableHook} />;

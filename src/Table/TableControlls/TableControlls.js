@@ -11,6 +11,7 @@ const propTypes = {
   withSort: PropTypes.instanceOf(Array),
   withSearch: PropTypes.bool,
   searchLabel: PropTypes.string,
+  parseSearchStringOutput: PropTypes.func,
   parseFilterRequestStringOutput: PropTypes.func,
   parseFilterKeyRequestOutput: PropTypes.func,
   parseFilterItemRequestOutput: PropTypes.func,
@@ -22,6 +23,7 @@ const defaultProps = {
   withSearch: true,
   withFilter: [],
   searchLabel: '',
+  parseSearchStringOutput: null,
   parseFilterRequestStringOutput: null,
   parseFilterKeyRequestOutput: null,
   parseFilterItemRequestOutput: null,
@@ -34,6 +36,7 @@ const TableControlls = ({
   withSearch,
   withFilter,
   searchLabel,
+  parseSearchStringOutput,
   parseFilterRequestStringOutput,
   parseFilterKeyRequestOutput,
   parseFilterItemRequestOutput,
@@ -45,6 +48,7 @@ const TableControlls = ({
         className="search"
         tableHook={tableHook}
         searchLabel={searchLabel}
+        parseSearchStringOutput={parseSearchStringOutput}
       />
     )}
     { withSort && Array.isArray(withSort) && withSort.length > 0 && (
