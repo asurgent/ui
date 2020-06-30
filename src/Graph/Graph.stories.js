@@ -107,7 +107,7 @@ export const lineGraph = () => (
       <Graph.Line data={data2} xProp="timestamp" />
     </div>
     <div style={{ height: '200px' }}>
-      <Graph.Line data={data3} xProp="timestamp" markerLines={[0.7]} />
+      <Graph.Line data={data3} xProp="timestamp" markerLines={[{ value: 0.7, title: 'one', color: '#C62929' }]} />
     </div>
   </>
 );
