@@ -25,7 +25,6 @@ const YLinearAxis = ({ yScale }) => {
   return (<g ref={ref} />);
 };
 
-
 YLinearAxis.propTypes = propTypes;
 YLinearAxis.defaultProps = defaultProps;
 

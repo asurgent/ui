@@ -87,15 +87,16 @@ const Zoom = ({
   }, [duration]);
 
   useLayoutEffect(() => {
-    const index = Math.floor(data.length / 2);
-    const targetData = data[index];
-    const result = {
-      targetData,
-      cx: xScale(targetData[xProp]),
-    };
-    onTooltipEvent(result);
-    setTooltip(result);
-
+    if (data.length >= 1) {
+      const index = Math.floor(data.length / 2);
+      const targetData = data[index];
+      const result = {
+        targetData,
+        cx: xScale(targetData[xProp]),
+      };
+      onTooltipEvent(result);
+      setTooltip(result);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, xScale]);
 

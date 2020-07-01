@@ -1,9 +1,6 @@
 import * as d3 from 'd3';
-import translation from './Axis.translation';
 
-const { t } = translation;
-
-const locale = d3.timeFormatLocale({
+const locales = (t) => ({
   dateTime: '%a %b %e %X %Y',
   date: '%d.%m.%Y',
   time: '%HH:%M:%S',
@@ -57,25 +54,26 @@ const locale = d3.timeFormatLocale({
     t('dec', 'asurgentui'),
   ],
 });
+export const customTick = (translator) => {
+  const formatter = d3.timeFormatLocale(locales(translator));
 
+  const formatHour = formatter.format('%I:%M');
+  const formatDay = formatter.format('%a %d');
+  const formatWeek = formatter.format('%b %d');
+  const formatMonth = formatter.format('%B');
+  const formatYear = formatter.format('%Y');
 
-const formatHour = locale.format('%I:%M');
-
-const formatDay = locale.format('%a %d');
-const formatWeek = locale.format('%b %d');
-const formatMonth = locale.format('%B');
-const formatYear = locale.format('%Y');
-
-export const customTick = (date) => {
-  if (d3.timeDay(date) < date) {
-    return formatHour(date);
-  } if (d3.timeMonth(date) < date) {
-    if (d3.timeWeek(date) < date) {
-      return formatDay(date);
+  return (date) => {
+    if (d3.timeDay(date) < date) {
+      return formatHour(date);
+    } if (d3.timeMonth(date) < date) {
+      if (d3.timeWeek(date) < date) {
+        return formatDay(date);
+      }
+      return formatWeek(date);
+    } if (d3.timeYear(date) < date) {
+      return formatMonth(date);
     }
-    return formatWeek(date);
-  } if (d3.timeYear(date) < date) {
-    return formatMonth(date);
-  }
-  return formatYear(date);
+    return formatYear(date);
+  };
 };

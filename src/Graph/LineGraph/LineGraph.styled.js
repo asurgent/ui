@@ -2,11 +2,20 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     height: inherit;
+    width: inherit;
     min-height: 200px;
 `;
 
 export const Graph = styled.div`
     height: calc(100% - 4rem);
+`;
+
+export const NoData = styled.div`
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 export const Stats = styled.div`

@@ -6,8 +6,9 @@ import React, {
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import * as d3 from 'd3';
-import { customTick } from './helpers';
+import translation from './Axis.translation';
 import ClipPath from '../ClipPath';
+import { customTick } from './helpers';
 
 const AxisGroup = styled.g`
     transform: translate${({ dimensions }) => `(0, ${dimensions.boundedHeight}px)`};
@@ -32,10 +33,10 @@ const XDateAxis = ({
 }) => {
   const ref = createRef();
 
-  const ticks = useMemo(() => d3
-    .axisBottom(xScale)
-    .tickFormat(customTick),
-
+  const ticks = useMemo(() => {
+    const format = customTick(translation.t);
+    return d3.axisBottom(xScale).tickFormat(format);
+  },
   [xScale]);
 
   useEffect(() => {
