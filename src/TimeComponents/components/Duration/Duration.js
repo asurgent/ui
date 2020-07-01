@@ -12,7 +12,7 @@ import { parseMoment } from '../../helpers';
 const { t } = translation;
 
 const Duration = ({
-  cronExpression, durationInSeconds, endDate, currentDate,
+  cronExpression, durationInSeconds, endDate, currentDate, ...props
 }) => {
   const validCronInterval = useMemo(() => {
     try {
@@ -37,7 +37,7 @@ const Duration = ({
 
   if (!validCronInterval) {
     return (
-      <C.Repeat>
+      <C.Repeat {...props}>
         <S.TextSmall withBottomMargin data-testid="invalid-cron">
           {t('duration', 'asurgentui') }
         </S.TextSmall>
@@ -49,7 +49,7 @@ const Duration = ({
   }
 
   return (
-    <C.Repeat>
+    <C.Repeat {...props}>
       {isRunning ? (
         <S.TextSmall withBottomMargin data-testid="remaining">
           {t('remaining', 'asurgentui') }

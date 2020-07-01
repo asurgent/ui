@@ -13,6 +13,7 @@ const DateSpan = ({
   startDate,
   endDate,
   endDateThreshold,
+  ...props
 }) => {
   const startDateValid = useMemo(() => parseMoment(startDate).isValid(), [startDate]);
   const endDateValid = useMemo(() => parseMoment(endDate).isValid(), [endDate]);
@@ -27,7 +28,7 @@ const DateSpan = ({
   const isActive = useMemo(() => parseMoment(endDate) > moment(), [endDate]);
 
   return (
-    <C.Dates>
+    <C.Dates {...props}>
       <C.Date>
         <S.TextSmall withBottomMargin>{t('startDate', 'asurgentui')}</S.TextSmall>
         <C.StartDate active={isActive && startDateValid}>
