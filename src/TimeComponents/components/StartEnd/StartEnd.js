@@ -14,6 +14,7 @@ const StartEnd = ({
   endDate,
   cronExpression,
   durationInSeconds,
+  ...props
 }) => {
   const validCronInterval = useMemo(() => {
     try {
@@ -64,7 +65,7 @@ const StartEnd = ({
   }, [durationInSeconds, validCronInterval, isRunning]);
 
   return (
-    <C.StartEnd>
+    <C.StartEnd {...props}>
       <S.TextSmall withBottomMargin>
         {isRunning ? (t('ends', 'asurgentui')) : (t('starts', 'asurgentui'))}
       </S.TextSmall>

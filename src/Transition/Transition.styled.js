@@ -23,6 +23,7 @@ export const FadeIn = styled.div`
 export const FadeOut = styled(FadeIn)``;
 
 export const FadeInSlideDown = styled(FadeIn)`
+    z-index: unset;
     transform: ${({ state, noTransform }) => {
     if (noTransform) {
       return 0;
