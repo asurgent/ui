@@ -32,10 +32,7 @@ const Number = forwardRef((props, ref) => {
   const [value, setValue] = useState(props.value);
 
   useEffect(() => {
-    if (propValue) {
-      setValue(parseInt(propValue || 0, 10));
-    }
-    setValue('');
+    setValue(propValue ? parseInt(propValue || 0, 10) : '');
   }, [propValue]);
 
   // built in min/max for number inputs only prevents valuechanges by using the buttons

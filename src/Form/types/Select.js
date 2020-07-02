@@ -1,51 +1,52 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as Icons from '@material-ui/icons';
+import translation from './Select.Translation';
+
+const { t } = translation;
 
 const propTyps = {
   value: PropTypes.string,
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)).isRequired,
   props: PropTypes.instanceOf(Object),
+  placeholder: PropTypes.string,
 };
 
 const defaultProps = {
   value: '',
   props: {},
+  placeholder: '',
 };
-
 
 const getDefaultSort = (sortKeys) => {
   if (Array.isArray(sortKeys) && sortKeys.length > 0) {
     const sort = sortKeys.find(({ default: sortByDefault }) => sortByDefault);
-
     if (sort) {
       return sort.value;
     }
-
-    const first = sortKeys[0];
-    return first.value;
+    return '';
   }
-
-  return null;
+  return '';
 };
-
 
 const Select = forwardRef((props, ref) => {
   const {
     name,
     options,
-
+    placeholder,
+    value: propValue,
   } = props;
 
   const [value, setValue] = useState('');
 
   useEffect(() => {
-    setValue(props.value || '');
-  }, [props]);
+    setValue(propValue || '');
+  }, [propValue]);
 
   useEffect(() => {
-    setValue(getDefaultSort(options));
+    const def = getDefaultSort(options);
+    setValue(def);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -58,7 +59,9 @@ const Select = forwardRef((props, ref) => {
         value={value}
         name={name}
         ref={ref}
+        style={{ opacity: value === '' ? 0.25 : 1 }}
       >
+        <option label={value === '' ? placeholder : t('reset', 'asurgentui')} value="" />
         { Array.isArray(options) && options
           .map(({
             value: optionValue,

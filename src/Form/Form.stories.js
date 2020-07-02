@@ -66,12 +66,14 @@ export const defaultForm = () => {
       type: 'text',
       label: 'Some Text',
       tooltip: 'hejhej',
+      placeholder: 'Text me',
     },
     someNumber: {
       type: 'number',
       label: 'Some Number (max 100)',
       tooltip: 'hejhej',
       maxValue: 100,
+      placeholder: 'Number me',
     },
     someRadioGroup: {
       type: 'radiogroup',
@@ -94,11 +96,12 @@ export const defaultForm = () => {
       type: 'select',
       label: 'Some Select',
       options: [
-        { value: '1', label: 'First option', default: true },
+        { value: '1', label: 'First option' }, // default: true
         { value: '2', label: 'Second option' },
         { value: '3', label: 'Third option' },
       ],
       tooltip: 'tooltip',
+      placeholder: 'Select me',
     },
     someFilterSelectSingle: {
       type: 'filterselect',
@@ -108,6 +111,7 @@ export const defaultForm = () => {
       props: {
         searchPlaceholder: 'Search in me plz',
       },
+      placeholder: 'Filterselect me',
     },
     someFilterSelectMulti: {
       type: 'filterselect',
@@ -118,6 +122,7 @@ export const defaultForm = () => {
         multiSelect: true,
         searchPlaceholder: 'Search in me plz',
       },
+      placeholder: 'Filterselect me alot',
     },
     someDate: {
       type: 'datepicker',
@@ -125,48 +130,61 @@ export const defaultForm = () => {
       render: (spec) => spec.someText && spec.someText.length < 10,
       tooltip: 'tooltip',
       label: 'Some date',
+      placeholder: 'Date me',
     },
   });
   const renderErrors = boolean('render errors', false);
+  const useInitValues = boolean('Use initial values', true);
 
   useEffect(() => {
-    formData.updateFields([
-      { name: 'someText', value: 'Good bye' },
-      { name: 'someNumber', value: 10 },
-      { name: 'someRadioGroup', value: 'value1' },
-      { name: 'someRadioGroup2', value: 'value4' },
-      { name: 'someSelect', value: '3' },
-      {
-        name: 'someFilterSelectSingle',
-        options: [
-          { value: '1', label: 'First option', selected: true },
-          { value: '2', label: 'Second option' },
-          { value: '3', label: 'Third option' },
-        ],
-        value: '1',
-      },
-      {
-        name: 'someFilterSelectMulti',
-        options: [
-          // selected -> for the filter dropdown
-          { value: 'First option', label: 'First option', selected: true },
-          { value: 'Second option', label: 'Second option' },
-          { value: 'Third option', label: 'Third option' },
-          { value: 'Fourth option', label: 'Fourth option' },
-          { value: 'Fifth option', label: 'Fifth option' },
-          { value: 'Sixth option', label: 'Sixth option' },
-          { value: 'Seventh option', label: 'Seventh option', selected: true },
-          { value: 'Eigth option', label: 'Eigth option' },
-          { value: 'Ninth option', label: 'Ninth option' },
-          { value: 'Tenth option', label: 'Tenth option' },
-        ],
-        // actual value (shows on tags for example)
-        value: ['First option', 'Seventh option'],
-      },
-      { name: 'someDate', value: moment().startOf('day').toISOString() },
-    ]);
+    if (useInitValues) {
+      formData.updateFields([
+        { name: 'someText', value: 'Good bye' },
+        { name: 'someNumber', value: 10 },
+        { name: 'someRadioGroup', value: 'value1' },
+        { name: 'someRadioGroup2', value: 'value4' },
+        { name: 'someSelect', value: '3' },
+        {
+          name: 'someFilterSelectSingle',
+          options: [
+            { value: '1', label: 'First option', selected: true },
+            { value: '2', label: 'Second option' },
+            { value: '3', label: 'Third option' },
+          ],
+          value: '1',
+        },
+        {
+          name: 'someFilterSelectMulti',
+          options: [
+            // selected -> for the filter dropdown
+            { value: '1', label: 'First option', selected: true },
+            { value: '2', label: 'Second option' },
+            { value: '3', label: 'Third option', selected: true },
+          ],
+          // actual value (shows on tags for example)
+          value: ['First option', 'Seventh option'],
+        },
+        { name: 'someDate', value: moment().startOf('day').toISOString() },
+      ]);
+    } else {
+      const options = [
+        { value: '1', label: 'First option' },
+        { value: '2', label: 'Second option' },
+        { value: '3', label: 'Third option' },
+      ];
+      formData.updateFields([
+        { name: 'someText', value: null },
+        { name: 'someNumber', value: null },
+        { name: 'someRadioGroup', value: null },
+        { name: 'someRadioGroup2', value: null },
+        { name: 'someSelect', value: null, options },
+        { name: 'someFilterSelectSingle', value: null, options },
+        { name: 'someFilterSelectMulti', value: null, options },
+        { name: 'someDate', value: null },
+      ]);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [useInitValues]);
 
   useEffect(() => {
     if (renderErrors) {
