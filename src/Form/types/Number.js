@@ -2,7 +2,7 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const propTyps = {
-  value: PropTypes.number,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   minValue: PropTypes.number,
   maxValue: PropTypes.number,
   label: PropTypes.string,
@@ -12,7 +12,7 @@ const propTyps = {
 };
 
 const defaultProps = {
-  value: 0,
+  value: '',
   minValue: null,
   maxValue: null,
   label: '',
@@ -26,13 +26,17 @@ const Number = forwardRef((props, ref) => {
     placeholder,
     minValue,
     maxValue,
+    value: propValue,
   } = props;
 
   const [value, setValue] = useState(props.value);
 
   useEffect(() => {
-    setValue(parseInt(props.value || 0, 10));
-  }, [props]);
+    if (propValue) {
+      setValue(parseInt(propValue || 0, 10));
+    }
+    setValue('');
+  }, [propValue]);
 
   // built in min/max for number inputs only prevents valuechanges by using the buttons
   const handleChange = ({ target }) => {
