@@ -162,7 +162,7 @@ export const defaultForm = () => {
             { value: '3', label: 'Third option', selected: true },
           ],
           // actual value (shows on tags for example)
-          value: ['First option', 'Seventh option'],
+          value: ['1', '3'],
         },
         { name: 'someDate', value: moment().startOf('day').toISOString() },
       ]);
