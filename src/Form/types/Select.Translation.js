@@ -1,7 +1,7 @@
 import addTranslation from '../../../lib/i18n/addTranslation';
 
 export default addTranslation({
-  id: 'select',
+  id: 'formSelect',
   sv: {
     reset: 'Återställ',
   },

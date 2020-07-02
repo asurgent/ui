@@ -1,7 +1,7 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as Icons from '@material-ui/icons';
-import translation from './Select.Translation';
+import translation from './Select.translation';
 
 const { t } = translation;
 
