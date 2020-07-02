@@ -26,7 +26,7 @@ const propTyps = {
 };
 
 const defaultProps = {
-  value: '',
+  value: [],
   props: { },
   theme: {},
   placeholder: t('selectPlaceholder', 'asurgentui'),
@@ -52,12 +52,13 @@ const FilterInput = forwardRef((props, ref) => {
 
   const {
     multiSelect = false,
+    maxTags = 3,
     searchPlaceholder = t('searchPlaceHolder', 'asurgentui'),
   } = inputProps;
 
   const tableHook = useTableHook();
 
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState([]);
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
@@ -67,15 +68,8 @@ const FilterInput = forwardRef((props, ref) => {
       setValue(props.value || '');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props]);
+  }, [props.value]);
 
-  useEffect(() => {
-    tableHook.registerFilterFetchCallback((payload, onSuccess) => {
-      onSuccess({ [name]: options.map((opt) => ({ value: opt.value })) });
-    });
-    tableHook.parentReady();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [options]);
 
   const parsers = {
     filterItem: (filters) => filters,
@@ -83,8 +77,18 @@ const FilterInput = forwardRef((props, ref) => {
     label: (filters) => filters,
   };
 
+
   const filterHook = useFilterHook([{ label: name, facetKey: name }], tableHook, parsers);
   const groupHook = useFilterGroupHook(tableHook, filterHook, name, () => {});
+
+  useEffect(() => {
+    tableHook.registerFilterFetchCallback((payload, onSuccess) => {
+      onSuccess({ [name]: options.map((opt) => ({ value: opt.value })) });
+    });
+    filterHook.setSelectedItems({ [name]: options.filter((opt) => opt.selected) });
+    tableHook.parentReady();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [options]);
 
   const handleChange = ({ value: filterValue, matched }) => {
     if (multiSelect) {
@@ -103,6 +107,7 @@ const FilterInput = forwardRef((props, ref) => {
     setSearchValue('');
   };
 
+
   const showTags = multiSelect && value.length > 0;
   return (
     <C.SelectFilter>
@@ -117,7 +122,7 @@ const FilterInput = forwardRef((props, ref) => {
           value={value}
           {...props.props}
         />
-        {showTags && <Tag.Collection tags={value.map((val) => ({ value: val }))} max={3} />}
+        {showTags && <Tag.Collection tags={value.map((val) => ({ value: val }))} max={maxTags} />}
       </C.InputWrapper>
       <C.FilterWrapper>
         <Shield.Transparent

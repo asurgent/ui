@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as Icons from '@material-ui/icons';
 import * as C from './FilterItem.styled';
@@ -27,6 +27,12 @@ const FilterItem = ({
   multiSelect,
 }) => {
   const hook = useFilterItemHook(filterItem, groupHook, filterHook, multiSelect);
+
+  useEffect(() => {
+    if (filterItem.selected) {
+      hook.setStateInclude(filterItem);
+    }
+  }, [filterItem, hook]);
 
   return (
     <C.FilterItem
