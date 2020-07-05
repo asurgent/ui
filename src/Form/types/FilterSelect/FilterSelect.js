@@ -68,7 +68,7 @@ const FilterSelect = forwardRef((props, ref) => {
   useEffect(() => {
     if (multiSelect) {
       const checkedOptions = options
-        .filter((opt) => inputValue.includes(opt.value))
+        .filter((opt) => inputValue?.includes(opt.value))
         .map((opt) => ({ ...opt, selected: true, matched: true }));
 
       setValue(checkedOptions);
@@ -97,7 +97,7 @@ const FilterSelect = forwardRef((props, ref) => {
 
     if (multiSelect) {
       const selectedOptions = options
-        .filter((opt) => inputValue.includes(opt.value));
+        .filter((opt) => inputValue?.includes(opt.value));
       const filterOptions = selectedOptions
         .map((opt) => ({ ...opt, selected: true, label: false }));
       filterHook.setSelectedItems({ [name]: filterOptions });
@@ -156,7 +156,10 @@ const FilterSelect = forwardRef((props, ref) => {
   const showTags = multiSelect && value.length > 0;
   return (
     <C.SelectFilter>
-      <C.InputWrapper singleValue={!multiSelect && value?.label} onClick={() => groupHook.setOpen(true)}>
+      <C.InputWrapper
+        singleValue={!multiSelect && value?.label}
+        onClick={() => groupHook.setOpen(true)}
+      >
         <C.Input
           type="text"
           hideText={showTags}

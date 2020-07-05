@@ -156,13 +156,9 @@ export const defaultForm = () => {
         {
           name: 'someFilterSelectMulti',
           options: [
-            {
-              value: '1', label: 'First option',
-            },
+            { value: '1', label: 'First option' },
             { value: '2', label: 'Second option' },
-            {
-              value: '3', label: 'Third option',
-            },
+            { value: '3', label: 'Third option' },
           ],
           value: ['1', '3'],
         },
@@ -181,7 +177,7 @@ export const defaultForm = () => {
         { name: 'someRadioGroup2', value: null },
         { name: 'someSelect', value: null, options },
         { name: 'someFilterSelectSingle', options, value: null },
-        /*        { name: 'someFilterSelectMulti', options }, */
+        { name: 'someFilterSelectMulti', options, value: null },
         { name: 'someDate', value: null },
       ]);
     }
@@ -210,11 +206,9 @@ export const defaultForm = () => {
         form={formData}
         msTimer={15}
         onSubmit={(values, isDirty) => {
-          console.log('VALUES', values);
-          /*  const multiChoiceSplit = values.someFilterSelectMulti.split(',');
+          const multiChoiceSplit = values.someFilterSelectMulti.split(',');
           const multiValue = multiChoiceSplit.length === 1 && multiChoiceSplit[0] === '' ? [] : multiChoiceSplit;
-
-          Object.assign(values, { someFilterSelectMulti: multiValue }); */
+          Object.assign(values, { someFilterSelectMulti: multiValue });
           action()('isDirty', isDirty);
           action()('Submitted', values);
         }}
