@@ -118,6 +118,7 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
           }
 
           const label = getLabel(item);
+          console.log('label', label);
 
           if (label) {
             return label

@@ -3,6 +3,7 @@
   "version": "1.9.3",
   "description": "frontend - asurgent UI components",
   "scripts": {
+    "start": "start-storybook -p 6006",
     "watch": "webpack --watch --mode production",
     "build": "webpack --mode production",
     "test": "jest --watch --projects jest-eslint.config.js",

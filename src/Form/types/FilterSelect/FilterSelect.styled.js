@@ -1,22 +1,5 @@
 import styled from 'styled-components';
 
-export const InputWrapper = styled.div`
-    width: 100%;
-    /* mock a normal select by making text not selectable */
-    position: relative;
-    user-select: none;
-    display: flex;
-    &::after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-`;
-
 export const Input = styled.input`
     padding-right: 2rem;
     text-overflow: ellipsis;
@@ -24,6 +7,26 @@ export const Input = styled.input`
         color: black!important;
     }
     display: ${({ hideText }) => (hideText ? 'none' : 'block')};
+`;
+
+export const InputWrapper = styled.div`
+    width: 100%;
+    /* mock a normal select by making text not selectable */
+    position: relative;
+    user-select: none;
+    display: flex;
+    &::after {
+        content:  ${({ singleValue }) => (singleValue ? `'${singleValue}'` : '')};
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    ${Input} {
+        visibility:  ${({ singleValue }) => (singleValue ? 'hidden' : 'visible')};
+    }
 `;
 
 export const FilterInput = styled.input`
@@ -57,7 +60,6 @@ export const Dropdown = styled.div`
     display: flex;
     flex-direction: column;
     
-
     .close {
         position: absolute;
         right: 1.6rem;

@@ -17,7 +17,7 @@ import useFilterHook from '../../../Table/TableFilter/useFilterHook';
 const { t } = translation;
 
 const propTyps = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  value: PropTypes.string,
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)).isRequired,
   props: PropTypes.instanceOf(Object),
@@ -26,13 +26,15 @@ const propTyps = {
 };
 
 const defaultProps = {
-  value: [],
+  value: '',
   props: { },
   theme: {},
   placeholder: t('selectPlaceholder', 'asurgentui'),
 };
 
 const dispatchEvent = (value, ref) => {
+  // dispatch mock-event so that the form can pick up an onChange-event.
+  // has to be a string, so split the value in onSubmit into an array
   const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
     window.HTMLInputElement.prototype, 'value',
   ).set;
@@ -41,13 +43,14 @@ const dispatchEvent = (value, ref) => {
   ref.current.dispatchEvent(inputEvent);
 };
 
-const FilterInput = forwardRef((props, ref) => {
+const FilterSelect = forwardRef((props, ref) => {
   const {
     name,
     options,
     theme,
     placeholder,
     props: inputProps,
+    value: inputValue,
   } = props;
 
   const {
@@ -59,24 +62,38 @@ const FilterInput = forwardRef((props, ref) => {
   const tableHook = useTableHook();
 
   const [value, setValue] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
+    // kolla så att value finns i options
+    // från options filtrera dom som har selected eller som matchar med value
+
     if (multiSelect) {
-      setValue(props.value || []);
+      const initselectedOption = options.filter(
+        (opt) => opt.selected || opt.value === inputValue,
+      );
+      setSelectedOption(initselectedOption);
+      setValue(initselectedOption.map((opt) => opt.value));
     } else {
-      setValue(props.value || '');
+      const checkedOption = options.find((opt) => opt.value === inputValue);
+      setSelectedOption(checkedOption);
+
+      console.log('checkedOption', checkedOption);
+      console.log('inputValue', inputValue);
+
+      setValue(checkedOption?.value || '');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.value]);
+  }, [props]);
 
 
   const parsers = {
-    filterItem: (filters) => filters,
-    filterKey: (filters) => filters,
-    label: (filters) => filters,
+    label: (filters) => {
+      const matchedOpt = options.find((opt) => opt.value === filters);
+      return matchedOpt?.label || '';
+    },
   };
-
 
   const filterHook = useFilterHook([{ label: name, facetKey: name }], tableHook, parsers);
   const groupHook = useFilterGroupHook(tableHook, filterHook, name, () => {});
@@ -88,30 +105,56 @@ const FilterInput = forwardRef((props, ref) => {
     filterHook.setSelectedItems({ [name]: options.filter((opt) => opt.selected) });
     tableHook.parentReady();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [options]);
+  }, [props]);
 
-  const handleChange = ({ value: filterValue, matched }) => {
-    if (multiSelect) {
-      const newArr = matched === true
-        ? [...value, filterValue]
-        : value.filter((val) => val !== filterValue);
-
-      setValue(newArr);
-      dispatchEvent(newArr, ref);
-      groupHook.onSearchOptions({ searchQuery: '' });
+  const handleChangeMulti = (filterValue) => {
+    let newSelectedOption;
+    const inValues = value.some((opt) => opt === filterValue);
+    if (inValues) {
+      newSelectedOption = selectedOption.filter((opt) => opt.value !== filterValue);
     } else {
-      setValue(filterValue);
-      groupHook.setOpen(false);
-      dispatchEvent(filterValue, ref);
+      newSelectedOption = [...selectedOption, options.find((opt) => opt.value === filterValue)];
     }
-    setSearchValue('');
+    setSelectedOption(newSelectedOption);
+
+    const stringValues = newSelectedOption.map((opt) => opt.value);
+    setValue(stringValues);
+    dispatchEvent(stringValues, ref);
   };
 
+  const handleChangeSingle = (filterValue) => {
+    const optionActive = selectedOption?.value === filterValue;
+
+    if (optionActive) {
+      setValue('');
+      dispatchEvent('', ref);
+      setSelectedOption('');
+      filterHook.setSelectedItems({ [name]: {} });
+    } else {
+      setValue(filterValue);
+      dispatchEvent(filterValue, ref);
+      const newSelectedOption = options.find((opt) => opt.value === filterValue);
+      setSelectedOption(newSelectedOption);
+      filterHook.setSelectedItems({ [name]: newSelectedOption });
+    }
+
+    groupHook.setOpen(false);
+  };
+
+  const handleChange = ({ value: filterValue }) => {
+    if (multiSelect) {
+      handleChangeMulti(filterValue);
+    } else {
+      handleChangeSingle(filterValue);
+    }
+    groupHook.onSearchOptions({ searchQuery: '' });
+    setSearchValue('');
+  };
 
   const showTags = multiSelect && value.length > 0;
   return (
     <C.SelectFilter>
-      <C.InputWrapper onClick={() => groupHook.setOpen(true)}>
+      <C.InputWrapper singleValue={!multiSelect && selectedOption?.label} onClick={() => groupHook.setOpen(true)}>
         <C.Input
           type="text"
           hideText={showTags}
@@ -119,11 +162,17 @@ const FilterInput = forwardRef((props, ref) => {
           name={name}
           ref={ref}
           disabled
-          value={value}
+          value={multiSelect ? value : value.value}
           {...props.props}
         />
-        {showTags && <Tag.Collection tags={value.map((val) => ({ value: val }))} max={maxTags} />}
+        {showTags && (
+          <Tag.Collection
+            tags={selectedOption.map((opt) => ({ value: opt.label }))}
+            max={maxTags}
+          />
+        )}
       </C.InputWrapper>
+
       <C.FilterWrapper>
         <Shield.Transparent
           onClick={() => groupHook.setOpen(false)}
@@ -179,8 +228,8 @@ const FilterInput = forwardRef((props, ref) => {
   );
 });
 
-FilterInput.defaultProps = defaultProps;
-FilterInput.propTypes = propTyps;
-FilterInput.displayName = '@asurgent.ui.Form.Input.FilterInput';
+FilterSelect.defaultProps = defaultProps;
+FilterSelect.propTypes = propTyps;
+FilterSelect.displayName = '@asurgent.ui.Form.Input.FilterInput';
 
-export default withTheme(FilterInput);
+export default withTheme(FilterSelect);

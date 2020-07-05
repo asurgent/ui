@@ -113,7 +113,7 @@ export const defaultForm = () => {
       },
       placeholder: 'Filterselect me',
     },
-    someFilterSelectMulti: {
+    /*    someFilterSelectMulti: {
       type: 'filterselect',
       label: 'Some Filterselect (multi)',
       options: [],
@@ -123,7 +123,7 @@ export const defaultForm = () => {
         searchPlaceholder: 'Search in me plz',
       },
       placeholder: 'Filterselect me alot',
-    },
+    }, */
     someDate: {
       type: 'datepicker',
       options: [],
@@ -147,23 +147,24 @@ export const defaultForm = () => {
         {
           name: 'someFilterSelectSingle',
           options: [
-            { value: '1', label: 'First option', selected: true },
+            { value: '1', label: 'First option' },
             { value: '2', label: 'Second option' },
             { value: '3', label: 'Third option' },
           ],
-          value: '1',
+          value: '2',
         },
-        {
+        /*   {
           name: 'someFilterSelectMulti',
           options: [
-            // selected -> for the filter dropdown
-            { value: '1', label: 'First option', selected: true },
+            {
+              value: '1', label: 'First option', selected: true,
+            },
             { value: '2', label: 'Second option' },
-            { value: '3', label: 'Third option', selected: true },
+            {
+              value: '3', label: 'Third option', selected: true,
+            },
           ],
-          // actual value (shows on tags for example)
-          value: ['1', '3'],
-        },
+        }, */
         { name: 'someDate', value: moment().startOf('day').toISOString() },
       ]);
     } else {
@@ -178,8 +179,8 @@ export const defaultForm = () => {
         { name: 'someRadioGroup', value: null },
         { name: 'someRadioGroup2', value: null },
         { name: 'someSelect', value: null, options },
-        { name: 'someFilterSelectSingle', value: null, options },
-        { name: 'someFilterSelectMulti', value: null, options },
+        { name: 'someFilterSelectSingle', options, value: null },
+        /*        { name: 'someFilterSelectMulti', options }, */
         { name: 'someDate', value: null },
       ]);
     }
@@ -208,6 +209,7 @@ export const defaultForm = () => {
         form={formData}
         msTimer={15}
         onSubmit={(values, isDirty) => {
+          console.log('VALUES', values);
           const multiChoiceSplit = values.someFilterSelectMulti.split(',');
           const multiValue = multiChoiceSplit.length === 1 && multiChoiceSplit[0] === '' ? [] : multiChoiceSplit;
 
