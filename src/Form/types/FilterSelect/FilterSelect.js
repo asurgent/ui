@@ -64,19 +64,17 @@ const FilterSelect = forwardRef((props, ref) => {
   const [value, setValue] = useState([]);
   const [searchValue, setSearchValue] = useState('');
 
+  // find matching options from incoming value
   useEffect(() => {
     if (multiSelect) {
       const checkedOptions = options
         .filter((opt) => inputValue.includes(opt.value))
         .map((opt) => ({ ...opt, selected: true, matched: true }));
-      if (checkedOptions.length > 0) {
-        setValue(checkedOptions);
-      }
+
+      setValue(checkedOptions);
     } else {
       const checkedOption = options.find((opt) => opt.value === inputValue);
-      if (checkedOption) {
-        setValue({ ...checkedOption, selected: true, matched: true });
-      }
+      setValue({ ...checkedOption, selected: true, matched: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
@@ -88,9 +86,10 @@ const FilterSelect = forwardRef((props, ref) => {
     },
   };
 
-  const filterHook = useFilterHook([{ facetKey: name }], tableHook, parsers); // label: name,
+  const filterHook = useFilterHook([{ facetKey: name }], tableHook, parsers);
   const groupHook = useFilterGroupHook(tableHook, filterHook, name, () => {});
 
+  // filter setup
   useEffect(() => {
     tableHook.registerFilterFetchCallback((payload, onSuccess) => {
       onSuccess({ [name]: options.map((opt) => ({ value: opt.value })) });
@@ -165,7 +164,7 @@ const FilterSelect = forwardRef((props, ref) => {
           name={name}
           ref={ref}
           disabled
-          value={multiSelect ? value.map((val) => val.value) : value.value}
+          value={multiSelect ? value.map((val) => val.value) : (value.value || '')}
           {...props.props}
         />
         {showTags && (
