@@ -17,7 +17,7 @@ import useFilterHook from '../../../Table/TableFilter/useFilterHook';
 const { t } = translation;
 
 const propTyps = {
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)).isRequired,
   props: PropTypes.instanceOf(Object),
@@ -62,31 +62,24 @@ const FilterSelect = forwardRef((props, ref) => {
   const tableHook = useTableHook();
 
   const [value, setValue] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
-    // kolla så att value finns i options
-    // från options filtrera dom som har selected eller som matchar med value
-
     if (multiSelect) {
-      const initselectedOption = options.filter(
-        (opt) => opt.selected || opt.value === inputValue,
-      );
-      setSelectedOption(initselectedOption);
-      setValue(initselectedOption.map((opt) => opt.value));
+      const checkedOptions = options
+        .filter((opt) => inputValue.includes(opt.value))
+        .map((opt) => ({ ...opt, selected: true, matched: true }));
+      if (checkedOptions.length > 0) {
+        setValue(checkedOptions);
+      }
     } else {
       const checkedOption = options.find((opt) => opt.value === inputValue);
-      setSelectedOption(checkedOption);
-
-      console.log('checkedOption', checkedOption);
-      console.log('inputValue', inputValue);
-
-      setValue(checkedOption?.value || '');
+      if (checkedOption) {
+        setValue({ ...checkedOption, selected: true, matched: true });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
-
 
   const parsers = {
     label: (filters) => {
@@ -95,49 +88,59 @@ const FilterSelect = forwardRef((props, ref) => {
     },
   };
 
-  const filterHook = useFilterHook([{ label: name, facetKey: name }], tableHook, parsers);
+  const filterHook = useFilterHook([{ facetKey: name }], tableHook, parsers); // label: name,
   const groupHook = useFilterGroupHook(tableHook, filterHook, name, () => {});
 
   useEffect(() => {
     tableHook.registerFilterFetchCallback((payload, onSuccess) => {
       onSuccess({ [name]: options.map((opt) => ({ value: opt.value })) });
     });
-    filterHook.setSelectedItems({ [name]: options.filter((opt) => opt.selected) });
+
+    if (multiSelect) {
+      const selectedOptions = options
+        .filter((opt) => inputValue.includes(opt.value));
+      const filterOptions = selectedOptions
+        .map((opt) => ({ ...opt, selected: true, label: false }));
+      filterHook.setSelectedItems({ [name]: filterOptions });
+    } else {
+      const selectedOptions = options
+        .find((opt) => opt.value === inputValue);
+      filterHook.setSelectedItems(
+        { [name]: [{ ...selectedOptions, selected: true }] },
+      );
+    }
+
     tableHook.parentReady();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
   const handleChangeMulti = (filterValue) => {
     let newSelectedOption;
-    const inValues = value.some((opt) => opt === filterValue);
-    if (inValues) {
-      newSelectedOption = selectedOption.filter((opt) => opt.value !== filterValue);
-    } else {
-      newSelectedOption = [...selectedOption, options.find((opt) => opt.value === filterValue)];
-    }
-    setSelectedOption(newSelectedOption);
+    const alreadySelected = value.some((opt) => opt.value === filterValue);
 
-    const stringValues = newSelectedOption.map((opt) => opt.value);
-    setValue(stringValues);
-    dispatchEvent(stringValues, ref);
+    if (alreadySelected) {
+      newSelectedOption = value.filter((opt) => opt.value !== filterValue);
+    } else {
+      newSelectedOption = [...value, options.find((opt) => opt.value === filterValue)];
+    }
+    setValue(newSelectedOption);
+
+    const dispatchValues = newSelectedOption.map((opt) => opt.value);
+    dispatchEvent(dispatchValues, ref);
   };
 
   const handleChangeSingle = (filterValue) => {
-    const optionActive = selectedOption?.value === filterValue;
-
-    if (optionActive) {
-      setValue('');
+    let newOption;
+    const alreadySelected = value?.value === filterValue;
+    if (alreadySelected) {
+      newOption = {};
       dispatchEvent('', ref);
-      setSelectedOption('');
-      filterHook.setSelectedItems({ [name]: {} });
     } else {
-      setValue(filterValue);
+      newOption = options.find((opt) => opt.value === filterValue);
       dispatchEvent(filterValue, ref);
-      const newSelectedOption = options.find((opt) => opt.value === filterValue);
-      setSelectedOption(newSelectedOption);
-      filterHook.setSelectedItems({ [name]: newSelectedOption });
     }
-
+    filterHook.setSelectedItems({ [name]: newOption });
+    setValue(newOption);
     groupHook.setOpen(false);
   };
 
@@ -154,7 +157,7 @@ const FilterSelect = forwardRef((props, ref) => {
   const showTags = multiSelect && value.length > 0;
   return (
     <C.SelectFilter>
-      <C.InputWrapper singleValue={!multiSelect && selectedOption?.label} onClick={() => groupHook.setOpen(true)}>
+      <C.InputWrapper singleValue={!multiSelect && value?.label} onClick={() => groupHook.setOpen(true)}>
         <C.Input
           type="text"
           hideText={showTags}
@@ -162,12 +165,12 @@ const FilterSelect = forwardRef((props, ref) => {
           name={name}
           ref={ref}
           disabled
-          value={multiSelect ? value : value.value}
+          value={multiSelect ? value.map((val) => val.value) : value.value}
           {...props.props}
         />
         {showTags && (
           <Tag.Collection
-            tags={selectedOption.map((opt) => ({ value: opt.label }))}
+            tags={value.map((opt) => ({ value: opt.label }))}
             max={maxTags}
           />
         )}

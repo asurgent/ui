@@ -113,7 +113,7 @@ export const defaultForm = () => {
       },
       placeholder: 'Filterselect me',
     },
-    /*    someFilterSelectMulti: {
+    someFilterSelectMulti: {
       type: 'filterselect',
       label: 'Some Filterselect (multi)',
       options: [],
@@ -123,7 +123,7 @@ export const defaultForm = () => {
         searchPlaceholder: 'Search in me plz',
       },
       placeholder: 'Filterselect me alot',
-    }, */
+    },
     someDate: {
       type: 'datepicker',
       options: [],
@@ -153,18 +153,19 @@ export const defaultForm = () => {
           ],
           value: '2',
         },
-        /*   {
+        {
           name: 'someFilterSelectMulti',
           options: [
             {
-              value: '1', label: 'First option', selected: true,
+              value: '1', label: 'First option',
             },
             { value: '2', label: 'Second option' },
             {
-              value: '3', label: 'Third option', selected: true,
+              value: '3', label: 'Third option',
             },
           ],
-        }, */
+          value: ['1', '3'],
+        },
         { name: 'someDate', value: moment().startOf('day').toISOString() },
       ]);
     } else {
@@ -210,10 +211,10 @@ export const defaultForm = () => {
         msTimer={15}
         onSubmit={(values, isDirty) => {
           console.log('VALUES', values);
-          const multiChoiceSplit = values.someFilterSelectMulti.split(',');
+          /*  const multiChoiceSplit = values.someFilterSelectMulti.split(',');
           const multiValue = multiChoiceSplit.length === 1 && multiChoiceSplit[0] === '' ? [] : multiChoiceSplit;
 
-          Object.assign(values, { someFilterSelectMulti: multiValue });
+          Object.assign(values, { someFilterSelectMulti: multiValue }); */
           action()('isDirty', isDirty);
           action()('Submitted', values);
         }}
