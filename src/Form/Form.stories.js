@@ -189,20 +189,14 @@ export const defaultForm = () => {
         form={formData}
         msTimer={15}
         onSubmit={(values, isDirty) => {
-          // const multiChoiceSplit = values.someFilterSelectMulti.split(',');
-          // const multiValue = multiChoiceSplit.length === 1 && multiChoiceSplit[0] === '' ? [] : multiChoiceSplit;
-
-          // Object.assign(values, { someFilterSelectMulti: multiValue });
-          // action()('isDirty', isDirty);
-          // action()('Submitted', values);
-          console.log(values);
+          action()('isDirty', isDirty);
+          action()('Submitted', values);
         }}
         onChange={(values, isDirty, dirtyItems, name) => {
-          // action()('Changed', name || 'form');
-          // action()('Form values', values);
-          // action()('Form dirty', isDirty);
-          // action()('Dirty items', dirtyItems);
-          console.log(values);
+          action()('Changed', name || 'form');
+          action()('Form values', values);
+          action()('Form dirty', isDirty);
+          action()('Dirty items', dirtyItems);
         }}
       >
         {(inputList, renderFields, onSubmitAction, onResetAction, isDirty) => (
