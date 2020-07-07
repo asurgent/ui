@@ -1,5 +1,5 @@
 import {
-  useEffect, useState, useMemo,
+  useEffect, useState, useMemo, createRef,
 } from 'react';
 
 const getDetfaultValue = (values) => {
@@ -21,10 +21,10 @@ const getDetfaultSingleValue = (values, options) => {
 };
 
 const useTableHook = (values, options, multiSelect, outputParser) => {
+  const inputRef = createRef();
   const [isOpen, setOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [selectedOptions, setSelected] = useState([]);
-  const [inputValue, setInputValue] = useState('');
   const [isReady, setReady] = useState(false);
 
   useEffect(() => {
@@ -37,10 +37,6 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
       setReady(true);
     }
   }, [values, options, multiSelect, selectedOptions, isReady]);
-
-  useEffect(() => {
-    setInputValue(outputParser(selectedOptions));
-  }, [outputParser, selectedOptions]);
 
   const listOptions = useMemo(() => {
     if (options && Array.isArray(options)) {
@@ -89,6 +85,7 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
 
 
   return {
+    inputRef,
     isOpen,
     setOpen,
     search,
@@ -96,8 +93,15 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
     hasOptions: () => listOptions.length > 0,
     getOptions: () => listOptions,
     hasSelected: () => selectedOptions.length > 0,
-    getSelected: () => selectedOptions,
-    getInputValue: () => inputValue,
+    getSelected: () => outputParser,
+    getInputValue: () => {
+      if (!multiSelect) {
+        return outputParser(selectedOptions[0]);
+      }
+
+      return outputParser(selectedOptions);
+    },
+    showPlaceHolder: () => selectedOptions.length === 0,
     showTags: () => Boolean(multiSelect) && selectedOptions.length > 0,
     getTags: () => selectedOptions.map((val) => ({ value: val })),
     selectItem: (item) => {

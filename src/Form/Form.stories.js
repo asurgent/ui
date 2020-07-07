@@ -114,7 +114,7 @@ export const defaultForm = () => {
       label: 'Some Filterselect (multi)',
       options: [],
       tooltip: 'tooltip',
-      // outputParser: (list) => list.join(','),
+      parseOutput: (r) => r.join(','),
       props: {
         multiSelect: true,
         searchPlaceholder: 'Search in me plz',

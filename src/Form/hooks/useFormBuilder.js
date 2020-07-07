@@ -86,7 +86,14 @@ const getValues = (references, originalValues) => {
   const keys = (Object.keys(references) || []);
   const values = keys.reduce((acc, key) => {
     if (references[key] && references[key].current) {
-      const { value } = references[key].current;
+      const { value, getArray } = references[key].current;
+      if (getArray && typeof getArray === 'function') {
+        return {
+          [key]: getArray(),
+          ...acc,
+        };
+      }
+
       const isNumber = references[key].current.type === 'number';
       const handledValue = isNumber ? parseInt(value, 10) : value;
 
@@ -140,21 +147,20 @@ const getRenderableFields = (formSpec, formData, currentValues) => {
   if (Array.isArray(formSpec)) {
     return formData;
   }
-
-  return Object.assign(
-    ...Object.keys(formSpec)
-      .filter((key) => {
-        // check if the field has a renderprop
-        if (formSpec[key].render) {
-          const shouldShow = formSpec[key].render(currentValues);
-          if (!shouldShow) {
-            return null;
-          }
+  const render = Object.keys(formSpec)
+    .filter((key) => {
+      // check if the field has a renderprop
+      if (formSpec[key].render) {
+        const shouldShow = formSpec[key].render(currentValues);
+        if (!shouldShow) {
+          return null;
         }
-        return formData[key];
-      })
-      .map((key) => ({ [key]: formData[key] })),
-  );
+      }
+      return formData[key];
+    })
+    .reduce((acc, key) => ({ ...acc, [key]: formData[key] }), {});
+
+  return render;
 };
 
 const initalValue = (formSpecification, parameters = null) => {
@@ -171,7 +177,7 @@ const initalValue = (formSpecification, parameters = null) => {
 
     return formObject;
   } if (typeof formSpecification === 'object') {
-    return JSON.parse(JSON.stringify(formSpecification));
+    return { ...formSpecification };
   }
   return {};
 };

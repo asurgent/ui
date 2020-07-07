@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import * as Icons from '@material-ui/icons';
 import * as VirtualRender from '../../../VirtualRender';
@@ -19,7 +19,7 @@ const propTyps = {
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
   props: PropTypes.instanceOf(Object),
   theme: PropTypes.instanceOf(Object),
-  outputParser: PropTypes.func,
+  parseOutput: PropTypes.func,
   placeholder: PropTypes.string,
 };
 
@@ -27,8 +27,8 @@ const defaultProps = {
   value: '',
   props: { },
   theme: {},
+  parseOutput: (r) => r,
   placeholder: t('selectPlaceholder', 'asurgentui'),
-  outputParser: (res) => res,
 };
 
 const dispatchEvent = (value, ref) => {
@@ -46,32 +46,34 @@ const FilterInput = forwardRef((props, ref) => {
     options,
     placeholder,
     value,
-    outputParser,
+    parseOutput,
     props: inputProps,
   } = props;
 
-  const filterSelectHook = useFilterSelectHook(value, options, inputProps.multiSelect, outputParser);
+  const { multiSelect } = inputProps;
+  const filterSelectHook = useFilterSelectHook(value, options, multiSelect, parseOutput);
 
   const handleChange = (item) => {
     const selected = filterSelectHook.selectItem(item);
-    dispatchEvent(selected, ref);
+    dispatchEvent(selected, filterSelectHook.inputRef);
   };
+
+  useImperativeHandle(ref, () => ({
+    getArray: () => filterSelectHook.getInputValue(),
+  }));
 
   return (
     <C.SelectFilter>
       <C.InputWrapper onClick={() => filterSelectHook.setOpen(true)}>
-        <C.Input
-          type="text"
-          hideText={filterSelectHook.showTags()}
-          placeholder={placeholder}
-          name={name}
-          ref={ref}
-          disabled
-          value={filterSelectHook.getInputValue()}
-          {...inputProps}
-        />
+        <C.Input type="text" name={name} ref={filterSelectHook.inputRef} disabled {...inputProps} />
+        { filterSelectHook.showPlaceHolder() && (
+          <C.Value placeholder>{placeholder}</C.Value>
+        )}
         { filterSelectHook.showTags() && (
           <Tag.Collection tags={filterSelectHook.getTags()} max={3} />
+        )}
+        {!filterSelectHook.showTags() && (
+          <C.Value>{filterSelectHook.getInputValue()}</C.Value>
         )}
       </C.InputWrapper>
       <C.FilterWrapper>
