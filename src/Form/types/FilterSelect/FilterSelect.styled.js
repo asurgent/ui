@@ -18,12 +18,18 @@ export const InputWrapper = styled.div`
 `;
 
 export const Input = styled.input`
+    display: none;
     padding-right: 2rem;
     text-overflow: ellipsis;
     &:disabled {
         color: black!important;
     }
-    display: ${({ hideText }) => (hideText ? 'none' : 'block')};
+`;
+
+export const Value = styled.div`
+    padding-right: 2rem;
+    text-overflow: ellipsis;
+    color: ${({ theme, placeholder }) => (placeholder ? theme.gray400 : theme.black)}
 `;
 
 export const FilterInput = styled.input`
@@ -98,14 +104,6 @@ export const Search = styled.div`
         }
     }
 `;
-
-export const Center = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.6rem;
-`;
-
 
 export const ListWrapper = styled.div`
     flex:1;

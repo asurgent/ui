@@ -114,6 +114,7 @@ export const defaultForm = () => {
       label: 'Some Filterselect (multi)',
       options: [],
       tooltip: 'tooltip',
+      parseOutput: (r) => r.join(','),
       props: {
         multiSelect: true,
         searchPlaceholder: 'Search in me plz',
@@ -138,25 +139,27 @@ export const defaultForm = () => {
       { name: 'someSelect', value: '3' },
       {
         name: 'someFilterSelectSingle',
+        value: '2',
         options: [
-          { value: '1', label: 'First option' },
-          { value: '2', label: 'Second option' },
-          { value: '3', label: 'Third option' },
+          '1',
+          '2',
+          '3',
         ],
       },
       {
         name: 'someFilterSelectMulti',
+        value: ['Zero option', 'Second option'],
         options: [
-          { value: 'First option', label: 'First option' },
-          { value: 'Second option', label: 'Second option' },
-          { value: 'Third option', label: 'Third option' },
-          { value: 'Fourth option', label: 'Fourth option' },
-          { value: 'Fifth option', label: 'Fifth option' },
-          { value: 'Sixth option', label: 'Sixth option' },
-          { value: 'Seventh option', label: 'Seventh option' },
-          { value: 'Eigth option', label: 'Eigth option' },
-          { value: 'Ninth option', label: 'Ninth option' },
-          { value: 'Tenth option', label: 'Tenth option' },
+          'First option',
+          'Second option',
+          'Third option',
+          'Fourth option',
+          'Fifth option',
+          'Sixth option',
+          'Seventh option',
+          'Eigth option',
+          'Ninth option',
+          'Tenth option',
         ],
       },
       { name: 'someDate', value: moment().startOf('day').toISOString() },
@@ -186,10 +189,6 @@ export const defaultForm = () => {
         form={formData}
         msTimer={15}
         onSubmit={(values, isDirty) => {
-          const multiChoiceSplit = values.someFilterSelectMulti.split(',');
-          const multiValue = multiChoiceSplit.length === 1 && multiChoiceSplit[0] === '' ? [] : multiChoiceSplit;
-
-          Object.assign(values, { someFilterSelectMulti: multiValue });
           action()('isDirty', isDirty);
           action()('Submitted', values);
         }}

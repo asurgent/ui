@@ -92,6 +92,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
         minValue,
         maxValue,
         noLabel = false,
+        parseOutput,
         props: inputProps,
       } = inputs[key];
 
@@ -126,6 +127,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
             maxDate={maxDate}
             minValue={minValue}
             maxValue={maxValue}
+            parseOutput={parseOutput}
             props={inputProps}
             options={options}
           />
