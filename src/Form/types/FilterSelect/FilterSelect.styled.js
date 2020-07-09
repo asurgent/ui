@@ -1,38 +1,49 @@
 import styled from 'styled-components';
 
-export const InputWrapper = styled.div`
-    width: 100%;
-    /* mock a normal select by making text not selectable */
-    position: relative;
-    user-select: none;
+export const SelectFilter = styled.div`
     display: flex;
-    &::after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
+    width: 100%;
 `;
 
 export const Input = styled.input`
     display: none;
-    padding-right: 2rem;
-    text-overflow: ellipsis;
-    &:disabled {
-        color: black!important;
+`;
+
+export const Output = styled.div`
+    width: 100%;
+    position: relative;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    padding: 1.2rem;
+
+    .down-arrow{
+        display: absolute;
+        top: 50%;
+        transform: translateY(-50%)
     }
 `;
 
 export const Value = styled.div`
     padding-right: 2rem;
     text-overflow: ellipsis;
-    color: ${({ theme, placeholder }) => (placeholder ? theme.gray400 : theme.black)}
+    color: ${({ theme, asPlaceholder }) => (asPlaceholder ? theme.gray400 : theme.black)};
 `;
 
-export const FilterInput = styled.input`
+export const SearchWrapper = styled.div`
+    padding: .8rem ;
+    background-color: ${({ theme }) => theme.gray50};
+
+    form {
+        padding-right: 4.8rem;
+
+        @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
+            padding-right: 0;
+        }
+    }
+`;
+
+export const Search = styled.input`
     margin: 0;
     display: flex;
     align-items: center;
@@ -46,11 +57,6 @@ export const FilterInput = styled.input`
     background: ${({ theme }) => theme.white};
 `;
 
-export const SelectFilter = styled.div`
-    display: flex;
-    width: 100%;
-`;
-export const FilterWrapper = styled.div``;
 
 export const Dropdown = styled.div`
     position: fixed;
@@ -92,33 +98,10 @@ export const Dropdown = styled.div`
         }
     }
 `;
-export const Search = styled.div`
-    padding: .8rem ;
-    background-color: ${({ theme }) => theme.gray50};
-
-    form {
-        padding-right: 4.8rem;
-
-        @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
-            padding-right: 0;
-        }
-    }
-`;
 
 export const ListWrapper = styled.div`
     flex:1;
     display: flex;
     position: relative;
     overflow:hidden;
-
-    &:after {
-        display:  ${({ disabled }) => (disabled ? 'block' : 'none')};
-        content: " ";
-        background: ${({ theme }) => theme.rgba(theme.white, 0.8)};
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-    }
 `;

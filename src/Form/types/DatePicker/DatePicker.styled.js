@@ -25,6 +25,6 @@ export const DatePicker = styled(KeyboardDatePicker)`
         padding: 0!important;
         margin: 0!important;
         min-height: 2.4rem!important;
-
+        padding: 1.2rem!important;
     }
 `;

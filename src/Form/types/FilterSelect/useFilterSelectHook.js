@@ -66,8 +66,8 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
           return false;
         })
         .sort((a, b) => {
-          const textA = a.value.toUpperCase();
-          const textB = b.value.toUpperCase();
+          const textA = (a.value || '').toUpperCase();
+          const textB = (b.value || '').toUpperCase();
           if (textA < textB) { return -1; }
           if (textA > textB) { return 1; }
           return 0;
@@ -103,7 +103,13 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
     },
     showPlaceHolder: () => selectedOptions.length === 0,
     showTags: () => Boolean(multiSelect) && selectedOptions.length > 0,
-    getTags: () => selectedOptions.map((val) => ({ value: val })),
+    getTags: () => selectedOptions.sort((a, b) => {
+      const textA = (a || '').toUpperCase();
+      const textB = (b || '').toUpperCase();
+      if (textA < textB) { return -1; }
+      if (textA > textB) { return 1; }
+      return 0;
+    }).map((val) => ({ value: val })),
     selectItem: (item) => {
       if (multiSelect) {
         if (item.selected) {

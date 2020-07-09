@@ -80,24 +80,27 @@ const updateFields = (form, list) => {
   return copy;
 };
 
+const getFiledValue = (ref) => {
+  const { value, getArray } = ref.current;
+
+  if (getArray && typeof getArray === 'function') {
+    return getArray();
+  } if (ref.current.type === 'number') {
+    return parseInt(value, 10);
+  }
+
+  return value;
+};
+
 const getValues = (references, originalValues) => {
   let dirty = false;
   const dirtyItems = {};
   const keys = (Object.keys(references) || []);
   const values = keys.reduce((acc, key) => {
     if (references[key] && references[key].current) {
-      const { value, getArray } = references[key].current;
-      if (getArray && typeof getArray === 'function') {
-        return {
-          [key]: getArray(),
-          ...acc,
-        };
-      }
+      const value = getFiledValue(references[key]);
 
-      const isNumber = references[key].current.type === 'number';
-      const handledValue = isNumber ? parseInt(value, 10) : value;
-
-      if (handledValue !== originalValues[key]) {
+      if (value !== originalValues[key]) {
         dirty = true;
         Object.assign(dirtyItems, { [key]: true });
       } else {
@@ -105,7 +108,7 @@ const getValues = (references, originalValues) => {
       }
 
       return {
-        [key]: handledValue,
+        [key]: value,
         ...acc,
       };
     }

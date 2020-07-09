@@ -25,12 +25,6 @@ export const Wrapper = styled.div`
     return theme.gray200;
   }};
   border-radius: ${(props) => (props.status === 'error' ? '5px 5px 0px 0px' : '5px')};
-  padding: ${({ type }) => {
-    if (type === 'radiogroup') {
-      return '0 1.2rem';
-    }
-    return '1.2rem';
-  }};
   position: relative;
   box-sizing: border-box;
   min-height: 4.7rem;
@@ -47,6 +41,12 @@ export const Wrapper = styled.div`
     border: none;
     outline: none;
     appearance: none; 
+    padding: ${({ type }) => {
+    if (type === 'radiogroup') {
+      return '0 1.2rem';
+    }
+    return '1.2rem';
+  }};
     
     &:disabled {
         color: ${({ theme }) => theme.gray400};

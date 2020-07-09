@@ -4,7 +4,7 @@ export default addTranslation({
   id: 'repeat',
   sv: {
     yearShort: 'Å',
-    yearLong: 'År',
+    yearLong: 'Årligen',
 
     monthShort: 'M',
     monthLong: 'Månad',
@@ -13,7 +13,7 @@ export default addTranslation({
     weekLong: 'Vecka',
 
     dayShort: 'D',
-    dayLong: 'Dag',
+    dayLong: 'Dagligen',
 
     hourShort: 'T',
     hourLong: 'Timme',

@@ -28,7 +28,7 @@ const defaultProps = {
   props: { },
   theme: {},
   parseOutput: (r) => r,
-  placeholder: t('selectPlaceholder', 'asurgentui'),
+  placeholder: '',
 };
 
 const dispatchEvent = (value, ref) => {
@@ -49,6 +49,7 @@ const FilterInput = forwardRef((props, ref) => {
     parseOutput,
     props: inputProps,
   } = props;
+  const placeholdeOutput = placeholder || t('selectPlaceholder', 'asurgentui');
 
   const { multiSelect } = inputProps;
   const filterSelectHook = useFilterSelectHook(value, options, multiSelect, parseOutput);
@@ -63,38 +64,36 @@ const FilterInput = forwardRef((props, ref) => {
   }));
 
   return (
-    <C.SelectFilter>
-      <C.InputWrapper onClick={() => filterSelectHook.setOpen(true)}>
+    <Shield.Transparent
+      onClick={() => filterSelectHook.setOpen(false)}
+      shieldIsUp={filterSelectHook.isOpen}
+    >
+      <C.SelectFilter onClick={() => filterSelectHook.setOpen(true)}>
         <C.Input type="text" name={name} ref={filterSelectHook.inputRef} disabled {...inputProps} />
-        { filterSelectHook.showPlaceHolder() && (
-          <C.Value placeholder>{placeholder}</C.Value>
-        )}
-        { filterSelectHook.showTags() && (
-          <Tag.Collection tags={filterSelectHook.getTags()} max={3} />
-        )}
-        {!filterSelectHook.showTags() && (
-          <C.Value>{filterSelectHook.getInputValue()}</C.Value>
-        )}
-      </C.InputWrapper>
-      <C.FilterWrapper>
-        <Shield.Transparent
-          onClick={() => filterSelectHook.setOpen(false)}
-          shieldIsUp={filterSelectHook.isOpen}
-        >
-          <Transition.FadeInFitted isVisible={filterSelectHook.isOpen} timeout={80}>
-            <C.Dropdown fitted>
-              <C.Search>
-                <C.FilterInput
-                  type="text"
-                  placeholder={inputProps.searchPlaceholder || t('searchPlaceHolder', 'asurgentui')}
-                  value={filterSelectHook.searchValue}
-                  onChange={({ target }) => {
-                    filterSelectHook.setSearch(target.value);
-                  }}
-                />
-              </C.Search>
-              <C.ListWrapper>
-                {
+        <C.Output>
+          <C.Value asPlaceholder={filterSelectHook.showPlaceHolder()}>
+            { filterSelectHook.showTags() && (
+              <Tag.Collection tags={filterSelectHook.getTags()} max={3} />
+            )}
+            { filterSelectHook.showPlaceHolder() && placeholdeOutput}
+            {!filterSelectHook.showTags() && (filterSelectHook.getInputValue())}
+          </C.Value>
+          <Icons.ArrowDropDown className="down-arrow" fontSize="large" />
+        </C.Output>
+        <Transition.FadeInFitted isVisible={filterSelectHook.isOpen} timeout={80}>
+          <C.Dropdown>
+            <C.SearchWrapper>
+              <C.Search
+                type="text"
+                placeholder={inputProps.searchPlaceholder || t('searchPlaceHolder', 'asurgentui')}
+                value={filterSelectHook.searchValue}
+                onChange={({ target }) => {
+                  filterSelectHook.setSearch(target.value);
+                }}
+              />
+            </C.SearchWrapper>
+            <C.ListWrapper>
+              {
                   filterSelectHook.hasOptions() && (
                     <VirtualRender.List
                       rowHeight={48}
@@ -111,18 +110,16 @@ const FilterInput = forwardRef((props, ref) => {
                     </VirtualRender.List>
                   )
                 }
-              </C.ListWrapper>
-            </C.Dropdown>
-          </Transition.FadeInFitted>
-        </Shield.Transparent>
-      </C.FilterWrapper>
-      <Icons.ArrowDropDown className="down-arrow" fontSize="large" />
-    </C.SelectFilter>
+            </C.ListWrapper>
+          </C.Dropdown>
+        </Transition.FadeInFitted>
+      </C.SelectFilter>
+    </Shield.Transparent>
   );
 });
 
 FilterInput.defaultProps = defaultProps;
 FilterInput.propTypes = propTyps;
-FilterInput.displayName = '@asurgent.ui.Form.Input.FilterInput';
+FilterInput.displayName = '@asurgent.ui.Form.Input.FilterSelect';
 
 export default FilterInput;
