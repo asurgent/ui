@@ -28,6 +28,14 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
   const [isReady, setReady] = useState(false);
 
   useEffect(() => {
+    if (!isOpen) {
+      // Wait for slideuptransition to complete
+      // before showing all options again
+      setTimeout(() => setSearch(''), 250);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
     if (isReady === false && options && options.length > 0) {
       if (!multiSelect) {
         setSelected(getDetfaultSingleValue(values, options));
@@ -127,6 +135,16 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
 
       setSelected([item.value]);
       return item.value;
+    },
+    reset: (resetValues) => {
+      if (isReady === true) {
+        if (!multiSelect) {
+          setSelected(getDetfaultSingleValue(resetValues, options));
+        } else {
+          setSelected(getDetfaultValue(resetValues));
+        }
+        setReady(true);
+      }
     },
   };
 };

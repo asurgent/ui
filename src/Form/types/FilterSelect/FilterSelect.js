@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useImperativeHandle, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as Icons from '@material-ui/icons';
 import * as VirtualRender from '../../../VirtualRender';
@@ -53,6 +53,12 @@ const FilterInput = forwardRef((props, ref) => {
 
   const { multiSelect } = inputProps;
   const filterSelectHook = useFilterSelectHook(value, options, multiSelect, parseOutput);
+
+  useEffect(() => {
+    filterSelectHook.reset(value);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
+
 
   const handleChange = (item) => {
     const selected = filterSelectHook.selectItem(item);
