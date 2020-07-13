@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { generateReferences, generateFieldComponents } from '../helpers';
 import {
   updateValue,
   appendTranslationPrefix,
@@ -10,6 +9,8 @@ import {
   resetValues,
   getRenderableFields,
   initalValue,
+  generateReferences,
+  generateFieldComponents,
 } from './helpers';
 
 
@@ -21,7 +22,6 @@ const useFormBuilder = (formSpecification, parameters = null) => {
   const [originalValues, setOriginalValues] = useState({});
   const [resetCallback, setResetCallback] = useState(null);
   const [errors, setErrors] = useState([]);
-
   // Seperate effect to render error-values on inputfields
   // and that keeps the input-fileds current value
   useEffect(() => {
