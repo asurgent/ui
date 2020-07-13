@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormStyle, FormRow } from './Form.styled';
 import { withDelayTimer } from './helpers';
@@ -39,6 +39,8 @@ const defaultProps = {
   onKeyDown: () => {},
   onKeyUpTimer: () => {},
 };
+
+export const FormContext = createContext({ hook: null });
 
 const Form = (props) => {
   const {
@@ -147,8 +149,10 @@ const Form = (props) => {
       }}
       className={className}
     >
-      { typeof children === 'function' && children(inputFileds, renderForms, onSubmitAction, onResetAction, isDirty) }
-      { typeof children !== 'function' && renderForms}
+      <FormContext.Provider value={{ hook }}>
+        { typeof children === 'function' && children(inputFileds, renderForms, onSubmitAction, onResetAction, isDirty) }
+        { typeof children !== 'function' && renderForms}
+      </FormContext.Provider>
     </FormStyle>
   );
 };
