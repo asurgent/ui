@@ -311,9 +311,8 @@ export const updateForm = () => {
 };
 
 
-export const defaultForm2 = () => {
+export const dynamicMinMaxAttributes = () => {
   const formData = Form.useFormBuilder({
-
     threshold_comparison: {
       type: 'select',
       label: 'threshold comparison',
@@ -325,44 +324,49 @@ export const defaultForm2 = () => {
         { value: '=', label: '=' },
       ],
     },
-
-    critical: {
+    threshold: {
+      type: 'number',
+      label: 'threshold',
+      maxValue: 100,
+    },
+    critical_threshold: {
       type: 'number',
       label: 'critical',
       maxValue: (values) => {
-        const { treashold, threshold_comparison: comp } = values;
+        const { threshold, threshold_comparison: comp } = values;
         switch (comp) {
-          case '>':
-            return treashold - 1;
-          case '>=':
-            return treashold;
+          case '<':
+            return threshold - 1;
+          case '<=':
+            return threshold;
+          case '=':
+            return threshold;
           default:
             return null;
         }
       },
       minValue: (values) => {
-        const { treashold, threshold_comparison: comp } = values;
+        const { threshold, threshold_comparison: comp } = values;
         switch (comp) {
-          case '<':
-            return treashold;
-          case '<=':
-            return treashold;
+          case '>':
+            return threshold + 1;
+          case '>=':
+            return threshold;
+          case '=':
+            return threshold;
           default:
             return 0;
         }
       },
     },
-    treashold: {
-      type: 'number',
-      label: 'treashold',
-      maxValue: 100,
-    },
+
   });
 
   useEffect(() => {
     formData.updateFields([
-      { name: 'critical', value: 11 },
-      { name: 'treashold', value: 10 },
+      { name: 'threshold_comparison', value: '<' },
+      { name: 'critical', value: 100 }, // Will be overridden to 10 on render
+      { name: 'threshold', value: 10 },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -373,10 +377,14 @@ export const defaultForm2 = () => {
         form={formData}
         msTimer={15}
         onSubmit={(values, isDirty) => {
-          console.log(values);
+          action()('isDirty', isDirty);
+          action()('Submitted', values);
         }}
         onChange={(values, isDirty, dirtyItems, name) => {
-          console.log(values);
+          action()('Changed', name || 'form');
+          action()('Form values', values);
+          action()('Form dirty', isDirty);
+          action()('Dirty items', dirtyItems);
         }}
       >
         {(inputList, renderFields, onSubmitAction, onResetAction, isDirty) => (

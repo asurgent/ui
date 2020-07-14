@@ -55,6 +55,7 @@ const NumberInput = forwardRef((props, ref) => {
     setValue(parseInt(props.value || 0, 10));
   }, [props]);
 
+  // built in min/max for number inputs only prevents valuechanges by using the buttons
   useEffect(() => {
     if ((max && value >= max)) {
       setValue(max);
@@ -62,16 +63,6 @@ const NumberInput = forwardRef((props, ref) => {
       setValue(min);
     }
   }, [props, max, min, value]);
-
-  // built in min/max for number inputs only prevents valuechanges by using the buttons
-  const handleChange = ({ target }) => {
-    const requestedValue = target.value;
-    let canChange = true;
-    if ((max && requestedValue >= max) || (min && requestedValue <= min)) {
-      canChange = false;
-    }
-    setValue(requestedValue);
-  };
 
   return (
     <input
@@ -81,7 +72,7 @@ const NumberInput = forwardRef((props, ref) => {
       placeholder={placeholder}
       min={min}
       max={max}
-      onChange={handleChange}
+      onChange={({ target }) => setValue(target.value)}
       name={name}
       ref={ref}
     />
