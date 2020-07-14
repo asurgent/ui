@@ -309,3 +309,89 @@ export const updateForm = () => {
     />
   );
 };
+
+
+export const defaultForm2 = () => {
+  const formData = Form.useFormBuilder({
+
+    threshold_comparison: {
+      type: 'select',
+      label: 'threshold comparison',
+      options: [
+        { value: '<', label: '<' },
+        { value: '>', label: '>' },
+        { value: '>=', label: '>=' },
+        { value: '<=', label: '<=' },
+        { value: '=', label: '=' },
+      ],
+    },
+
+    critical: {
+      type: 'number',
+      label: 'critical',
+      maxValue: (values) => {
+        const { treashold, threshold_comparison: comp } = values;
+        switch (comp) {
+          case '>':
+            return treashold - 1;
+          case '>=':
+            return treashold;
+          default:
+            return null;
+        }
+      },
+      minValue: (values) => {
+        const { treashold, threshold_comparison: comp } = values;
+        switch (comp) {
+          case '<':
+            return treashold;
+          case '<=':
+            return treashold;
+          default:
+            return 0;
+        }
+      },
+    },
+    treashold: {
+      type: 'number',
+      label: 'treashold',
+      maxValue: 100,
+    },
+  });
+
+  useEffect(() => {
+    formData.updateFields([
+      { name: 'critical', value: 11 },
+      { name: 'treashold', value: 10 },
+    ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div style={{ minHeight: '120vh' }}>
+      <Form.Primary
+        form={formData}
+        msTimer={15}
+        onSubmit={(values, isDirty) => {
+          console.log(values);
+        }}
+        onChange={(values, isDirty, dirtyItems, name) => {
+          console.log(values);
+        }}
+      >
+        {(inputList, renderFields, onSubmitAction, onResetAction, isDirty) => (
+          <>
+            {renderFields}
+            <Block.SpaceBetween>
+              <Button.Hollow>Cancel</Button.Hollow>
+              <Button.Secondary disabled={!isDirty} onClick={onResetAction}>
+                Reset
+              </Button.Secondary>
+              <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
+            </Block.SpaceBetween>
+          </>
+        )}
+      </Form.Primary>
+    </div>
+  );
+};
