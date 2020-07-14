@@ -309,3 +309,97 @@ export const updateForm = () => {
     />
   );
 };
+
+
+export const dynamicMinMaxAttributes = () => {
+  const formData = Form.useFormBuilder({
+    threshold_comparison: {
+      type: 'select',
+      label: 'threshold comparison',
+      options: [
+        { value: '<', label: '<' },
+        { value: '>', label: '>' },
+        { value: '>=', label: '>=' },
+        { value: '<=', label: '<=' },
+        { value: '=', label: '=' },
+      ],
+    },
+    threshold: {
+      type: 'number',
+      label: 'threshold',
+      maxValue: 100,
+    },
+    critical_threshold: {
+      type: 'number',
+      label: 'critical',
+      maxValue: (values) => {
+        const { threshold, threshold_comparison: comp } = values;
+        switch (comp) {
+          case '<':
+            return threshold - 1;
+          case '<=':
+            return threshold;
+          case '=':
+            return threshold;
+          default:
+            return null;
+        }
+      },
+      minValue: (values) => {
+        const { threshold, threshold_comparison: comp } = values;
+        switch (comp) {
+          case '>':
+            return threshold + 1;
+          case '>=':
+            return threshold;
+          case '=':
+            return threshold;
+          default:
+            return 0;
+        }
+      },
+    },
+
+  });
+
+  useEffect(() => {
+    formData.updateFields([
+      { name: 'threshold_comparison', value: '<' },
+      { name: 'critical', value: 100 }, // Will be overridden to 10 on render
+      { name: 'threshold', value: 10 },
+    ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div style={{ minHeight: '120vh' }}>
+      <Form.Primary
+        form={formData}
+        msTimer={15}
+        onSubmit={(values, isDirty) => {
+          action()('isDirty', isDirty);
+          action()('Submitted', values);
+        }}
+        onChange={(values, isDirty, dirtyItems, name) => {
+          action()('Changed', name || 'form');
+          action()('Form values', values);
+          action()('Form dirty', isDirty);
+          action()('Dirty items', dirtyItems);
+        }}
+      >
+        {(inputList, renderFields, onSubmitAction, onResetAction, isDirty) => (
+          <>
+            {renderFields}
+            <Block.SpaceBetween>
+              <Button.Hollow>Cancel</Button.Hollow>
+              <Button.Secondary disabled={!isDirty} onClick={onResetAction}>
+                Reset
+              </Button.Secondary>
+              <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
+            </Block.SpaceBetween>
+          </>
+        )}
+      </Form.Primary>
+    </div>
+  );
+};

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { generateReferences, generateFieldComponents } from '../helpers';
 import {
   updateValue,
   appendTranslationPrefix,
@@ -10,10 +9,30 @@ import {
   resetValues,
   getRenderableFields,
   initalValue,
+  generateReferences,
+  generateFieldComponents,
 } from './helpers';
+
+const getKeyValue = (update, cache) => {
+  if (update.value !== undefined) {
+    return update.value;
+  } if (cache?.value) {
+    return cache.value;
+  }
+
+  return undefined;
+};
+const getValuesFromUpdate = (update, cache) => Object.keys(update)
+  .reduce((acc, key) => ({
+    [key]: getKeyValue(update[key], cache[key]),
+    ...acc,
+  }), {});
 
 
 const useFormBuilder = (formSpecification, parameters = null) => {
+  // ValueState helps ut keep track of changes i the form both
+  // from user-changes and hook-changes. Used in eg. Number.js
+  const [valueState, setValueState] = useState({});
   const [formData, setFormData] = useState(initalValue(formSpecification, parameters));
   const [inputFileds, setInputFields] = useState({});
   const [renderedFields, setRenderedFields] = useState([]);
@@ -21,7 +40,6 @@ const useFormBuilder = (formSpecification, parameters = null) => {
   const [originalValues, setOriginalValues] = useState({});
   const [resetCallback, setResetCallback] = useState(null);
   const [errors, setErrors] = useState([]);
-
   // Seperate effect to render error-values on inputfields
   // and that keeps the input-fileds current value
   useEffect(() => {
@@ -78,23 +96,32 @@ const useFormBuilder = (formSpecification, parameters = null) => {
       const update = updateValue(formData, { name, value });
       if (update) {
         setFormData(update);
+        setValueState(getValuesFromUpdate(update, valueState));
+      }
+    },
+    updateValues: (list) => {
+      const update = updateValues(formData, list);
+      if (update) {
+        setFormData(update);
+        setValueState(getValuesFromUpdate(update, valueState));
       }
     },
     updateField: (name, value) => {
       const update = updateField(formData, { name, value });
       if (update) {
         setFormData(update);
+        setValueState(getValuesFromUpdate(update, valueState));
       }
     },
     updateFields: (list) => {
       const update = updateFields(formData, list);
       if (update) {
         setFormData(update);
+        setValueState(getValuesFromUpdate(update, valueState));
       }
     },
     focusOnField: (key) => {
       const input = references[key];
-
       if (input && input.current) {
         input.current.focus();
       }
@@ -110,12 +137,6 @@ const useFormBuilder = (formSpecification, parameters = null) => {
       if (Object.prototype.hasOwnProperty.call(formData, key) === false) {
         const copy = { ...formData, [key]: field };
         setFormData(copy);
-      }
-    },
-    updateValues: (list) => {
-      const update = updateValues(formData, list);
-      if (update) {
-        setFormData(update);
       }
     },
     errors: (errorsList, translation) => {
@@ -135,8 +156,13 @@ const useFormBuilder = (formSpecification, parameters = null) => {
         }
       }
     },
-    getValues: () => getValues(references, originalValues),
+    getValues: () => {
+      const result = getValues(references, originalValues);
+      setValueState(result.values);
+      return result;
+    },
     inputFileds: renderedFields,
+    valueState,
     formData,
   };
 };

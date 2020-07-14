@@ -1,4 +1,138 @@
 import cloneDeep from 'lodash/cloneDeep';
+import React from 'react';
+import InputWrapper from '../components/InputWrapper';
+
+import Text from '../types/Text/index';
+import Number from '../types/Number/index';
+import TextArea from '../types/TextArea/index';
+import Select from '../types/Select/index';
+import FilterSelect from '../types/FilterSelect/index';
+import Label from '../types/Label/index';
+import DatePicker from '../types/DatePicker/index';
+import RadioGroup from '../types/RadioGroup/index';
+
+
+const getInputComponent = (type) => {
+  switch (type) {
+    case 'text':
+      return Text;
+    case 'number':
+      return Number;
+    case 'textarea':
+      return TextArea;
+    case 'select':
+      return Select;
+    case 'filterselect':
+      return FilterSelect;
+    case 'label':
+      return Label;
+    case 'datepicker':
+      return DatePicker;
+    case 'radiogroup':
+      return RadioGroup;
+    default:
+      return Text;
+  }
+};
+
+const getFieldError = (key, errors) => {
+  if (Array.isArray(errors)) {
+    const error = errors.find(({ property }) => property === key);
+    if (error) {
+      const { message, message_translation_key: translationKey } = error;
+
+      return {
+        message,
+        translationKey,
+      };
+    }
+  }
+
+  return false;
+};
+
+export const generateReferences = (inputs) => {
+  const referenceList = Object.keys(inputs)
+    .reduce((acc, key) => {
+      // Ignore labels when generating refercens
+      if (inputs[key].type === 'label') {
+        return acc;
+      }
+
+      return {
+        [key]: React.createRef(),
+        ...acc,
+      };
+    }, {});
+
+  return referenceList;
+};
+
+export const generateFieldComponents = (inputs, referenceList, errors, keepInputValue, self) => {
+  const original = {};
+  const fields = Object.keys(inputs)
+    .reduce((acc, key) => {
+      const {
+        type,
+        value,
+        tooltip,
+        placeholder,
+        label,
+        options,
+        minDate,
+        maxDate,
+        minValue,
+        maxValue,
+        noLabel = false,
+        parseOutput,
+        props: inputProps,
+      } = inputs[key];
+
+      let inputValue = value;
+      const error = getFieldError(key, errors);
+
+      if (keepInputValue && referenceList[key]?.current) {
+        const isNumber = referenceList[key].current.type === 'number';
+        inputValue = isNumber
+          ? parseInt(referenceList[key].current.value, 10)
+          : referenceList[key].current.value;
+      }
+
+      Object.assign(original, { [key]: inputValue });
+
+      const RequestedComponent = getInputComponent(type);
+      const Component = (
+        <InputWrapper
+          label={label || key}
+          tooltip={tooltip || ''}
+          noLabel={noLabel}
+          error={error}
+          type={type}
+        >
+          <RequestedComponent
+            hook={self}
+            ref={referenceList[key]}
+            name={key}
+            value={inputValue}
+            placeholder={placeholder}
+            label={label}
+            minDate={minDate}
+            maxDate={maxDate}
+            minValue={minValue}
+            maxValue={maxValue}
+            parseOutput={parseOutput}
+            props={inputProps}
+            options={options}
+          />
+        </InputWrapper>
+      );
+
+      return Object.assign(acc, { [key]: Component });
+    }, {});
+
+  return { fields, original };
+};
+
 
 export const updateValue = (form, change) => {
   if (typeof change === 'object') {
