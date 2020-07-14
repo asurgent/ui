@@ -6,8 +6,8 @@ import { FormContext } from '../../Form';
 
 const propTyps = {
   value: PropTypes.number,
-  minValue: PropTypes.number,
-  maxValue: PropTypes.number,
+  minValue: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+  maxValue: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
@@ -32,7 +32,7 @@ const NumberInput = forwardRef((props, ref) => {
   } = props;
 
   const { hook: form } = useContext(FormContext);
-  const [value, setValue] = useState(props.value);
+  const [value, setValue] = useState(parseInt(props.value || 0, 10));
 
   const max = useMemo(() => {
     if (typeof maxValue === 'function') {
