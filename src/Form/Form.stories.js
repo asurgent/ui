@@ -365,7 +365,7 @@ export const dynamicMinMaxAttributes = () => {
   useEffect(() => {
     formData.updateFields([
       { name: 'threshold_comparison', value: '<' },
-      { name: 'critical', value: 100 }, // Will be overridden to 10 on render
+      { name: 'critical_threshold', value: 100 }, // Will be overridden to 10 on render
       { name: 'threshold', value: 10 },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
