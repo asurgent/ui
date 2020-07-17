@@ -14,7 +14,7 @@ const defaultProps = {
   children: null,
 };
 
-const Emptystate = ({ navigationList, children }) => (
+const SubnavigationBlock = ({ navigationList, children }) => (
   <C.Wrapper>
     <C.Navigation>
       {
@@ -37,8 +37,8 @@ const Emptystate = ({ navigationList, children }) => (
   </C.Wrapper>
 );
 
-Emptystate.propTypes = propTypes;
-Emptystate.defaultProps = defaultProps;
-Emptystate.displayName = '@asurgent.ui.Block.Emptystate';
+SubnavigationBlock.propTypes = propTypes;
+SubnavigationBlock.defaultProps = defaultProps;
+SubnavigationBlock.displayName = '@asurgent.ui.Block.SubnavigationBlock';
 
-export default Emptystate;
+export default SubnavigationBlock;
