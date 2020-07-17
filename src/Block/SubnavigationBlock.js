@@ -7,7 +7,7 @@ const propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
-  navigationList: PropTypes.instanceOf(PropTypes.Array).isRequired,
+  navigationList: PropTypes.instanceOf(Array).isRequired,
 };
 
 const defaultProps = {
