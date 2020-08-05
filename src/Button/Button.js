@@ -94,7 +94,6 @@ const Button = (props) => {
         onClick(event);
       }
 
-
       if (isValidLink && isInteralLink(link)) {
         event.preventDefault();
 
@@ -113,6 +112,7 @@ const Button = (props) => {
   const attrs = {
     className: [(disabled ? 'disabled' : null), className].join(' ').trim(),
     onClick: handleClick,
+    onMouseDown: (e) => e.preventDefault(),
   };
 
   const TooltipWrapper = ({ children: tooltipChildren }) => {
