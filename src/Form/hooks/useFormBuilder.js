@@ -136,7 +136,7 @@ const useFormBuilder = (formSpecification, parameters = null) => {
     blurFields: () => {
       Object.keys(references).forEach((key) => {
         const input = references[key];
-        if (input && input.current) {
+        if (input?.current?.tagName === 'INPUT') {
           input.current.blur();
         }
       });
