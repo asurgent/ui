@@ -1,15 +1,16 @@
 /* eslint-env jest */
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {
-  render, cleanup, fireEvent, waitFor, act, screen,
+  render, cleanup, act,
 } from 'test-utils';
 
 import * as Form from './index';
 import * as Button from '../Button';
 
 
-/* afterEach(cleanup); */
+afterEach(cleanup);
 
 const MyForm = ({ subTitle, resetTitle, onClick }) => {
   const formObj = {
@@ -42,6 +43,13 @@ const MyForm = ({ subTitle, resetTitle, onClick }) => {
 
   );
 };
+
+MyForm.propTypes = {
+  subTitle: PropTypes.string.isRequired,
+  resetTitle: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
 describe('Button', () => {
   test('The form submits when clicking the submit button, even when fields are not yet blurred', async () => {
     const props = {

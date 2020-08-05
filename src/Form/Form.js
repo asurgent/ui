@@ -48,8 +48,8 @@ const Form = (props) => {
     children,
     msTimer,
     onSubmit,
-    onFocus,
     onBlur,
+    onFocus,
     onChange,
     onChangeTimer,
     onKeyUp,
@@ -151,7 +151,7 @@ const Form = (props) => {
       }}
       onBlur={(event) => {
         const { name } = event.target;
-        eventTrigger({ name, action: onFocus, setDirty: false });
+        eventTrigger({ name, action: onBlur, setDirty: false });
       }}
       className={className}
     >
