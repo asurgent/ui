@@ -110,5 +110,4 @@ NextDate.defaultProps = {
   durationInSeconds: 0,
 };
 
-
 export default NextDate;

@@ -36,7 +36,6 @@ const combineChartDimensions = (dimensions = {}) => {
   };
 };
 
-
 export const useChartDimensions = () => {
   const ref = useRef();
   const [width, setWidth] = useState(500);
@@ -52,7 +51,6 @@ export const useChartDimensions = () => {
         if (!Array.isArray(entries)) return;
         if (!entries.length) return;
         const entry = entries[0];
-
 
         if (width !== entry.contentRect.width) {
           setWidth(entry.contentRect.width);

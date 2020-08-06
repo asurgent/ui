@@ -9,7 +9,6 @@ export default {
   decorators: [withKnobs],
 };
 
-
 export const main = () => (
   <Cron.Editor
     end={new Date()}

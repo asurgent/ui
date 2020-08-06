@@ -47,7 +47,6 @@ const usePaginationHook = (tableHook, props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableHook.hasTriggers()]);
 
-
   // After this render-cycle, reset the reset-state so
   // hook will trigger updates on user-actions again
   useEffect(() => {
@@ -80,7 +79,6 @@ const usePaginationHook = (tableHook, props) => {
     const newList = buildPaginationArray(currentPage, totalPageCount, PAGINATION_DELTA);
     setPaginationList(newList);
   }, [currentPage, totalPageCount]);
-
 
   const paginate = (requestedPage) => {
     const page = Math.max(1, Math.min(totalPageCount, requestedPage));

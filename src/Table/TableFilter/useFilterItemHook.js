@@ -54,7 +54,6 @@ const useFilterProvider = (filterItem, groupHook, filterHook, isMultiSelect) => 
     }
   };
 
-
   return {
     isExcluded: () => state === EXCLUDE,
     isIncluded: () => state === INCLUDE,

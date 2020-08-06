@@ -105,7 +105,6 @@ export const mainLayout = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   return (
     <Main provider={provider}>
       <Omnibar>

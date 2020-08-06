@@ -1,4 +1,3 @@
-
 import React from 'react';
 import * as Icon from '@material-ui/icons';
 import {
@@ -10,7 +9,6 @@ import * as Button from './index';
 const content = 'Button text ';
 
 export default { title: 'UI Components|Buttons', decorators: [withKnobs] };
-
 
 export const saveToFileButton = () => (
   <>

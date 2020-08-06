@@ -34,7 +34,6 @@ export const FadeInSlideDown = styled(FadeIn)`
 }
 `;
 
-
 export const FadeInSlideDownOnDesktop = styled(FadeIn)`
   @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
       transform: translateY(
@@ -42,7 +41,6 @@ export const FadeInSlideDownOnDesktop = styled(FadeIn)`
       );
   }
 `;
-
 
 export const FadeInFitted = styled(FadeIn)`
   position: absolute!important;

@@ -45,7 +45,6 @@ const Backdrop = ({
     setTooltip(null);
   };
 
-
   return (
     <>
       <C.Backdrop
@@ -68,7 +67,6 @@ const Backdrop = ({
     </>
   );
 };
-
 
 Backdrop.propTypes = propTypes;
 Backdrop.defaultProps = defaultProps;

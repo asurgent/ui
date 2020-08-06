@@ -12,7 +12,6 @@ const defaultProps = {
   parseSearchStringOutput: null,
 };
 
-
 const TableSearchBarProxy = ({ tableHook, parseSearchStringOutput, ...props }) => {
   const parsers = { parseSearchStringOutput };
   const searchHook = useSearchbarHook(tableHook, parsers);

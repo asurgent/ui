@@ -25,7 +25,6 @@ const getEmptystate = (hook, props) => {
   return null;
 };
 
-
 const propTypes = {
   theme: PropTypes.instanceOf(Object).isRequired,
   tableHook: PropTypes.instanceOf(Object).isRequired,

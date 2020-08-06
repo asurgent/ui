@@ -66,7 +66,6 @@ export const Close = styled.div`
     }
 `;
 
-
 export const Actionbar = styled.div`
     position: absolute;
     left: 0;
@@ -74,7 +73,6 @@ export const Actionbar = styled.div`
     padding: 3.2rem;
     width: 100%;
 `;
-
 
 export const Overlay = styled.div`
   top: 0;

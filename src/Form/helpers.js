@@ -1,4 +1,3 @@
-
 export const withDelayTimer = (action, timeout = 500) => {
   let timer = setTimeout(() => {}, timeout);
   return (...args) => {

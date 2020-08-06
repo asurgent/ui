@@ -14,7 +14,6 @@ const defaultProps = {
   props: {},
 };
 
-
 const getDefaultSort = (sortKeys) => {
   if (Array.isArray(sortKeys) && sortKeys.length > 0) {
     const sort = sortKeys.find(({ default: sortByDefault }) => sortByDefault);
@@ -29,7 +28,6 @@ const getDefaultSort = (sortKeys) => {
 
   return null;
 };
-
 
 const Select = forwardRef((props, ref) => {
   const {

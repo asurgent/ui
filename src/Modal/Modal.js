@@ -10,7 +10,6 @@ import {
 } from './helpers';
 import * as Transition from '../Transition';
 
-
 const propTypes = {
   title: PropTypes.oneOfType([
     PropTypes.string,
