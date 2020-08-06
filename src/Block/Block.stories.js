@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   withKnobs, boolean, number,
@@ -124,7 +123,6 @@ export const subnavigationBlock = () => (
     </Block.Bordered>
   </Block.SubnavigationBlock>
 );
-
 
 centerBlock.story = {
   name: 'Center Block',

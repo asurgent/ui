@@ -6,7 +6,6 @@ import * as Dismissable from './index';
 
 export default { title: 'UI Components|Dismissable', decorators: [withKnobs] };
 
-
 export const plain = () => (
   <Dismissable.Plain
     id={text('Id', 'some.banner.id')}
@@ -21,7 +20,6 @@ export const plain = () => (
 plain.story = {
   name: 'Plain',
 };
-
 
 export const primary = () => {
   const [id, setId] = useState('banner.storybook.primary');

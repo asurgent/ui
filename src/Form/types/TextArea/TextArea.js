@@ -40,7 +40,6 @@ const TextArea = forwardRef((props, ref) => {
   );
 });
 
-
 TextArea.defaultProps = defaultProps;
 TextArea.propTypes = propTyps;
 TextArea.displayName = '@asurgent.ui.Form.Input.TextArea';

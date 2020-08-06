@@ -53,7 +53,6 @@ const Occurrence = ({ hook }) => (
   </C.Row>
 );
 
-
 Occurrence.propTypes = propTypes;
 Occurrence.defaultProps = defaultProps;
 Occurrence.displayName = '@asurgent.ui.CronEditor.Occurrence';

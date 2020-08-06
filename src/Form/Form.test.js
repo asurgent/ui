@@ -9,7 +9,6 @@ import {
 import * as Form from './index';
 import * as Button from '../Button';
 
-
 afterEach(cleanup);
 
 const MyForm = ({ subTitle, resetTitle, onClick }) => {
@@ -65,7 +64,7 @@ describe('Button', () => {
     expect(subBtn).not.toBeNull();
 
     // check that a button is hidden on !isDirty
-    const resetBtn = queryByText(props.resetTitle);
+    let resetBtn = queryByText(props.resetTitle);
     expect(resetBtn).toBeNull();
 
     const textInput = queryByDisplayValue('My value');
@@ -74,7 +73,8 @@ describe('Button', () => {
     act(() => textInput.click());
     rerender(<MyForm {...props} />);
 
-    // check that button still hidden after click on a field
-    expect(queryByText(props.resetTitle)).toBeNull();
+    // check that a button is visible on isDirty
+    resetBtn = queryByText(props.resetTitle);
+    expect(resetBtn).toBeDefined();
   });
 });

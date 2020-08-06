@@ -112,7 +112,6 @@ export const Card = styled.div`
     align-items: center;
 `;
 
-
 export const TableCellContent = styled.div`
     margin: 0;
     padding: 0;

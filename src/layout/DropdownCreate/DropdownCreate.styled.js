@@ -29,7 +29,6 @@ export const DesktopMenu = styled.div`
     }
 `;
 
-
 export const MobileMenu = styled.div`
     position: fixed;
     top: -1px;
@@ -81,7 +80,6 @@ export const CreateItem = styled.div`
     }
 `;
 
-
 export const MobileContent = styled.div`
     margin-top: 1.6rem;
     padding: 2.4rem;
@@ -96,7 +94,6 @@ export const Mobile = styled.div`
         display: none;
     }   
 `;
-
 
 export const Desktop = styled.div`
     display: none;

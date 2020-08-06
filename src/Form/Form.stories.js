@@ -310,7 +310,6 @@ export const updateForm = () => {
   );
 };
 
-
 export const dynamicMinMaxAttributes = () => {
   const formData = Form.useFormBuilder({
     threshold_comparison: {

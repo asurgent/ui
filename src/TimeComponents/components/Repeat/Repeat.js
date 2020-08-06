@@ -34,7 +34,6 @@ const Repeat = ({
     }
   }, [validCronInterval]);
 
-
   if (!validCronInterval) {
     return (
       <C.Repeat data-testid="invalid" {...props}>

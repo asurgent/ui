@@ -29,7 +29,6 @@ Full.displayName = '@asurgent.ui.moment.Full';
 Ago.displayName = '@asurgent.ui.moment.Ago';
 Custom.displayName = '@asurgent.ui.moment.Custom';
 
-
 export {
   DateTime,
   Date,

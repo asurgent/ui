@@ -1,4 +1,3 @@
-
 import React, { forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as C from './RadioGroup.styled';

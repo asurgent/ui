@@ -17,7 +17,6 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
     const matchedKeyInFilterList = [];
     const allFilters = tableHook.getAllFilters();
 
-
     const compare = (a, b) => {
       // Use toUpperCase() to ignore character casing
       const bandA = a.value.toUpperCase();
@@ -52,7 +51,6 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
 
             return [...acc, item];
           }, []);
-
 
         // Decorate the filter item with a 'matched' attribute.
         // That means, if this filter item is pressent in the

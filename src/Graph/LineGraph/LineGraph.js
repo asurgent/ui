@@ -55,7 +55,6 @@ const LineGraph = ({
     }
   }, []);
 
-
   return (
     <C.Wrapper>
       {(!data || data.length === 0) && (
@@ -142,7 +141,6 @@ const LineGraph = ({
     </C.Wrapper>
   );
 };
-
 
 LineGraph.propTypes = propTypes;
 LineGraph.defaultProps = defaultProps;

@@ -11,7 +11,6 @@ import Label from '../types/Label/index';
 import DatePicker from '../types/DatePicker/index';
 import RadioGroup from '../types/RadioGroup/index';
 
-
 const getInputComponent = (type) => {
   switch (type) {
     case 'text':
@@ -132,7 +131,6 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
 
   return { fields, original };
 };
-
 
 export const updateValue = (form, change) => {
   if (typeof change === 'object') {

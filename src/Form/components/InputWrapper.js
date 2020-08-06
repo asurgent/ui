@@ -13,7 +13,6 @@ import {
   TooltipIcon,
 } from './InputWrapper.styled';
 
-
 const propTyps = {
   tooltip: PropTypes.string,
   label: PropTypes.string,

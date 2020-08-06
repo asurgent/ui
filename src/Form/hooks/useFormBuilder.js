@@ -28,7 +28,6 @@ const getValuesFromUpdate = (update, cache) => Object.keys(update)
     ...acc,
   }), {});
 
-
 const useFormBuilder = (formSpecification, parameters = null) => {
   // ValueState helps ut keep track of changes i the form both
   // from user-changes and hook-changes. Used in eg. Number.js
@@ -75,7 +74,6 @@ const useFormBuilder = (formSpecification, parameters = null) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
-
 
   return {
     setResetCallback,

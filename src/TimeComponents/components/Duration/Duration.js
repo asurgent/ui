@@ -34,7 +34,6 @@ const Duration = ({
     validCronInterval ? getTimestamp(durationInSeconds, previousOccasion, isRunning) : null
   ), [durationInSeconds, isRunning, previousOccasion, validCronInterval]);
 
-
   if (!validCronInterval) {
     return (
       <C.Repeat {...props}>

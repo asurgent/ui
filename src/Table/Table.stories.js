@@ -451,7 +451,6 @@ export const controlls = () => {
   );
 };
 
-
 export const separate = () => {
   const hook = Table.useTableHook();
   const [add, setAdd] = useState([]);

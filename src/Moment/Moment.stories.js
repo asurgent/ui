@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   withKnobs, text, boolean, number,

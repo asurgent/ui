@@ -18,7 +18,6 @@ const defaultProps = {
   className: '',
 };
 
-
 const TableFilter = ({ filterHook, tableHook, className }) => (
   <C.Wrapper className={className}>
     <C.Filters>

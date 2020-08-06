@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const Dismiss = styled.div`
   cursor: pointer;
 `;
@@ -32,7 +31,6 @@ export const ContainerPlain = styled(Container)`
     border: 0.1rem solid ${({ theme }) => theme.gray300};
     margin-bottom: ${({ withBottomMargin }) => (withBottomMargin ? '1.6rem' : '0')};
 `;
-
 
 export const IconHolder = styled.div`
     display: flex;

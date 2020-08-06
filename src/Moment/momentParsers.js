@@ -40,7 +40,6 @@ export const date = (timestamp) => {
   return '';
 };
 
-
 export const dateTime = (timestamp) => {
   const time = parseTime(timestamp);
   if (time) {
