@@ -35,7 +35,7 @@ jobs:
 
       - name: Create NPMRC
         run: |
-          echo $'registry=https://registry.npmjs.org/ \n@asurgent:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}\n//registry.npmjs.org/:_authToken=${{ secrets.NPM_KEY }}' > ~/.npmrc
+          echo $'registry=https://registry.npmjs.org/ \n@asurgent:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}' > ~/.npmrc
 
       - name: Install
         run: npm ci
