@@ -5,7 +5,6 @@ import { Primary as Form, useFormBuilder } from '../../Form';
 import * as Button from '../../Button';
 import { SortWrapper } from './TableSort.styled';
 
-
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
   sortHook: PropTypes.instanceOf(Object).isRequired,
@@ -29,14 +28,12 @@ const TableSort = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableHook.isLoading]);
 
-
   useEffect(() => {
     if (sortHook.isReady) {
       formData.updateField('sortKey', { value: sortHook.getCurrentSortKey() });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortHook.isReady]);
-
 
   const direction = sortHook.currentSortDirectionIsAscending();
   if (!sortHook.hasOptions()) {

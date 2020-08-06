@@ -16,12 +16,10 @@ const Wrapper = styled.div`
     border: 1px solid ${({ theme }) => theme.gray200};
 `;
 
-
 export default {
   title: 'UI Components|Virtual Render',
   decorators: [withKnobs],
 };
-
 
 export const list = () => {
   const rowDummyData = Array.from({
@@ -29,7 +27,6 @@ export const list = () => {
   }, (_, i) => ({
     pos: i,
   }));
-
 
   return (
     <Wrapper>

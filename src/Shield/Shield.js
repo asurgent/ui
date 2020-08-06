@@ -47,5 +47,4 @@ const Shield = ({
 Shield.defaultProps = defaultProps;
 Shield.propTypes = propTypes;
 
-
 export default Shield;

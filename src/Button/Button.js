@@ -94,7 +94,6 @@ const Button = (props) => {
         onClick(event);
       }
 
-
       if (isValidLink && isInteralLink(link)) {
         event.preventDefault();
 

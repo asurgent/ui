@@ -11,7 +11,6 @@ import Occurrence from './components/Occurrence';
 import ThemeProvider from './components/ThemeProvider';
 import useCronHook from './useCronHook';
 
-
 const propTypes = {
   end: PropTypes.oneOfType([
     PropTypes.string,

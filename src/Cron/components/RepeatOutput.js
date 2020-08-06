@@ -26,7 +26,6 @@ const defaultProps = {
   withBorder: false,
 };
 
-
 const RepeatOutput = ({
   cronExpression, startDate, withBorder,
 }) => (

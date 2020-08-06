@@ -10,7 +10,6 @@ const propTypes = {
 
 const defaultProps = {};
 
-
 const TableSortProxy = (props) => {
   const { tableHook, sortKeys } = props;
   const sortHook = useSortHook(sortKeys, tableHook);

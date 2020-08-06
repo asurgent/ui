@@ -1,7 +1,6 @@
 import React from 'react';
 import * as Button from '../../Button';
 
-
 const isObject = (item) => (item && typeof item === 'object' && !Array.isArray(item));
 
 const mergeDeep = (target, source) => {

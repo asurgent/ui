@@ -54,7 +54,6 @@ export const Left = styled.div`
     padding-top: 2.4rem;
 `;
 
-
 export const Content = styled.div`
     background: ${({ theme }) => theme.white};
     position: relative;

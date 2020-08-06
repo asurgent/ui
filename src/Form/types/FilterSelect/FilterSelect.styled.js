@@ -57,7 +57,6 @@ export const Search = styled.input`
     background: ${({ theme }) => theme.white};
 `;
 
-
 export const Dropdown = styled.div`
     position: fixed;
     top: -1px;

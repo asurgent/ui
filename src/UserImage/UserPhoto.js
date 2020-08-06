@@ -16,7 +16,6 @@ const GetUserInitials = (fullName) => {
   return '';
 };
 
-
 const propTypes = {
   size: PropTypes.string,
   name: PropTypes.string,
@@ -25,7 +24,6 @@ const propTypes = {
   href: PropTypes.string,
   className: PropTypes.string,
 };
-
 
 const defaultProps = {
   size: '2.4rem',

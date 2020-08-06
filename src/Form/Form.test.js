@@ -9,7 +9,6 @@ import {
 import * as Form from './index';
 import * as Button from '../Button';
 
-
 afterEach(cleanup);
 
 const MyForm = ({ subTitle, resetTitle, onClick }) => {
@@ -82,10 +81,8 @@ describe('Button', () => {
     textInput = rend.getByDisplayValue('My value');
     expect(textInput).toBeDefined();
 
-
     textInput = rend.getByDisplayValue('My value');
     expect(textInput).toBeDefined();
-
 
     fireEvent.click(subBtn);
     expect(props.onClick).toHaveBeenCalled(); */

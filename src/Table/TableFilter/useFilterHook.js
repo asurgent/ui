@@ -16,7 +16,6 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
   const [selectedItems, setSelectedItems] = useState({});
   const [hasSelectedItems, setHasSelectedItems] = useState(false);
 
-
   // Initial setter. This will trigger Poppulate effect as well.
   useEffect(() => {
     if (tableHook.isReady) {
@@ -35,7 +34,6 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
 
       const selectedItemsCache = { ...getHistoryState() };
       const categoryDefaultValues = filterKeys.filter(({ defaultSelect }) => defaultSelect);
-
 
       categoryDefaultValues.forEach(({ facetKey, defaultSelect, multiSelect = true }) => {
         const valueObject = {};
@@ -63,7 +61,6 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableHook.isReady]);
-
 
   // Poppulate tabelHook with state for requests and URL
   useEffect(() => {
@@ -107,7 +104,6 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
     setHasSelectedItems(hasSelected);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, selectedItems]);
-
 
   return {
     isReady,

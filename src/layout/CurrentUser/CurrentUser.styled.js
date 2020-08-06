@@ -32,7 +32,6 @@ export const Name = styled.div`
     
 `;
 
-
 export const Mobile = styled.div`
     display: flex;
     align-items: center;
@@ -42,7 +41,6 @@ export const Mobile = styled.div`
         display: none;
     }   
 `;
-
 
 export const Desktop = styled.div`
     display: none;

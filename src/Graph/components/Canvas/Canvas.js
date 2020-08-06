@@ -67,7 +67,6 @@ const Canvas = ({
     );
   }, [dimensions.boundedHeight, sortedData, markerLines, yProp]);
 
-
   return (
     <C.Wrapper ref={ref}>
       <svg width={dimensions.width} height={dimensions.height}>
@@ -83,7 +82,6 @@ const Canvas = ({
     </C.Wrapper>
   );
 };
-
 
 Canvas.propTypes = propTypes;
 Canvas.defaultProps = defaultProps;

@@ -18,7 +18,6 @@ const DatePicker = forwardRef((props, ref) => {
     minDateMessage,
   } = props;
 
-
   const [value, setValue] = useState(getStartOfDay(props.value));
 
   useEffect(() => {
