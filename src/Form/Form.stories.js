@@ -183,7 +183,7 @@ export const defaultForm = () => {
   }, [renderErrors]);
 
   return (
-    <div style={{ minHeight: '120vh' }}>
+    <div style={{}}>
       <Form.Primary
         form={formData}
         msTimer={15}
@@ -206,11 +206,7 @@ export const defaultForm = () => {
               <Button.Secondary disabled={!isDirty} onClick={onResetAction}>
                 Reset
               </Button.Secondary>
-              <Button.Primary
-                onClick={(e) => onSubmitAction(e)}
-              >
-                Submit
-              </Button.Primary>
+              <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
             </Block.SpaceBetween>
           </>
         )}

@@ -50,15 +50,18 @@ MyForm.propTypes = {
 };
 
 describe('Button', () => {
-  test('The form submits when clicking the submit button, even when fields are not yet blurred', async () => {
+  test('The reset button isnt showing (isDirty) just because of a click on a field', async () => {
     const props = {
       subTitle: 'Submit', resetTitle: 'Reset', disabled: true, onClick: jest.fn(),
     };
 
     const rend = render(<MyForm {...props} />);
-    const { queryByText, queryByDisplayValue, rerender } = rend;
+    const {
+      queryByText, queryByDisplayValue, rerender,
+    } = rend;
+
     const subBtn = queryByText(props.subTitle);
-    expect(subBtn).toBeDefined();
+    expect(subBtn).not.toBeNull();
 
     // check that a button is hidden on !isDirty
     let resetBtn = queryByText(props.resetTitle);
@@ -67,26 +70,11 @@ describe('Button', () => {
     const textInput = queryByDisplayValue('My value');
     expect(textInput).toBeDefined();
 
-    act(() => textInput.focus());
+    act(() => textInput.click());
     rerender(<MyForm {...props} />);
 
     // check that a button is visible on isDirty
     resetBtn = queryByText(props.resetTitle);
     expect(resetBtn).toBeDefined();
-
-    // TODO: klicking a field without changing anything turns the form dirty. should not.
-    // have to blur fields before being able to click the submit button also.
-
-    /*
-    textInput = rend.getByDisplayValue('My value');
-    expect(textInput).toBeDefined();
-
-    textInput = rend.getByDisplayValue('My value');
-    expect(textInput).toBeDefined();
-
-    fireEvent.click(subBtn);
-    expect(props.onClick).toHaveBeenCalled(); */
-    /*  const btnTitle = getByText(props.btnTitle);
-    expect(btnTitle).toBeDefined(); */
   });
 });

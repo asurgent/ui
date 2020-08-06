@@ -131,6 +131,14 @@ const useFormBuilder = (formSpecification, parameters = null) => {
         input.current.blur();
       }
     },
+    blurFields: () => {
+      Object.keys(references).forEach((key) => {
+        const input = references[key];
+        if (input?.current?.tagName === 'INPUT') {
+          input.current.blur();
+        }
+      });
+    },
     addField: (key, field) => {
       if (Object.prototype.hasOwnProperty.call(formData, key) === false) {
         const copy = { ...formData, [key]: field };

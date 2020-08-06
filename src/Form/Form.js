@@ -48,8 +48,8 @@ const Form = (props) => {
     children,
     msTimer,
     onSubmit,
-    onBlur,
     onFocus,
+    onBlur,
     onChange,
     onChangeTimer,
     onKeyUp,
@@ -91,27 +91,27 @@ const Form = (props) => {
   const eventTrigger = ({
     name = null, timerAction = null, action = null, reRender = false, setDirty = true,
   }) => {
-    setTimeout(() => {
-      const { values, dirty, dirtyItems } = hook.getValues();
-      if (setDirty) {
-        setIsDirty(dirty);
-      }
-      if (reRender) {
-        hook.renderItems(values);
-      }
-      if (timerAction) {
-        timerAction(values, dirty, dirtyItems);
-      }
-      action(values, dirty, dirtyItems, name);
-    }, 0);
+    const { values, dirty, dirtyItems } = hook.getValues();
+    if (setDirty) {
+      setIsDirty(dirty);
+    }
+    if (reRender) {
+      hook.renderItems(values);
+    }
+    if (timerAction) {
+      timerAction(values, dirty, dirtyItems);
+    }
+    action(values, dirty, dirtyItems, name);
   };
 
   const onSubmitAction = () => {
-    eventTrigger({ action: onSubmit });
+    hook.blurFields();
+    eventTrigger({ action: onSubmit, setDirty: false });
   };
 
   const onResetAction = () => {
     setIsDirty(false);
+    hook.blurFields();
     hook.resetValues();
   };
 
@@ -143,7 +143,7 @@ const Form = (props) => {
       }}
       onSubmit={(event) => {
         event.preventDefault();
-        eventTrigger({ action: onSubmit });
+        eventTrigger({ action: onSubmit, setDirty: false });
       }}
       onFocus={(event) => {
         const { name } = event.target;
