@@ -111,6 +111,7 @@ const Form = (props) => {
 
   const onResetAction = () => {
     setIsDirty(false);
+    hook.blurFields();
     hook.resetValues();
   };
 
