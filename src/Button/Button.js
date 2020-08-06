@@ -112,6 +112,7 @@ const Button = (props) => {
   const attrs = {
     className: [(disabled ? 'disabled' : null), className].join(' ').trim(),
     onClick: handleClick,
+    // onMouseDown needed because of onBlur on form fields
     onMouseDown: (e) => e.preventDefault(),
   };
 
