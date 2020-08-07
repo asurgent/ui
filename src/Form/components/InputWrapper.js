@@ -56,7 +56,7 @@ const Text = (props) => {
           )}
         </Header>
       )}
-      <Wrapper type={type} hasError={Boolean(error)}>
+      <Wrapper hasError={Boolean(error)}>
         {children}
       </Wrapper>
       {error && (
