@@ -19,7 +19,7 @@ To run storybook locally:
 git clone git@github.com:asurgent/ui.git
 
 cd @asurgent/ui
-npm run storybook
+npm run storybook 
 ```
 
 
