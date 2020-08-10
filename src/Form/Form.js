@@ -91,17 +91,21 @@ const Form = (props) => {
   const eventTrigger = ({
     name = null, timerAction = null, action = null, reRender = false, setDirty = true,
   }) => {
-    const { values, dirty, dirtyItems } = hook.getValues();
-    if (setDirty) {
-      setIsDirty(dirty);
-    }
-    if (reRender) {
-      hook.renderItems(values);
-    }
-    if (timerAction) {
-      timerAction(values, dirty, dirtyItems);
-    }
-    action(values, dirty, dirtyItems, name);
+    // setTimeout needed for render-dependencies in the form
+    // (e.g. field X depends on the value for field Y)
+    setTimeout(() => {
+      const { values, dirty, dirtyItems } = hook.getValues();
+      if (setDirty) {
+        setIsDirty(dirty);
+      }
+      if (reRender) {
+        hook.renderItems(values);
+      }
+      if (timerAction) {
+        timerAction(values, dirty, dirtyItems);
+      }
+      action(values, dirty, dirtyItems, name);
+    }, 0);
   };
 
   const onSubmitAction = () => {

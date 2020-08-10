@@ -88,6 +88,7 @@ export const defaultForm = () => {
         { label: 'label3', value: 'value3' },
         { label: 'label4', value: 'value4' },
       ],
+      render: (s) => s.someRadioGroup && s.someRadioGroup === 'value2',
       tooltip: 'tooltip',
     },
     someSelect: {
