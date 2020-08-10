@@ -91,7 +91,8 @@ const Form = (props) => {
   const eventTrigger = ({
     name = null, timerAction = null, action = null, reRender = false, setDirty = true,
   }) => {
-    // setTimeout needed for render-dependencies in the form (e.g. field X depends on the value for field Y)
+    // setTimeout needed for render-dependencies in the form
+    // (e.g. field X depends on the value for field Y)
     setTimeout(() => {
       const { values, dirty, dirtyItems } = hook.getValues();
       if (setDirty) {
