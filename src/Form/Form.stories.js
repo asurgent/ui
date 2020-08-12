@@ -15,6 +15,9 @@ export default {
 };
 
 const formObj = {
+  label: {
+    type: 'label', label: 'Test', value: 'Im just a label',
+  },
   search: {
     type: 'text', label: 'Test', placeholder: 'Hello',
   },
