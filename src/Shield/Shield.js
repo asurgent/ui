@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { Overlay } from './Shield.styled';
 
@@ -15,6 +16,8 @@ const propTypes = {
   onClick: PropTypes.func,
   shieldIsUp: PropTypes.bool,
 };
+
+const modalRoot = document.getElementById('shield-root');
 
 const defaultProps = {
   dark: false,
@@ -33,14 +36,22 @@ const Shield = ({
 }) => (
   <>
     {shieldIsUp && (
-      <Overlay
-
+      ReactDOM.createPortal(<Overlay
         dark={dark}
         onClick={onClick}
         backgroundColor={backgroundColor}
-      />
+      />, modalRoot)
     )}
-    {children}
+    {
+      React.Children.map(children, (child) => React
+        .cloneElement(child, {
+          style: {
+            ...(child.props.style || {}),
+            zIndex: shieldIsUp ? 3 : 'unset',
+            position: 'relative',
+          },
+        }))
+    }
   </>
 );
 

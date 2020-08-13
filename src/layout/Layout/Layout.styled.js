@@ -69,7 +69,6 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: 1.6rem;
-    -webkit-transform: translate3d(0,0,0);
     
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
