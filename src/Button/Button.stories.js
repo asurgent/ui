@@ -67,7 +67,7 @@ export const acceptButton = () => (
 );
 
 export const pillButton = () => (
-  <Button.Pill onClick={(e) => action('Clicked!')(e)}>{content}</Button.Pill>
+  <Button.Pill onClick={(e) => action('Clicked!')(e)} iconRight={<Icon.ConfirmationNumber fontSize="medium" />}>{content}</Button.Pill>
 );
 
 export const tooltipButton = () => (
