@@ -12,7 +12,7 @@ npm install --save @asurgent/ui
 
 ## Run locally
 
-This project uses storybook help view and develop components. 
+This project uses storybook help view and develop components.
 
 To run storybook locally:
 ```bash
