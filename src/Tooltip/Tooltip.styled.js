@@ -10,6 +10,7 @@ export const TooltipWrapper = styled.div`
   border-radius: 5px;
   max-width: max(20rem, 25vw);
   white-space: pre-wrap;
+  font-size: 1.2rem;
   transform: ${({ position }) => {
     switch (position) {
       case 'left':
@@ -20,7 +21,7 @@ export const TooltipWrapper = styled.div`
         return 'translateX(-50%)';
     }
   }};
-  
+
   color: ${({ theme }) => theme.white};
   display: none;
 

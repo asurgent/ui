@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items:  flex-start;
+    width: 100%;
 `;
 
 export const NavigationItem = styled(NavLink)`
@@ -13,11 +14,12 @@ export const NavigationItem = styled(NavLink)`
     align-items: center;
     text-decoration: none;
     position: relative;
-    margin: ${({ theme }) => (theme.menuItemsSpacing || '.5rem')} 0;
-    padding: ${({ theme }) => (theme.menuItemsSpacing || '.5rem')};
+    margin: ${({ theme }) => (theme.menuItemsSpacing || '0')} 0;
+    padding: ${({ theme }) => (theme.menuItemsSpacing || '1.6rem 0')};
     border-radius: 3px;
     font-size: ${({ theme }) => (theme.menuFontSize || 'inherit')};
     color: ${({ theme }) => theme.linkColor};
+    width: 100%;
 
     &.active {
         background: ${({ theme }) => theme.activeBackground};
@@ -26,6 +28,6 @@ export const NavigationItem = styled(NavLink)`
 
     span {
          margin-left: 1.6rem;
-         
-     }   
+
+     }
 `;

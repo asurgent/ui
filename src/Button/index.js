@@ -6,8 +6,8 @@ import withStyle from './withStyle';
 import * as C from './Button.styled';
 
 const Primary = withStyle((theme) => ({
-  backgroundColor: theme.blue400,
-  borderColor: darken(0.08, theme.blue400),
+  backgroundColor: theme.blue900,
+  borderColor: darken(0.08, theme.blue900),
   spinnerColor: theme.white,
 }))(C.Button);
 
@@ -24,8 +24,8 @@ const Reject = withStyle((theme) => ({
 }))(C.Button);
 
 const Create = withStyle((theme) => ({
-  backgroundColor: '#13be69',
-  borderColor: darken(0.08, '#13be69'),
+  backgroundColor: theme.blue900,
+  borderColor: theme.blue900,
   spinnerColor: theme.white,
 }))(C.Button);
 

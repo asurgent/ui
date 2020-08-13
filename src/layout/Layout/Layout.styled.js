@@ -11,9 +11,8 @@ export const Logo = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: ${({ theme }) => theme.blue700};
+    background: ${({ theme }) => theme.blue900};
     margin-bottom: -1px;
-    box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
 
     svg {
         fill: ${({ theme }) => theme.white};
@@ -50,8 +49,7 @@ export const Left = styled.div`
     background: ${({ theme }) => theme.blue900};
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding-top: 2.4rem;
+    align-items: flex-start;
 `;
 
 
@@ -71,7 +69,7 @@ export const Content = styled.div`
     flex-direction: column;
     margin-top: 1.6rem;
     -webkit-transform: translate3d(0,0,0);
-    
+
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         margin-top: 0;

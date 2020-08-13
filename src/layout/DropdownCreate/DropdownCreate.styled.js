@@ -12,16 +12,16 @@ export const DesktopMenu = styled.div`
     width: auto;
     min-width: 28rem;
     height: auto;
-    padding: 1.6rem;
-    margin-top: .8rem;  
-    top: 100%;
+    padding: .8rem 0;
+    margin-top: .8rem;
+    top: 5px;
     transform: translateY(10px);
-    right: 0;
+    right: -1px;
     border-radius: 5px;
     background: ${({ theme }) => theme.white};
     border: 1px solid ${({ theme }) => theme.gray200};
     box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
-    
+
     small {
         display: block;
         margin-top: .8rem;
@@ -57,10 +57,10 @@ export const CreateDescription = styled.div`
 export const CreateItem = styled.div`
     display: grid;
     grid-template-columns: 3.2rem 1fr;
-    grid-template-areas: 
+    grid-template-areas:
         "logo title"
         "logo desc";
-    padding: .8rem;
+    padding: .8rem 2.4rem;
     border-radius: 3px;
 
     &:hover {
@@ -78,6 +78,9 @@ export const CreateItem = styled.div`
 
     ${CreateDescription} {
         grid-area: desc;
+        &:first-letter {
+          text-transform: uppercase;
+        }
     }
 `;
 
@@ -94,7 +97,7 @@ export const Mobile = styled.div`
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         display: none;
-    }   
+    }
 `;
 
 
