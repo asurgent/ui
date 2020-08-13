@@ -7,7 +7,7 @@ This library contains the basic set of asurgent's components. It exposes React A
 Install and use in your project
 
 ```bash
-npm install --save @asurgent/ui
+npm install --save @asurgent/ui 
 ```
 
 ## Run locally
