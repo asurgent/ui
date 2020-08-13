@@ -7,7 +7,7 @@ import * as Spinner from './index';
 export default { title: 'UI Components|Spinner', decorators: [withKnobs] };
 
 export const spinner = () => (
-  <Spinner.Ring size={number('Size', 100)} speed={number('Speed', 2)} color={text('Color', '#239dd9')} />
+  <Spinner.Ring size={number('Size', 100)} speed={number('Speed', 2)} color={text('Color', '#239d34')} />
 );
 
 spinner.story = {
