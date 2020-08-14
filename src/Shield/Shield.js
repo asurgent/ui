@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { Overlay } from './Shield.styled';
@@ -17,7 +17,7 @@ const propTypes = {
   shieldIsUp: PropTypes.bool,
 };
 
-const modalRoot = document.getElementById('shield-root');
+const shieldRoot = document.getElementById('shield-root');
 
 const defaultProps = {
   dark: false,
@@ -33,27 +33,33 @@ const Shield = ({
   children,
   onClick,
   shieldIsUp,
-}) => (
-  <>
-    {shieldIsUp && (
-      ReactDOM.createPortal(<Overlay
-        dark={dark}
-        onClick={onClick}
-        backgroundColor={backgroundColor}
-      />, modalRoot)
-    )}
-    {
-      React.Children.map(children, (child) => React
-        .cloneElement(child, {
-          style: {
-            ...(child.props.style || {}),
-            zIndex: shieldIsUp ? 3 : 'unset',
-            position: 'relative',
-          },
-        }))
-    }
-  </>
-);
+}) => {
+  useEffect(() => {
+
+  }, []);
+
+  return (
+    <>
+      {shieldIsUp && (
+        ReactDOM.createPortal(<Overlay
+          dark={dark}
+          onClick={onClick}
+          backgroundColor={backgroundColor}
+        />, shieldRoot)
+      )}
+      {
+        React.Children.map(children, (child) => React
+          .cloneElement(child, {
+            style: {
+              ...(child.props.style || {}),
+              zIndex: shieldIsUp ? 3 : 'unset',
+              position: 'relative',
+            },
+          }))
+      }
+    </>
+  );
+};
 
 Shield.defaultProps = defaultProps;
 Shield.propTypes = propTypes;

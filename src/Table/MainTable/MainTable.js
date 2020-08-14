@@ -100,14 +100,11 @@ const Table = (props) => {
   return (
     <Wrapper>
       { tableHook.isExporting() && (
-        ReactDOM.createPortal(
-          <Shield.Dark>
-            <TableLoader>
-              <Spinner.Ring size={50} color={theme.blue400} />
-            </TableLoader>
-          </Shield.Dark>,
-          modalRoot,
-        )
+        <Shield.Dark>
+          <TableLoader>
+            <Spinner.Ring size={50} color={theme.blue400} />
+          </TableLoader>
+        </Shield.Dark>
       )}
       { withControlls && (
         <Controlls

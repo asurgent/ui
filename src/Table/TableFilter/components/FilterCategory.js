@@ -53,16 +53,17 @@ const FilterCategory = (props) => {
     <C.FilterWrapper>
       <Button.Filter onClick={() => groupHook.setOpen(true)}>{label}</Button.Filter>
       <Shield.Transparent onClick={() => groupHook.setOpen(false)} shieldIsUp={groupHook.isOpen()}>
-        <Transition.FadeInSlideDownOnDesktop isVisible={groupHook.isOpen()} timeout={80}>
-          <C.Dropdown>
-            {
+        <C.ShieldTargetWrapper>
+          <Transition.FadeInSlideDownOnDesktop isVisible={groupHook.isOpen()} timeout={80}>
+            <C.Dropdown>
+              {
               tableHook.isFilterLoading && (
                 <C.Center>
                   <Spinner.Ring size={24} color={theme.blue400} />
                 </C.Center>
               )
             }
-            {
+              {
               !tableHook.isFilterLoading && filterHook.isReady && (
                 <>
                   <C.Search>
@@ -100,9 +101,10 @@ const FilterCategory = (props) => {
                 </>
               )
             }
-            <Button.Icon className="close" onClick={() => groupHook.setOpen(false)} icon={<Icon.Close fontSize="large" />} />
-          </C.Dropdown>
-        </Transition.FadeInSlideDownOnDesktop>
+              <Button.Icon className="close" onClick={() => groupHook.setOpen(false)} icon={<Icon.Close fontSize="large" />} />
+            </C.Dropdown>
+          </Transition.FadeInSlideDownOnDesktop>
+        </C.ShieldTargetWrapper>
       </Shield.Transparent>
     </C.FilterWrapper>
   );
