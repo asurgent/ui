@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { BaseBlock } from '../../Block/Block.styled';
 
 export const Scene = styled.div`
     background: ${({ theme }) => theme.white};
@@ -15,14 +14,9 @@ export const Scene = styled.div`
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    margin-top: 1.6rem;
-    
+    padding-bottom: 3.2rem;
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         margin-top: 0;
-    }
-
-    > ${BaseBlock}:last-of-type {
-        margin-bottom: 3.2rem;
     }
 `;
