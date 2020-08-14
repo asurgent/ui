@@ -68,11 +68,25 @@ const Layout = ({ provider, children }) => {
 
   return (
     <C.Main>
+      <C.Left>
+        <Navigation
+          theme={(theme) => ({
+            activeBackground: theme.blue800,
+            activeLinkColor: theme.white,
+            linkColor: theme.white,
+          })}
+          navigationList={navigation}
+        />
+      </C.Left>
+
+      <C.Content>
+        {children}
+      </C.Content>
+
       <C.Top>
         <C.Logo>
           <IconAsurget />
         </C.Logo>
-
         <CreateList
           shouldShow={isAdmin}
           createList={provider.getCreateList()}
@@ -103,21 +117,6 @@ const Layout = ({ provider, children }) => {
           )}
         </CurrentUser>
       </C.Top>
-
-      <C.Left>
-        <Navigation
-          theme={(theme) => ({
-            activeBackground: theme.blue800,
-            activeLinkColor: theme.white,
-            linkColor: theme.white,
-          })}
-          navigationList={navigation}
-        />
-      </C.Left>
-
-      <C.Content>
-        {children}
-      </C.Content>
     </C.Main>
   );
 };

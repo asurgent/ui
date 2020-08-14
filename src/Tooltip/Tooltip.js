@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import * as C from './Tooltip.styled';
 
-const modalRoot = document.getElementById('tooltip-root');
+const tooltipRoot = document.getElementById('tooltip-root');
 const positions = {
   middle: 'middle',
   right: 'right',
@@ -89,7 +89,7 @@ class Tooltip extends Component {
               >
                 {tooltipMessage}
               </C.TooltipWrapper>,
-              modalRoot,
+              tooltipRoot,
             )}
         </>
       );

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const FilterWrapper = styled.div``;
+export const ShieldTargetWrapper = styled.div``;
 
 export const ListWrapper = styled.div`
     flex:1;

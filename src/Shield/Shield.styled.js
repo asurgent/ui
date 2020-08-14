@@ -5,6 +5,8 @@ export default {};
 export const Overlay = styled.div`
     top: 0;
     left: 0;
+    bottom: 0;
+    right: 0;
     z-index: 2;
     position: fixed;
     background: ${({ theme, backgroundColor, dark }) => {
@@ -18,16 +20,4 @@ export const Overlay = styled.div`
 
     return 'transparent';
   }};
-
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &+ * {
-        z-index: 2;
-        position: relative;
-    }
 `;
