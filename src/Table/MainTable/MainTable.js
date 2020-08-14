@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import * as Spinner from '../../Spinner';
@@ -9,8 +8,6 @@ import BaseTable from '../BaseTable';
 
 import { Wrapper, TableLoader } from './MainTable.styled';
 import * as Shield from '../../Shield';
-
-const modalRoot = document.getElementById('tooltip-root');
 
 const getEmptystate = (hook, props) => {
   if (hook.requestFailedMessage()) {
