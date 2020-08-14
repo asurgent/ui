@@ -21,8 +21,7 @@ import * as Transition from './Transition';
 import * as Dismissable from './Dismissable';
 import * as TimeComponents from './TimeComponents';
 
-import * as Layout from './layout/Layout';
-import * as Omnibar from './layout/Omnibar';
+import * as Layout from './layout';
 
 export {
   i18n,
@@ -41,7 +40,6 @@ export {
   Moment,
   Shield,
   Layout,
-  Omnibar,
   Cron,
   Transition,
   Dismissable,
