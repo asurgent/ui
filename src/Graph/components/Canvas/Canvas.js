@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 import moment from 'moment';
 import { useChartDimensions } from './useChartDimensions';
+import Context from '../Context';
+
 import * as C from './Canvas.styled';
 
 const propTypes = {
@@ -12,11 +14,13 @@ const propTypes = {
   yProp: PropTypes.string.isRequired,
   xProp: PropTypes.string.isRequired,
   markerLines: PropTypes.instanceOf(Array),
+  withContext: PropTypes.bool,
 };
 
 const defaultProps = {
   customDimensions: {},
   markerLines: [],
+  withContext: true,
 };
 
 const Canvas = ({
@@ -26,8 +30,9 @@ const Canvas = ({
   yProp,
   xProp,
   markerLines,
+  withContext,
 }) => {
-  const [ref, dimensions] = useChartDimensions(customDimensions);
+  const [ref, dimensions] = useChartDimensions(withContext);
 
   const sortedData = useMemo(() => data
     .reduce((acc, item) => ([{
@@ -67,6 +72,30 @@ const Canvas = ({
     );
   }, [dimensions.boundedHeight, sortedData, markerLines, yProp]);
 
+  const yScaleContext = useMemo(() => {
+    // Add markerLines to list of data. In case markerLines
+    // is larger/smaller than the chart-data
+    const treasholdValues = markerLines !== null
+      ? (Array.isArray(markerLines)
+        ? [...markerLines]
+        : [markerLines])
+        .reduce((acc, item) => [...acc, {
+          [yProp]: item.value || item,
+        }], [])
+      : [];
+
+    const [min, max] = d3.extent([
+      ...sortedData,
+      ...treasholdValues,
+    ], ({ [yProp]: y }) => y);
+
+    return (
+      d3.scaleLinear()
+        .domain([Math.floor(min), Math.ceil(max)])
+        .range([dimensions.contextHeight, 0])
+    );
+  }, [markerLines, sortedData, dimensions.contextHeight, yProp]);
+
   return (
     <C.Wrapper ref={ref}>
       <svg width={dimensions.width} height={dimensions.height}>
@@ -78,6 +107,14 @@ const Canvas = ({
             sortedData,
           })}
         </C.ChartGroup>
+        <Context
+          dimensions={dimensions}
+          xScale={xScale}
+          yScale={yScaleContext}
+          data={sortedData}
+          yProp={yProp}
+          xProp={xProp}
+        />
       </svg>
     </C.Wrapper>
   );

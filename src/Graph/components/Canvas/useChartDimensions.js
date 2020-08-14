@@ -1,13 +1,14 @@
 import { ResizeObserver } from '@juggle/resize-observer';
 import { useRef, useState, useEffect } from 'react';
 
-const combineChartDimensions = (dimensions = {}) => {
+const combineChartDimensions = (dimensions = {}, withContext) => {
   const parsedDimensions = {
     ...dimensions,
     marginTop: dimensions.marginTop || 10,
     marginRight: dimensions.marginRight || 10,
     marginBottom: dimensions.marginBottom || 30,
     marginLeft: dimensions.marginLeft || 40,
+    contextHeight: 20,
   };
   return {
     ...parsedDimensions,
@@ -24,7 +25,14 @@ const combineChartDimensions = (dimensions = {}) => {
     boundedHeight: Math.max(
       parsedDimensions.height
         - parsedDimensions.marginTop
-        - parsedDimensions.marginBottom,
+        - parsedDimensions.marginBottom
+        - (withContext ? 60 - parsedDimensions.contextHeight : 0),
+      0,
+    ),
+    contextWidth: Math.max(
+      parsedDimensions.width
+        - parsedDimensions.marginLeft
+        - parsedDimensions.marginRight,
       0,
     ),
     boundedWidth: Math.max(
@@ -36,12 +44,12 @@ const combineChartDimensions = (dimensions = {}) => {
   };
 };
 
-export const useChartDimensions = () => {
+export const useChartDimensions = (withContext) => {
   const ref = useRef();
   const [width, setWidth] = useState(500);
   const [height, setHeight] = useState(200);
 
-  const dimensions = combineChartDimensions({ width, height });
+  const dimensions = combineChartDimensions({ width, height }, withContext);
 
   useEffect(() => {
     const element = ref.current;
