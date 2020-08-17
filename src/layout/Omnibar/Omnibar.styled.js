@@ -2,8 +2,6 @@ import styled from 'styled-components';
 
 export const Omnibar = styled.div`
     top: 0;
-    z-index: 1;
-    position: sticky;
     background: ${({ theme }) => theme.white};
     box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
     display: flex;
@@ -11,6 +9,7 @@ export const Omnibar = styled.div`
     justify-content: space-evenly;
     padding: .8rem;
     min-height: fit-content;
+    margin-bottom: .8rem;
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         padding: 1.6rem;

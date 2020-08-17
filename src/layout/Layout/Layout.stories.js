@@ -2,11 +2,10 @@ import React, { useEffect } from 'react';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import * as Icons from '@material-ui/icons';
-import { Main, useLayout } from './index';
+import * as Layout from '../index';
 import * as Block from '../../Block';
 import * as Modal from '../../Modal';
 import * as Table from '../../Table';
-import { Omnibar } from '../Omnibar';
 
 const navigationList = (t, customerId) => [
   {
@@ -53,7 +52,7 @@ const createList = () => [
 
 export const mainLayout = () => {
   const table = Table.useTableHook();
-  const provider = useLayout({
+  const provider = Layout.useLayout({
     translator: (t) => t,
     navigationListConstructor: navigationList,
     avaliableLanguagesConstructor: avaliableLanguages,
@@ -106,8 +105,8 @@ export const mainLayout = () => {
   }, []);
 
   return (
-    <Main provider={provider}>
-      <Omnibar>
+    <Layout.Main provider={provider}>
+      <Layout.Omnibar.Main>
         <Table.Controlls
           tableHook={table}
           withFilter={[
@@ -123,51 +122,54 @@ export const mainLayout = () => {
             { value: 'due', label: 'Due' },
           ]}
         />
-      </Omnibar>
-      <Block.Center>
-        <Table.Main
-          withHeader
-          useHistoryState
-          historyStatePrefix="tickets"
-          tableHook={table}
-          withSearch={false}
-          headerData={[
-            {
-              value: 'Cell 1',
-              sortKey: 'sort-A',
-              size: 'minmax(30rem, 1fr)',
-            },
-            { value: 'B', sortKey: 'sort-B' },
-            { value: 'C', sortKey: 'sort-C', render: false },
-            {
-              value: 'D',
-              sortKey: 'sort-D',
-              size: 'minmax(8rem, 10rem)',
-            },
-          ]}
-          columnConfiguration={(row) => {
-            const {
-              valueA, valueB, valueC, valueD,
-            } = row;
+      </Layout.Omnibar.Main>
+      <Layout.Scene>
+        <Block.Center>
+          <Table.Main
+            withHeader
+            useHistoryState
+            historyStatePrefix="tickets"
+            tableHook={table}
+            withSearch={false}
+            headerData={[
+              {
+                value: 'Cell 1',
+                sortKey: 'sort-A',
+                size: 'minmax(30rem, 1fr)',
+              },
+              { value: 'B', sortKey: 'sort-B' },
+              { value: 'C', sortKey: 'sort-C', render: false },
+              {
+                value: 'D',
+                sortKey: 'sort-D',
+                size: 'minmax(8rem, 10rem)',
+              },
+            ]}
+            columnConfiguration={(row) => {
+              const {
+                valueA, valueB, valueC, valueD,
+              } = row;
 
-            return [
-              { value: valueB },
-              valueA,
-              () => valueC,
-              () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
-            ];
-          }}
-        />
-      </Block.Center>
-      <Block.Center>
-        <Modal.Primary isOpen={boolean('open', false)}>
-          hello
-        </Modal.Primary>
-      </Block.Center>
-      <Block.Center>
-        <Table.Pagination tableHook={table} />
-      </Block.Center>
-    </Main>
+              return [
+                { value: valueB },
+                valueA,
+                () => valueC,
+                () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
+              ];
+            }}
+          />
+        </Block.Center>
+        <Block.Center>
+          <Modal.Primary isOpen={boolean('open', false)}>
+            hello
+          </Modal.Primary>
+        </Block.Center>
+        <Block.Center>
+          <Table.Pagination tableHook={table} />
+        </Block.Center>
+      </Layout.Scene>
+    </Layout.Main>
+
   );
 };
 

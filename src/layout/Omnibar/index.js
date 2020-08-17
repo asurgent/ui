@@ -1,3 +1,3 @@
 import { Omnibar, LeftActions, RightActions } from './Omnibar.styled';
 
-export { Omnibar, LeftActions, RightActions };
+export { Omnibar as Main, LeftActions, RightActions };

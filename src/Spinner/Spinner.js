@@ -10,7 +10,7 @@ const propTypes = {
 
 const defaultProps = {
   size: 15,
-  color: 'black',
+  color: null,
   speed: 2,
 };
 

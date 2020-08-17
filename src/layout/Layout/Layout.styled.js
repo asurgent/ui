@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { BaseBlock } from '../../Block/Block.styled';
 import * as User from '../CurrentUser/CurrentUser.styled';
+import { Omnibar } from '../Omnibar/Omnibar.styled';
+import { Scene } from '../Scene/Scene.styled';
 
 export const Logo = styled.div`
     position: absolute;
@@ -29,13 +30,13 @@ export const Top = styled.div`
     justify-content: flex-end;
     align-items: center;
     position: fixed;
-    z-index: 2;
     width: 100%;
+    height: 6rem;
     border-bottom: 1px solid ${({ theme }) => theme.gray300};
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         position: relative;
-        z-index: unset;
+        /* z-index: unset; */
         width: 100%;
         box-shadow: none;
     }
@@ -53,29 +54,20 @@ export const Left = styled.div`
 `;
 
 export const Content = styled.div`
-    background: ${({ theme }) => theme.white};
-    position: relative;
-    overflow-y: auto;
-    overflow-x: auto;
-    height: 100%;
-    max-height: 100%;
-    min-height: 100%;
-    width: 100%;
-    max-width: 100%;
-    min-width: 100%;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    margin-top: 1.6rem;
-    -webkit-transform: translate3d(0,0,0);
+    display: grid;
+    overflow: hidden;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "omnibar"
+        "scene";
 
-
-    @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
-        margin-top: 0;
+    ${Omnibar} {
+        grid-area: omnibar;
     }
 
-    > ${BaseBlock}:last-of-type {
-        margin-bottom: 3.2rem;
+    ${Scene} {
+        grid-area: scene;
     }
 `;
 
