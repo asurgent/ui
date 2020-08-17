@@ -7,11 +7,13 @@ const propTyps = {
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)).isRequired,
   props: PropTypes.instanceOf(Object),
+  placeholder: PropTypes.string,
 };
 
 const defaultProps = {
   value: '',
   props: {},
+  placeholder: '',
 };
 
 const getDefaultSort = (sortKeys) => {
@@ -33,7 +35,7 @@ const Select = forwardRef((props, ref) => {
   const {
     name,
     options,
-
+    placeholder,
   } = props;
 
   const [value, setValue] = useState('');
@@ -57,6 +59,11 @@ const Select = forwardRef((props, ref) => {
         name={name}
         ref={ref}
       >
+        {placeholder && (
+        <option disabled value="">
+          {placeholder}
+        </option>
+        )}
         { Array.isArray(options) && options
           .map(({
             value: optionValue,
