@@ -98,11 +98,12 @@ export const defaultForm = () => {
       type: 'select',
       label: 'Some Select',
       options: [
-        { value: '1', label: 'First option', default: true },
+        { value: '1', label: 'First option' },
         { value: '2', label: 'Second option' },
         { value: '3', label: 'Third option' },
       ],
       tooltip: 'tooltip',
+      placeholder: 'Select something',
     },
     someFilterSelectSingle: {
       type: 'filterselect',
@@ -140,7 +141,7 @@ export const defaultForm = () => {
       { name: 'someNumber', value: 10 },
       { name: 'someRadioGroup', value: 'value1' },
       { name: 'someRadioGroup2', value: 'value4' },
-      { name: 'someSelect', value: '3' },
+      { name: 'someSelect', value: null },
       {
         name: 'someFilterSelectSingle',
         value: '2',
