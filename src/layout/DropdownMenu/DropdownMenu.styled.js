@@ -24,6 +24,10 @@ export const DesktopMenu = styled.div`
       padding: 1.6rem;
     }
 
+    form {
+        padding: 1.6rem;
+    }
+
     small {
         display: block;
         margin-top: .8rem;
