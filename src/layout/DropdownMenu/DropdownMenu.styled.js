@@ -4,7 +4,7 @@ export const MenuWrapper = styled.div`
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         position: absolute;
         right: 20px;
-    }   
+    }
 `;
 
 export const DesktopMenu = styled.div`
@@ -12,25 +12,31 @@ export const DesktopMenu = styled.div`
     width: auto;
     min-width: 28rem;
     height: auto;
-    padding: 2.4rem;
+    padding: .8rem 0;
     border-radius: 5px;
     background: ${({ theme }) => theme.white};
     border: 1px solid ${({ theme }) => theme.gray200};
     box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
-    top: 100%;
-    right: 0;
-    
+    top: 5px;
+    right: -1px;
+
+    .user-details {
+      padding: 1.6rem;
+    }
+
+    form {
+        padding: 1.6rem;
+    }
+
     small {
         display: block;
         margin-top: .8rem;
-        margin-bottom: 1.6rem;
     }
 `;
 
 export const DesktopMenuFooter = styled.div`
-    margin-top: 1.6rem;
     border-top: 1px solid ${({ theme }) => theme.gray300};;
-    padding-top: 1.6rem;
+    padding-top: .8rem;
 `;
 
 export const MobileMenu = styled.div`
@@ -96,7 +102,7 @@ export const Mobile = styled.div`
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         display: none;
-    }   
+    }
 `;
 
 export const Desktop = styled.div`

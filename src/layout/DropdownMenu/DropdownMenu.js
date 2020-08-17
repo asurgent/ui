@@ -66,8 +66,10 @@ const DropdownMenu = ({
         <U.Desktop>
           <Transition.FadeInSlideDown isVisible={isOpen} timeout={80}>
             <U.DesktopMenu>
-              <b>{email}</b>
-              <small>{customerName}</small>
+              <div className="user-details">
+                <b>{email}</b>
+                <small>{customerName}</small>
+              </div>
               <Form.Primary
                 form={langaugeForm}
                 onChangeTimer={(values) => {

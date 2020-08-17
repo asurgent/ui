@@ -18,7 +18,7 @@ export const Button = styled.div`
     justify-content: center;
     transition: 0.03s;
     white-space: normal;
-    padding: 1.2rem 1.4rem;
+    padding: .8rem 1.6rem;
     border-radius: 3px;
 
     button {
@@ -35,10 +35,10 @@ export const Button = styled.div`
         align-items: center;
         justify-content: center;
 
-        font-family: 'Lato', sans-serif;
+        font-family: 'Poppins', sans-serif;
         text-align: center;
         letter-spacing: 0.13rem;
-        text-decoration: none;    
+        text-decoration: none;
         font-size: 1.4rem;
         text-transform: uppercase;
         font-weight: bold;
@@ -166,7 +166,7 @@ export const Link = styled.div`
         border-color: transparent;
         background-color: transparent;
     }
-    
+
     .label {
         display: flex;
         align-items: center;
@@ -193,7 +193,7 @@ export const Icon = styled.div`
     font-weight: bold;
     letter-spacing: 0.12rem;
     text-transform: uppercase;
-    text-decoration: none;    
+    text-decoration: none;
     font-size: 1.6rem;
     color: ${({ theme }) => theme.black};
 
@@ -236,7 +236,7 @@ export const Pill = styled(Button)`
         background-color: transparent;
     }
 
-    .label { 
+    .label {
         color: ${({ theme }) => theme.textColor};
     }
 
