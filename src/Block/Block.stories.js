@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   withKnobs, boolean, number,
@@ -105,6 +104,25 @@ export const emptyState = () => (
   </Block.Emptystate>
 );
 
+export const subnavigationBlock = () => (
+  <Block.SubnavigationBlock navigationList={[
+    {
+      label: 'On call', path: 'http://google.com', icon: '', isActive: () => true,
+    },
+    { label: 'Other stuff', path: 'http://apple.com', icon: '' },
+  ]}
+  >
+    <h1>I am title</h1>
+    <Block.Bordered noShadow withPadding>
+      <h2>Did you come in early?</h2>
+      <p>
+        Let your colleages sleep and snooze the On Call phone.
+        When you hit the snooze button the On Call phone will no
+        longer be active and calls will be redirected to you instead.
+      </p>
+    </Block.Bordered>
+  </Block.SubnavigationBlock>
+);
 
 centerBlock.story = {
   name: 'Center Block',

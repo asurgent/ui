@@ -11,7 +11,6 @@ export const Active = styled(Base)`
     width: 3.2rem;
 `;
 
-
 export const FilterItem = styled.div`
     display: flex;
     flex-direction: row;

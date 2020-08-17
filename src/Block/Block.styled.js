@@ -75,12 +75,16 @@ export const Emptystate = styled(BaseBlock)`
 
 export const ErrorState = styled(BaseBlock)`
     justify-content: center;
-    align-items: flex-start;
-    padding: 1.6rem !important;
+    align-items: flex-start;  
     flex-direction: column;
     background: ${({ theme }) => theme.rgba(theme.ruby800, 0.25)};
     border: 1px solid ${({ theme }) => theme.rgba(theme.ruby800, 0.8)};
     border-radius: 5px;
+
+    padding: 1.6rem;
+    @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
+        padding: 1.6rem;
+    }
 
     > b.title {
         margin-bottom: 1.6rem;

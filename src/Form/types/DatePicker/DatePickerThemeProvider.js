@@ -27,7 +27,6 @@ const theme = createMuiTheme({
   },
 });
 
-
 const CustomThemeProvider = ({ children }) => (
   <ThemeProvider theme={theme}>
     {children}

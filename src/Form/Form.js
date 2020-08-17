@@ -88,10 +88,16 @@ const Form = (props) => {
 
   const { inputFileds } = hook;
 
-  const eventTrigger = (name, timerAction, action, reRender = false) => {
+  const eventTrigger = ({
+    name = null, timerAction = null, action = null, reRender = false, setDirty = true,
+  }) => {
+    // setTimeout needed for render-dependencies in the form
+    // (e.g. field X depends on the value for field Y)
     setTimeout(() => {
       const { values, dirty, dirtyItems } = hook.getValues();
-      setIsDirty(dirty);
+      if (setDirty) {
+        setIsDirty(dirty);
+      }
       if (reRender) {
         hook.renderItems(values);
       }
@@ -103,11 +109,13 @@ const Form = (props) => {
   };
 
   const onSubmitAction = () => {
-    eventTrigger(null, null, onSubmit);
+    hook.blurFields();
+    eventTrigger({ action: onSubmit, setDirty: false });
   };
 
   const onResetAction = () => {
     setIsDirty(false);
+    hook.blurFields();
     hook.resetValues();
   };
 
@@ -123,29 +131,31 @@ const Form = (props) => {
     <FormStyle
       onKeyUp={(event) => {
         const { name } = event.target;
-        eventTrigger(name, keyPressTimer, onKeyUp);
+        eventTrigger({ name, timerAction: keyPressTimer, action: onKeyUp });
       }}
       onKeyDown={(event) => {
         const { name } = event.target;
-        eventTrigger(name, keyPressTimer, onKeyDown);
+        eventTrigger({ name, timerAction: keyPressTimer, action: onKeyDown });
       }}
       onChange={(event) => {
         const { name } = event.target;
         // Will trigger a rerender of form based on
         // input field render property
-        eventTrigger(name, changeTimer, onChange, true);
+        eventTrigger({
+          name, timerAction: changeTimer, action: onChange, reRender: true,
+        });
       }}
       onSubmit={(event) => {
         event.preventDefault();
-        eventTrigger(null, null, onSubmit);
+        eventTrigger({ action: onSubmit, setDirty: false });
       }}
       onFocus={(event) => {
         const { name } = event.target;
-        eventTrigger(name, null, onFocus);
+        eventTrigger({ name, action: onFocus, setDirty: false });
       }}
       onBlur={(event) => {
         const { name } = event.target;
-        eventTrigger(name, null, onBlur);
+        eventTrigger({ name, action: onBlur, setDirty: false });
       }}
       className={className}
     >

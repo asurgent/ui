@@ -91,7 +91,6 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
     return [];
   }, [options, search, selectedOptions, values]);
 
-
   return {
     inputRef,
     isOpen,

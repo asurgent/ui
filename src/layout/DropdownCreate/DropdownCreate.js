@@ -6,7 +6,6 @@ import * as Button from '../../Button';
 import * as Shield from '../../Shield';
 import * as Transition from '../../Transition';
 
-
 const btnPropTypes = {
   onClick: PropTypes.func,
   title: PropTypes.string,

@@ -14,14 +14,10 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   border: .1rem solid;
-  border-color: ${({ theme, hasError, type }) => {
+  border-color: ${({ theme, hasError }) => {
     if (hasError) {
       return theme.ruby800;
     }
-    if (type === 'radiogroup') {
-      return 'transparent';
-    }
-
     return theme.gray200;
   }};
   border-radius: ${(props) => (props.status === 'error' ? '5px 5px 0px 0px' : '5px')};

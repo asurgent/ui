@@ -33,6 +33,7 @@ export {
 };
 
 export { default as Emptystate } from './BlockEmptyState';
+export { default as SubnavigationBlock } from './SubnavigationBlock';
 export {
   ErrorMessage as Error,
   WarningMessage as Warning,

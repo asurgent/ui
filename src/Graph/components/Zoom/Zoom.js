@@ -100,7 +100,6 @@ const Zoom = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, xScale]);
 
-
   const bisect = useMemo(() => d3.bisector(({ [xProp]: x }) => x).left, [xProp]);
 
   const handleMouseMove = (e) => {

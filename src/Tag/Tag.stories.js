@@ -5,7 +5,6 @@ import {
 import { action } from '@storybook/addon-actions';
 import * as Tag from './index';
 
-
 export default { title: 'UI Components|Tag', decorators: [withKnobs] };
 
 export const singeTag = () => (
@@ -22,7 +21,6 @@ singeTag.story = {
   name: 'Single Tag',
 };
 
-
 export const tagCollection = () => {
   const tags = Array.from({ length: 10 }, (_, i) => `Tag-${i}`);
   return (
@@ -35,7 +33,6 @@ export const tagCollection = () => {
 tagCollection.story = {
   name: 'Tag Collection from string array',
 };
-
 
 export const tagCollectionObject = () => {
   const tags = Array.from({ length: 10 }, (_, i) => ({

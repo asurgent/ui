@@ -72,7 +72,6 @@ const TableControlls = ({
   </C.Controllbar>
 );
 
-
 TableControlls.propTypes = propTypes;
 TableControlls.defaultProps = defaultProps;
 TableControlls.displayName = '@asurgent.ui.Table.Controlls';

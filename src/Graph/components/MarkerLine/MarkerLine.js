@@ -49,7 +49,6 @@ const MarkerLine = ({ yScale, markerLines, dimensions }) => {
   );
 };
 
-
 MarkerLine.propTypes = propTypes;
 MarkerLine.defaultProps = defaultProps;
 

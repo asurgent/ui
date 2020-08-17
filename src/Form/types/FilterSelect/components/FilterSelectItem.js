@@ -10,7 +10,6 @@ const propTypes = {
 
 const defaultProps = {};
 
-
 const FilterItem = ({
   filterItem,
   onChange,

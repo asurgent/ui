@@ -52,7 +52,6 @@ export const Left = styled.div`
     align-items: flex-start;
 `;
 
-
 export const Content = styled.div`
     background: ${({ theme }) => theme.white};
     position: relative;

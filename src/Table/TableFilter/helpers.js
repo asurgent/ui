@@ -74,7 +74,6 @@ export const buildFilterStateString = (selectedFilters) => {
       return groups;
     }, {});
 
-
   /*
     If we have any selected filters we will preform
     1. Stringify the minified object
@@ -137,7 +136,6 @@ export const buildFilterQuery = (
         const filterString = (filterItem) => `${outputGroupKey} ${condition} '${parseRequestItem(filterItem, groupKey)}'`;
         // Build a new list with filter fomrated filter items
         const filterList = typeList.reduce((incl, s) => [...incl, filterString(s)], []);
-
 
         if (filterList.length > 0) {
           // Join all filter items with specifific operator

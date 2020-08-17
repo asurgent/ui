@@ -39,7 +39,6 @@ const VirtualRender = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items, index]);
 
-
   const onScroll = () => {
     const { scrollTop } = wrapperRef.current;
 
@@ -55,7 +54,6 @@ const VirtualRender = (props) => {
     onScroll();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
-
 
   return (
     <C.Wrapper onScroll={onScroll} ref={wrapperRef} style={style}>

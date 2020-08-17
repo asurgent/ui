@@ -4,7 +4,6 @@ import { Primary as Form, useFormBuilder } from '../../Form';
 import * as C from './TableSearchBar.styled';
 import translation from './TableSearchbar.translation';
 
-
 const propTypes = {
   tableHook: PropTypes.instanceOf(Object).isRequired,
   searchHook: PropTypes.instanceOf(Object).isRequired,

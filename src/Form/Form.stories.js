@@ -15,6 +15,9 @@ export default {
 };
 
 const formObj = {
+  label: {
+    type: 'label', label: 'Test', value: 'Im just a label',
+  },
   search: {
     type: 'text', label: 'Test', placeholder: 'Hello',
   },
@@ -88,6 +91,7 @@ export const defaultForm = () => {
         { label: 'label3', value: 'value3' },
         { label: 'label4', value: 'value4' },
       ],
+      render: (s) => s.someRadioGroup && s.someRadioGroup === 'value2',
       tooltip: 'tooltip',
     },
     someSelect: {
@@ -183,7 +187,7 @@ export const defaultForm = () => {
   }, [renderErrors]);
 
   return (
-    <div style={{ minHeight: '120vh' }}>
+    <div style={{}}>
       <Form.Primary
         form={formData}
         msTimer={15}
@@ -309,7 +313,6 @@ export const updateForm = () => {
     />
   );
 };
-
 
 export const dynamicMinMaxAttributes = () => {
   const formData = Form.useFormBuilder({

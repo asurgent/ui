@@ -79,7 +79,6 @@ const dataset2 = [
   },
 ];
 
-
 export const lineGraph = () => (
   <>
     <div style={{ height: '200px' }}>

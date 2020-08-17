@@ -63,7 +63,6 @@ DismissablePrimary.propTypes = propTypes;
 DismissablePrimary.defaultProps = defaultProps;
 DismissablePrimary.displayName = '@asurgent.ui.Dismissable.Primary';
 
-
 export const DismissablePlain = ({
   id, title, fadeOutSpeed, withBottomMargin, children,
 }) => {

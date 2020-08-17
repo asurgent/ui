@@ -13,7 +13,6 @@ import {
   TooltipIcon,
 } from './InputWrapper.styled';
 
-
 const propTyps = {
   tooltip: PropTypes.string,
   label: PropTypes.string,
@@ -57,7 +56,7 @@ const Text = (props) => {
           )}
         </Header>
       )}
-      <Wrapper type={type} hasError={Boolean(error)}>
+      <Wrapper hasError={Boolean(error)}>
         {children}
       </Wrapper>
       {error && (

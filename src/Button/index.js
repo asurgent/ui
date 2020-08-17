@@ -55,7 +55,6 @@ const Filter = withMapProps(filterPropsMapper)(withStyle(() => ({
   textColor: '#24292e',
 }))(C.Filter));
 
-
 const iconPropsMapper = ({
   icon,
   iconLeft,
