@@ -53,7 +53,7 @@ const NumberInput = forwardRef((props, ref) => {
 
   useEffect(() => {
     setValue(parseInt(props.value || 0, 10));
-  }, [props]);
+  }, [props.value]);
 
   // built in min/max for number inputs only prevents valuechanges by using the buttons
   useEffect(() => {

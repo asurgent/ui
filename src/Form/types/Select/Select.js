@@ -42,10 +42,14 @@ const Select = forwardRef((props, ref) => {
 
   useEffect(() => {
     setValue(props.value || '');
-  }, [props]);
+    // also reset value if options change over time
+  }, [props.value, props.options]);
 
   useEffect(() => {
-    setValue(getDefaultSort(options));
+    // only set default value if doesn't have empty option
+    if (!placeholder) {
+      setValue(getDefaultSort(options));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

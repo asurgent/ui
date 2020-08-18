@@ -82,6 +82,7 @@ const useFormBuilder = (formSpecification, parameters = null) => {
       if (resetData) {
         setFormData(resetData);
         if (resetCallback && resetCallback.run) {
+          // passes the resetValues back to Form.js, which passes it to the <Form onChange ...
           resetCallback.run(resetData);
         }
       }

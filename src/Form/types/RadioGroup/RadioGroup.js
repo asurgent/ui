@@ -25,7 +25,7 @@ const RadioGroup = forwardRef((props, ref) => {
 
   useEffect(() => {
     setVal(props.value || '');
-  }, [props]);
+  }, [props.value]);
 
   return (
     <C.FieldSet onChange={({ target }) => setVal(target.value)}>

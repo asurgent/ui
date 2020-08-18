@@ -22,7 +22,7 @@ const DatePicker = forwardRef((props, ref) => {
 
   useEffect(() => {
     setValue(getStartOfDay(props.value));
-  }, [props]);
+  }, [props.value]);
 
   const dispatchEvent = (d) => {
     const input = ref.current;

@@ -74,6 +74,10 @@ const Form = (props) => {
             .map((key) => ({ name: key, value: resetData[key].value }));
           const resetDirtyItems = Object.keys(resetData)
             .map((key) => ({ name: key, value: false }));
+
+          // rerender, othwerwise values wont change on reset
+          hook.renderItems(resetValues);
+          // sends the reset-values back to the Forms onChange event
           onChange(resetValues, false, resetDirtyItems, null);
         },
       });
