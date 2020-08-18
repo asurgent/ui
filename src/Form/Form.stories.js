@@ -96,14 +96,24 @@ export const defaultForm = () => {
     },
     someSelect: {
       type: 'select',
-      label: 'Some Select',
+      label: 'Select with empty option',
       options: [
         { value: '1', label: 'First option' },
         { value: '2', label: 'Second option' },
         { value: '3', label: 'Third option' },
       ],
       tooltip: 'tooltip',
-      placeholder: 'Select something',
+      placeholder: 'select',
+    },
+    someSelect2: {
+      type: 'select',
+      label: 'Select with default value',
+      options: [
+        { value: '1', label: 'First option' },
+        { value: '2', label: 'Second option' },
+        { value: '3', label: 'Third option' },
+      ],
+      tooltip: 'tooltip',
     },
     someFilterSelectSingle: {
       type: 'filterselect',
@@ -141,7 +151,8 @@ export const defaultForm = () => {
       { name: 'someNumber', value: 10 },
       { name: 'someRadioGroup', value: 'value1' },
       { name: 'someRadioGroup2', value: 'value4' },
-      { name: 'someSelect', value: null },
+      { name: 'someSelect', options: [{ value: '4', label: 'four' }, { value: '5', label: 'five' }], value: '' },
+      { name: 'someSelect2', options: [{ value: '6', label: 'six' }, { value: '7', label: 'seven' }] },
       {
         name: 'someFilterSelectSingle',
         value: '2',
@@ -207,7 +218,14 @@ export const defaultForm = () => {
           <>
             {renderFields}
             <Block.SpaceBetween>
-              <Button.Hollow>Cancel</Button.Hollow>
+              <Button.Hollow onClick={() => {
+                formData.updateField('someSelect', {
+                  options: [{ value: '8', label: '8' }, { value: '9', label: '9' }],
+                });
+              }}
+              >
+                Update someSelect-options
+              </Button.Hollow>
               <Button.Secondary disabled={!isDirty} onClick={onResetAction}>
                 Reset
               </Button.Secondary>

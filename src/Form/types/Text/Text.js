@@ -26,7 +26,7 @@ const Text = forwardRef((props, ref) => {
 
   useEffect(() => {
     setValue(props.value || '');
-  }, [props]);
+  }, [props.value]);
 
   return (
     <input
