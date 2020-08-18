@@ -8,7 +8,6 @@ export const Omnibar = styled.div`
     align-items: center;
     justify-content: space-evenly;
     padding: .8rem;
-    min-height: fit-content;
     margin-bottom: .8rem;
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
