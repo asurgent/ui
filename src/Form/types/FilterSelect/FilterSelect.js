@@ -16,7 +16,11 @@ const { t } = translation;
 const propTyps = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   name: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.instanceOf(Object),
+      PropTypes.string]),
+  ).isRequired,
   props: PropTypes.instanceOf(Object),
   theme: PropTypes.instanceOf(Object),
   parseOutput: PropTypes.func,
