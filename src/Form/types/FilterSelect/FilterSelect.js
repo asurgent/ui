@@ -16,7 +16,11 @@ const { t } = translation;
 const propTyps = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   name: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.instanceOf(Object),
+      PropTypes.string]),
+  ).isRequired,
   props: PropTypes.instanceOf(Object),
   theme: PropTypes.instanceOf(Object),
   parseOutput: PropTypes.func,
@@ -52,7 +56,13 @@ const FilterInput = forwardRef((props, ref) => {
   const placeholdeOutput = placeholder || t('selectPlaceholder', 'asurgentui');
 
   const { multiSelect } = inputProps;
-  const filterSelectHook = useFilterSelectHook(value, options, multiSelect, parseOutput);
+  const filterSelectHook = useFilterSelectHook(
+    value,
+    options,
+    multiSelect,
+    parseOutput,
+    placeholder,
+  );
 
   useEffect(() => {
     filterSelectHook.reset(value);
@@ -81,7 +91,7 @@ const FilterInput = forwardRef((props, ref) => {
               <Tag.Collection tags={filterSelectHook.getTags()} max={3} />
             )}
             { filterSelectHook.showPlaceHolder() && placeholdeOutput}
-            {!filterSelectHook.showTags() && (filterSelectHook.getInputValue())}
+            {!filterSelectHook.showTags() && (filterSelectHook.getOutput())}
           </C.Value>
           <Icons.ArrowDropDown className="down-arrow" fontSize="large" />
         </C.Output>

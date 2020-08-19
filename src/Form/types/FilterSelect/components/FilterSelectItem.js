@@ -19,7 +19,7 @@ const FilterItem = ({
       {filterItem.selected && <Icons.Check />}
     </C.Active>
     <C.FilterLabel>
-      { filterItem.value }
+      { filterItem.label }
     </C.FilterLabel>
   </C.FilterItem>
 );

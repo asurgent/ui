@@ -155,9 +155,9 @@ export const defaultForm = () => {
       { name: 'someSelect2', options: [{ value: '6', label: 'six' }, { value: '7', label: 'seven' }] },
       {
         name: 'someFilterSelectSingle',
-        value: '2',
+        value: '1',
         options: [
-          '1',
+          { value: '1', label: 'one' },
           '2',
           '3',
         ],

@@ -4,23 +4,56 @@ import {
 
 const getDetfaultValue = (values) => {
   if (!values) { return []; }
-  if (Array.isArray(values)) { return values; }
-  return [values];
+  if (Array.isArray(values)) { return values.map((item) => `${item}`); }
+  return [`${values}`];
 };
 
-const getDetfaultSingleValue = (values, options) => {
+const getDetfaultSingleValue = (values, options, hasPlaceholder) => {
   const parseValue = getDetfaultValue(values);
   if (parseValue.length > 0) {
     return parseValue;
   }
-  if ((!values || (Array.isArray(values) && values.length === 0)) && options.length > 0) {
-    return [options[0]];
+
+  if (!hasPlaceholder
+    && (!values || (Array.isArray(values)
+    && values.length === 0)) && options.length > 0
+  ) {
+    const first = options[0];
+    if (first?.value !== undefined) {
+      return [`${first.value}`];
+    }
+    return [`${first}`];
   }
 
   return [];
 };
 
-const useTableHook = (values, options, multiSelect, outputParser) => {
+const getValuesAndLabel = (list) => {
+  const result = list.reduce((acc, item) => {
+    const [labels, options] = acc;
+
+    if (typeof item === 'object' && item?.value) {
+      Object.assign(labels, {
+        [item.value]: item.label || item.value,
+      });
+      options.push(item.value);
+    } else {
+      Object.assign(labels, {
+        [item]: item,
+      });
+      options.push(item);
+    }
+
+    return [
+      labels,
+      options,
+    ];
+  }, [{}, []]);
+
+  return result;
+};
+
+const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlaceholder) => {
   const inputRef = createRef();
   const [isOpen, setOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -38,24 +71,31 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
   useEffect(() => {
     if (isReady === false && options && options.length > 0) {
       if (!multiSelect) {
-        setSelected(getDetfaultSingleValue(values, options));
+        setSelected(getDetfaultSingleValue(values, options, hasPlaceholder));
       } else {
         setSelected(getDetfaultValue(values));
       }
       setReady(true);
     }
-  }, [values, options, multiSelect, selectedOptions, isReady]);
+  }, [values, options, multiSelect, selectedOptions, isReady, hasPlaceholder]);
+
+  const [labelsList, optionsList] = useMemo(() => getValuesAndLabel(options), [options]);
+  const selectedOptionsOutputList = useMemo(() => selectedOptions
+    .map((value) => labelsList[value]),
+  [labelsList, selectedOptions]);
 
   const listOptions = useMemo(() => {
     if (options && Array.isArray(options)) {
       const selected = getDetfaultValue(values);
       const mergedOptions = Array.from(new Set([
         ...selected,
-        ...options,
-      ])).reduce((acc, item) => [{
-        value: item,
-        selected: selectedOptions.some((val) => val === item),
-      }, ...acc], []);
+        ...optionsList,
+      ]))
+        .reduce((acc, item) => [{
+          label: labelsList[item] || item,
+          value: item,
+          selected: selectedOptions.some((val) => val === item),
+        }, ...acc], []);
 
       const filterd = mergedOptions
         .filter((item) => {
@@ -63,7 +103,7 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
             return true;
           }
 
-          const label = item.label || item.value;
+          const label = `${item.label || item.value}`;
 
           if (label) {
             return label
@@ -89,7 +129,7 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
       return filterd;
     }
     return [];
-  }, [options, search, selectedOptions, values]);
+  }, [labelsList, options, optionsList, search, selectedOptions, values]);
 
   return {
     inputRef,
@@ -101,6 +141,13 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
     getOptions: () => listOptions,
     hasSelected: () => selectedOptions.length > 0,
     getSelected: () => outputParser,
+    getOutput: () => {
+      if (!multiSelect) {
+        return outputParser(selectedOptionsOutputList[0]);
+      }
+
+      return outputParser(selectedOptionsOutputList);
+    },
     getInputValue: () => {
       if (!multiSelect) {
         return outputParser(selectedOptions[0]);
@@ -126,19 +173,19 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
           return result;
         }
 
-        const result = Array.from(new Set([item.value, ...selectedOptions]));
+        const result = Array.from(new Set([`${item.value}`, ...selectedOptions]));
         setSelected(result);
 
         return result;
       }
 
-      setSelected([item.value]);
-      return item.value;
+      setSelected([`${item.value}`]);
+      return `${item.value}`;
     },
     reset: (resetValues) => {
       if (isReady === true) {
         if (!multiSelect) {
-          setSelected(getDetfaultSingleValue(resetValues, options));
+          setSelected(getDetfaultSingleValue(resetValues, options, hasPlaceholder));
         } else {
           setSelected(getDetfaultValue(resetValues));
         }
@@ -148,4 +195,4 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
   };
 };
 
-export default useTableHook;
+export default useFilterSelectHook;
