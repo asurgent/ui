@@ -4,8 +4,8 @@ import {
 
 const getDetfaultValue = (values) => {
   if (!values) { return []; }
-  if (Array.isArray(values)) { return values; }
-  return [values];
+  if (Array.isArray(values)) { return values.map((item) => `${item}`); }
+  return [`${values}`];
 };
 
 const getDetfaultSingleValue = (values, options, hasPlaceholder) => {
@@ -20,9 +20,9 @@ const getDetfaultSingleValue = (values, options, hasPlaceholder) => {
   ) {
     const first = options[0];
     if (first?.value !== undefined) {
-      return [first.value];
+      return [`${first.value}`];
     }
-    return [first];
+    return [`${first}`];
   }
 
   return [];
@@ -173,14 +173,14 @@ const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlac
           return result;
         }
 
-        const result = Array.from(new Set([item.value, ...selectedOptions]));
+        const result = Array.from(new Set([`${item.value}`, ...selectedOptions]));
         setSelected(result);
 
         return result;
       }
 
-      setSelected([item.value]);
-      return item.value;
+      setSelected([`${item.value}`]);
+      return `${item.value}`;
     },
     reset: (resetValues) => {
       if (isReady === true) {
