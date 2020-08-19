@@ -20,7 +20,32 @@ const getDetfaultSingleValue = (values, options) => {
   return [];
 };
 
-const useTableHook = (values, options, multiSelect, outputParser) => {
+const getValuesAndLabel = (list) => {
+  const result = list.reduce((acc, item) => {
+    const [labels, options] = acc;
+
+    if (typeof item === 'object' && item?.value) {
+      Object.assign(labels, {
+        [item.value]: item.label || item.value,
+      });
+      options.push(item.value);
+    } else {
+      Object.assign(labels, {
+        [item]: item,
+      });
+      options.push(item);
+    }
+
+    return [
+      labels,
+      options,
+    ];
+  }, [{}, []]);
+
+  return result;
+};
+
+const useFilterSelectHook = (values, options, multiSelect, outputParser) => {
   const inputRef = createRef();
   const [isOpen, setOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -46,16 +71,24 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
     }
   }, [values, options, multiSelect, selectedOptions, isReady]);
 
+
+  const [labelsList, optionsList] = useMemo(() => getValuesAndLabel(options), [options]);
+  const selectedOptionsOutputList = useMemo(() => selectedOptions
+    .map((value) => labelsList[value]),
+  [labelsList, selectedOptions]);
+
   const listOptions = useMemo(() => {
     if (options && Array.isArray(options)) {
       const selected = getDetfaultValue(values);
       const mergedOptions = Array.from(new Set([
         ...selected,
-        ...options,
-      ])).reduce((acc, item) => [{
-        value: item,
-        selected: selectedOptions.some((val) => val === item),
-      }, ...acc], []);
+        ...optionsList,
+      ]))
+        .reduce((acc, item) => [{
+          label: labelsList[item] || item,
+          value: item,
+          selected: selectedOptions.some((val) => val === item),
+        }, ...acc], []);
 
       const filterd = mergedOptions
         .filter((item) => {
@@ -63,7 +96,7 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
             return true;
           }
 
-          const label = item.label || item.value;
+          const label = `${item.label || item.value}`;
 
           if (label) {
             return label
@@ -89,7 +122,7 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
       return filterd;
     }
     return [];
-  }, [options, search, selectedOptions, values]);
+  }, [labelsList, options, optionsList, search, selectedOptions, values]);
 
   return {
     inputRef,
@@ -101,6 +134,13 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
     getOptions: () => listOptions,
     hasSelected: () => selectedOptions.length > 0,
     getSelected: () => outputParser,
+    getOutput: () => {
+      if (!multiSelect) {
+        return outputParser(selectedOptionsOutputList[0]);
+      }
+
+      return outputParser(selectedOptionsOutputList);
+    },
     getInputValue: () => {
       if (!multiSelect) {
         return outputParser(selectedOptions[0]);
@@ -148,4 +188,4 @@ const useTableHook = (values, options, multiSelect, outputParser) => {
   };
 };
 
-export default useTableHook;
+export default useFilterSelectHook;

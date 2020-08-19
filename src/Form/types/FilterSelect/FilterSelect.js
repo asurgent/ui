@@ -81,7 +81,7 @@ const FilterInput = forwardRef((props, ref) => {
               <Tag.Collection tags={filterSelectHook.getTags()} max={3} />
             )}
             { filterSelectHook.showPlaceHolder() && placeholdeOutput}
-            {!filterSelectHook.showTags() && (filterSelectHook.getInputValue())}
+            {!filterSelectHook.showTags() && (filterSelectHook.getOutput())}
           </C.Value>
           <Icons.ArrowDropDown className="down-arrow" fontSize="large" />
         </C.Output>
