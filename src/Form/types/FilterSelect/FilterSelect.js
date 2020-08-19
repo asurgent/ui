@@ -52,7 +52,13 @@ const FilterInput = forwardRef((props, ref) => {
   const placeholdeOutput = placeholder || t('selectPlaceholder', 'asurgentui');
 
   const { multiSelect } = inputProps;
-  const filterSelectHook = useFilterSelectHook(value, options, multiSelect, parseOutput);
+  const filterSelectHook = useFilterSelectHook(
+    value,
+    options,
+    multiSelect,
+    parseOutput,
+    placeholder,
+  );
 
   useEffect(() => {
     filterSelectHook.reset(value);

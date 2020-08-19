@@ -8,13 +8,20 @@ const getDetfaultValue = (values) => {
   return [values];
 };
 
-const getDetfaultSingleValue = (values, options) => {
+const getDetfaultSingleValue = (values, options, hasPlaceholder) => {
   const parseValue = getDetfaultValue(values);
   if (parseValue.length > 0) {
     return parseValue;
   }
-  if ((!values || (Array.isArray(values) && values.length === 0)) && options.length > 0) {
-    return [options[0]];
+  if (!hasPlaceholder
+    && (!values || (Array.isArray(values)
+    && values.length === 0)) && options.length > 0
+  ) {
+    const first = options[0];
+    if (first?.value !== undefined) {
+      return [first.value];
+    }
+    return [first];
   }
 
   return [];
@@ -45,7 +52,7 @@ const getValuesAndLabel = (list) => {
   return result;
 };
 
-const useFilterSelectHook = (values, options, multiSelect, outputParser) => {
+const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlaceholder) => {
   const inputRef = createRef();
   const [isOpen, setOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -63,13 +70,13 @@ const useFilterSelectHook = (values, options, multiSelect, outputParser) => {
   useEffect(() => {
     if (isReady === false && options && options.length > 0) {
       if (!multiSelect) {
-        setSelected(getDetfaultSingleValue(values, options));
+        setSelected(getDetfaultSingleValue(values, options, hasPlaceholder));
       } else {
         setSelected(getDetfaultValue(values));
       }
       setReady(true);
     }
-  }, [values, options, multiSelect, selectedOptions, isReady]);
+  }, [values, options, multiSelect, selectedOptions, isReady, hasPlaceholder]);
 
   const [labelsList, optionsList] = useMemo(() => getValuesAndLabel(options), [options]);
   const selectedOptionsOutputList = useMemo(() => selectedOptions
