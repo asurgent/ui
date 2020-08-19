@@ -13,6 +13,7 @@ const getDetfaultSingleValue = (values, options, hasPlaceholder) => {
   if (parseValue.length > 0) {
     return parseValue;
   }
+
   if (!hasPlaceholder
     && (!values || (Array.isArray(values)
     && values.length === 0)) && options.length > 0
@@ -184,7 +185,7 @@ const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlac
     reset: (resetValues) => {
       if (isReady === true) {
         if (!multiSelect) {
-          setSelected(getDetfaultSingleValue(resetValues, options));
+          setSelected(getDetfaultSingleValue(resetValues, options, hasPlaceholder));
         } else {
           setSelected(getDetfaultValue(resetValues));
         }
