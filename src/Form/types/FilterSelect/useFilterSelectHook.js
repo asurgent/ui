@@ -59,7 +59,6 @@ const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlac
   const [search, setSearch] = useState('');
   const [selectedOptions, setSelected] = useState([]);
   const [isReady, setReady] = useState(false);
-
   useEffect(() => {
     if (!isOpen) {
       // Wait for slideuptransition to complete
@@ -78,6 +77,13 @@ const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlac
       setReady(true);
     }
   }, [values, options, multiSelect, selectedOptions, isReady, hasPlaceholder]);
+
+  useEffect(() => {
+    // close option window when selecting new option
+    if (!multiSelect) {
+      setOpen(false);
+    }
+  }, [multiSelect, selectedOptions]);
 
   const [labelsList, optionsList] = useMemo(() => getValuesAndLabel(options), [options]);
   const selectedOptionsOutputList = useMemo(() => selectedOptions
