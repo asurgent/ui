@@ -123,6 +123,7 @@ export const defaultForm = () => {
       props: {
         searchPlaceholder: 'Search in me plz',
       },
+      placeholder: 'Select me',
     },
     someFilterSelectMulti: {
       type: 'filterselect',
@@ -155,11 +156,11 @@ export const defaultForm = () => {
       { name: 'someSelect2', options: [{ value: '6', label: 'six' }, { value: '7', label: 'seven' }] },
       {
         name: 'someFilterSelectSingle',
-        value: '1',
         options: [
           { value: '1', label: 'one' },
-          '2',
+          { value: '2', label: 'two' },
           '3',
+          '4',
         ],
       },
       {
