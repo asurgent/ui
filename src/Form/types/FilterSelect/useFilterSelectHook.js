@@ -98,7 +98,7 @@ const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlac
         ...optionsList,
       ]))
         .reduce((acc, item) => [{
-          label: labelsList[item] || item,
+          label: `${labelsList[item] || item}`,
           value: item,
           selected: selectedOptions.some((val) => val === item),
         }, ...acc], []);
@@ -120,8 +120,8 @@ const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlac
           return false;
         })
         .sort((a, b) => {
-          const textA = (a.value || '').toUpperCase();
-          const textB = (b.value || '').toUpperCase();
+          const textA = a.label.toUpperCase();
+          const textB = b.label.toUpperCase();
           if (textA < textB) { return -1; }
           if (textA > textB) { return 1; }
           return 0;
