@@ -8,11 +8,14 @@ import TextArea from '../types/TextArea/index';
 import Select from '../types/Select/index';
 import FilterSelect from '../types/FilterSelect/index';
 import Label from '../types/Label/index';
+import Bool from '../types/Bool/index';
 import DatePicker from '../types/DatePicker/index';
 import RadioGroup from '../types/RadioGroup/index';
 
 const getInputComponent = (type) => {
   switch (type) {
+    case 'bool':
+      return Bool;
     case 'text':
       return Text;
     case 'number':
