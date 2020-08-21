@@ -1,4 +1,6 @@
-import React, { forwardRef, useState, useEffect } from 'react';
+import React, {
+  forwardRef, useState, useEffect, useImperativeHandle,
+} from 'react';
 import PropTypes from 'prop-types';
 import * as C from './RadioGroup.styled';
 
@@ -7,6 +9,7 @@ const propTypes = {
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   wrapRadios: PropTypes.bool,
+  parseOutput: PropTypes.func,
   props: PropTypes.instanceOf(Object),
 };
 
@@ -15,17 +18,25 @@ const defaultProps = {
   options: [],
   wrapRadios: false,
   props: {},
+  parseOutput: (val) => val || '',
 };
 
 const RadioGroup = forwardRef((props, ref) => {
   const {
-    name, options, wrapRadios,
+    name,
+    options,
+    wrapRadios,
+    parseOutput,
   } = props;
   const [val, setVal] = useState(null);
 
   useEffect(() => {
-    setVal(props.value || '');
+    setVal(props.value);
   }, [props.value]);
+
+  useImperativeHandle(ref, () => ({
+    value: parseOutput(val),
+  }));
 
   return (
     <C.FieldSet onChange={({ target }) => setVal(target.value)}>
@@ -37,7 +48,6 @@ const RadioGroup = forwardRef((props, ref) => {
               name={name}
               value={opt.value}
               checked={val === opt.value}
-              ref={val === opt.value ? ref : null}
               readOnly
               {...props.props}
             />
