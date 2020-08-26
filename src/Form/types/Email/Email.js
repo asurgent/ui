@@ -8,7 +8,6 @@ import React, {
 import PropTypes from 'prop-types';
 import { emailRegexp } from './helpers';
 
-
 const propTyps = {
   value: PropTypes.string,
   label: PropTypes.string,
