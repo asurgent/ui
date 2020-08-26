@@ -13,7 +13,6 @@ import { TextField } from '@material-ui/core';
 import ThemeProvider from './DatePickerThemeProvider';
 import * as C from './DatePicker.styled';
 
-
 const getStartOfDay = (val) => moment(val).startOf('day').toISOString();
 
 const DatePicker = forwardRef((props, ref) => {
