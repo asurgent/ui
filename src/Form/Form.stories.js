@@ -65,11 +65,11 @@ export const simpleForm = () => {
 
 export const defaultForm = () => {
   const formData = Form.useFormBuilder({
-    // someText: {
-    //   type: 'text',
-    //   label: 'Some Text',
-    //   tooltip: 'hejhej',
-    // },
+    someText: {
+      type: 'text',
+      label: 'Some Text',
+      tooltip: 'hejhej',
+    },
     imABoolean: {
       type: 'bool',
       label: 'Im true or false',
@@ -82,115 +82,115 @@ export const defaultForm = () => {
       tooltip: 'Select me',
       value: '',
     },
-    // someNumber: {
-    //   type: 'number',
-    //   label: 'Some Number (max 100)',
-    //   tooltip: 'hejhej',
-    //   maxValue: 100,
-    // },
-    // someRadioGroup: {
-    //   type: 'radiogroup',
-    //   label: 'Some Radio Group',
-    //   options: [
-    //     { label: 'label1', value: 'value1' },
-    //     { label: 'label2', value: 'value2' },
-    //   ],
-    // },
-    // someRadioGroup2: {
-    //   type: 'radiogroup',
-    //   label: 'Some Radio Group',
-    //   options: [
-    //     { label: 'label3', value: 'value3' },
-    //     { label: 'label4', value: 'value4' },
-    //   ],
-    //   render: (s) => s.someRadioGroup && s.someRadioGroup === 'value2',
-    //   tooltip: 'tooltip',
-    // },
-    // someSelect: {
-    //   type: 'select',
-    //   label: 'Select with empty option',
-    //   options: [
-    //     { value: '1', label: 'First option' },
-    //     { value: '2', label: 'Second option' },
-    //     { value: '3', label: 'Third option' },
-    //   ],
-    //   tooltip: 'tooltip',
-    //   placeholder: 'select',
-    // },
-    // someSelect2: {
-    //   type: 'select',
-    //   label: 'Select with default value',
-    //   options: [
-    //     { value: '1', label: 'First option' },
-    //     { value: '2', label: 'Second option' },
-    //     { value: '3', label: 'Third option' },
-    //   ],
-    //   tooltip: 'tooltip',
-    // },
-    // someFilterSelectSingle: {
-    //   type: 'filterselect',
-    //   label: 'Some Filterselect (single)',
-    //   options: [],
-    //   tooltip: 'tooltip',
-    //   props: {
-    //     searchPlaceholder: 'Search in me plz',
-    //   },
-    //   placeholder: 'Select me',
-    // },
-    // someFilterSelectMulti: {
-    //   type: 'filterselect',
-    //   label: 'Some Filterselect (multi)',
-    //   options: [],
-    //   tooltip: 'tooltip',
-    //   parseOutput: (r) => r.join(','),
-    //   props: {
-    //     multiSelect: true,
-    //     searchPlaceholder: 'Search in me plz',
-    //   },
-    // },
-    // someDate: {
-    //   type: 'datepicker',
-    //   options: [],
-    //   render: (spec) => spec.someText && spec.someText.length < 10,
-    //   tooltip: 'tooltip',
-    //   label: 'Some date',
-    // },
+    someNumber: {
+      type: 'number',
+      label: 'Some Number (max 100)',
+      tooltip: 'hejhej',
+      maxValue: 100,
+    },
+    someRadioGroup: {
+      type: 'radiogroup',
+      label: 'Some Radio Group',
+      options: [
+        { label: 'label1', value: 'value1' },
+        { label: 'label2', value: 'value2' },
+      ],
+    },
+    someRadioGroup2: {
+      type: 'radiogroup',
+      label: 'Some Radio Group',
+      options: [
+        { label: 'label3', value: 'value3' },
+        { label: 'label4', value: 'value4' },
+      ],
+      render: (s) => s.someRadioGroup && s.someRadioGroup === 'value2',
+      tooltip: 'tooltip',
+    },
+    someSelect: {
+      type: 'select',
+      label: 'Select with empty option',
+      options: [
+        { value: '1', label: 'First option' },
+        { value: '2', label: 'Second option' },
+        { value: '3', label: 'Third option' },
+      ],
+      tooltip: 'tooltip',
+      placeholder: 'select',
+    },
+    someSelect2: {
+      type: 'select',
+      label: 'Select with default value',
+      options: [
+        { value: '1', label: 'First option' },
+        { value: '2', label: 'Second option' },
+        { value: '3', label: 'Third option' },
+      ],
+      tooltip: 'tooltip',
+    },
+    someFilterSelectSingle: {
+      type: 'filterselect',
+      label: 'Some Filterselect (single)',
+      options: [],
+      tooltip: 'tooltip',
+      props: {
+        searchPlaceholder: 'Search in me plz',
+      },
+      placeholder: 'Select me',
+    },
+    someFilterSelectMulti: {
+      type: 'filterselect',
+      label: 'Some Filterselect (multi)',
+      options: [],
+      tooltip: 'tooltip',
+      parseOutput: (r) => r.join(','),
+      props: {
+        multiSelect: true,
+        searchPlaceholder: 'Search in me plz',
+      },
+    },
+    someDate: {
+      type: 'datepicker',
+      options: [],
+      render: (spec) => spec.someText && spec.someText.length < 10,
+      tooltip: 'tooltip',
+      label: 'Some date',
+    },
   });
   const renderErrors = boolean('render errors', false);
 
   useEffect(() => {
     formData.updateFields([
-      // { name: 'someText', value: 'Good bye' },
-      // { name: 'someNumber', value: 10 },
-      // { name: 'someRadioGroup', value: 'value1' },
-      // { name: 'someRadioGroup2', value: 'value4' },
-      // { name: 'someSelect', options: [{ value: '4', label: 'four' }, { value: '5', label: 'five' }], value: '' },
-      // { name: 'someSelect2', options: [{ value: '6', label: 'six' }, { value: '7', label: 'seven' }] },
-      // {
-      //   name: 'someFilterSelectSingle',
-      //   options: [
-      //     { value: '1', label: 'one' },
-      //     { value: '2', label: 'two' },
-      //     '3',
-      //     '4',
-      //   ],
-      // },
-      // {
-      //   name: 'someFilterSelectMulti',
-      //   value: ['1 First option First option First option First option', '0 Zero option', '2 Second option'],
-      //   options: [
-      //     '2 Second option',
-      //     '3 Third option',
-      //     '4 Fourth option',
-      //     '5 Fifth option',
-      //     '6 Sixth option',
-      //     '7 Seventh option',
-      //     '8 Eigth option',
-      //     '9 Ninth option',
-      //     '10 Tenth option',
-      //   ],
-      // },
-      // { name: 'someDate', value: moment().startOf('day').toISOString() },
+      { name: 'someText', value: 'Good bye' },
+      { name: 'someNumber', value: 10 },
+      { name: 'someRadioGroup', value: 'value1' },
+      { name: 'someRadioGroup2', value: 'value4' },
+      { name: 'someSelect', options: [{ value: '4', label: 'four' }, { value: '5', label: 'five' }], value: '' },
+      { name: 'someSelect2', options: [{ value: '6', label: 'six' }, { value: '7', label: 'seven' }] },
+      {
+        name: 'someFilterSelectSingle',
+        options: [
+          { value: '1', label: 'one' },
+          { value: '2', label: 'two' },
+          '3',
+          '4',
+        ],
+      },
+      {
+        name: 'someFilterSelectMulti',
+        value: ['1 First option First option First option First option', '0 Zero option', '2 Second option'],
+        options: [
+          '2 Second option',
+          '3 Third option',
+          '4 Fourth option',
+          '5 Fifth option',
+          '6 Sixth option',
+          '7 Seventh option',
+          '8 Eigth option',
+          '9 Ninth option',
+          '10 Tenth option',
+        ],
+      },
+      { name: 'someDate', value: moment().startOf('day').toISOString() },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -227,8 +227,7 @@ export const defaultForm = () => {
           action()('Form values', values);
           action()('Form dirty', isDirty);
           action()('Dirty items', dirtyItems);
-          // console.log(values);
-          console.log(validates);
+          action()('Validating fields', validates);
         }}
       >
         {(inputList, renderFields, onSubmitAction, onResetAction, isDirty) => (

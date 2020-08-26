@@ -6,7 +6,6 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import PropTypes from 'prop-types';
-import { isNull } from 'lodash';
 import * as C from './RadioGroup.styled';
 
 const propTypes = {
