@@ -1,4 +1,9 @@
-import React, { forwardRef, useImperativeHandle, useEffect } from 'react';
+import React, {
+  createRef,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import PropTypes from 'prop-types';
 import * as Icons from '@material-ui/icons';
 import * as VirtualRender from '../../../VirtualRender';
@@ -54,7 +59,7 @@ const FilterInput = forwardRef((props, ref) => {
     props: inputProps,
   } = props;
   const placeholdeOutput = placeholder || t('selectPlaceholder', 'asurgentui');
-
+  const searchInput = createRef();
   const { multiSelect } = inputProps;
   const filterSelectHook = useFilterSelectHook(
     value,
@@ -76,6 +81,14 @@ const FilterInput = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     getArray: () => filterSelectHook.getInputValue(),
+    focus: () => {
+      filterSelectHook.setOpen(true);
+      searchInput.current.focus();
+    },
+    blur: () => {
+      filterSelectHook.setOpen(false);
+      searchInput.current.blur();
+    },
   }));
 
   return (
@@ -99,6 +112,7 @@ const FilterInput = forwardRef((props, ref) => {
           <C.Dropdown>
             <C.SearchWrapper>
               <C.Search
+                forwardRef={searchInput}
                 type="text"
                 placeholder={inputProps.searchPlaceholder || t('searchPlaceHolder', 'asurgentui')}
                 value={filterSelectHook.searchValue}
@@ -124,7 +138,7 @@ const FilterInput = forwardRef((props, ref) => {
                       )}
                     </VirtualRender.List>
                   )
-                }
+              }
             </C.ListWrapper>
           </C.Dropdown>
         </Transition.FadeInFitted>

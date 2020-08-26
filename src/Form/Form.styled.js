@@ -10,7 +10,7 @@ export const FormStyle = styled.form`
 
 export const FormRow = styled.div`
     display: block;
-    margin-bottom: 1.6rem;
+    margin-bottom: 2.4rem;
     width: 100%;
     flex-grow: 1;
     min-width: 50%;

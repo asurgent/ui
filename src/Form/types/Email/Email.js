@@ -1,11 +1,13 @@
 import React, {
   forwardRef,
   useState,
+  createRef,
   useEffect,
   useImperativeHandle,
-  createRef,
 } from 'react';
 import PropTypes from 'prop-types';
+import { emailRegexp } from './helpers';
+
 
 const propTyps = {
   value: PropTypes.string,
@@ -23,10 +25,10 @@ const defaultProps = {
   props: {},
   placeholder: '',
   parseOutput: (v) => v,
-  validator: () => true,
+  validator: (v) => emailRegexp.test(v),
 };
 
-const Text = forwardRef((props, ref) => {
+const Email = forwardRef((props, ref) => {
   const {
     name,
     placeholder,
@@ -34,6 +36,7 @@ const Text = forwardRef((props, ref) => {
     validator,
   } = props;
   const input = createRef();
+
   const [value, setValue] = useState('');
 
   useImperativeHandle(ref, () => ({
@@ -50,7 +53,7 @@ const Text = forwardRef((props, ref) => {
   return (
     <input
       {...props.props}
-      type="text"
+      type="email"
       value={value}
       placeholder={placeholder}
       onChange={({ target }) => setValue(target.value)}
@@ -60,8 +63,8 @@ const Text = forwardRef((props, ref) => {
   );
 });
 
-Text.defaultProps = defaultProps;
-Text.propTypes = propTyps;
-Text.displayName = '@asurgent.ui.Form.Input.Text';
+Email.defaultProps = defaultProps;
+Email.propTypes = propTyps;
+Email.displayName = '@asurgent.ui.Form.Input.Email';
 
-export default Text;
+export default Email;

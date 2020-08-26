@@ -9,6 +9,7 @@ import Select from '../types/Select/index';
 import FilterSelect from '../types/FilterSelect/index';
 import Label from '../types/Label/index';
 import Bool from '../types/Bool/index';
+import Email from '../types/Email/index';
 import DatePicker from '../types/DatePicker/index';
 import RadioGroup from '../types/RadioGroup/index';
 
@@ -32,6 +33,8 @@ const getInputComponent = (type) => {
       return DatePicker;
     case 'radiogroup':
       return RadioGroup;
+    case 'email':
+      return Email;
     default:
       return Text;
   }
@@ -226,19 +229,38 @@ const getFiledValue = (ref) => {
   return value;
 };
 
+const getValidator = (ref) => {
+  const { validator } = ref.current;
+  if (validator !== undefined) {
+    return validator;
+  }
+
+  return true;
+};
+
 export const getValues = (references, originalValues) => {
   let dirty = false;
+  let valid = true;
   const dirtyItems = {};
+  const validates = {};
   const keys = (Object.keys(references) || []);
   const values = keys.reduce((acc, key) => {
     if (references[key] && references[key].current) {
       const value = getFiledValue(references[key]);
+      const isValid = getValidator(references[key]);
 
       if (value !== originalValues[key]) {
         dirty = true;
         Object.assign(dirtyItems, { [key]: true });
       } else {
         Object.assign(dirtyItems, { [key]: false });
+      }
+
+      if (isValid) {
+        Object.assign(validates, { [key]: true });
+      } else {
+        valid = false;
+        Object.assign(validates, { [key]: false });
       }
 
       return {
@@ -250,7 +272,13 @@ export const getValues = (references, originalValues) => {
     return acc;
   }, {});
 
-  return { values, dirty, dirtyItems };
+  return {
+    values,
+    valid,
+    dirty,
+    dirtyItems,
+    validates,
+  };
 };
 
 export const resetValues = (formData, originalValues) => Object.keys(formData)

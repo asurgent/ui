@@ -1,7 +1,12 @@
 import React, {
-  forwardRef, useState, useEffect, useImperativeHandle,
+  useState,
+  createRef,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
 } from 'react';
 import PropTypes from 'prop-types';
+import { isNull } from 'lodash';
 import * as C from './RadioGroup.styled';
 
 const propTypes = {
@@ -29,6 +34,7 @@ const RadioGroup = forwardRef((props, ref) => {
     parseOutput,
   } = props;
   const [val, setVal] = useState(null);
+  const input = createRef();
 
   useEffect(() => {
     setVal(props.value);
@@ -36,6 +42,8 @@ const RadioGroup = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     value: parseOutput(val),
+    focus: () => input.current.focus(),
+    blur: () => input.current.blur(),
   }));
 
   return (
@@ -48,6 +56,7 @@ const RadioGroup = forwardRef((props, ref) => {
               name={name}
               value={opt.value}
               checked={val === opt.value}
+              ref={val === opt.value ? input : null}
               readOnly
               {...props.props}
             />

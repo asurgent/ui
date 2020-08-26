@@ -1,4 +1,10 @@
-import React, { forwardRef, useState, useEffect } from 'react';
+import React, {
+  useState,
+  useEffect,
+  createRef,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import PropTypes from 'prop-types';
 import * as Icons from '@material-ui/icons';
 
@@ -8,12 +14,14 @@ const propTyps = {
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)).isRequired,
   props: PropTypes.instanceOf(Object),
   placeholder: PropTypes.string,
+  parseOutput: PropTypes.func,
 };
 
 const defaultProps = {
   value: '',
   props: {},
   placeholder: '',
+  parseOutput: (v) => v,
 };
 
 const getDefaultSort = (sortKeys) => {
@@ -36,9 +44,17 @@ const Select = forwardRef((props, ref) => {
     name,
     options,
     placeholder,
+    parseOutput,
   } = props;
 
+  const input = createRef();
   const [value, setValue] = useState('');
+
+  useImperativeHandle(ref, () => ({
+    value: parseOutput(value),
+    focus: () => input.current.focus(),
+    blur: () => input.current.blur(),
+  }));
 
   useEffect(() => {
     setValue(props.value || '');
@@ -61,7 +77,6 @@ const Select = forwardRef((props, ref) => {
         onChange={({ target }) => setValue(target.value)}
         value={value}
         name={name}
-        ref={ref}
       >
         {placeholder && (
         <option disabled value="">
