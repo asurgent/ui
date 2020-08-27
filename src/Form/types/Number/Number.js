@@ -98,7 +98,7 @@ const NumberInput = forwardRef((props, ref) => {
       placeholder={placeholder}
       min={min}
       max={max}
-      onChange={({ target }) => setValue(target.value)}
+      onChange={({ target }) => setValue(parseInt(target.value, 10))}
       name={name}
       ref={input}
     />
