@@ -69,11 +69,6 @@ const FilterInput = forwardRef((props, ref) => {
     placeholder,
   );
 
-  useEffect(() => {
-    filterSelectHook.reset(value);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.value]);
-
   const handleChange = (item) => {
     const selected = filterSelectHook.selectItem(item);
     dispatchEvent(selected, filterSelectHook.inputRef);

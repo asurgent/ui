@@ -43,8 +43,7 @@ const useFormBuilder = (formSpecification, parameters = null) => {
   // and that keeps the input-fileds current value
   useEffect(() => {
     if (Object.keys(references).length > 0) {
-      const { fields, original } = generateFieldComponents(formData, references, errors, true);
-      setOriginalValues(original);
+      const { fields } = generateFieldComponents(formData, references, errors, true);
       setInputFields(fields);
 
       const { values } = getValues(references, originalValues);
