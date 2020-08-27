@@ -98,10 +98,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
       const error = getFieldError(key, errors);
 
       if (keepInputValue && referenceList[key]?.current) {
-        const isNumber = referenceList[key].current.type === 'number';
-        inputValue = isNumber
-          ? parseInt(referenceList[key].current.value, 10)
-          : referenceList[key].current.value;
+        inputValue = referenceList[key].current.value();
       }
 
       Object.assign(original, { [key]: inputValue });
@@ -219,22 +216,10 @@ export const updateFields = (form, list) => {
   return copy;
 };
 
-const getFiledValue = (ref) => {
-  const { value, getArray } = ref.current;
-
-  if (getArray && typeof getArray === 'function') {
-    return getArray();
-  } if (ref.current.type === 'number') {
-    return parseInt(value, 10);
-  }
-
-  return value;
-};
-
 const getValidator = (ref) => {
   const { validator } = ref.current;
-  if (validator !== undefined) {
-    return validator;
+  if (validator && typeof validator === 'function') {
+    return validator();
   }
 
   return true;
@@ -248,7 +233,7 @@ export const getValues = (references, originalValues) => {
   const keys = (Object.keys(references) || []);
   const values = keys.reduce((acc, key) => {
     if (references[key] && references[key].current) {
-      const value = getFiledValue(references[key]);
+      const value = references[key].current.value();
       const isValid = getValidator(references[key]);
 
       if (value !== originalValues[key]) {
