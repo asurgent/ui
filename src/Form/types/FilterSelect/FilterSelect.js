@@ -29,6 +29,10 @@ const propTyps = {
   theme: PropTypes.instanceOf(Object),
   parseOutput: PropTypes.func,
   placeholder: PropTypes.string,
+  validator: PropTypes.shape({
+    condition: PropTypes.func,
+    errorMessage: PropTypes.string,
+  }),
 };
 
 const defaultProps = {
@@ -37,6 +41,10 @@ const defaultProps = {
   theme: {},
   parseOutput: (r) => r,
   placeholder: '',
+  validator: {
+    condition: () => true,
+    errorMessage: '',
+  },
 };
 
 const dispatchEvent = (value, ref) => {
@@ -51,9 +59,10 @@ const dispatchEvent = (value, ref) => {
 const FilterInput = forwardRef((props, ref) => {
   const {
     name,
-    options,
-    placeholder,
     value,
+    options,
+    validator,
+    placeholder,
     parseOutput,
     props: inputProps,
   } = props;
@@ -74,6 +83,8 @@ const FilterInput = forwardRef((props, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
+    validator: validator.condition(value),
+    validationErrorMessage: validator.errorMessage,
     getArray: () => filterSelectHook.getInputValue(),
     focus: () => {
       filterSelectHook.setOpen(true);

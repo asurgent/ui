@@ -80,6 +80,10 @@ export const defaultForm = () => {
       type: 'email',
       label: 'Email',
       tooltip: 'Select me',
+      validator: {
+        condition: () => false,
+        errorMessage: 'I did not validate',
+      },
       value: '',
     },
     someNumber: {
@@ -160,37 +164,37 @@ export const defaultForm = () => {
 
   useEffect(() => {
     formData.updateFields([
-      { name: 'someText', value: 'Good bye' },
-      { name: 'someNumber', value: 10 },
-      { name: 'someRadioGroup', value: 'value1' },
-      { name: 'someRadioGroup2', value: 'value4' },
-      { name: 'someSelect', options: [{ value: '4', label: 'four' }, { value: '5', label: 'five' }], value: '' },
-      { name: 'someSelect2', options: [{ value: '6', label: 'six' }, { value: '7', label: 'seven' }] },
-      {
-        name: 'someFilterSelectSingle',
-        options: [
-          { value: '1', label: 'one' },
-          { value: '2', label: 'two' },
-          '3',
-          '4',
-        ],
-      },
-      {
-        name: 'someFilterSelectMulti',
-        value: ['1 First option First option First option First option', '0 Zero option', '2 Second option'],
-        options: [
-          '2 Second option',
-          '3 Third option',
-          '4 Fourth option',
-          '5 Fifth option',
-          '6 Sixth option',
-          '7 Seventh option',
-          '8 Eigth option',
-          '9 Ninth option',
-          '10 Tenth option',
-        ],
-      },
-      { name: 'someDate', value: moment().startOf('day').toISOString() },
+      // { name: 'someText', value: 'Good bye' },
+      // { name: 'someNumber', value: 10 },
+      // { name: 'someRadioGroup', value: 'value1' },
+      // { name: 'someRadioGroup2', value: 'value4' },
+      // { name: 'someSelect', options: [{ value: '4', label: 'four' }, { value: '5', label: 'five' }], value: '' },
+      // { name: 'someSelect2', options: [{ value: '6', label: 'six' }, { value: '7', label: 'seven' }] },
+      // {
+      //   name: 'someFilterSelectSingle',
+      //   options: [
+      //     { value: '1', label: 'one' },
+      //     { value: '2', label: 'two' },
+      //     '3',
+      //     '4',
+      //   ],
+      // },
+      // {
+      //   name: 'someFilterSelectMulti',
+      //   value: ['1 First option First option First option First option', '0 Zero option', '2 Second option'],
+      //   options: [
+      //     '2 Second option',
+      //     '3 Third option',
+      //     '4 Fourth option',
+      //     '5 Fifth option',
+      //     '6 Sixth option',
+      //     '7 Seventh option',
+      //     '8 Eigth option',
+      //     '9 Ninth option',
+      //     '10 Tenth option',
+      //   ],
+      // },
+      // { name: 'someDate', value: moment().startOf('day').toISOString() },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

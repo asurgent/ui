@@ -96,7 +96,7 @@ const useFormBuilder = (formSpecification, parameters = null) => {
         .reduce((acc, [property, value]) => {
           if (!value) {
             return [{
-              property, message: 'You need some text',
+              property, message: references[property]?.current?.validationErrorMessage || 'Error',
             }, ...acc];
           }
           return acc;

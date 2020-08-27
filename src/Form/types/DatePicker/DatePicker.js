@@ -43,7 +43,8 @@ const DatePicker = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     value: parseOutput(value),
-    validator: validator(value),
+    validator: validator.condition(value),
+    validationErrorMessage: validator.errorMessage,
     focus: () => input.current.focus(),
     blur: () => input.current.blur(),
   }));
@@ -100,7 +101,10 @@ DatePicker.propTypes = {
   tooltip: PropTypes.string,
   props: PropTypes.instanceOf(Object),
   parseOutput: PropTypes.func,
-  validator: PropTypes.func,
+  validator: PropTypes.shape({
+    condition: PropTypes.func,
+    errorMessage: PropTypes.string,
+  }),
 };
 
 DatePicker.defaultProps = {
@@ -115,7 +119,10 @@ DatePicker.defaultProps = {
   tooltip: '',
   props: {},
   parseOutput: (v) => v,
-  validator: () => true,
+  validator: {
+    condition: () => true,
+    errorMessage: '',
+  },
 };
 
 DatePicker.displayName = '@asurgent.ui.Form.Input.DatePicker';

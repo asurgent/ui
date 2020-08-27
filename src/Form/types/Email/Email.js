@@ -40,7 +40,8 @@ const Email = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     value: parseOutput(value),
-    validator: validator(value),
+    validator: validator.condition(value),
+    validationErrorMessage: validator.errorMessage,
     focus: () => input.current.focus(),
     blur: () => input.current.blur(),
   }));

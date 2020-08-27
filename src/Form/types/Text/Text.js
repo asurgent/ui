@@ -14,7 +14,10 @@ const propTyps = {
   placeholder: PropTypes.string,
   props: PropTypes.instanceOf(Object),
   parseOutput: PropTypes.func,
-  validator: PropTypes.func,
+  validator: PropTypes.shape({
+    condition: PropTypes.func,
+    errorMessage: PropTypes.string,
+  }),
 };
 
 const defaultProps = {
@@ -23,7 +26,10 @@ const defaultProps = {
   props: {},
   placeholder: '',
   parseOutput: (v) => v,
-  validator: () => true,
+  validator: {
+    condition: () => true,
+    errorMessage: '',
+  },
 };
 
 const Text = forwardRef((props, ref) => {
@@ -38,7 +44,8 @@ const Text = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     value: parseOutput(value),
-    validator: validator(value),
+    validator: validator.condition(value),
+    validationErrorMessage: validator.errorMessage,
     focus: () => input.current.focus(),
     blur: () => input.current.blur(),
   }));
