@@ -1,5 +1,11 @@
 import React, {
-  forwardRef, useState, useEffect, useContext, useMemo,
+  useMemo,
+  useState,
+  useEffect,
+  createRef,
+  forwardRef,
+  useContext,
+  useImperativeHandle,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormContext } from '../../Form';
@@ -12,6 +18,11 @@ const propTyps = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   props: PropTypes.instanceOf(Object),
+  parseOutput: PropTypes.func,
+  validator: PropTypes.shape({
+    condition: PropTypes.func,
+    errorMessage: PropTypes.string,
+  }),
 };
 
 const defaultProps = {
@@ -21,6 +32,11 @@ const defaultProps = {
   label: '',
   props: {},
   placeholder: '',
+  parseOutput: (v) => v,
+  validator: {
+    condition: () => true,
+    errorMessage: '',
+  },
 };
 
 const NumberInput = forwardRef((props, ref) => {
@@ -29,8 +45,10 @@ const NumberInput = forwardRef((props, ref) => {
     placeholder,
     minValue,
     maxValue,
+    parseOutput,
+    validator,
   } = props;
-
+  const input = createRef();
   const { hook: form } = useContext(FormContext);
   const [value, setValue] = useState(parseInt(props.value || 0, 10));
 
@@ -64,6 +82,14 @@ const NumberInput = forwardRef((props, ref) => {
     }
   }, [props, max, min, value]);
 
+  useImperativeHandle(ref, () => ({
+    value: () => parseOutput(value),
+    validator: () => validator.condition(value),
+    validationErrorMessage: validator.errorMessage,
+    focus: () => input.current.focus(),
+    blur: () => input.current.blur(),
+  }));
+
   return (
     <input
       {...props.props}
@@ -72,9 +98,9 @@ const NumberInput = forwardRef((props, ref) => {
       placeholder={placeholder}
       min={min}
       max={max}
-      onChange={({ target }) => setValue(target.value)}
+      onChange={({ target }) => setValue(parseInt(target.value, 10))}
       name={name}
-      ref={ref}
+      ref={input}
     />
   );
 });

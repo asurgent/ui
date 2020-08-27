@@ -70,6 +70,22 @@ export const defaultForm = () => {
       label: 'Some Text',
       tooltip: 'hejhej',
     },
+    imABoolean: {
+      type: 'bool',
+      label: 'Im true or false',
+      tooltip: 'Select me',
+      value: false,
+    },
+    email: {
+      type: 'email',
+      label: 'Email',
+      tooltip: 'Select me',
+      validator: {
+        condition: () => false,
+        errorMessage: 'I did not validate',
+      },
+      value: '',
+    },
     someNumber: {
       type: 'number',
       label: 'Some Number (max 100)',
@@ -204,15 +220,18 @@ export const defaultForm = () => {
       <Form.Primary
         form={formData}
         msTimer={15}
-        onSubmit={(values, isDirty) => {
+        onSubmit={({ values, isDirty }) => {
           action()('isDirty', isDirty);
           action()('Submitted', values);
         }}
-        onChange={(values, isDirty, dirtyItems, name) => {
+        onChange={({
+          values, isDirty, dirtyItems, name, validates,
+        }) => {
           action()('Changed', name || 'form');
           action()('Form values', values);
           action()('Form dirty', isDirty);
           action()('Dirty items', dirtyItems);
+          action()('Validating fields', validates);
         }}
       >
         {(inputList, renderFields, onSubmitAction, onResetAction, isDirty) => (

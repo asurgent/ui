@@ -93,34 +93,45 @@ const Form = (props) => {
   const { inputFileds } = hook;
 
   const eventTrigger = ({
-    name = null, timerAction = null, action = null, reRender = false, setDirty = true,
+    name = null,
+    timerAction = null,
+    action = null,
+    reRender = false,
+    setDirty = true,
+    withFrontendErrors = false,
   }) => {
     // setTimeout needed for render-dependencies in the form
     // (e.g. field X depends on the value for field Y)
     setTimeout(() => {
-      const { values, dirty, dirtyItems } = hook.getValues();
+      const formValues = hook.getValues();
       if (setDirty) {
-        setIsDirty(dirty);
+        setIsDirty(formValues.dirty);
       }
       if (reRender) {
-        hook.renderItems(values);
+        hook.renderItems(formValues.values);
       }
+
+      if (withFrontendErrors) {
+        hook.renderFrontendErrors();
+      }
+
       if (timerAction) {
-        timerAction(values, dirty, dirtyItems);
+        timerAction(formValues.values, formValues.dirty, formValues.dirtyItems);
       }
-      action(values, dirty, dirtyItems, name);
+      action({ name, ...formValues });
     }, 0);
   };
 
   const onSubmitAction = () => {
     hook.blurFields();
-    eventTrigger({ action: onSubmit, setDirty: false });
+    eventTrigger({ action: onSubmit, setDirty: false, withFrontendErrors: true });
   };
 
   const onResetAction = () => {
     setIsDirty(false);
     hook.blurFields();
     hook.resetValues();
+    hook.errors([]);
   };
 
   const renderForms = Object
