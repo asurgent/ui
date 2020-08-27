@@ -9,7 +9,6 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import MomentUtils from '@date-io/moment';
-import { TextField } from '@material-ui/core';
 import ThemeProvider from './DatePickerThemeProvider';
 import * as C from './DatePicker.styled';
 
@@ -17,6 +16,7 @@ const getStartOfDay = (val) => moment(val).startOf('day').toISOString();
 
 const DatePicker = forwardRef((props, ref) => {
   const {
+    name,
     format,
     parseOutput,
     validator,
@@ -48,10 +48,6 @@ const DatePicker = forwardRef((props, ref) => {
     blur: () => input.current.blur(),
   }));
 
-  const TextFieldOverride = (fieldProps) => (
-    <TextField {...fieldProps} fullWidth inputRef={input} />
-  );
-
   return (
     <ThemeProvider>
       <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -71,10 +67,10 @@ const DatePicker = forwardRef((props, ref) => {
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
-          TextFieldComponent={TextFieldOverride}
           {...props.props}
         />
       </MuiPickersUtilsProvider>
+      <input type="text" style={{ display: 'none' }} readOnly name={name} value={value} ref={input} />
     </ThemeProvider>
   );
 });
