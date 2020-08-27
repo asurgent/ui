@@ -83,9 +83,9 @@ const FilterInput = forwardRef((props, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
-    validator: validator.condition(value),
+    validator: () => validator.condition(value),
     validationErrorMessage: validator.errorMessage,
-    getArray: () => filterSelectHook.getInputValue(),
+    value: () => filterSelectHook.getInputValue(),
     focus: () => {
       filterSelectHook.setOpen(true);
       searchInput.current.focus();

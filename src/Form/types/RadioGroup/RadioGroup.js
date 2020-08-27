@@ -40,7 +40,7 @@ const RadioGroup = forwardRef((props, ref) => {
   }, [props.value]);
 
   useImperativeHandle(ref, () => ({
-    value: parseOutput(val),
+    value: () => parseOutput(val),
     focus: () => input.current.focus(),
     blur: () => input.current.blur(),
   }));

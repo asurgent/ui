@@ -51,7 +51,7 @@ const Select = forwardRef((props, ref) => {
   const [value, setValue] = useState('');
 
   useImperativeHandle(ref, () => ({
-    value: parseOutput(value),
+    value: () => parseOutput(value),
     focus: () => input.current.focus(),
     blur: () => input.current.blur(),
   }));

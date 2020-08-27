@@ -15,7 +15,10 @@ const propTyps = {
   placeholder: PropTypes.string,
   props: PropTypes.instanceOf(Object),
   parseOutput: PropTypes.func,
-  validator: PropTypes.func,
+  validator: PropTypes.shape({
+    condition: PropTypes.func,
+    errorMessage: PropTypes.string,
+  }),
 };
 
 const defaultProps = {
@@ -24,7 +27,10 @@ const defaultProps = {
   props: {},
   placeholder: '',
   parseOutput: (v) => v,
-  validator: (v) => emailRegexp.test(v),
+  validator: {
+    condition: (v) => emailRegexp.test(v),
+    errorMessage: 'Unvalid email format',
+  },
 };
 
 const Email = forwardRef((props, ref) => {
@@ -39,8 +45,8 @@ const Email = forwardRef((props, ref) => {
   const [value, setValue] = useState('');
 
   useImperativeHandle(ref, () => ({
-    value: parseOutput(value),
-    validator: validator.condition(value),
+    value: () => parseOutput(value),
+    validator: () => validator.condition(value),
     validationErrorMessage: validator.errorMessage,
     focus: () => input.current.focus(),
     blur: () => input.current.blur(),

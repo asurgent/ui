@@ -83,8 +83,8 @@ const NumberInput = forwardRef((props, ref) => {
   }, [props, max, min, value]);
 
   useImperativeHandle(ref, () => ({
-    value: parseOutput(value),
-    validator: validator.condition(value),
+    value: () => parseOutput(value),
+    validator: () => validator.condition(value),
     validationErrorMessage: validator.errorMessage,
     focus: () => input.current.focus(),
     blur: () => input.current.blur(),

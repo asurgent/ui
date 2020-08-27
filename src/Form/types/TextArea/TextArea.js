@@ -41,7 +41,7 @@ const TextArea = forwardRef((props, ref) => {
   }, [props.value]);
 
   useImperativeHandle(ref, () => ({
-    value: parseOutput(value),
+    value: () => parseOutput(value),
     validator: validator.condition(value),
     validationErrorMessage: validator.errorMessage,
   }));
