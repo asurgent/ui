@@ -90,6 +90,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
         maxValue,
         noLabel = false,
         parseOutput,
+        validator,
         props: inputProps,
       } = inputs[key];
 
@@ -121,6 +122,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
             value={inputValue}
             placeholder={placeholder}
             label={label}
+            validator={validator}
             minDate={minDate}
             maxDate={maxDate}
             minValue={minValue}
