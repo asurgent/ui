@@ -75,7 +75,7 @@ const FilterCategory = (props) => {
                       msTimer={150}
                       onKeyUpTimer={groupHook.onSearchOptions}
                     >
-                      {({ searchQuery }) => (searchQuery)}
+                      {({ fields: { searchQuery } }) => (searchQuery)}
                     </Form.Primary>
                   </C.Search>
                   <C.ListWrapper>

@@ -164,7 +164,7 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
     hasOptions: () => getGroupFilter().length > 0,
     getOptions: () => options,
     getGroupKey: () => filterGroupKey,
-    onSearchOptions: ({ searchQuery }) => setSearch(searchQuery),
+    onSearchOptions: ({ values }) => setSearch(values.searchQuery),
   };
 };
 

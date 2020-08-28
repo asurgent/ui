@@ -44,12 +44,12 @@ const TableSort = (props) => {
     <Form
       className={className}
       form={formData}
-      onChangeTimer={(values) => {
+      onChangeTimer={({ values }) => {
         const selectedSortKey = values.sortKey;
         sortHook.setCurrentSortKey(selectedSortKey);
       }}
     >
-      {({ sortKey }) => (
+      {({ fields: { sortKey } }) => (
         <SortWrapper>
           {sortKey}
           <Button.Icon
