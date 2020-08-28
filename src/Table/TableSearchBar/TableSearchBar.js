@@ -53,11 +53,11 @@ const TableSearchBar = (props) => {
       <Form
         form={formData}
         className={className}
-        onKeyUpTimer={(values) => {
+        onKeyUpTimer={({ values }) => {
           searchHook.setQuery(values.search);
         }}
       >
-        {({ search }) => search}
+        {({ fields: { search } }) => search}
       </Form>
       {tableHook.isLoading && <C.SearchBarBlocker />}
     </C.SearchBarContainer>

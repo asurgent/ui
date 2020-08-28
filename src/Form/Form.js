@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { FormStyle, FormRow } from './Form.styled';
 import { withDelayTimer } from './helpers';
 
-const timer = (callback, msTimer) => () => withDelayTimer((values, dirty, dirtyItems) => {
-  callback(values, dirty, dirtyItems);
+const timer = (callback, msTimer) => () => withDelayTimer((payloadObj) => {
+  callback(payloadObj);
 }, msTimer);
 
 const propTyps = {
@@ -116,7 +116,7 @@ const Form = (props) => {
       }
 
       if (timerAction) {
-        timerAction(formValues.values, formValues.dirty, formValues.dirtyItems);
+        timerAction({ name, ...formValues });
       }
       action({ name, ...formValues });
     }, 0);
@@ -134,7 +134,7 @@ const Form = (props) => {
     hook.errors([]);
   };
 
-  const renderForms = Object
+  const fields = Object
     .keys(inputFileds)
     .map((key) => (
       <FormRow key={key}>
@@ -175,8 +175,14 @@ const Form = (props) => {
       className={className}
     >
       <FormContext.Provider value={{ hook }}>
-        { typeof children === 'function' && children(inputFileds, renderForms, onSubmitAction, onResetAction, isDirty) }
-        { typeof children !== 'function' && renderForms}
+        { typeof children === 'function' && children({
+          render: fields,
+          fields: inputFileds,
+          onSubmitAction,
+          onResetAction,
+          isDirty,
+        }) }
+        { typeof children !== 'function' && fields}
       </FormContext.Provider>
     </FormStyle>
   );
