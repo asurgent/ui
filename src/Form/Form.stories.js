@@ -23,7 +23,7 @@ const formObj = {
   },
   datepicker: {
     type: 'datepicker',
-    label: 'datdeLabel',
+    label: 'im a label',
     name: 'datepicker',
     maxDate: moment().add(2, 'days').startOf('day').toISOString(),
     minDate: moment().subtract(2, 'days').startOf('day').toISOString(),

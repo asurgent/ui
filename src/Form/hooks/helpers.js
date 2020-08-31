@@ -321,6 +321,7 @@ export const initalValue = (formSpecification, parameters = null) => {
       ...acc,
       [field.name]: {
         type: field.type,
+        label: field.label || field.name,
         tooltip: field.description,
         value: parameters[field.name],
         options: parameters[field.options],
