@@ -75,7 +75,7 @@ const Select = forwardRef((props, ref) => {
         {...props.props}
         type="select"
         onChange={({ target }) => setValue(target.value)}
-        value={value}
+        value={value || ''}
         name={name}
       >
         {placeholder && (
@@ -87,11 +87,12 @@ const Select = forwardRef((props, ref) => {
           .map(({
             value: optionValue,
             label: optionLabel,
+            key,
             disabled,
             disabledPreFix,
             disabledPostFix,
           }) => (
-            <option key={`${optionLabel}-${value}`} value={optionValue} disabled={disabled}>
+            <option key={key || `${optionLabel}-${value}`} value={optionValue} disabled={disabled}>
               {disabled && disabledPreFix}
               {optionLabel}
               {disabled && disabledPostFix}
