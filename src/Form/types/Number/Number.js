@@ -90,6 +90,14 @@ const NumberInput = forwardRef((props, ref) => {
     blur: () => input.current.blur(),
   }));
 
+  const dispatchEvent = (d) => {
+    const element = input.current;
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+    nativeInputValueSetter.call(element, d);
+    const inputEvent = new Event('input', { bubbles: true });
+    element.dispatchEvent(inputEvent);
+  };
+
   return (
     <input
       {...props.props}
@@ -98,7 +106,17 @@ const NumberInput = forwardRef((props, ref) => {
       placeholder={placeholder}
       min={min}
       max={max}
-      onChange={({ target }) => setValue(parseInt(target.value, 10))}
+      onBlur={({ target }) => {
+        const num = parseInt(target.value, 10);
+        if (Number.isNaN(num)) {
+          setValue(0);
+          dispatchEvent(0);
+        }
+      }}
+      onChange={({ target }) => {
+        const num = parseInt(target.value, 10);
+        setValue(Number.isNaN(num) ? '' : num);
+      }}
       name={name}
       ref={input}
     />
