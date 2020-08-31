@@ -30,8 +30,8 @@ const Bool = forwardRef((props, ref) => {
   const parser = useCallback((val) => (val === 'true'), []);
 
   const options = useMemo(() => [
-    { label: t('yes'), value: 'true' },
-    { label: t('no'), value: 'false' },
+    { label: t('yes', 'asurgentui'), value: 'true' },
+    { label: t('no', 'asurgentui'), value: 'false' },
   ], [t]);
 
   useEffect(() => {
