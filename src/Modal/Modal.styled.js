@@ -79,7 +79,6 @@ export const Overlay = styled.div`
   left: 0;
   z-index: 3;
   position: fixed;
-  height: -webkit-fill-available-;
   background: rgba(0, 0, 0, 0.3);
 
   overflow: hidden;

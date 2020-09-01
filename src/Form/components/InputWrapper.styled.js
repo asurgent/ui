@@ -57,11 +57,12 @@ export const Wrapper = styled.div`
       outline: none;
     }
   }
+  
   textarea { 
     resize: vertical; 
   }
+
   select {
-    z-index: 1;
     padding-right: 3.2rem;
     background: transparent;
   }
