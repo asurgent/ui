@@ -8,6 +8,7 @@ export default addTranslation({
     invalidCron: 'Ogiltigt',
     naIcon: 'Ø',
     naText: 'N/A',
+    exired: 'Gått ut',
   },
   en: {
     nextDate: 'Next date',
@@ -15,5 +16,6 @@ export default addTranslation({
     invalidCron: 'Invalid',
     naIcon: 'Ø',
     naText: 'N/A',
+    exired: 'Expired',
   },
 });

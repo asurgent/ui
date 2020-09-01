@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import parser from 'cron-parser';
 import moment from 'moment';
+import withTheme from 'high-order-components/withTheme';
 import * as C from '../Repeat/Repeat.styled';
 import translation from './Duration.translation';
 import * as S from '../../TimeComponents.styled';
@@ -87,4 +88,4 @@ Duration.defaultProps = {
   currentDate: moment(),
 };
 
-export default Duration;
+export default withTheme()(Duration);
