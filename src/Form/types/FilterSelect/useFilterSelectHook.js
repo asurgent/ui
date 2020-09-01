@@ -85,7 +85,7 @@ const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlac
 
   const [labelsList, optionsList] = useMemo(() => getValuesAndLabel(options), [options]);
   const selectedOptionsOutputList = useMemo(() => selectedOptions
-    .map((value) => labelsList[value]),
+    .map((value) => (labelsList[value] || value)),
   [labelsList, selectedOptions]);
 
   const listOptions = useMemo(() => {
