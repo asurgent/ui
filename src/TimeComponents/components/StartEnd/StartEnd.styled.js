@@ -58,7 +58,8 @@ export const ExpiredDate = styled(Calendar)`
 export const DateAndTime = styled.div`
   width: 6rem;
   height: 6rem;
-  border-top: 0.8rem solid #133A5D;
+  border-top: 0.8rem solid;
+  border-top-color: ${({ theme, active }) => (active ? theme.blue900 : theme.gray600)};
   border-radius: 5px;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;

@@ -24,7 +24,7 @@ export const Dots = styled.div`
 export const NextDate = styled.div`
   width: 6rem;
   height: 6rem;
-  border-top: 0.8rem solid #133A5D;
+  border-top: 0.8rem solid;
   border-radius: 5px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   display:flex;
@@ -32,15 +32,11 @@ export const NextDate = styled.div`
   justify-content: center;
   align-items: center;
   background: white;
+  margin-right: 3.6rem;
 `;
 export const StartDate = styled(NextDate)`
-  border-top: 0.8rem solid ;
-  border-top-color: ${({ active }) => (active ? '#13BE69' : '#6E6E6E')};
+  border-top-color: ${({ active, theme }) => (active ? theme.green800 : theme.gray600)};
 `;
 export const EndDate = styled(NextDate)`
-  border-top: 0.8rem solid;
-  border-top-color: ${({ active }) => (active ? '#C6403B' : '#6E6E6E')};
-`;
-export const ExpiredDate = styled(NextDate)`
-   border-top: 0.8rem solid #6E6E6E;
+  border-top-color: ${({ active, theme }) => (active ? theme.ruby800 : theme.gray600)};
 `;

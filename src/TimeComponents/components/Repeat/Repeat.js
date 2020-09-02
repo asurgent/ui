@@ -1,7 +1,9 @@
+// isongoing, isexpired, or compute
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import parser from 'cron-parser';
 import moment from 'moment';
+import { withTheme } from 'styled-components';
 import * as C from './Repeat.styled';
 import translation from './Repeat.translation';
 import * as S from '../../TimeComponents.styled';
@@ -10,60 +12,71 @@ import { parseMoment } from '../../helpers';
 import { getRepeatInterval } from './helpers';
 
 const { t } = translation;
-
+console.clear();
 const Repeat = ({
-  currentDate, endDate, cronExpression, ...props
+  cronExpression,
+  isOngoing,
+  nextDate,
+  hasExpired,
+  onGoingFrom,
+  onGoingTo,
+  durationInSeconds,
+  theme,
 }) => {
-  const validCronInterval = useMemo(() => {
+  const firstUpcoming = useMemo(() => {
     try {
-      return parser.parseExpression(cronExpression, { currentDate, endDate });
+      const interval = parser.parseExpression(cronExpression, { currentDate: moment(nextDate) });
+      return moment(interval.next().toString());
     } catch (e) {
       return null;
     }
-  }, [cronExpression, currentDate, endDate]);
+  }, [cronExpression, nextDate]);
 
-  const isExpired = useMemo(() => parseMoment(endDate) < moment(), [endDate]);
-
-  const intervalInSeconds = useMemo(() => {
+  const difference = useMemo(() => {
     try {
-      const next = parseMoment(validCronInterval.next().toString());
-      const prev = parseMoment(validCronInterval.prev().toString());
-      return next.diff(prev, 'seconds');
+      return moment(nextDate).diff(firstUpcoming, 'seconds');
     } catch (e) {
+      console.log('err', e);
       return null;
     }
-  }, [validCronInterval]);
+  }, [firstUpcoming, nextDate]);
 
-  if (!validCronInterval) {
+  // invalid cron, return nothing
+  if (!firstUpcoming) {
+    return null;
+  }
+
+  console.log('nextdate', moment(nextDate).toString());
+  console.log('firstUpcoming', moment(firstUpcoming).toString());
+  // ongoing, return spinner
+  if (isOngoing) {
     return (
-      <C.Repeat data-testid="invalid" {...props}>
-        <S.TextSmall withBottomMargin>{t('repeats', 'asurgentui')}</S.TextSmall>
-        <Icons.Dots active={false} />
+      <C.Container>
+        <S.TextSmall withBottomMargin>{t('status', 'asurgentui')}</S.TextSmall>
+        <S.TextNormal>{}</S.TextNormal>
+        {/* <Icons.Spinner style={{ marginBottom: '0.4rem' }} /> */}
+        <S.TextSmall data-testid="is-running" withBottomMargin>{t('ongoing', 'asurgentui')}</S.TextSmall>
+      </C.Container>
+    );
+  }
+
+  if (hasExpired) {
+    return (
+      <C.Container data-testid="repeat" expired>
+        <S.TextSmall withBottomMargin>{t('status', 'asurgentui')}</S.TextSmall>
         <S.TextNormal data-testid="short-label">{t('naIcon', 'asurgentui')}</S.TextNormal>
-        <S.TextSmall data-testid="long-label">{t('naText', 'asurgentui')}</S.TextSmall>
-      </C.Repeat>
+        <S.TextSmall style={{ marginTop: '0.7rem' }} data-testid="long-label">{t('expired', 'asurgentui')}</S.TextSmall>
+      </C.Container>
     );
   }
-
-  if (isExpired) {
-    return (
-      <C.Repeat data-testid="repeat" {...props}>
-        <S.TextSmall withBottomMargin>{t('repeats', 'asurgentui')}</S.TextSmall>
-        <Icons.Dots active={!isExpired} />
-        <S.TextNormal data-testid="short-label">{t('zero', 'asurgentui')}</S.TextNormal>
-        <S.TextSmall data-testid="long-label">{t('times', 'asurgentui')}</S.TextSmall>
-      </C.Repeat>
-    );
-  }
-
-  const label = getRepeatInterval(intervalInSeconds);
+  const label = getRepeatInterval(difference);
   return (
-    <C.Repeat data-testid="repeat" {...props}>
+    <C.Container data-testid="repeat">
       <S.TextSmall withBottomMargin>{t('repeats', 'asurgentui')}</S.TextSmall>
-      <Icons.Dots active={!isExpired} />
+      <Icons.Dots theme={theme} />
       <S.TextNormal data-testid={label.short}>{t(label.short, 'asurgentui')}</S.TextNormal>
       <S.TextSmall data-testid={label.long}>{t(label.long, 'asurgentui')}</S.TextSmall>
-    </C.Repeat>
+    </C.Container>
   );
 };
 
@@ -87,4 +100,4 @@ Repeat.defaultProps = {
   cronExpression: '* * * * *',
 };
 
-export default Repeat;
+export default withTheme(Repeat);

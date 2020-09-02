@@ -3,6 +3,11 @@ import addTranslation from '../../../../lib/i18n/addTranslation';
 export default addTranslation({
   id: 'repeat',
   sv: {
+    ongoing: 'Pågår',
+    status: 'Status',
+    repeats: 'Repeteras',
+    expired: 'Gått ut',
+
     yearShort: 'Å',
     yearLong: 'Årligen',
 
@@ -26,13 +31,16 @@ export default addTranslation({
     naIcon: 'Ø',
     naText: 'N/A',
 
-    repeats: 'Repeteras',
-
     zero: '0',
     times: 'Gånger',
 
   },
   en: {
+    ongoing: 'Ongoing',
+    status: 'Status',
+    repeats: 'Repeats',
+    expired: 'Expired',
+
     yearShort: 'Y',
     yearLong: 'Yearly',
 
@@ -55,8 +63,6 @@ export default addTranslation({
     secondLong: 'Second',
     naIcon: 'Ø',
     naText: 'N/A',
-
-    repeats: 'Repeats',
 
     zero: '0',
     times: 'Times',

@@ -25,10 +25,7 @@ Dots.propTypes = propTypes;
 Dots.defaultProps = defaultProps;
 
 export const Duration = ({ active, theme }) => {
-  console.log('active', active);
-  console.log('theme', theme);
   const color = active ? theme.blue900 : theme.gray600;
-  console.log('color', color);
   return (
     <svg width="54" height="22" viewBox="0 0 54 12" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="6" cy="6" r="5" stroke={color} strokeWidth="2" />
@@ -81,13 +78,14 @@ export const StyledSpinner = styled.svg`
     }
 `;
 
-export const Spinner = ({ size }) => (
+export const Spinner = ({ size, ...props }) => (
   <StyledSpinner
     viewBox="0 0 32 32"
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     size={size}
+    {...props}
   >
     <rect id="Artboard1" x="0" y="0" width="32" height="32" />
     <g id="Artboard11">

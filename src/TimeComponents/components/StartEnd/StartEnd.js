@@ -1,15 +1,14 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import parser from 'cron-parser';
 import PlayIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
 import { withTheme } from 'styled-components';
+import parser from 'cron-parser';
 import * as C from './StartEnd.styled';
 import * as S from '../../TimeComponents.styled';
 import translation from './StartEnd.translation';
 import * as Icons from '../Icons';
-import { getDay, parseMoment, getMonthYear } from '../../helpers';
 
 const { t } = translation;
 
@@ -28,16 +27,16 @@ const getRelativeTime = ({ date, duration }) => {
   const seconds = timestamp.diff(moment(), 'seconds');
 
   if (days > 0) {
-    return { number: days, label: 'days' };
+    return { number: days, label: t('days', 'asurgentui') };
   }
   if (hours > 0) {
-    return { number: hours, label: 'hours' };
+    return { number: hours, label: t('hours', 'asurgentui') };
   }
   if (minutes > 0) {
-    return { number: minutes, label: 'minutes' };
+    return { number: minutes, label: t('minutes', 'asurgentui') };
   }
   if (seconds > 0) {
-    return { number: seconds, label: 'seconds' };
+    return { number: seconds, label: t('seconds', 'asurgentui') };
   }
   return {};
 };
@@ -53,8 +52,18 @@ const StartEnd = ({
   theme,
   ...props
 }) => {
-  const isRecurring = useMemo(() => cronExpression !== null || cronExpression !== '', [cronExpression]);
+  const nextNextDate = useMemo(() => {
+    try {
+      const interval = parser.parseExpression(cronExpression,
+        { currentDate: moment(nextDate).toString() });
+      const d = moment(interval.next().toString());
+      return d;
+    } catch (e) {
+      return null;
+    }
+  }, [cronExpression, nextDate]);
 
+  // play/stop buttons
   if (isOngoing) {
     return (
       <C.Dates>
@@ -82,20 +91,25 @@ const StartEnd = ({
     );
   }
 
+  // calendar versions
   return (
     <C.Dates>
       <C.Container {...props}>
-        <C.DateAndTime>
-          <S.TextNormal>{moment(onGoingFrom).format('DD')}</S.TextNormal>
-          <S.TextSmall>{moment(onGoingFrom).format('MMM YY')}</S.TextSmall>
+        <C.DateAndTime active={!hasExpired}>
+          <S.TextNormal>{moment(nextDate).format('DD')}</S.TextNormal>
+          <S.TextSmall>
+            {`${t(`month${moment(nextDate).month()}`)} ${moment(nextDate).format('YY')}`}
+          </S.TextSmall>
         </C.DateAndTime>
         <C.Time>
-          <S.TextSmall>wed 23:00</S.TextSmall>
+          <S.TextSmall>
+            {`${t(`day${moment(nextDate).day()}`)} ${moment(nextDate).format('hh:mm')}`}
+          </S.TextSmall>
         </C.Time>
       </C.Container>
 
       <C.Container>
-        <S.TextSmall withBottomMargin>{t('remaining', 'asurgentui')}</S.TextSmall>
+        <S.TextSmall withBottomMargin>{t('duration', 'asurgentui')}</S.TextSmall>
         <Icons.Duration active theme={theme} />
         <S.TextNormal>{getRelativeTime({ duration: durationInSeconds }).number}</S.TextNormal>
         <S.TextSmall withBottomMargin>
@@ -104,12 +118,16 @@ const StartEnd = ({
       </C.Container>
 
       <C.Container {...props}>
-        <C.DateAndTime>
-          <S.TextNormal>{moment(onGoingTo).format('DD')}</S.TextNormal>
-          <S.TextSmall>{moment(onGoingTo).format('MMM YY')}</S.TextSmall>
+        <C.DateAndTime active={!hasExpired}>
+          <S.TextNormal>{moment(nextNextDate).format('DD')}</S.TextNormal>
+          <S.TextSmall>
+            {`${t(`month${moment(nextNextDate).month()}`)} ${moment(nextNextDate).format('YY')}`}
+          </S.TextSmall>
         </C.DateAndTime>
         <C.Time>
-          <S.TextSmall>wed 23:00</S.TextSmall>
+          <S.TextSmall>
+            {`${t(`day${moment(nextNextDate).day()}`)} ${moment(nextNextDate).format('hh:mm')}`}
+          </S.TextSmall>
         </C.Time>
       </C.Container>
     </C.Dates>
@@ -117,56 +135,42 @@ const StartEnd = ({
 };
 
 StartEnd.propTypes = {
+  hasExpired: PropTypes.bool,
+  isOngoing: PropTypes.bool,
+  cronExpression: PropTypes.string,
+  durationInSeconds: PropTypes.number,
+  nextDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
+  onGoingFrom: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
+  onGoingTo: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
   endDate: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
   ]),
-  cronExpression: PropTypes.string,
-  durationInSeconds: PropTypes.number,
   theme: PropTypes.instanceOf(Object).isRequired,
 };
 
 StartEnd.defaultProps = {
-  endDate: moment().add(1, 'week'),
-  cronExpression: '* * * * *',
-  durationInSeconds: 1800,
+  hasExpired: false,
+  isOngoing: false,
+  cronExpression: null,
+  durationInSeconds: null,
+  nextDate: null,
+  onGoingFrom: null,
+  onGoingTo: null,
+  endDate: null,
 };
 
 export default withTheme(StartEnd);
-/*
-
-  return (
-    <C.Date data-testid="expired" {...props}>
-      <S.TextSmall withBottomMargin>{t('nextDate', 'asurgentui')}</S.TextSmall>
-      <C.ExpiredDate>
-        <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
-        <S.TextSmall>{t('exired', 'asurgentui')}</S.TextSmall>
-      </C.ExpiredDate>
-    </C.Date>
-  );
-
-  // If not recurring, next date N/A
-  if (!isRecurring) {
-    return (
-      <C.Date data-testid="expired" {...props}>
-        <S.TextSmall withBottomMargin>{t('nextDate', 'asurgentui')}</S.TextSmall>
-        <C.ExpiredDate>
-          <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
-          <S.TextSmall>{t('naText', 'asurgentui')}</S.TextSmall>
-        </C.ExpiredDate>
-      </C.Date>
-    );
-  }
-
-  return (
-    <C.Date {...props}>
-      <S.TextSmall withBottomMargin>{t('nextDate', 'asurgentui')}</S.TextSmall>
-      <C.NextDate data-testid="next-run">
-        <S.TextNormal>{parseMoment(nextDate).format('DD')}</S.TextNormal>
-        <S.TextSmall>{getMonthYear(parseMoment(nextDate))}</S.TextSmall>
-      </C.NextDate>
-    </C.Date>
-  );
-
-*/
