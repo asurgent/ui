@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
-// eslint-disable-next-line import/no-unresolved
 import * as C from './Ring.styled';
 
 const propTypes = {
