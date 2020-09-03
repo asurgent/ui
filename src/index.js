@@ -20,6 +20,7 @@ import * as Graph from './Graph';
 import * as Transition from './Transition';
 import * as Dismissable from './Dismissable';
 import * as TimeComponents from './TimeComponents';
+import * as Progress from './Progress';
 
 import * as Layout from './layout';
 
@@ -45,4 +46,5 @@ export {
   Dismissable,
   Svg,
   TimeComponents,
+  Progress,
 };

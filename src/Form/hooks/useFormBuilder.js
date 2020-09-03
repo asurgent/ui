@@ -43,8 +43,7 @@ const useFormBuilder = (formSpecification, parameters = null) => {
   // and that keeps the input-fileds current value
   useEffect(() => {
     if (Object.keys(references).length > 0) {
-      const { fields, original } = generateFieldComponents(formData, references, errors, true);
-      setOriginalValues(original);
+      const { fields } = generateFieldComponents(formData, references, errors, true);
       setInputFields(fields);
 
       const { values } = getValues(references, originalValues);
@@ -91,6 +90,19 @@ const useFormBuilder = (formSpecification, parameters = null) => {
       const fields = getRenderableFields(formSpecification, inputFileds, values);
       setRenderedFields(fields);
     },
+    renderFrontendErrors: () => {
+      const { validates } = getValues(references, originalValues);
+      const errorList = Object.entries(validates)
+        .reduce((acc, [property, value]) => {
+          if (!value) {
+            return [{
+              property, message: references[property]?.current?.validationErrorMessage || 'Error',
+            }, ...acc];
+          }
+          return acc;
+        }, []);
+      setErrors(errorList);
+    },
     updateValue: (name, value) => {
       const update = updateValue(formData, { name, value });
       if (update) {
@@ -124,6 +136,10 @@ const useFormBuilder = (formSpecification, parameters = null) => {
       if (input && input.current) {
         input.current.focus();
       }
+    },
+    clearErrorForField: (filedName) => {
+      const errorList = errors.find(({ property }) => property !== filedName);
+      setErrors(errorList || []);
     },
     blurField: (key) => {
       const input = references[key];

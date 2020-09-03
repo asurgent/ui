@@ -45,7 +45,10 @@ const FilterCategory = (props) => {
   const groupHook = useFilterGroupHook(tableHook, filterHook, filterKey, onChange);
   const form = Form.useFormBuilder({
     searchQuery: {
-      type: 'text', value: '', noLabel: true, props: { autoFocus: true },
+      type: 'text',
+      value: '',
+      noLabel: true,
+      props: { autoFocus: true },
     },
   });
 
@@ -72,7 +75,7 @@ const FilterCategory = (props) => {
                       msTimer={150}
                       onKeyUpTimer={groupHook.onSearchOptions}
                     >
-                      {({ searchQuery }) => (searchQuery)}
+                      {({ fields: { searchQuery } }) => (searchQuery)}
                     </Form.Primary>
                   </C.Search>
                   <C.ListWrapper>

@@ -14,15 +14,13 @@ const getDetfaultSingleValue = (values, options, hasPlaceholder) => {
     return parseValue;
   }
 
-  if (!hasPlaceholder
-    && (!values || (Array.isArray(values)
-    && values.length === 0)) && options.length > 0
-  ) {
-    const first = options[0];
-    if (first?.value !== undefined) {
-      return [`${first.value}`];
+  if (!hasPlaceholder) {
+    if ((!values || (Array.isArray(values) && values.length === 0)) && options.length > 0) {
+      const first = options[0];
+      if (first?.value !== undefined) {
+        return [`${first.value}`];
+      }
     }
-    return [`${first}`];
   }
 
   return [];
@@ -87,7 +85,7 @@ const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlac
 
   const [labelsList, optionsList] = useMemo(() => getValuesAndLabel(options), [options]);
   const selectedOptionsOutputList = useMemo(() => selectedOptions
-    .map((value) => labelsList[value]),
+    .map((value) => (labelsList[value] || value)),
   [labelsList, selectedOptions]);
 
   const listOptions = useMemo(() => {

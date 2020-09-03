@@ -57,11 +57,12 @@ export const Wrapper = styled.div`
       outline: none;
     }
   }
+  
   textarea { 
     resize: vertical; 
   }
+
   select {
-    z-index: 1;
     padding-right: 3.2rem;
     background: transparent;
   }
@@ -84,12 +85,12 @@ export const Label = styled.div`
 
 export const Error = styled.div`
   flex: 1;
-  margin-top: .8rem;
+  margin-top: .4rem;
   font-size: 1.1rem;
   letter-spacing: .1rem;
   color: ${({ theme }) => theme.ruby800};
   position: absolute; 
-  bottom: -2rem;
+  top: 100%;
 `;
 
 export const Header = styled.div`

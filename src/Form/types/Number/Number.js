@@ -1,5 +1,11 @@
 import React, {
-  forwardRef, useState, useEffect, useContext, useMemo,
+  useMemo,
+  useState,
+  useEffect,
+  createRef,
+  forwardRef,
+  useContext,
+  useImperativeHandle,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormContext } from '../../Form';
@@ -12,6 +18,11 @@ const propTyps = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   props: PropTypes.instanceOf(Object),
+  parseOutput: PropTypes.func,
+  validator: PropTypes.shape({
+    condition: PropTypes.func,
+    errorMessage: PropTypes.string,
+  }),
 };
 
 const defaultProps = {
@@ -21,6 +32,11 @@ const defaultProps = {
   label: '',
   props: {},
   placeholder: '',
+  parseOutput: (v) => v,
+  validator: {
+    condition: () => true,
+    errorMessage: '',
+  },
 };
 
 const NumberInput = forwardRef((props, ref) => {
@@ -29,8 +45,10 @@ const NumberInput = forwardRef((props, ref) => {
     placeholder,
     minValue,
     maxValue,
+    parseOutput,
+    validator,
   } = props;
-
+  const input = createRef();
   const { hook: form } = useContext(FormContext);
   const [value, setValue] = useState(parseInt(props.value || 0, 10));
 
@@ -64,6 +82,22 @@ const NumberInput = forwardRef((props, ref) => {
     }
   }, [props, max, min, value]);
 
+  useImperativeHandle(ref, () => ({
+    value: () => parseOutput(value),
+    validator: () => validator.condition(value),
+    validationErrorMessage: validator.errorMessage,
+    focus: () => input.current.focus(),
+    blur: () => input.current.blur(),
+  }));
+
+  const dispatchEvent = (d) => {
+    const element = input.current;
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+    nativeInputValueSetter.call(element, d);
+    const inputEvent = new Event('input', { bubbles: true });
+    element.dispatchEvent(inputEvent);
+  };
+
   return (
     <input
       {...props.props}
@@ -72,9 +106,19 @@ const NumberInput = forwardRef((props, ref) => {
       placeholder={placeholder}
       min={min}
       max={max}
-      onChange={({ target }) => setValue(target.value)}
+      onBlur={({ target }) => {
+        const num = parseInt(target.value, 10);
+        if (Number.isNaN(num)) {
+          setValue(0);
+          dispatchEvent(0);
+        }
+      }}
+      onChange={({ target }) => {
+        const num = parseInt(target.value, 10);
+        setValue(Number.isNaN(num) ? '' : num);
+      }}
       name={name}
-      ref={ref}
+      ref={input}
     />
   );
 });

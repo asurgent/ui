@@ -8,11 +8,15 @@ import TextArea from '../types/TextArea/index';
 import Select from '../types/Select/index';
 import FilterSelect from '../types/FilterSelect/index';
 import Label from '../types/Label/index';
+import Bool from '../types/Bool/index';
+import Email from '../types/Email/index';
 import DatePicker from '../types/DatePicker/index';
 import RadioGroup from '../types/RadioGroup/index';
 
 const getInputComponent = (type) => {
   switch (type) {
+    case 'bool':
+      return Bool;
     case 'text':
       return Text;
     case 'number':
@@ -29,6 +33,8 @@ const getInputComponent = (type) => {
       return DatePicker;
     case 'radiogroup':
       return RadioGroup;
+    case 'email':
+      return Email;
     default:
       return Text;
   }
@@ -84,6 +90,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
         maxValue,
         noLabel = false,
         parseOutput,
+        validator,
         props: inputProps,
       } = inputs[key];
 
@@ -91,10 +98,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
       const error = getFieldError(key, errors);
 
       if (keepInputValue && referenceList[key]?.current) {
-        const isNumber = referenceList[key].current.type === 'number';
-        inputValue = isNumber
-          ? parseInt(referenceList[key].current.value, 10)
-          : referenceList[key].current.value;
+        inputValue = referenceList[key].current.value();
       }
 
       Object.assign(original, { [key]: inputValue });
@@ -115,6 +119,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
             value={inputValue}
             placeholder={placeholder}
             label={label}
+            validator={validator}
             minDate={minDate}
             maxDate={maxDate}
             minValue={minValue}
@@ -211,31 +216,38 @@ export const updateFields = (form, list) => {
   return copy;
 };
 
-const getFiledValue = (ref) => {
-  const { value, getArray } = ref.current;
-
-  if (getArray && typeof getArray === 'function') {
-    return getArray();
-  } if (ref.current.type === 'number') {
-    return parseInt(value, 10);
+const getValidator = (ref) => {
+  const { validator } = ref.current;
+  if (validator && typeof validator === 'function') {
+    return validator();
   }
 
-  return value;
+  return true;
 };
 
 export const getValues = (references, originalValues) => {
   let dirty = false;
+  let valid = true;
   const dirtyItems = {};
+  const validates = {};
   const keys = (Object.keys(references) || []);
   const values = keys.reduce((acc, key) => {
     if (references[key] && references[key].current) {
-      const value = getFiledValue(references[key]);
+      const value = references[key].current.value();
+      const isValid = getValidator(references[key]);
 
       if (value !== originalValues[key]) {
         dirty = true;
         Object.assign(dirtyItems, { [key]: true });
       } else {
         Object.assign(dirtyItems, { [key]: false });
+      }
+
+      if (isValid) {
+        Object.assign(validates, { [key]: true });
+      } else {
+        valid = false;
+        Object.assign(validates, { [key]: false });
       }
 
       return {
@@ -247,7 +259,13 @@ export const getValues = (references, originalValues) => {
     return acc;
   }, {});
 
-  return { values, dirty, dirtyItems };
+  return {
+    values,
+    valid,
+    dirty,
+    dirtyItems,
+    validates,
+  };
 };
 
 export const resetValues = (formData, originalValues) => Object.keys(formData)
@@ -303,6 +321,7 @@ export const initalValue = (formSpecification, parameters = null) => {
       ...acc,
       [field.name]: {
         type: field.type,
+        label: field.label || field.name,
         tooltip: field.description,
         value: parameters[field.name],
         options: parameters[field.options],

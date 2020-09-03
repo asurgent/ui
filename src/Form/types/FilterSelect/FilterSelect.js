@@ -1,4 +1,8 @@
-import React, { forwardRef, useImperativeHandle, useEffect } from 'react';
+import React, {
+  createRef,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import PropTypes from 'prop-types';
 import * as Icons from '@material-ui/icons';
 import * as VirtualRender from '../../../VirtualRender';
@@ -25,6 +29,10 @@ const propTyps = {
   theme: PropTypes.instanceOf(Object),
   parseOutput: PropTypes.func,
   placeholder: PropTypes.string,
+  validator: PropTypes.shape({
+    condition: PropTypes.func,
+    errorMessage: PropTypes.string,
+  }),
 };
 
 const defaultProps = {
@@ -33,6 +41,10 @@ const defaultProps = {
   theme: {},
   parseOutput: (r) => r,
   placeholder: '',
+  validator: {
+    condition: () => true,
+    errorMessage: '',
+  },
 };
 
 const dispatchEvent = (value, ref) => {
@@ -47,14 +59,15 @@ const dispatchEvent = (value, ref) => {
 const FilterInput = forwardRef((props, ref) => {
   const {
     name,
-    options,
-    placeholder,
     value,
+    options,
+    validator,
+    placeholder,
     parseOutput,
     props: inputProps,
   } = props;
   const placeholdeOutput = placeholder || t('selectPlaceholder', 'asurgentui');
-
+  const searchInput = createRef();
   const { multiSelect } = inputProps;
   const filterSelectHook = useFilterSelectHook(
     value,
@@ -64,18 +77,23 @@ const FilterInput = forwardRef((props, ref) => {
     placeholder,
   );
 
-  useEffect(() => {
-    filterSelectHook.reset(value);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.value]);
-
   const handleChange = (item) => {
     const selected = filterSelectHook.selectItem(item);
     dispatchEvent(selected, filterSelectHook.inputRef);
   };
 
   useImperativeHandle(ref, () => ({
-    getArray: () => filterSelectHook.getInputValue(),
+    validator: () => validator.condition(value),
+    validationErrorMessage: validator.errorMessage,
+    value: () => filterSelectHook.getInputValue(),
+    focus: () => {
+      filterSelectHook.setOpen(true);
+      searchInput.current.focus();
+    },
+    blur: () => {
+      filterSelectHook.setOpen(false);
+      searchInput.current.blur();
+    },
   }));
 
   return (
@@ -99,6 +117,7 @@ const FilterInput = forwardRef((props, ref) => {
           <C.Dropdown>
             <C.SearchWrapper>
               <C.Search
+                forwardRef={searchInput}
                 type="text"
                 placeholder={inputProps.searchPlaceholder || t('searchPlaceHolder', 'asurgentui')}
                 value={filterSelectHook.searchValue}
@@ -124,7 +143,7 @@ const FilterInput = forwardRef((props, ref) => {
                       )}
                     </VirtualRender.List>
                   )
-                }
+              }
             </C.ListWrapper>
           </C.Dropdown>
         </Transition.FadeInFitted>

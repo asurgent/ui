@@ -29,15 +29,10 @@ export const Top = styled.div`
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    position: fixed;
-    width: 100%;
     height: 6rem;
     border-bottom: 1px solid ${({ theme }) => theme.gray300};
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
-        position: relative;
-        /* z-index: unset; */
-        width: 100%;
         box-shadow: none;
     }
 

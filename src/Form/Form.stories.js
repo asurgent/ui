@@ -23,7 +23,7 @@ const formObj = {
   },
   datepicker: {
     type: 'datepicker',
-    label: 'datdeLabel',
+    label: 'im a label',
     name: 'datepicker',
     maxDate: moment().add(2, 'days').startOf('day').toISOString(),
     minDate: moment().subtract(2, 'days').startOf('day').toISOString(),
@@ -69,6 +69,22 @@ export const defaultForm = () => {
       type: 'text',
       label: 'Some Text',
       tooltip: 'hejhej',
+    },
+    imABoolean: {
+      type: 'bool',
+      label: 'Im true or false',
+      tooltip: 'Select me',
+      value: false,
+    },
+    email: {
+      type: 'email',
+      label: 'Email',
+      tooltip: 'Select me',
+      validator: {
+        condition: () => false,
+        errorMessage: 'I did not validate',
+      },
+      value: '',
     },
     someNumber: {
       type: 'number',
@@ -204,20 +220,28 @@ export const defaultForm = () => {
       <Form.Primary
         form={formData}
         msTimer={15}
-        onSubmit={(values, isDirty) => {
+        onSubmit={({ values, isDirty }) => {
           action()('isDirty', isDirty);
           action()('Submitted', values);
         }}
-        onChange={(values, isDirty, dirtyItems, name) => {
+        onChange={({
+          values, isDirty, dirtyItems, name, validates,
+        }) => {
           action()('Changed', name || 'form');
           action()('Form values', values);
           action()('Form dirty', isDirty);
           action()('Dirty items', dirtyItems);
+          action()('Validating fields', validates);
         }}
       >
-        {(inputList, renderFields, onSubmitAction, onResetAction, isDirty) => (
+        {({
+          render,
+          onSubmitAction,
+          onResetAction,
+          isDirty,
+        }) => (
           <>
-            {renderFields}
+            {render}
             <Block.SpaceBetween>
               <Button.Hollow onClick={() => {
                 formData.updateField('someSelect', {
@@ -246,11 +270,11 @@ export const secondaryThemeForm = () => {
     <Block.Info hideLeftBorder withPadding>
       <Form.Primary
         form={formData}
-        onSubmit={(values) => action()('Submitted', values)}
+        onSubmit={({ values }) => action()('Submitted', values)}
       >
-        {(inputList, renderFields, onSubmitAction) => (
+        {({ render, onSubmitAction }) => (
           <>
-            {renderFields}
+            {render}
             <Block.SpaceBetween renderTransparent>
               <Button.Hollow>Cancel</Button.Hollow>
               <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
@@ -268,19 +292,19 @@ export const advancedRender = () => {
   return (
     <Form.Primary
       form={formData}
-      onSubmit={(values) => action()('Submitted', values)}
+      onSubmit={({ values }) => action()('Submitted', values)}
     >
-      {(inputList, renderFields, onSubmitAction) => (
+      {({ fields, onSubmitAction }) => (
         <>
           {
               Object
-                .keys(inputList)
+                .keys(fields)
                 .map((key) => (
                   <div key={key}>
                     <p>
                       {`Im a paragagrah for: ${key}`}
                     </p>
-                    {inputList[key]}
+                    {fields[key]}
                   </div>
                 ))
             }
@@ -300,11 +324,11 @@ export const apiForm = () => {
   return (
     <Form.Primary
       form={formData}
-      onSubmit={(values) => action()('Submitted', values)}
+      onSubmit={({ values }) => action()('Submitted', values)}
     >
-      {(inputList, renderFields, onSubmitAction) => (
+      {({ render, onSubmitAction }) => (
         <>
-          {renderFields}
+          {render}
           <Block.SpaceBetween>
             <Button.Hollow>Cancel</Button.Hollow>
             <Button.Primary onClick={onSubmitAction}>Save</Button.Primary>
@@ -329,7 +353,7 @@ export const updateForm = () => {
   return (
     <Form.Primary
       form={formData}
-      onChangeTimer={(values) => action()('Updated', values)}
+      onChangeTimer={({ values }) => action()('Updated', values)}
     />
   );
 };
@@ -399,20 +423,24 @@ export const dynamicMinMaxAttributes = () => {
       <Form.Primary
         form={formData}
         msTimer={15}
-        onSubmit={(values, isDirty) => {
+        onSubmit={({ values, isDirty }) => {
           action()('isDirty', isDirty);
           action()('Submitted', values);
         }}
-        onChange={(values, isDirty, dirtyItems, name) => {
+        onChange={({
+          values, isDirty, dirtyItems, name,
+        }) => {
           action()('Changed', name || 'form');
           action()('Form values', values);
           action()('Form dirty', isDirty);
           action()('Dirty items', dirtyItems);
         }}
       >
-        {(inputList, renderFields, onSubmitAction, onResetAction, isDirty) => (
+        {({
+          render, onSubmitAction, onResetAction, isDirty,
+        }) => (
           <>
-            {renderFields}
+            {render}
             <Block.SpaceBetween>
               <Button.Hollow>Cancel</Button.Hollow>
               <Button.Secondary disabled={!isDirty} onClick={onResetAction}>
