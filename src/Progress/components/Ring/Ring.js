@@ -10,6 +10,7 @@ const propTypes = {
   stroke: PropTypes.number,
   progress: PropTypes.number,
   showPercentage: PropTypes.bool,
+  useShadow: PropTypes.bool,
   theme: PropTypes.instanceOf(Object),
 };
 
@@ -19,11 +20,12 @@ const defaultProps = {
   stroke: 4,
   progress: 95,
   showPercentage: false,
+  useShadow: false,
   theme: {},
 };
 
 const Ring = ({
-  radius, stroke, progress, showPercentage, color, theme,
+  radius, stroke, progress, showPercentage, color, useShadow, theme,
 }) => {
   const normalizedRadius = useMemo(() => radius - stroke * 0.5,
     [radius, stroke]);
@@ -37,6 +39,21 @@ const Ring = ({
   return (
     <C.Container>
       <svg height={radius * 2} width={radius * 2}>
+        {useShadow && (
+        <C.Ring
+          radius={radius}
+          stroke={theme.gray200}
+          fill="transparent"
+          strokeWidth={stroke}
+          strokeDasharray={`${circumference} ${circumference}`}
+          style={{ strokeDashoffset: 0 }}
+          stroke-width={stroke}
+          r={normalizedRadius}
+          cx={radius}
+          cy={radius}
+        />
+        )}
+
         <C.Ring
           radius={radius}
           stroke={color || theme.blue900}
