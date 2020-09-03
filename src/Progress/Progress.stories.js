@@ -9,9 +9,9 @@ export default { title: 'UI Components|Progress', decorators: [withKnobs] };
 export const ring = () => (
   <div style={{ padding: '2rem' }}>
     <Progress.Ring
-      radius={number('Radius', 60)}
-      stroke={number('Stroke', 4)}
-      progress={number('Progress', 90)}
+      radius={number('Radius', 80)}
+      stroke={number('Stroke', 5)}
+      progress={number('Progress', 75)}
       showPercentage={boolean('Show percentage', false)}
       color={text('Color', null)}
     />
