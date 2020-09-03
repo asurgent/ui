@@ -10,10 +10,13 @@ import * as S from '../../TimeComponents.styled';
 import * as Icons from '../Icons';
 import { parseMoment } from '../../helpers';
 import { getRepeatInterval } from './helpers';
+import * as Progress from '../../../Progress';
 
 const { t } = translation;
 console.clear();
 const Repeat = ({
+  startDate,
+  endDate,
   cronExpression,
   isOngoing,
   nextDate,
@@ -28,9 +31,13 @@ const Repeat = ({
       const interval = parser.parseExpression(cronExpression, { currentDate: moment(nextDate) });
       return moment(interval.next().toString());
     } catch (e) {
+      console.log('error', e);
       return null;
     }
   }, [cronExpression, nextDate]);
+
+  console.log('firstUpcoming', firstUpcoming);
+  console.log('onGoingFrom', onGoingFrom);
 
   const difference = useMemo(() => {
     try {
@@ -41,23 +48,36 @@ const Repeat = ({
     }
   }, [firstUpcoming, nextDate]);
 
-  // invalid cron, return nothing
-  if (!firstUpcoming) {
+  const percentageLeft = useMemo(() => {
+    if (isOngoing) {
+      const diffStartEnd = moment(onGoingTo).diff(moment(onGoingFrom), 'seconds');
+      const diffNowEnd = moment(onGoingTo).diff(moment(), 'seconds');
+      const percentage = (diffNowEnd / diffStartEnd) * 100;
+      return percentage;
+    }
     return null;
-  }
+  }, [isOngoing, onGoingFrom, onGoingTo]);
 
-  console.log('nextdate', moment(nextDate).toString());
-  console.log('firstUpcoming', moment(firstUpcoming).toString());
   // ongoing, return spinner
   if (isOngoing) {
     return (
       <C.Container>
         <S.TextSmall withBottomMargin>{t('status', 'asurgentui')}</S.TextSmall>
-        <S.TextNormal>{}</S.TextNormal>
-        {/* <Icons.Spinner style={{ marginBottom: '0.4rem' }} /> */}
+        <Progress.Ring
+          radius={20}
+          stroke={3}
+          progress={percentageLeft}
+          useShadow
+          useAnimation
+        />
         <S.TextSmall data-testid="is-running" withBottomMargin>{t('ongoing', 'asurgentui')}</S.TextSmall>
       </C.Container>
     );
+  }
+
+  if (!firstUpcoming) {
+    // one timer
+    return <p>{percentageLeft}</p>;
   }
 
   if (hasExpired) {

@@ -15,6 +15,7 @@ export const ring = () => (
       showPercentage={boolean('Show percentage', false)}
       color={text('Color', null)}
       useShadow={boolean('Use shadow', false)}
+      useAnimation={boolean('Animated', false)}
     />
   </div>
 );

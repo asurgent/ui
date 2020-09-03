@@ -10,6 +10,7 @@ const propTypes = {
   progress: PropTypes.number,
   showPercentage: PropTypes.bool,
   useShadow: PropTypes.bool,
+  useAnimation: PropTypes.bool,
   theme: PropTypes.instanceOf(Object),
 };
 
@@ -20,11 +21,12 @@ const defaultProps = {
   progress: 95,
   showPercentage: false,
   useShadow: false,
+  useAnimation: false,
   theme: {},
 };
 
 const Ring = ({
-  radius, stroke, progress, showPercentage, color, useShadow, theme,
+  radius, stroke, progress, showPercentage, color, useShadow, useAnimation, theme,
 }) => {
   const normalizedRadius = useMemo(() => radius - stroke * 0.5,
     [radius, stroke]);
@@ -64,11 +66,12 @@ const Ring = ({
           r={normalizedRadius}
           cx={radius}
           cy={radius}
+          useAnimation={useAnimation}
         />
       </svg>
       {showPercentage && (
         <C.Text radius={radius}>
-          {progress}
+          {Math.floor(progress)}
           <C.Small>%</C.Small>
         </C.Text>
       )}
