@@ -105,14 +105,16 @@ export const emptyState = () => (
 );
 
 export const subnavigationBlock = () => (
-  <Block.SubnavigationBlock navigationList={[
-    {
-      label: 'On call', path: 'http://google.com', icon: '', isActive: () => true,
-    },
-    { label: 'Other stuff', path: 'http://apple.com', icon: '' },
-  ]}
+  <Block.SubnavigationBlock
+    title="Hello"
+    navigationList={[
+      {
+        label: 'On call', path: 'http://google.com', icon: '', isActive: () => true,
+      },
+      { label: 'Other stuff', path: 'http://apple.com', icon: '' },
+    ]}
   >
-    <h1>I am title</h1>
+    <h2>I am title</h2>
     <Block.Bordered noShadow withPadding>
       <h2>Did you come in early?</h2>
       <p>

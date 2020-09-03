@@ -8,14 +8,17 @@ const propTypes = {
     PropTypes.arrayOf(PropTypes.node),
   ]),
   navigationList: PropTypes.instanceOf(Array).isRequired,
+  title: PropTypes.string,
 };
 
 const defaultProps = {
   children: null,
+  title: null,
 };
 
-const SubnavigationBlock = ({ navigationList, children }) => (
+const SubnavigationBlock = ({ navigationList, title, children }) => (
   <C.Wrapper>
+    { title && <C.Title>{title}</C.Title> }
     <C.Navigation>
       {
         navigationList.map(({
