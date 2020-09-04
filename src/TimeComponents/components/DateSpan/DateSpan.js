@@ -6,7 +6,8 @@ import * as C from './DateSpan.styled';
 import * as S from '../../TimeComponents.styled';
 import translation from './DateSpan.translation';
 import * as Icons from '../Icons';
-import { parseMoment, getMonthYear } from '../../helpers';
+import { getMonthYear } from '../../helpers';
+import { newMoment } from '../../../Moment/momentParsers';
 
 const { t } = translation;
 
@@ -18,30 +19,60 @@ const DateSpan = ({
   theme,
   ...props
 }) => {
-  const startDateValid = useMemo(() => parseMoment(startDate).isValid(), [startDate]);
-  const endDateValid = useMemo(() => parseMoment(endDate).isValid(), [endDate]);
+  const startDateValid = useMemo(() => newMoment(startDate).isValid(), [startDate]);
+  const endDateValid = useMemo(() => newMoment(endDate).isValid(), [endDate]);
 
   const isNever = useMemo(() => {
     if (endDateValid) {
-      return parseMoment(endDate) > parseMoment(endDateThreshold);
+      return newMoment(endDate) > newMoment(endDateThreshold);
     }
     return null;
   }, [endDate, endDateThreshold, endDateValid]);
 
-  const isActive = useMemo(() => parseMoment(endDate) > moment(), [endDate]);
+  const isActive = useMemo(() => newMoment(endDate) > moment(), [endDate]);
 
-  return (
-    <C.Dates {...props}>
+  return ((
+    <C.Dates>
+      <C.Container {...props}>
+        <C.StartDate active={!hasExpired}>
+          <S.TextNormal>{newMoment(startDate).format('DD')}</S.TextNormal>
+          <S.TextSmall>
+            {`${t(`month${newMoment(startDate).month()}`)} ${newMoment(startDate).format('YY')}`}
+          </S.TextSmall>
+        </C.StartDate>
+        <C.Time>
+          <S.TextSmall>
+            {`${t(`day${newMoment(startDate).day()}`)} ${newMoment(startDate).format('hh:mm')}`}
+          </S.TextSmall>
+        </C.Time>
+      </C.Container>
+
+      <C.Container {...props}>
+        <C.EndDate active={!hasExpired}>
+          <S.TextNormal>{newMoment(endDate).format('DD')}</S.TextNormal>
+          <S.TextSmall>
+            {`${t(`month${newMoment(endDate).month()}`)} ${newMoment(endDate).format('YY')}`}
+          </S.TextSmall>
+        </C.EndDate>
+        <C.Time>
+          <S.TextSmall>
+            {`${t(`day${newMoment(endDate).day()}`)} ${newMoment(endDate).format('hh:mm')}`}
+          </S.TextSmall>
+        </C.Time>
+      </C.Container>
+    </C.Dates>
+  )
+  /*   <C.Dates {...props}>
       <C.StartDate active={!hasExpired} theme={theme}>
-        <S.TextNormal>{parseMoment(startDate).format('DD')}</S.TextNormal>
-        <S.TextSmall>{getMonthYear(parseMoment(startDate))}</S.TextSmall>
+        <S.TextNormal>{newMoment(startDate).format('DD')}</S.TextNormal>
+        <S.TextSmall>{getMonthYear(newMoment(startDate))}</S.TextSmall>
       </C.StartDate>
 
       <C.EndDate active={!hasExpired} theme={theme}>
-        <S.TextNormal>{parseMoment(endDate).format('DD')}</S.TextNormal>
-        <S.TextSmall>{getMonthYear(parseMoment(endDate))}</S.TextSmall>
+        <S.TextNormal>{newMoment(endDate).format('DD')}</S.TextNormal>
+        <S.TextSmall>{getMonthYear(newMoment(endDate))}</S.TextSmall>
       </C.EndDate>
-    </C.Dates>
+    </C.Dates> */
   );
 };
 

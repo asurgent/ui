@@ -9,6 +9,7 @@ import translation from './Repeat.translation';
 import * as S from '../../TimeComponents.styled';
 import * as Icons from '../Icons';
 import { parseMoment } from '../../helpers';
+import { newMoment } from '../../../Moment/momentParsers';
 import { getRepeatInterval } from './helpers';
 import * as Progress from '../../../Progress';
 
@@ -24,24 +25,23 @@ const Repeat = ({
   onGoingFrom,
   onGoingTo,
   durationInSeconds,
+  useAnimation,
+  showPercentage,
   theme,
 }) => {
   const firstUpcoming = useMemo(() => {
     try {
-      const interval = parser.parseExpression(cronExpression, { currentDate: moment(nextDate) });
-      return moment(interval.next().toString());
+      const interval = parser.parseExpression(cronExpression, { currentDate: newMoment(nextDate) });
+      return newMoment(interval.next().toString());
     } catch (e) {
       console.log('error', e);
       return null;
     }
   }, [cronExpression, nextDate]);
 
-  console.log('firstUpcoming', firstUpcoming);
-  console.log('onGoingFrom', onGoingFrom);
-
   const difference = useMemo(() => {
     try {
-      return moment(nextDate).diff(firstUpcoming, 'seconds');
+      return newMoment(nextDate).diff(firstUpcoming, 'seconds');
     } catch (e) {
       console.log('err', e);
       return null;
@@ -50,9 +50,9 @@ const Repeat = ({
 
   const percentageLeft = useMemo(() => {
     if (isOngoing) {
-      const diffStartEnd = moment(onGoingTo).diff(moment(onGoingFrom), 'seconds');
-      const diffNowEnd = moment(onGoingTo).diff(moment(), 'seconds');
-      const percentage = (diffNowEnd / diffStartEnd) * 100;
+      const diffStartEnd = newMoment(onGoingTo).diff(newMoment(onGoingFrom), 'seconds');
+      const diffNowEnd = newMoment(onGoingTo).diff(newMoment(), 'seconds');
+      const percentage = ((diffStartEnd - diffNowEnd) / diffStartEnd) * 100;
       return percentage;
     }
     return null;
@@ -61,28 +61,24 @@ const Repeat = ({
   // ongoing, return spinner
   if (isOngoing) {
     return (
-      <C.Container>
+      <C.Container data-testid="progress">
         <S.TextSmall withBottomMargin>{t('status', 'asurgentui')}</S.TextSmall>
         <Progress.Ring
           radius={20}
           stroke={3}
           progress={percentageLeft}
           useShadow
-          useAnimation
+          useAnimation={useAnimation}
+          showPercentage={showPercentage}
         />
-        <S.TextSmall data-testid="is-running" withBottomMargin>{t('ongoing', 'asurgentui')}</S.TextSmall>
+        <S.TextSmall withBottomMargin>{t('ongoing', 'asurgentui')}</S.TextSmall>
       </C.Container>
     );
   }
 
-  if (!firstUpcoming) {
-    // one timer
-    return <p>{percentageLeft}</p>;
-  }
-
   if (hasExpired) {
     return (
-      <C.Container data-testid="repeat" expired>
+      <C.Container data-testid="expired" expired>
         <S.TextSmall withBottomMargin>{t('status', 'asurgentui')}</S.TextSmall>
         <S.TextNormal data-testid="short-label">{t('naIcon', 'asurgentui')}</S.TextNormal>
         <S.TextSmall style={{ marginTop: '0.7rem' }} data-testid="long-label">{t('expired', 'asurgentui')}</S.TextSmall>
@@ -91,7 +87,7 @@ const Repeat = ({
   }
   const label = getRepeatInterval(difference);
   return (
-    <C.Container data-testid="repeat">
+    <C.Container>
       <S.TextSmall withBottomMargin>{t('repeats', 'asurgentui')}</S.TextSmall>
       <Icons.Dots theme={theme} />
       <S.TextNormal data-testid={label.short}>{t(label.short, 'asurgentui')}</S.TextNormal>
@@ -112,12 +108,16 @@ Repeat.propTypes = {
     PropTypes.instanceOf(moment),
   ]),
   cronExpression: PropTypes.string,
+  useAnimation: PropTypes.bool,
+  showPercentage: PropTypes.bool,
 };
 
 Repeat.defaultProps = {
-  currentDate: moment(),
-  endDate: moment().add(1, 'week'),
+  currentDate: newMoment(),
+  endDate: newMoment().add(1, 'week'),
   cronExpression: '* * * * *',
+  useAnimation: true,
+  showPercentage: true,
 };
 
 export default withTheme(Repeat);

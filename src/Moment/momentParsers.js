@@ -75,3 +75,14 @@ export const custom = (timestamp, formatTemplate) => {
   }
   return '';
 };
+
+// To get rid of Deprecation warning: value provided is not in a recognized RFC2822 or ISO format
+// when using moment("not iso-formatted input"), shows up in storybook + tests.
+// Doing "moment()" is not valid anymore it seems
+export const newMoment = (inputDate) => {
+  try {
+    return moment(inputDate ? new Date(inputDate) : new Date());
+  } catch (e) {
+    return null;
+  }
+};

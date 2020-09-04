@@ -45,15 +45,6 @@ export const Calendar = styled.div`
   align-items: center;
   background: white;
 `;
-export const StartDate = styled(Calendar)`
-  border-top: 0.8rem solid #13BE69;
-`;
-export const EndDate = styled(Calendar)`
-  border-top: 0.8rem solid #C6403B;
-`;
-export const ExpiredDate = styled(Calendar)`
-   border-top: 0.8rem solid #6E6E6E;
-`;
 
 export const DateAndTime = styled.div`
   width: 6rem;

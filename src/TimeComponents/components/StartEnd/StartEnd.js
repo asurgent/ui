@@ -9,6 +9,7 @@ import * as C from './StartEnd.styled';
 import * as S from '../../TimeComponents.styled';
 import translation from './StartEnd.translation';
 import * as Icons from '../Icons';
+import { newMoment } from '../../../Moment/momentParsers';
 
 const { t } = translation;
 
@@ -17,14 +18,14 @@ const { t } = translation;
 const getRelativeTime = ({ date, duration }) => {
   let timestamp;
   if (duration) {
-    timestamp = moment().add(duration, 'seconds');
+    timestamp = newMoment().add(duration, 'seconds');
   } else {
-    timestamp = moment(date);
+    timestamp = newMoment(date);
   }
-  const days = timestamp.diff(moment(), 'days');
-  const hours = timestamp.diff(moment(), 'hours');
-  const minutes = timestamp.diff(moment(), 'minutes');
-  const seconds = timestamp.diff(moment(), 'seconds');
+  const days = timestamp.diff(newMoment(), 'days');
+  const hours = timestamp.diff(newMoment(), 'hours');
+  const minutes = timestamp.diff(newMoment(), 'minutes');
+  const seconds = timestamp.diff(newMoment(), 'seconds');
 
   if (days > 0) {
     return { number: days, label: t('days', 'asurgentui') };
@@ -55,8 +56,8 @@ const StartEnd = ({
   const nextNextDate = useMemo(() => {
     try {
       const interval = parser.parseExpression(cronExpression,
-        { currentDate: moment(nextDate).toString() });
-      const d = moment(interval.next().toString());
+        { currentDate: newMoment(nextDate).toString() });
+      const d = newMoment(interval.next().toString());
       return d;
     } catch (e) {
       return null;
@@ -70,8 +71,8 @@ const StartEnd = ({
         <C.Container {...props}>
           <S.TextSmall withBottomMargin>{t('started', 'asurgentui')}</S.TextSmall>
           <PlayIcon fontSize="large" style={{ fill: theme.blue900 }} />
-          <S.TextNormal>{moment(onGoingFrom).format('HH:mm')}</S.TextNormal>
-          <S.TextSmall withBottomMargin>{moment(onGoingFrom).format('YYYY-MM-DD')}</S.TextSmall>
+          <S.TextNormal>{newMoment(onGoingFrom).format('HH:mm')}</S.TextNormal>
+          <S.TextSmall withBottomMargin>{newMoment(onGoingFrom).format('YYYY-MM-DD')}</S.TextSmall>
         </C.Container>
 
         <C.Container>
@@ -84,8 +85,8 @@ const StartEnd = ({
         <C.Container {...props}>
           <S.TextSmall withBottomMargin>{t('ends', 'asurgentui')}</S.TextSmall>
           <StopIcon fontSize="large" style={{ fill: theme.blue900 }} />
-          <S.TextNormal>{moment(onGoingTo).format('HH:mm')}</S.TextNormal>
-          <S.TextSmall withBottomMargin>{moment(onGoingTo).format('YYYY-MM-DD')}</S.TextSmall>
+          <S.TextNormal>{newMoment(onGoingTo).format('HH:mm')}</S.TextNormal>
+          <S.TextSmall withBottomMargin>{newMoment(onGoingTo).format('YYYY-MM-DD')}</S.TextSmall>
         </C.Container>
       </C.Dates>
     );
@@ -96,14 +97,14 @@ const StartEnd = ({
     <C.Dates>
       <C.Container {...props}>
         <C.DateAndTime active={!hasExpired}>
-          <S.TextNormal>{moment(nextDate).format('DD')}</S.TextNormal>
+          <S.TextNormal>{newMoment(nextDate).format('DD')}</S.TextNormal>
           <S.TextSmall>
-            {`${t(`month${moment(nextDate).month()}`)} ${moment(nextDate).format('YY')}`}
+            {`${t(`month${newMoment(nextDate).month()}`)} ${newMoment(nextDate).format('YY')}`}
           </S.TextSmall>
         </C.DateAndTime>
         <C.Time>
           <S.TextSmall>
-            {`${t(`day${moment(nextDate).day()}`)} ${moment(nextDate).format('hh:mm')}`}
+            {`${t(`day${newMoment(nextDate).day()}`)} ${newMoment(nextDate).format('hh:mm')}`}
           </S.TextSmall>
         </C.Time>
       </C.Container>
@@ -119,14 +120,14 @@ const StartEnd = ({
 
       <C.Container {...props}>
         <C.DateAndTime active={!hasExpired}>
-          <S.TextNormal>{moment(nextNextDate).format('DD')}</S.TextNormal>
+          <S.TextNormal>{newMoment(nextNextDate).format('DD')}</S.TextNormal>
           <S.TextSmall>
-            {`${t(`month${moment(nextNextDate).month()}`)} ${moment(nextNextDate).format('YY')}`}
+            {`${t(`month${newMoment(nextNextDate).month()}`)} ${newMoment(nextNextDate).format('YY')}`}
           </S.TextSmall>
         </C.DateAndTime>
         <C.Time>
           <S.TextSmall>
-            {`${t(`day${moment(nextNextDate).day()}`)} ${moment(nextNextDate).format('hh:mm')}`}
+            {`${t(`day${newMoment(nextNextDate).day()}`)} ${newMoment(nextNextDate).format('hh:mm')}`}
           </S.TextSmall>
         </C.Time>
       </C.Container>
