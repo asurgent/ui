@@ -1,23 +1,29 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import {
-  withKnobs, number, text, boolean,
+  withKnobs, text, boolean,
 } from '@storybook/addon-knobs';
 
 import DateSpan from './components/DateSpan';
 import Repeat from './components/Repeat';
 import StartEnd from './components/StartEnd';
 
-import * as apiResponse from './apiResponses';
+import { newMoment } from '../Moment/momentParsers';
 
 export default { title: 'UI Components|Time Components', decorators: [withKnobs] };
 
 export const dateSpan = () => (
   <div style={{ padding: '2rem' }}>
     <DateSpan
-      startDate={text('start date', apiResponse.ongoingBusinessHours.start)}
-      endDate={text('end date', apiResponse.ongoingBusinessHours.end)}
-      hasExpired={boolean('Has expired', apiResponse.ongoingBusinessHours.dyn_is_passed)}
+      startDate={text('start date', newMoment()
+        .subtract(123, 'days')
+        .set({ hour: 8, minute: 25 })
+        .toISOString())}
+      endDate={text('end date', newMoment()
+        .add(45, 'days')
+        .set({ hour: 19, minute: 11 })
+        .toISOString())}
+      hasExpired={boolean('Has expired', false)}
     />
   </div>
 );
@@ -29,14 +35,18 @@ dateSpan.story = {
 export const repeat = () => (
   <div style={{ padding: '2rem' }}>
     <Repeat
-      startDate={text('start date', apiResponse.ongoingBusinessHours.start)}
-      endDate={text('end date', apiResponse.ongoingBusinessHours.end)}
-      isOngoing={boolean('Is ongoing', apiResponse.ongoingBusinessHours.dyn_is_ongoing_now)}
-      hasExpired={boolean('Has expired', apiResponse.ongoingBusinessHours.dyn_is_passed)}
-      cronExpression={text('cron exp', apiResponse.ongoingBusinessHours.cron_expression)}
-      nextDate={text('Next date', apiResponse.ongoingBusinessHours.dyn_next_execution)}
-      onGoingFrom={text('Ongoing from', apiResponse.ongoingBusinessHours.dyn_is_ongoing_from)}
-      onGoingTo={text('Ongoing to', apiResponse.ongoingBusinessHours.dyn_is_ongoing_to)}
+      isOngoing={boolean('Is ongoing', true)}
+      hasExpired={boolean('Has expired', false)}
+      cronExpression={text('cron exp', `0 ${newMoment().hours() + 1} * * *`)}
+      nextExecution={text('Next execution', newMoment().set({
+        hours: newMoment().hours() + 1, minutes: 0, seconds: 0, milliseconds: 0,
+      }))}
+      onGoingFrom={text('Ongoing from', newMoment().set({
+        hours: newMoment().hours(), minutes: 0, seconds: 0, milliseconds: 0,
+      }))}
+      onGoingTo={text('Ongoing to', newMoment().set({
+        hours: newMoment().hours() + 1, minutes: 0, seconds: 0, milliseconds: 0,
+      }))}
       useAnimation={boolean('Use animation', true)}
       showPercentage={boolean('Show percentage', true)}
     />
@@ -47,19 +57,31 @@ repeat.story = {
   name: 'Repeat',
 };
 
-export const startEnd = () => (
-  <div style={{ padding: '2rem' }}>
-    <StartEnd
-      isOngoing={boolean('Is ongoing', apiResponse.upcomingNextFullHour.dyn_is_ongoing_now)}
-      hasExpired={boolean('Has expired', apiResponse.upcomingNextFullHour.dyn_is_passed)}
-      durationInSeconds={number('Duration in seconds', apiResponse.upcomingNextFullHour.duration_in_seconds)}
-      cronExpression={text('cron exp', apiResponse.upcomingNextFullHour.cron_expression)}
-      nextDate={text('Next date', apiResponse.upcomingNextFullHour.dyn_next_execution)}
-      onGoingFrom={text('Ongoing from', apiResponse.upcomingNextFullHour.dyn_is_ongoing_from)}
-      onGoingTo={text('Ongoing to', apiResponse.upcomingNextFullHour.dyn_is_ongoing_to)}
-    />
-  </div>
-);
+export const startEnd = () => {
+  const duration = 1800;
+  const currentHour = newMoment().hours();
+  const from = newMoment()
+    .set({
+      hours: currentHour, minutes: 0, seconds: 0, milliseconds: 0,
+    });
+
+  const to = from.clone().add(1800, 'seconds');
+  const next = from.clone().add(1, 'days');
+
+  return (
+    <div style={{ padding: '2rem' }}>
+      <StartEnd
+        isOngoing={boolean('Is ongoing', true)}
+        hasExpired={boolean('Has expired', false)}
+        cronExpression={text('cron exp', `0 ${currentHour} * * *`)}
+        durationInSeconds={duration}
+        nextDate={text('Next date', next)}
+        onGoingFrom={text('Ongoing from', from)}
+        onGoingTo={text('Ongoing to', to)}
+      />
+    </div>
+  );
+};
 
 startEnd.story = {
   name: 'Starts/Ends',

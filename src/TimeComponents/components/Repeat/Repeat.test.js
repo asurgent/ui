@@ -2,37 +2,80 @@
 
 import React from 'react';
 import { render, cleanup } from 'test-utils';
-import * as apiResponse from '../../apiResponses';
 import Repeat from './index';
 import { newMoment } from '../../../Moment/momentParsers';
 
 afterEach(cleanup);
 
-const onGoingProps = {
-  startDate: apiResponse.ongoingBusinessHours.start,
-  endDate: apiResponse.ongoingBusinessHours.end,
-  isOngoing: apiResponse.ongoingBusinessHours.dyn_is_ongoing_now,
-  hasExpired: apiResponse.ongoingBusinessHours.dyn_is_passed,
-  cronExpression: apiResponse.ongoingBusinessHours.cron_expression,
-  nextDate: apiResponse.ongoingBusinessHours.dyn_next_execution,
-  onGoingFrom: apiResponse.ongoingBusinessHours.dyn_is_ongoing_from,
-  onGoingTo: apiResponse.ongoingBusinessHours.dyn_is_ongoing_to,
+const startOfDay = newMoment()
+  .set({
+    hours: 6,
+    minutes: 0,
+    seconds: 0,
+    milliseconds: 0,
+  })
+  .toISOString();
+
+const endOfDay = newMoment()
+  .set({
+    hours: 22,
+    minutes: 0,
+    seconds: 0,
+    milliseconds: 0,
+  })
+  .toISOString();
+
+const startOfHour = newMoment()
+  .set({
+    hours: newMoment().hours(),
+    minutes: 0,
+    seconds: 0,
+    milliseconds: 0,
+  })
+  .toISOString();
+
+const startOfNextHour = newMoment()
+  .set({
+    hours: newMoment().hours() + 1,
+    minutes: 0,
+    seconds: 0,
+    milliseconds: 0,
+  })
+  .toISOString();
+
+const upcomingProps = {
+  start: startOfDay,
+  end: endOfDay,
+  cronExpression: null,
+  hasExpired: false,
+  isOngoing: false,
+  onGoingFrom: null,
+  onGoingTo: null,
+};
+
+const ongoingProps = {
+  startDate: startOfDay,
+  endDate: endOfDay,
+  cronExpression: null,
+  hasExpired: false,
+  isOngoing: true,
+  onGoingFrom: startOfHour,
+  onGoingTo: startOfNextHour,
 };
 
 const expiredProps = {
-  startDate: apiResponse.expired.start,
-  endDate: apiResponse.expired.end,
-  isOngoing: apiResponse.expired.dyn_is_ongoing_now,
-  hasExpired: apiResponse.expired.dyn_is_passed,
-  cronExpression: apiResponse.expired.cron_expression,
-  nextDate: apiResponse.expired.dyn_next_execution,
-  onGoingFrom: apiResponse.expired.dyn_is_ongoing_from,
-  onGoingTo: apiResponse.expired.dyn_is_ongoing_to,
+  startDate: newMoment().subtract(2, 'days').toISOString(),
+  endDate: newMoment().subtract(1, 'days').toISOString(),
+  cronExpression: '21 14 * * *',
+  hasExpired: true,
+  isOngoing: false,
+  onGoingFrom: null,
+  onGoingTo: null,
 };
 
 describe('Duration', () => {
   test('Renders progress', async () => {
-    const { getByTestId } = render(<Repeat {...onGoingProps} />);
+    const { getByTestId } = render(<Repeat {...ongoingProps} />);
 
     const minute = getByTestId(/progress/);
     expect(minute).toBeDefined();
@@ -43,12 +86,8 @@ describe('Duration', () => {
     const hour = getByTestId(/expired/);
     expect(hour).toBeDefined();
   });
-  test('Renders day', async () => {
-    const props = {
-      endDate: newMoment().add(10, 'years'),
-      cronExpression: '0 15 * * *',
-    };
-    const { getByTestId } = render(<Repeat {...props} />);
+  test('Renders upcoming', async () => {
+    const { getByTestId } = render(<Repeat {...upcomingProps} />);
 
     const day = getByTestId(/dayShort/);
     expect(day).toBeDefined();
@@ -62,25 +101,5 @@ describe('Duration', () => {
 
     const week = getByTestId(/weekShort/);
     expect(week).toBeDefined();
-  });
-  test('Renders month', async () => {
-    const props = {
-      endDate: newMoment().add(10, 'years'),
-      cronExpression: '0 15 1 * *',
-    };
-    const { getByTestId } = render(<Repeat {...props} />);
-
-    const week = getByTestId(/monthShort/);
-    expect(week).toBeDefined();
-  });
-  test('Renders year', async () => {
-    const props = {
-      endDate: newMoment().add(10, 'years'),
-      cronExpression: '0 15 1 1 *',
-    };
-    const { getByTestId } = render(<Repeat {...props} />);
-
-    const year = getByTestId(/yearShort/);
-    expect(year).toBeDefined();
   });
 });
