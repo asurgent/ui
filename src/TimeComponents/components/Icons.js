@@ -1,46 +1,58 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 // 133A5D
 const propTypes = {
   active: PropTypes.bool,
+  theme: PropTypes.instanceOf(Object),
 };
 const defaultProps = {
   active: true,
+  theme: {},
 };
-export const Dots = ({ active }) => (
-  <svg width="24" height="4" viewBox="0 0 24 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="2" cy="2" r="2" fill={active ? '#133A5D' : 'gray'} />
-    <circle cx="12" cy="2" r="2" fill={active ? '#133A5D' : 'gray'} />
-    <circle cx="22" cy="2" r="2" fill={active ? '#133A5D' : 'gray'} />
-  </svg>
-);
+export const Dots = ({ active, theme }) => {
+  const color = active ? theme.blue900 : theme.gray600;
+  return (
+    <svg width="24" height="4" viewBox="0 0 24 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="2" cy="2" r="2" fill={color} />
+      <circle cx="12" cy="2" r="2" fill={color} />
+      <circle cx="22" cy="2" r="2" fill={color} />
+    </svg>
+  );
+};
 Dots.propTypes = propTypes;
 Dots.defaultProps = defaultProps;
 
-export const Duration = ({ active }) => (
-  <svg width="54" height="12" viewBox="0 0 54 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="6" cy="6" r="5" stroke={active ? '#133A5D' : 'gray'} strokeWidth="2" />
-    <circle cx="48" cy="6" r="5" stroke={active ? '#133A5D' : 'gray'} strokeWidth="2" />
-    <circle cx="48" cy="6" r="2" fill={active ? '#133A5D' : 'gray'} />
-    <line x1="11" y1="6" x2="43" y2="6" stroke={active ? '#133A5D' : 'gray'} strokeWidth="2" />
-  </svg>
-);
+export const Duration = ({ active, theme }) => {
+  const color = active ? theme.blue900 : theme.gray600;
+  return (
+    <svg width="54" height="22" viewBox="0 0 54 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="6" cy="6" r="5" stroke={color} strokeWidth="2" />
+      <circle cx="48" cy="6" r="5" stroke={color} strokeWidth="2" />
+      <circle cx="48" cy="6" r="2" fill={color} />
+      <line x1="11" y1="6" x2="43" y2="6" stroke={color} strokeWidth="2" />
+    </svg>
+  );
+};
 Duration.propTypes = propTypes;
 Duration.defaultProps = defaultProps;
 
-export const Flag = ({ active }) => (
-  <svg width="32" height="8" viewBox="0 0 32 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="4" height="4" fill={active ? '#133A5D' : 'gray'} />
-    <rect x="4" y="4" width="4" height="4" fill={active ? '#133A5D' : 'gray'} />
-    <rect x="8" width="4" height="4" fill={active ? '#133A5D' : 'gray'} />
-    <rect x="12" y="4" width="4" height="4" fill={active ? '#133A5D' : 'gray'} />
-    <rect x="16" width="4" height="4" fill={active ? '#133A5D' : 'gray'} />
-    <rect x="20" y="4" width="4" height="4" fill={active ? '#133A5D' : 'gray'} />
-    <rect x="24" width="4" height="4" fill={active ? '#133A5D' : 'gray'} />
-    <rect x="28" y="4" width="4" height="4" fill={active ? '#133A5D' : 'gray'} />
-  </svg>
-);
+export const Flag = ({ active, theme }) => {
+  const color = active ? theme.blue900 : theme.gray600;
+  return (
+    <svg width="32" height="8" viewBox="0 0 32 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="4" height="4" fill={color} />
+      <rect x="4" y="4" width="4" height="4" fill={color} />
+      <rect x="8" width="4" height="4" fill={color} />
+      <rect x="12" y="4" width="4" height="4" fill={color} />
+      <rect x="16" width="4" height="4" fill={color} />
+      <rect x="20" y="4" width="4" height="4" fill={color} />
+      <rect x="24" width="4" height="4" fill={color} />
+      <rect x="28" y="4" width="4" height="4" fill={color} />
+    </svg>
+  );
+};
 Flag.propTypes = propTypes;
 Flag.defaultProps = defaultProps;
 
@@ -58,7 +70,7 @@ export const StyledSpinner = styled.svg`
     }
     path {
         fill:none;
-        stroke:#133A5D;
+        stroke: ${({ theme }) => theme.blue900};
         stroke-width: 1px;
     }
     rect {
@@ -66,13 +78,14 @@ export const StyledSpinner = styled.svg`
     }
 `;
 
-export const Spinner = ({ size }) => (
+export const Spinner = ({ size, ...props }) => (
   <StyledSpinner
     viewBox="0 0 32 32"
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     size={size}
+    {...props}
   >
     <rect id="Artboard1" x="0" y="0" width="32" height="32" />
     <g id="Artboard11">

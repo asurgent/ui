@@ -1,4 +1,22 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const blinkAnim = () => keyframes`
+    0% {
+      opacity: 1;
+  }
+  40% {
+      opacity: 1;
+  }
+  60% {
+      opacity: 0;
+  }
+  75% {
+  opacity: 1;
+  }
+  100% {
+      opacity: 1;
+  }
+`;
 
 export const Container = styled.div`
   position: relative;
@@ -24,4 +42,10 @@ export const Ring = styled.circle`
   transition: stroke-dashoffset 0.35s;
   transform: rotate(-90deg);
   transform-origin: ${({ radius }) => `${radius}px ${radius}px`};
+
+  opacity: 1;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-name: ${({ useAnimation }) => (useAnimation ? blinkAnim : '')};
 `;
