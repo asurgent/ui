@@ -58,15 +58,14 @@ repeat.story = {
 };
 
 export const startEnd = () => {
-  const duration = 1800;
+  const duration = 3600;
   const currentHour = newMoment().hours();
-  const from = newMoment()
-    .set({
-      hours: currentHour, minutes: 0, seconds: 0, milliseconds: 0,
-    });
+  const from = newMoment().set({
+    hour: currentHour, minute: 0, second: 0, millisecond: 0,
+  });
 
-  const to = from.clone().add(1800, 'seconds');
-  const next = from.clone().add(1, 'days');
+  const to = from.clone().add(3600, 'seconds').toISOString();
+  const next = from.clone().add(1, 'days').toISOString();
 
   return (
     <div style={{ padding: '2rem' }}>
@@ -76,7 +75,7 @@ export const startEnd = () => {
         cronExpression={text('cron exp', `0 ${currentHour} * * *`)}
         durationInSeconds={duration}
         nextDate={text('Next date', next)}
-        onGoingFrom={text('Ongoing from', from)}
+        onGoingFrom={text('Ongoing from', from.toISOString())}
         onGoingTo={text('Ongoing to', to)}
       />
     </div>

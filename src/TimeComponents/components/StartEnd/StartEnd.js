@@ -5,42 +5,13 @@ import PlayIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
 import { withTheme } from 'styled-components';
 import parser from 'cron-parser';
-import * as C from './StartEnd.styled';
-import * as S from '../../TimeComponents.styled';
+import * as C from '../../TimeComponents.styled';
 import translation from './StartEnd.translation';
 import * as Icons from '../Icons';
 import { newMoment } from '../../../Moment/momentParsers';
+import { getRelativeTime } from './helpers';
 
 const { t } = translation;
-
-// have to create the moment-object with duration here,
-// passing a date in here leads to rounding errors
-const getRelativeTime = ({ date, duration }) => {
-  let timestamp;
-  if (duration) {
-    timestamp = newMoment().add(duration, 'seconds');
-  } else {
-    timestamp = newMoment(date);
-  }
-  const days = timestamp.diff(newMoment(), 'days');
-  const hours = timestamp.diff(newMoment(), 'hours');
-  const minutes = timestamp.diff(newMoment(), 'minutes');
-  const seconds = timestamp.diff(newMoment(), 'seconds');
-
-  if (days > 0) {
-    return { number: days, label: t('days', 'asurgentui') };
-  }
-  if (hours > 0) {
-    return { number: hours, label: t('hours', 'asurgentui') };
-  }
-  if (minutes > 0) {
-    return { number: minutes, label: t('minutes', 'asurgentui') };
-  }
-  if (seconds > 0) {
-    return { number: seconds, label: t('seconds', 'asurgentui') };
-  }
-  return {};
-};
 
 const StartEnd = ({
   cronExpression,
@@ -51,12 +22,11 @@ const StartEnd = ({
   onGoingTo,
   durationInSeconds,
   theme,
-  ...props
 }) => {
   const nextNextDate = useMemo(() => {
     try {
       const interval = parser.parseExpression(cronExpression,
-        { currentDate: newMoment(nextDate).toString() });
+        { currentDate: newMoment(nextDate).toISOString() });
       const d = newMoment(interval.next().toString());
       return d;
     } catch (e) {
@@ -68,25 +38,25 @@ const StartEnd = ({
   if (isOngoing) {
     return (
       <C.Dates>
-        <C.Container {...props}>
-          <S.TextSmall withBottomMargin>{t('started', 'asurgentui')}</S.TextSmall>
+        <C.Container>
+          <C.TextSmall withBottomMargin>{t('started', 'asurgentui')}</C.TextSmall>
           <PlayIcon fontSize="large" style={{ fill: theme.blue900 }} />
-          <S.TextNormal>{newMoment(onGoingFrom).format('HH:mm')}</S.TextNormal>
-          <S.TextSmall withBottomMargin>{newMoment(onGoingFrom).format('YYYY-MM-DD')}</S.TextSmall>
+          <C.TextNormal>{newMoment(onGoingFrom).format('HH:mm')}</C.TextNormal>
+          <C.TextSmall withBottomMargin>{newMoment(onGoingFrom).format('YYYY-MM-DD')}</C.TextSmall>
         </C.Container>
 
         <C.Container>
-          <S.TextSmall withBottomMargin>{t('remaining', 'asurgentui')}</S.TextSmall>
+          <C.TextSmall withBottomMargin>{t('remaining', 'asurgentui')}</C.TextSmall>
           <Icons.Duration active theme={theme} />
-          <S.TextNormal>{getRelativeTime({ date: onGoingTo }).number}</S.TextNormal>
-          <S.TextSmall withBottomMargin>{getRelativeTime({ date: onGoingTo }).label}</S.TextSmall>
+          <C.TextNormal>{getRelativeTime({ date: onGoingTo }).number}</C.TextNormal>
+          <C.TextSmall withBottomMargin>{getRelativeTime({ date: onGoingTo }).label}</C.TextSmall>
         </C.Container>
 
-        <C.Container {...props}>
-          <S.TextSmall withBottomMargin>{t('ends', 'asurgentui')}</S.TextSmall>
+        <C.Container>
+          <C.TextSmall withBottomMargin>{t('ends', 'asurgentui')}</C.TextSmall>
           <StopIcon fontSize="large" style={{ fill: theme.blue900 }} />
-          <S.TextNormal>{newMoment(onGoingTo).format('HH:mm')}</S.TextNormal>
-          <S.TextSmall withBottomMargin>{newMoment(onGoingTo).format('YYYY-MM-DD')}</S.TextSmall>
+          <C.TextNormal>{newMoment(onGoingTo).format('HH:mm')}</C.TextNormal>
+          <C.TextSmall withBottomMargin>{newMoment(onGoingTo).format('YYYY-MM-DD')}</C.TextSmall>
         </C.Container>
       </C.Dates>
     );
@@ -95,40 +65,40 @@ const StartEnd = ({
   // calendar versions
   return (
     <C.Dates>
-      <C.Container {...props}>
+      <C.Container hasExpired={hasExpired}>
         <C.DateAndTime active={!hasExpired}>
-          <S.TextNormal>{newMoment(nextDate).format('DD')}</S.TextNormal>
-          <S.TextSmall>
+          <C.TextNormal>{newMoment(nextDate).format('DD')}</C.TextNormal>
+          <C.TextSmall>
             {`${t(`month${newMoment(nextDate).month()}`)} ${newMoment(nextDate).format('YY')}`}
-          </S.TextSmall>
+          </C.TextSmall>
         </C.DateAndTime>
         <C.Time>
-          <S.TextSmall>
+          <C.TextSmall>
             {`${t(`day${newMoment(nextDate).day()}`)} ${newMoment(nextDate).format('hh:mm')}`}
-          </S.TextSmall>
+          </C.TextSmall>
         </C.Time>
       </C.Container>
 
-      <C.Container>
-        <S.TextSmall withBottomMargin>{t('duration', 'asurgentui')}</S.TextSmall>
-        <Icons.Duration active theme={theme} />
-        <S.TextNormal>{getRelativeTime({ duration: durationInSeconds }).number}</S.TextNormal>
-        <S.TextSmall withBottomMargin>
+      <C.Container hasExpired={hasExpired}>
+        <C.TextSmall withBottomMargin>{t('duration', 'asurgentui')}</C.TextSmall>
+        <Icons.Duration active={!hasExpired} theme={theme} />
+        <C.TextNormal>{getRelativeTime({ duration: durationInSeconds }).number}</C.TextNormal>
+        <C.TextSmall withBottomMargin>
           {getRelativeTime({ duration: durationInSeconds }).label}
-        </S.TextSmall>
+        </C.TextSmall>
       </C.Container>
 
-      <C.Container {...props}>
+      <C.Container hasExpired={hasExpired}>
         <C.DateAndTime active={!hasExpired}>
-          <S.TextNormal>{newMoment(nextNextDate).format('DD')}</S.TextNormal>
-          <S.TextSmall>
+          <C.TextNormal>{newMoment(nextNextDate).format('DD')}</C.TextNormal>
+          <C.TextSmall>
             {`${t(`month${newMoment(nextNextDate).month()}`)} ${newMoment(nextNextDate).format('YY')}`}
-          </S.TextSmall>
+          </C.TextSmall>
         </C.DateAndTime>
         <C.Time>
-          <S.TextSmall>
+          <C.TextSmall>
             {`${t(`day${newMoment(nextNextDate).day()}`)} ${newMoment(nextNextDate).format('hh:mm')}`}
-          </S.TextSmall>
+          </C.TextSmall>
         </C.Time>
       </C.Container>
     </C.Dates>
@@ -155,11 +125,6 @@ StartEnd.propTypes = {
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
   ]),
-  endDate: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-    PropTypes.instanceOf(moment),
-  ]),
   theme: PropTypes.instanceOf(Object).isRequired,
 };
 
@@ -171,7 +136,6 @@ StartEnd.defaultProps = {
   nextDate: null,
   onGoingFrom: null,
   onGoingTo: null,
-  endDate: null,
 };
 
 export default withTheme(StartEnd);

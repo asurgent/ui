@@ -25,6 +25,16 @@ const endOfDay = newMoment()
   })
   .toISOString();
 
+const nextYear = newMoment()
+  .set({
+    hours: 6,
+    minutes: 0,
+    seconds: 0,
+    milliseconds: 0,
+  })
+  .add(1, 'year')
+  .toISOString();
+
 const startOfHour = newMoment()
   .set({
     hours: newMoment().hours(),
@@ -43,16 +53,7 @@ const startOfNextHour = newMoment()
   })
   .toISOString();
 
-const upcomingProps = {
-  start: startOfDay,
-  end: endOfDay,
-  cronExpression: null,
-  hasExpired: false,
-  isOngoing: false,
-  onGoingFrom: null,
-  onGoingTo: null,
-};
-
+// unused parts of the api-reply are stripped
 const ongoingProps = {
   startDate: startOfDay,
   endDate: endOfDay,
@@ -73,12 +74,22 @@ const expiredProps = {
   onGoingTo: null,
 };
 
+const repeatingProps = {
+  startDate: startOfDay,
+  endDate: nextYear,
+  cronExpression: '* * * * *',
+  hasExpired: false,
+  isOngoing: false,
+  onGoingFrom: null,
+  onGoingTo: null,
+};
+
 describe('Duration', () => {
   test('Renders progress', async () => {
     const { getByTestId } = render(<Repeat {...ongoingProps} />);
 
-    const minute = getByTestId(/progress/);
-    expect(minute).toBeDefined();
+    const progress = getByTestId(/progress/);
+    expect(progress).toBeDefined();
   });
   test('Renders expired', async () => {
     const { getByTestId } = render(<Repeat {...expiredProps} />);
@@ -86,20 +97,36 @@ describe('Duration', () => {
     const hour = getByTestId(/expired/);
     expect(hour).toBeDefined();
   });
-  test('Renders upcoming', async () => {
-    const { getByTestId } = render(<Repeat {...upcomingProps} />);
 
-    const day = getByTestId(/dayShort/);
-    expect(day).toBeDefined();
+  test('Renders repeats', async () => {
+    const { getByTestId } = render(<Repeat {...repeatingProps} />);
+
+    const repeats = getByTestId(/repeats/);
+    expect(repeats).toBeDefined();
   });
-  test('Renders week', async () => {
-    const props = {
-      endDate: newMoment().add(1, 'year'),
-      cronExpression: '0 15 * * 1',
-    };
-    const { getByTestId } = render(<Repeat {...props} />);
 
-    const week = getByTestId(/weekShort/);
-    expect(week).toBeDefined();
+  test('Renders correct date type', async () => {
+    const { getByTestId, rerender } = render(<Repeat {...repeatingProps} />);
+    expect(getByTestId(/minuteShort/)).toBeDefined();
+
+    let newProps = { ...repeatingProps, cronExpression: '0 * * * *' };
+    rerender(<Repeat {...newProps} />);
+    expect(getByTestId(/hourShort/)).toBeDefined();
+
+    newProps = { ...repeatingProps, cronExpression: '0 12 * * *' };
+    rerender(<Repeat {...newProps} />);
+    expect(getByTestId(/dayShort/)).toBeDefined();
+
+    newProps = { ...repeatingProps, cronExpression: '0 12 * * 1' };
+    rerender(<Repeat {...newProps} />);
+    expect(getByTestId(/weekShort/)).toBeDefined();
+
+    newProps = { ...repeatingProps, cronExpression: '0 12 1 * *' };
+    rerender(<Repeat {...newProps} />);
+    expect(getByTestId(/monthShort/)).toBeDefined();
+
+    newProps = { ...repeatingProps, cronExpression: '0 12 1 1 *' };
+    rerender(<Repeat {...newProps} />);
+    expect(getByTestId(/yearShort/)).toBeDefined();
   });
 });

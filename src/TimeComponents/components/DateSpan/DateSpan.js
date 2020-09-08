@@ -2,46 +2,44 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { withTheme } from 'styled-components';
-import * as C from './DateSpan.styled';
-import * as S from '../../TimeComponents.styled';
+import * as C from '../../TimeComponents.styled';
 import translation from './DateSpan.translation';
-
 import { newMoment } from '../../../Moment/momentParsers';
 
 const { t } = translation;
 
-const DateSpan = ({
+const Datespan = ({
   startDate,
   endDate,
   hasExpired,
   theme,
 }) => ((
   <C.Dates>
-    <C.Container>
+    <C.Container hasExpired={hasExpired}>
       <C.StartDate active={!hasExpired} theme={theme}>
-        <S.TextNormal>{newMoment(startDate).format('DD')}</S.TextNormal>
-        <S.TextSmall>
+        <C.TextNormal>{newMoment(startDate).format('DD')}</C.TextNormal>
+        <C.TextSmall>
           {`${t(`month${newMoment(startDate).month()}`)} ${newMoment(startDate).format('YY')}`}
-        </S.TextSmall>
+        </C.TextSmall>
       </C.StartDate>
       <C.Time>
-        <S.TextSmall>
+        <C.TextSmall>
           {`${t(`day${newMoment(startDate).day()}`)} ${newMoment(startDate).format('HH:mm')}`}
-        </S.TextSmall>
+        </C.TextSmall>
       </C.Time>
     </C.Container>
 
-    <C.Container>
+    <C.Container hasExpired={hasExpired}>
       <C.EndDate active={!hasExpired} theme={theme}>
-        <S.TextNormal>{newMoment(endDate).format('DD')}</S.TextNormal>
-        <S.TextSmall>
+        <C.TextNormal>{newMoment(endDate).format('DD')}</C.TextNormal>
+        <C.TextSmall>
           {`${t(`month${newMoment(endDate).month()}`)} ${newMoment(endDate).format('YY')}`}
-        </S.TextSmall>
+        </C.TextSmall>
       </C.EndDate>
       <C.Time>
-        <S.TextSmall>
+        <C.TextSmall>
           {`${t(`day${newMoment(endDate).day()}`)} ${newMoment(endDate).format('HH:mm')}`}
-        </S.TextSmall>
+        </C.TextSmall>
       </C.Time>
     </C.Container>
   </C.Dates>
@@ -49,7 +47,7 @@ const DateSpan = ({
 
 );
 
-DateSpan.propTypes = {
+Datespan.propTypes = {
   hasExpired: PropTypes.bool.isRequired,
   startDate: PropTypes.oneOfType([
     PropTypes.string,
@@ -63,10 +61,10 @@ DateSpan.propTypes = {
   ]),
   theme: PropTypes.instanceOf(Object),
 };
-DateSpan.defaultProps = {
+Datespan.defaultProps = {
   startDate: null,
   endDate: null,
   theme: {},
 };
 
-export default withTheme(DateSpan);
+export default withTheme(Datespan);
