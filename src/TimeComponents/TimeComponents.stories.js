@@ -40,13 +40,13 @@ export const repeat = () => (
       cronExpression={text('cron exp', `0 ${newMoment().hours() + 1} * * *`)}
       nextExecution={text('Next execution', newMoment().set({
         hours: newMoment().hours() + 1, minutes: 0, seconds: 0, milliseconds: 0,
-      }))}
+      }).toISOString())}
       onGoingFrom={text('Ongoing from', newMoment().set({
         hours: newMoment().hours(), minutes: 0, seconds: 0, milliseconds: 0,
-      }))}
+      }).toISOString())}
       onGoingTo={text('Ongoing to', newMoment().set({
         hours: newMoment().hours() + 1, minutes: 0, seconds: 0, milliseconds: 0,
-      }))}
+      }).toISOString())}
       useAnimation={boolean('Use animation', true)}
       showPercentage={boolean('Show percentage', true)}
     />
