@@ -102,8 +102,8 @@ Repeat.defaultProps = {
   onGoingFrom: null,
   onGoingTo: null,
   cronExpression: null,
-  useAnimation: true,
-  showPercentage: true,
+  useAnimation: false,
+  showPercentage: false,
   theme: {},
 };
 
