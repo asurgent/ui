@@ -38,21 +38,21 @@ const StartEnd = ({
   if (isOngoing) {
     return (
       <C.Dates>
-        <C.Container>
+        <C.Container marginRight>
           <C.TextSmall withBottomMargin>{t('started', 'asurgentui')}</C.TextSmall>
           <PlayIcon fontSize="large" style={{ fill: theme.blue900 }} />
           <C.TextNormal>{newMoment(onGoingFrom).format('HH:mm')}</C.TextNormal>
           <C.TextSmall withBottomMargin>{newMoment(onGoingFrom).format('YYYY-MM-DD')}</C.TextSmall>
         </C.Container>
 
-        <C.Container>
+        <C.Container marginRight marginLeft>
           <C.TextSmall withBottomMargin>{t('remaining', 'asurgentui')}</C.TextSmall>
           <Icons.Duration active theme={theme} />
           <C.TextNormal>{getRelativeTime({ date: onGoingTo }).number}</C.TextNormal>
           <C.TextSmall withBottomMargin>{getRelativeTime({ date: onGoingTo }).label}</C.TextSmall>
         </C.Container>
 
-        <C.Container>
+        <C.Container marginLeft>
           <C.TextSmall withBottomMargin>{t('ends', 'asurgentui')}</C.TextSmall>
           <StopIcon fontSize="large" style={{ fill: theme.blue900 }} />
           <C.TextNormal>{newMoment(onGoingTo).format('HH:mm')}</C.TextNormal>
@@ -65,7 +65,7 @@ const StartEnd = ({
   // calendar versions
   return (
     <C.Dates>
-      <C.Container hasExpired={hasExpired}>
+      <C.Container hasExpired={hasExpired} marginRight>
         <C.DateAndTime active={!hasExpired}>
           <C.TextNormal>{newMoment(nextExecution).format('DD')}</C.TextNormal>
           <C.TextSmall>
@@ -79,7 +79,7 @@ const StartEnd = ({
         </C.Time>
       </C.Container>
 
-      <C.Container hasExpired={hasExpired}>
+      <C.Container hasExpired={hasExpired} marginRight marginLeft>
         <C.TextSmall withBottomMargin>{t('duration', 'asurgentui')}</C.TextSmall>
         <Icons.Duration active={!hasExpired} theme={theme} />
         <C.TextNormal>{getRelativeTime({ duration: durationInSeconds }).number}</C.TextNormal>
@@ -88,7 +88,7 @@ const StartEnd = ({
         </C.TextSmall>
       </C.Container>
 
-      <C.Container hasExpired={hasExpired}>
+      <C.Container hasExpired={hasExpired} marginLeft>
         <C.DateAndTime active={!hasExpired}>
           <C.TextNormal>{newMoment(nextNextDate).format('DD')}</C.TextNormal>
           <C.TextSmall>

@@ -26,12 +26,14 @@ export const Container = styled.div`
     }
     text-align: center;
     color: ${({ hasExpired, theme }) => (hasExpired ? theme.gray600 : theme.black)};
-    margin: 0 2rem;
+    margin-right: ${({ marginRight }) => marginRight && '2rem'};
+    margin-left: ${({ marginLeft }) => marginLeft && '2rem'};
 `;
 
 export const Dates = styled.div`
     display: flex;
     align-items: center;
+
 `;
 
 export const Calendar = styled.div`
