@@ -47,7 +47,7 @@ const Repeat = ({
   if (isOngoing) {
     return (
       <C.Container data-testid="progress">
-        <C.TextSmall withBottomMargin>{t('status', 'asurgentui')}</C.TextSmall>
+        <C.TextSmall style={{ marginBottom: '0.5rem' }}>{t('status', 'asurgentui')}</C.TextSmall>
         <Progress.Ring
           radius={20}
           stroke={2}
