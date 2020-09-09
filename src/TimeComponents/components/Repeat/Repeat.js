@@ -37,9 +37,9 @@ const Repeat = ({
   if (hasExpired) {
     return (
       <C.Container hasExpired data-testid="expired">
-        <C.TextSmall withBottomMargin>{t('status', 'asurgentui')}</C.TextSmall>
+        <C.TextSmall style={{ marginBottom: '1rem' }}>{t('status', 'asurgentui')}</C.TextSmall>
         <C.TextNormal data-testid="short-label">{t('naIcon', 'asurgentui')}</C.TextNormal>
-        <C.TextSmall style={{ marginTop: '0.7rem' }} data-testid="long-label">{t('expired', 'asurgentui')}</C.TextSmall>
+        <C.TextSmall style={{ marginTop: '1rem' }} data-testid="long-label">{t('expired', 'asurgentui')}</C.TextSmall>
       </C.Container>
     );
   }
@@ -47,10 +47,10 @@ const Repeat = ({
   if (isOngoing) {
     return (
       <C.Container data-testid="progress">
-        <C.TextSmall withBottomMargin>{t('status', 'asurgentui')}</C.TextSmall>
+        <C.TextSmall style={{ marginBottom: '0.5rem' }}>{t('status', 'asurgentui')}</C.TextSmall>
         <Progress.Ring
           radius={20}
-          stroke={3}
+          stroke={2}
           progress={getProgress(onGoingFrom, onGoingTo)}
           useShadow
           useAnimation={useAnimation}
