@@ -16,7 +16,7 @@ const { t } = translation;
 const StartEnd = ({
   cronExpression,
   isOngoing,
-  nextDate,
+  nextExecution,
   hasExpired,
   onGoingFrom,
   onGoingTo,
@@ -26,13 +26,13 @@ const StartEnd = ({
   const nextNextDate = useMemo(() => {
     try {
       const interval = parser.parseExpression(cronExpression,
-        { currentDate: newMoment(nextDate).toISOString() });
+        { currentDate: newMoment(nextExecution).toISOString() });
       const d = newMoment(interval.next().toString());
       return d;
     } catch (e) {
       return null;
     }
-  }, [cronExpression, nextDate]);
+  }, [cronExpression, nextExecution]);
 
   // play/stop buttons
   if (isOngoing) {
@@ -67,14 +67,14 @@ const StartEnd = ({
     <C.Dates>
       <C.Container hasExpired={hasExpired}>
         <C.DateAndTime active={!hasExpired}>
-          <C.TextNormal>{newMoment(nextDate).format('DD')}</C.TextNormal>
+          <C.TextNormal>{newMoment(nextExecution).format('DD')}</C.TextNormal>
           <C.TextSmall>
-            {`${t(`month${newMoment(nextDate).month()}`)} ${newMoment(nextDate).format('YY')}`}
+            {`${t(`month${newMoment(nextExecution).month()}`, 'asurgentui')} ${newMoment(nextExecution).format('YY')}`}
           </C.TextSmall>
         </C.DateAndTime>
         <C.Time>
           <C.TextSmall>
-            {`${t(`day${newMoment(nextDate).day()}`)} ${newMoment(nextDate).format('hh:mm')}`}
+            {`${t(`day${newMoment(nextExecution).day()}`, 'asurgentui')} ${newMoment(nextExecution).format('hh:mm')}`}
           </C.TextSmall>
         </C.Time>
       </C.Container>
@@ -92,12 +92,12 @@ const StartEnd = ({
         <C.DateAndTime active={!hasExpired}>
           <C.TextNormal>{newMoment(nextNextDate).format('DD')}</C.TextNormal>
           <C.TextSmall>
-            {`${t(`month${newMoment(nextNextDate).month()}`)} ${newMoment(nextNextDate).format('YY')}`}
+            {`${t(`month${newMoment(nextNextDate).month()}`, 'asurgentui')} ${newMoment(nextNextDate).format('YY')}`}
           </C.TextSmall>
         </C.DateAndTime>
         <C.Time>
           <C.TextSmall>
-            {`${t(`day${newMoment(nextNextDate).day()}`)} ${newMoment(nextNextDate).format('hh:mm')}`}
+            {`${t(`day${newMoment(nextNextDate).day()}`, 'asurgentui')} ${newMoment(nextNextDate).format('hh:mm')}`}
           </C.TextSmall>
         </C.Time>
       </C.Container>
@@ -110,7 +110,7 @@ StartEnd.propTypes = {
   isOngoing: PropTypes.bool,
   cronExpression: PropTypes.string,
   durationInSeconds: PropTypes.number,
-  nextDate: PropTypes.oneOfType([
+  nextExecution: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
@@ -133,7 +133,7 @@ StartEnd.defaultProps = {
   isOngoing: false,
   cronExpression: null,
   durationInSeconds: null,
-  nextDate: null,
+  nextExecution: null,
   onGoingFrom: null,
   onGoingTo: null,
 };

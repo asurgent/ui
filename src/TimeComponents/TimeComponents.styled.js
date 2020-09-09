@@ -5,7 +5,6 @@ export const TextSmall = styled.p`
     line-height: 18px;
     text-align: center;
     text-transform: uppercase;
-    margin-bottom: ${({ withBottomMargin }) => (withBottomMargin ? '1rem!important' : '0')};
 `;
 
 export const TextNormal = styled.h4`
@@ -18,7 +17,6 @@ export const TextNormal = styled.h4`
 `;
 
 export const Container = styled.div`
-    width: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -28,6 +26,7 @@ export const Container = styled.div`
     }
     text-align: center;
     color: ${({ hasExpired, theme }) => (hasExpired ? theme.gray600 : theme.black)};
+    margin: 0 2rem;
 `;
 
 export const Dates = styled.div`
@@ -49,14 +48,14 @@ export const Calendar = styled.div`
 `;
 
 export const StartDate = styled(Calendar)`
-  border-top-color: ${({ active, theme }) => (active ? theme.green800 : theme.gray600)};
+  border-top-color: ${({ hasExpired, theme }) => (hasExpired ? theme.gray600 : theme.green800)};
 `;
 export const EndDate = styled(Calendar)`
-  border-top-color: ${({ active, theme }) => (active ? theme.ruby800 : theme.gray600)};
+  border-top-color: ${({ hasExpired, theme }) => (hasExpired ? theme.gray600 : theme.ruby800)};
 `;
 
 export const Time = styled.div`
-  background: 'white';
+  background: ${({ theme }) => theme.white};
   padding: 0.2rem 0.5rem;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-bottom-left-radius: 5px;
