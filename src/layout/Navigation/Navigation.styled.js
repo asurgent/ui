@@ -16,7 +16,6 @@ export const NavigationItem = styled(NavLink)`
     position: relative;
     margin: ${({ theme }) => (theme.menuItemsSpacing || '0')} 0;
     padding: ${({ theme }) => (theme.menuItemsSpacing || '1.6rem 0')};
-    border-radius: 3px;
     font-size: ${({ theme }) => (theme.menuFontSize || 'inherit')};
     color: ${({ theme }) => theme.linkColor};
     width: 100%;

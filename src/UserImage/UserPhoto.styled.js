@@ -12,7 +12,8 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   border: 1px solid;
-  border-color: ${({ email }) => {
+  border-color: #fff;
+  box-shadow: 0 0 0 2px ${({ email }) => {
     const color = randomcolor({
       luminosity: 'light',
       hue: 'random',
@@ -36,7 +37,7 @@ export const Wrapper = styled.div`
   }};
 
   small {
-    font-size: .4em;    
+    font-size: .4em;
     text-transform: uppercase;
   }
 `;
