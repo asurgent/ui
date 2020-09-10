@@ -23,7 +23,7 @@ export const FadeIn = styled.div`
 
 export const FadeOut = styled(FadeIn)``;
 
-export const FadeOutAndOut = styled(FadeIn)`
+export const FadeInAndOut = styled(FadeIn)`
  opacity: ${({ state, in: visible }) => {
     switch (state) {
       case 'entering':

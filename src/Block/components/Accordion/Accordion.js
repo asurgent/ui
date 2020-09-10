@@ -45,11 +45,11 @@ const Accordion = ({
           <KeyboardArrowDown fontSize="large" />
         </Tooltip.Middle>
       </C.Arrow>
-      <Transition.FadeOutAndOut isVisible={isOpen} timeout={80} className="content">
+      <Transition.FadeInAndOut isVisible={isOpen} timeout={80} className="content">
         <C.Content>
           { isOpen && typeof children === 'function' ? children() : children }
         </C.Content>
-      </Transition.FadeOutAndOut>
+      </Transition.FadeInAndOut>
     </C.Wrapper>
   );
 };
