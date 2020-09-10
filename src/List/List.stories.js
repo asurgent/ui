@@ -6,7 +6,7 @@ import * as Button from '../Button/index';
 
 export default { title: 'UI Components|List', decorators: [withKnobs] };
 
-export const saveToFileButton = () => (
+export const primaryList = () => (
   <>
     <List.Primary
       rows={[

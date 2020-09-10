@@ -17,12 +17,13 @@ const defaultProps = {
 
 const List = ({ rows, children }) => (
   <C.Wrapper>
-    { rows.map((item) => {
+    { rows.map((item, index) => {
       if (!item) { return null; }
 
       const { label, value, row } = item;
       return (
-        <>
+        // eslint-disable-next-line react/no-array-index-key
+        <React.Fragment key={`${value}${label}${index}-key`}>
           { !row && (
           <>
             <C.Title>
@@ -39,8 +40,10 @@ const List = ({ rows, children }) => (
             )}
           </>
           )}
-          { row && (<C.Row>{row}</C.Row>)}
-        </>
+          { row && (
+            <C.Row>{row}</C.Row>
+          )}
+        </React.Fragment>
       );
     })}
     { children }
