@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const Text = styled.div`
     padding: 3.2rem;
     overflow: hidden;

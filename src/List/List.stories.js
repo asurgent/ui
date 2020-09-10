@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import * as Icon from '@material-ui/icons';
