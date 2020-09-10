@@ -21,6 +21,7 @@ import * as Transition from './Transition';
 import * as Dismissable from './Dismissable';
 import * as TimeComponents from './TimeComponents';
 import * as Progress from './Progress';
+import * as Markdown from './Markdown';
 
 import * as Layout from './layout';
 
@@ -47,4 +48,5 @@ export {
   Svg,
   TimeComponents,
   Progress,
+  Markdown,
 };
