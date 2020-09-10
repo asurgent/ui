@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import * as C from './Accordion.styled';
 import * as Transition from '../../../Transition';
+import * as Tooltip from '../../../Tooltip';
+import translation from './Accordion.translation';
 
 const propTypes = {
   children: PropTypes.func.isRequired,
@@ -21,7 +23,7 @@ const Accordion = ({
   title, description, open, children,
 }) => {
   const [isOpen, setIsOpen] = useState(open);
-
+  const { t } = translation;
   return (
     <C.Wrapper onClick={() => setIsOpen(true)}>
       <C.Text isOpen={isOpen}>
@@ -39,7 +41,9 @@ const Accordion = ({
         }}
         isOpen={isOpen}
       >
-        <KeyboardArrowDown fontSize="large" />
+        <Tooltip.Middle tip={t('details', 'asurgentui')}>
+          <KeyboardArrowDown fontSize="large" />
+        </Tooltip.Middle>
       </C.Arrow>
       <Transition.FadeOutAndOut isVisible={isOpen} timeout={80} className="content">
         <C.Content>
