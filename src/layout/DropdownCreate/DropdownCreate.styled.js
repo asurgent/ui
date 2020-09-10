@@ -60,7 +60,6 @@ export const CreateItem = styled.div`
         "logo title"
         "logo desc";
     padding: .8rem 2.4rem;
-    border-radius: 3px;
 
     &:hover {
         background: ${({ theme }) => theme.gray100};
@@ -84,8 +83,8 @@ export const CreateItem = styled.div`
 `;
 
 export const MobileContent = styled.div`
-    margin-top: 1.6rem;
-    padding: 2.4rem;
+    margin-top: 6.4rem;
+    /* padding: 2.4rem; */
 `;
 
 export const Mobile = styled.div`

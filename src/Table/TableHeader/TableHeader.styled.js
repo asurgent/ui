@@ -14,7 +14,6 @@ export const Header = styled(C.Cell)`
 `;
 
 export const HeaderLabel = styled(C.TableCellContent)`
-    color: ${({ theme }) => theme.gray600};
     font-weight: 600;
     font-size: 1.2rem;
 `;

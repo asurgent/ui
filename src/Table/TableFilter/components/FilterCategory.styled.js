@@ -51,7 +51,7 @@ export const Dropdown = styled.div`
     border: 1px solid ${({ theme }) => theme.gray200};
     display: flex;
     flex-direction: column;
-    
+
 
     .close {
         position: absolute;
@@ -64,7 +64,7 @@ export const Dropdown = styled.div`
         width: auto;
         height: auto;
         max-height: 50rem;
-        top: unset;
+        top: -16px;
         bottom: unset;
         min-width: 40rem;
         left: unset;
@@ -74,8 +74,8 @@ export const Dropdown = styled.div`
         border: 1px solid ${({ theme }) => theme.gray200};
         box-shadow: 0 6px 10px -5px ${({ theme }) => theme.rgba(theme.black, 0.2)};
         display: flex;
-        flex-direction: column;  
-        
+        flex-direction: column;
+
         .close {
             display: none;
         }
@@ -89,5 +89,5 @@ export const Mobile = styled.div`
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         display: none;
-    }   
+    }
 `;

@@ -83,7 +83,7 @@ export const TabButton = styled.div`
     padding: 1.6rem;
     font-size: 1.4rem;
     font-weight: bold;
-    background: ${({ active, theme }) => (active ? theme.white : theme.gray300)};
+    background: ${({ active, theme }) => (active ? theme.white : theme.gray100)};
     text-transform: uppercase;
     text-align: center;
 `;

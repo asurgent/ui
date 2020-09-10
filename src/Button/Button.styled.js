@@ -102,6 +102,8 @@ export const Plain = styled.div`
     color: ${({ theme }) => theme.black};
     position: relative;
     display: inline-block;
+    width: 100%;
+    align-self: center;
 
     button {
         cursor: pointer;
@@ -120,8 +122,8 @@ export const Plain = styled.div`
 
 export const Filter = styled(Button)`
     padding: .5rem .8rem;
-    background-color: #eff3f6;
-    background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
+    background-color: transparent;
+    border-color: transparent;
     position: relative;
 
     button {
@@ -134,14 +136,15 @@ export const Filter = styled(Button)`
     }
 
     &:hover {
-        border-color: ${({ theme }) => darken(0.1, theme.borderColor)};
-        background: ${({ theme }) => darken(0.02, theme.backgroundColor)};
-        background-image: linear-gradient(-180deg,${() => darken(0.02, '#fafbfc')},${() => darken(0.02, '#eff3f6')} 90%);
+      border-color: ${({ theme }) => darken(0.1, theme.borderColor)};
+      background: ${({ theme }) => darken(0.02, theme.backgroundColor)};
+      background-image: linear-gradient(-180deg,${() => darken(0.02, '#fafbfc')},${() => darken(0.02, '#eff3f6')} 90%);
         color: ${({ theme }) => darken(0.02, (theme.textColor))};
     }
 
     .label {
         font-size: .9rem;
+        line-height: 1rem;
     }
 `;
 
