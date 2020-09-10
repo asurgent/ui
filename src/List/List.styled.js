@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
     position: relative;
     width: 100%;
     display: grid;
-    grid-template-columns: minmax(auto, 20%) 1fr;
+    grid-template-columns: auto 1fr;
     border-top: 1px solid ${({ theme }) => theme.gray300};
 `;
 
@@ -19,6 +19,7 @@ export const Title = styled.div`
     align-items: center;
     border-bottom: 1px solid ${({ theme }) => theme.gray300};
     word-break: break-all;
+    min-width: 8rem;
 `;
 
 export const Value = styled(Title)`
