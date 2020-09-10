@@ -70,6 +70,14 @@ export const pillButton = () => (
   <Button.Pill onClick={(e) => action('Clicked!')(e)} iconRight={<Icon.ConfirmationNumber fontSize="medium" />}>{content}</Button.Pill>
 );
 
+export const createBlock = () => (
+  <Button.CreateBlock link="/sdf/2" onClick={(e) => action('Clicked!')(e)} iconLeft={<Icon.Add fontSize="large" />}>{content}</Button.CreateBlock>
+);
+
+export const Stretched = () => (
+  <Button.Stretched link="/sdf/2" onClick={(e) => action('Clicked!')(e)} iconRight={<Icon.ArrowForward fontSize="large" />}>{content}</Button.Stretched>
+);
+
 export const tooltipButton = () => (
   <Button.Primary tooltip="hello" tooltipOrientation={text('orientation (middle,left,right)', 'middle')} onClick={(e) => action('Clicked!')(e)}>
     {content}

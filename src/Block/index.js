@@ -8,7 +8,7 @@ import {
   Stretch,
   Wrap,
   WrapGrid,
-} from './Block.styled';
+} from './components/Block.styled';
 
 Center.displayName = '@asurgent.ui.Block.Center';
 Left.displayName = '@asurgent.ui.Block.Left';
@@ -32,10 +32,11 @@ export {
   WrapGrid,
 };
 
-export { default as Emptystate } from './BlockEmptyState';
-export { default as SubnavigationBlock } from './SubnavigationBlock';
+export { default as Accordion } from './components/Accordion';
+export { default as Emptystate } from './components/BlockEmptyState';
+export { default as SubnavigationBlock } from './components/SubnavigationBlock';
 export {
   ErrorMessage as Error,
   WarningMessage as Warning,
   InfoMessage as Info,
-} from './BlockStatusMessage';
+} from './components/BlockStatusMessage/BlockStatusMessage';

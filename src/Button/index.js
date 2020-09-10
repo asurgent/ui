@@ -29,6 +29,7 @@ const Create = withStyle((theme) => ({
   spinnerColor: theme.white,
 }))(C.Button);
 
+
 const Hollow = withStyle((theme) => ({
   backgroundColor: 'transparent',
   borderColor: theme.blue400,
@@ -54,6 +55,16 @@ const Filter = withMapProps(filterPropsMapper)(withStyle(() => ({
   borderColor: darken(0.1, '#eff3f6'),
   textColor: '#24292e',
 }))(C.Filter));
+
+const CreateBlock = withStyle((theme) => ({
+  textColor: theme.blue900,
+  spinnerColor: theme.blue900,
+}))(C.CreateBlock);
+
+const Stretched = withStyle((theme) => ({
+  textColor: theme.blue900,
+  spinnerColor: theme.blue900,
+}))(C.Stretched);
 
 const iconPropsMapper = ({
   icon,
@@ -87,4 +98,6 @@ export {
   Create,
   Filter,
   Pill,
+  CreateBlock,
+  Stretched,
 };
