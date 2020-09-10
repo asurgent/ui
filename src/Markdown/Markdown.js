@@ -14,7 +14,7 @@ const defaultProps = {
   flavor: 'github',
 };
 
-const Markdown = ({ markdown, flavor }) => {
+const Markdown = ({ markdown, flavor, ...props }) => {
   const converter = new showdown.Converter({
     tables: true,
     strikethrough: true,
@@ -26,9 +26,8 @@ const Markdown = ({ markdown, flavor }) => {
 
     return dompurify.sanitize(dirtyHTML);
   }, [converter, flavor, markdown]);
-
   /* eslint-disable-next-line react/no-danger */
-  return <C.Markdown dangerouslySetInnerHTML={{ __html: html }} />;
+  return (<C.Markdown dangerouslySetInnerHTML={{ __html: html }} {...props} />);
 };
 
 Markdown.propTypes = propTypes;

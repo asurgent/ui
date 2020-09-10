@@ -10,9 +10,10 @@ export default {
   decorators: [withKnobs({ escapeHTML: false })],
 };
 
-export const markdownWithHTML = () => (
+export const markdown = () => (
   <Markdown.Primary
     markdown={text('Markdown', myMarkdown)}
     flavor={text('Flavor (github, original, vanilla)', 'github')}
+    style={{ padding: '1rem' }}
   />
 );
