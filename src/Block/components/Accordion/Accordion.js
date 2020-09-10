@@ -23,27 +23,25 @@ const Accordion = ({
   const [isOpen, setIsOpen] = useState(open);
 
   return (
-    <C.Wrapper>
-      <C.Peek onClick={() => setIsOpen(true)}>
-        <C.Text>
-          <C.Title>
-            {title}
-          </C.Title>
-          <C.Description>
-            {description}
-          </C.Description>
-        </C.Text>
-        <C.Arrow
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsOpen(!isOpen);
-          }}
-          isOpen={isOpen}
-        >
-          <KeyboardArrowDown fontSize="large" />
-        </C.Arrow>
-      </C.Peek>
-      <Transition.FadeOutAndOut isVisible={isOpen} timeout={80}>
+    <C.Wrapper onClick={() => setIsOpen(true)}>
+      <C.Text isOpen={isOpen}>
+        <C.Title>
+          {title}
+        </C.Title>
+        <C.Description>
+          {description}
+        </C.Description>
+      </C.Text>
+      <C.Arrow
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsOpen(!isOpen);
+        }}
+        isOpen={isOpen}
+      >
+        <KeyboardArrowDown fontSize="large" />
+      </C.Arrow>
+      <Transition.FadeOutAndOut isVisible={isOpen} timeout={80} className="content">
         <C.Content>
           { isOpen && typeof children === 'function' ? children() : children }
         </C.Content>
