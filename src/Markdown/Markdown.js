@@ -27,7 +27,7 @@ const Markdown = ({ markdown, flavor, ...props }) => {
     return dompurify.sanitize(dirtyHTML);
   }, [converter, flavor, markdown]);
   /* eslint-disable-next-line react/no-danger */
-  return (<C.Markdown dangerouslySetInnerHTML={{ __html: html }} {...props} />);
+  return (<C.Markdown className="markdown-body" dangerouslySetInnerHTML={{ __html: html }} {...props} />);
 };
 
 Markdown.propTypes = propTypes;
