@@ -30,14 +30,16 @@ export const Page = styled.div`
     font-size:1.2rem;
     font-weight: 600;
     border: 1px solid;
-    border-color: ${({ theme, activePage }) => (activePage ? theme.rgba(theme.gray100, 1) : 'transparent')};
-    background: ${({ theme, activePage }) => (activePage ? theme.rgba(theme.gray100, 1) : theme.white)};
+    border-color: ${({ theme, activePage }) => (activePage ? theme.rgba(theme.blue900, 1) : 'transparent')};
+    background: ${({ theme, activePage }) => (activePage ? theme.rgba(theme.white, 1) : theme.white)};
     font-weight: ${({ activePage }) => (activePage ? '700' : '400')};
-    color: ${({ theme }) => theme.gray800};
+    color: ${({ theme }) => theme.black};
     border-radius: 100%;
+    transition: 0.2s;
 
     &:hover {
-      border-color: ${({ theme, isClickable }) => (isClickable ? theme.rgba(theme.gray100, 1) : 'transparent')};
+      border-color: ${({ isClickable }) => (isClickable ? 'transparent' : 'transparent')};
       background: ${({ theme, isClickable }) => (isClickable ? theme.rgba(theme.gray100, 1) : 'transparent')};
+      color: ${({ theme }) => theme.black};
     }
 `;

@@ -125,6 +125,7 @@ export const Filter = styled(Button)`
     background-color: transparent;
     border-color: transparent;
     position: relative;
+    transition: 0.03s;
 
     button {
         cursor: pointer;
@@ -136,10 +137,9 @@ export const Filter = styled(Button)`
     }
 
     &:hover {
-      border-color: ${({ theme }) => darken(0.1, theme.borderColor)};
-      background: ${({ theme }) => darken(0.02, theme.backgroundColor)};
-      background-image: linear-gradient(-180deg,${() => darken(0.02, '#fafbfc')},${() => darken(0.02, '#eff3f6')} 90%);
-        color: ${({ theme }) => darken(0.02, (theme.textColor))};
+      border-color: ${({ theme }) => theme.gray100};
+      background: ${({ theme }) => theme.gray100};
+      color: ${({ theme }) => darken(0.02, (theme.textColor))};
     }
 
     .label {

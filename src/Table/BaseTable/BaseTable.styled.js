@@ -26,13 +26,15 @@ export const Count = styled.div`
     max-width: 100%;
     min-width: 100%;
     display: flex;
-    color: ${({ theme }) => theme.gray600};
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 1.4rem;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
     flex-direction: row;
-    padding: .8rem;
+    padding: .8rem 0;
+    div {
+      margin-left: .8rem;
+    }
 `;
 
 export const Wrapper = styled.div`

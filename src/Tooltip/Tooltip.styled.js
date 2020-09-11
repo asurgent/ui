@@ -11,6 +11,7 @@ export const TooltipWrapper = styled.div`
   max-width: max(20rem, 25vw);
   white-space: pre-wrap;
   font-size: 1.2rem;
+  animation: fade-in .1s ease;
   transform: ${({ position }) => {
     switch (position) {
       case 'left':
@@ -25,7 +26,18 @@ export const TooltipWrapper = styled.div`
   color: ${({ theme }) => theme.white};
   display: none;
 
+
   @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {
     display: block;
   }
+
+
+  @keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 `;
