@@ -70,6 +70,7 @@ export const NavigationItem = styled(NavLink)`
 `;
 
 export const Icon = styled.div`
+    display: flex;
     margin-left: 1.6rem;
     margin-right: 1.6rem;
 `;
