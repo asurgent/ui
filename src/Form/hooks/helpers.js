@@ -91,6 +91,8 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
         noLabel = false,
         parseOutput,
         validator,
+        className,
+        classNameWrapper,
         props: inputProps,
       } = inputs[key];
 
@@ -111,6 +113,8 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
           noLabel={noLabel}
           error={error}
           type={type}
+          className={className}
+          classNameWrapper={classNameWrapper}
         >
           <RequestedComponent
             hook={self}

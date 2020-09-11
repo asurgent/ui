@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { i18next } from '../../../lib/i18n';
 import i18next from 'i18next';
 import * as Tooltip from '../../Tooltip';
 
@@ -16,6 +15,8 @@ import {
 const propTyps = {
   tooltip: PropTypes.string,
   label: PropTypes.string,
+  className: PropTypes.string,
+  classNameWrapper: PropTypes.string,
   type: PropTypes.string.isRequired,
   error: PropTypes.oneOfType([
     PropTypes.bool,
@@ -30,11 +31,13 @@ const propTyps = {
 
 const defaultProps = {
   label: '',
-  noLabel: false,
   tooltip: '',
+  noLabel: false,
+  className: '',
+  classNameWrapper: '',
 };
 
-const Text = (props) => {
+const InputWrapper = (props) => {
   const {
     label,
     tooltip,
@@ -42,10 +45,12 @@ const Text = (props) => {
     children,
     noLabel,
     type,
+    className,
+    classNameWrapper,
   } = props;
 
   return (
-    <Main type={type}>
+    <Main type={type} className={className}>
       { noLabel === false && (
         <Header>
           <Label>{label}</Label>
@@ -56,7 +61,7 @@ const Text = (props) => {
           )}
         </Header>
       )}
-      <Wrapper hasError={Boolean(error)}>
+      <Wrapper hasError={Boolean(error)} className={classNameWrapper}>
         {children}
       </Wrapper>
       {error && (
@@ -72,8 +77,8 @@ const Text = (props) => {
   );
 };
 
-Text.defaultProps = defaultProps;
-Text.propTypes = propTyps;
-Text.displayName = '@asurgent.ui.Form.InputWrapper';
+InputWrapper.defaultProps = defaultProps;
+InputWrapper.propTypes = propTyps;
+InputWrapper.displayName = '@asurgent.ui.Form.InputWrapper';
 
-export default Text;
+export default InputWrapper;

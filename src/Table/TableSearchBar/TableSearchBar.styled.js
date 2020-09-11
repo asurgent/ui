@@ -2,6 +2,14 @@ import styled from 'styled-components';
 
 export const SearchBarContainer = styled.div`
     position: relative;
+
+    .custom-table-search {
+        border-radius: 5rem;
+        
+        input {
+            border-radius: 5rem;
+        }
+    }
 `;
 
 export const SearchBarBlocker = styled.div`

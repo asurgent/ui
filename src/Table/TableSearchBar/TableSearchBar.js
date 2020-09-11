@@ -23,7 +23,12 @@ const TableSearchBar = (props) => {
   const { t } = translation;
   const formData = useFormBuilder({
     search: {
-      type: 'text', placeholder: searchLabel || t('placeholder', 'asurgentui'), value: '', noLabel: true, props: { autoFocus: true },
+      type: 'text',
+      placeholder: searchLabel || t('placeholder', 'asurgentui'),
+      value: '',
+      noLabel: true,
+      props: { autoFocus: true },
+      classNameWrapper: 'custom-table-search',
     },
   });
 
