@@ -26,6 +26,7 @@ export const Output = styled.div`
 
 export const Value = styled.div`
     padding-right: 2rem;
+    overflow: hidden;
     text-overflow: ellipsis;
     color: ${({ theme, asPlaceholder }) => (asPlaceholder ? theme.gray400 : theme.black)};
 `;
