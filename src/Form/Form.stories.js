@@ -90,13 +90,13 @@ export const defaultForm = () => {
       type: 'number',
       label: 'Some Number (max 100)',
       tooltip: 'hejhej',
-      maxValue: null,
+      maxValue: 100,
     },
     someRadioGroup: {
       type: 'radiogroup',
       label: 'Some Radio Group',
       options: [
-        { label: 'label1label1label1label1label1label1label1label1label1label1label1label1label1label1label1label1label1label1label1', value: 'value1value1value1value1value1value1value1value1value1value1' },
+        { label: 'label1', value: 'value1' },
         { label: 'label2', value: 'value2' },
       ],
     },
@@ -105,7 +105,7 @@ export const defaultForm = () => {
       label: 'Some Radio Group',
       options: [
         { label: 'label3', value: 'value3' },
-        { label: 'label4', value: 'fourfourfourfourfourfourfourfourfourfourfourfourfourfourfour' },
+        { label: 'label4', value: 'value4' },
       ],
       render: (s) => s.someRadioGroup && s.someRadioGroup === 'value2',
       tooltip: 'tooltip',
@@ -164,16 +164,16 @@ export const defaultForm = () => {
 
   useEffect(() => {
     formData.updateFields([
-      { name: 'someText', value: 'Good bye Good bye Good bye Good bye Good bye Good bye Good bye Good bye Good bye Good bye Good bye Good bye Good bye Good bye Good bye Good bye Good bye Good bye Good bye Good bye Good bye Good bye ' },
-      { name: 'someNumber', value: 1000000000000000000000000000000000000000000000000000000 },
-      { name: 'someRadioGroup', value: 'value1value1value1value1value1value1value1value1value1value1' },
-      { name: 'someRadioGroup2', value: 'value4value4value4value4value4value4value4value4value4' },
-      { name: 'someSelect', options: [{ value: '4', label: 'fourfourfourfourfourfourfourfourfourfourfourfourfourfourfour' }, { value: '5', label: 'fivefivefivefivefivefivefivefivefivefivefive' }], value: '' },
+      { name: 'someText', value: 'Good bye' },
+      { name: 'someNumber', value: 10 },
+      { name: 'someRadioGroup', value: 'value1' },
+      { name: 'someRadioGroup2', value: 'value4' },
+      { name: 'someSelect', options: [{ value: '4', label: 'four' }, { value: '5', label: 'five' }], value: '' },
       { name: 'someSelect2', options: [{ value: '6', label: 'six' }, { value: '7', label: 'seven' }] },
       {
         name: 'someFilterSelectSingle',
         options: [
-          { value: '1', label: 'oneoneoneoneoneoneoneone oneoneoneoneoneoneoneoneoneoneoneoneoneoneoneoneoneoneone' },
+          { value: '1', label: 'one' },
           { value: '2', label: 'two' },
           '3',
           '4',
@@ -181,15 +181,9 @@ export const defaultForm = () => {
       },
       {
         name: 'someFilterSelectMulti',
-        value: ['1 First option First option First option First option', '0 Zero option', '2 Second option', '4 Fourth option',
-          '5 Fifth option',
-          '6 Sixth option',
-          '7 Seventh option',
-          '8 Eigth option',
-          '9 Ninth option',
-          '10 Tenth option'],
+        value: ['1 First option First option First option First option', '0 Zero option', '2 Second option'],
         options: [
-          '2 Second option 2 Second option 2 Second option 2 Second option v 2 Second option 2 Second option 2 Second option 2 Second option 2 Second option',
+          '2 Second option',
           '3 Third option',
           '4 Fourth option',
           '5 Fifth option',
@@ -222,7 +216,7 @@ export const defaultForm = () => {
   }, [renderErrors]);
 
   return (
-    <div style={{ padding: '5rem' }}>
+    <div style={{}}>
       <Form.Primary
         form={formData}
         msTimer={15}
