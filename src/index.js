@@ -22,7 +22,7 @@ import * as Dismissable from './Dismissable';
 import * as TimeComponents from './TimeComponents';
 import * as Progress from './Progress';
 import * as List from './List';
-
+import * as Markdown from './Markdown';
 import * as Layout from './layout';
 
 export {
@@ -49,4 +49,5 @@ export {
   TimeComponents,
   Progress,
   List,
+  Markdown,
 };

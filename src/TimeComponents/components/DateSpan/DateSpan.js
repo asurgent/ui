@@ -1,93 +1,70 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import * as C from './DateSpan.styled';
-import * as S from '../../TimeComponents.styled';
+import { withTheme } from 'styled-components';
+import * as C from '../../TimeComponents.styled';
 import translation from './DateSpan.translation';
-import * as Icons from '../Icons';
-import { parseMoment, getMonthYear } from '../../helpers';
+import { newMoment } from '../../../Moment/momentParsers';
 
 const { t } = translation;
 
-const DateSpan = ({
+const Datespan = ({
   startDate,
   endDate,
-  endDateThreshold,
-  ...props
-}) => {
-  const startDateValid = useMemo(() => parseMoment(startDate).isValid(), [startDate]);
-  const endDateValid = useMemo(() => parseMoment(endDate).isValid(), [endDate]);
+  hasExpired,
+  theme,
+}) => ((
+  <C.Dates>
+    <C.Container hasExpired={hasExpired} marginRight>
+      <C.StartDate hasExpired={hasExpired} theme={theme}>
+        <C.TextNormal>{newMoment(startDate).format('DD')}</C.TextNormal>
+        <C.TextSmall>
+          {`${t(`month${newMoment(startDate).month()}`, 'asurgentui')} ${newMoment(startDate).format('YY')}`}
+        </C.TextSmall>
+      </C.StartDate>
+      <C.Time>
+        <C.TextSmall>
+          {`${t(`day${newMoment(startDate).day()}`, 'asurgentui')} ${newMoment(startDate).format('HH:mm')}`}
+        </C.TextSmall>
+      </C.Time>
+    </C.Container>
 
-  const isNever = useMemo(() => {
-    if (endDateValid) {
-      return parseMoment(endDate) > parseMoment(endDateThreshold);
-    }
-    return null;
-  }, [endDate, endDateThreshold, endDateValid]);
+    <C.Container hasExpired={hasExpired} marginLeft>
+      <C.EndDate hasExpired={hasExpired} theme={theme}>
+        <C.TextNormal>{newMoment(endDate).format('DD')}</C.TextNormal>
+        <C.TextSmall>
+          {`${t(`month${newMoment(endDate).month()}`, 'asurgentui')} ${newMoment(endDate).format('YY')}`}
+        </C.TextSmall>
+      </C.EndDate>
+      <C.Time>
+        <C.TextSmall>
+          {`${t(`day${newMoment(endDate).day()}`, 'asurgentui')} ${newMoment(endDate).format('HH:mm')}`}
+        </C.TextSmall>
+      </C.Time>
+    </C.Container>
+  </C.Dates>
+)
 
-  const isActive = useMemo(() => parseMoment(endDate) > moment(), [endDate]);
+);
 
-  return (
-    <C.Dates {...props}>
-      <C.Date>
-        <S.TextSmall withBottomMargin>{t('startDate', 'asurgentui')}</S.TextSmall>
-        <C.StartDate active={isActive && startDateValid}>
-          {startDateValid ? (
-            <>
-              <S.TextNormal>{parseMoment(startDate).format('DD')}</S.TextNormal>
-              <S.TextSmall>{getMonthYear(parseMoment(startDate))}</S.TextSmall>
-            </>
-          ) : (
-            <>
-              <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
-              <S.TextSmall>{t('invalid', 'asurgentui')}</S.TextSmall>
-            </>
-          )}
-        </C.StartDate>
-      </C.Date>
-      <C.Dots>
-        <Icons.Dots active={false} />
-      </C.Dots>
-      <C.Date>
-        <S.TextSmall withBottomMargin>{t('endDate', 'asurgentui')}</S.TextSmall>
-        {endDateValid ? (
-          <C.EndDate active={isActive && endDateValid}>
-            {isNever ? (
-              <>
-                <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
-                <S.TextSmall>{t('never', 'asurgentui')}</S.TextSmall>
-              </>
-            ) : (
-              <>
-                <S.TextNormal>{parseMoment(endDate).format('DD')}</S.TextNormal>
-                <S.TextSmall>{getMonthYear(parseMoment(endDate))}</S.TextSmall>
-              </>
-            )}
-          </C.EndDate>
-        ) : (
-          <C.EndDate active={false}>
-            <S.TextNormal>{t('naIcon', 'asurgentui')}</S.TextNormal>
-            <S.TextSmall>{t('invalid', 'asurgentui')}</S.TextSmall>
-          </C.EndDate>
-        )}
-      </C.Date>
-    </C.Dates>
-  );
-};
-
-DateSpan.propTypes = {
-  startDate: PropTypes.string,
-  endDate: PropTypes.string,
-  endDateThreshold: PropTypes.oneOfType([
+Datespan.propTypes = {
+  hasExpired: PropTypes.bool.isRequired,
+  startDate: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
   ]),
+  endDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
+  theme: PropTypes.instanceOf(Object),
 };
-DateSpan.defaultProps = {
+Datespan.defaultProps = {
   startDate: null,
   endDate: null,
-  endDateThreshold: moment().add(10, 'years'),
+  theme: {},
 };
 
-export default DateSpan;
+export default withTheme(Datespan);
