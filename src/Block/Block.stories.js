@@ -2,7 +2,10 @@ import React from 'react';
 import {
   withKnobs, boolean, number,
 } from '@storybook/addon-knobs';
+import * as Icon from '@material-ui/icons';
 import * as Block from './index';
+import * as List from '../List';
+import * as Button from '../Button';
 
 const content = 'Hello there im in a block';
 
@@ -102,6 +105,22 @@ export const emptyState = () => (
   <Block.Emptystate title="Error ocurred">
     <p>Somethings broken</p>
   </Block.Emptystate>
+);
+
+export const accordion = () => (
+  <div style={{ padding: '5rem' }}>
+    <Block.Accordion title="Hello" description="Desc">
+      <List.Primary
+        rows={[
+          { label: 'Label', value: 'Hello' },
+          { label: 'Label', value: 'Hello' },
+          { label: 'Label', value: '' },
+          { label: 'Label 123123', value: 'Hello' },
+          { row: (<Button.Stretched iconRight={<Icon.ArrowForward fontSize="large" />}>Next</Button.Stretched>) },
+        ]}
+      />
+    </Block.Accordion>
+  </div>
 );
 
 export const subnavigationBlock = () => (

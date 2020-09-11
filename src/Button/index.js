@@ -55,6 +55,16 @@ const Filter = withMapProps(filterPropsMapper)(withStyle(() => ({
   textColor: '#24292e',
 }))(C.Filter));
 
+const CreateBlock = withStyle((theme) => ({
+  textColor: theme.blue900,
+  spinnerColor: theme.blue900,
+}))(C.CreateBlock);
+
+const Stretched = withStyle((theme) => ({
+  textColor: theme.blue900,
+  spinnerColor: theme.blue900,
+}))(C.Stretched);
+
 const iconPropsMapper = ({
   icon,
   iconLeft,
@@ -87,4 +97,6 @@ export {
   Create,
   Filter,
   Pill,
+  CreateBlock,
+  Stretched,
 };
