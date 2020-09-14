@@ -19,6 +19,22 @@ Table:
 | value1   | value2  | value3 |
 | *foo* | **bar** | ~~baz~~ |
 
+Code:
+
+<code>const myVar = "something cool"</code>
+
+Pre: 
+
+<pre>
+{
+  "myBadassJSON": {
+    "value": 1,
+    "label": "one"
+  }
+}
+</pre>
+
+
 Links: 
 
 http://github.com - link option 1
@@ -30,6 +46,3 @@ Quote:
 <a href="javascript:alert('xss')" onclick="alert(123)">i'm a dangerous HTML-element, containing xss and a spooky :ghost: clickevent</a>
 <script>alert('xss');</script>
 <div style="border: 1px solid black">i'm a div with inline styling</div>
-
-Images:
-![Image of Yaktocat](https://www.lifeandstylemag.com/wp-content/uploads/2015/08/the-office-quotes-11-main.jpg?resize=843%2C471 =421x236)
