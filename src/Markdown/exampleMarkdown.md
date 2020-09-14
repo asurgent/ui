@@ -45,4 +45,3 @@ Quote:
 
 <a href="javascript:alert('xss')" onclick="alert(123)">i'm a dangerous HTML-element, containing xss and a spooky :ghost: clickevent</a>
 <script>alert('xss');</script>
-<div style="border: 1px solid black">i'm a div with inline styling</div>
