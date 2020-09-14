@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import showdown from 'showdown';
-import dompurify from 'dompurify';
 import * as C from './Markdown.styled';
+import { makeDirtyHTML, sanitizeHtml } from './helpers';
 
 const propTypes = {
   markdown: PropTypes.string,
@@ -15,17 +14,10 @@ const defaultProps = {
 };
 
 const Markdown = ({ markdown, flavor, ...props }) => {
-  const converter = new showdown.Converter({
-    tables: true,
-    strikethrough: true,
-  });
-
   const html = useMemo(() => {
-    converter.setFlavor(flavor);
-    const dirtyHTML = converter.makeHtml(markdown);
-
-    return dompurify.sanitize(dirtyHTML);
-  }, [converter, flavor, markdown]);
+    const dirtyHTML = makeDirtyHTML({ markdown, flavor });
+    return sanitizeHtml({ dirtyHTML });
+  }, [flavor, markdown]);
   /* eslint-disable-next-line react/no-danger */
   return (<C.Markdown className="markdown-body" dangerouslySetInnerHTML={{ __html: html }} {...props} />);
 };
