@@ -2,29 +2,33 @@ import dompurify from 'dompurify';
 import showdown from 'showdown';
 
 const ALLOWED_TAGS = [
-  'b',
-  'br',
-  'table',
-  'tbody',
-  'thead',
-  'tr',
-  'th',
-  'td',
   'a',
-  'p',
+  'b',
+  'blockquote',
+  'br',
+  'code',
+  'div',
+  'em',
   'h1',
   'h2',
   'h3',
   'h4',
   'h5',
   'h6',
-  'code',
-  'pre',
+  'i',
   'img',
-  'div',
-  'blockquote',
+  'li',
+  'p',
+  'pre',
+  'strong',
+  'table',
+  'tbody',
+  'td',
+  'th',
+  'thead',
+  'tr',
   'ul',
-  'li'];
+];
 const ALLOWED_ATTR = ['href', 'colspan', 'mailto'];
 
 export const makeDirtyHTML = ({ markdown, flavor }) => {

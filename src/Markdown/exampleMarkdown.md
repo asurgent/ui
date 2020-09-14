@@ -1,9 +1,7 @@
 # This is an h1 tag
 
-_Italic_
-
-**Bold with markdown**
-<b>Bold with HTML</b>
+_Italic and **bold** with markdown_
+<i>Italic and <b>bold</b> with HTML</i>
 
 List:
 
