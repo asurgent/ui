@@ -12,8 +12,9 @@ export default {
 
 export const markdown = () => (
   <Markdown.Primary
-    markdown={text('Markdown', myMarkdown)}
+    className={text('Some extra class', 'mySpecificClass')}
     flavor={text('Flavor (github, original, vanilla)', 'github')}
+    markdown={text('Markdown', myMarkdown)}
     style={{ padding: '1rem' }}
   />
 );
