@@ -128,7 +128,13 @@ export const subnavigationBlock = () => (
     title="Hello"
     navigationList={[
       {
-        label: 'On call', path: 'http://google.com', icon: '', isActive: () => true,
+        label: 'On call',
+        path: 'http://google.com',
+        icon: '',
+        isActive: () => true,
+        iconStyle: { background: 'pink' },
+        navigationStyle: { background: 'magenta' },
+        labelStyle: { background: 'orange' },
       },
       { label: 'Other stuff', path: 'http://apple.com', icon: '' },
     ]}
