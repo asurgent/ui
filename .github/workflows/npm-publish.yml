@@ -34,7 +34,7 @@ jobs:
         run: npm run build
 
       - name: Test
-        run: npm patch
+        run: npm version patch
 
       - name: Build
         run: git add . && git commit -m "Patch" && git p && git p --tags
