@@ -23,6 +23,7 @@ import * as TimeComponents from './TimeComponents';
 import * as Progress from './Progress';
 import * as List from './List';
 import * as Markdown from './Markdown';
+import * as Truncate from './Truncate';
 import * as Layout from './layout';
 
 export {
@@ -50,4 +51,5 @@ export {
   Progress,
   List,
   Markdown,
+  Truncate,
 };
