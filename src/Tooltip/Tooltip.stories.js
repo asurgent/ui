@@ -3,6 +3,7 @@ import {
   withKnobs,
 } from '@storybook/addon-knobs';
 import * as Tooltip from './index';
+import * as Tag from '../Tag';
 
 const center = {
   height: '100vh', width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center',
@@ -18,7 +19,10 @@ Some other text.
 export const bottomMiddle = () => (
   <div style={center}>
     <Tooltip.Middle tip={someFormattedToolTip}>
-      <h1 style={{ display: 'inline-block' }}>Hover me</h1>
+      <div>
+        {/*   <h1 style={{ display: 'inline-block' }}>Hover me</h1> */}
+        <Tag.Collection tags={[1, 2, 3, 4].map((el) => ({ value: 'asdfasdfasdfasdfasdf', maxLength: 5 }))} maxTags={2} maxLength={5} />
+      </div>
     </Tooltip.Middle>
   </div>
 );

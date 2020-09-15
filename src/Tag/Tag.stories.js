@@ -12,7 +12,7 @@ export const singeTag = () => (
     <Tag.Single
       onDelete={boolean('Has delete action', false) ? (action('click')) : false}
       label={text('Tag label', 'Tag')}
-      max={number('Max letter count (0 is unlimited)', 0)}
+      maxLength={number('Max letter count (0 is unlimited)', 0)}
     />
   </>
 );
@@ -25,7 +25,11 @@ export const tagCollection = () => {
   const tags = Array.from({ length: 10 }, (_, i) => `Tag-${i}`);
   return (
     <>
-      <Tag.Collection tags={tags} max={number('Max tags (0 is unlimited)', 0)} />
+      <Tag.Collection
+        tags={tags}
+        maxTags={number('Max tags (0 is unlimited)', 0)}
+        maxLength={number('Max letter count (0 is unlimited', 0)}
+      />
     </>
   );
 };
@@ -41,7 +45,11 @@ export const tagCollectionObject = () => {
   }));
   return (
     <>
-      <Tag.Collection tags={tags} max={number('Max tags (default is unlimited)', 0)} />
+      <Tag.Collection
+        tags={tags}
+        maxTags={number('Max tags (default is unlimited)', 0)}
+        maxLength={number('Max letter count (0 is unlimited', 0)}
+      />
     </>
   );
 };

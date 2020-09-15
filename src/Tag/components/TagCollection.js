@@ -4,7 +4,8 @@ import { TagsCollection, SpillOver } from './Tag.styled';
 import TagSingle from './TagSingle';
 
 const propTypes = {
-  max: PropTypes.number,
+  maxTags: PropTypes.number,
+  maxLength: PropTypes.number,
   tags: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string })),
@@ -12,17 +13,18 @@ const propTypes = {
 };
 
 const defaultProps = {
-  max: 0,
+  maxTags: 0,
+  maxLength: 0,
 };
 
-const TagCollection = ({ tags, max }) => {
+const TagCollection = ({ tags, maxTags, maxLength }) => {
   let spillOver = 0;
   let tagsList = tags;
-  if (max > 0) {
-    tagsList = [...tags].splice(0, max);
+  if (maxTags > 0) {
+    tagsList = [...tags].splice(0, maxTags);
 
     if (tagsList.length < tags.length) {
-      spillOver = tags.length - max;
+      spillOver = tags.length - maxTags;
     }
   }
 
@@ -39,12 +41,18 @@ const TagCollection = ({ tags, max }) => {
                 onDelete={tag.onDelete ? tag.onDelete : false}
                 key={key(tag.value)}
                 label={tag.value}
-                max={tag.max ? tag.max : 0}
+                maxLength={maxLength}
               />
             );
           }
 
-          return <TagSingle key={key(tag.toString())} label={tag.toString()} />;
+          return (
+            <TagSingle
+              key={key(tag.toString())}
+              label={tag.toString()}
+              maxLength={maxLength}
+            />
+          );
         })
       }
       {spillOver > 0 && <SpillOver>{`+${spillOver}`}</SpillOver>}
