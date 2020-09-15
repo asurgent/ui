@@ -13,6 +13,18 @@ export const start = () => (
       string={text('String', 'I am truncated string')}
       maxLength={number('Max length', 6)}
     />
+    <h1>
+      <Truncate.Start
+        string={text('String', 'I am truncated string')}
+        maxLength={number('Max length', 6)}
+      />
+    </h1>
+    <p>
+      <Truncate.Start
+        string={text('String', 'I am truncated string')}
+        maxLength={number('Max length', 6)}
+      />
+    </p>
   </div>
 );
 
@@ -26,6 +38,18 @@ export const center = () => (
       string={text('String', 'I am truncated string')}
       maxLength={number('Max length', 6)}
     />
+    <h1>
+      <Truncate.Center
+        string={text('String', 'I am truncated string')}
+        maxLength={number('Max length', 6)}
+      />
+    </h1>
+    <p>
+      <Truncate.Center
+        string={text('String', 'I am truncated string')}
+        maxLength={number('Max length', 6)}
+      />
+    </p>
   </div>
 );
 
@@ -39,9 +63,21 @@ export const end = () => (
       string={text('String', 'I am truncated string')}
       maxLength={number('Max length', 6)}
     />
+    <h1>
+      <Truncate.End
+        string={text('String', 'I am truncated string')}
+        maxLength={number('Max length', 6)}
+      />
+    </h1>
+    <p>
+      <Truncate.End
+        string={text('String', 'I am truncated string')}
+        maxLength={number('Max length', 6)}
+      />
+    </p>
   </div>
 );
 
 end.story = {
-  name: 'Start',
+  name: 'End',
 };
