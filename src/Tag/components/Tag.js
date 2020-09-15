@@ -5,7 +5,7 @@ import * as Button from '../../Button';
 
 const propTypes = {
   label: PropTypes.string.isRequired,
-  max: PropTypes.number,
+  maxLength: PropTypes.number,
   component: PropTypes.elementType.isRequired,
   onDelete: PropTypes.oneOfType([
     PropTypes.bool,
@@ -15,16 +15,16 @@ const propTypes = {
 
 const defaultProps = {
   onDelete: false,
-  max: 0,
+  maxLength: 0,
 };
 
 const Tag = ({
-  label, component: Styled, onDelete, max,
+  label, component: Styled, onDelete, maxLength,
 }) => {
   let parsedLabel = label;
 
-  if (max > 0 && label.length > max) {
-    parsedLabel = `${label.substr(0, max)}...`;
+  if (maxLength > 0 && label.length > maxLength) {
+    parsedLabel = `${label.substr(0, maxLength)}...`;
   }
 
   return (
