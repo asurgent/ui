@@ -32,12 +32,15 @@ jobs:
 
       - name: Build
         run: npm run build
+      
+      - name: Commit build
+        run: git add . && git commit -m "Patch"
 
-      - name: Test
+      - name: Bump 
         run: npm version patch
-
-      - name: Build
-        run: git add . && git commit -m "Patch" && git p && git p --tags
+      
+      - name: Push build
+        run: git p && git p --tags
 
       - name: Publish
         run: npm publish
