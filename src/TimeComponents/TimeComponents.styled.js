@@ -21,6 +21,7 @@ export const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 6rem;
     p {
       margin: 0;
     }
@@ -58,7 +59,8 @@ export const EndDate = styled(Calendar)`
 
 export const Time = styled.div`
   background: ${({ theme }) => theme.white};
-  padding: 0.2rem 0.5rem;
+  width: 100%;
+  padding: 0.2rem 0;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
