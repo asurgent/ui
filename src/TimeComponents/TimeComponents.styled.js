@@ -42,6 +42,8 @@ export const Calendar = styled.div`
   height: 6rem;
   border-top: 0.8rem solid;
   border-radius: 5px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   display:flex;
   flex-direction: column;
@@ -70,18 +72,6 @@ export const Time = styled.div`
   }
 `;
 
-export const DateAndTime = styled.div`
-  width: 6rem;
-  height: 6rem;
-  border-top: 0.8rem solid;
+export const DateAndTime = styled(Calendar)`
   border-top-color: ${({ theme, active }) => (active ? theme.blue900 : theme.gray600)};
-  border-radius: 5px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: white;
 `;
