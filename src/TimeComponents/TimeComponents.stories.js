@@ -33,7 +33,7 @@ export const repeat = () => (
     <TimeComponents.Repeat
       isOngoing={boolean('Is ongoing', true)}
       hasExpired={boolean('Has expired', false)}
-      cronExpression={text('cron exp', `0 ${newMoment().hours() + 1} * * *`)}
+      cronCategory={text('Cron category', `custom`)}
       nextExecution={text('Next execution', newMoment().set({
         hours: newMoment().hours() + 1, minutes: 0, seconds: 0, milliseconds: 0,
       }).toISOString())}
@@ -58,20 +58,20 @@ export const startEnd = () => {
   const currentHour = newMoment().hours();
   const from = newMoment().set({
     hour: currentHour, minute: 0, second: 0, millisecond: 0,
-  });
+  }).toISOString();
 
-  const to = from.clone().add(3600, 'seconds').toISOString();
-  const next = from.clone().add(1, 'days').toISOString();
+  const to = newMoment(from).add(3600, 'seconds').toISOString();
+  const next = newMoment(from).add(1, 'days').toISOString();
 
   return (
     <div style={{ padding: '2rem' }}>
       <TimeComponents.StartEnd
         isOngoing={boolean('Is ongoing', true)}
         hasExpired={boolean('Has expired', false)}
-        cronExpression={text('cron exp', `0 ${currentHour} * * *`)}
         durationInSeconds={duration}
+        cronExpression={text('cron exp', `0 ${currentHour} * * *`)}
         nextExecution={text('Next date', next)}
-        onGoingFrom={text('Ongoing from', from.toISOString())}
+        onGoingFrom={text('Ongoing from', from)}
         onGoingTo={text('Ongoing to', to)}
       />
     </div>

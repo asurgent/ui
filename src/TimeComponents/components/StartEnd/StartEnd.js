@@ -4,16 +4,17 @@ import moment from 'moment';
 import PlayIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
 import { withTheme } from 'styled-components';
-import parser from 'cron-parser';
 import * as C from '../../TimeComponents.styled';
 import translation from './StartEnd.translation';
 import * as Icons from '../Icons';
 import { newMoment } from '../../../Moment/momentParsers';
-import { getRelativeTime } from './helpers';
+import { getRelativeTime, getNextNextDate, getLastRun } from './helpers';
 
 const { t } = translation;
 
 const StartEnd = ({
+  start,
+  end,
   cronExpression,
   isOngoing,
   nextExecution,
@@ -23,16 +24,37 @@ const StartEnd = ({
   durationInSeconds,
   theme,
 }) => {
-  const nextNextDate = useMemo(() => {
-    try {
-      const interval = parser.parseExpression(cronExpression,
-        { currentDate: newMoment(nextExecution).toISOString() });
-      const d = newMoment(interval.next().toString());
-      return d;
-    } catch (e) {
-      return null;
+  const dates = useMemo(() => {
+    if (!cronExpression) {
+      return {
+        from: newMoment(start),
+        to: newMoment(end),
+      };
     }
-  }, [cronExpression, nextExecution]);
+
+    if (isOngoing) {
+      return {
+        from: newMoment(onGoingFrom),
+        to: newMoment(onGoingTo),
+      };
+    }
+
+    // has next execution-date from the api
+    if (nextExecution && cronExpression) {
+      return getNextNextDate({ nextExecution, cronExpression });
+    }
+
+    // expired but repeated, find the last occurrence and add duration
+    return getLastRun({ cronExpression, end, durationInSeconds });
+  }, [cronExpression,
+    durationInSeconds,
+    start,
+    end,
+    isOngoing,
+    nextExecution,
+    onGoingFrom,
+    onGoingTo,
+  ]);
 
   // play/stop buttons
   if (isOngoing) {
@@ -41,22 +63,22 @@ const StartEnd = ({
         <C.Container marginRight>
           <C.TextSmall withBottomMargin>{t('started', 'asurgentui')}</C.TextSmall>
           <PlayIcon fontSize="large" style={{ fill: theme.blue900 }} />
-          <C.TextNormal>{newMoment(onGoingFrom).format('HH:mm')}</C.TextNormal>
-          <C.TextSmall withBottomMargin>{newMoment(onGoingFrom).format('YYYY-MM-DD')}</C.TextSmall>
+          <C.TextNormal>{newMoment(dates.from).format('HH:mm')}</C.TextNormal>
+          <C.TextSmall withBottomMargin>{newMoment(dates.from).format('YYYY-MM-DD')}</C.TextSmall>
         </C.Container>
 
         <C.Container marginRight marginLeft>
           <C.TextSmall withBottomMargin>{t('remaining', 'asurgentui')}</C.TextSmall>
           <Icons.Duration active theme={theme} />
-          <C.TextNormal>{getRelativeTime({ date: onGoingTo }).number}</C.TextNormal>
-          <C.TextSmall withBottomMargin>{getRelativeTime({ date: onGoingTo }).label}</C.TextSmall>
+          <C.TextNormal>{getRelativeTime({ date: dates.to }).number}</C.TextNormal>
+          <C.TextSmall withBottomMargin>{getRelativeTime({ date: dates.to }).label}</C.TextSmall>
         </C.Container>
 
         <C.Container marginLeft>
           <C.TextSmall withBottomMargin>{t('ends', 'asurgentui')}</C.TextSmall>
           <StopIcon fontSize="large" style={{ fill: theme.blue900 }} />
-          <C.TextNormal>{newMoment(onGoingTo).format('HH:mm')}</C.TextNormal>
-          <C.TextSmall withBottomMargin>{newMoment(onGoingTo).format('YYYY-MM-DD')}</C.TextSmall>
+          <C.TextNormal>{newMoment(dates.to).format('HH:mm')}</C.TextNormal>
+          <C.TextSmall withBottomMargin>{newMoment(dates.to).format('YYYY-MM-DD')}</C.TextSmall>
         </C.Container>
       </C.Dates>
     );
@@ -67,20 +89,20 @@ const StartEnd = ({
     <C.Dates>
       <C.Container hasExpired={hasExpired} marginRight>
         <C.DateAndTime active={!hasExpired}>
-          <C.TextNormal>{newMoment(nextExecution).format('DD')}</C.TextNormal>
+          <C.TextNormal>{newMoment(dates.from).format('DD')}</C.TextNormal>
           <C.TextSmall>
-            {`${t(`month${newMoment(nextExecution).month()}`, 'asurgentui')} ${newMoment(nextExecution).format('YY')}`}
+            {`${t(`month${newMoment(dates.from).month()}`, 'asurgentui')} ${newMoment(dates.from).format('YY')}`}
           </C.TextSmall>
         </C.DateAndTime>
         <C.Time>
           <C.TextSmall>
-            {`${t(`day${newMoment(nextExecution).day()}`, 'asurgentui')} ${newMoment(nextExecution).format('hh:mm')}`}
+            {`${t(`day${newMoment(dates.from).day()}`, 'asurgentui')} ${newMoment(dates.from).format('HH:mm')}`}
           </C.TextSmall>
         </C.Time>
       </C.Container>
 
       <C.Container hasExpired={hasExpired} marginRight marginLeft>
-        <C.TextSmall withBottomMargin>{t('duration', 'asurgentui')}</C.TextSmall>
+        <C.TextSmall withBottomMargin>{t(hasExpired ? 'lasted' : 'duration', 'asurgentui')}</C.TextSmall>
         <Icons.Duration active={!hasExpired} theme={theme} />
         <C.TextNormal>{getRelativeTime({ duration: durationInSeconds }).number}</C.TextNormal>
         <C.TextSmall withBottomMargin>
@@ -90,14 +112,14 @@ const StartEnd = ({
 
       <C.Container hasExpired={hasExpired} marginLeft>
         <C.DateAndTime active={!hasExpired}>
-          <C.TextNormal>{newMoment(nextNextDate).format('DD')}</C.TextNormal>
+          <C.TextNormal>{newMoment(dates.to).format('DD')}</C.TextNormal>
           <C.TextSmall>
-            {`${t(`month${newMoment(nextNextDate).month()}`, 'asurgentui')} ${newMoment(nextNextDate).format('YY')}`}
+            {`${t(`month${newMoment(dates.to).month()}`, 'asurgentui')} ${newMoment(dates.to).format('YY')}`}
           </C.TextSmall>
         </C.DateAndTime>
         <C.Time>
           <C.TextSmall>
-            {`${t(`day${newMoment(nextNextDate).day()}`, 'asurgentui')} ${newMoment(nextNextDate).format('hh:mm')}`}
+            {`${t(`day${newMoment(dates.to).day()}`, 'asurgentui')} ${newMoment(dates.to).format('HH:mm')}`}
           </C.TextSmall>
         </C.Time>
       </C.Container>
@@ -110,6 +132,16 @@ StartEnd.propTypes = {
   isOngoing: PropTypes.bool,
   cronExpression: PropTypes.string,
   durationInSeconds: PropTypes.number,
+  start: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
+  end: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
   nextExecution: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
@@ -133,6 +165,8 @@ StartEnd.defaultProps = {
   isOngoing: false,
   cronExpression: null,
   durationInSeconds: null,
+  start: null,
+  end: null,
   nextExecution: null,
   onGoingFrom: null,
   onGoingTo: null,
