@@ -1,4 +1,5 @@
 import moment from 'moment';
+import parser from 'cron-parser';
 import translation from './StartEnd.translation';
 import { newMoment } from '../../../Moment/momentParsers';
 
@@ -32,4 +33,34 @@ export const getRelativeTime = ({ date, duration }) => {
   }
 
   return {};
+};
+
+export const getNextNextDate = ({ nextExecution, cronExpression }) => {
+  try {
+    const interval = parser.parseExpression(cronExpression,
+      { currentDate: newMoment(nextExecution).toISOString() });
+    const d = interval.next().toString();
+    return {
+      from: newMoment(nextExecution),
+      to: newMoment(d),
+    };
+  } catch (e) {
+    return null;
+  }
+};
+
+export const getLastRun = ({ cronExpression, end, durationInSeconds }) => {
+  try {
+    const interval = parser.parseExpression(cronExpression, {
+      currentDate: newMoment(end).toISOString(),
+    });
+    const prev = newMoment(interval.prev().toString()).toISOString();
+    const to = newMoment(prev).add(durationInSeconds, 'seconds').toISOString();
+    return {
+      from: prev,
+      to,
+    };
+  } catch (e) {
+    return null;
+  }
 };

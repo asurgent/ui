@@ -9,10 +9,14 @@ export const Default = styled.div`
     background: ${({ theme }) => theme.white};
     display: flex;
     align-items: center;
+    max-width: 100%;
 
     .label {
         padding: .4rem;
         display: inline-block;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     ${Button.Plain} {

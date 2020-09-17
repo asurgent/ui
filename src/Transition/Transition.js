@@ -6,6 +6,7 @@ const propTypes = {
   timeout: PropTypes.number,
   unmountChildren: PropTypes.bool,
   isVisible: PropTypes.bool.isRequired,
+  className: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
@@ -15,6 +16,7 @@ const propTypes = {
 const defaultProps = {
   timeout: 500,
   unmountChildren: true,
+  className: '',
 };
 
 const withTransitionEffect = (TransitionComponent) => {
@@ -23,10 +25,11 @@ const withTransitionEffect = (TransitionComponent) => {
     timeout,
     unmountChildren,
     children,
+    className,
   }) => (
     <Transition timeout={timeout} in={isVisible}>
       {(state) => (
-        <TransitionComponent state={state} timeout={timeout}>
+        <TransitionComponent state={state} timeout={timeout} className={className}>
           { (state !== 'exited' || !unmountChildren) && children}
         </TransitionComponent>
       )}

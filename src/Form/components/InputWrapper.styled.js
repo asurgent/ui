@@ -37,6 +37,7 @@ export const Wrapper = styled.div`
     border: none;
     outline: none;
     appearance: none; 
+    text-overflow: ellipsis;
     padding: ${({ type }) => {
     if (type === 'radiogroup') {
       return '0 1.2rem';

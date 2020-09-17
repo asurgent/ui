@@ -8,26 +8,21 @@ export default addTranslation({
     repeats: 'Repeteras',
     expired: 'Gått ut',
 
-    yearShort: 'Å',
-    yearLong: 'Årligen',
+    customShort: 'A',
+    customLong: 'Anpassat',
 
-    monthShort: 'M',
-    monthLong: 'Månad',
+    hourlyShort: 'T',
+    hourlyLong: 'Timme',
 
-    weekShort: 'V',
-    weekLong: 'Vecka',
+    dailyShort: 'D',
+    dailyLong: 'Dagligen',
 
-    dayShort: 'D',
-    dayLong: 'Dagligen',
+    weeklyShort: 'V',
+    weeklyLong: 'Vecka',
 
-    hourShort: 'T',
-    hourLong: 'Timme',
+    monthlyShort: 'M',
+    monthlyLong: 'Månad',
 
-    minuteShort: 'M',
-    minuteLong: 'Minut',
-
-    secondShort: 'S',
-    secondLong: 'Sekund',
     naIcon: 'Ø',
     naText: 'N/A',
 
@@ -41,26 +36,21 @@ export default addTranslation({
     repeats: 'Repeats',
     expired: 'Expired',
 
-    yearShort: 'Y',
-    yearLong: 'Yearly',
+    customShort: 'C',
+    customLong: 'Custom',
 
-    monthShort: 'M',
-    monthLong: 'Monthly',
+    hourlyShort: 'H',
+    hourlyLong: 'Hourly',
 
-    weekShort: 'W',
-    weekLong: 'Weekly',
+    dailyShort: 'D',
+    dailyLong: 'Daily',
 
-    dayShort: 'D',
-    dayLong: 'Daily',
+    weeklyShort: 'W',
+    weeklyLong: 'Weekly',
 
-    hourShort: 'H',
-    hourLong: 'Hourly',
+    monthlyShort: 'M',
+    monthlyLong: 'Monthly',
 
-    minuteShort: 'M',
-    minuteLong: 'Minute',
-
-    secondShort: 'S',
-    secondLong: 'Second',
     naIcon: 'Ø',
     naText: 'N/A',
 

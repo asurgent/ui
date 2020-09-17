@@ -26,10 +26,13 @@ const SubnavigationBlock = ({ navigationList, title, children }) => (
           icon,
           label,
           isActive,
+          iconStyle,
+          navigationStyle,
+          labelStyle,
         }) => (
-          <C.NavigationItem to={path} key={path} isActive={isActive}>
-            <C.Icon>{icon}</C.Icon>
-            <C.Label>{label}</C.Label>
+          <C.NavigationItem style={navigationStyle} to={path} key={path} isActive={isActive}>
+            <C.Icon style={iconStyle}>{icon}</C.Icon>
+            <C.Label style={labelStyle}>{label}</C.Label>
           </C.NavigationItem>
         ))
       }

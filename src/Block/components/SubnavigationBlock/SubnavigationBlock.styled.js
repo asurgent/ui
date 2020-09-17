@@ -63,13 +63,14 @@ export const NavigationItem = styled(NavLink)`
     margin-bottom: .8rem;
 
     &.active {
-        background-color: #F9F9F9;
+        background-color: ${({ theme }) => theme.gray50};
         border-color: #133A5D;
         font-weight: bold;
     }
 `;
 
 export const Icon = styled.div`
+    display: flex;
     margin-left: 1.6rem;
     margin-right: 1.6rem;
 `;

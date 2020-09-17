@@ -18,7 +18,9 @@ Some other text.
 export const bottomMiddle = () => (
   <div style={center}>
     <Tooltip.Middle tip={someFormattedToolTip}>
-      <h1 style={{ display: 'inline-block' }}>Hover me</h1>
+      <div>
+        <h1 style={{ display: 'inline-block' }}>Hover me</h1>
+      </div>
     </Tooltip.Middle>
   </div>
 );

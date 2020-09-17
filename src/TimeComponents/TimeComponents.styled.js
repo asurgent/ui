@@ -21,17 +21,20 @@ export const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 6rem;
     p {
       margin: 0;
     }
     text-align: center;
     color: ${({ hasExpired, theme }) => (hasExpired ? theme.gray600 : theme.black)};
-    margin: 0 2rem;
+    margin-right: ${({ marginRight }) => marginRight && '2rem'};
+    margin-left: ${({ marginLeft }) => marginLeft && '2rem'};
 `;
 
 export const Dates = styled.div`
     display: flex;
     align-items: center;
+
 `;
 
 export const Calendar = styled.div`
@@ -39,6 +42,8 @@ export const Calendar = styled.div`
   height: 6rem;
   border-top: 0.8rem solid;
   border-radius: 5px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   display:flex;
   flex-direction: column;
@@ -56,7 +61,8 @@ export const EndDate = styled(Calendar)`
 
 export const Time = styled.div`
   background: ${({ theme }) => theme.white};
-  padding: 0.2rem 0.5rem;
+  width: 100%;
+  padding: 0.2rem 0;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -66,18 +72,6 @@ export const Time = styled.div`
   }
 `;
 
-export const DateAndTime = styled.div`
-  width: 6rem;
-  height: 6rem;
-  border-top: 0.8rem solid;
+export const DateAndTime = styled(Calendar)`
   border-top-color: ${({ theme, active }) => (active ? theme.blue900 : theme.gray600)};
-  border-radius: 5px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: white;
 `;

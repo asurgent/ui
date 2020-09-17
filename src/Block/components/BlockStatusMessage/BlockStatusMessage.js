@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ErrorState, InfoState, WarningState } from './Block.styled';
+import { ErrorState, InfoState, WarningState } from './BlockStatusMessage.styled';
 
 const propTypes = {
   title: PropTypes.string,

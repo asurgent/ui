@@ -1,45 +1,32 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import parser from 'cron-parser';
 import moment from 'moment';
 import { withTheme } from 'styled-components';
 import translation from './Repeat.translation';
 import * as C from '../../TimeComponents.styled';
 import * as Icons from '../Icons';
-import { newMoment } from '../../../Moment/momentParsers';
-import { getRepeatInterval, getProgress } from './helpers';
+import { getProgress } from './helpers';
 import * as Progress from '../../../Progress';
 
 const { t } = translation;
 
 const Repeat = ({
   hasExpired,
-  cronExpression,
   isOngoing,
   onGoingFrom,
   onGoingTo,
   useAnimation,
   showPercentage,
+  nextExecution,
+  cronCategory,
   theme,
 }) => {
-  const upcomingDates = useMemo(() => {
-    try {
-      const interval = parser.parseExpression(cronExpression);
-      return {
-        occasion1: newMoment(interval.next().toString()).toISOString(),
-        occasion2: newMoment(interval.next().toString()).toISOString(),
-      };
-    } catch (err) {
-      return null;
-    }
-  }, [cronExpression]);
-
   if (hasExpired) {
     return (
       <C.Container hasExpired data-testid="expired">
-        <C.TextSmall withBottomMargin>{t('status', 'asurgentui')}</C.TextSmall>
+        <C.TextSmall style={{ marginBottom: '1.1rem' }}>{t('status', 'asurgentui')}</C.TextSmall>
         <C.TextNormal data-testid="short-label">{t('naIcon', 'asurgentui')}</C.TextNormal>
-        <C.TextSmall style={{ marginTop: '0.7rem' }} data-testid="long-label">{t('expired', 'asurgentui')}</C.TextSmall>
+        <C.TextSmall style={{ marginTop: '1.1rem' }} data-testid="long-label">{t('expired', 'asurgentui')}</C.TextSmall>
       </C.Container>
     );
   }
@@ -47,10 +34,10 @@ const Repeat = ({
   if (isOngoing) {
     return (
       <C.Container data-testid="progress">
-        <C.TextSmall withBottomMargin>{t('status', 'asurgentui')}</C.TextSmall>
+        <C.TextSmall style={{ marginBottom: '0.5rem' }}>{t('status', 'asurgentui')}</C.TextSmall>
         <Progress.Ring
           radius={20}
-          stroke={3}
+          stroke={2}
           progress={getProgress(onGoingFrom, onGoingTo)}
           useShadow
           useAnimation={useAnimation}
@@ -61,18 +48,13 @@ const Repeat = ({
     );
   }
 
-  if (upcomingDates) {
-    const label = getRepeatInterval(
-      upcomingDates.occasion1,
-      upcomingDates.occasion2,
-    );
-
+  if (nextExecution) {
     return (
       <C.Container data-testid="repeats">
         <C.TextSmall withBottomMargin>{t('repeats', 'asurgentui')}</C.TextSmall>
         <Icons.Dots theme={theme} />
-        <C.TextNormal data-testid={label.short}>{t(label.short, 'asurgentui')}</C.TextNormal>
-        <C.TextSmall data-testid={label.long}>{t(label.long, 'asurgentui')}</C.TextSmall>
+        <C.TextNormal data-testid={cronCategory}>{t(`${cronCategory}Short`, 'asurgentui')}</C.TextNormal>
+        <C.TextSmall>{t(`${cronCategory}Long`, 'asurgentui')}</C.TextSmall>
       </C.Container>
     );
   }
@@ -90,7 +72,12 @@ Repeat.propTypes = {
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
   ]),
-  cronExpression: PropTypes.string,
+  nextExecution: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
+  cronCategory: PropTypes.string,
   useAnimation: PropTypes.bool,
   showPercentage: PropTypes.bool,
   theme: PropTypes.instanceOf(Object),
@@ -101,7 +88,8 @@ Repeat.propTypes = {
 Repeat.defaultProps = {
   onGoingFrom: null,
   onGoingTo: null,
-  cronExpression: null,
+  nextExecution: null,
+  cronCategory: null,
   useAnimation: false,
   showPercentage: false,
   theme: {},

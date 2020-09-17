@@ -252,3 +252,60 @@ export const Pill = styled(Button)`
         }
     }
 `;
+
+export const CreateBlock = styled.div`
+    background: ${({ theme }) => theme.white};;
+    border: 2px dashed ${({ theme }) => theme.gray300};
+    box-sizing: border-box;
+    height: 12.8rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    color: ${({ theme }) => theme.blue800};
+    margin-bottom: 1.6rem;
+    font-weight: 500;
+
+    &:hover {
+        cursor: pointer;
+        border: 2px dashed ${({ theme }) => theme.gray400};
+    }
+
+    .label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+        letter-spacing: 0.13rem;
+        text-decoration: none;
+        font-size: 1.4rem;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+`;
+
+export const Stretched = styled.div`
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    padding: 1.6rem .8rem;
+    border: none;
+    color: ${({ theme }) => theme.blue900};
+
+    .label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+        letter-spacing: 0.13rem;
+        text-decoration: none;
+        font-size: 1.4rem;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+`;

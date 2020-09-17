@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconNoTickets from '../icons/IconNoTickets';
-import { Emptystate as Wrapper } from './Block.styled';
+import IconNoTickets from '../../../icons/IconNoTickets';
+import { Emptystate as Wrapper } from './BlockEmptyState.styled';
 
 const propTypes = {
   title: PropTypes.string.isRequired,

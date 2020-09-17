@@ -21,7 +21,9 @@ import * as Transition from './Transition';
 import * as Dismissable from './Dismissable';
 import * as TimeComponents from './TimeComponents';
 import * as Progress from './Progress';
-
+import * as List from './List';
+import * as Markdown from './Markdown';
+import * as Truncate from './Truncate';
 import * as Layout from './layout';
 
 export {
@@ -47,4 +49,7 @@ export {
   Svg,
   TimeComponents,
   Progress,
+  List,
+  Markdown,
+  Truncate,
 };

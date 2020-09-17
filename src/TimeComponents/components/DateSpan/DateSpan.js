@@ -15,7 +15,7 @@ const Datespan = ({
   theme,
 }) => ((
   <C.Dates>
-    <C.Container hasExpired={hasExpired}>
+    <C.Container hasExpired={hasExpired} marginRight>
       <C.StartDate hasExpired={hasExpired} theme={theme}>
         <C.TextNormal>{newMoment(startDate).format('DD')}</C.TextNormal>
         <C.TextSmall>
@@ -29,7 +29,7 @@ const Datespan = ({
       </C.Time>
     </C.Container>
 
-    <C.Container hasExpired={hasExpired}>
+    <C.Container hasExpired={hasExpired} marginLeft>
       <C.EndDate hasExpired={hasExpired} theme={theme}>
         <C.TextNormal>{newMoment(endDate).format('DD')}</C.TextNormal>
         <C.TextSmall>

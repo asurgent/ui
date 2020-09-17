@@ -23,6 +23,23 @@ export const FadeIn = styled.div`
 
 export const FadeOut = styled(FadeIn)``;
 
+export const FadeInAndOut = styled(FadeIn)`
+ opacity: ${({ state, in: visible }) => {
+    switch (state) {
+      case 'entering':
+        return visible ? 0 : 1;
+      case 'entered':
+        return visible ? 0 : 1;
+      case 'exiting':
+        return visible ? 1 : 0;
+      case 'exited':
+        return visible ? 1 : 0;
+      default:
+        return 0;
+    }
+  }};
+`;
+
 export const FadeInSlideDown = styled(FadeIn)`
     z-index: unset;
     transform: ${({ state, noTransform }) => {

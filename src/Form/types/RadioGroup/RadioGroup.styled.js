@@ -8,15 +8,20 @@ export const Label = styled.label`
     letter-spacing: .1rem;
     color: ${({ theme }) => theme.gray700};
     text-transform: capitalize;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    
 `;
 
 export const RadioWrapper = styled.div`
     display: flex;
     flex-direction: ${({ wrapRadios }) => (wrapRadios === true ? 'column' : 'row')};
     align-items: flex-start;
+    flex-wrap: wrap;
 
-    ${Label}:not(:first-child) {
-        margin-left: 1.6rem;
+    ${Label} {
+        margin-right: 1.6rem;
     }
 `;
 
@@ -24,8 +29,9 @@ export const FieldSet = styled.fieldset`
     border: none;
     margin: 0;
     padding: 0;
-    margin-left: 1.6rem;
-    margin-right: 1.6rem;
+    padding: 1.05rem 1.2rem;
+    /* needed for some weird fieldset behavior, overflows otherwise in the background */
+    min-width: 0; 
 `;
 
 export const CheckMark = styled.span`
@@ -65,4 +71,6 @@ export const RadioInput = styled.input`
 export const Text = styled.span`
     margin-left: 2.4rem;
     line-height: 1.6rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;

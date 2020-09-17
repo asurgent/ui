@@ -77,14 +77,15 @@ const expiredProps = {
 const repeatingProps = {
   startDate: startOfDay,
   endDate: nextYear,
-  cronExpression: '* * * * *',
+  cronCategory: 'custom',
   hasExpired: false,
   isOngoing: false,
   onGoingFrom: null,
   onGoingTo: null,
+  nextExecution: startOfNextHour,
 };
 
-describe('Duration', () => {
+describe('Repeat', () => {
   test('Renders progress', async () => {
     const { getByTestId } = render(<Repeat {...ongoingProps} />);
 
@@ -103,30 +104,5 @@ describe('Duration', () => {
 
     const repeats = getByTestId(/repeats/);
     expect(repeats).toBeDefined();
-  });
-
-  test('Renders correct date type', async () => {
-    const { getByTestId, rerender } = render(<Repeat {...repeatingProps} />);
-    expect(getByTestId(/minuteShort/)).toBeDefined();
-
-    let newProps = { ...repeatingProps, cronExpression: '0 * * * *' };
-    rerender(<Repeat {...newProps} />);
-    expect(getByTestId(/hourShort/)).toBeDefined();
-
-    newProps = { ...repeatingProps, cronExpression: '0 12 * * *' };
-    rerender(<Repeat {...newProps} />);
-    expect(getByTestId(/dayShort/)).toBeDefined();
-
-    newProps = { ...repeatingProps, cronExpression: '0 12 * * 1' };
-    rerender(<Repeat {...newProps} />);
-    expect(getByTestId(/weekShort/)).toBeDefined();
-
-    newProps = { ...repeatingProps, cronExpression: '0 12 1 * *' };
-    rerender(<Repeat {...newProps} />);
-    expect(getByTestId(/monthShort/)).toBeDefined();
-
-    newProps = { ...repeatingProps, cronExpression: '0 12 1 1 *' };
-    rerender(<Repeat {...newProps} />);
-    expect(getByTestId(/yearShort/)).toBeDefined();
   });
 });
