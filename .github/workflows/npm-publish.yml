@@ -29,9 +29,13 @@ jobs:
         run: |
           echo $'registry=https://registry.npmjs.org/ \n@asurgent:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}' > ~/.npmrc
           
-      - name: Push & Update
+      - name: Push, Update & Publish
         run: |
-          printf "\n\n$(date)" >> README.md
+          npm run build
+          printf "\n\nLast build, $(date)" >> README.md
           git add .
-          git commit -m "test"
-          git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"     
+          git commit -m "Build package"
+          npm version patch
+          git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
+          git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY" --tags
+          npm publish
