@@ -25,6 +25,7 @@ import * as List from './List';
 import * as Markdown from './Markdown';
 import * as Truncate from './Truncate';
 import * as Layout from './layout';
+import ThemeVaraiables from '../lib/style/theme';
 
 export {
   i18n,
@@ -52,4 +53,5 @@ export {
   List,
   Markdown,
   Truncate,
+  ThemeVaraiables,
 };

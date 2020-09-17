@@ -19,7 +19,10 @@ const TableSort = (props) => {
   const { tableHook, sortHook, className } = props;
   const formData = useFormBuilder({
     sortKey: {
-      type: 'select', options: sortHook.getOptions(), noLabel: true,
+      type: 'select',
+      options: sortHook.getOptions(),
+      noLabel: true,
+      classNameWrapper: 'custom-table-sort-select',
     },
   });
 

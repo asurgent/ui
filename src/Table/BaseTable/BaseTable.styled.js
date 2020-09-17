@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Plain } from '../../Button/Button.styled';
 
 export const Arrow = styled.div`
     border: solid black;
@@ -26,13 +27,38 @@ export const Count = styled.div`
     max-width: 100%;
     min-width: 100%;
     display: flex;
-    color: ${({ theme }) => theme.gray600};
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 1.4rem;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
     flex-direction: row;
-    padding: .8rem;
+    padding: .8rem 0 2.4rem 0;
+    
+    ${Plain} {
+      width: 10rem;
+      font-size: 1.2rem;
+    
+      .label {
+        display: flex;
+        align-content: center;
+        color: ${({ theme }) => theme.gray600};
+      
+        svg {
+          margin-left: .8rem;
+          visibility: hidden;
+          opacity: 0;
+        }
+      }
+      &:hover {
+        .label {
+          svg {
+            visibility:visible;
+            opacity: 1;
+            transition: opacity .15s ease-in-out; 
+          }
+        }
+      }
+    }
 `;
 
 export const Wrapper = styled.div`
@@ -64,6 +90,7 @@ export const Row = styled.div`
   display: grid;
   width: fit-content;
   min-width: 100%;
+  grid-column-gap: 0.8rem;
   grid-template-columns: ${({ headerList, equalSize }) => {
     const columnSize = 'minmax(50px, 1fr)';
     const sizing = headerList
@@ -96,7 +123,6 @@ export const Row = styled.div`
 
 export const Cell = styled.div`
     display: flex;
-    padding: .8rem;
     position: relative;
     overflow: hidden;
     min-height: 5.6rem;

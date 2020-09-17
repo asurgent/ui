@@ -24,7 +24,7 @@ const Ring = styled.div`
   width: ${({ size }) => `${size}px`};
   background: transparent;
   border-radius: 50%;
-  border: ${({ size, color, theme }) => `${size / 10}px solid ${color || theme.blue400}`} ;
+  border: ${({ size, color, theme }) => `${size / 10}px solid ${color || theme.blue900}`} ;
   border-radius: 50%;
   animation-duration: ${({ speed }) => `${speed}s`};
   animation-iteration-count: infinite;

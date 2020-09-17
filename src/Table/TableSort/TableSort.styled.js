@@ -9,4 +9,9 @@ export const SortWrapper = styled.div`
     ${Button.Icon} {
         margin: 0 .6rem;
     }
+
+    .custom-table-sort-select {
+        border: none;
+        background-color: none;
+    }
 `;

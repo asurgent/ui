@@ -41,9 +41,8 @@ export const TagsCollection = styled.div`
     }
 `;
 export const SpillOver = styled.div`
-    font-size: 1.2rem;
-    line-height: 1.2rem;
+    font-size: 1rem;
+    line-height: 1rem;
     padding: .4rem;
     padding-left: 0;
-    font-weight: 700;
 `;
