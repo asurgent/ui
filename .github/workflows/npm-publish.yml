@@ -31,6 +31,7 @@ jobs:
           
       - name: Push, Update & Publish
         run: |
+          npm ci
           npm run build
           printf "\n\nLast build, $(date)" >> README.md
           git add .
