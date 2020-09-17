@@ -55,10 +55,10 @@ const TableSort = (props) => {
       {({ fields: { sortKey } }) => (
         <SortWrapper>
           {sortKey}
-          <Button.Plain
+          <Button.Icon
             disabled={tableHook.isLoading}
             onClick={() => sortHook.toggleCurrentSortDirection()}
-            iconRight={direction ? <ArrowDownward /> : <ArrowUpward />}
+            icon={direction ? <ArrowDownward /> : <ArrowUpward />}
           />
         </SortWrapper>
       )}
