@@ -84,7 +84,6 @@ export const CreateItem = styled.div`
 
 export const MobileContent = styled.div`
     margin-top: 6.4rem;
-    /* padding: 2.4rem; */
 `;
 
 export const Mobile = styled.div`

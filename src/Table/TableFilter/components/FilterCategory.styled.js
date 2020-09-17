@@ -64,7 +64,7 @@ export const Dropdown = styled.div`
         width: auto;
         height: auto;
         max-height: 50rem;
-        top: -16px;
+        top: -1.6rem;
         bottom: unset;
         min-width: 40rem;
         left: unset;
