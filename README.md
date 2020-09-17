@@ -48,3 +48,6 @@ Whenever the tag is pushed, simply go under releases, edit the pushed tag. Give 
     @asurgent:registry=https://npm.pkg.github.com/
     //npm.pkg.github.com/:_authToken=YOUR_PERONAL_ACCESS_TOKEN
     ```
+
+
+Thu Sep 17 12:49:55 UTC 2020
