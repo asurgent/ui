@@ -1,0 +1,37 @@
+name: Publish package
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [13.x]
+    env:
+      CI: true
+      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      NPM_REGISTRY_URL: https://npm.pkg.github.com
+      NODE_AUTH_TOKEN: ${{secrets.NPM_KEY}}
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup Git
+        run: |
+          git switch -c master
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name "$GITHUB_ACTOR"
+          
+      - name: Create NPMRC
+        run: |
+          echo $'registry=https://registry.npmjs.org/ \n@asurgent:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}' > ~/.npmrc
+          
+      - name: Push & Update
+        run: |
+          printf "\n\n$(date)" >> README.md
+          git add .
+          git commit -m "test"
+          git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"     
