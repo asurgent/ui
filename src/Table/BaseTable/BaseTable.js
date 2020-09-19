@@ -157,7 +157,7 @@ const BaseTable = withTheme((props) => {
           {!isLoading && rows}
           {isLoading && (
             <C.Loading>
-              <Spinner.Ring size={32} color={theme.blue400} />
+              <Spinner.Ring size={32} color={theme.blue900} />
             </C.Loading>
           )}
           {/* Render rows end */}

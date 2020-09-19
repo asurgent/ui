@@ -20,6 +20,7 @@ export const Button = styled.div`
     white-space: normal;
     padding: .8rem 1.6rem;
     border-radius: 3px;
+    white-space: nowrap;
 
     button {
         cursor: pointer;
@@ -121,7 +122,7 @@ export const Plain = styled.div`
 `;
 
 export const Filter = styled(Button)`
-    padding: .5rem .8rem;
+    padding: .8rem;
     background-color: transparent;
     border-color: transparent;
     position: relative;
