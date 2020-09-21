@@ -15,6 +15,12 @@ const defaultProps = {
   children: null,
 };
 
+const Primary = ({ children, position, ...props }) => (
+  <Tooltip {...props} position={position}>
+    {children}
+  </Tooltip>
+);
+
 const Middle = ({ children, position, ...props }) => (
   <Tooltip {...props} position="middle">
     {children}
@@ -44,4 +50,10 @@ Left.propTypes = propTypes;
 Left.defaultProps = defaultProps;
 Left.displayName = '@asurgent.ui.Tooltip.Left';
 
-export { Middle, Right, Left };
+Primary.propTypes = propTypes;
+Primary.defaultProps = defaultProps;
+Primary.displayName = '@asurgent.ui.Tooltip.Primary';
+
+export {
+  Middle, Right, Left, Primary,
+};

@@ -81,6 +81,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
         type,
         value,
         tooltip,
+        tooltipPostition,
         placeholder,
         label,
         options,
@@ -110,6 +111,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
         <InputWrapper
           label={label || key}
           tooltip={tooltip || ''}
+          tooltipPostition={tooltipPostition}
           noLabel={noLabel}
           error={error}
           type={type}

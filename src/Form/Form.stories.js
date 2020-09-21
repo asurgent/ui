@@ -73,6 +73,7 @@ export const defaultForm = () => {
     imABoolean: {
       type: 'bool',
       label: 'Im true or false',
+      tooltipPostition: 'left',
       tooltip: 'Select me',
       value: false,
     },
@@ -216,7 +217,7 @@ export const defaultForm = () => {
   }, [renderErrors]);
 
   return (
-    <div style={{}}>
+    <div style={{ padding: '3.2rem' }}>
       <Form.Primary
         form={formData}
         msTimer={15}
