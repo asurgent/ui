@@ -7,7 +7,11 @@ import * as Tooltip from '../../../Tooltip';
 import translation from './Accordion.translation';
 
 const propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.func.isRequired,
+    PropTypes.arrayOf(PropTypes.node),
+  ]).isRequired,
   title: PropTypes.string,
   description: PropTypes.string,
   open: PropTypes.bool,
@@ -47,7 +51,7 @@ const Accordion = ({
       </C.Arrow>
       <Transition.FadeInAndOut isVisible={isOpen} timeout={80} className="content">
         <C.Content>
-          { isOpen && typeof children === 'function' ? children() : children }
+          { isOpen && (typeof children === 'function' ? children() : children) }
         </C.Content>
       </Transition.FadeInAndOut>
     </C.Wrapper>

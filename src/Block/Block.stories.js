@@ -110,15 +110,17 @@ export const emptyState = () => (
 export const accordion = () => (
   <div style={{ padding: '5rem' }}>
     <Block.Accordion title="Hello" description="Desc">
-      <List.Primary
-        rows={[
-          { label: 'Label', value: 'Hello' },
-          { label: 'Label', value: 'Hello' },
-          { label: 'Label', value: '' },
-          { label: 'Label 123123', value: 'Hello' },
-          { row: (<Button.Stretched iconRight={<Icon.ArrowForward fontSize="large" />}>Next</Button.Stretched>) },
-        ]}
-      />
+      {() => (
+        <List.Primary
+          rows={[
+            { label: 'Label', value: 'Hello' },
+            { label: 'Label', value: 'Hello' },
+            { label: 'Label', value: '' },
+            { label: 'Label 123123', value: 'Hello' },
+            { row: (<Button.Stretched iconRight={<Icon.ArrowForward fontSize="large" />}>Next</Button.Stretched>) },
+          ]}
+        />
+      )}
     </Block.Accordion>
   </div>
 );
