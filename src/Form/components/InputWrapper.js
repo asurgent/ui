@@ -23,7 +23,7 @@ const propTyps = {
     PropTypes.instanceOf(Object),
   ]).isRequired,
   noLabel: PropTypes.bool,
-  tooltipPostition: PropTypes.string,
+  tooltipPosition: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
@@ -36,14 +36,14 @@ const defaultProps = {
   noLabel: false,
   className: '',
   classNameWrapper: '',
-  tooltipPostition: 'middle',
+  tooltipPosition: 'middle',
 };
 
 const InputWrapper = (props) => {
   const {
     label,
     tooltip,
-    tooltipPostition,
+    tooltipPosition,
     error,
     children,
     noLabel,
@@ -58,7 +58,7 @@ const InputWrapper = (props) => {
         <Header>
           <Label>{label}</Label>
           { tooltip && (
-            <Tooltip.Primary tip={tooltip} position={tooltipPostition}>
+            <Tooltip.Primary tip={tooltip} position={tooltipPosition}>
               <TooltipIcon />
             </Tooltip.Primary>
           )}
