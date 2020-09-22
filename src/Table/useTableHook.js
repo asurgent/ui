@@ -177,7 +177,7 @@ const useTableHook = (payloadOverrides) => {
     getScopedFilters: () => tableData.facets,
     getAllFilters: () => filterData,
     getItemCount: () => tableData.total_count,
-    getSearchedQuery: () => historyState.search,
+    getSearchedQuery: () => decodeURI(historyState.search),
     loadFilterForKey: (filterKey, requestString) => {
       // Used by filterGroupHook. This will load filer-data
       setFilterRequestKeyState({ filterKey, requestString });

@@ -5,9 +5,11 @@ import * as Spinner from '../../Spinner';
 import TablePagination from '../TablePagination';
 import Controlls from '../TableControlls';
 import BaseTable from '../BaseTable';
-
+import translation from '../BaseTable/BaseTable.translation';
 import { Wrapper, TableLoader } from './MainTable.styled';
 import * as Shield from '../../Shield';
+
+const { t } = translation;
 
 const getEmptystate = (hook, props) => {
   if (hook.requestFailedMessage()) {
@@ -16,8 +18,11 @@ const getEmptystate = (hook, props) => {
   const { emptystate } = props;
   const base = emptystate;
   const query = hook.getSearchedQuery();
+
+  // emptystate.base is what's set via <Table.Main emptystate="something"
+  // which shows up when a filter-query doesnt "hit" anything.
   if (query) {
-    return `${base} for : ${query}`;
+    return emptystate ? `${base}: ${query}` : t('emptystate');
   }
   return null;
 };
