@@ -306,6 +306,108 @@ export const main = () => {
   );
 };
 
+export const mainSearchable = () => {
+  const success = boolean('Successful response', true);
+  const table = Table.useTableHook(({ order_by }) => ({ page_size: 15, order_by: [...order_by, 'desc myRes'] }));
+  const myRes = Array.from(Array(5)).map((e, i) => (
+    {
+      valueA: `heja${i}`, valueB: `hejb${i}`, valueC: `hejc${i}`, valueD: `hejd${i}`,
+    }));
+
+  useEffect(() => {
+    table.registerRowFetchCallback((payload, onSuccess, onFail) => {
+      action('fetch')(payload);
+
+      if (success) {
+        const myFilteredRes = myRes.filter((r) => r.valueA.includes(payload.search_string.replace('*', '')));
+        onSuccess({
+          result: myFilteredRes,
+          page: 1,
+          total_pages: 20,
+          total_count: myFilteredRes.length,
+        });
+      } else {
+        onFail('Could not get your things');
+      }
+    });
+
+    table.registerFilterFetchCallback((payload, onSuccess) => {
+      onSuccess({ myRes });
+    });
+
+    table.parentReady();
+  }, []);
+
+  return (
+    <StoryWrapper>
+      <Table.Controlls
+        tableHook={table}
+        searchLabel="search"
+        withFilter={[{ label: 'My res', facetKey: 'myRes', excludeable: true }]}
+        parseFilterLabelOutput={(filter) => {
+          // If we get empty-string as type, set it to label Missing
+          if (filter === '') {
+            return 'missing';
+          }
+          return null;
+        }}
+        parseFilterItemRequestOutput={(filter, filterKey) => {
+          if (filterKey === 'myRes') {
+            const user = filter.match(/\((\d+)\)$/);
+
+            if (user) {
+              const [, newKey] = user;
+              return newKey;
+            }
+          }
+          return null;
+        }}
+        parseFilterKeyRequestOutput={(filterKey) => {
+          if (filterKey === 'myRes') {
+            return 'myRes';
+          }
+          return null;
+        }}
+      />
+
+      <Table.Main
+        withHeader
+        useHistoryState
+        historyStatePrefix="tickets"
+        tableHook={table}
+        emptystate="Inga rez för"
+        withControlls={false}
+        exportFileName={text('export file name', 'export_file_name')}
+        headerData={[
+          {
+            label: 'A',
+            size: 'minmax(30rem, 1fr)',
+          },
+          { label: 'B', key: 'test' },
+          { label: 'C', sortKey: 'sort-C' },
+          {
+            label: 'D',
+            size: 'minmax(8rem, 10rem)',
+            props: { style: { textAlign: 'center' } },
+          },
+        ]}
+        cardConfiguration={(row) => <Card row={row} />}
+        columnConfiguration={(row) => {
+          const {
+            valueA, valueB, valueC, valueD,
+          } = row;
+          return [
+            { value: valueA },
+            { value: valueB },
+            { value: valueC },
+            { value: valueD },
+          ];
+        }}
+      />
+    </StoryWrapper>
+  );
+};
+
 export const pagination = () => {
   const hook = Table.useTableHook();
   useEffect(() => {
