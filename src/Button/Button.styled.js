@@ -102,7 +102,6 @@ export const Plain = styled.div`
     color: ${({ theme }) => theme.black};
     position: relative;
     display: inline-block;
-    width: 100%;
     align-self: center;
 
     button {

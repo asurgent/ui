@@ -217,7 +217,7 @@ export const defaultForm = () => {
   }, [renderErrors]);
 
   return (
-    <div style={{}}>
+    <div style={{ padding: '3rem' }}>
       <Form.Primary
         form={formData}
         msTimer={15}
