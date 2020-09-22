@@ -133,7 +133,7 @@ const BaseTable = withTheme((props) => {
 
               >
                 {`${itemCount} ${t('results', 'asurgentui')}`}
-                <Icons.SaveAlt fontSize="medium" />
+                <Icons.SaveAlt />
               </Button.Plain>
             )}
           </C.Count>

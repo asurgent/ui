@@ -51,7 +51,7 @@ export const plainButton = () => (
 );
 
 export const linkButton = () => (
-  <Button.Link iconLeft={<Icon.ConfirmationNumber fontSize="medium" onClick={(e) => action('Clicked!')(e)} />}>{content}</Button.Link>
+  <Button.Link iconLeft={<Icon.ConfirmationNumber onClick={(e) => action('Clicked!')(e)} />}>{content}</Button.Link>
 );
 
 export const transparentButton = () => (
@@ -67,7 +67,7 @@ export const acceptButton = () => (
 );
 
 export const pillButton = () => (
-  <Button.Pill onClick={(e) => action('Clicked!')(e)} iconRight={<Icon.ConfirmationNumber fontSize="medium" />}>{content}</Button.Pill>
+  <Button.Pill onClick={(e) => action('Clicked!')(e)} iconRight={<Icon.ConfirmationNumber />}>{content}</Button.Pill>
 );
 
 export const createBlock = () => (
