@@ -32,8 +32,7 @@ export const Title = styled.h1`
 export const Content = styled.div`
     flex: 1;
     grid-area: content;
-    overflow-x: auto;
-
+    
     h2 {
         padding: 0;
         margin-top: 0;
