@@ -12,12 +12,21 @@ export const Logo = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: ${({ theme }) => theme.blue900};
+    background: ${({ theme }) => theme.white};
     margin-bottom: -1px;
+    border-bottom: 1px solid;
+    border-color: ${({ theme }) => theme.gray300};
 
     svg {
-        fill: ${({ theme }) => theme.white};
+        fill: ${({ theme }) => theme.blue900};
         width: 60%;
+    }
+    @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
+      background: ${({ theme }) => theme.blue900};
+      border-color: transparent;
+        svg {
+          fill: ${({ theme }) => theme.white};
+        }
     }
 `;
 
