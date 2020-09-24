@@ -6,9 +6,9 @@ import StopIcon from '@material-ui/icons/Stop';
 import { withTheme } from 'styled-components';
 import * as C from '../../TimeComponents.styled';
 import translation from './StartEnd.translation';
-import * as Icons from '../Icons';
 import { newMoment } from '../../../Moment/momentParsers';
-import { getRelativeTime, getNextNextDate, getLastRun } from './helpers';
+import { getLastRun } from './helpers';
+import Duration from './Duration';
 
 const { t } = translation;
 
@@ -22,6 +22,7 @@ const StartEnd = ({
   onGoingFrom,
   onGoingTo,
   durationInSeconds,
+  showDurationToolTip,
   theme,
 }) => {
   const dates = useMemo(() => {
@@ -40,8 +41,11 @@ const StartEnd = ({
     }
 
     // has next execution-date from the api
-    if (nextExecution && cronExpression) {
-      return getNextNextDate({ nextExecution, cronExpression });
+    if (nextExecution) {
+      return {
+        from: newMoment(nextExecution),
+        to: newMoment(nextExecution).add(durationInSeconds, 'seconds'),
+      };
     }
 
     // expired but repeated, find the last occurrence and add duration
@@ -58,6 +62,7 @@ const StartEnd = ({
 
   // play/stop buttons
   if (isOngoing) {
+    const remainingSeconds = moment.duration(dates.to.diff(moment())).asSeconds();
     return (
       <C.Dates>
         <C.Container marginRight>
@@ -67,12 +72,13 @@ const StartEnd = ({
           <C.TextSmall withBottomMargin>{newMoment(dates.from).format('YYYY-MM-DD')}</C.TextSmall>
         </C.Container>
 
-        <C.Container marginRight marginLeft>
-          <C.TextSmall withBottomMargin>{t('remaining', 'asurgentui')}</C.TextSmall>
-          <Icons.Duration active theme={theme} />
-          <C.TextNormal>{getRelativeTime({ date: dates.to }).number}</C.TextNormal>
-          <C.TextSmall withBottomMargin>{getRelativeTime({ date: dates.to }).label}</C.TextSmall>
-        </C.Container>
+        <Duration
+          isOnGoing
+          showDurationToolTip={showDurationToolTip}
+          durationInSeconds={remainingSeconds}
+          theme={theme}
+          hasExpired={hasExpired}
+        />
 
         <C.Container marginLeft>
           <C.TextSmall withBottomMargin>{t('ends', 'asurgentui')}</C.TextSmall>
@@ -89,9 +95,9 @@ const StartEnd = ({
     <C.Dates>
       <C.Container hasExpired={hasExpired} marginRight>
         <C.DateAndTime active={!hasExpired}>
-          <C.TextNormal>{newMoment(dates.from).format('DD')}</C.TextNormal>
+          <C.TextNormal>{newMoment(dates.from).format('D')}</C.TextNormal>
           <C.TextSmall>
-            {`${t(`month${newMoment(dates.from).month()}`, 'asurgentui')} ${newMoment(dates.from).format('YY')}`}
+            {`${t(`month${newMoment(dates.from).month()}`, 'asurgentui')} ${newMoment(dates.from).format('YYYY')}`}
           </C.TextSmall>
         </C.DateAndTime>
         <C.Time>
@@ -101,20 +107,18 @@ const StartEnd = ({
         </C.Time>
       </C.Container>
 
-      <C.Container hasExpired={hasExpired} marginRight marginLeft>
-        <C.TextSmall withBottomMargin>{t(hasExpired ? 'lasted' : 'duration', 'asurgentui')}</C.TextSmall>
-        <Icons.Duration active={!hasExpired} theme={theme} />
-        <C.TextNormal>{getRelativeTime({ duration: durationInSeconds }).number}</C.TextNormal>
-        <C.TextSmall withBottomMargin>
-          {getRelativeTime({ duration: durationInSeconds }).label}
-        </C.TextSmall>
-      </C.Container>
+      <Duration
+        showDurationToolTip={showDurationToolTip}
+        durationInSeconds={durationInSeconds}
+        theme={theme}
+        hasExpired={hasExpired}
+      />
 
       <C.Container hasExpired={hasExpired} marginLeft>
         <C.DateAndTime active={!hasExpired}>
-          <C.TextNormal>{newMoment(dates.to).format('DD')}</C.TextNormal>
+          <C.TextNormal>{newMoment(dates.to).format('D')}</C.TextNormal>
           <C.TextSmall>
-            {`${t(`month${newMoment(dates.to).month()}`, 'asurgentui')} ${newMoment(dates.to).format('YY')}`}
+            {`${t(`month${newMoment(dates.to).month()}`, 'asurgentui')} ${newMoment(dates.to).format('YYYY')}`}
           </C.TextSmall>
         </C.DateAndTime>
         <C.Time>
@@ -128,6 +132,7 @@ const StartEnd = ({
 };
 
 StartEnd.propTypes = {
+  showDurationToolTip: PropTypes.bool,
   hasExpired: PropTypes.bool,
   isOngoing: PropTypes.bool,
   cronExpression: PropTypes.string,
@@ -161,6 +166,7 @@ StartEnd.propTypes = {
 };
 
 StartEnd.defaultProps = {
+  showDurationToolTip: true,
   hasExpired: false,
   isOngoing: false,
   cronExpression: null,

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import {
-  withKnobs, text, boolean,
+  withKnobs, text, boolean, number,
 } from '@storybook/addon-knobs';
 import * as TimeComponents from './index';
 import { newMoment } from '../Moment/momentParsers';
@@ -60,15 +60,16 @@ export const startEnd = () => {
     hour: currentHour, minute: 0, second: 0, millisecond: 0,
   }).toISOString();
 
-  const to = newMoment(from).add(3600, 'seconds').toISOString();
+  const to = newMoment(from).add(duration, 'seconds').toISOString();
   const next = newMoment(from).add(1, 'days').toISOString();
 
   return (
     <div style={{ padding: '2rem' }}>
       <TimeComponents.StartEnd
+        showDurationToolTip={boolean('Show duration tooltip', true)}
         isOngoing={boolean('Is ongoing', true)}
         hasExpired={boolean('Has expired', false)}
-        durationInSeconds={duration}
+        durationInSeconds={number('Duration in seconds', duration)}
         cronExpression={text('cron exp', `0 ${currentHour} * * *`)}
         nextExecution={text('Next date', next)}
         onGoingFrom={text('Ongoing from', from)}

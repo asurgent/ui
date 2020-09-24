@@ -17,9 +17,9 @@ const Datespan = ({
   <C.Dates>
     <C.Container hasExpired={hasExpired} marginRight>
       <C.StartDate hasExpired={hasExpired} theme={theme}>
-        <C.TextNormal>{newMoment(startDate).format('DD')}</C.TextNormal>
+        <C.TextNormal>{newMoment(startDate).format('D')}</C.TextNormal>
         <C.TextSmall>
-          {`${t(`month${newMoment(startDate).month()}`, 'asurgentui')} ${newMoment(startDate).format('YY')}`}
+          {`${t(`month${newMoment(startDate).month()}`, 'asurgentui')} ${newMoment(startDate).format('YYYY')}`}
         </C.TextSmall>
       </C.StartDate>
       <C.Time>
@@ -31,9 +31,9 @@ const Datespan = ({
 
     <C.Container hasExpired={hasExpired} marginLeft>
       <C.EndDate hasExpired={hasExpired} theme={theme}>
-        <C.TextNormal>{newMoment(endDate).format('DD')}</C.TextNormal>
+        <C.TextNormal>{newMoment(endDate).format('D')}</C.TextNormal>
         <C.TextSmall>
-          {`${t(`month${newMoment(endDate).month()}`, 'asurgentui')} ${newMoment(endDate).format('YY')}`}
+          {`${t(`month${newMoment(endDate).month()}`, 'asurgentui')} ${newMoment(endDate).format('YYYY')}`}
         </C.TextSmall>
       </C.EndDate>
       <C.Time>
