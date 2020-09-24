@@ -23,7 +23,7 @@ export const formatTextNumber = (durationInSeconds) => {
   const formattedDuration = durationHumanized
     .split(' ')
     .map((el) => {
-      const numbersInText = ['en', 'ett', 'one', 'a'];
+      const numbersInText = ['en', 'ett', 'one', 'a', 'an'];
       return numbersInText.includes(el) ? '1' : el;
     });
 
