@@ -9,11 +9,14 @@ import * as ToolTip from '../../../Tooltip';
 const { t } = translation;
 
 const propTypes = {
-  isOnGoing: PropTypes.bool.isRequired,
+  isOnGoing: PropTypes.bool,
   hasExpired: PropTypes.bool.isRequired,
   showDurationToolTip: PropTypes.bool.isRequired,
   theme: PropTypes.instanceOf(Object).isRequired,
   durationInSeconds: PropTypes.number.isRequired,
+};
+const defaultProps = {
+  isOnGoing: false,
 };
 
 const Duration = ({
@@ -54,5 +57,6 @@ const Duration = ({
 };
 
 Duration.propTypes = propTypes;
+Duration.defaultProps = defaultProps;
 
 export default Duration;

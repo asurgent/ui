@@ -81,7 +81,7 @@ Repeat.propTypes = {
   useAnimation: PropTypes.bool,
   showPercentage: PropTypes.bool,
   theme: PropTypes.instanceOf(Object),
-  isOngoing: PropTypes.bool.isRequired,
+  isOngoing: PropTypes.bool,
   hasExpired: PropTypes.bool.isRequired,
 };
 
@@ -92,6 +92,7 @@ Repeat.defaultProps = {
   cronCategory: null,
   useAnimation: false,
   showPercentage: false,
+  isOngoing: null,
   theme: {},
 };
 
