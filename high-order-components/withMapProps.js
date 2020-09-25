@@ -1,5 +1,4 @@
 import React from 'react';
-import wrapDisplayName from 'recompose/wrapDisplayName';
 
 const propTyps = {};
 const defaultProps = {};
@@ -9,7 +8,6 @@ const withMapProps = (remapProps) => (Component) => {
 
   MapPropsComponent.defaultProps = defaultProps;
   MapPropsComponent.propTypes = propTyps;
-  MapPropsComponent.displayName = wrapDisplayName(Component, 'withMapProps');
 
   return MapPropsComponent;
 };
