@@ -53,6 +53,44 @@ const defaultProps = {
   tooltipOrientation: 'middle',
 };
 
+const propTypesTooltip = {
+  tooltipOrientation: PropTypes.string,
+  tooltip: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]).isRequired,
+};
+
+const defaultPropsTooltip = {
+  tooltipOrientation: '',
+  tooltip: '',
+};
+
+const TooltipWrapper = ({ children, tooltipOrientation, tooltip }) => {
+  switch (tooltipOrientation) {
+    case 'left':
+      return (
+        <Tooltip.Left tip={tooltip}>
+          {children}
+        </Tooltip.Left>
+      );
+    case 'right':
+      return (
+        <Tooltip.Right tip={tooltip}>
+          {children}
+        </Tooltip.Right>
+      );
+    default:
+      return (
+        <Tooltip.Middle tip={tooltip}>
+          {children}
+        </Tooltip.Middle>
+      );
+  }
+};
+
 const Button = (props) => {
   const {
     mainIcon,
@@ -79,6 +117,7 @@ const Button = (props) => {
   const location = useLocation();
   const isValidLink = (link && (isExternalLink(link) || isInteralLink(link)));
   const isValidMailto = mailto && (isValidMail(mailto));
+  const tooltTipProps = { tooltip, tooltipOrientation };
 
   const handleClick = async (event) => {
     if (!disabled) {
@@ -114,29 +153,6 @@ const Button = (props) => {
     onClick: handleClick,
     // onMouseDown needed because of onBlur on form fields
     onMouseDown: (e) => e.preventDefault(),
-  };
-
-  const TooltipWrapper = ({ children: tooltipChildren }) => {
-    switch (tooltipOrientation) {
-      case 'left':
-        return (
-          <Tooltip.Left tip={tooltip}>
-            {tooltipChildren}
-          </Tooltip.Left>
-        );
-      case 'right':
-        return (
-          <Tooltip.Right tip={tooltip}>
-            {tooltipChildren}
-          </Tooltip.Right>
-        );
-      default:
-        return (
-          <Tooltip.Middle tip={tooltip}>
-            {tooltipChildren}
-          </Tooltip.Middle>
-        );
-    }
   };
 
   const content = (
@@ -182,7 +198,7 @@ const Button = (props) => {
     }
 
     return (
-      <TooltipWrapper>
+      <TooltipWrapper {...tooltTipProps}>
         <Link {...upddatedAttrs}>
           {content}
         </Link>
@@ -195,7 +211,7 @@ const Button = (props) => {
   if (type === 'submit') {
     const { onClick: buttonOnClick, ...rest } = attrs;
     return (
-      <TooltipWrapper>
+      <TooltipWrapper {...tooltTipProps}>
         <Style {...rest}>
           <button onClick={buttonOnClick} type="submit">{' '}</button>
           {content}
@@ -205,7 +221,7 @@ const Button = (props) => {
   }
 
   return (
-    <TooltipWrapper>
+    <TooltipWrapper {...tooltTipProps}>
       <Style {...attrs}>
         {content}
       </Style>
@@ -215,5 +231,7 @@ const Button = (props) => {
 
 Button.defaultProps = defaultProps;
 Button.propTypes = propTyps;
+TooltipWrapper.defaultProps = defaultPropsTooltip;
+TooltipWrapper.propTypes = propTypesTooltip;
 
 export default Button;

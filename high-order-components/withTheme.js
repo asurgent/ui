@@ -1,5 +1,4 @@
 import React from 'react';
-import wrapDisplayName from 'recompose/wrapDisplayName';
 import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
 import libraryTheme from '../lib/style/theme';
@@ -35,7 +34,6 @@ const withTheme = (themeOverrides = {}) => (Target) => {
 
   WithTheme.propTypes = propTypes;
   WithTheme.defaultProps = defaultProps;
-  WithTheme.displayName = wrapDisplayName(Target, 'withTheme');
 
   return WithTheme;
 };
