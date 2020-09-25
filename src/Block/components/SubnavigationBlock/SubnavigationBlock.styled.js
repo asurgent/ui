@@ -10,8 +10,10 @@ export const Wrapper = styled.div`
         "navigation"
         "title"
         "content";
+    overflow-x: auto;
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {
+        overflow-x: unset;
         grid-column-gap: 1.6rem;
         grid-template-columns: 25rem minmax(20rem , 101rem);
         grid-template-areas:
@@ -32,6 +34,11 @@ export const Title = styled.h1`
 export const Content = styled.div`
     flex: 1;
     grid-area: content;
+    overflow-x: auto;
+    
+    @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {
+            overflow-x: unset;
+    }
     
     h2 {
         padding: 0;
