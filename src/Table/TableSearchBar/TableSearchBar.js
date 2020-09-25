@@ -28,7 +28,7 @@ const TableSearchBar = (props) => {
       placeholder: searchLabel || t('placeholder', 'asurgentui'),
       value: '',
       noLabel: true,
-      props: { autoFocus: true },
+      /* props: { autoFocus: true }, */
       classNameWrapper: 'custom-table-search',
     },
   });
