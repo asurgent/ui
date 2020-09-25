@@ -1,3 +1,4 @@
+import { isIOS, isSafari } from 'react-device-detect';
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Primary as Form, useFormBuilder } from '../../Form';
@@ -36,7 +37,10 @@ const TableSearchBar = (props) => {
     if (tableHook.isLoading) {
       formData.blurField('search');
     } else {
-      formData.focusOnField('search');
+      const notIOS = !(isIOS && isSafari);
+      if (notIOS) {
+        formData.focusOnField('search');
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableHook.isLoading]);
