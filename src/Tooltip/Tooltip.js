@@ -1,6 +1,7 @@
-import React, { Component, createRef } from 'react';
+import React, { createRef, useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
+
 import * as C from './Tooltip.styled';
 
 const tooltipRoot = document.getElementById('tooltip-root');
@@ -11,7 +12,10 @@ const positions = {
 };
 
 const propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]),
   tip: PropTypes.string,
   position: PropTypes.string,
 };
@@ -22,80 +26,64 @@ const defaultProps = {
   children: null,
 };
 
-class Tooltip extends Component {
-    state = {
-      show: false,
-      coordinates: { left: 0, top: 0 },
-      ref: createRef(),
-    }
+const Tooltip = ({ position, tip, children }) => {
+  const [show, setShow] = useState(false);
+  const [coordinates, setCoordinates] = useState({ left: 0, top: 0 });
 
-    showTooltip = ({ currentTarget }) => {
-      if (currentTarget != null) {
-        const {
-          x,
-          top,
-          height,
-          width,
-        } = currentTarget.getBoundingClientRect();
-        const { position } = this.props;
-        const coordinates = {};
-        const spacing = 5;
+  const ref = createRef(null);
 
-        if (position === positions.right) {
-          Object.assign(coordinates, { left: x + width + spacing, top: top + (height / 2) });
-        } else if (position === positions.left) {
-          Object.assign(coordinates, { left: x - spacing, top: top + (height / 2) });
-        } else {
-          // Middle
-          Object.assign(coordinates, { left: x + (width / 2), top: top + height + spacing });
-        }
+  const handleMouseEnter = () => {
+    if (ref.current != null) {
+      const {
+        x, top, height, width,
+      } = ref.current.getBoundingClientRect();
 
-        this.setState({ show: true, coordinates });
+      const spacing = 5;
+
+      if (position === positions.right) {
+        setCoordinates({ left: x + width + spacing, top: top + (height / 2) });
+      } else if (position === positions.left) {
+        setCoordinates({ left: x - spacing, top: top + (height / 2) });
+      } else {
+        // Middle
+        setCoordinates({ left: x + (width / 2), top: top + height + spacing });
       }
+      setShow(true);
     }
+  };
 
-    hideTooltip = () => {
-      this.setState({ show: false, coordinates: { left: 0, top: 0 } });
-    }
+  const handleMouseLeave = () => {
+    setShow(false);
+  };
 
-    renderChildren = (children) => {
-      const { ref } = this.state;
+  useEffect(() => {
+    handleMouseLeave();
+  }, [children]);
 
-      if (ref.current) {
-        ref.current.addEventListener('mouseenter', this.showTooltip);
-        ref.current.addEventListener('mouseleave', this.hideTooltip);
-      }
-
-      return React.Children.map(children,
-        (child) => React.cloneElement(child, {
-          onMouseEnter: this.showTooltip,
-          onMouseLeave: this.hideTooltip,
-          ref,
-        }));
-    }
-
-    render() {
-      const { tip: tooltipMessage, children, position } = this.props;
-      const { coordinates, show } = this.state;
-
-      return (
-        <>
-          {tooltipMessage ? this.renderChildren(children) : children}
-          { show === true && tooltipMessage
-            && ReactDOM.createPortal(
+  return (
+    <>
+      { tip && (
+      <div
+        ref={ref}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {children}
+      </div>
+      ) }
+      { show === true && tip
+            && createPortal(
               <C.TooltipWrapper
                 position={position}
                 style={coordinates}
               >
-                {tooltipMessage}
+                {tip}
               </C.TooltipWrapper>,
               tooltipRoot,
             )}
-        </>
-      );
-    }
-}
-
+    </>
+  );
+};
 Tooltip.propTypes = propTypes;
 Tooltip.defaultProps = defaultProps;
 Tooltip.displayName = '@asurgent.ui.Tooltip';
