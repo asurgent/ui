@@ -3,13 +3,9 @@ import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 
 import * as C from './Tooltip.styled';
+import { positions, getCoordinates } from './helpers';
 
 const tooltipRoot = document.getElementById('tooltip-root');
-const positions = {
-  middle: 'middle',
-  right: 'right',
-  left: 'left',
-};
 
 const propTypes = {
   children: PropTypes.oneOfType([
@@ -34,20 +30,8 @@ const Tooltip = ({ position, tip, children }) => {
 
   const handleMouseEnter = () => {
     if (ref.current != null) {
-      const {
-        x, top, height, width,
-      } = ref.current.getBoundingClientRect();
-
-      const spacing = 5;
-
-      if (position === positions.right) {
-        setCoordinates({ left: x + width + spacing, top: top + (height / 2) });
-      } else if (position === positions.left) {
-        setCoordinates({ left: x - spacing, top: top + (height / 2) });
-      } else {
-        // Middle
-        setCoordinates({ left: x + (width / 2), top: top + height + spacing });
-      }
+      const coords = getCoordinates({ position, ref });
+      setCoordinates(coords);
       setShow(true);
     }
   };
@@ -73,10 +57,7 @@ const Tooltip = ({ position, tip, children }) => {
       ) }
       { show === true && tip
             && createPortal(
-              <C.TooltipWrapper
-                position={position}
-                style={coordinates}
-              >
+              <C.TooltipWrapper position={position} style={coordinates}>
                 {tip}
               </C.TooltipWrapper>,
               tooltipRoot,
