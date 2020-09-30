@@ -47,13 +47,13 @@ const Tooltip = ({ position, tip, children }) => {
   return (
     <>
       { tip && (
-      <div
+      <C.TooltipParent
         ref={ref}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         {children}
-      </div>
+      </C.TooltipParent>
       ) }
       { show === true && tip
             && createPortal(

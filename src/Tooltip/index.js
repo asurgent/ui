@@ -11,7 +11,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  position: 'midde',
+  position: 'middle',
   children: null,
 };
 
