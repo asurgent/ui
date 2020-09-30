@@ -41,3 +41,7 @@ export const TooltipWrapper = styled.div`
     }
 }
 `;
+
+export const TooltipParent = styled.div`
+  background: transparent!important;
+`;

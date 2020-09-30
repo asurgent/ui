@@ -69,6 +69,9 @@ const defaultPropsTooltip = {
 };
 
 const TooltipWrapper = ({ children, tooltipOrientation, tooltip }) => {
+  if (!tooltip) {
+    return children;
+  }
   switch (tooltipOrientation) {
     case 'left':
       return (
