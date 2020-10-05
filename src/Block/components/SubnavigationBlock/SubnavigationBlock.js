@@ -22,6 +22,7 @@ const SubnavigationBlock = ({ navigationList, title, children }) => (
     <C.Navigation>
       {
         navigationList.map(({
+          render = () => true,
           path,
           icon,
           label,
@@ -30,11 +31,12 @@ const SubnavigationBlock = ({ navigationList, title, children }) => (
           navigationStyle,
           labelStyle,
         }) => (
+          render() && (
           <C.NavigationItem style={navigationStyle} to={path} key={path} isActive={isActive}>
             <C.Icon style={iconStyle}>{icon}</C.Icon>
             <C.Label style={labelStyle}>{label}</C.Label>
           </C.NavigationItem>
-        ))
+          )))
       }
     </C.Navigation>
     <C.Content>

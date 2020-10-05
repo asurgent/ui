@@ -137,8 +137,14 @@ export const subnavigationBlock = () => (
         iconStyle: { background: 'pink' },
         navigationStyle: { background: 'magenta' },
         labelStyle: { background: 'orange' },
+        render: () => true,
       },
-      { label: 'Other stuff', path: 'http://apple.com', icon: '' },
+      {
+        label: 'Other stuff', path: 'http://apple.com', icon: '',
+      },
+      {
+        label: 'Hidden stuff', path: 'http://apple.com', icon: '', render: () => false,
+      },
     ]}
   >
     <h2>I am title</h2>
