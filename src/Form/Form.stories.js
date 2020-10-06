@@ -54,11 +54,6 @@ const ticketValues = {
 
 export const simpleForm = () => {
   const formData = Form.useFormBuilder(formObj);
-  useEffect(() => {
-    const updated = Object.keys(formObj).map((obj) => ({ name: obj, value: 'asdfasdf' }));
-    formData.updateFields(updated);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   return (
     <Form.Primary
       form={formData}
