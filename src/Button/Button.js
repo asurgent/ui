@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { object } from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import * as Spinner from '../Spinner';
 import * as Tooltip from '../Tooltip/index';
@@ -32,6 +32,7 @@ const propTyps = {
   renderStyle: PropTypes.instanceOf(Object).isRequired,
   type: PropTypes.string, // Add button[type="submit"] as an ovelay to native trigger in forms
   tooltipOrientation: PropTypes.string,
+  style: PropTypes.instanceOf(Object),
 };
 
 const defaultProps = {
@@ -51,6 +52,7 @@ const defaultProps = {
   passLocationState: false,
   type: '',
   tooltipOrientation: 'middle',
+  style: {},
 };
 
 const propTypesTooltip = {
@@ -114,7 +116,8 @@ const Button = (props) => {
     saveToJson,
     saveToFilename,
     type,
-    renderStyle: Style,
+    style,
+    renderStyle: Component,
   } = props;
 
   const location = useLocation();
@@ -152,6 +155,7 @@ const Button = (props) => {
   };
 
   const attrs = {
+    style,
     className: [(disabled ? 'disabled' : null), className].join(' ').trim(),
     onClick: handleClick,
     // onMouseDown needed because of onBlur on form fields
@@ -174,7 +178,7 @@ const Button = (props) => {
 
   // If we pass a link/mailto, convert component to a-tag
   if (isValidLink || isValidMailto) {
-    const Link = Style.withComponent('a');
+    const Link = Component.withComponent('a');
     const upddatedAttrs = { ...attrs };
 
     if (isValidLink) {
@@ -215,19 +219,19 @@ const Button = (props) => {
     const { onClick: buttonOnClick, ...rest } = attrs;
     return (
       <TooltipWrapper {...tooltTipProps}>
-        <Style {...rest}>
+        <Component {...rest}>
           <button onClick={buttonOnClick} type="submit">{' '}</button>
           {content}
-        </Style>
+        </Component>
       </TooltipWrapper>
     );
   }
 
   return (
     <TooltipWrapper {...tooltTipProps}>
-      <Style {...attrs}>
+      <Component {...attrs}>
         {content}
-      </Style>
+      </Component>
     </TooltipWrapper>
   );
 };

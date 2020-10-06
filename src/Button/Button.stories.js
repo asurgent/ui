@@ -63,7 +63,7 @@ export const rejectButton = () => (
 );
 
 export const acceptButton = () => (
-  <Button.Create onClick={(e) => action('Clicked!')(e)}>{content}</Button.Create>
+  <Button.Create style={{ padding: '4rem' }} onClick={(e) => action('Clicked!')(e)}>{content}</Button.Create>
 );
 
 export const pillButton = () => (
