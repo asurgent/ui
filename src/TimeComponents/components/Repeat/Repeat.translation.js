@@ -40,7 +40,7 @@ export default addTranslation({
     expired: 'Expired',
     occurs: 'Occurs',
 
-    timme: 'time',
+    time: 'time',
 
     customShort: 'C',
     customLong: 'Custom',
