@@ -17,7 +17,6 @@ const Repeat = ({
   onGoingTo,
   useAnimation,
   showPercentage,
-  nextExecution,
   cronCategory,
   theme,
 }) => {
@@ -48,7 +47,7 @@ const Repeat = ({
     );
   }
 
-  if (nextExecution) {
+  if (cronCategory) {
     return (
       <C.Container data-testid="repeats">
         <C.TextSmall withBottomMargin>{t('repeats', 'asurgentui')}</C.TextSmall>
@@ -58,7 +57,14 @@ const Repeat = ({
       </C.Container>
     );
   }
-  return null;
+  return (
+    <C.Container hasExpired data-testid="occursOnce">
+      <C.TextSmall withBottomMargin>{t('occurs', 'asurgentui')}</C.TextSmall>
+      <Icons.Dots theme={theme} />
+      <C.TextNormal>1</C.TextNormal>
+      <C.TextSmall>{t('time', 'asurgentui')}</C.TextSmall>
+    </C.Container>
+  );
 };
 
 Repeat.propTypes = {
@@ -68,11 +74,6 @@ Repeat.propTypes = {
     PropTypes.instanceOf(moment),
   ]),
   onGoingTo: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-    PropTypes.instanceOf(moment),
-  ]),
-  nextExecution: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
@@ -88,7 +89,6 @@ Repeat.propTypes = {
 Repeat.defaultProps = {
   onGoingFrom: null,
   onGoingTo: null,
-  nextExecution: null,
   cronCategory: null,
   useAnimation: false,
   showPercentage: false,
