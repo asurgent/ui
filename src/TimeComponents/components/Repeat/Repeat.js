@@ -58,7 +58,7 @@ const Repeat = ({
     );
   }
   return (
-    <C.Container hasExpired data-testid="occursOnce">
+    <C.Container data-testid="occursOnce">
       <C.TextSmall withBottomMargin>{t('occurs', 'asurgentui')}</C.TextSmall>
       <Icons.Dots theme={theme} />
       <C.TextNormal>1</C.TextNormal>
