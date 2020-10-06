@@ -48,6 +48,17 @@ const Repeat = ({
     );
   }
 
+  if (!cronCategory) {
+    return (
+      <C.Container hasExpired data-testid="occursOnce">
+        <C.TextSmall withBottomMargin>{t('occurs', 'asurgentui')}</C.TextSmall>
+        <Icons.Dots theme={theme} />
+        <C.TextNormal>1</C.TextNormal>
+        <C.TextSmall>{t('time', 'asurgentui')}</C.TextSmall>
+      </C.Container>
+    );
+  }
+
   if (nextExecution) {
     return (
       <C.Container data-testid="repeats">

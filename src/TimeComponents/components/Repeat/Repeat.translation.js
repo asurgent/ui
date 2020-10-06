@@ -7,6 +7,9 @@ export default addTranslation({
     status: 'Status',
     repeats: 'Repeteras',
     expired: 'Gått ut',
+    occurs: 'Inträffar',
+
+    time: 'gång',
 
     customShort: 'A',
     customLong: 'Anpassat',
@@ -35,6 +38,9 @@ export default addTranslation({
     status: 'Status',
     repeats: 'Repeats',
     expired: 'Expired',
+    occurs: 'Occurs',
+
+    timme: 'time',
 
     customShort: 'C',
     customLong: 'Custom',
