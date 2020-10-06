@@ -34,9 +34,6 @@ export const repeat = () => (
       isOngoing={boolean('Is ongoing', true)}
       hasExpired={boolean('Has expired', false)}
       cronCategory={text('Cron category', `custom`)}
-      nextExecution={text('Next execution', newMoment().set({
-        hours: newMoment().hours() + 1, minutes: 0, seconds: 0, milliseconds: 0,
-      }).toISOString())}
       onGoingFrom={text('Ongoing from', newMoment().set({
         hours: newMoment().hours(), minutes: 0, seconds: 0, milliseconds: 0,
       }).toISOString())}
