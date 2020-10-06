@@ -135,6 +135,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
             parseOutput={parseOutput}
             props={inputProps}
             options={options}
+            disabled={disabled}
           />
         </InputWrapper>
       );

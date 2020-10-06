@@ -104,10 +104,10 @@ const FilterInput = forwardRef((props, ref) => {
       onClick={() => filterSelectHook.setOpen(false)}
       shieldIsUp={filterSelectHook.isOpen}
     >
-      <C.SelectFilter onClick={() => filterSelectHook.setOpen(true)}>
-        <C.Input disabled={disabled} type="text" name={name} ref={filterSelectHook.inputRef} disabled {...inputProps} />
+      <C.SelectFilter onClick={() => !disabled && filterSelectHook.setOpen(true)}>
+        <C.Input type="text" name={name} ref={filterSelectHook.inputRef} disabled {...inputProps} />
         <C.Output>
-          <C.Value asPlaceholder={filterSelectHook.showPlaceHolder()}>
+          <C.Value disabled={disabled} asPlaceholder={filterSelectHook.showPlaceHolder()}>
             { filterSelectHook.showTags() && (
               <Tag.Collection tags={filterSelectHook.getTags()} max={3} />
             )}

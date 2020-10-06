@@ -74,7 +74,7 @@ export const Wrapper = styled.div`
   }
   * {
     color: ${({ theme, disabled }) => (disabled ? theme.gray400 : theme.black)};
-    cursor: ${(disabled) => (disabled ? 'not-allowed' : 'initial')}
+    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'initial')}
   }
  
 `;

@@ -92,14 +92,12 @@ export const defaultForm = () => {
         errorMessage: 'I did not validate',
       },
       value: '',
-      disabled: true,
     },
     someNumber: {
       type: 'number',
       label: 'Some Number (max 100)',
       tooltip: 'hejhej',
       maxValue: 100,
-      disabled: true,
     },
     someRadioGroup: {
       type: 'radiogroup',
@@ -108,7 +106,6 @@ export const defaultForm = () => {
         { label: 'label1', value: 'value1' },
         { label: 'label2', value: 'value2' },
       ],
-      disabled: true,
     },
     someRadioGroup2: {
       type: 'radiogroup',
@@ -131,7 +128,6 @@ export const defaultForm = () => {
       ],
       tooltip: 'tooltip',
       placeholder: 'select',
-      disabled: true,
     },
     someSelect2: {
       type: 'select',
@@ -142,7 +138,6 @@ export const defaultForm = () => {
         { value: '3', label: 'Third option' },
       ],
       tooltip: 'tooltip',
-      disabled: true,
     },
     someFilterSelectSingle: {
       type: 'filterselect',
@@ -153,7 +148,6 @@ export const defaultForm = () => {
         searchPlaceholder: 'Search in me plz',
       },
       placeholder: 'Select me',
-      disabled: true,
     },
     someFilterSelectMulti: {
       type: 'filterselect',
@@ -165,7 +159,6 @@ export const defaultForm = () => {
         multiSelect: true,
         searchPlaceholder: 'Search in me plz',
       },
-      disabled: true,
     },
     someDate: {
       type: 'datepicker',
@@ -173,7 +166,6 @@ export const defaultForm = () => {
       render: (spec) => spec.someText && spec.someText.length < 10,
       tooltip: 'tooltip',
       label: 'Some date',
-      disabled: true,
     },
   });
   const renderErrors = boolean('render errors', false);
@@ -194,6 +186,7 @@ export const defaultForm = () => {
           '3',
           '4',
         ],
+        value: '3',
       },
       {
         name: 'someFilterSelectMulti',

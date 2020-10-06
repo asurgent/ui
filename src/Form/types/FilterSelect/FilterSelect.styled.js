@@ -28,7 +28,12 @@ export const Value = styled.div`
     padding-right: 2rem;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: ${({ theme, asPlaceholder }) => (asPlaceholder ? theme.gray400 : theme.black)};
+    color: ${({ theme, asPlaceholder, disabled }) => ((asPlaceholder || disabled) ? theme.gray400 : theme.black)};
+    
+    /* Tags */
+    * {
+        color: ${({ theme, disabled }) => (disabled ? theme.gray400 : theme.black)};
+    }
 `;
 
 export const SearchWrapper = styled.div`
@@ -69,7 +74,6 @@ export const Dropdown = styled.div`
     display: flex;
     flex-direction: column;
     
-
     .close {
         position: absolute;
         right: 1.6rem;
