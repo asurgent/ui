@@ -24,6 +24,7 @@ const DatePicker = forwardRef((props, ref) => {
     maxDateMessage,
     minDate,
     minDateMessage,
+    disabled,
   } = props;
 
   const input = createRef();
@@ -68,6 +69,7 @@ const DatePicker = forwardRef((props, ref) => {
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
+          disabled={disabled}
           {...props.props}
         />
       </MuiPickersUtilsProvider>
@@ -105,6 +107,7 @@ DatePicker.propTypes = {
     condition: PropTypes.func,
     errorMessage: PropTypes.string,
   }),
+  disabled: PropTypes.bool,
 };
 
 DatePicker.defaultProps = {
@@ -123,6 +126,7 @@ DatePicker.defaultProps = {
     condition: () => true,
     errorMessage: '',
   },
+  disabled: false,
 };
 
 DatePicker.displayName = '@asurgent.ui.Form.Input.DatePicker';

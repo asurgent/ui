@@ -72,8 +72,11 @@ export const Wrapper = styled.div`
     position:absolute;
     right: .8rem;
   }
-  
-  
+  * {
+    color: ${({ theme, disabled }) => (disabled ? theme.gray400 : theme.black)};
+    cursor: ${(disabled) => (disabled ? 'not-allowed' : 'initial')}
+  }
+ 
 `;
 
 export const Label = styled.div`

@@ -19,6 +19,7 @@ const propTyps = {
     condition: PropTypes.func,
     errorMessage: PropTypes.string,
   }),
+  disabled: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -31,6 +32,7 @@ const defaultProps = {
     condition: (v) => emailRegexp.test(v),
     errorMessage: 'Unvalid email format',
   },
+  disabled: false,
 };
 
 const Email = forwardRef((props, ref) => {
@@ -39,6 +41,7 @@ const Email = forwardRef((props, ref) => {
     placeholder,
     parseOutput,
     validator,
+    disabled,
   } = props;
   const input = createRef();
 
@@ -65,6 +68,7 @@ const Email = forwardRef((props, ref) => {
       onChange={({ target }) => setValue(target.value)}
       name={name}
       ref={input}
+      disabled={disabled}
     />
   );
 });

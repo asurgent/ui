@@ -16,7 +16,7 @@ export default {
 
 const formObj = {
   label: {
-    type: 'label', label: 'Test', value: 'Im just a label',
+    type: 'label', label: 'Test', value: 'Im just a label', disabled: true,
   },
   search: {
     type: 'text', label: 'Test', placeholder: 'Hello',
@@ -54,7 +54,11 @@ const ticketValues = {
 
 export const simpleForm = () => {
   const formData = Form.useFormBuilder(formObj);
-
+  useEffect(() => {
+    const updated = Object.keys(formObj).map((obj) => ({ name: obj, value: 'asdfasdf' }));
+    formData.updateFields(updated);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Form.Primary
       form={formData}
@@ -69,6 +73,7 @@ export const defaultForm = () => {
       type: 'text',
       label: 'Some Text',
       tooltip: 'hejhej',
+      disabled: true,
     },
     imABoolean: {
       type: 'bool',
@@ -76,6 +81,7 @@ export const defaultForm = () => {
       tooltipPosition: 'left',
       tooltip: 'Select me',
       value: false,
+      disabled: true,
     },
     email: {
       type: 'email',
@@ -86,12 +92,14 @@ export const defaultForm = () => {
         errorMessage: 'I did not validate',
       },
       value: '',
+      disabled: true,
     },
     someNumber: {
       type: 'number',
       label: 'Some Number (max 100)',
       tooltip: 'hejhej',
       maxValue: 100,
+      disabled: true,
     },
     someRadioGroup: {
       type: 'radiogroup',
@@ -100,6 +108,7 @@ export const defaultForm = () => {
         { label: 'label1', value: 'value1' },
         { label: 'label2', value: 'value2' },
       ],
+      disabled: true,
     },
     someRadioGroup2: {
       type: 'radiogroup',
@@ -110,6 +119,7 @@ export const defaultForm = () => {
       ],
       render: (s) => s.someRadioGroup && s.someRadioGroup === 'value2',
       tooltip: 'tooltip',
+      disabled: true,
     },
     someSelect: {
       type: 'select',
@@ -121,6 +131,7 @@ export const defaultForm = () => {
       ],
       tooltip: 'tooltip',
       placeholder: 'select',
+      disabled: true,
     },
     someSelect2: {
       type: 'select',
@@ -131,6 +142,7 @@ export const defaultForm = () => {
         { value: '3', label: 'Third option' },
       ],
       tooltip: 'tooltip',
+      disabled: true,
     },
     someFilterSelectSingle: {
       type: 'filterselect',
@@ -141,6 +153,7 @@ export const defaultForm = () => {
         searchPlaceholder: 'Search in me plz',
       },
       placeholder: 'Select me',
+      disabled: true,
     },
     someFilterSelectMulti: {
       type: 'filterselect',
@@ -152,6 +165,7 @@ export const defaultForm = () => {
         multiSelect: true,
         searchPlaceholder: 'Search in me plz',
       },
+      disabled: true,
     },
     someDate: {
       type: 'datepicker',
@@ -159,6 +173,7 @@ export const defaultForm = () => {
       render: (spec) => spec.someText && spec.someText.length < 10,
       tooltip: 'tooltip',
       label: 'Some date',
+      disabled: true,
     },
   });
   const renderErrors = boolean('render errors', false);

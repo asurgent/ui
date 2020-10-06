@@ -18,6 +18,7 @@ const propTyps = {
     condition: PropTypes.func,
     errorMessage: PropTypes.string,
   }),
+  disabled: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -30,6 +31,7 @@ const defaultProps = {
     condition: () => true,
     errorMessage: '',
   },
+  disabled: false,
 };
 
 const Text = forwardRef((props, ref) => {
@@ -38,6 +40,7 @@ const Text = forwardRef((props, ref) => {
     placeholder,
     parseOutput,
     validator,
+    disabled,
   } = props;
   const input = createRef();
   const [value, setValue] = useState('');
@@ -63,6 +66,7 @@ const Text = forwardRef((props, ref) => {
       onChange={({ target }) => setValue(target.value)}
       name={name}
       ref={input}
+      disabled={disabled}
     />
   );
 });

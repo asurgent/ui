@@ -15,6 +15,7 @@ const propTypes = {
   wrapRadios: PropTypes.bool,
   parseOutput: PropTypes.func,
   props: PropTypes.instanceOf(Object),
+  disabled: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -23,6 +24,7 @@ const defaultProps = {
   wrapRadios: false,
   props: {},
   parseOutput: (val) => val || '',
+  disabled: false,
 };
 
 const RadioGroup = forwardRef((props, ref) => {
@@ -31,6 +33,7 @@ const RadioGroup = forwardRef((props, ref) => {
     options,
     wrapRadios,
     parseOutput,
+    disabled,
   } = props;
   const [val, setVal] = useState(null);
   const input = createRef();
@@ -57,6 +60,7 @@ const RadioGroup = forwardRef((props, ref) => {
               checked={val === opt.value}
               ref={val === opt.value ? input : null}
               readOnly
+              disabled={disabled}
               {...props.props}
             />
             <C.CheckMark />

@@ -33,6 +33,7 @@ const propTyps = {
     condition: PropTypes.func,
     errorMessage: PropTypes.string,
   }),
+  disabled: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -45,6 +46,7 @@ const defaultProps = {
     condition: () => true,
     errorMessage: '',
   },
+  disabled: false,
 };
 
 const dispatchEvent = (value, ref) => {
@@ -65,6 +67,7 @@ const FilterInput = forwardRef((props, ref) => {
     placeholder,
     parseOutput,
     props: inputProps,
+    disabled,
   } = props;
   const placeholdeOutput = placeholder || t('selectPlaceholder', 'asurgentui');
   const searchInput = createRef();
@@ -102,7 +105,7 @@ const FilterInput = forwardRef((props, ref) => {
       shieldIsUp={filterSelectHook.isOpen}
     >
       <C.SelectFilter onClick={() => filterSelectHook.setOpen(true)}>
-        <C.Input type="text" name={name} ref={filterSelectHook.inputRef} disabled {...inputProps} />
+        <C.Input disabled={disabled} type="text" name={name} ref={filterSelectHook.inputRef} disabled {...inputProps} />
         <C.Output>
           <C.Value asPlaceholder={filterSelectHook.showPlaceHolder()}>
             { filterSelectHook.showTags() && (

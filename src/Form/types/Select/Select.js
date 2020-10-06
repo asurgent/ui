@@ -15,6 +15,7 @@ const propTyps = {
   props: PropTypes.instanceOf(Object),
   placeholder: PropTypes.string,
   parseOutput: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -22,6 +23,7 @@ const defaultProps = {
   props: {},
   placeholder: '',
   parseOutput: (v) => v,
+  disabled: false,
 };
 
 const getDefaultSort = (sortKeys) => {
@@ -45,6 +47,7 @@ const Select = forwardRef((props, ref) => {
     options,
     placeholder,
     parseOutput,
+    disabled,
   } = props;
 
   const input = createRef();
@@ -77,6 +80,7 @@ const Select = forwardRef((props, ref) => {
         onChange={({ target }) => setValue(target.value)}
         value={value || ''}
         name={name}
+        disabled={disabled}
       >
         {placeholder && (
         <option disabled value="">
@@ -88,14 +92,14 @@ const Select = forwardRef((props, ref) => {
             value: optionValue,
             label: optionLabel,
             key,
-            disabled,
+            disabledOption,
             disabledPreFix,
             disabledPostFix,
           }) => (
-            <option key={key || `${optionLabel}-${value}`} value={optionValue} disabled={disabled}>
-              {disabled && disabledPreFix}
+            <option key={key || `${optionLabel}-${value}`} value={optionValue} disabled={disabledOption}>
+              {disabledOption && disabledPreFix}
               {optionLabel}
-              {disabled && disabledPostFix}
+              {disabledOption && disabledPostFix}
             </option>
           ))}
       </select>
