@@ -16,7 +16,7 @@ export default {
 
 const formObj = {
   label: {
-    type: 'label', label: 'Test', value: 'Im just a label', disabled: true,
+    type: 'label', label: 'Test', value: 'Im just a label',
   },
   search: {
     type: 'text', label: 'Test', placeholder: 'Hello',
@@ -68,7 +68,7 @@ export const defaultForm = () => {
       type: 'text',
       label: 'Some Text',
       tooltip: 'hejhej',
-      disabled: true,
+      disabled: () => true,
     },
     imABoolean: {
       type: 'bool',
@@ -76,7 +76,7 @@ export const defaultForm = () => {
       tooltipPosition: 'left',
       tooltip: 'Select me',
       value: false,
-      disabled: true,
+      disabled: () => true,
     },
     email: {
       type: 'email',
@@ -111,7 +111,6 @@ export const defaultForm = () => {
       ],
       render: (s) => s.someRadioGroup && s.someRadioGroup === 'value2',
       tooltip: 'tooltip',
-      disabled: true,
     },
     someSelect: {
       type: 'select',

@@ -14,14 +14,14 @@ const propTyps = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   props: PropTypes.instanceOf(Object),
-  disabled: PropTypes.bool,
+  disabled: PropTypes.func,
 };
 
 const defaultProps = {
   value: 'false',
   label: '',
   props: {},
-  disabled: false,
+  disabled: () => false,
 };
 
 const Bool = forwardRef((props, ref) => {

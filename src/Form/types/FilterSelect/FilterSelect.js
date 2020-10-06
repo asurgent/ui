@@ -33,7 +33,7 @@ const propTyps = {
     condition: PropTypes.func,
     errorMessage: PropTypes.string,
   }),
-  disabled: PropTypes.bool,
+  disabled: PropTypes.func,
 };
 
 const defaultProps = {
@@ -46,7 +46,7 @@ const defaultProps = {
     condition: () => true,
     errorMessage: '',
   },
-  disabled: false,
+  disabled: () => false,
 };
 
 const dispatchEvent = (value, ref) => {
@@ -104,10 +104,10 @@ const FilterInput = forwardRef((props, ref) => {
       onClick={() => filterSelectHook.setOpen(false)}
       shieldIsUp={filterSelectHook.isOpen}
     >
-      <C.SelectFilter onClick={() => !disabled && filterSelectHook.setOpen(true)}>
+      <C.SelectFilter onClick={() => !disabled() && filterSelectHook.setOpen(true)}>
         <C.Input type="text" name={name} ref={filterSelectHook.inputRef} disabled {...inputProps} />
         <C.Output>
-          <C.Value disabled={disabled} asPlaceholder={filterSelectHook.showPlaceHolder()}>
+          <C.Value disabled={disabled()} asPlaceholder={filterSelectHook.showPlaceHolder()}>
             { filterSelectHook.showTags() && (
               <Tag.Collection tags={filterSelectHook.getTags()} max={3} />
             )}
