@@ -75,6 +75,7 @@ export const defaultForm = () => {
       label: 'Some Multiple Text',
       tooltip: 'hejhej',
       parseOutput: (r) => r.filter((entry) => entry !== ''),
+      placeholder: 'Add something cool',
     },
     imABoolean: {
       type: 'bool',
