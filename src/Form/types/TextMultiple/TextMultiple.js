@@ -102,7 +102,7 @@ const TextMultiple = forwardRef((props, ref) => {
             }
           }}
         />
-        <Button.Icon disabled={newEntry.length === 0} icon={(<Add fontSize="large" onClick={handleAdd} />)} />
+        <Button.Icon disabled={newEntry.length === 0} onClick={handleAdd} icon={(<Add fontSize="large" />)} />
       </C.Entry>
     </C.Container>
   );
