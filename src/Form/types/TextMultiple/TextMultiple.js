@@ -87,7 +87,7 @@ const TextMultiple = forwardRef((props, ref) => {
             value={entry}
             onChange={({ target }) => handleChange({ target, index })}
           />
-          <Button.Icon tooltip="Remove" icon={<Delete fontSize="large" onClick={() => handleRemove({ index })} />} />
+          <Button.Icon icon={<Delete fontSize="large" onClick={() => handleRemove({ index })} />} />
         </C.Entry>
       ))}
       <C.Entry>
@@ -102,7 +102,7 @@ const TextMultiple = forwardRef((props, ref) => {
             }
           }}
         />
-        <Button.Icon tooltip="Remove" icon={(<Add fontSize="large" onClick={handleAdd} />)} />
+        <Button.Icon disabled={newEntry.length === 0} icon={(<Add fontSize="large" onClick={handleAdd} />)} />
       </C.Entry>
     </C.Container>
   );
