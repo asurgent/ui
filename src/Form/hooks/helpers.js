@@ -12,6 +12,7 @@ import Bool from '../types/Bool/index';
 import Email from '../types/Email/index';
 import DatePicker from '../types/DatePicker/index';
 import RadioGroup from '../types/RadioGroup/index';
+import TextMultiple from '../types/TextMultiple/index';
 
 const getInputComponent = (type) => {
   switch (type) {
@@ -19,6 +20,8 @@ const getInputComponent = (type) => {
       return Bool;
     case 'text':
       return Text;
+    case 'textmultiple':
+      return TextMultiple;
     case 'number':
       return Number;
     case 'textarea':
@@ -35,6 +38,7 @@ const getInputComponent = (type) => {
       return RadioGroup;
     case 'email':
       return Email;
+
     default:
       return Text;
   }

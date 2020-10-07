@@ -70,6 +70,13 @@ export const defaultForm = () => {
       label: 'Some Text',
       tooltip: 'hejhej',
     },
+    someTextMultiple: {
+      type: 'textmultiple',
+      label: 'Some Multiple Text',
+      tooltip: 'hejhej',
+      parseOutput: (r) => r.filter((entry) => entry !== ''),
+      placeholder: 'Add something cool',
+    },
     imABoolean: {
       type: 'bool',
       label: 'Im true or false',
@@ -166,6 +173,7 @@ export const defaultForm = () => {
   useEffect(() => {
     formData.updateFields([
       { name: 'someText', value: 'Good bye' },
+      { name: 'someTextMultiple', value: ['Good', 'bye'] },
       { name: 'someNumber', value: 10 },
       { name: 'someRadioGroup', value: 'value1' },
       { name: 'someRadioGroup2', value: 'value4' },
