@@ -97,7 +97,7 @@ const TextMultiple = forwardRef((props, ref) => {
           value={newEntry}
           onChange={handleNewEntryChange}
           onKeyPress={({ key }) => {
-            if (key === 'Enter') {
+            if (key === 'Enter' && newEntry.length > 0) {
               handleAdd();
             }
           }}
