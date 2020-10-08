@@ -77,6 +77,17 @@ export const defaultForm = () => {
       parseOutput: (r) => r.filter((entry) => entry !== ''),
       placeholder: 'Add something cool',
     },
+    someTextMultipleObject: {
+      type: 'textmultipleobject',
+      label: 'Some Multiple Text (Object)',
+      tooltip: 'hejhej',
+      parseOutput: (r) => r, // .filter((entry) => entry !== ''),
+      placeholder: 'Add something cool',
+      options: {
+        name: 'string',
+        number: 'number',
+      },
+    },
     imABoolean: {
       type: 'bool',
       label: 'Im true or false',
@@ -174,6 +185,17 @@ export const defaultForm = () => {
     formData.updateFields([
       { name: 'someText', value: 'Good bye' },
       { name: 'someTextMultiple', value: ['Good', 'bye'] },
+      {
+        name: 'someTextMultipleObject',
+        value: [{
+          name: 'hello',
+          number: 1,
+        },
+        {
+          name: 'goodbye',
+          number: 2,
+        }],
+      },
       { name: 'someNumber', value: 10 },
       { name: 'someRadioGroup', value: 'value1' },
       { name: 'someRadioGroup2', value: 'value4' },

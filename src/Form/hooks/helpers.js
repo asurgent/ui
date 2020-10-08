@@ -13,6 +13,7 @@ import Email from '../types/Email/index';
 import DatePicker from '../types/DatePicker/index';
 import RadioGroup from '../types/RadioGroup/index';
 import TextMultiple from '../types/TextMultiple/index';
+import TextMultipleObject from '../types/TextMultipleObject/index';
 
 const getInputComponent = (type) => {
   switch (type) {
@@ -22,6 +23,8 @@ const getInputComponent = (type) => {
       return Text;
     case 'textmultiple':
       return TextMultiple;
+    case 'textmultipleobject':
+      return TextMultipleObject;
     case 'number':
       return Number;
     case 'textarea':
