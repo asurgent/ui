@@ -65,12 +65,12 @@ const Single = forwardRef((props, ref) => {
       <C.Entry>
         {Object.keys(value).map((key, index) => (
           <InputWrapper
-                  /* eslint-disable-next-line react/no-array-index-key */
+            /* eslint-disable-next-line react/no-array-index-key */
             key={index}
             name={key}
-            label={key}
+            label={options[key]?.label || ''}
             value={value[key]}
-            type={options[key] === 'number' ? 'number' : 'string'}
+            type={options[key]?.type || 'text'}
             onChange={handleChange}
           />
         ))}

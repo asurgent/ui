@@ -101,10 +101,10 @@ const Multiple = forwardRef((props, ref) => {
             return (
               <InputWrapper
                 key={key}
-                label={key}
+                label={options[key]?.label}
                 value={val}
                 name={key}
-                type={options[key] === 'number' ? 'number' : 'string'}
+                type={options[key]?.type || 'text'}
                 onChange={({ target }) => handleChange({ target, index })}
               />
             );
@@ -131,9 +131,9 @@ const Multiple = forwardRef((props, ref) => {
                 /* eslint-disable-next-line react/no-array-index-key */
                 key={index}
                 name={key}
-                label={key}
+                label={options[key]?.label || ''}
                 value={newEntry[key]}
-                type={options[key] === 'number' ? 'number' : 'string'}
+                type={options[key]?.type || 'text'}
                 onChange={({ target }) => {
                   setNewEntry({ ...newEntry, [key]: target.value });
                 }}

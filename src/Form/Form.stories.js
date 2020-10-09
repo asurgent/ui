@@ -83,8 +83,8 @@ export const defaultForm = () => {
       tooltip: 'hejhej',
       parseOutput: (r) => r,
       options: {
-        name: 'string',
-        number: 'number',
+        someName: { label: 'translatedLabel1', type: 'string' },
+        someNumber: { label: 'translatedLabel2', type: 'number' },
       },
     },
     someObjectMultiple: {
@@ -93,8 +93,8 @@ export const defaultForm = () => {
       tooltip: 'hejhej',
       parseOutput: (r) => r,
       options: {
-        name: 'string',
-        number: 'number',
+        someName: { label: 'translatedMultiLabel1', type: 'string' },
+        someNumber: { label: 'translatedMultiLabel2', type: 'number' },
       },
     },
     imABoolean: {
@@ -197,19 +197,19 @@ export const defaultForm = () => {
       {
         name: 'someObject',
         value: {
-          name: 'hello',
-          number: 1,
+          someName: 'hello',
+          someNumber: 1,
         },
       },
       {
         name: 'someObjectMultiple',
         value: [{
-          name: 'hello',
-          number: 1,
+          someName: 'hello',
+          someNumber: 1,
         },
         {
-          name: 'goodbye',
-          number: 2,
+          someName: 'goodbye',
+          someNumber: 2,
         }],
       },
       { name: 'someNumber', value: 10 },
