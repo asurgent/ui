@@ -77,23 +77,21 @@ export const defaultForm = () => {
       parseOutput: (r) => r.filter((entry) => entry !== ''),
       placeholder: 'Add something cool',
     },
-    someTextObject: {
-      type: 'textobject',
-      label: 'Some Text (Object)',
+    someObject: {
+      type: 'objectsingle',
+      label: 'Some Object',
       tooltip: 'hejhej',
-      parseOutput: (r) => r, // .filter((entry) => entry !== ''),
-      placeholder: 'Add something cool',
+      parseOutput: (r) => r,
       options: {
         name: 'string',
         number: 'number',
       },
     },
-    someTextMultipleObject: {
-      type: 'textmultipleobject',
-      label: 'Some Multiple Text (Object)',
+    someObjectMultiple: {
+      type: 'objectmultiple',
+      label: 'Some Object Multiple',
       tooltip: 'hejhej',
-      parseOutput: (r) => r, // .filter((entry) => entry !== ''),
-      placeholder: 'Add something cool',
+      parseOutput: (r) => r,
       options: {
         name: 'string',
         number: 'number',
@@ -197,14 +195,14 @@ export const defaultForm = () => {
       { name: 'someText', value: 'Good bye' },
       { name: 'someTextMultiple', value: ['Good', 'bye'] },
       {
-        name: 'someTextObject',
+        name: 'someObject',
         value: {
           name: 'hello',
           number: 1,
-        }
+        },
       },
       {
-        name: 'someTextMultipleObject',
+        name: 'someObjectMultiple',
         value: [{
           name: 'hello',
           number: 1,

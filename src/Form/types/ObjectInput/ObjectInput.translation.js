@@ -1,7 +1,7 @@
 import addTranslation from '../../../../lib/i18n/addTranslation';
 
 export default addTranslation({
-  id: 'TextMultipleObject',
+  id: 'ObjectInput',
   sv: {
     remove: 'Ta bort',
     add: 'Lägg till',

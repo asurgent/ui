@@ -4,11 +4,11 @@ import React, {
 import PropTypes from 'prop-types';
 import Delete from '@material-ui/icons/Block';
 import Add from '@material-ui/icons/Add';
-import * as C from './TextMultipleObject.styled';
-import * as Button from '../../../Button';
-import translation from './TextMultipleObject.translation';
-import InputWrapper from './InputWrapper';
-import { clearObjectValues } from './helpers';
+import * as C from '../ObjectInput.styled';
+import * as Button from '../../../../Button';
+import translation from '../ObjectInput.translation';
+import InputWrapper from '../InputWrapper';
+import { clearObjectValues } from '../helpers';
 
 const { t } = translation;
 
@@ -33,7 +33,7 @@ const defaultProps = {
   },
 };
 
-const TextMultipleObject = forwardRef((props, ref) => {
+const Multiple = forwardRef((props, ref) => {
   const {
     options, name, parseOutput, validator,
   } = props;
@@ -155,7 +155,7 @@ const TextMultipleObject = forwardRef((props, ref) => {
   );
 });
 
-TextMultipleObject.propTypes = propTypes;
-TextMultipleObject.defaultProps = defaultProps;
+Multiple.propTypes = propTypes;
+Multiple.defaultProps = defaultProps;
 
-export default TextMultipleObject;
+export default Multiple;

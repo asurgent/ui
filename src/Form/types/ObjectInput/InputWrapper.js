@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as C from './TextMultipleObject.styled';
+import * as C from './ObjectInput.styled';
 
 const propTypes = {
   type: PropTypes.string.isRequired,
