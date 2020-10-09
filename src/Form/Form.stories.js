@@ -77,6 +77,17 @@ export const defaultForm = () => {
       parseOutput: (r) => r.filter((entry) => entry !== ''),
       placeholder: 'Add something cool',
     },
+    someTextObject: {
+      type: 'textobject',
+      label: 'Some Text (Object)',
+      tooltip: 'hejhej',
+      parseOutput: (r) => r, // .filter((entry) => entry !== ''),
+      placeholder: 'Add something cool',
+      options: {
+        name: 'string',
+        number: 'number',
+      },
+    },
     someTextMultipleObject: {
       type: 'textmultipleobject',
       label: 'Some Multiple Text (Object)',
@@ -185,6 +196,13 @@ export const defaultForm = () => {
     formData.updateFields([
       { name: 'someText', value: 'Good bye' },
       { name: 'someTextMultiple', value: ['Good', 'bye'] },
+      {
+        name: 'someTextObject',
+        value: {
+          name: 'hello',
+          number: 1,
+        }
+      },
       {
         name: 'someTextMultipleObject',
         value: [{
