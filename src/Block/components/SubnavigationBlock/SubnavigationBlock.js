@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as C from './SubnavigationBlock.styled';
+import * as T from '../../../Typography';
 
 const propTypes = {
   children: PropTypes.oneOfType([
@@ -18,7 +19,7 @@ const defaultProps = {
 
 const SubnavigationBlock = ({ navigationList, title, children }) => (
   <C.Wrapper>
-    { title && <C.Title>{title}</C.Title> }
+    { title && <T.Title.H1>{title}</T.Title.H1> }
     <C.Navigation>
       {
         navigationList.map((page) => {

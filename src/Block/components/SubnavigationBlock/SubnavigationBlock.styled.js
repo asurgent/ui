@@ -22,15 +22,6 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const Title = styled.h1`
-    grid-area: title;
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: normal;
-    font-size: 2.6rem;
-    line-height: 3rem;
-`;
-
 export const Content = styled.div`
     flex: 1;
     grid-area: content;
@@ -38,16 +29,6 @@ export const Content = styled.div`
     
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {
             overflow-x: unset;
-    }
-    
-    h2 {
-        padding: 0;
-        margin-top: 0;
-        font-family: "Poppins";
-        font-style: normal;
-        font-weight: 500;
-        font-size: 2.2rem;
-        line-height: 2.6rem;
     }
 `;
 
