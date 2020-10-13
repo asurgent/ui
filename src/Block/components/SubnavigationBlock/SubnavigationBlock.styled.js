@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import * as T from '../../../Typography';
 
 export const Wrapper = styled.div`
     display: grid;
@@ -19,6 +20,10 @@ export const Wrapper = styled.div`
         grid-template-areas:
             ". title"
             "navigation content";
+    }
+    
+    ${T.Title.H1} {
+        grid-area: title;
     }
 `;
 
