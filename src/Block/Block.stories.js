@@ -124,12 +124,12 @@ export const accordion = () => (
     </Block.Accordion>
   </div>
 );
-
+const iWontRender = false;
 export const subnavigationBlock = () => (
   <Block.SubnavigationBlock
     title="Hello"
     navigationList={[
-      {
+      iWontRender && {
         label: 'On call',
         path: 'http://google.com',
         icon: '',
@@ -137,7 +137,6 @@ export const subnavigationBlock = () => (
         iconStyle: { background: 'pink' },
         navigationStyle: { background: 'magenta' },
         labelStyle: { background: 'orange' },
-        render: () => true,
       },
       {
         label: 'Other stuff', path: 'http://apple.com', icon: '',

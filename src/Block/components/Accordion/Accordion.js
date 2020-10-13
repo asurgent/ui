@@ -12,6 +12,7 @@ const propTypes = {
     PropTypes.func.isRequired,
     PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
+  override: PropTypes.func,
   title: PropTypes.string,
   description: PropTypes.string,
   open: PropTypes.bool,
@@ -21,22 +22,27 @@ const defaultProps = {
   title: null,
   description: null,
   open: false,
+  override: null,
 };
 
 const Accordion = ({
-  title, description, open, children,
+  title, description, open, children, override,
 }) => {
   const [isOpen, setIsOpen] = useState(open);
   const { t } = translation;
   return (
     <C.Wrapper onClick={() => setIsOpen(true)}>
-      <C.Text isOpen={isOpen}>
-        <C.Title>
-          {title}
-        </C.Title>
-        <C.Description>
-          {description}
-        </C.Description>
+      <C.Text isOpen={isOpen} hasOverride={override}>
+        {!override ? (
+          <>
+            <C.Title>
+              {title}
+            </C.Title>
+            <C.Description>
+              {description}
+            </C.Description>
+          </>
+        ) : override(isOpen)}
       </C.Text>
       <C.Arrow
         onClick={(e) => {

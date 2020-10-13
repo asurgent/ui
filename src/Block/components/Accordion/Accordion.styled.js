@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Text = styled.div`
-    padding: 3.2rem;
+    padding: ${({ hasOverride }) => !hasOverride && '3.2rem'};
     overflow: hidden;
     cursor: ${({ isOpen }) => (isOpen ? 'default' : 'pointer')};
 `;
