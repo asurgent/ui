@@ -133,12 +133,14 @@ const Multiple = forwardRef((props, ref) => {
                 /* eslint-disable-next-line react/no-array-index-key */
                 key={index}
                 name={key}
-                label={options[key]?.label || ''}
+                label={options[key].label}
                 value={newEntry[key]}
-                type={options[key]?.type || 'text'}
+                type={options[key].type}
                 onChange={({ target }) => {
                   setNewEntry({ ...newEntry, [key]: target.value });
                 }}
+                disabled={options[key].disabled}
+                render={options[key].render}
               />
             ))}
           <C.ButtonContainer>
