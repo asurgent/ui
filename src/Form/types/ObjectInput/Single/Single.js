@@ -63,17 +63,22 @@ const Single = forwardRef((props, ref) => {
 
       {Object.keys(value).length > 0 && (
       <C.Entry>
-        {Object.keys(value).map((key, index) => (
-          <InputWrapper
-            /* eslint-disable-next-line react/no-array-index-key */
-            key={index}
-            name={key}
-            label={options[key]?.label || ''}
-            value={value[key]}
-            type={options[key]?.type || 'text'}
-            onChange={handleChange}
-          />
-        ))}
+        {Object.keys(value).map((key, index) => {
+          const option = options[key];
+          return (
+            <InputWrapper
+              /* eslint-disable-next-line react/no-array-index-key */
+              key={index}
+              name={key}
+              label={option.label}
+              value={value[key]}
+              type={option.type}
+              onChange={handleChange}
+              disabled={option.disabled}
+              render={option.render}
+            />
+          );
+        })}
       </C.Entry>
       )}
     </C.Container>

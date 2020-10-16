@@ -101,11 +101,13 @@ const Multiple = forwardRef((props, ref) => {
             return (
               <InputWrapper
                 key={key}
-                label={options[key]?.label}
+                label={options[key].label}
                 value={val}
                 name={key}
-                type={options[key]?.type || 'text'}
+                type={options[key].type}
                 onChange={({ target }) => handleChange({ target, index })}
+                disabled={options[key].disabled}
+                render={options[key].render}
               />
             );
           })}

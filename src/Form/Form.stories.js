@@ -84,7 +84,9 @@ export const defaultForm = () => {
       parseOutput: (r) => r,
       options: {
         someName: { label: 'translatedLabel1', type: 'string' },
-        someNumber: { label: 'translatedLabel2', type: 'number' },
+        someOtherName: { label: 'translatedLabel2', type: 'string' },
+        someNumber: { label: 'translatedLabel3', type: 'number', render: () => false },
+        someOtherNumber: { label: 'translatedLabel4', type: 'number', disabled: () => true },
       },
     },
     someObjectMultiple: {
@@ -94,7 +96,9 @@ export const defaultForm = () => {
       parseOutput: (r) => r,
       options: {
         someName: { label: 'translatedMultiLabel1', type: 'string' },
-        someNumber: { label: 'translatedMultiLabel2', type: 'number' },
+        someOtherName: { label: 'translatedMultiLabel2', type: 'string' },
+        someNumber: { label: 'translatedMultiLabel3', type: 'number', render: () => false },
+        someOtherNumber: { label: 'translatedMultiLabel4', type: 'number', disabled: () => true },
       },
     },
     imABoolean: {
@@ -198,18 +202,24 @@ export const defaultForm = () => {
         name: 'someObject',
         value: {
           someName: 'hello',
+          someOtherName: 'goodbye',
           someNumber: 1,
+          someOtherNumber: 2,
         },
       },
       {
         name: 'someObjectMultiple',
         value: [{
           someName: 'hello',
+          someOtherName: 'whats up',
           someNumber: 1,
+          someOtherNumber: 2,
         },
         {
           someName: 'goodbye',
-          someNumber: 2,
+          someOtherName: 'cya',
+          someNumber: 3,
+          someOtherNumber: 4,
         }],
       },
       { name: 'someNumber', value: 10 },
