@@ -1,5 +1,5 @@
 import React, {
-  forwardRef, useState, createRef, useImperativeHandle, useEffect,
+  forwardRef, useState, createRef, useImperativeHandle, useEffect, useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 import Delete from '@material-ui/icons/Block';
@@ -11,6 +11,19 @@ import InputWrapper from '../InputWrapper';
 import { clearObjectValues } from '../helpers';
 
 const { t } = translation;
+
+const canAddNew = (newEntry, options) => {
+  const editableInputs = Object.keys(newEntry).map((key) => {
+    const isDisabled = options[key]?.disabled && options[key].disabled();
+    const isHidden = options[key]?.render && !options[key].render();
+    if (!isDisabled && !isHidden) {
+      return newEntry[key];
+    }
+    return null;
+  });
+  const allInputsFilled = editableInputs.every((ent) => ent !== '');
+  return allInputsFilled;
+};
 
 const propTypes = {
   options: PropTypes.instanceOf(Object),
@@ -77,7 +90,7 @@ const Multiple = forwardRef((props, ref) => {
     setValue(newValue);
   };
 
-  const canAdd = Object.values(newEntry).every((ent) => ent !== '');
+  const canAdd = useMemo(() => canAddNew(newEntry, options), [newEntry, options]);
 
   return (
     <C.Container>
