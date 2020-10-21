@@ -73,6 +73,10 @@ export const Wrapper = styled.div`
     right: .8rem;
   }
   
+  .transparentBackground {
+    background: transparent!important;
+    border-color: ${({ theme }) => theme.gray200}!important;
+  }
   
 `;
 

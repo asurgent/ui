@@ -10,6 +10,7 @@ const propTypes = {
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.func,
   render: PropTypes.func,
+  error: PropTypes.instanceOf(Object),
 };
 
 const defaultProps = {
@@ -18,14 +19,16 @@ const defaultProps = {
   type: 'text',
   disabled: () => false,
   render: () => true,
+  error: null,
 };
 
-const InputWrapper = ({
-  type, label, value, name, disabled, render, onChange,
-}) => {
+const InputWrapper = (props) => {
+  const {
+    type, label, value, name, disabled, render, onChange, error,
+  } = props;
   if (render()) {
     return (
-      <C.InputContainer>
+      <C.InputContainer hasError={error}>
         <small>{label}</small>
         <input
           value={value}
@@ -34,6 +37,7 @@ const InputWrapper = ({
           onChange={onChange}
           disabled={disabled()}
         />
+        {error && <C.Error>{error?.errorMessage}</C.Error>}
       </C.InputContainer>
     );
   }

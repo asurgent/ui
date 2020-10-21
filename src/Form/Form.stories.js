@@ -81,17 +81,40 @@ export const defaultForm = () => {
       type: 'objectsingle',
       label: 'Some Object',
       tooltip: 'hejhej',
+      className: 'asdf',
+      showContainerError: false,
       parseOutput: (r) => r,
+      validator: {
+        conditions: () => {
+          const validation = {
+            someName: { valid: (val) => val === 'hej', errorMessage: 'not "hej"' },
+            someNumber: { valid: (val) => parseInt(val, 10) === 1, errorMessage: 'not 1' },
+          };
+          return validation;
+        },
+      },
       options: {
-        someName: { label: 'translatedLabel1', type: 'string' },
-        someOtherName: { label: 'translatedLabel2', type: 'string' },
-        someNumber: { label: 'translatedLabel3', type: 'number', render: () => false },
-        someOtherNumber: { label: 'translatedLabel4', type: 'number', disabled: () => true },
+        someName: {
+          label: 'translatedLabel1', type: 'string', // , errorMessage: 'ärr', valid: (a) => a === 'asdf',
+        },
+        someOtherName: { label: 'translatedLabel2', type: 'string', disabled: () => true },
+        someNumber: { label: 'translatedLabel3', type: 'number', valid: (a) => a === 2 },
+        someOtherNumber: { label: 'translatedLabel4', type: 'number', render: () => false },
       },
     },
-    someObjectMultiple: {
+    email: {
+      type: 'email',
+      label: 'Email',
+      tooltip: 'Select me',
+      validator: {
+        condition: (v) => v === 'asdf',
+        errorMessage: 'I did not validate',
+      },
+      value: '',
+    },
+    /*  someObjectMultiple: {
       type: 'objectmultiple',
-      label: 'Some Object Multiple',
+      label: null,
       tooltip: 'hejhej',
       parseOutput: (r) => r,
       options: {
@@ -108,16 +131,7 @@ export const defaultForm = () => {
       tooltip: 'Select me',
       value: false,
     },
-    email: {
-      type: 'email',
-      label: 'Email',
-      tooltip: 'Select me',
-      validator: {
-        condition: () => false,
-        errorMessage: 'I did not validate',
-      },
-      value: '',
-    },
+
     someNumber: {
       type: 'number',
       label: 'Some Number (max 100)',
@@ -190,7 +204,7 @@ export const defaultForm = () => {
       render: (spec) => spec.someText && spec.someText.length < 10,
       tooltip: 'tooltip',
       label: 'Some date',
-    },
+    }, */
   });
   const renderErrors = boolean('render errors', false);
 
@@ -207,7 +221,8 @@ export const defaultForm = () => {
           someOtherNumber: 2,
         },
       },
-      {
+      { name: 'email', value: 'mail@asdf.se' },
+      /*  {
         name: 'someObjectMultiple',
         value: [{
           someName: 'hello',
@@ -251,7 +266,7 @@ export const defaultForm = () => {
           '10 Tenth option',
         ],
       },
-      { name: 'someDate', value: moment().startOf('day').toISOString() },
+      { name: 'someDate', value: moment().startOf('day').toISOString() }, */
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

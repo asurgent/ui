@@ -18,6 +18,7 @@ const propTyps = {
   className: PropTypes.string,
   classNameWrapper: PropTypes.string,
   type: PropTypes.string.isRequired,
+  showContainerError: PropTypes.bool,
   error: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.instanceOf(Object),
@@ -37,6 +38,7 @@ const defaultProps = {
   className: '',
   classNameWrapper: '',
   tooltipPosition: 'middle',
+  showContainerError: true,
 };
 
 const InputWrapper = (props) => {
@@ -50,6 +52,7 @@ const InputWrapper = (props) => {
     type,
     className,
     classNameWrapper,
+    showContainerError,
   } = props;
 
   return (
@@ -64,10 +67,10 @@ const InputWrapper = (props) => {
           )}
         </Header>
       )}
-      <Wrapper hasError={Boolean(error)} className={classNameWrapper}>
+      <Wrapper hasError={showContainerError && Boolean(error)} type={type} className={classNameWrapper}>
         {children}
       </Wrapper>
-      {error && (
+      {showContainerError && error && (
         <Error>
           {
             i18next.exists(`${error.translationKey}`)

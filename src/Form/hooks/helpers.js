@@ -101,8 +101,10 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
         noLabel = false,
         parseOutput,
         validator,
+        validators,
         className,
         classNameWrapper,
+        showContainerError,
         props: inputProps,
       } = inputs[key];
 
@@ -126,6 +128,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
           type={type}
           className={className}
           classNameWrapper={classNameWrapper}
+          showContainerError={showContainerError}
         >
           <RequestedComponent
             hook={self}
@@ -135,6 +138,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
             placeholder={placeholder}
             label={label}
             validator={validator}
+            validators={validators}
             minDate={minDate}
             maxDate={maxDate}
             minValue={minValue}
@@ -142,6 +146,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
             parseOutput={parseOutput}
             props={inputProps}
             options={options}
+            error={error}
           />
         </InputWrapper>
       );
@@ -236,7 +241,6 @@ const getValidator = (ref) => {
   if (validator && typeof validator === 'function') {
     return validator();
   }
-
   return true;
 };
 
