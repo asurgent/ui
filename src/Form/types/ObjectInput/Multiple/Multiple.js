@@ -8,22 +8,9 @@ import * as C from '../ObjectInput.styled';
 import * as Button from '../../../../Button';
 import translation from '../ObjectInput.translation';
 import InputWrapper from '../InputWrapper';
-import { clearObjectValues } from '../helpers';
+import { clearObjectValues, canAddNew } from '../helpers';
 
 const { t } = translation;
-
-const canAddNew = (newEntry, options) => {
-  const editableInputs = Object.keys(newEntry).map((key) => {
-    const isDisabled = options[key]?.disabled && options[key].disabled();
-    const isHidden = options[key]?.render && !options[key].render();
-    if (!isDisabled && !isHidden) {
-      return newEntry[key];
-    }
-    return null;
-  });
-  const allInputsFilled = editableInputs.every((ent) => ent !== '');
-  return allInputsFilled;
-};
 
 const propTypes = {
   options: PropTypes.instanceOf(Object),
@@ -73,16 +60,10 @@ const Multiple = forwardRef((props, ref) => {
     validator: () => {
       const fieldWithValidation = validator.conditions();
 
-      const notPassed = Object.keys(fieldWithValidation)
-        .reduce((obj, key) => {
-          const field = fieldWithValidation[key];
-          const val = value[key];
-          return (
-            { ...obj, ...field.valid(val) === false && { [key]: field } }
-          );
-        }, {});
+      const allPassed = Object.keys(fieldWithValidation)
+        .every((key) => value.every((valEntry) => fieldWithValidation[key].valid(valEntry[key])));
 
-      return Object.keys(notPassed).length === 0;
+      return allPassed;
     },
     validationErrorMessage: validator.errorMessage,
   }));
