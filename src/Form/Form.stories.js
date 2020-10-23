@@ -83,7 +83,6 @@ export const defaultForm = () => {
       tooltip: 'hejhej',
       className: 'asdf',
       showContainerError: false,
-      parseOutput: (r) => r,
       validator: {
         conditions: () => {
           const validation = {
@@ -94,12 +93,30 @@ export const defaultForm = () => {
         },
       },
       options: {
-        someName: {
-          label: 'translatedLabel1', type: 'string', // , errorMessage: 'ärr', valid: (a) => a === 'asdf',
-        },
+        someName: { label: 'translatedLabel1', type: 'string' },
         someOtherName: { label: 'translatedLabel2', type: 'string', disabled: () => true },
-        someNumber: { label: 'translatedLabel3', type: 'number', valid: (a) => a === 2 },
+        someNumber: { label: 'translatedLabel3', type: 'number' },
         someOtherNumber: { label: 'translatedLabel4', type: 'number', render: () => false },
+      },
+    },
+    someObjectMultiple: {
+      type: 'objectmultiple',
+      label: null,
+      tooltip: 'hejhej',
+      showContainerError: false,
+      validator: {
+        conditions: () => {
+          const validation = {
+            someName: { valid: (val) => val === 'hello', errorMessage: 'not "hello"' },
+          };
+          return validation;
+        },
+      },
+      options: {
+        someName: { label: 'translatedMultiLabel1', type: 'string' },
+        someOtherName: { label: 'translatedMultiLabel2', type: 'string' },
+        someNumber: { label: 'translatedMultiLabel3', type: 'number', render: () => false },
+        someOtherNumber: { label: 'translatedMultiLabel4', type: 'number', disabled: () => true },
       },
     },
     email: {
@@ -111,18 +128,6 @@ export const defaultForm = () => {
         errorMessage: 'I did not validate',
       },
       value: '',
-    },
-    /*  someObjectMultiple: {
-      type: 'objectmultiple',
-      label: null,
-      tooltip: 'hejhej',
-      parseOutput: (r) => r,
-      options: {
-        someName: { label: 'translatedMultiLabel1', type: 'string' },
-        someOtherName: { label: 'translatedMultiLabel2', type: 'string' },
-        someNumber: { label: 'translatedMultiLabel3', type: 'number', render: () => false },
-        someOtherNumber: { label: 'translatedMultiLabel4', type: 'number', disabled: () => true },
-      },
     },
     imABoolean: {
       type: 'bool',
@@ -204,7 +209,7 @@ export const defaultForm = () => {
       render: (spec) => spec.someText && spec.someText.length < 10,
       tooltip: 'tooltip',
       label: 'Some date',
-    }, */
+    },
   });
   const renderErrors = boolean('render errors', false);
 
@@ -222,16 +227,16 @@ export const defaultForm = () => {
         },
       },
       { name: 'email', value: 'mail@asdf.se' },
-      /*  {
+      {
         name: 'someObjectMultiple',
         value: [{
-          someName: 'hello',
+          someName: 'goodbye',
           someOtherName: 'whats up',
           someNumber: 1,
           someOtherNumber: 2,
         },
         {
-          someName: 'goodbye',
+          someName: 'hello',
           someOtherName: 'cya',
           someNumber: 3,
           someOtherNumber: 4,
@@ -266,7 +271,7 @@ export const defaultForm = () => {
           '10 Tenth option',
         ],
       },
-      { name: 'someDate', value: moment().startOf('day').toISOString() }, */
+      { name: 'someDate', value: moment().startOf('day').toISOString() },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

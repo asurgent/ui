@@ -67,7 +67,11 @@ const InputWrapper = (props) => {
           )}
         </Header>
       )}
-      <Wrapper hasError={showContainerError && Boolean(error)} type={type} className={classNameWrapper}>
+      <Wrapper
+        hasError={showContainerError && Boolean(error)}
+        type={type}
+        className={classNameWrapper}
+      >
         {children}
       </Wrapper>
       {showContainerError && error && (

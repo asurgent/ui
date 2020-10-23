@@ -2,7 +2,6 @@ import React, {
   forwardRef, useState, createRef, useImperativeHandle, useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
-import { set } from 'lodash';
 import * as C from '../ObjectInput.styled';
 import InputWrapper from '../InputWrapper';
 import { clearObjectValues } from '../helpers';
@@ -16,6 +15,10 @@ const propTypes = {
     conditions: PropTypes.instanceOf(Object),
     errorMessage: PropTypes.string,
   }),
+  error: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.instanceOf(Object),
+  ]),
 };
 
 const defaultProps = {
@@ -26,6 +29,7 @@ const defaultProps = {
     conditions: () => true,
     errorMessage: 'some error',
   },
+  error: false,
 };
 
 const Single = forwardRef((props, ref) => {
@@ -34,9 +38,6 @@ const Single = forwardRef((props, ref) => {
   } = props;
 
   const [value, setValue] = useState(props.value || {});
-  const [validFields, setValidFields] = useState({});
-  const [hasError, setHasError] = useState(false);
-  const [invalidFields, setInvalidFields] = useState({});
 
   useEffect(() => {
     const val = props.value || clearObjectValues(options) || {};
@@ -49,16 +50,9 @@ const Single = forwardRef((props, ref) => {
     value: () => parseOutput(value),
     validator: () => {
       const fieldWithValidation = validator.conditions();
-      const notPassed = Object.keys(fieldWithValidation)
-        .reduce((obj, key) => {
-          const field = fieldWithValidation[key];
-          const val = value[key];
-          return (
-            { ...obj, ...field.valid(val) === false && { [key]: field } }
-          );
-        }, {});
-      setInvalidFields(notPassed);
-      return Object.keys(notPassed).length === 0;
+      const allPassed = Object.keys(fieldWithValidation)
+        .every((key) => fieldWithValidation[key].valid(value[key]));
+      return allPassed;
     },
     validationErrorMessage: validator.errorMessage,
   }));
@@ -82,21 +76,20 @@ const Single = forwardRef((props, ref) => {
       <C.Entry>
         {Object.keys(value).map((key, index) => {
           const option = options[key];
+          const entryValidator = validator?.conditions()[key];
           return (
-            <>
-              <InputWrapper
-                /* eslint-disable-next-line react/no-array-index-key */
-                key={index}
-                name={key}
-                label={option.label}
-                value={value[key]}
-                type={option.type}
-                onChange={handleChange}
-                disabled={option.disabled}
-                render={option.render}
-                error={error && invalidFields[key]}
-              />
-            </>
+            <InputWrapper
+              /* eslint-disable-next-line react/no-array-index-key */
+              key={index}
+              name={key}
+              label={option.label}
+              value={value[key]}
+              type={option.type}
+              onChange={handleChange}
+              disabled={option.disabled}
+              render={option.render}
+              validator={error && entryValidator}
+            />
           );
         })}
       </C.Entry>
@@ -109,43 +102,3 @@ Single.propTypes = propTypes;
 Single.defaultProps = defaultProps;
 
 export default Single;
-
-/*
-    console.log('ref', ref.current);
-    const invalidFields = validator.condition(value);
-    console.log('invalidFields', invalidFields);
-    setValidFields(invalidFields);
-    return invalidFields;
-  */
-
-/*
-validator: () => {
-      const fields = Object.keys(value).reduce((obj, key) => {
-        const inputValidator = validator.condition[key];
-        return (
-          {
-            ...obj,
-            ...inputValidator && { [key]: inputValidator(value[key]) },
-          }
-        );
-      }, {});
-      setValidFields(fields);
-    },
-*/
-
-/*
- const conditions = Object.keys(validator.conditions);
-      const mapped = conditions.map((cond) => validator.conditions[cond](value[cond]));
-      console.log('mapped', mapped);
-      /* const fields = Object.keys(value).reduce((obj, key) => {
-        const inputValidator = validator.conditions[key];
-        return (
-          {
-            ...obj,
-            ...inputValidator && { [key]: inputValidator(value[key]) },
-          }
-        );
-      }, {});
-      console.log('fuelds', fields);
-      return mapped.every((f) => f.true);
-*/

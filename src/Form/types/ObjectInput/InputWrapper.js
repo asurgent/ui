@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import * as C from './ObjectInput.styled';
 
@@ -10,7 +10,7 @@ const propTypes = {
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.func,
   render: PropTypes.func,
-  error: PropTypes.instanceOf(Object),
+  validator: PropTypes.instanceOf(Object),
 };
 
 const defaultProps = {
@@ -19,13 +19,21 @@ const defaultProps = {
   type: 'text',
   disabled: () => false,
   render: () => true,
-  error: null,
+  validator: null,
 };
 
 const InputWrapper = (props) => {
   const {
-    type, label, value, name, disabled, render, onChange, error,
+    type, label, value, name, disabled, render, onChange, validator,
   } = props;
+
+  const error = useMemo(() => {
+    if (validator && validator.valid(value) === false) {
+      return validator.errorMessage;
+    }
+    return null;
+  }, [validator, value]);
+
   if (render()) {
     return (
       <C.InputContainer hasError={error}>
@@ -37,7 +45,7 @@ const InputWrapper = (props) => {
           onChange={onChange}
           disabled={disabled()}
         />
-        {error && <C.Error>{error?.errorMessage}</C.Error>}
+        {error && <C.Error>{error}</C.Error>}
       </C.InputContainer>
     );
   }

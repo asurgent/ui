@@ -31,9 +31,13 @@ const propTypes = {
   name: PropTypes.string.isRequired,
   parseOutput: PropTypes.func,
   validator: PropTypes.shape({
-    condition: PropTypes.func,
+    conditions: PropTypes.func,
     errorMessage: PropTypes.string,
   }),
+  error: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.instanceOf(Object),
+  ]),
 };
 
 const defaultProps = {
@@ -41,14 +45,15 @@ const defaultProps = {
   value: [],
   parseOutput: (v) => v,
   validator: {
-    condition: () => true,
+    conditions: () => true,
     errorMessage: '',
   },
+  error: null,
 };
 
 const Multiple = forwardRef((props, ref) => {
   const {
-    options, name, parseOutput, validator,
+    options, name, parseOutput, validator, error,
   } = props;
   const [value, setValue] = useState(props.value || []);
   const [newEntry, setNewEntry] = useState({});
@@ -65,7 +70,20 @@ const Multiple = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     value: () => parseOutput(value),
-    validator: () => validator.condition(value),
+    validator: () => {
+      const fieldWithValidation = validator.conditions();
+
+      const notPassed = Object.keys(fieldWithValidation)
+        .reduce((obj, key) => {
+          const field = fieldWithValidation[key];
+          const val = value[key];
+          return (
+            { ...obj, ...field.valid(val) === false && { [key]: field } }
+          );
+        }, {});
+
+      return Object.keys(notPassed).length === 0;
+    },
     validationErrorMessage: validator.errorMessage,
   }));
 
@@ -111,6 +129,7 @@ const Multiple = forwardRef((props, ref) => {
           {/* Loop over key-value pair */}
           {Object.keys(entry).map((key) => {
             const val = entry[key];
+            const entryValidator = validator?.conditions()[key];
             return (
               <InputWrapper
                 key={key}
@@ -121,6 +140,7 @@ const Multiple = forwardRef((props, ref) => {
                 onChange={({ target }) => handleChange({ target, index })}
                 disabled={options[key].disabled}
                 render={options[key].render}
+                validator={error && entryValidator}
               />
             );
           })}
