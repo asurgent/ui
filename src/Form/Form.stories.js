@@ -95,8 +95,15 @@ export const defaultForm = () => {
       options: {
         someName: { label: 'translatedLabel1', type: 'string' },
         someOtherName: { label: 'translatedLabel2', type: 'string', disabled: () => true },
-        someNumber: { label: 'translatedLabel3', type: 'number' },
-        someOtherNumber: { label: 'translatedLabel4', type: 'number', render: () => false },
+        someSelect: {
+          label: 'translatedLabel3',
+          type: 'select',
+          placeholder: 'select',
+          options: [
+            { label: 'someLabel1', value: 'someValue1' },
+            { label: 'someLabel2', value: 'someValue2' }],
+        },
+        someNumber: { label: 'translatedLabel4', type: 'number', render: () => false },
       },
     },
     someObjectMultiple: {
@@ -114,9 +121,17 @@ export const defaultForm = () => {
       },
       options: {
         someName: { label: 'translatedMultiLabel1', type: 'string' },
-        someOtherName: { label: 'translatedMultiLabel2', type: 'string' },
-        someNumber: { label: 'translatedMultiLabel3', type: 'number', render: () => false },
-        someOtherNumber: { label: 'translatedMultiLabel4', type: 'number', disabled: () => true },
+        someOtherName: { label: 'translatedMultiLabel2', type: 'string', render: () => false },
+        someSelect: {
+          label: 'translatedMultiLabel3',
+          type: 'select',
+          placeholder: 'select',
+          options: [
+            { label: 'someLabel3', value: 'someValue3' },
+            { label: 'someLabel4', value: 'someValue4' },
+          ],
+        },
+        someNumber: { label: 'translatedMultiLabel4', type: 'number', disabled: () => true },
       },
     },
     email: {
@@ -223,7 +238,7 @@ export const defaultForm = () => {
           someName: 'hello',
           someOtherName: 'goodbye',
           someNumber: 1,
-          someOtherNumber: 2,
+          someSelect: 'someValue2',
         },
       },
       { name: 'email', value: 'mail@asdf.se' },
@@ -233,19 +248,19 @@ export const defaultForm = () => {
           someName: 'goodbye',
           someOtherName: 'whats up',
           someNumber: 1,
-          someOtherNumber: 2,
+          someSelect: 'someValue2',
         },
         {
           someName: 'hello',
           someOtherName: 'cya',
           someNumber: 3,
-          someOtherNumber: 4,
+          someSelect: 'someValue1',
         }],
       },
       { name: 'someNumber', value: 10 },
       { name: 'someRadioGroup', value: 'value1' },
       { name: 'someRadioGroup2', value: 'value4' },
-      { name: 'someSelect', options: [{ value: '4', label: 'four' }, { value: '5', label: 'five' }], value: '' },
+      { name: 'someSelect', value: '' },
       { name: 'someSelect2', options: [{ value: '6', label: 'six' }, { value: '7', label: 'seven' }] },
       {
         name: 'someFilterSelectSingle',

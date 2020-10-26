@@ -51,7 +51,11 @@ const Single = forwardRef((props, ref) => {
     validator: () => {
       const fieldWithValidation = validator.conditions();
       const allPassed = Object.keys(fieldWithValidation)
-        .every((key) => fieldWithValidation[key].valid(value[key]));
+        .every((key) => {
+          const fieldValue = value[key];
+          const fieldValidation = fieldWithValidation[key].valid;
+          return fieldValidation(fieldValue);
+        });
       return allPassed;
     },
     validationErrorMessage: validator.errorMessage,
@@ -77,6 +81,7 @@ const Single = forwardRef((props, ref) => {
         {Object.keys(value).map((key, index) => {
           const option = options[key];
           const entryValidator = validator?.conditions()[key];
+
           return (
             <InputWrapper
               /* eslint-disable-next-line react/no-array-index-key */
@@ -88,7 +93,9 @@ const Single = forwardRef((props, ref) => {
               onChange={handleChange}
               disabled={option.disabled}
               render={option.render}
-              validator={error && entryValidator}
+              validator={error ? entryValidator : null}
+              options={option.options}
+              placeholder={option.placeholder}
             />
           );
         })}

@@ -61,7 +61,11 @@ const Multiple = forwardRef((props, ref) => {
       const fieldWithValidation = validator.conditions();
 
       const allPassed = Object.keys(fieldWithValidation)
-        .every((key) => value.every((valEntry) => fieldWithValidation[key].valid(valEntry[key])));
+        .every((key) => value.every((valEntry) => {
+          const fieldValue = valEntry[key];
+          const fieldValidation = fieldWithValidation[key].valid;
+          return fieldValidation(fieldValue);
+        }));
 
       return allPassed;
     },
@@ -110,18 +114,22 @@ const Multiple = forwardRef((props, ref) => {
           {/* Loop over key-value pair */}
           {Object.keys(entry).map((key) => {
             const val = entry[key];
+            const option = options[key];
             const entryValidator = validator?.conditions()[key];
             return (
               <InputWrapper
                 key={key}
-                label={options[key].label}
+                label={option.label}
                 value={val}
                 name={key}
-                type={options[key].type}
+                type={option.type}
                 onChange={({ target }) => handleChange({ target, index })}
-                disabled={options[key].disabled}
-                render={options[key].render}
-                validator={error && entryValidator}
+                disabled={option.disabled}
+                render={option.render}
+                validator={error ? entryValidator : null}
+                options={option.options}
+                tooltip={option.tooltip}
+                placeholder={options[key].placeholder}
               />
             );
           })}
@@ -155,6 +163,9 @@ const Multiple = forwardRef((props, ref) => {
                 }}
                 disabled={options[key].disabled}
                 render={options[key].render}
+                options={options[key].options}
+                tooltip={options[key].tooltip}
+                placeholder={options[key].placeholder}
               />
             ))}
           <C.ButtonContainer>
