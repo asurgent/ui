@@ -7,11 +7,13 @@ export default addTranslation({
     add: 'Lägg till',
     addNew: 'Lägg till ny',
     entry: 'Post',
+    update: 'Uppdatera',
   },
   en: {
     remove: 'Remove',
     add: 'Add',
     addNew: 'Add new',
     entry: 'Entry',
+    update: 'Update',
   },
 });

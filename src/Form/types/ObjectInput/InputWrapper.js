@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import * as C from './ObjectInput.styled';
-import Select from '../Select';
+/* import Select from '../Select'; */
 /* import Text from '../Text';
 import Number from '../Number'; */
 
@@ -33,7 +33,17 @@ const defaultProps = {
 
 const InputWrapper = (props) => {
   const {
-    type, label, value, name, disabled, render, onChange, validator, options, tooltip, placeholder,
+    type,
+    label,
+    value,
+    name,
+    disabled,
+    render,
+    onChange,
+    validator,
+    options,
+    tooltip,
+    placeholder,
   } = props;
 
   const error = useMemo(() => {
@@ -48,14 +58,17 @@ const InputWrapper = (props) => {
       <>
         <C.InputContainer type={type} tooltip={tooltip} error={error} label={label}>
           {type === 'select' ? (
-            <Select
+            <select
               value={value}
               name={name}
               onChange={onChange}
               disabled={disabled()}
-              options={options}
-              placeholder={placeholder}
-            />
+            >
+              <option disabled value="">
+                {placeholder}
+              </option>
+              {options.map((opt) => <option value={opt.value} key={`${opt.value}-${opt.label}`}>{opt.label}</option>)}
+            </select>
           ) : (
             <input
               value={value}

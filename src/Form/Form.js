@@ -97,7 +97,7 @@ const Form = (props) => {
     timerAction = null,
     action = null,
     reRender = false,
-    setDirty = false,
+    setDirty = true,
     withFrontendErrors = false,
   }) => {
     // setTimeout needed for render-dependencies in the form
@@ -146,22 +146,18 @@ const Form = (props) => {
     <FormStyle
       onKeyUp={(event) => {
         const { name } = event.target;
-        eventTrigger({
-          name, timerAction: keyPressTimer, action: onKeyUp, setDirty: false,
-        });
+        eventTrigger({ name, timerAction: keyPressTimer, action: onKeyUp });
       }}
       onKeyDown={(event) => {
         const { name } = event.target;
-        eventTrigger({
-          name, timerAction: keyPressTimer, action: onKeyDown, setDirty: false,
-        });
+        eventTrigger({ name, timerAction: keyPressTimer, action: onKeyDown });
       }}
       onChange={(event) => {
         const { name } = event.target;
         // Will trigger a rerender of form based on
         // input field render property
         eventTrigger({
-          name, timerAction: changeTimer, action: onChange, reRender: true, setDirty: false,
+          name, timerAction: changeTimer, action: onChange, reRender: true,
         });
       }}
       onSubmit={(event) => {

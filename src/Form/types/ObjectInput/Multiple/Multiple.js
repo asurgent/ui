@@ -158,9 +158,7 @@ const Multiple = forwardRef((props, ref) => {
                 label={options[key].label}
                 value={newEntry[key]}
                 type={options[key].type}
-                onChange={({ target }) => {
-                  setNewEntry({ ...newEntry, [key]: target.value });
-                }}
+                onChange={({ target }) => setNewEntry({ ...newEntry, [key]: target.value })}
                 disabled={options[key].disabled}
                 render={options[key].render}
                 options={options[key].options}
