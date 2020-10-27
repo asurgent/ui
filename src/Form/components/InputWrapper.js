@@ -20,6 +20,7 @@ const propTyps = {
   type: PropTypes.string.isRequired,
   showContainerError: PropTypes.bool,
   error: PropTypes.oneOfType([
+    PropTypes.string,
     PropTypes.bool,
     PropTypes.instanceOf(Object),
   ]).isRequired,
