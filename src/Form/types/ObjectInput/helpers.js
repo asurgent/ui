@@ -3,15 +3,16 @@ export const clearObjectValues = (obj) => {
   return Object.assign({}, ...objectEmptyValues);
 };
 
-export const canAddNew = (newEntry, options) => {
-  const editableInputs = Object.keys(newEntry).map((key) => {
-    const isDisabled = options[key]?.disabled && options[key].disabled();
-    const isHidden = options[key]?.render && !options[key].render();
-    if (!isDisabled && !isHidden) {
-      return newEntry[key];
-    }
-    return null;
+export const valuesPassedValidation = ({ validators, value }) => Object.keys(validators)
+  .every((key) => value.every((valEntry) => {
+    const fieldValue = valEntry[key];
+    const fieldValidation = validators[key].valid;
+    return fieldValidation(fieldValue);
+  }));
+
+export const valuePassedValidation = ({ validators, value }) => Object.keys(validators)
+  .every((key) => {
+    const { valid } = validators[key];
+    const val = value[key];
+    return valid(val);
   });
-  const allInputsFilled = editableInputs.every((ent) => ent !== '');
-  return allInputsFilled;
-};

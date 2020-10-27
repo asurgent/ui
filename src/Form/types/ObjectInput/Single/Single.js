@@ -4,7 +4,10 @@ import React, {
 import PropTypes from 'prop-types';
 import * as C from '../ObjectInput.styled';
 import InputWrapper from '../InputWrapper';
-import { clearObjectValues } from '../helpers';
+import {
+  clearObjectValues,
+  valuePassedValidation,
+} from '../helpers';
 
 const propTypes = {
   options: PropTypes.instanceOf(Object),
@@ -47,18 +50,9 @@ const Single = forwardRef((props, ref) => {
   const input = createRef();
 
   useImperativeHandle(ref, () => ({
-    value: () => parseOutput(value),
-    validator: () => {
-      const fieldWithValidation = validator.conditions();
-      const allPassed = Object.keys(fieldWithValidation)
-        .every((key) => {
-          const fieldValue = value[key];
-          const fieldValidation = fieldWithValidation[key].valid;
-          return fieldValidation(fieldValue);
-        });
-      return allPassed;
-    },
     validationErrorMessage: validator.errorMessage,
+    value: () => parseOutput(value),
+    validator: () => valuePassedValidation({ validators: validator.conditions(), value }),
   }));
 
   const handleChange = ({ target }) => {

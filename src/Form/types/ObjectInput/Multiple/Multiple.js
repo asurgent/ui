@@ -8,7 +8,11 @@ import * as C from '../ObjectInput.styled';
 import * as Button from '../../../../Button';
 import translation from '../ObjectInput.translation';
 import InputWrapper from '../InputWrapper';
-import { clearObjectValues, canAddNew } from '../helpers';
+import {
+  clearObjectValues,
+  valuePassedValidation,
+  valuesPassedValidation,
+} from '../helpers';
 
 const { t } = translation;
 
@@ -56,20 +60,9 @@ const Multiple = forwardRef((props, ref) => {
   const input = createRef();
 
   useImperativeHandle(ref, () => ({
-    value: () => parseOutput(value),
-    validator: () => {
-      const fieldWithValidation = validator.conditions();
-
-      const allPassed = Object.keys(fieldWithValidation)
-        .every((key) => value.every((valEntry) => {
-          const fieldValue = valEntry[key];
-          const fieldValidation = fieldWithValidation[key].valid;
-          return fieldValidation(fieldValue);
-        }));
-
-      return allPassed;
-    },
     validationErrorMessage: validator.errorMessage,
+    value: () => parseOutput(value),
+    validator: () => valuesPassedValidation({ validators: validator.conditions(), value }),
   }));
 
   const handleChange = ({ target, index }) => {
@@ -89,11 +82,14 @@ const Multiple = forwardRef((props, ref) => {
   };
 
   const handleRemove = ({ index }) => {
-    const newValue = value.filter((el, ind) => ind !== index);
+    const newValue = value.filter((v, ind) => ind !== index);
     setValue(newValue);
   };
 
-  const canAdd = useMemo(() => canAddNew(newEntry, options), [newEntry, options]);
+  const canAdd = useMemo(() => valuePassedValidation({
+    validators: validator.conditions(),
+    value: newEntry,
+  }), [newEntry, validator]);
 
   return (
     <C.Container>
