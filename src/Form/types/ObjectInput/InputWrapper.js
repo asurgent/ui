@@ -53,10 +53,17 @@ const InputWrapper = (props) => {
     return null;
   }, [validator, value]);
 
+  const val = useMemo(() => {
+    if (value) {
+      return type === 'number' ? parseInt(value, 10) : value;
+    }
+    return '';
+  }, [type, value]);
+
   if (render()) {
     return (
       <>
-        <C.InputContainer type={type} tooltip={tooltip} error={error} label={label}>
+        <C.InputContainer type={type} tooltip={tooltip} error={error || false} label={label}>
           {type === 'select' ? (
             <select
               value={value}
@@ -71,7 +78,7 @@ const InputWrapper = (props) => {
             </select>
           ) : (
             <input
-              value={value}
+              value={val}
               name={name}
               type={type}
               onChange={onChange}

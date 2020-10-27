@@ -87,7 +87,7 @@ export const defaultForm = () => {
         conditions: () => {
           const validation = {
             someName: { valid: (val) => val === 'hej', errorMessage: 'not "hej"' },
-            someNumber: { valid: (val) => parseInt(val, 10) === 1, errorMessage: 'not 1' },
+            someNumber: { valid: (val) => val === 1, errorMessage: 'not 1' },
           };
           return validation;
         },
@@ -103,7 +103,7 @@ export const defaultForm = () => {
             { label: 'someLabel1', value: 'someValue1' },
             { label: 'someLabel2', value: 'someValue2' }],
         },
-        someNumber: { label: 'translatedLabel4', type: 'number', render: () => false },
+        someNumber: { label: 'translatedLabel4', type: 'number', render: () => true },
       },
     },
     someObjectMultiple: {
