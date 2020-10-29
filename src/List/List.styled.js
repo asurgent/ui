@@ -20,6 +20,7 @@ export const Title = styled.div`
     border-bottom: 1px solid ${({ theme }) => theme.gray300};
     word-break: break-all;
     min-width: 8rem;
+    flex-wrap: wrap;
 `;
 
 export const Value = styled(Title)`

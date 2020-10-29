@@ -23,6 +23,7 @@ const propTyps = {
     condition: PropTypes.func,
     errorMessage: PropTypes.string,
   }),
+  disabled: PropTypes.func,
 };
 
 const defaultProps = {
@@ -37,6 +38,7 @@ const defaultProps = {
     condition: () => true,
     errorMessage: '',
   },
+  disabled: () => false,
 };
 
 const NumberInput = forwardRef((props, ref) => {
@@ -47,6 +49,7 @@ const NumberInput = forwardRef((props, ref) => {
     maxValue,
     parseOutput,
     validator,
+    disabled,
   } = props;
   const input = createRef();
   const { hook: form } = useContext(FormContext);
@@ -119,6 +122,7 @@ const NumberInput = forwardRef((props, ref) => {
       }}
       name={name}
       ref={input}
+      disabled={disabled()}
     />
   );
 });

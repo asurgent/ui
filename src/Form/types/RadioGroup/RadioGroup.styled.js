@@ -39,7 +39,7 @@ export const CheckMark = styled.span`
     height: 2rem;
     width: 2rem;
     background-color: #fff;
-    border: 0.2rem solid black ;
+    border: 0.2rem solid black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,20 +51,6 @@ export const CheckMark = styled.span`
         width: 50%;
         height: 50%;
         border-radius: 100%;
-        background: ${({ theme }) => theme.blue900};
-    }
-`;
-
-export const RadioInput = styled.input`
-    width: 2rem!important;
-    height: 2rem!important;   
-    margin: 0; 
-    /* change border color and draw the dot */
-    &:checked + ${CheckMark} {
-    border: ${({ theme }) => `0.2rem solid ${theme.blue900}`};
-        &:after {
-            display: block;
-        }
     }
 `;
 
@@ -73,4 +59,26 @@ export const Text = styled.span`
     line-height: 1.6rem;
     overflow: hidden;
     text-overflow: ellipsis;
+`;
+
+export const RadioInput = styled.input`
+    width: 2rem!important;
+    height: 2rem!important;   
+    margin: 0; 
+    /* change border color and draw the dot */
+    &:checked + ${CheckMark} {
+    border: ${({ theme, disabled }) => `0.2rem solid ${disabled ? theme.gray400 : theme.blue900}`};
+        &:after {
+            display: block;
+        }
+    }
+    ~ ${CheckMark} {
+        border-color: ${({ theme, disabled }) => (disabled ? theme.gray400 : theme.blue900)};
+        &:after {
+            background: ${({ theme, disabled }) => (disabled ? theme.gray400 : theme.blue900)};
+        }
+    }
+    ~ ${Text} {
+        color: ${({ theme, disabled }) => (disabled ? theme.gray400 : theme.black)};
+    }
 `;
