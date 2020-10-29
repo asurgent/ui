@@ -13,6 +13,7 @@ import Email from '../types/Email/index';
 import DatePicker from '../types/DatePicker/index';
 import RadioGroup from '../types/RadioGroup/index';
 import TextMultiple from '../types/TextMultiple/index';
+import * as ObjectInput from '../types/ObjectInput/index';
 
 const getInputComponent = (type) => {
   switch (type) {
@@ -22,6 +23,10 @@ const getInputComponent = (type) => {
       return Text;
     case 'textmultiple':
       return TextMultiple;
+    case 'objectsingle':
+      return ObjectInput.Single;
+    case 'objectmultiple':
+      return ObjectInput.Multiple;
     case 'number':
       return Number;
     case 'textarea':
@@ -96,8 +101,10 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
         noLabel = false,
         parseOutput,
         validator,
+        validators,
         className,
         classNameWrapper,
+        showContainerError,
         props: inputProps,
         disabled = () => false,
       } = inputs[key];
@@ -123,6 +130,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
           className={className}
           classNameWrapper={classNameWrapper}
           disabled={disabled}
+          showContainerError={showContainerError}
         >
           <RequestedComponent
             hook={self}
@@ -132,6 +140,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
             placeholder={placeholder}
             label={label}
             validator={validator}
+            validators={validators}
             minDate={minDate}
             maxDate={maxDate}
             minValue={minValue}
@@ -140,6 +149,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
             props={inputProps}
             options={options}
             disabled={disabled}
+            error={error}
           />
         </InputWrapper>
       );
@@ -234,7 +244,6 @@ const getValidator = (ref) => {
   if (validator && typeof validator === 'function') {
     return validator();
   }
-
   return true;
 };
 

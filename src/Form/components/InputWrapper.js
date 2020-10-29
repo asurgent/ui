@@ -18,7 +18,9 @@ const propTyps = {
   className: PropTypes.string,
   classNameWrapper: PropTypes.string,
   type: PropTypes.string.isRequired,
+  showContainerError: PropTypes.bool,
   error: PropTypes.oneOfType([
+    PropTypes.string,
     PropTypes.bool,
     PropTypes.instanceOf(Object),
   ]).isRequired,
@@ -38,6 +40,7 @@ const defaultProps = {
   className: '',
   classNameWrapper: '',
   tooltipPosition: 'middle',
+  showContainerError: true,
   disabled: () => false,
 };
 
@@ -52,6 +55,7 @@ const InputWrapper = (props) => {
     type,
     className,
     classNameWrapper,
+    showContainerError,
     disabled,
   } = props;
 
@@ -67,10 +71,15 @@ const InputWrapper = (props) => {
           )}
         </Header>
       )}
-      <Wrapper disabled={disabled()} hasError={Boolean(error)} className={classNameWrapper}>
+      <Wrapper
+        disabled={disabled()}
+        hasError={showContainerError && Boolean(error)}
+        type={type}
+        className={classNameWrapper}
+      >
         {children}
       </Wrapper>
-      {error && (
+      {showContainerError && error && (
         <Error>
           {
             i18next.exists(`${error.translationKey}`)

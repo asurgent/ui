@@ -2,7 +2,7 @@ import React, {
   useState, forwardRef, createRef, useEffect, useImperativeHandle,
 } from 'react';
 import PropTypes from 'prop-types';
-import Delete from '@material-ui/icons/DeleteForever';
+import Delete from '@material-ui/icons/Block';
 import Add from '@material-ui/icons/Add';
 import * as C from './TextMultiple.styled';
 import * as Button from '../../../Button';

@@ -77,6 +77,73 @@ export const defaultForm = () => {
       parseOutput: (r) => r.filter((entry) => entry !== ''),
       placeholder: 'Add something cool',
     },
+    someObject: {
+      type: 'objectsingle',
+      label: 'Some Object',
+      tooltip: 'hejhej',
+      className: 'asdf',
+      showContainerError: false,
+      validator: {
+        conditions: () => {
+          const validation = {
+            someName: { valid: (val) => val === 'hej', errorMessage: 'not "hej"' },
+            someNumber: { valid: (val) => val === 1, errorMessage: 'not 1' },
+          };
+          return validation;
+        },
+      },
+      options: {
+        someName: { label: 'translatedLabel1', type: 'string' },
+        someOtherName: { label: 'translatedLabel2', type: 'string', disabled: () => true },
+        someSelect: {
+          label: 'translatedLabel3',
+          type: 'select',
+          placeholder: 'select',
+          options: [
+            { label: 'someLabel1', value: 'someValue1' },
+            { label: 'someLabel2', value: 'someValue2' }],
+        },
+        someNumber: { label: 'translatedLabel4', type: 'number', render: () => true },
+      },
+    },
+    someObjectMultiple: {
+      type: 'objectmultiple',
+      label: null,
+      tooltip: 'hejhej',
+      showContainerError: false,
+      validator: {
+        conditions: () => {
+          const validation = {
+            someName: { valid: (val) => val === 'hello', errorMessage: 'not "hello"' },
+          };
+          return validation;
+        },
+      },
+      options: {
+        someName: { label: 'translatedMultiLabel1', type: 'string' },
+        someOtherName: { label: 'translatedMultiLabel2', type: 'string', render: () => false },
+        someSelect: {
+          label: 'translatedMultiLabel3',
+          type: 'select',
+          placeholder: 'select',
+          options: [
+            { label: 'someLabel3', value: 'someValue3' },
+            { label: 'someLabel4', value: 'someValue4' },
+          ],
+        },
+        someNumber: { label: 'translatedMultiLabel4', type: 'number', disabled: () => true },
+      },
+    },
+    email: {
+      type: 'email',
+      label: 'Email',
+      tooltip: 'Select me',
+      validator: {
+        condition: (v) => v === 'asdf',
+        errorMessage: 'I did not validate',
+      },
+      value: '',
+    },
     imABoolean: {
       type: 'bool',
       label: 'Im true or false',
@@ -84,16 +151,6 @@ export const defaultForm = () => {
       tooltip: 'Select me',
       value: false,
       disabled: () => true,
-    },
-    email: {
-      type: 'email',
-      label: 'Email',
-      tooltip: 'Select me',
-      validator: {
-        condition: () => false,
-        errorMessage: 'I did not validate',
-      },
-      value: '',
     },
     someNumber: {
       type: 'number',
@@ -175,10 +232,35 @@ export const defaultForm = () => {
     formData.updateFields([
       { name: 'someText', value: 'Good bye' },
       { name: 'someTextMultiple', value: ['Good', 'bye'] },
+      {
+        name: 'someObject',
+        value: {
+          someName: 'hello',
+          someOtherName: 'goodbye',
+          someNumber: 1,
+          someSelect: 'someValue2',
+        },
+      },
+      { name: 'email', value: 'mail@asdf.se' },
+      {
+        name: 'someObjectMultiple',
+        value: [{
+          someName: 'goodbye',
+          someOtherName: 'whats up',
+          someNumber: 1,
+          someSelect: 'someValue3',
+        },
+        {
+          someName: 'hello',
+          someOtherName: 'cya',
+          someNumber: 3,
+          someSelect: 'someValue4',
+        }],
+      },
       { name: 'someNumber', value: 10 },
       { name: 'someRadioGroup', value: 'value1' },
       { name: 'someRadioGroup2', value: 'value4' },
-      { name: 'someSelect', options: [{ value: '4', label: 'four' }, { value: '5', label: 'five' }], value: '' },
+      { name: 'someSelect', value: '' },
       { name: 'someSelect2', options: [{ value: '6', label: 'six' }, { value: '7', label: 'seven' }] },
       {
         name: 'someFilterSelectSingle',
