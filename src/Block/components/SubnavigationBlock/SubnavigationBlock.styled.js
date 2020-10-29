@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import * as T from '../../../Typography';
 
 export const Wrapper = styled.div`
     display: grid;
@@ -20,15 +21,10 @@ export const Wrapper = styled.div`
             ". title"
             "navigation content";
     }
-`;
-
-export const Title = styled.h1`
-    grid-area: title;
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: normal;
-    font-size: 2.6rem;
-    line-height: 3rem;
+    
+    ${T.Title.H1} {
+        grid-area: title;
+    }
 `;
 
 export const Content = styled.div`
@@ -38,16 +34,6 @@ export const Content = styled.div`
     
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {
             overflow-x: unset;
-    }
-    
-    h2 {
-        padding: 0;
-        margin-top: 0;
-        font-family: "Poppins";
-        font-style: normal;
-        font-weight: 500;
-        font-size: 2.2rem;
-        line-height: 2.6rem;
     }
 `;
 

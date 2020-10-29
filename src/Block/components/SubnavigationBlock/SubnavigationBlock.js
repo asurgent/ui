@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as C from './SubnavigationBlock.styled';
+import * as T from '../../../Typography';
 
 const propTypes = {
   children: PropTypes.oneOfType([
@@ -18,25 +19,28 @@ const defaultProps = {
 
 const SubnavigationBlock = ({ navigationList, title, children }) => (
   <C.Wrapper>
-    { title && <C.Title>{title}</C.Title> }
+    { title && <T.Title.H1>{title}</T.Title.H1> }
     <C.Navigation>
       {
-        navigationList.map(({
-          render = () => true,
-          path,
-          icon,
-          label,
-          isActive,
-          iconStyle,
-          navigationStyle,
-          labelStyle,
-        }) => (
-          render() && (
-          <C.NavigationItem style={navigationStyle} to={path} key={path} isActive={isActive}>
-            <C.Icon style={iconStyle}>{icon}</C.Icon>
-            <C.Label style={labelStyle}>{label}</C.Label>
-          </C.NavigationItem>
-          )))
+        navigationList.map((page) => {
+          if (!page) { return null; }
+          const {
+            path,
+            icon,
+            label,
+            isActive,
+            iconStyle,
+            navigationStyle,
+            labelStyle,
+          } = page;
+
+          return (
+            <C.NavigationItem style={navigationStyle} to={path} key={path} isActive={isActive}>
+              <C.Icon style={iconStyle}>{icon}</C.Icon>
+              <C.Label style={labelStyle}>{label}</C.Label>
+            </C.NavigationItem>
+          );
+        })
       }
     </C.Navigation>
     <C.Content>

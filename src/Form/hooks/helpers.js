@@ -106,6 +106,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
         classNameWrapper,
         showContainerError,
         props: inputProps,
+        disabled = () => false,
       } = inputs[key];
 
       let inputValue = value;
@@ -128,6 +129,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
           type={type}
           className={className}
           classNameWrapper={classNameWrapper}
+          disabled={disabled}
           showContainerError={showContainerError}
         >
           <RequestedComponent
@@ -146,6 +148,7 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
             parseOutput={parseOutput}
             props={inputProps}
             options={options}
+            disabled={disabled}
             error={error}
           />
         </InputWrapper>

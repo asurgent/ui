@@ -30,6 +30,7 @@ const propTyps = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
+  disabled: PropTypes.func,
 };
 
 const defaultProps = {
@@ -40,6 +41,7 @@ const defaultProps = {
   classNameWrapper: '',
   tooltipPosition: 'middle',
   showContainerError: true,
+  disabled: () => false,
 };
 
 const InputWrapper = (props) => {
@@ -54,6 +56,7 @@ const InputWrapper = (props) => {
     className,
     classNameWrapper,
     showContainerError,
+    disabled,
   } = props;
 
   return (
@@ -69,6 +72,7 @@ const InputWrapper = (props) => {
         </Header>
       )}
       <Wrapper
+        disabled={disabled()}
         hasError={showContainerError && Boolean(error)}
         type={type}
         className={classNameWrapper}

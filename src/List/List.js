@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import * as C from './List.styled';
 
 const propTypes = {
+  style: PropTypes.instanceOf(Object),
   rows: PropTypes.instanceOf(Array),
   children: PropTypes.oneOfType([
     PropTypes.node,
@@ -11,12 +12,13 @@ const propTypes = {
 };
 
 const defaultProps = {
+  style: {},
   rows: [],
   children: null,
 };
 
-const List = ({ rows, children }) => (
-  <C.Wrapper>
+const List = ({ rows, children, style }) => (
+  <C.Wrapper style={style}>
     { rows.map((item, index) => {
       if (!item) { return null; }
 

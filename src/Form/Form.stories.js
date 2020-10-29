@@ -54,7 +54,6 @@ const ticketValues = {
 
 export const simpleForm = () => {
   const formData = Form.useFormBuilder(formObj);
-
   return (
     <Form.Primary
       form={formData}
@@ -69,6 +68,7 @@ export const defaultForm = () => {
       type: 'text',
       label: 'Some Text',
       tooltip: 'hejhej',
+      disabled: () => true,
     },
     someTextMultiple: {
       type: 'textmultiple',
@@ -150,8 +150,8 @@ export const defaultForm = () => {
       tooltipPosition: 'left',
       tooltip: 'Select me',
       value: false,
+      disabled: () => true,
     },
-
     someNumber: {
       type: 'number',
       label: 'Some Number (max 100)',
@@ -270,6 +270,7 @@ export const defaultForm = () => {
           '3',
           '4',
         ],
+        value: '3',
       },
       {
         name: 'someFilterSelectMulti',

@@ -14,16 +14,18 @@ const propTyps = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   props: PropTypes.instanceOf(Object),
+  disabled: PropTypes.func,
 };
 
 const defaultProps = {
   value: 'false',
   label: '',
   props: {},
+  disabled: () => false,
 };
 
 const Bool = forwardRef((props, ref) => {
-  const { name, label } = props;
+  const { name, label, disabled } = props;
   const { t } = translation;
 
   const [value, setValue] = useState();
@@ -47,6 +49,7 @@ const Bool = forwardRef((props, ref) => {
       options={options}
       ref={ref}
       props={props.props}
+      disabled={disabled}
     />
   );
 });

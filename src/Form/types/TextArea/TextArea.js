@@ -13,6 +13,7 @@ const propTyps = {
     condition: PropTypes.func,
     errorMessage: PropTypes.string,
   }),
+  disabled: PropTypes.func,
 };
 
 const defaultProps = {
@@ -24,6 +25,7 @@ const defaultProps = {
     condition: () => true,
     errorMessage: '',
   },
+  disabled: () => false,
 };
 
 const TextArea = forwardRef((props, ref) => {
@@ -32,6 +34,7 @@ const TextArea = forwardRef((props, ref) => {
     placeholder,
     parseOutput,
     validator,
+    disabled,
   } = props;
 
   const [value, setValue] = useState('');
@@ -55,6 +58,7 @@ const TextArea = forwardRef((props, ref) => {
       onChange={({ target }) => setValue(target.value)}
       name={name}
       autoComplete="off"
+      disabled={disabled()}
     />
   );
 });

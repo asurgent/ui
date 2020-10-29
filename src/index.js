@@ -24,6 +24,7 @@ import * as Progress from './Progress';
 import * as List from './List';
 import * as Markdown from './Markdown';
 import * as Truncate from './Truncate';
+import * as Typography from './Typography';
 import * as Layout from './layout';
 import ThemeVaraiables from '../lib/style/theme';
 
@@ -54,4 +55,5 @@ export {
   Markdown,
   Truncate,
   ThemeVaraiables,
+  Typography,
 };
