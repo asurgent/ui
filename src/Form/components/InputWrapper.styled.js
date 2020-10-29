@@ -76,13 +76,7 @@ export const Wrapper = styled.div`
   .transparentBackground {
     background: transparent!important;
     border-color: ${({ theme }) => theme.gray200}!important;
-  }
-  * {
-    color: ${({ theme, disabled }) => (disabled ? theme.gray400 : theme.black)};
-    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'initial')}
-  }
- 
-  
+  }  
 `;
 
 export const Label = styled.div`
