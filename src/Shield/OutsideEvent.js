@@ -14,7 +14,7 @@ const defaultProps = {
   onClick: () => null,
 };
 
-const useOutsideAlerter = (ref, { onClick }) => {
+const useOutsideEvent = (ref, { onClick }) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
@@ -30,7 +30,7 @@ const useOutsideAlerter = (ref, { onClick }) => {
 
 const OutsideEvent = ({ children, onClick }) => {
   const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, { onClick });
+  useOutsideEvent(wrapperRef, { onClick });
   return (
     <C.OutsideEvent ref={wrapperRef}>
       {children}
