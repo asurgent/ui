@@ -100,10 +100,7 @@ const FilterInput = forwardRef((props, ref) => {
   }));
 
   return (
-    <Shield.Transparent
-      onClick={() => filterSelectHook.setOpen(false)}
-      shieldIsUp={filterSelectHook.isOpen}
-    >
+    <Shield.OutsideEvent onClick={() => filterSelectHook.setOpen(false)}>
       <C.SelectFilter onClick={() => !disabled() && filterSelectHook.setOpen(true)}>
         <C.Input type="text" name={name} ref={filterSelectHook.inputRef} disabled {...inputProps} />
         <C.Output>
@@ -151,7 +148,7 @@ const FilterInput = forwardRef((props, ref) => {
           </C.Dropdown>
         </Transition.FadeInFitted>
       </C.SelectFilter>
-    </Shield.Transparent>
+    </Shield.OutsideEvent>
   );
 });
 

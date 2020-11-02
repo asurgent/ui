@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Shield from './Shield';
+import Outside from './OutsideEvent';
 
 const propTypes = {
   dark: PropTypes.bool,
@@ -55,4 +56,15 @@ Transparent.propTypes = propTypes;
 Transparent.defaultProps = defaultProps;
 Transparent.displayName = '@asurgent.ui.Shield.Transparent';
 
-export { Custom, Transparent, Dark };
+const OutsideEvent = ({ children, onClick, ...props }) => (
+  <Outside onClick={onClick} {...props}>
+    {children}
+  </Outside>
+);
+OutsideEvent.propTypes = propTypes;
+OutsideEvent.defaultProps = defaultProps;
+OutsideEvent.displayName = '@asurgent.ui.Shield.OutsideEvent';
+
+export {
+  Custom, Transparent, Dark, OutsideEvent,
+};
