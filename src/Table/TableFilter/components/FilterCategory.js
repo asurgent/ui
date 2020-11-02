@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import * as Icon from '@material-ui/icons';
@@ -55,7 +55,7 @@ const FilterCategory = (props) => {
   return (
     <C.FilterWrapper>
       <Button.Filter onClick={() => groupHook.setOpen(true)}>{label}</Button.Filter>
-      <Shield.Transparent onClick={() => groupHook.setOpen(false)} shieldIsUp={groupHook.isOpen()}>
+      <Shield.OutsideEvent onClick={() => groupHook.setOpen(false)}>
         <C.ShieldTargetWrapper>
           <Transition.FadeInSlideDownOnDesktop isVisible={groupHook.isOpen()} timeout={80}>
             <C.Dropdown>
@@ -108,7 +108,7 @@ const FilterCategory = (props) => {
             </C.Dropdown>
           </Transition.FadeInSlideDownOnDesktop>
         </C.ShieldTargetWrapper>
-      </Shield.Transparent>
+      </Shield.OutsideEvent>
     </C.FilterWrapper>
   );
 };
