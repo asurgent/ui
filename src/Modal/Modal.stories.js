@@ -44,16 +44,14 @@ export const primaryModal = () => {
   return (
     <Modal.Primary
       isOpen={boolean('is open', true)}
-      fullscreen={boolean('fullscreen', false)}
+      fullscreen={boolean('fullscreen', true)}
       withActionbar={boolean('withActionbar', false)}
       title="Modal Title"
       onClose={action('Close action')}
       withoutHeader={boolean('withoutHeader', false)}
     >
       <p>Hello</p>
-      <Form.Primary
-        form={formData}
-      />
+      <Form.Primary form={formData} />
       <Table.Filter
         tableHook={tableHook}
         filterKeys={[
