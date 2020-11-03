@@ -59,6 +59,15 @@ const Multiple = forwardRef((props, ref) => {
 
   const input = createRef();
 
+  // trigger change event on form on add/remove button-clicks
+  const dispatchEvent = (newValue) => {
+    const element = input.current;
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+    nativeInputValueSetter.call(element, newValue);
+    const inputEvent = new Event('input', { bubbles: true });
+    element.dispatchEvent(inputEvent);
+  };
+
   useImperativeHandle(ref, () => ({
     validationErrorMessage: validator.errorMessage,
     value: () => parseOutput(value),
@@ -68,22 +77,30 @@ const Multiple = forwardRef((props, ref) => {
   const handleChange = ({ target, index }) => {
     const newArr = value.map((ent, ind) => {
       if (ind === index) {
-        return { ...ent, [target.name]: target.value };
+        const val = target.type === 'number' ? parseInt(target.value, 10) : target.value;
+        return { ...ent, [target.name]: val };
       }
       return ent;
     });
     setValue(newArr);
   };
 
+  const handleChangeNewEntry = ({ target, key }) => {
+    const val = options[key].type === 'number' ? parseInt(target.value, 10) : target.value;
+    setNewEntry({ ...newEntry, [key]: val });
+  };
+
   const handleAdd = () => {
     const newValue = [...value, newEntry];
     setValue(newValue);
     setNewEntry(clearObjectValues(options));
+    dispatchEvent(newValue);
   };
 
   const handleRemove = ({ index }) => {
     const newValue = value.filter((v, ind) => ind !== index);
     setValue(newValue);
+    dispatchEvent(newValue);
   };
 
   const canAdd = useMemo(() => valuePassedValidation({
@@ -154,7 +171,7 @@ const Multiple = forwardRef((props, ref) => {
                 label={options[key].label}
                 value={newEntry[key]}
                 type={options[key].type}
-                onChange={({ target }) => setNewEntry({ ...newEntry, [key]: target.value })}
+                onChange={({ target }) => handleChangeNewEntry({ target, key })}
                 disabled={options[key].disabled}
                 render={options[key].render}
                 options={options[key].options}

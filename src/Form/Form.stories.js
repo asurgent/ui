@@ -87,7 +87,7 @@ export const defaultForm = () => {
         conditions: () => {
           const validation = {
             someName: { valid: (val) => val === 'hej', errorMessage: 'not "hej"' },
-            someNumber: { valid: (val) => val === 1, errorMessage: 'not 1' },
+            someNumber: { valid: (val) => typeof val === 'number' && val === 2, errorMessage: 'not 1' },
           };
           return validation;
         },
@@ -115,6 +115,7 @@ export const defaultForm = () => {
         conditions: () => {
           const validation = {
             someName: { valid: (val) => val === 'hello', errorMessage: 'not "hello"' },
+            someNumber: { valid: (val) => typeof val === 'number', errorMessage: 'not a number' },
           };
           return validation;
         },
@@ -122,6 +123,7 @@ export const defaultForm = () => {
       options: {
         someName: { label: 'translatedMultiLabel1', type: 'string' },
         someOtherName: { label: 'translatedMultiLabel2', type: 'string', render: () => false },
+        someNumber: { label: 'translatedMultiLabel3', type: 'number' },
         someSelect: {
           label: 'translatedMultiLabel3',
           type: 'select',
@@ -131,7 +133,6 @@ export const defaultForm = () => {
             { label: 'someLabel4', value: 'someValue4' },
           ],
         },
-        someNumber: { label: 'translatedMultiLabel4', type: 'number', disabled: () => true },
       },
     },
     email: {
@@ -347,7 +348,7 @@ export const defaultForm = () => {
               <Button.Secondary disabled={!isDirty} onClick={onResetAction}>
                 Reset
               </Button.Secondary>
-              <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
+              <Button.Primary disabled={!isDirty} onClick={onSubmitAction}>Submit</Button.Primary>
             </Block.SpaceBetween>
           </>
         )}

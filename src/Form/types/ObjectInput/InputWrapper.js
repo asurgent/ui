@@ -1,9 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import * as C from './ObjectInput.styled';
-/* import Select from '../Select'; */
-/* import Text from '../Text';
-import Number from '../Number'; */
 
 const propTypes = {
   type: PropTypes.string,
@@ -53,13 +50,6 @@ const InputWrapper = (props) => {
     return null;
   }, [validator, value]);
 
-  const val = useMemo(() => {
-    if (value) {
-      return type === 'number' ? parseInt(value, 10) : value;
-    }
-    return '';
-  }, [type, value]);
-
   if (render()) {
     return (
       <>
@@ -78,7 +68,7 @@ const InputWrapper = (props) => {
             </select>
           ) : (
             <input
-              value={val}
+              value={value || ''}
               name={name}
               type={type}
               onChange={onChange}
