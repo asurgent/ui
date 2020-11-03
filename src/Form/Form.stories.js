@@ -348,7 +348,7 @@ export const defaultForm = () => {
               <Button.Secondary disabled={!isDirty} onClick={onResetAction}>
                 Reset
               </Button.Secondary>
-              <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
+              <Button.Primary disabled={!isDirty} onClick={onSubmitAction}>Submit</Button.Primary>
             </Block.SpaceBetween>
           </>
         )}
