@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { buildFilterQuery } from './helpers';
+import { buildFilterQuery, escapeRegExp } from './helpers';
 import translation from './TableFilter.translation';
 
 const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
@@ -121,7 +121,7 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
             return label
               .toString()
               .toLowerCase()
-              .match(search.toString().toLowerCase());
+              .match(escapeRegExp(search.toString().toLowerCase()));
           }
           return false;
         });
