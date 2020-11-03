@@ -56,7 +56,8 @@ const Single = forwardRef((props, ref) => {
   }));
 
   const handleChange = ({ target }) => {
-    const newValue = { ...value, [target.name]: target.value };
+    const val = target.type === 'number' ? parseInt(target.value, 10) : target.value;
+    const newValue = { ...value, [target.name]: val };
     setValue(newValue);
   };
 
@@ -75,7 +76,6 @@ const Single = forwardRef((props, ref) => {
         {Object.keys(value).map((key, index) => {
           const option = options[key];
           const entryValidator = validator?.conditions()[key];
-
           return (
             <InputWrapper
               /* eslint-disable-next-line react/no-array-index-key */

@@ -68,11 +68,17 @@ const Multiple = forwardRef((props, ref) => {
   const handleChange = ({ target, index }) => {
     const newArr = value.map((ent, ind) => {
       if (ind === index) {
-        return { ...ent, [target.name]: target.value };
+        const val = target.type === 'number' ? parseInt(target.value, 10) : target.value;
+        return { ...ent, [target.name]: val };
       }
       return ent;
     });
     setValue(newArr);
+  };
+
+  const handleChangeNewEntry = ({ target, key }) => {
+    const val = options[key].type === 'number' ? parseInt(target.value, 10) : target.value;
+    setNewEntry({ ...newEntry, [key]: val });
   };
 
   const handleAdd = () => {
@@ -154,7 +160,7 @@ const Multiple = forwardRef((props, ref) => {
                 label={options[key].label}
                 value={newEntry[key]}
                 type={options[key].type}
-                onChange={({ target }) => setNewEntry({ ...newEntry, [key]: target.value })}
+                onChange={({ target }) => handleChangeNewEntry({ target, key })}
                 disabled={options[key].disabled}
                 render={options[key].render}
                 options={options[key].options}
