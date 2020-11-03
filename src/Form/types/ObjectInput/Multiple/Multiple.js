@@ -60,10 +60,10 @@ const Multiple = forwardRef((props, ref) => {
   const input = createRef();
 
   // trigger change event on form on add/remove button-clicks
-  const dispatchEvent = () => {
+  const dispatchEvent = (newValue) => {
     const element = input.current;
     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
-    nativeInputValueSetter.call(element, value);
+    nativeInputValueSetter.call(element, newValue);
     const inputEvent = new Event('input', { bubbles: true });
     element.dispatchEvent(inputEvent);
   };
@@ -94,13 +94,13 @@ const Multiple = forwardRef((props, ref) => {
     const newValue = [...value, newEntry];
     setValue(newValue);
     setNewEntry(clearObjectValues(options));
-    dispatchEvent();
+    dispatchEvent(newValue);
   };
 
   const handleRemove = ({ index }) => {
     const newValue = value.filter((v, ind) => ind !== index);
     setValue(newValue);
-    dispatchEvent();
+    dispatchEvent(newValue);
   };
 
   const canAdd = useMemo(() => valuePassedValidation({
