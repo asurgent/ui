@@ -89,6 +89,9 @@ export const buildFilterStateString = (selectedFilters) => {
   return '';
 };
 
+// $& means the whole matched string
+export const escapeRegExp = (string) => string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
+
 /**
  * @param  {Object} selectedFilters - all selected filters
  * @param  {Function} parseRequestItemOutput - allows implementation of table to alter request
