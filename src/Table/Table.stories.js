@@ -306,33 +306,54 @@ export const main = () => {
   );
 };
 
+const myRes = Array.from(Array(10)).map((e, i) => (
+  {
+    name: `Name${i}`, age: Math.floor(Math.random() * 80 + 20),
+  }));
+
 export const mainSearchable = () => {
-  const success = boolean('Successful response', true);
-  const table = Table.useTableHook(({ order_by }) => ({ page_size: 15, order_by: [...order_by, 'desc myRes'] }));
-  const myRes = Array.from(Array(5)).map((e, i) => (
-    {
-      valueA: `heja${i}`, valueB: `hejb${i}`, valueC: `hejc${i}`, valueD: `hejd${i}`,
-    }));
+  const table = Table.useTableHook(() => ({ page_size: 15 }));
+
+  const BG_FILTER_VALUE = 50;
+  const BG_FILTER_KEY = 'age';
+
+  // Fake response method that corresponds to the parseFilterRequestStringOutput-prop below
+  const getFakeResponse = (search_string = '') => {
+    const strippedString = search_string.replace(/\*/g, '').replace(/\+/g, ' ');
+
+    const fakeFilteredResponse = myRes.filter((res) => {
+      if (strippedString !== '') {
+        return res[BG_FILTER_KEY] > BG_FILTER_VALUE
+        && res.name.toLocaleLowerCase().includes(strippedString.toLocaleLowerCase());
+      }
+      return res[BG_FILTER_KEY] > BG_FILTER_VALUE;
+    });
+
+    const response = {
+      result: fakeFilteredResponse,
+      page: 1,
+      total_pages: 1,
+      total_count: fakeFilteredResponse,
+      facets: {
+        name: fakeFilteredResponse.map((el) => ({
+          count: myRes.filter((res) => res.name === el.name).length,
+          value: el.name,
+        })),
+      },
+    };
+    return response;
+  };
 
   useEffect(() => {
-    table.registerRowFetchCallback((payload, onSuccess, onFail) => {
+    table.registerRowFetchCallback((payload, onSuccess) => {
       action('fetch')(payload);
-
-      if (success) {
-        const myFilteredRes = myRes.filter((r) => r.valueA.includes(payload.search_string.replace('*', '')));
-        onSuccess({
-          result: myFilteredRes,
-          page: 1,
-          total_pages: 20,
-          total_count: myFilteredRes.length,
-        });
-      } else {
-        onFail('Could not get your things');
-      }
+      const { search_string } = payload;
+      onSuccess(getFakeResponse(search_string));
     });
 
     table.registerFilterFetchCallback((payload, onSuccess) => {
-      onSuccess({ myRes });
+      const { search_string } = payload;
+      onSuccess(getFakeResponse(search_string).facets);
     });
 
     table.parentReady();
@@ -340,39 +361,23 @@ export const mainSearchable = () => {
 
   return (
     <StoryWrapper>
+      <p>{`Table with initial filter for age > 50`}</p>
       <Table.Controlls
         tableHook={table}
         searchLabel="search"
-        withFilter={[{ label: 'My res', facetKey: 'myRes', excludeable: true }]}
-        parseFilterLabelOutput={(filter) => {
-          // If we get empty-string as type, set it to label Missing
-          if (filter === '') {
-            return 'missing';
+        withFilter={[{ label: 'Name', facetKey: 'name', excludeable: true }]}
+        parseFilterRequestStringOutput={(filterString) => {
+          if (filterString) {
+            return `${filterString} and (${BG_FILTER_KEY} gt '${BG_FILTER_VALUE}'))`;
           }
-          return null;
-        }}
-        parseFilterItemRequestOutput={(filter, filterKey) => {
-          if (filterKey === 'myRes') {
-            const user = filter.match(/\((\d+)\)$/);
-
-            if (user) {
-              const [, newKey] = user;
-              return newKey;
-            }
-          }
-          return null;
-        }}
-        parseFilterKeyRequestOutput={(filterKey) => {
-          if (filterKey === 'myRes') {
-            return 'myRes';
-          }
-          return null;
+          return `(${BG_FILTER_KEY} gt '${BG_FILTER_VALUE}')`;
         }}
       />
 
       <Table.Main
         withHeader
         useHistoryState
+        displayCount={false}
         historyStatePrefix="tickets"
         tableHook={table}
         emptystate="Inga rez för"
@@ -380,27 +385,20 @@ export const mainSearchable = () => {
         exportFileName={text('export file name', 'export_file_name')}
         headerData={[
           {
-            label: 'A',
+            label: 'Name',
             size: 'minmax(30rem, 1fr)',
           },
-          { label: 'B', key: 'test' },
-          { label: 'C', sortKey: 'sort-C' },
-          {
-            label: 'D',
-            size: 'minmax(8rem, 10rem)',
-            props: { style: { textAlign: 'center' } },
-          },
+          { label: 'Age', key: 'age' },
+
         ]}
         cardConfiguration={(row) => <Card row={row} />}
         columnConfiguration={(row) => {
           const {
-            valueA, valueB, valueC, valueD,
+            name, age,
           } = row;
           return [
-            { value: valueA },
-            { value: valueB },
-            { value: valueC },
-            { value: valueD },
+            { value: name },
+            { value: age },
           ];
         }}
       />
