@@ -98,7 +98,7 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
       // Look if there is items in the selected group
       // But dont include if its not a multiselect (aka singleSelect) filter.
       // Since a singleSelect MUST have a value, it cant be cleared.
-      return (list.length > 0) && category.multiSelect !== false;
+      return (list.length > 0) && category?.multiSelect !== false;
     });
 
     setHasSelectedItems(hasSelected);

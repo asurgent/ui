@@ -139,9 +139,18 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
       // Ommit the targetd group from the selected-items object and generate
       // a request-string that excludes the targeted group
       const { [filterGroupKey]: current, ...rest } = filterHook.getSelectedItems();
-      const requestString = buildFilterQuery(rest);
-
-      tableHook.loadFilterForKey(filterGroupKey, requestString);
+      const filter = buildFilterQuery(rest);
+      const parser = filterHook.getParser();
+      if (parser.requestString && typeof parser.requestString === 'function') {
+        const requestString = parser.requestString(filter);
+        if (typeof requestString === 'string') {
+          tableHook.loadFilterForKey(filterGroupKey, requestString);
+        } else {
+          tableHook.loadFilterForKey(filterGroupKey, filter);
+        }
+      } else {
+        tableHook.loadFilterForKey(filterGroupKey, filter);
+      }
       setIsReady(true);
     } else {
       setSearch('');
