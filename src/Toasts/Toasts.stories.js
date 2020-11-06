@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
-import Toasts, { addToast } from './index';
+import { Manager, addToast } from './index';
 
 export default { title: 'UI Components|Toasts', decorators: [withKnobs] };
 
 export const toasts = () => {
-  const add = () => addToast('Hello friends. Im an error!!', 'info');
+  const add = () => addToast('HellofriendsImanerrorHellofriendsImanerrorHellofriendsImanerrorHellofriendsImanerror', 'info');
 
   return (
     <>
       <button onClick={add}>Add</button>
-      <Toasts />
+      <Manager />
     </>
   );
 };

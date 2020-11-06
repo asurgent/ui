@@ -81,8 +81,8 @@ const Toast = ({
 
   return (
     <C.Toast type={type} onMouseEnter={onCancelTimer} onMouseLeave={onSetTimer}>
-      {message}
-      <Close onClick={onRemove} class="close" />
+      <C.Message>{message}</C.Message>
+      <Close fontSize="large" onClick={onRemove} className="close" />
       <C.Bar type={type} done={percentageDone} />
     </C.Toast>
   );

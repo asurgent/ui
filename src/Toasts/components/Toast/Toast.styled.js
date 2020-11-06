@@ -31,24 +31,31 @@ const getColor = (theme, type) => {
   }
 };
 
+export const Message = styled.div`
+    word-break: break-all;
+`;
+
 export const Toast = styled.div`
     position: relative;
-    display: block;
+    display: grid;
     width: 32rem;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 1fr 2rem;
+    grid-column-gap: .8rem;
+    grid-template-areas: "text close";
     padding: 1.6rem;
     border-radius: 5px;
-    border: 1px solid ${({ theme, type }) => getColor(theme, type).border};
-    background-color: ${({ theme, type }) => getColor(theme, type).background};
+    box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.1);
+    background-color: ${({ theme }) => theme.white};
     color: ${({ theme, type }) => getColor(theme, type).border};
     margin-bottom: .8rem;
 
     .close {
-        fill: ${({ theme, type }) => getColor(theme, type).border};
-        position: absolute;
+        fill: ${({ theme }) => theme.black};
         right: .4rem;
-        top: .4rem;
-        height:1.6rem;
-        width:1.6rem;
+        height: 2rem;
+        width: 2rem;
         cursor: pointer;
     }
 `;
@@ -56,11 +63,12 @@ export const Toast = styled.div`
 export const Bar = styled.div`
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
     display: block;
     height: .4rem;
     background-color: ${({ theme, type }) => getColor(theme, type).border};
-    width: ${({ done }) => `${done}%`};
+    width: ${({ done }) => `${100 - done}%`};
     transition: width 100ms;
-    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: ${({ done }) => (done > 10 ? '0px' : '5px')};
 `;

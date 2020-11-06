@@ -11,4 +11,4 @@ export const addToast = (message, type = 'info') => {
   window.dispatchEvent(event);
 };
 
-export default ToastManager;
+export { ToastManager as Manager };

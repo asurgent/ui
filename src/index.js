@@ -26,6 +26,7 @@ import * as Markdown from './Markdown';
 import * as Truncate from './Truncate';
 import * as Typography from './Typography';
 import * as Layout from './layout';
+import * as Toasts from './Toasts';
 import ThemeVaraiables from '../lib/style/theme';
 
 export {
@@ -56,4 +57,5 @@ export {
   Truncate,
   ThemeVaraiables,
   Typography,
+  Toasts,
 };
