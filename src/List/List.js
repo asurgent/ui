@@ -31,7 +31,7 @@ const List = ({ rows, children, style }) => (
             <C.Title>
               { label }
             </C.Title>
-            { value ? (
+            { value !== null && value !== '' ? (
               <C.Value>
                 { value }
               </C.Value>

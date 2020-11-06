@@ -15,6 +15,7 @@ export const primaryList = () => (
         { label: 'Label', value: 'Hello' },
         { label: 'Label', value: '' },
         { label: 'Label 123123', value: 'Hello' },
+        { label: 'Label value 0', value: 0 },
         { row: (<Button.Stretched link="/asd/123" iconRight={<Icon.ArrowForward fontSize="large" />}>Next</Button.Stretched>) },
       ]}
     />
