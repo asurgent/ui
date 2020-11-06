@@ -24,8 +24,6 @@ const List = ({ rows, children, style }) => (
       if (!item) { return null; }
 
       const { label, value, row } = item;
-      const NA = hasValue(value);
-      console.log('value', value, 'isvalue', NA);
       return (
         // eslint-disable-next-line react/no-array-index-key
         <React.Fragment key={`${value}${label}${index}-key`}>
