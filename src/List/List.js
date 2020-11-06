@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as C from './List.styled';
+import { hasValue } from './helpers';
 
 const propTypes = {
   style: PropTypes.instanceOf(Object),
@@ -23,6 +24,8 @@ const List = ({ rows, children, style }) => (
       if (!item) { return null; }
 
       const { label, value, row } = item;
+      const NA = hasValue(value);
+      console.log('value', value, 'isvalue', NA);
       return (
         // eslint-disable-next-line react/no-array-index-key
         <React.Fragment key={`${value}${label}${index}-key`}>
@@ -31,7 +34,7 @@ const List = ({ rows, children, style }) => (
             <C.Title>
               { label }
             </C.Title>
-            { value !== null && value !== '' ? (
+            { hasValue(value) ? (
               <C.Value>
                 { value }
               </C.Value>
