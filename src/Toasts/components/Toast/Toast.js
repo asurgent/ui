@@ -4,7 +4,10 @@ import Close from '@material-ui/icons/Close';
 import * as C from './Toast.styled';
 
 const propTypes = {
-  message: PropTypes.string.isRequired,
+  message: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+  ]).isRequired,
   type: PropTypes.string,
   timeout: PropTypes.number,
   autoClose: PropTypes.bool,
