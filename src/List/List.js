@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as C from './List.styled';
+import { hasValue } from './helpers';
 
 const propTypes = {
   style: PropTypes.instanceOf(Object),
@@ -31,7 +32,7 @@ const List = ({ rows, children, style }) => (
             <C.Title>
               { label }
             </C.Title>
-            { value ? (
+            { hasValue(value) ? (
               <C.Value>
                 { value }
               </C.Value>
