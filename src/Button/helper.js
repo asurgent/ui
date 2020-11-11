@@ -2,8 +2,8 @@ export const isExternalLink = (link) => (link || '').toString().match(/^(http(s)
 export const isInteralLink = (link) => (link || '').toString().match(/^(\/)/);
 export const isValidMail = (link) => (link || '').toString().match(/^(.+@.+\.[a-zAZ]+)$/);
 
-const JSONToCSV = ({ data = [], translations, delimiter = ',' }) => {
-  const cols = translations || (data.length > 0 ? Object.keys(data[0]) : []);
+const JSONToCSV = ({ data = [], delimiter = ',' }) => {
+  const cols = data.length > 0 ? Object.keys(data[0]) : [];
 
   return [
     cols.join(delimiter),
@@ -16,7 +16,6 @@ const JSONToCSV = ({ data = [], translations, delimiter = ',' }) => {
 
 export const fileSaver = async ({
   data = [],
-  translations = null,
   type = 'csv',
   fileName = 'export',
   overrideConfig,
@@ -26,7 +25,7 @@ export const fileSaver = async ({
     fileExtension: type,
     ...overrideConfig,
   };
-  const fixedData = type === 'csv' ? JSONToCSV({ data, translations }) : JSON.stringify(data);
+  const fixedData = type === 'csv' ? JSONToCSV({ data }) : JSON.stringify(data);
 
   const blob = new Blob([fixedData], { type: config.type });
   const href = await URL.createObjectURL(blob);
