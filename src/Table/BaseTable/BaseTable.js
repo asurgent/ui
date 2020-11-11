@@ -123,14 +123,12 @@ const BaseTable = withTheme((props) => {
       <C.Base>
         { displayCount && (
           <C.Count>
-
             { canExportResults && exportResultsAction && (
               <Button.Plain
                 disabled={itemCount === 0}
                 saveToFilename={exportFileName}
                 tooltip={t('export', 'asurgentui')}
-                saveToJson={exportResultsAction}
-
+                saveToFile={exportResultsAction}
               >
                 {`${itemCount} ${t('results', 'asurgentui')}`}
                 <Icons.SaveAlt />
