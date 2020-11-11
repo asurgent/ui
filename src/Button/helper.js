@@ -7,7 +7,7 @@ const JSONToCSV = ({ data = [], delimiter = ',' }) => {
 
   return [
     cols.join(delimiter),
-    ...data.map((obj) => Object.keys(data[0]).reduce(
+    ...data.map((obj) => cols.reduce(
       (acc, key) => `${acc}${acc.length ? delimiter : ''}"${obj[key] || ''}"`,
       '',
     )),
