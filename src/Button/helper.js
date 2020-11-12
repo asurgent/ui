@@ -1,6 +1,7 @@
 export const isExternalLink = (link) => (link || '').toString().match(/^(http(s)?:\/\/)/);
 export const isInteralLink = (link) => (link || '').toString().match(/^(\/)/);
 export const isValidMail = (link) => (link || '').toString().match(/^(.+@.+\.[a-zAZ]+)$/);
+
 const JSONToCSV = ({ data, delimiter = ',' }) => {
   if (!Array.isArray(data)
   || data?.length === 0
@@ -28,13 +29,10 @@ const stringifyData = (d) => {
   }
 };
 
-const getHandledData = (data, fileName) => {
+const getHandledData = (data, fileExtension) => {
   if (!data) {
     return { data: 'no data', type: 'text/plain', extension: 'txt' };
   }
-
-  const lastPartFilename = fileName?.split('.').pop();
-  const fileExtension = ['csv', 'json'].includes(lastPartFilename) ? lastPartFilename : 'txt';
 
   switch (fileExtension) {
     case 'csv':
@@ -54,14 +52,27 @@ const getHandledData = (data, fileName) => {
   }
 };
 
+const getHandledFileName = (fileName) => {
+  const extension = fileName?.split('.').pop();
+  if (['csv', 'json'].includes(extension)) {
+    const nameWithoutExtension = fileName?.slice(0, fileName.length - (extension.length + 1));
+    return {
+      extension,
+      name: nameWithoutExtension,
+    };
+  }
+  return { extension: 'txt', name: fileName };
+};
+
 export const fileSaver = async ({ data, fileName = 'export.csv' }) => {
-  const handledData = getHandledData(data, fileName);
+  const handledFileName = getHandledFileName(fileName);
+  const handledData = getHandledData(data, handledFileName.extension);
 
   const blob = new Blob([handledData.data], { type: handledData.type });
   const href = await URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = href;
-  link.download = `${fileName.replace(handledData.extension, '')}.${handledData.extension}`;
+  link.download = `${handledFileName?.name}.${handledFileName.extension}`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
