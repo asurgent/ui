@@ -10,15 +10,13 @@ const JSONToCSV = ({ data, delimiter = ',' }) => {
   }
 
   const cols = Object.keys(data[0]);
-  const res = [
+  return [
     cols.join(delimiter),
     ...data.map((obj) => cols.reduce(
       (acc, key) => `${acc}${acc.length ? delimiter : ''}"${obj[key] || ''}"`,
       '',
     )),
   ].join('\n');
-
-  return res;
 };
 
 const stringifyData = (d) => {
@@ -30,10 +28,6 @@ const stringifyData = (d) => {
 };
 
 const getHandledData = (data, fileExtension) => {
-  if (!data) {
-    return { data: 'no data', type: 'text/plain', extension: 'txt' };
-  }
-
   switch (fileExtension) {
     case 'csv':
       return {
@@ -52,7 +46,7 @@ const getHandledData = (data, fileExtension) => {
   }
 };
 
-const getHandledFileName = (fileName) => {
+const splitFileName = (fileName) => {
   const extension = fileName?.split('.').pop();
   if (['csv', 'json'].includes(extension)) {
     const nameWithoutExtension = fileName?.slice(0, fileName.length - (extension.length + 1));
@@ -65,14 +59,16 @@ const getHandledFileName = (fileName) => {
 };
 
 export const fileSaver = async ({ data, fileName = 'export.csv' }) => {
-  const handledFileName = getHandledFileName(fileName);
+  const handledFileName = splitFileName(fileName);
   const handledData = getHandledData(data, handledFileName.extension);
 
   const blob = new Blob([handledData.data], { type: handledData.type });
   const href = await URL.createObjectURL(blob);
+
   const link = document.createElement('a');
   link.href = href;
-  link.download = `${handledFileName?.name}.${handledFileName.extension}`;
+  link.download = `${handledFileName?.name}.${handledData.extension}`;
+
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);

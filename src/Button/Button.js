@@ -129,7 +129,7 @@ const Button = (props) => {
     if (!disabled) {
       if (saveToFile && typeof saveToFile === 'function') {
         const result = await saveToFile();
-        fileSaver({ data: result, fileName: saveToFilename });
+        fileSaver({ result, fileName: saveToFilename });
       }
 
       if (onClick) {
