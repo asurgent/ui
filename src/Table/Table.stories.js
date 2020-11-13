@@ -224,7 +224,7 @@ export const main = () => {
         useHistoryState
         historyStatePrefix="tickets"
         tableHook={table}
-        exportFileName={text('export file name', 'export_file_name')}
+        exportFileName={text('export file name', 'myexport.csv')}
         withSearch={boolean('With search', true)}
         parseSearchStringOutput={(query) => `${query} My special string`}
         parseFilterLabelOutput={(filter, filterKey) => {
