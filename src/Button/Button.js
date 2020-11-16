@@ -14,7 +14,7 @@ const propTyps = {
   mainIcon: PropTypes.element,
   link: PropTypes.string,
   onClick: PropTypes.func,
-  saveToJson: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
+  saveToFile: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   saveToFilename: PropTypes.string,
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
@@ -41,7 +41,7 @@ const defaultProps = {
   mainIcon: null,
   link: '',
   onClick: () => {},
-  saveToJson: false,
+  saveToFile: false,
   saveToFilename: '',
   disabled: false,
   loading: false,
@@ -113,7 +113,7 @@ const Button = (props) => {
     passLocationState,
     className,
     theme,
-    saveToJson,
+    saveToFile,
     saveToFilename,
     type,
     style,
@@ -127,12 +127,9 @@ const Button = (props) => {
 
   const handleClick = async (event) => {
     if (!disabled) {
-      if (saveToJson && typeof saveToJson === 'function') {
-        const result = await saveToJson();
-        fileSaver(result, saveToFilename, {
-          type: 'application/json',
-          fileExtension: 'json',
-        });
+      if (saveToFile && typeof saveToFile === 'function') {
+        const result = await saveToFile();
+        fileSaver({ data: result, fileName: saveToFilename });
       }
 
       if (onClick) {
