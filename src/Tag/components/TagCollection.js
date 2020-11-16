@@ -6,6 +6,7 @@ import TagSingle from './TagSingle';
 const propTypes = {
   maxTags: PropTypes.number,
   maxLength: PropTypes.number,
+  style: PropTypes.instanceOf(Object),
   tags: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string })),
@@ -13,11 +14,14 @@ const propTypes = {
 };
 
 const defaultProps = {
+  style: {},
   maxTags: 0,
   maxLength: 0,
 };
 
-const TagCollection = ({ tags, maxTags, maxLength }) => {
+const TagCollection = ({
+  tags, maxTags, maxLength, style,
+}) => {
   let spillOver = 0;
   let tagsList = tags;
   if (maxTags > 0) {
@@ -29,7 +33,7 @@ const TagCollection = ({ tags, maxTags, maxLength }) => {
   }
 
   return (
-    <TagsCollection>
+    <TagsCollection style={style}>
       {
         tagsList.map((tag, index) => {
           const time = new Date().getTime();
