@@ -1,3 +1,4 @@
 import LineGraph from './LineGraph';
+import Heatmap from './Heatmap';
 
-export { LineGraph };
+export { LineGraph, Heatmap };

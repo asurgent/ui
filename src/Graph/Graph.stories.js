@@ -5,6 +5,7 @@ import data from './data';
 import data2 from './data2';
 import data3 from './data3';
 
+console.log('Graph', Graph);
 export default {
   title: 'UI Components|Graph',
   decorators: [withKnobs],
@@ -111,5 +112,11 @@ export const lineGraph = () => (
     <div style={{ height: '200px' }}>
       <Graph.LineGraph data={data3} xProp="timestamp" markerLines={[{ value: 0.7, title: 'one', color: '#C62929' }]} />
     </div>
+  </>
+);
+
+export const heatmap = () => (
+  <>
+    <Graph.Heatmap />
   </>
 );
