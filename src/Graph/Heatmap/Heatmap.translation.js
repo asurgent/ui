@@ -9,11 +9,11 @@ export default addTranslation({
     noData: 'Ingen grafdata',
 
     day0: 'Mån',
-    day1: 'Tis',
-    day2: 'Ons',
+    day1: '',
+    day2: '',
     day3: 'Tor',
-    day4: 'Fre',
-    day5: 'Lör',
+    day4: '',
+    day5: '',
     day6: 'Sön',
   },
   en: {
@@ -23,11 +23,11 @@ export default addTranslation({
     noData: 'No graph data',
 
     day0: 'Mon',
-    day1: 'Tue',
-    day2: 'Wed',
+    day1: '',
+    day2: '',
     day3: 'Thu',
-    day4: 'Fri',
-    day5: 'Sat',
+    day4: '',
+    day5: '',
     day6: 'Sun',
   },
 });
