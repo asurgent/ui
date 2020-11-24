@@ -30,7 +30,7 @@ const DayText = ({ cellSize }) => {
   }, [cellSize]);
 
   return (
-    <C.DayText id="dayText" ref={gRef} />
+    <C.DayText ref={gRef} />
   );
 };
 

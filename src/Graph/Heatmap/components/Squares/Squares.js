@@ -74,7 +74,7 @@ const Squares = ({
           .style('top', `${y - (height + cellSize)}px`);
       };
 
-      const squareGroup = d3.select('#squares');
+      const squareGroup = d3.select(squareRef.current);
       const squares = squareGroup
         .selectAll('rect')
         .data(dates)
@@ -123,7 +123,7 @@ const Squares = ({
     theme.gray100,
     valueLabel]);
 
-  return (<C.Squares id="squares" ref={squareRef} />);
+  return (<C.Squares ref={squareRef} />);
 };
 
 Squares.propTypes = propTypes;

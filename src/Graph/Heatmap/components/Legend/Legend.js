@@ -50,27 +50,14 @@ const Legend = ({
         .attr('height', cellSize)
         .attr('rx', cellRadius)
         .attr('ry', cellRadius);
-
-      /* legend less-text */
-      legend
-        .append('text')
-        .text(t('less', 'asurgentui'))
-        .attr('font-size', 12)
-        .attr('x', -45)
-        .attr('y', 13);
-
-      /* legend more-text */
-      legend
-        .append('text')
-        .text(t('more', 'asurgentui'))
-        .attr('font-size', 12)
-        .attr('x', 110)
-        .attr('y', 13);
     }
   }, [cellPadding, cellRadius, cellSize, legendCategories]);
 
   return (
-    <C.Legend id="legend" ref={legendRef} />
+    <C.Legend ref={legendRef}>
+      <C.Text x={-45} y={13}>{t('less', 'asurgentui')}</C.Text>
+      <C.Text x={110} y={13}>{t('more', 'asurgentui')}</C.Text>
+    </C.Legend>
   );
 };
 
