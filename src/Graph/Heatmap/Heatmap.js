@@ -4,9 +4,11 @@ import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 import moment from 'moment';
 import translation from './Heatmap.translation';
-import createLegend from './Legend';
-import { getColor } from './helpers';
+
 import * as C from './Heatmap.styled';
+import Squares from './components/Squares';
+import Legend from './components/Legend';
+import DayText from './components/DayText';
 
 const { t } = translation;
 
@@ -48,18 +50,8 @@ const Heatmap = ({
 }) => {
   const [dates, setDates] = useState(null);
 
-  const values = useMemo(() => {
-    if (dates?.length > 0) {
-      return dates.map((c) => c.value);
-    }
-    return null;
-  }, [dates]);
-  const maxValue = useMemo(() => {
-    if (values) {
-      return Math.max(...values);
-    }
-    return null;
-  }, [values]);
+  const values = useMemo(() => (dates?.length > 0 ? dates.map((c) => c.value) : null), [dates]);
+  const maxValue = useMemo(() => (values ? Math.max(...values) : null), [values]);
 
   const myColor = d3
     .scaleLinear()
@@ -87,140 +79,46 @@ const Heatmap = ({
   }, [setDates]);
 
   useEffect(() => {
-    const svg = d3.select('#svg');
-    svg.selectAll('*').remove();
-
-    function draw() {
-      // g.selectAll(g) -> 2018,2019,2020 group
-      const countDay = (d) => d.getUTCDay();
-      const formatDate = d3.utcFormat('%x');
-
-      const svgGroup = svg.append('g').style('user-select', 'none');
-
-      // Y-axis labels (days)
-      const dayText = svgGroup
-        .append('g')
-        .attr('class', 'dayText')
-        .selectAll('text')
-        .data(d3.range(7).map((i) => new Date(new Date().getFullYear(), 0, i)))
-        .join('text')
-        .attr('y', (d) => (countDay(d) + 0.5) * cellSize)
-        .attr('dy', '0.31em')
-        .attr('font-size', 12)
-        .text((d) => t(`day${new Date(d).getUTCDay()}`));
-
-      // create a tooltip
-      const tooltip = d3.select('#tooltip');
-
-      const mouseover = () => tooltip.style('opacity', 1);
-      const mouseleave = () => tooltip.style('opacity', 0);
-      const mousemove = ({ date, value }) => {
-        const { x, y } = d3.event;
-        const { width, height } = tooltip.node().getBoundingClientRect();
-
-        tooltip
-          .html(`${value} ${valueLabel} ${t('on', 'asurgentui')} ${moment(date).format('YYYY-MM-DD')}`)
-          .style('left', `${x - (width / 2)}px`)
-          .style('top', `${y - (height + cellSize)}px`);
-      };
-
-      function toggleSelected(d) {
-        const highlightedDates = dates.map((date) => {
-          if (date.date === d.date) {
-            const toggledDate = { ...date, selected: !d.selected };
-            return toggledDate;
-          }
-          return date;
-        });
-        setDates(highlightedDates);
-      }
-
-      const squareGroup = svgGroup
-        .append('g')
-        .attr('class', 'squares');
-
-      const squares = squareGroup
-        .selectAll('rect')
-        .data(dates)
-        .join('rect')
-        .on('mousemove', mousemove)
-        .on('mouseover', mouseover)
-        .on('mouseleave', mouseleave)
-        .on('click', (d) => {
-          onDateClick(d);
-          toggleSelected(d);
-        });
-      squares
-        .attr('width', cellSize - cellPadding)
-        .attr('height', cellSize - cellPadding)
-        .attr(
-          'x',
-          (d) => {
-            const currentYear = d3.utcYear(d.date);
-            const week = d3.utcSunday.count(currentYear, d.date);
-            return week * cellSize + 10;
-          },
-        )
-        .attr('y', (d) => new Date(d.date).getUTCDay() * cellSize)
-        .attr('rx', cellRadius)
-        .attr('ry', cellRadius)
-        .style('cursor', 'pointer')
-        .attr('fill', (d) => {
-          const test = dates.find(({ date }) => date === d.date);
-
-          if (test.selected === false) {
-            return emptyColor;
-          }
-          return getColor(d.value, emptyColor || theme.gray100, legendCategories);
-        })
-        .transition()
-        .duration(500);
-
-      /*   squares.on('mousemove', mousemove)
-         */
-      /*
-           .on('mousemove', mousemove)
-        .on('mouseover', mouseover)
-        .on('mouseleave', mouseleave)
-
-        .on('click', (d) => {
-          onDateClick(d);
-          toggleSelected(d);
-        })
-        */
-
-      // .on('click', toggleSpecificDate)
-
-      createLegend({
-        svgGroup, legendCategories, cellSize, cellPadding, cellRadius,
-      });
+    if (dates && legendCategories) {
+      const svg = d3.select('#svg');
 
       const { width, height } = svg
         .select('g').node().getBoundingClientRect();
       svg.attr('width', width)
         .attr('height', height);
     }
+  }, [dates, legendCategories]);
 
-    if (dates && legendCategories) {
-      draw();
-    }
-  }, [dates,
-    color,
-    legendCategories,
-    values, cellSize,
-    cellPadding,
-    cellRadius,
-    emptyColor,
-    theme,
-    onDateClick,
-    maxValue,
-    valueLabel]);
+  if (!dates || !legendCategories) {
+    return <p>{t('noData', 'asurgentui')}</p>;
+  }
 
   return (
-    <C.Container>
-      <svg id="svg" />
+    <>
+      <svg id="svg" width="800px" height="800px">
+        <C.Group id="group">
+          <DayText cellSize={cellSize} />
+          <Squares
+            dates={dates}
+            setDates={setDates}
+            valueLabel={valueLabel}
+            onDateClick={onDateClick}
+            cellSize={cellSize}
+            cellPadding={cellPadding}
+            cellRadius={cellRadius}
+            emptyColor={emptyColor}
+            legendCategories={legendCategories}
+          />
+          <Legend
+            legendCategories={legendCategories}
+            cellSize={cellSize}
+            cellPadding={cellPadding}
+            cellRadius={cellPadding}
+          />
+        </C.Group>
+      </svg>
       <C.Tooltip id="tooltip" />
-    </C.Container>
+    </>
   );
 };
 

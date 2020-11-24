@@ -115,7 +115,13 @@ export const lineGraph = () => (
 );
 
 export const heatmap = () => (
-  <div style={{ padding: '2rem' }}>
+  <div style={{
+    padding: '2.4rem 3.6rem',
+    border: '1px solid #dadada',
+    width: 'max-content',
+    borderRadius: '5px',
+  }}
+  >
     <Graph.Heatmap
       steps={number('Steps', 5)}
       color={text('Color', '#C6403B')}
@@ -123,7 +129,7 @@ export const heatmap = () => (
       cellSize={number('Cell size', 18)}
       cellRadius={number('Cell radius', 1)}
       cellPadding={number('Cell padding', 2)}
-      onDateClick={(d) => console.log('clicked date', d)}
+      onDateClick={(d) => action('Clicked!')(d)}
     />
   </div>
 );
