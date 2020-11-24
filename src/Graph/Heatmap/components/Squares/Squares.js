@@ -10,8 +10,7 @@ import { getColor } from '../../helpers';
 const { t } = translation;
 
 const propTypes = {
-  dates: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
-  setDates: PropTypes.func,
+  data: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   valueLabel: PropTypes.string,
   onDateClick: PropTypes.func,
   cellSize: PropTypes.number,
@@ -22,8 +21,7 @@ const propTypes = {
   theme: PropTypes.instanceOf(Object),
 };
 const defaultProps = {
-  dates: null,
-  setDates: () => null,
+  data: null,
   valueLabel: 'value',
   onDateClick: () => null,
   cellSize: 18,
@@ -35,8 +33,7 @@ const defaultProps = {
 };
 
 const Squares = ({
-  dates,
-  setDates,
+  data,
   valueLabel,
   onDateClick,
   cellSize,
@@ -72,10 +69,11 @@ const Squares = ({
           .style('top', `${y - (height + cellSize)}px`);
       };
 
+      console.log('legendCategories', legendCategories);
       const squareGroup = d3.select(squareRef.current);
       const squares = squareGroup
         .selectAll('rect')
-        .data(dates)
+        .data(data)
         .join('rect')
         .on('mousemove', mousemove)
         .on('mouseover', mouseover)
@@ -114,7 +112,7 @@ const Squares = ({
     cellPadding,
     cellRadius,
     cellSize,
-    dates,
+    data,
     emptyColor,
     legendCategories,
     onDateClick,

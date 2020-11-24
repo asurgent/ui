@@ -1,10 +1,8 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
-import moment from 'moment';
 import translation from './Heatmap.translation';
-
 import * as C from './Heatmap.styled';
 import Squares from './components/Squares';
 import Legend from './components/Legend';
@@ -12,16 +10,8 @@ import DayText from './components/DayText';
 
 const { t } = translation;
 
-const sampleSize = 300;
-const sample = [...Array(sampleSize)].map((_, ind) => ({
-  date: new Date(moment().subtract(sampleSize - ind, 'days')),
-  day: Math.floor(Math.random() * 4),
-  count: Math.floor(Math.random() * 2) === 0 ? 0 : Math.floor(Math.random() * 50),
-}));
-
-sample.sort((a, b) => new Date(a.Date) - new Date(b.Date));
-
 const propTypes = {
+  data: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   steps: PropTypes.number,
   color: PropTypes.string,
   emptyColor: PropTypes.string,
@@ -34,6 +24,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  data: null,
   steps: 5,
   color: null,
   emptyColor: null,
@@ -46,11 +37,18 @@ const defaultProps = {
 };
 
 const Heatmap = ({
-  steps, color, emptyColor, cellSize, cellRadius, cellPadding, valueLabel, onDateClick, theme,
+  data,
+  steps,
+  color,
+  emptyColor,
+  cellSize,
+  cellRadius,
+  cellPadding,
+  valueLabel,
+  onDateClick,
+  theme,
 }) => {
-  const [dates, setDates] = useState(null);
-
-  const values = useMemo(() => (dates?.length > 0 ? dates.map((c) => c.value) : null), [dates]);
+  const values = useMemo(() => (data?.length > 0 ? data.map((c) => c.value) : null), [data]);
   const maxValue = useMemo(() => (values ? Math.max(...values) : null), [values]);
 
   const myColor = d3
@@ -65,21 +63,11 @@ const Heatmap = ({
       upperBound,
       lowerBound,
       color: myColor(lowerBound),
-      selected: true,
     };
   }), [maxValue, myColor, steps]);
 
   useEffect(() => {
-    const convertedData = sample.map((dv) => ({
-      date: d3.timeDay(new Date(dv.date)),
-      value: dv.count,
-      selected: true,
-    }));
-    setDates(convertedData);
-  }, [setDates]);
-
-  useEffect(() => {
-    if (dates && legendCategories) {
+    if (data && legendCategories) {
       const svg = d3.select('#svg');
 
       const { width, height } = svg
@@ -87,9 +75,9 @@ const Heatmap = ({
       svg.attr('width', width)
         .attr('height', height);
     }
-  }, [dates, legendCategories]);
+  }, [data, legendCategories]);
 
-  if (!dates || !legendCategories) {
+  if (!data || !legendCategories) {
     return <p>{t('noData', 'asurgentui')}</p>;
   }
 
@@ -99,8 +87,7 @@ const Heatmap = ({
         <C.Group id="group">
           <DayText cellSize={cellSize} />
           <Squares
-            dates={dates}
-            setDates={setDates}
+            data={data}
             valueLabel={valueLabel}
             onDateClick={onDateClick}
             cellSize={cellSize}

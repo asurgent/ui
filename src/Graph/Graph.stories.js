@@ -5,6 +5,7 @@ import * as Graph from './index';
 import data from './data';
 import data2 from './data2';
 import data3 from './data3';
+import data4 from './data4';
 
 export default {
   title: 'UI Components|Graph',
@@ -124,6 +125,7 @@ export const heatmap = () => (
   }}
   >
     <Graph.Heatmap
+      data={data4}
       steps={number('Steps', 5)}
       color={text('Color', '#C6403B')}
       emptyColor={text('Empty color', '#F9F9F9')}
