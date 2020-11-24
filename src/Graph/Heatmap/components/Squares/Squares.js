@@ -69,7 +69,6 @@ const Squares = ({
           .style('top', `${y - (height + cellSize)}px`);
       };
 
-      console.log('legendCategories', legendCategories);
       const squareGroup = d3.select(squareRef.current);
       const squares = squareGroup
         .selectAll('rect')
