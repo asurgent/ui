@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as d3 from 'd3';
@@ -47,20 +47,18 @@ const Squares = ({
   theme,
 }) => {
   const squareRef = useRef(null);
+  const [selected, setSelected] = useState(null);
 
   useEffect(() => {
-    if (squareRef.current) {
-      const toggleSelected = (d) => {
-        const highlightedDates = dates.map((date) => {
-          if (date.date === d.date) {
-            const toggledDate = { ...date, selected: !d.selected };
-            return toggledDate;
-          }
-          return date;
-        });
-        setDates(highlightedDates);
-      };
+    const toggleSelected = (d) => {
+      if (selected && d.date === selected.date) {
+        setSelected(null);
+      } else {
+        setSelected(d);
+      }
+    };
 
+    if (squareRef.current) {
       const tooltip = d3.select('#tooltip');
 
       const mouseover = () => tooltip.style('opacity', 1);
@@ -101,9 +99,10 @@ const Squares = ({
         .attr('rx', cellRadius)
         .attr('ry', cellRadius)
         .attr('fill', (d) => {
-          const test = dates.find(({ date }) => date === d.date);
-
-          if (test.selected === false) {
+          if (selected) {
+            if (d.date === selected.date) {
+              return getColor(d.value, emptyColor || theme.gray100, legendCategories);
+            }
             return emptyColor;
           }
           return getColor(d.value, emptyColor || theme.gray100, legendCategories);
@@ -119,7 +118,7 @@ const Squares = ({
     emptyColor,
     legendCategories,
     onDateClick,
-    setDates,
+    selected,
     theme.gray100,
     valueLabel]);
 
