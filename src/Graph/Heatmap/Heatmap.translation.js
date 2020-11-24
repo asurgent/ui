@@ -15,6 +15,8 @@ export default addTranslation({
     day4: '',
     day5: '',
     day6: 'Sön',
+
+    on: 'den',
   },
   en: {
     less: 'Less',
@@ -29,5 +31,7 @@ export default addTranslation({
     day4: '',
     day5: '',
     day6: 'Sun',
+
+    on: 'on',
   },
 });

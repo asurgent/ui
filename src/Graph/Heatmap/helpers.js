@@ -1,8 +1,9 @@
-export const getColor = (value, emptyColor, categories) => {
-  if (value === null) {
+export const getColor = (value, emptyColor, legendCategories) => {
+  if (value === null || value === 0) {
     return emptyColor;
   }
-  const categoryColor = categories.find(
+
+  const categoryColor = legendCategories.find(
     (c) => c.lowerBound <= value && c.upperBound >= value,
   )?.color || emptyColor;
 

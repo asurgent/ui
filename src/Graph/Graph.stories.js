@@ -1,11 +1,10 @@
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
+import { withKnobs, text, number } from '@storybook/addon-knobs';
 import * as Graph from './index';
 import data from './data';
 import data2 from './data2';
 import data3 from './data3';
 
-console.log('Graph', Graph);
 export default {
   title: 'UI Components|Graph',
   decorators: [withKnobs],
@@ -116,7 +115,15 @@ export const lineGraph = () => (
 );
 
 export const heatmap = () => (
-  <>
-    <Graph.Heatmap />
-  </>
+  <div style={{ padding: '2rem' }}>
+    <Graph.Heatmap
+      steps={number('Steps', 5)}
+      color={text('Color', '#C6403B')}
+      emptyColor={text('Empty color', '#F9F9F9')}
+      cellSize={number('Cell size', 18)}
+      cellRadius={number('Cell radius', 1)}
+      cellPadding={number('Cell padding', 2)}
+      onDateClick={(d) => console.log('clicked date', d)}
+    />
+  </div>
 );
