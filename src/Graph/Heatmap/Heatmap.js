@@ -1,12 +1,14 @@
 import React, { useEffect, useMemo } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import * as d3 from 'd3';
 import translation from './Heatmap.translation';
 import * as C from './Heatmap.styled';
 import Squares from './components/Squares';
 import Legend from './components/Legend';
 import DayText from './components/DayText';
+import MonthText from './components/MonthText';
 
 const { t } = translation;
 
@@ -21,6 +23,16 @@ const propTypes = {
   cellRadius: PropTypes.number,
   valueLabel: PropTypes.string,
   onDateClick: PropTypes.func,
+  startDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
+  endDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
 };
 
 const defaultProps = {
@@ -34,6 +46,8 @@ const defaultProps = {
   cellPadding: 2,
   valueLabel: 'something',
   onDateClick: () => null,
+  startDate: moment().startOf('year'),
+  endDate: moment().endOf('year'),
 };
 
 const Heatmap = ({
@@ -46,6 +60,8 @@ const Heatmap = ({
   cellPadding,
   valueLabel,
   onDateClick,
+  startDate,
+  endDate,
   theme,
 }) => {
   const values = useMemo(() => (data?.length > 0 ? data.map((c) => c.value) : null), [data]);
@@ -86,8 +102,11 @@ const Heatmap = ({
       <svg id="svg" width="800px" height="800px">
         <C.Group id="group">
           <DayText cellSize={cellSize} />
+          <MonthText cellSize={cellSize} data={data} />
           <Squares
             data={data}
+            startDate={startDate}
+            endDate={endDate}
             valueLabel={valueLabel}
             onDateClick={onDateClick}
             cellSize={cellSize}

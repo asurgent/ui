@@ -7,6 +7,8 @@ export const Tooltip = styled.div`
      position: absolute;
      border-radius: 5px;
      padding: 10px;
+     user-select: none;
+     pointer-events: none;
 
      &:after {
         width: 0;

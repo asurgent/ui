@@ -18,6 +18,16 @@ const propTypes = {
   cellRadius: PropTypes.number,
   emptyColor: PropTypes.string,
   legendCategories: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
+  startDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
+  endDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
   theme: PropTypes.instanceOf(Object),
 };
 const defaultProps = {
@@ -29,11 +39,15 @@ const defaultProps = {
   cellRadius: 1,
   emptyColor: '#dadada',
   legendCategories: null,
+  startDate: moment().startOf('year'),
+  endDate: moment().endOf('year'),
   theme: {},
 };
 
 const Squares = ({
   data,
+  startDate,
+  endDate,
   valueLabel,
   onDateClick,
   cellSize,
@@ -45,6 +59,15 @@ const Squares = ({
 }) => {
   const squareRef = useRef(null);
   const [selected, setSelected] = useState(null);
+  const dateRange = d3.timeDays(startDate, endDate);
+
+  const testData = dateRange.map((d) => {
+    const inpDate = data.find((dat) => moment(dat.date).isSame(moment(d), 'day'));
+    if (inpDate) {
+      return inpDate;
+    }
+    return { date: d, value: null };
+  });
 
   useEffect(() => {
     const toggleSelected = (d) => {
@@ -72,7 +95,7 @@ const Squares = ({
       const squareGroup = d3.select(squareRef.current);
       const squares = squareGroup
         .selectAll('rect')
-        .data(data)
+        .data(testData)
         .join('rect')
         .on('mousemove', mousemove)
         .on('mouseover', mouseover)
@@ -87,9 +110,9 @@ const Squares = ({
         .attr(
           'x',
           (d) => {
-            const currentYear = d3.utcYear(d.date);
+            const currentYear = moment(d.date).startOf('year');
             const week = d3.utcSunday.count(currentYear, d.date);
-            return week * cellSize + 10;
+            return week * cellSize + 30;
           },
         )
         .attr('y', (d) => new Date(d.date).getUTCDay() * cellSize)
@@ -107,8 +130,7 @@ const Squares = ({
         .transition()
         .duration(500);
     }
-  }, [
-    cellPadding,
+  }, [cellPadding,
     cellRadius,
     cellSize,
     data,
@@ -116,6 +138,7 @@ const Squares = ({
     legendCategories,
     onDateClick,
     selected,
+    testData,
     theme.gray100,
     valueLabel]);
 

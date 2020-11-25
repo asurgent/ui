@@ -122,6 +122,7 @@ export const heatmap = () => (
     border: '1px solid #dadada',
     width: 'max-content',
     borderRadius: '5px',
+    marginTop: '2rem',
   }}
   >
     <Graph.Heatmap
