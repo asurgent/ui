@@ -78,7 +78,7 @@ const DropdownMenu = ({
               />
               <U.DesktopMenuFooter>
                 <Button.Transparent onClick={onLogout}>
-                  <Icon.ExitToApp className="exit-icon" fontSize="large" style={{marginRight: .8 + 'rem', marginBottom: .2 + 'rem'}} />
+                  <Icon.ExitToApp className="exit-icon" fontSize="large" style={{ marginRight: `${0.8}rem`, marginBottom: `${0.2}rem` }} />
                   {' '}
                   {translations.logout || 'Sign out'}
                 </Button.Transparent>
