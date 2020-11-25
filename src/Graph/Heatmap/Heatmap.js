@@ -67,6 +67,15 @@ const Heatmap = ({
   const values = useMemo(() => (data?.length > 0 ? data.map((c) => c.value) : null), [data]);
   const maxValue = useMemo(() => (values ? Math.max(...values) : null), [values]);
 
+  const dateRange = d3.timeDays(startDate, endDate);
+  const testData = dateRange.map((d) => {
+    const inpDate = data.find((dat) => moment(dat.date).isSame(moment(d), 'day'));
+    if (inpDate) {
+      return inpDate;
+    }
+    return { date: d, value: null };
+  });
+
   const myColor = d3
     .scaleLinear()
     .domain([1, Math.ceil(maxValue)])
@@ -88,6 +97,7 @@ const Heatmap = ({
 
       const { width, height } = svg
         .select('g').node().getBoundingClientRect();
+
       svg.attr('width', width)
         .attr('height', height);
     }
@@ -99,12 +109,11 @@ const Heatmap = ({
 
   return (
     <>
-      <svg id="svg" width="800px" height="800px">
+      <svg id="svg" preserveAspectRatio="none">
         <C.Group id="group">
-          <DayText cellSize={cellSize} />
           <MonthText cellSize={cellSize} data={data} />
           <Squares
-            data={data}
+            data={testData}
             startDate={startDate}
             endDate={endDate}
             valueLabel={valueLabel}
@@ -115,6 +124,7 @@ const Heatmap = ({
             emptyColor={emptyColor}
             legendCategories={legendCategories}
           />
+          <DayText cellSize={cellSize} />
           <Legend
             legendCategories={legendCategories}
             cellSize={cellSize}

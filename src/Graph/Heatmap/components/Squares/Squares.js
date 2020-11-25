@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as d3 from 'd3';
 import { withTheme } from 'styled-components';
+import { AppsOutlined } from '@material-ui/icons';
 import * as C from './Squares.styled';
 import translation from './Squares.translation';
 import { getColor } from '../../helpers';
@@ -59,15 +60,6 @@ const Squares = ({
 }) => {
   const squareRef = useRef(null);
   const [selected, setSelected] = useState(null);
-  const dateRange = d3.timeDays(startDate, endDate);
-
-  const testData = dateRange.map((d) => {
-    const inpDate = data.find((dat) => moment(dat.date).isSame(moment(d), 'day'));
-    if (inpDate) {
-      return inpDate;
-    }
-    return { date: d, value: null };
-  });
 
   useEffect(() => {
     const toggleSelected = (d) => {
@@ -95,14 +87,16 @@ const Squares = ({
       const squareGroup = d3.select(squareRef.current);
       const squares = squareGroup
         .selectAll('rect')
-        .data(testData)
+        .data(data)
         .join('rect')
         .on('mousemove', mousemove)
         .on('mouseover', mouseover)
         .on('mouseleave', mouseleave)
         .on('click', (d) => {
           onDateClick(d);
-          toggleSelected(d);
+          if (d.value !== null) {
+            toggleSelected(d);
+          }
         });
       squares
         .attr('width', cellSize - cellPadding)
@@ -112,10 +106,10 @@ const Squares = ({
           (d) => {
             const currentYear = moment(d.date).startOf('year');
             const week = d3.utcSunday.count(currentYear, d.date);
-            return week * cellSize + 30;
+            return week * cellSize + 40;
           },
         )
-        .attr('y', (d) => new Date(d.date).getUTCDay() * cellSize)
+        .attr('y', (d) => new Date(d.date).getUTCDay() * cellSize + 20)
         .attr('rx', cellRadius)
         .attr('ry', cellRadius)
         .attr('fill', (d) => {
@@ -129,6 +123,23 @@ const Squares = ({
         })
         .transition()
         .duration(500);
+
+      const monthText = d3.select('#monthText');
+      const firsts = data.filter((d) => moment(d.date).date() === 1);
+
+      monthText
+        .selectAll('text')
+        .data(firsts)
+        .join('text')
+        .text((d) => t(`month${moment(d.date).month()}`, 'asurgentui'))
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'hanging')
+        .attr('x', ({ date }) => {
+          const currentYear = moment(date).startOf('year');
+          const week = d3.utcSunday.count(currentYear, date);
+          const x = (week * cellSize) + 47;
+          return x;
+        });
     }
   }, [cellPadding,
     cellRadius,
@@ -138,7 +149,6 @@ const Squares = ({
     legendCategories,
     onDateClick,
     selected,
-    testData,
     theme.gray100,
     valueLabel]);
 

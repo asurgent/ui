@@ -23,7 +23,7 @@ const DayText = ({ cellSize }) => {
         .selectAll('text')
         .data(d3.range(7).map((i) => new Date(new Date().getFullYear(), 0, i)))
         .join('text')
-        .attr('y', (d) => (d.getUTCDay() + 0.5) * cellSize)
+        .attr('y', (d) => (d.getUTCDay() + 0.5) * cellSize + 20)
         .attr('dy', '0.31em')
         .text((d) => t(`day${new Date(d).getUTCDay()}`, 'asurgentui'));
     }

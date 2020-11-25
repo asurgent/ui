@@ -20,19 +20,21 @@ const MonthText = ({ data, cellSize }) => {
 
   useEffect(() => {
     if (gRef.current) {
-      const dayText = d3.select(gRef.current);
+      /*  const dayText = d3.select(gRef.current);
       dayText
         .selectAll('text')
-        .data(data) // d3.range(12).map((i) => new Date(new Date().getFullYear(), i, 1))
+        .data(d3.range(12)) // d3.range(12).map((i) => new Date(new Date().getFullYear(), i, 1))
         .join('text')
-        .attr('x', (d) => (d.date.getMonth() + 0.5) * cellSize * 4)
+        .attr('x', (month) => (month + 0.5) * cellSize * 4)
         .attr('dx', '0.31em')
-        .text((d) => t(`month${new Date(d.date).getMonth()}`, 'asurgentui'));
+        .attr('text-anchor', 'start')
+        .attr('dominant-baseline', 'hanging')
+        .text((d) => t(`month${d}`, 'asurgentui')); */
     }
   }, [cellSize, data]);
 
   return (
-    <C.MonthText ref={gRef} />
+    <C.MonthText ref={gRef} id="monthText" />
   );
 };
 

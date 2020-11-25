@@ -35,7 +35,7 @@ const Legend = ({
         .attr(
           'transform',
           // cellSize * vertical day-squares + top-margin
-          `translate(680, ${(cellSize * 7) + 10})`,
+          `translate(840, ${(cellSize * 7) + 20})`,
         );
 
       /* legend squares */
