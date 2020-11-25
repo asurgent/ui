@@ -12,6 +12,12 @@ export const H1 = styled.h1`
     padding: 1.6rem 0 2.4rem 0;
     border-top: ${({ theme, borderTop }) => borderTop && `1px solid ${theme.gray300}`};
     border-bottom: ${({ theme, borderBottom }) => borderBottom && `1px solid ${theme.gray300}`};
+    text-transform: ${({ capitalize, uppercase, lowercase }) => {
+    if (capitalize) return 'capitalize';
+    if (uppercase) return 'uppercase';
+    if (lowercase) return 'lowercase';
+    return 'initial';
+  }};
 `;
 
 export const H2 = styled.h2`
@@ -29,6 +35,12 @@ export const H2 = styled.h2`
     margin-bottom: .8rem;
     border-top: ${({ theme, borderTop }) => borderTop && `1px solid ${theme.gray300}`};
     border-bottom: ${({ theme, borderBottom }) => borderBottom && `1px solid ${theme.gray300}`};
+    text-transform: ${({ capitalize, uppercase, lowercase }) => {
+    if (capitalize) return 'capitalize';
+    if (uppercase) return 'uppercase';
+    if (lowercase) return 'lowercase';
+    return 'initial';
+  }};
 `;
 
 export const H3 = styled.h3`
@@ -46,4 +58,10 @@ export const H3 = styled.h3`
     margin-bottom: .8rem;
     border-top: ${({ theme, borderTop }) => borderTop && `1px solid ${theme.gray300}`};
     border-bottom: ${({ theme, borderBottom }) => borderBottom && `1px solid ${theme.gray300}`};
+    text-transform: ${({ capitalize, uppercase, lowercase }) => {
+    if (capitalize) return 'capitalize';
+    if (uppercase) return 'uppercase';
+    if (lowercase) return 'lowercase';
+    return 'initial';
+  }};
 `;
