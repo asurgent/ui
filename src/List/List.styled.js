@@ -13,7 +13,7 @@ export const Title = styled.div`
     font-family: "Poppins";
     font-style: normal;
     font-weight: normal;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     text-transform: uppercase;
     display: flex;
     align-items: center;

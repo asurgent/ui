@@ -11,7 +11,10 @@ export const SortWrapper = styled.div`
     }
 
     .custom-table-sort-select {
-        border: none;
+        border: 1px solid ${({ theme }) => theme.gray300};
         background-color: none;
+        @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
+            border: none;
+        }
     }
 `;
