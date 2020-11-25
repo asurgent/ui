@@ -21,6 +21,9 @@ const formObj = {
   search: {
     type: 'text', label: 'Test', placeholder: 'Hello',
   },
+  switch: {
+    type: 'switch', label: 'Test', placeholder: 'Hello', wrapperStyle: { border: 'none' }, style: { background: '' }, description: 'If you select this option this process will be the general chain of actions taken when there is an alert on this Entity.',
+  },
   datepicker: {
     type: 'datepicker',
     label: 'im a label',

@@ -12,7 +12,6 @@ import * as Button from './Button';
 import * as Spinner from './Spinner';
 import * as Block from './Block';
 import * as Modal from './Modal';
-import * as Switch from './Switch';
 import * as UserImage from './UserImage';
 import * as Moment from './Moment';
 import * as Cron from './Cron';
@@ -37,7 +36,6 @@ export {
   Block,
   Form,
   Modal,
-  Switch,
   Tooltip,
   Table,
   Tag,
