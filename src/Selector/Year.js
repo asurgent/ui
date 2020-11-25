@@ -15,18 +15,20 @@ const defaultProps = {
 const Year = ({ entries, onSelect }) => {
   const [selected, setSelected] = useState(0);
   return (
-    entries.map((el, ind) => (
-      <C.Year
-        key={el}
-        selected={selected === ind}
-        onClick={() => {
-          setSelected(ind);
-          onSelect(el);
-        }}
-      >
-        <p>{el}</p>
-      </C.Year>
-    ))
+    <C.Container>
+      {entries.map((el, ind) => (
+        <C.Year
+          key={el}
+          selected={selected === ind}
+          onClick={() => {
+            setSelected(ind);
+            onSelect(el);
+          }}
+        >
+          <p>{el}</p>
+        </C.Year>
+      ))}
+    </C.Container>
   );
 };
 
