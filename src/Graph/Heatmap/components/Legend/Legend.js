@@ -35,19 +35,18 @@ const Legend = ({
         .attr(
           'transform',
           // cellSize * vertical day-squares + top-margin
-          `translate(840, ${(cellSize * 7) + 20})`,
+          `translate(840, ${(cellSize * 7) + 30})`,
         );
 
-      /* legend squares */
       legend
         .selectAll('rect')
         .data(legendCategories)
         .enter()
         .append('rect')
         .attr('fill', (d) => d.color)
-        .attr('x', (_, i) => (cellSize + cellPadding) * i)
-        .attr('width', cellSize)
-        .attr('height', cellSize)
+        .attr('x', (_, i) => cellSize * i)
+        .attr('width', cellSize - cellPadding)
+        .attr('height', cellSize - cellPadding)
         .attr('rx', cellRadius)
         .attr('ry', cellRadius);
     }

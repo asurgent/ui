@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as d3 from 'd3';
 import { withTheme } from 'styled-components';
-import { AppsOutlined } from '@material-ui/icons';
 import * as C from './Squares.styled';
 import translation from './Squares.translation';
 import { getColor } from '../../helpers';
+import { addMonthText, addWeekdays } from './helpers';
 
 const { t } = translation;
 
@@ -19,7 +19,7 @@ const propTypes = {
   cellRadius: PropTypes.number,
   emptyColor: PropTypes.string,
   legendCategories: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
-  startDate: PropTypes.oneOfType([
+  /*   startDate: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
@@ -28,9 +28,10 @@ const propTypes = {
     PropTypes.string,
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
-  ]),
+  ]), */
   theme: PropTypes.instanceOf(Object),
 };
+
 const defaultProps = {
   data: null,
   valueLabel: 'value',
@@ -40,15 +41,15 @@ const defaultProps = {
   cellRadius: 1,
   emptyColor: '#dadada',
   legendCategories: null,
-  startDate: moment().startOf('year'),
-  endDate: moment().endOf('year'),
+  /*  startDate: moment().startOf('year'),
+  endDate: moment().endOf('year'), */
   theme: {},
 };
 
 const Squares = ({
   data,
-  startDate,
-  endDate,
+  /*   startDate,
+  endDate, */
   valueLabel,
   onDateClick,
   cellSize,
@@ -57,8 +58,12 @@ const Squares = ({
   emptyColor,
   legendCategories,
   theme,
+
 }) => {
   const squareRef = useRef(null);
+  const monthTextRef = useRef(null);
+  const weekdayRef = useRef(null);
+
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
@@ -98,6 +103,7 @@ const Squares = ({
             toggleSelected(d);
           }
         });
+
       squares
         .attr('width', cellSize - cellPadding)
         .attr('height', cellSize - cellPadding)
@@ -124,35 +130,34 @@ const Squares = ({
         .transition()
         .duration(500);
 
-      const monthText = d3.select('#monthText');
-      const firsts = data.filter((d) => moment(d.date).date() === 1);
-
-      monthText
-        .selectAll('text')
-        .data(firsts)
-        .join('text')
-        .text((d) => t(`month${moment(d.date).month()}`, 'asurgentui'))
-        .attr('text-anchor', 'middle')
-        .attr('dominant-baseline', 'hanging')
-        .attr('x', ({ date }) => {
-          const currentYear = moment(date).startOf('year');
-          const week = d3.utcSunday.count(currentYear, date);
-          const x = (week * cellSize) + 47;
-          return x;
-        });
+      if (monthTextRef.current) {
+        addMonthText({ ref: monthTextRef.current, data, cellSize });
+      }
+      if (weekdayRef.current) {
+        addWeekdays({ ref: weekdayRef.current, cellSize });
+      }
     }
-  }, [cellPadding,
+  }, [
+    cellPadding,
     cellRadius,
     cellSize,
     data,
     emptyColor,
     legendCategories,
+    monthTextRef,
     onDateClick,
     selected,
     theme.gray100,
-    valueLabel]);
+    valueLabel,
+  ]);
 
-  return (<C.Squares ref={squareRef} />);
+  return (
+    <>
+      <C.Months ref={monthTextRef} />
+      <C.Weekdays ref={weekdayRef} />
+      <C.Squares ref={squareRef} />
+    </>
+  );
 };
 
 Squares.propTypes = propTypes;

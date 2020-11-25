@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -7,8 +7,6 @@ import translation from './Heatmap.translation';
 import * as C from './Heatmap.styled';
 import Squares from './components/Squares';
 import Legend from './components/Legend';
-import DayText from './components/DayText';
-import MonthText from './components/MonthText';
 
 const { t } = translation;
 
@@ -64,6 +62,8 @@ const Heatmap = ({
   endDate,
   theme,
 }) => {
+  const monthTextRef = useRef(null);
+
   const values = useMemo(() => (data?.length > 0 ? data.map((c) => c.value) : null), [data]);
   const maxValue = useMemo(() => (values ? Math.max(...values) : null), [values]);
 
@@ -111,7 +111,6 @@ const Heatmap = ({
     <>
       <svg id="svg" preserveAspectRatio="none">
         <C.Group id="group">
-          <MonthText cellSize={cellSize} data={data} />
           <Squares
             data={testData}
             startDate={startDate}
@@ -123,13 +122,13 @@ const Heatmap = ({
             cellRadius={cellRadius}
             emptyColor={emptyColor}
             legendCategories={legendCategories}
+            monthTextRef={monthTextRef}
           />
-          <DayText cellSize={cellSize} />
           <Legend
             legendCategories={legendCategories}
             cellSize={cellSize}
             cellPadding={cellPadding}
-            cellRadius={cellPadding}
+            cellRadius={cellRadius}
           />
         </C.Group>
       </svg>
