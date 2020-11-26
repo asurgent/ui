@@ -11,7 +11,7 @@ export const main = () => (
   <Selector.Main
     entries={[
       { label: '2020', value: 2020 },
-      { label: 'tvåtusen nitton', value: 2019, default: true },
+      { label: 'tvåtusen och nitton', value: 2019, default: true },
       { label: '2k18', value: 2018, default: false },
     ]}
     onSelect={(d) => action()('clicked', d)}
