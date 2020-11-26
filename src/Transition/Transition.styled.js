@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const FadeIn = styled.div`
     width: 100%;
     position: relative;
-    z-index: 2;
+    z-index: 1;
     transition: ${({ timeout }) => `${parseInt(timeout, 10) / 1000}s`};
     opacity: ${({ state }) => {
     switch (state) {
@@ -48,13 +48,13 @@ export const FadeInSlideDown = styled(FadeIn)`
     }
     return `${state === 'entering' || state === 'entered' ? 20 : 0}px`;
   }
-}
+};
 `;
 
 export const FadeInSlideDownOnDesktop = styled(FadeIn)`
   @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
       transform: translateY(
-      ${({ state }) => (state === 'entering' || state === 'entered' ? 20 : 0)}px
+        ${({ state }) => (state === 'entering' || state === 'entered' ? 20 : 0)}px
       );
   }
 `;
