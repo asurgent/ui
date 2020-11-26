@@ -16,7 +16,7 @@ const propTypes = {
   value: PropTypes.bool,
   parseOutput: PropTypes.func,
   validator: PropTypes.instanceOf(Object),
-  disabled: PropTypes.bool,
+  disabled: PropTypes.func,
 };
 
 const defaultProps = {
@@ -30,20 +30,14 @@ const defaultProps = {
 };
 
 const Switch = forwardRef((props, ref) => {
-  // {
-  //   value,
-  //   onToggle,
-  //   children,
-  //   tooltipRef,
-  // }
   const {
     name,
     parseOutput,
     validator,
     disabled,
   } = props;
-  const input = createRef();
 
+  const input = createRef();
   const [value, setValue] = useState(props.value);
 
   useEffect(() => {
