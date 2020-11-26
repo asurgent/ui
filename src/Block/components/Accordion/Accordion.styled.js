@@ -20,6 +20,7 @@ export const Arrow = styled.div`
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {
         border-left: 1px solid ${({ theme }) => theme.gray200};
+        border-top: none;
     }
 `;
 

@@ -3,7 +3,7 @@ import HelpOutline from '@material-ui/icons/HelpOutline';
 
 export const Main = styled.div`
   width: 100%;
-  max-width: 100%; 
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -12,6 +12,7 @@ export const Main = styled.div`
 export const Wrapper = styled.div`
   margin: 0;
   display: flex;
+  max-width: 700px;
   align-items: center;
   border: .1rem solid;
   border-color: ${({ theme, hasError }) => {
@@ -92,6 +93,7 @@ export const Error = styled.div`
 export const Header = styled.div`
   margin-bottom: .8rem;
   display: flex;
+  max-width: 700px;
 `;
 
 export const TooltipIcon = styled(HelpOutline)`
