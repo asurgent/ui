@@ -7,10 +7,17 @@ import * as Selector from './index';
 
 export default { title: 'UI Components|Selector', decorators: [withKnobs] };
 
-export const year = () => (
-  <Selector.Year entries={[2020, 2019, 2018, 2017]} onSelect={(d) => action()('clicked', d)} />
+export const main = () => (
+  <Selector.Main
+    entries={[
+      { label: '2020', value: 2020 },
+      { label: 'tvåtusen nitton', value: 2019, default: true },
+      { label: '2k18', value: 2018, default: false },
+    ]}
+    onSelect={(d) => action()('clicked', d)}
+  />
 );
 
-year.story = {
-  name: 'Selector Ring',
+main.story = {
+  name: 'Selector Main',
 };

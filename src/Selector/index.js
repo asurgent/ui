@@ -1,3 +1,3 @@
-import Year from './Year';
+import Main from './Selector';
 
-export { Year };
+export { Main };
