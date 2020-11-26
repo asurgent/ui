@@ -68,7 +68,7 @@ const Heatmap = ({
   const maxValue = useMemo(() => (values ? Math.max(...values) : null), [values]);
 
   const dateRange = d3.timeDays(startDate, endDate);
-  const testData = dateRange.map((d) => {
+  const filledData = dateRange.map((d) => {
     const inpDate = data.find((dat) => moment(dat.date).isSame(moment(d), 'day'));
     if (inpDate) {
       return inpDate;
@@ -112,7 +112,7 @@ const Heatmap = ({
       <svg id="svg" preserveAspectRatio="none">
         <C.Group id="group">
           <Squares
-            data={testData}
+            data={filledData}
             startDate={startDate}
             endDate={endDate}
             valueLabel={valueLabel}

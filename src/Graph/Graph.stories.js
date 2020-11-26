@@ -1,5 +1,6 @@
 import React from 'react';
 import { withKnobs, text, number } from '@storybook/addon-knobs';
+import moment from 'moment';
 import { action } from '@storybook/addon-actions';
 import * as Graph from './index';
 import data from './data';
@@ -134,6 +135,8 @@ export const heatmap = () => (
       cellRadius={number('Cell radius', 1)}
       cellPadding={number('Cell padding', 2)}
       onDateClick={(d) => action('Clicked!')(d)}
+      startDate={text('Start date', moment().startOf('year'))}
+      endDate={text('End date', moment().endOf('year'))}
     />
   </div>
 );
