@@ -95,7 +95,7 @@ jobs:
             az storage blob upload-batch -d "\$web" -s storybook-static --connection-string "${connectionString}"
             url=$(az storage account show -g ${{env.AZURE_RESOURCE_GROUP}} -n cloudopsui${pr} --query 'primaryEndpoints.web' | tr -d '"')
             echo url=$url 
-            echo "name=URL" >> $GITHUB_ENV
+            echo "::set-env name=URL::$url"
 
       - name: comment PR
         uses: KeenFann/comment-on-pr@master
