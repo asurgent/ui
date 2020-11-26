@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import i18next from 'i18next';
-import { Description } from '@material-ui/icons';
 import * as Tooltip from '../../Tooltip';
 import * as T from '../../Typography';
 
