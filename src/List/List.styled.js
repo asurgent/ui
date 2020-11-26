@@ -5,7 +5,8 @@ export const Wrapper = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: auto 1fr;
-    border-top: 1px solid ${({ theme }) => theme.gray300};
+    border-top: 1px solid ${({ theme, borderTop }) => (borderTop ? theme.gray300 : 'transprent')};
+    border-bottom: 1px solid ${({ theme, borderBottom }) => (borderBottom ? theme.gray300 : 'transprent')};
 `;
 
 export const Title = styled.div`
@@ -16,11 +17,12 @@ export const Title = styled.div`
     font-size: 1.4rem;
     text-transform: uppercase;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     border-bottom: 1px solid ${({ theme }) => theme.gray300};
     word-break: break-all;
     min-width: 8rem;
     flex-wrap: wrap;
+    align-items: center;
 `;
 
 export const Value = styled(Title)`

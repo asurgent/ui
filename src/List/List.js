@@ -6,6 +6,8 @@ import { hasValue } from './helpers';
 const propTypes = {
   style: PropTypes.instanceOf(Object),
   rows: PropTypes.instanceOf(Array),
+  borderBottom: PropTypes.bool,
+  borderTop: PropTypes.bool,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
@@ -16,10 +18,18 @@ const defaultProps = {
   style: {},
   rows: [],
   children: null,
+  borderBottom: false,
+  borderTop: false,
 };
 
-const List = ({ rows, children, style }) => (
-  <C.Wrapper style={style}>
+const List = ({
+  rows,
+  style,
+  children,
+  borderBottom,
+  borderTop,
+}) => (
+  <C.Wrapper style={style} borderBottom={borderBottom} borderTop={borderTop}>
     { rows.map((item, index) => {
       if (!item) { return null; }
 
