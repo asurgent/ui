@@ -104,4 +104,3 @@ jobs:
         with:
           msg: Deployed to ${{ env.URL }}. Closing this pull request will delete the deployment.
           check_for_duplicate_msg: false  # OPTIONAL 
-
