@@ -9,6 +9,7 @@ import Select from '../types/Select/index';
 import FilterSelect from '../types/FilterSelect/index';
 import Label from '../types/Label/index';
 import Bool from '../types/Bool/index';
+import Switch from '../types/Switch/index';
 import Email from '../types/Email/index';
 import DatePicker from '../types/DatePicker/index';
 import RadioGroup from '../types/RadioGroup/index';
@@ -43,6 +44,8 @@ const getInputComponent = (type) => {
       return RadioGroup;
     case 'email':
       return Email;
+    case 'switch':
+      return Switch;
 
     default:
       return Text;
@@ -105,6 +108,9 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
         className,
         classNameWrapper,
         showContainerError,
+        style,
+        wrapperStyle,
+        description,
         props: inputProps,
         disabled = () => false,
       } = inputs[key];
@@ -121,6 +127,9 @@ export const generateFieldComponents = (inputs, referenceList, errors, keepInput
       const RequestedComponent = getInputComponent(type);
       const Component = (
         <InputWrapper
+          description={description}
+          style={style}
+          wrapperStyle={wrapperStyle}
           label={label || key}
           tooltip={tooltip || ''}
           tooltipPosition={tooltipPosition}

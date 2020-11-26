@@ -21,7 +21,7 @@ export const Wrapper = styled.div`
     }
     return theme.gray200;
   }};
-  border-radius: ${(props) => (props.status === 'error' ? '5px 5px 0px 0px' : '5px')};
+  border-radius: ${(props) => (props.status === 'error' ? '2px 2px 0px 0px' : '2px')};
   position: relative;
   box-sizing: border-box;
   min-height: 4.7rem;
@@ -78,14 +78,6 @@ export const Wrapper = styled.div`
     background: transparent!important;
     border-color: ${({ theme }) => theme.gray200}!important;
   }  
-`;
-
-export const Label = styled.div`
-  flex: 1;
-  font-size: 1.4rem;
-  letter-spacing: .1rem;
-  color: ${({ theme }) => theme.gray700};
-  text-transform: capitalize;
 `;
 
 export const Error = styled.div`
