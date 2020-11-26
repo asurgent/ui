@@ -23,7 +23,7 @@ const Selector = ({ entries, onSelect }) => {
 
   return (
     <C.Container>
-      {entries.map((ent, ind) => (
+      {entries?.map((ent, ind) => (
         <C.Year
           key={ent.label || ind}
           selected={selected === ind}
