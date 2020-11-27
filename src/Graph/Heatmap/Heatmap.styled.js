@@ -4,7 +4,7 @@ export const Tooltip = styled.div`
      opacity: 0;
      background-color: ${({ theme }) => theme.gray800};
      color: ${({ theme }) => theme.gray100};
-     position: absolute;
+     position: fixed;
      border-radius: 5px;
      padding: 10px;
      user-select: none;
