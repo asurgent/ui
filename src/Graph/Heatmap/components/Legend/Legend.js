@@ -37,12 +37,10 @@ const Legend = ({
           // cellSize * vertical day-squares + top-margin
           `translate(840, ${(cellSize * 7) + 30})`,
         );
-
       legend
         .selectAll('rect')
         .data(legendCategories)
-        .enter()
-        .append('rect')
+        .join('rect')
         .attr('fill', (d) => d.color)
         .attr('x', (_, i) => cellSize * i)
         .attr('width', cellSize - cellPadding)
