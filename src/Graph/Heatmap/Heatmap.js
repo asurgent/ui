@@ -73,12 +73,12 @@ const Heatmap = ({
     if (inpDate) {
       return { ...inpDate, date: moment(inpDate.date).startOf('day') };
     }
-    return { date: d, value: null };
+    return { date: moment(d), value: null };
   });
 
   const myColor = d3
     .scaleLinear()
-    .domain([1, Math.ceil(maxValue)])
+    .domain([Number.MIN_VALUE, Math.ceil(maxValue)])
     .range([theme.ruby50 || 'white', color || theme.ruby800]);
 
   const legendCategories = useMemo(() => [...Array(steps)].map((_, i) => {
