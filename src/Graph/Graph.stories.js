@@ -123,14 +123,14 @@ export const heatmap = () => (
     border: '1px solid #dadada',
     width: 'max-content',
     borderRadius: '5px',
-    marginTop: '2rem',
+    marginTop: '20rem',
   }}
   >
     <Graph.Heatmap
       data={data4}
       steps={number('Steps', 5)}
       color={text('Color', '#C6403B')}
-      emptyColor={text('Empty color', '#F9F9F9')}
+      emptyColor={text('Empty color', '#F2F2F2')}
       cellSize={number('Cell size', 18)}
       cellRadius={number('Cell radius', 1)}
       cellPadding={number('Cell padding', 2)}

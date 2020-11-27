@@ -37,7 +37,7 @@ const defaultProps = {
   data: null,
   steps: 5,
   color: null,
-  emptyColor: null,
+  emptyColor: '#F2F2F2',
   theme: {},
   cellSize: 18,
   cellRadius: 1,
@@ -71,7 +71,7 @@ const Heatmap = ({
   const filledData = dateRange.map((d) => {
     const inpDate = data.find((dat) => moment(dat.date).isSame(moment(d), 'day'));
     if (inpDate) {
-      return inpDate;
+      return { ...inpDate, date: moment(inpDate.date).startOf('day') };
     }
     return { date: d, value: null };
   });

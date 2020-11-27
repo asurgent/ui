@@ -39,7 +39,7 @@ const defaultProps = {
   cellSize: 18,
   cellPadding: 2,
   cellRadius: 1,
-  emptyColor: '#dadada',
+  emptyColor: '#F2F2F2',
   legendCategories: null,
   /*  startDate: moment().startOf('year'),
   endDate: moment().endOf('year'), */
@@ -110,12 +110,12 @@ const Squares = ({
         .attr(
           'x',
           (d) => {
-            const currentYear = moment(d.date).startOf('year');
-            const week = d3.utcSunday.count(currentYear, d.date);
+            const firstOfYear = moment(d.date).startOf('year');
+            const week = d3.utcSunday.count(firstOfYear, d.date);
             return week * cellSize + 40;
           },
         )
-        .attr('y', (d) => new Date(d.date).getUTCDay() * cellSize + 20)
+        .attr('y', (d) => (moment(d.date).isoWeekday() - 1) * cellSize + 20)
         .attr('rx', cellRadius)
         .attr('ry', cellRadius)
         .attr('fill', (d) => {
