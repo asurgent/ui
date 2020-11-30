@@ -1,4 +1,6 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, {
+  useEffect, useMemo, useRef,
+} from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -21,6 +23,7 @@ const propTypes = {
   cellRadius: PropTypes.number,
   valueLabel: PropTypes.string,
   onDateClick: PropTypes.func,
+  showLegend: PropTypes.func,
   startDate: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
@@ -44,6 +47,7 @@ const defaultProps = {
   cellPadding: 2,
   valueLabel: 'something',
   onDateClick: () => null,
+  showLegend: () => true,
   startDate: moment().startOf('year'),
   endDate: moment().endOf('year'),
 };
@@ -58,6 +62,7 @@ const Heatmap = ({
   cellPadding,
   valueLabel,
   onDateClick,
+  showLegend,
   startDate,
   endDate,
   theme,
@@ -68,6 +73,7 @@ const Heatmap = ({
   const maxValue = useMemo(() => (values ? Math.max(...values) : null), [values]);
 
   const dateRange = d3.timeDays(startDate, endDate);
+
   const filledData = dateRange.map((d) => {
     const inpDate = data.find((dat) => moment(dat.date).isSame(moment(d), 'day'));
     if (inpDate) {
@@ -124,12 +130,16 @@ const Heatmap = ({
             legendCategories={legendCategories}
             monthTextRef={monthTextRef}
           />
-          <Legend
-            legendCategories={legendCategories}
-            cellSize={cellSize}
-            cellPadding={cellPadding}
-            cellRadius={cellRadius}
-          />
+          {showLegend() && (
+            <Legend
+              startDate={startDate}
+              endDate={endDate}
+              legendCategories={legendCategories}
+              cellSize={cellSize}
+              cellPadding={cellPadding}
+              cellRadius={cellRadius}
+            />
+          )}
         </C.Group>
       </svg>
       <C.Tooltip id="tooltip" />

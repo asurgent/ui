@@ -4,7 +4,9 @@ import translation from './Squares.translation';
 
 const { t } = translation;
 
-export const addMonthText = ({ ref, data, cellSize }) => {
+export const addMonthText = ({
+  ref, data, startDate, cellSize,
+}) => {
   const monthText = d3.select(ref);
   const firsts = data.filter((d) => moment(d.date).date() === 1);
   monthText
@@ -15,7 +17,7 @@ export const addMonthText = ({ ref, data, cellSize }) => {
     .attr('text-anchor', 'middle')
     .attr('dominant-baseline', 'hanging')
     .attr('x', ({ date }) => {
-      const currentYear = moment(date).startOf('year');
+      const currentYear = startDate ? moment(startDate) : moment(date).startOf('year');
       const week = d3.utcSunday.count(currentYear, date);
       const x = (week * cellSize) + 47;
       return x;

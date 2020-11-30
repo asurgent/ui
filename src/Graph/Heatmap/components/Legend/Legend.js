@@ -19,6 +19,17 @@ const defaultProps = {
 
 const { t } = translation;
 
+const centerOfLastSquare = () => {
+  try {
+    const lastSquare = d3.select('#squares rect:last-child');
+    const x = parseInt(lastSquare.attr('x'), 10);
+    const width = parseInt(lastSquare.attr('width'), 10);
+    return x - (width / 2);
+  } catch (e) {
+    return 0;
+  }
+};
+
 const Legend = ({
   legendCategories,
   cellSize,
@@ -29,20 +40,19 @@ const Legend = ({
 
   useEffect(() => {
     if (legendRef.current) {
-      /* Legend container */
-      const legend = d3.select(legendRef.current);
-      legend
+      const legendContainer = d3.select(legendRef.current);
+      legendContainer
         .attr(
           'transform',
           // cellSize * vertical day-squares + top-margin
-          `translate(840, ${(cellSize * 7) + 30})`,
+          `translate(${centerOfLastSquare()}, ${(cellSize * 7) + 30})`,
         );
-      legend
+      legendContainer
         .selectAll('rect')
         .data(legendCategories)
         .join('rect')
         .attr('fill', (d) => d.color)
-        .attr('x', (_, i) => cellSize * i)
+        .attr('x', (_, i) => -100 + (cellSize * i))
         .attr('width', cellSize - cellPadding)
         .attr('height', cellSize - cellPadding)
         .attr('rx', cellRadius)
@@ -52,8 +62,8 @@ const Legend = ({
 
   return (
     <C.Legend ref={legendRef}>
-      <C.Text x={-45} y={13}>{t('less', 'asurgentui')}</C.Text>
-      <C.Text x={110} y={13}>{t('more', 'asurgentui')}</C.Text>
+      <C.Text x={-140} y={13}>{t('less', 'asurgentui')}</C.Text>
+      <C.Text x={0} y={13}>{t('more', 'asurgentui')}</C.Text>
     </C.Legend>
   );
 };

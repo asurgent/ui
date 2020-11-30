@@ -19,16 +19,11 @@ const propTypes = {
   cellRadius: PropTypes.number,
   emptyColor: PropTypes.string,
   legendCategories: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
-  /*   startDate: PropTypes.oneOfType([
+  startDate: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
   ]),
-  endDate: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-    PropTypes.instanceOf(moment),
-  ]), */
   theme: PropTypes.instanceOf(Object),
 };
 
@@ -41,15 +36,13 @@ const defaultProps = {
   cellRadius: 1,
   emptyColor: '#F2F2F2',
   legendCategories: null,
-  /*  startDate: moment().startOf('year'),
-  endDate: moment().endOf('year'), */
+  startDate: moment().startOf('year'),
   theme: {},
 };
 
 const Squares = ({
   data,
-  /*   startDate,
-  endDate, */
+  startDate,
   valueLabel,
   onDateClick,
   cellSize,
@@ -58,7 +51,6 @@ const Squares = ({
   emptyColor,
   legendCategories,
   theme,
-
 }) => {
   const squareRef = useRef(null);
   const monthTextRef = useRef(null);
@@ -110,7 +102,7 @@ const Squares = ({
         .attr(
           'x',
           (d) => {
-            const firstOfYear = moment(d.date).startOf('year');
+            const firstOfYear = startDate ? moment(startDate) : moment(d.date).startOf('year');
             const week = d3.utcSunday.count(firstOfYear, d.date);
             return week * cellSize + 40;
           },
@@ -131,14 +123,15 @@ const Squares = ({
         .duration(500);
 
       if (monthTextRef.current) {
-        addMonthText({ ref: monthTextRef.current, data, cellSize });
+        addMonthText({
+          ref: monthTextRef.current, data, startDate, cellSize,
+        });
       }
       if (weekdayRef.current) {
         addWeekdays({ ref: weekdayRef.current, cellSize });
       }
     }
-  }, [
-    cellPadding,
+  }, [cellPadding,
     cellRadius,
     cellSize,
     data,
@@ -147,15 +140,15 @@ const Squares = ({
     monthTextRef,
     onDateClick,
     selected,
+    startDate,
     theme.gray100,
-    valueLabel,
-  ]);
+    valueLabel]);
 
   return (
     <>
       <C.Months ref={monthTextRef} />
       <C.Weekdays ref={weekdayRef} />
-      <C.Squares ref={squareRef} />
+      <C.Squares id="squares" ref={squareRef} />
     </>
   );
 };
