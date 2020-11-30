@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
-export const FilterWrapper = styled.div``;
+export const FilterWrapper = styled.div`
+    background-color: ${({ active }) => (active ? 'orange' : 'white')}
+`;
+
 export const ShieldTargetWrapper = styled.div``;
 
 export const ListWrapper = styled.div`

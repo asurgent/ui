@@ -10,6 +10,7 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
   const [search, setSearch] = useState('');
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
+  const [hasSelected, setHasSelected] = useState(false);
 
   const getGroupFilter = () => {
     // Keep track of all items we found in the retrived list.
@@ -132,6 +133,11 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
     }
   };
 
+  useEffect(() => {
+    const allFilters = filterHook.getSelectedItems();
+    setHasSelected(allFilters?.[filterGroupKey]?.length > 0);
+  }, [filterGroupKey, filterHook, tableHook]);
+
   // Initial setter. This will trigger a fetch if no filter-items have been loaded
   useEffect(() => {
     if (open) {
@@ -174,6 +180,7 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
     getOptions: () => options,
     getGroupKey: () => filterGroupKey,
     onSearchOptions: ({ values }) => setSearch(values.searchQuery),
+    hasSelectedOptions: () => hasSelected,
   };
 };
 
