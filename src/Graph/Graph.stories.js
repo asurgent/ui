@@ -138,8 +138,8 @@ export const heatmap = () => (
       cellPadding={number('Cell padding', 2)}
       onDateClick={(d) => action('Clicked!')(d)}
       showLegend={() => true}
-      startDate={text('Start date', moment('2020-06-08'))}
-      endDate={text('End date', moment('2020-09-08'))}
+      startDate={text('Start date', moment('2020-01-01'))}
+      endDate={text('End date', moment('2020-12-31'))}
     />
   </div>
 );

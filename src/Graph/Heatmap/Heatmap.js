@@ -72,7 +72,7 @@ const Heatmap = ({
   const values = useMemo(() => (data?.length > 0 ? data.map((c) => c.value) : null), [data]);
   const maxValue = useMemo(() => (values ? Math.max(...values) : null), [values]);
 
-  const dateRange = d3.timeDays(startDate, endDate);
+  const dateRange = d3.timeDays(startDate, moment(endDate).add(1, 'days'));
 
   const filledData = dateRange.map((d) => {
     const inpDate = data.find((dat) => moment(dat.date).isSame(moment(d), 'day'));
