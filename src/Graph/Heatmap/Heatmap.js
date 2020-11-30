@@ -93,7 +93,7 @@ const Heatmap = ({
     return {
       upperBound,
       lowerBound,
-      color: myColor(lowerBound),
+      color: myColor(upperBound),
     };
   }), [maxValue, myColor, steps]);
 
