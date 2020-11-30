@@ -4,7 +4,7 @@ export const Controllbar = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: 1fr auto;
-    grid-column-gap: .8rem;
+    grid-column-gap: 0;
     grid-row-gap: .8rem;
     grid-template-areas: 
         "search search"
@@ -15,6 +15,7 @@ export const Controllbar = styled.div`
         grid-template-areas: 
         "search sort"
         "filter . ";
+        grid-column-gap: .8rem;
     }   
 
     .search {

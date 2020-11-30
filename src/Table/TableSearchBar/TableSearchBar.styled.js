@@ -5,6 +5,7 @@ export const SearchBarContainer = styled.div`
 
     .custom-table-search {
         border-radius: 5rem;
+        max-width: 100%;
 
         input {
             border-radius: 5rem;

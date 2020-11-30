@@ -2,17 +2,16 @@ import styled from 'styled-components';
 import * as Button from '../../../Button/Button.styled';
 
 export const Wrapper = styled.div`
-    grid-row-gap: .8rem;
     display: grid;
     grid-template-columns: 1fr auto;
-    grid-column-gap: .8rem;
-    grid-row-gap: .8rem;
+    grid-column-gap: 0;
     grid-template-areas:
         "filters "
         "clear";
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         grid-template-areas: "filters clear";
+        grid-column-gap: .8rem;
     }
 
     ${Button.Plain} {
@@ -44,7 +43,7 @@ export const Filters = styled.div`
     display: flex;
     flex-wrap: wrap;
     > * {
-        margin-right: .6rem;
-        margin-bottom: .6rem;
+        margin-right: .4rem;
+        margin-bottom: .4rem;
     }
 `;

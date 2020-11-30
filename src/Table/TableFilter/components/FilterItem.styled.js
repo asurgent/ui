@@ -4,7 +4,7 @@ export const Base = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1.6rem;
+    padding: 1.6rem 0 1.6rem 1.6rem;
 `;
 
 export const Active = styled(Base)`

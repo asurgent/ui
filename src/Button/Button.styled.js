@@ -42,7 +42,7 @@ export const Button = styled.div`
         text-decoration: none;
         font-size: 1.4rem;
         text-transform: uppercase;
-        font-weight: bold;
+        font-weight: 500;
     }
 
     &:visited {
@@ -104,6 +104,7 @@ export const Plain = styled.div`
     position: relative;
     display: inline-block;
     align-self: center;
+    width: 100%;
 
     button {
         cursor: pointer;
@@ -193,7 +194,7 @@ export const Icon = styled.div`
     transition: 0.2s;
     text-align: center;
     white-space: normal;
-    font-weight: bold;
+    font-weight: 500;
     letter-spacing: 0.12rem;
     text-transform: uppercase;
     text-decoration: none;
@@ -283,7 +284,7 @@ export const CreateBlock = styled.div`
         text-decoration: none;
         font-size: 1.4rem;
         text-transform: uppercase;
-        font-weight: bold;
+        font-weight: 500;
     }
 `;
 
@@ -306,6 +307,6 @@ export const Stretched = styled.div`
         text-decoration: none;
         font-size: 1.4rem;
         text-transform: uppercase;
-        font-weight: bold;
+        font-weight: 500;
     }
 `;

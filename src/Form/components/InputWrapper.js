@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import i18next from 'i18next';
 import * as Tooltip from '../../Tooltip';
+import * as T from '../../Typography';
 
 import {
   Main,
   Wrapper,
-  Label,
   Header,
   Error,
   TooltipIcon,
@@ -31,6 +31,9 @@ const propTyps = {
     PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
   disabled: PropTypes.func,
+  style: PropTypes.instanceOf(Object),
+  wrapperStyle: PropTypes.instanceOf(Object),
+  description: PropTypes.string,
 };
 
 const defaultProps = {
@@ -42,6 +45,9 @@ const defaultProps = {
   tooltipPosition: 'middle',
   showContainerError: true,
   disabled: () => false,
+  style: {},
+  wrapperStyle: {},
+  description: '',
 };
 
 const InputWrapper = (props) => {
@@ -57,13 +63,16 @@ const InputWrapper = (props) => {
     classNameWrapper,
     showContainerError,
     disabled,
+    wrapperStyle,
+    style,
+    description,
   } = props;
 
   return (
-    <Main type={type} className={className}>
+    <Main type={type} className={className} style={style}>
       { noLabel === false && (
         <Header>
-          <Label>{label}</Label>
+          <T.P.Small capitalize bold style={{ margin: 0 }}>{label}</T.P.Small>
           { tooltip && (
             <Tooltip.Primary tip={tooltip} position={tooltipPosition}>
               <TooltipIcon />
@@ -71,7 +80,9 @@ const InputWrapper = (props) => {
           )}
         </Header>
       )}
+      { description && <T.P.Main style={{ margin: 0 }}>{description}</T.P.Main>}
       <Wrapper
+        style={wrapperStyle}
         disabled={disabled()}
         hasError={showContainerError && Boolean(error)}
         type={type}
