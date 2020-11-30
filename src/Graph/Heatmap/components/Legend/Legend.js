@@ -9,12 +9,14 @@ const propTypes = {
   cellSize: PropTypes.number,
   cellPadding: PropTypes.number,
   cellRadius: PropTypes.number,
+  steps: PropTypes.number,
 };
 const defaultProps = {
   legendCategories: null,
   cellSize: 18,
   cellPadding: 2,
   cellRadius: 1,
+  steps: 5,
 };
 
 const { t } = translation;
@@ -35,12 +37,16 @@ const Legend = ({
   cellSize,
   cellPadding,
   cellRadius,
+  steps,
 }) => {
   const legendRef = useRef(null);
+
+  const widthOfSquares = -(steps * cellSize);
 
   useEffect(() => {
     if (legendRef.current) {
       const legendContainer = d3.select(legendRef.current);
+
       legendContainer
         .attr(
           'transform',
@@ -52,17 +58,18 @@ const Legend = ({
         .data(legendCategories)
         .join('rect')
         .attr('fill', (d) => d.color)
-        .attr('x', (_, i) => -100 + (cellSize * i))
+        .attr('x', (_, i) => widthOfSquares - 10 + (cellSize * i))
+        .attr('y', 2)
         .attr('width', cellSize - cellPadding)
         .attr('height', cellSize - cellPadding)
         .attr('rx', cellRadius)
         .attr('ry', cellRadius);
     }
-  }, [cellPadding, cellRadius, cellSize, legendCategories]);
+  }, [cellPadding, cellRadius, cellSize, legendCategories, steps, widthOfSquares]);
 
   return (
     <C.Legend ref={legendRef}>
-      <C.Text x={-140} y={13}>{t('less', 'asurgentui')}</C.Text>
+      <C.Text x={widthOfSquares - 50} y={13}>{t('less', 'asurgentui')}</C.Text>
       <C.Text x={0} y={13}>{t('more', 'asurgentui')}</C.Text>
     </C.Legend>
   );

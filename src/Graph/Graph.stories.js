@@ -134,8 +134,8 @@ export const heatmap = () => (
       color={text('Color', '#C6403B')}
       emptyColor={text('Empty color', '#F2F2F2')}
       cellSize={number('Cell size', 18)}
-      cellRadius={number('Cell radius', 1)}
       cellPadding={number('Cell padding', 2)}
+      cellRadius={number('Cell radius', 1)}
       onDateClick={(d) => action('Clicked!')(d)}
       showLegend={() => true}
       startDate={text('Start date', moment('2020-01-01'))}

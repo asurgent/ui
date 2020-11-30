@@ -132,6 +132,7 @@ const Heatmap = ({
           />
           {showLegend() && (
             <Legend
+              steps={steps}
               startDate={startDate}
               endDate={endDate}
               legendCategories={legendCategories}
