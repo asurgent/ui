@@ -82,7 +82,7 @@ const Heatmap = ({
     return { date: moment(d), value: null };
   });
 
-  const myColor = d3
+  const colorScale = d3
     .scaleLinear()
     .domain([0, steps - 1])
     .range([theme.ruby50 || 'white', color || theme.ruby800]);
@@ -93,9 +93,9 @@ const Heatmap = ({
     return {
       upperBound,
       lowerBound,
-      color: myColor(i),
+      color: colorScale(i),
     };
-  }), [maxValue, myColor, steps]);
+  }), [colorScale, maxValue, steps]);
 
   useEffect(() => {
     if (data && legendCategories) {
