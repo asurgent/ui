@@ -33,7 +33,7 @@ export const navigation = () => (
           label: 'Explore', tooltip: 'Explore Environment', icon: (<Icon.Explore fontSize="large" />), link: '/test2',
         },
         {
-          label: 'Tickets', tooltip: 'View tickets', icon: (<Icon.Comment fontSize="large" />), link: '/test3',
+          label: 'Tickets', tooltip: 'View tickets', icon: (<Icon.Message fontSize="large" />), link: '/test3',
         },
         {
           label: 'Docs', tooltip: 'Documentation', icon: (<Icon.LibraryBooks fontSize="large" />), link: '/test4',

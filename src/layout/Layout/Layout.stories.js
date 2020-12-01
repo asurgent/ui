@@ -24,7 +24,7 @@ const navigationList = (t, customerId) => [
   {
     label: t('linkTicketsLabel'),
     tooltip: t('linkTicketsTooltip'),
-    icon: (<Icons.Comment fontSize="large" />),
+    icon: (<Icons.Message fontSize="large" />),
     link: '/tickets',
   },
 ];
@@ -39,7 +39,7 @@ const createList = () => [
   {
     title: 'Ticket',
     description: 'create a new ticket',
-    icon: (Icons.ConfirmationNumber),
+    icon: (Icons.Message),
     onClick: action('create ticket'),
   },
   {
