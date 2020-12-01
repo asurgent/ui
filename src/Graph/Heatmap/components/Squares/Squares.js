@@ -75,8 +75,9 @@ const Squares = ({
       const mousemove = ({ date, value }) => {
         const { x, y } = d3.event;
         const { width, height } = tooltip.node().getBoundingClientRect();
+        const valueText = value === null ? t('noData', 'asurgentui') : `${value} ${valueLabel}`;
         tooltip
-          .html(`${value} ${valueLabel} ${t('on', 'asurgentui')} ${moment(date).format('YYYY-MM-DD')}`)
+          .html(`${valueText} ${t('on', 'asurgentui')} ${moment(date).format('YYYY-MM-DD')}`)
           .style('left', `${x - (width / 2)}px`)
           .style('top', `${y - (height + cellSize)}px`);
       };

@@ -25,6 +25,8 @@ export default addTranslation({
     month9: 'Okt',
     month10: 'Nov',
     month11: 'Dec',
+
+    noData: 'Ingen data',
   },
   en: {
     on: 'on',
@@ -49,5 +51,7 @@ export default addTranslation({
     month9: 'Oct',
     month10: 'Nov',
     month11: 'Dec',
+
+    noData: 'No data',
   },
 });
