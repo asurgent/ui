@@ -26,7 +26,7 @@ export const dropdownMenu = () => (
           label: 'Explore', tooltip: 'Explore Environment', icon: (<Explore fontSize="large" />), link: '/',
         },
         {
-          label: 'Tickets', tooltip: 'View tickets', icon: (<Comment fontSize="large" />), link: '/',
+          label: 'Tickets', tooltip: 'View tickets', icon: (<TicketIcon fontSize="large" />), link: '/',
         },
         {
           label: 'Documentation', tooltip: 'Documentation', icon: (<LibraryBooks fontSize="large" />), link: '/',

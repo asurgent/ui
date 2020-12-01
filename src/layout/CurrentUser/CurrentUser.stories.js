@@ -17,7 +17,7 @@ export const currentUser = () => (
           label: 'Dashbaord', tooltip: 'Dashboard', active: true, icon: (<Dashboard fontSize="large" />),
         },
         { label: 'Explore', tooltip: 'Explore Environment', icon: (<Explore fontSize="large" />) },
-        { label: 'Tickets', tooltip: 'View tickets', icon: (<Comment fontSize="large" />) },
+        { label: 'Tickets', tooltip: 'View tickets', icon: (<TicketIcon fontSize="large" />) },
         { label: 'Docs', tooltip: 'Documentation', icon: (<LibraryBooks fontSize="large" />) },
       ]}
       languages={[{ value: 'en', label: 'English' }, { value: 'sv', label: 'Swedish' }]}
