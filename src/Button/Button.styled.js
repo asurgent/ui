@@ -124,9 +124,9 @@ export const Plain = styled.div`
 export const Filter = styled(Button)`
     padding: .8rem;
     background-color: transparent;
-    border-color: transparent;
+    border-color: ${({ theme }) => theme.gray100};
     position: relative;
-    transition: 0.03s;
+    transition: 0.05s;
 
     button {
         cursor: pointer;
