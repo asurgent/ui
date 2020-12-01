@@ -21,8 +21,10 @@ export const Name = styled.div`
 
     b {
         font-style: normal;
-        font-weight: bold;
         font-size: 1.6rem;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        line-height: 1.6rem;
     }
 
     small {

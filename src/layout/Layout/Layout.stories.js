@@ -63,11 +63,11 @@ export const mainLayout = () => {
 
   useEffect(() => {
     provider.setCurrentLanguage('sv');
-    provider.setCustomerId('123');
-    provider.setCustomerName('asurgent');
+    provider.setCustomerId('1234');
+    provider.setCustomerName('Asurgent AB');
     provider.setUser({
-      name: 'Test',
-      email: 'test@mail.com',
+      name: 'Steve Martin',
+      email: 'steve.martin@asurgent.com',
       imageLink: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
       isAdmin: true,
     });

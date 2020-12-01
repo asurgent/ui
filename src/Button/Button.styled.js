@@ -125,6 +125,7 @@ export const Filter = styled(Button)`
     padding: .8rem;
     background-color: transparent;
     border-color: transparent;
+    color: ${({ theme }) => theme.black};
     position: relative;
     transition: 0.03s;
 

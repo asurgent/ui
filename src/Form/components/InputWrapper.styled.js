@@ -19,9 +19,9 @@ export const Wrapper = styled.div`
     if (hasError) {
       return theme.ruby800;
     }
-    return theme.gray200;
+    return theme.gray300;
   }};
-  border-radius: ${(props) => (props.status === 'error' ? '2px 2px 0px 0px' : '2px')};
+  border-radius: ${(props) => (props.status === 'error' ? '3px 3px 0px 0px' : '3px')};
   position: relative;
   box-sizing: border-box;
   min-height: 4.7rem;
