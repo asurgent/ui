@@ -84,7 +84,7 @@ const Heatmap = ({
 
   const myColor = d3
     .scaleLinear()
-    .domain([Number.MIN_VALUE, Math.ceil(maxValue)])
+    .domain([0, steps - 1])
     .range([theme.ruby50 || 'white', color || theme.ruby800]);
 
   const legendCategories = useMemo(() => [...Array(steps)].map((_, i) => {
@@ -93,7 +93,7 @@ const Heatmap = ({
     return {
       upperBound,
       lowerBound,
-      color: myColor(upperBound),
+      color: myColor(i),
     };
   }), [maxValue, myColor, steps]);
 
