@@ -101,7 +101,7 @@ const DropdownMenu = ({
                   email={email}
                   href={imageLink}
                 />
-                <div class="meta">
+                <div className="meta">
                   <b>{name}</b>
                   <small>{email}</small>
                   <small>{customerName}</small>
@@ -125,7 +125,7 @@ const DropdownMenu = ({
                         navigationList={navigationList}
                       />
                     )}
-                    <div class="wrapper">
+                    <div className="wrapper">
                       <Button.Plain onClick={onLogout}>
                         <U.CreateItem>
                           <Icon.ExitToApp className="exit-icon" fontSize="large" />
