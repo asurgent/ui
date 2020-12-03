@@ -32,11 +32,12 @@ export const Count = styled.div`
     align-items: center;
     justify-content: flex-start;
     flex-direction: row;
-    padding: .8rem 0 2.4rem 0;
+    padding: .8rem 2.4rem 2.4rem;
     
     ${Plain} {
       width: 10rem;
       font-size: 1.2rem;
+      white-space: nowrap;
     
       .label {
         display: flex;
@@ -90,6 +91,7 @@ export const Row = styled.div`
   display: grid;
   width: fit-content;
   min-width: 100%;
+  padding: 0 2.4rem;
   grid-column-gap: 0.8rem;
   grid-template-columns: ${({ headerList, equalSize }) => {
     const columnSize = 'minmax(50px, 1fr)';
