@@ -49,6 +49,7 @@ export const primaryModal = () => {
       title="Modal Title"
       onClose={action('Close action')}
       withoutHeader={boolean('withoutHeader', false)}
+      transparent={boolean('Transparent', false)}
     >
       <p>Hello</p>
       <Form.Primary form={formData} />
