@@ -23,3 +23,18 @@ export const ring = () => (
 ring.story = {
   name: 'Ring',
 };
+
+export const bar = () => (
+  <div style={{ margin: '2rem', height: '300px' }}>
+    <Progress.Bar
+      progress={number('Progress', 75)}
+      height={text('Height', '300px')}
+      width={text('Width', '2px')}
+      showNumber={boolean('Show number', true)}
+    />
+  </div>
+);
+
+bar.story = {
+  name: 'Bar',
+};
