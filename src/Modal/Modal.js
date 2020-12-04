@@ -21,6 +21,7 @@ const propTypes = {
   withoutHeader: PropTypes.bool,
   isOpen: PropTypes.bool.isRequired,
   transparent: PropTypes.bool,
+  style: PropTypes.instanceOf(Object),
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
@@ -34,6 +35,7 @@ const defaultProps = {
   fullscreen: false,
   onClose: () => {},
   transparent: false,
+  style: {},
   children: null,
 };
 
@@ -56,12 +58,13 @@ class Modal extends Component {
       fullscreen,
       withActionbar,
       transparent,
+      style,
     } = this.props;
 
     return ReactDOM.createPortal(
       <Transition.FadeIn isVisible={isOpen} timeout={50}>
         <C.Overlay>
-          <C.Modal fullscreen={fullscreen} transparent={transparent}>
+          <C.Modal fullscreen={fullscreen} transparent={transparent} style={style}>
             { !withoutHeader && (
             <C.Close onClick={onClose}>
               <Icon.Close fontSize="large" />
