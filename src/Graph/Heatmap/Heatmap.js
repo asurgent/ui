@@ -138,7 +138,7 @@ const Heatmap = ({
   const squareWidth = svgGroupWidth / weeks - 2;
   return (
     <div ref={groupRef} style={{ width: '100%' }}>
-      <svg id="svg" style={{ height: '100%', width: '100%' }} preserveAspectRatio="none">
+      <svg id="svg" preserveAspectRatio="none">
         <C.Group id="group">
           <Squares
             data={filledData}
