@@ -123,9 +123,9 @@ export const heatmap = () => (
   <div style={{
     padding: '2.4rem 3.6rem',
     border: '1px solid #dadada',
-    width: 'max-content',
     borderRadius: '5px',
     marginTop: '20rem',
+    width: '100%',
   }}
   >
     <Graph.Heatmap

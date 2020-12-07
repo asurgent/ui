@@ -1,5 +1,5 @@
 import React, {
-  useEffect, useMemo, useRef,
+  useEffect, useMemo, useRef, useLayoutEffect, useState,
 } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
@@ -52,6 +52,25 @@ const defaultProps = {
   endDate: moment().endOf('year'),
 };
 
+const useSvgGroupSize = (ref) => {
+  const [size, setSize] = useState(0);
+
+  useLayoutEffect(() => {
+    const updateSize = () => {
+      if (ref?.current) {
+        const { width } = ref?.current.getBoundingClientRect();
+        setSize(width);
+      }
+    };
+
+    window.addEventListener('resize', updateSize);
+    updateSize();
+
+    return () => window.removeEventListener('resize', updateSize);
+  }, [ref]);
+  return size;
+};
+
 const Heatmap = ({
   data,
   steps,
@@ -68,6 +87,7 @@ const Heatmap = ({
   theme,
 }) => {
   const monthTextRef = useRef(null);
+  const groupRef = useRef(null);
 
   const values = useMemo(() => (data?.length > 0 ? data.map((c) => c.value) : null), [data]);
   const maxValue = useMemo(() => (values ? Math.max(...values) : null), [values]);
@@ -113,9 +133,12 @@ const Heatmap = ({
     return <p>{t('noData', 'asurgentui')}</p>;
   }
 
+  const svgGroupWidth = useSvgGroupSize(groupRef);
+  const weeks = d3.utcSunday.count(new Date(startDate), new Date(endDate));
+  const squareWidth = svgGroupWidth / weeks - 2;
   return (
-    <>
-      <svg id="svg" preserveAspectRatio="none">
+    <div ref={groupRef} style={{ width: '100%' }}>
+      <svg id="svg" style={{ height: '100%', width: '100%' }} preserveAspectRatio="none">
         <C.Group id="group">
           <Squares
             data={filledData}
@@ -123,7 +146,7 @@ const Heatmap = ({
             endDate={endDate}
             valueLabel={valueLabel}
             onDateClick={onDateClick}
-            cellSize={cellSize}
+            cellSize={squareWidth}
             cellPadding={cellPadding}
             cellRadius={cellRadius}
             emptyColor={emptyColor}
@@ -136,7 +159,7 @@ const Heatmap = ({
               startDate={startDate}
               endDate={endDate}
               legendCategories={legendCategories}
-              cellSize={cellSize}
+              cellSize={squareWidth}
               cellPadding={cellPadding}
               cellRadius={cellRadius}
             />
@@ -144,7 +167,7 @@ const Heatmap = ({
         </C.Group>
       </svg>
       <C.Tooltip id="tooltip" />
-    </>
+    </div>
   );
 };
 
