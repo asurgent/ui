@@ -18,7 +18,7 @@ const propTypes = {
   color: PropTypes.string,
   emptyColor: PropTypes.string,
   theme: PropTypes.instanceOf(Object),
-  cellSize: PropTypes.number,
+  // cellSize: PropTypes.number,
   cellPadding: PropTypes.number,
   cellRadius: PropTypes.number,
   valueLabel: PropTypes.string,
@@ -42,7 +42,7 @@ const defaultProps = {
   color: null,
   emptyColor: '#F2F2F2',
   theme: {},
-  cellSize: 18,
+  // cellSize: 18,
   cellRadius: 1,
   cellPadding: 2,
   valueLabel: 'something',
@@ -76,7 +76,7 @@ const Heatmap = ({
   steps,
   color,
   emptyColor,
-  cellSize,
+  // cellSize,
   cellRadius,
   cellPadding,
   valueLabel,
@@ -88,6 +88,8 @@ const Heatmap = ({
 }) => {
   const monthTextRef = useRef(null);
   const groupRef = useRef(null);
+  const svgRef = useRef(null);
+  const containerRef = useRef(null);
 
   const values = useMemo(() => (data?.length > 0 ? data.map((c) => c.value) : null), [data]);
   const maxValue = useMemo(() => (values ? Math.max(...values) : null), [values]);
@@ -118,14 +120,12 @@ const Heatmap = ({
   }), [colorScale, maxValue, steps]);
 
   useEffect(() => {
-    if (data && legendCategories) {
-      const svg = d3.select('#svg');
+    if (data && legendCategories && svgRef?.current) {
+      const { width } = containerRef.current.getBoundingClientRect();
+      const { height } = groupRef.current.getBoundingClientRect();
 
-      const { width, height } = svg
-        .select('g').node().getBoundingClientRect();
-
-      svg.attr('width', width)
-        .attr('height', height);
+      svgRef.current.setAttribute('width', width);
+      svgRef.current.setAttribute('height', height);
     }
   }, [data, legendCategories]);
 
@@ -133,20 +133,23 @@ const Heatmap = ({
     return <p>{t('noData', 'asurgentui')}</p>;
   }
 
-  const svgGroupWidth = useSvgGroupSize(groupRef);
-  const weeks = d3.utcSunday.count(new Date(startDate), new Date(endDate));
-  const squareWidth = svgGroupWidth / weeks - 2;
+  const svgGroupWidth = useSvgGroupSize(containerRef);
+  const weeks = d3.utcSunday.count(startDate, endDate);
+  const squareWidth = svgGroupWidth === 0
+    ? cellPadding
+    : (svgGroupWidth / (weeks) - cellPadding);
+
   return (
-    <div ref={groupRef} style={{ width: '100%' }}>
-      <svg id="svg" preserveAspectRatio="none">
-        <C.Group id="group">
+    <div ref={containerRef}>
+      <svg preserveAspectRatio="none" ref={svgRef}>
+        <C.Group ref={groupRef}>
           <Squares
             data={filledData}
             startDate={startDate}
             endDate={endDate}
             valueLabel={valueLabel}
             onDateClick={onDateClick}
-            cellSize={squareWidth}
+            cellSize={Math.abs(squareWidth)}
             cellPadding={cellPadding}
             cellRadius={cellRadius}
             emptyColor={emptyColor}

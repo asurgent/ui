@@ -121,11 +121,11 @@ export const lineGraph = () => (
 
 export const heatmap = () => (
   <div style={{
-    padding: '2.4rem 3.6rem',
+    /* padding: '2.4rem 3.6rem', */
     border: '1px solid #dadada',
     borderRadius: '5px',
     marginTop: '20rem',
-    width: '100%',
+    width: '350px',
   }}
   >
     <Graph.Heatmap
@@ -138,7 +138,7 @@ export const heatmap = () => (
       cellRadius={number('Cell radius', 1)}
       onDateClick={(d) => action('Clicked!')(d)}
       showLegend={() => true}
-      startDate={text('Start date', moment('2020-01-01'))}
+      startDate={text('Start date', moment('2020-10-01'))}
       endDate={text('End date', moment('2020-12-31'))}
     />
   </div>
