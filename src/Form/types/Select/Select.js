@@ -51,7 +51,7 @@ const Select = forwardRef((props, ref) => {
   } = props;
 
   const input = createRef();
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(props.value || '');
 
   useImperativeHandle(ref, () => ({
     value: () => parseOutput(value),
@@ -65,8 +65,9 @@ const Select = forwardRef((props, ref) => {
   }, [props.value, props.options]);
 
   useEffect(() => {
-    // only set default value if doesn't have empty option
-    if (!placeholder) {
+    // only set "default value" if it doesnt have a inital prop-value AND
+    // not uses a placeholder like 'Select me'
+    if (!placeholder && !props.value) {
       setValue(getDefaultSort(options));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

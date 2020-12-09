@@ -28,7 +28,7 @@ const Bool = forwardRef((props, ref) => {
   const { name, label, disabled } = props;
   const { t } = translation;
 
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(`${props.value}`);
   const parser = useCallback((val) => (val === 'true'), []);
 
   const options = useMemo(() => [
