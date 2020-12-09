@@ -92,36 +92,6 @@ export const defaultForm = () => {
       placeholder: 'Add something cool',
       value: ['first', 'second'],
     },
-    someObject: {
-      type: 'objectsingle',
-      label: 'Some Object',
-      tooltip: 'hejhej',
-      className: 'asdf',
-      showContainerError: false,
-      validator: {
-        conditions: () => {
-          const validation = {
-            someName: { valid: (val) => val === 'hej', errorMessage: 'not "hej"' },
-            someNumber: { valid: (val) => typeof val === 'number' && val === 2, errorMessage: 'not 1' },
-          };
-          return validation;
-        },
-      },
-      options: {
-        someName: { label: 'translatedLabel1', type: 'string' },
-        someOtherName: { label: 'translatedLabel2', type: 'string', disabled: () => true },
-        someSelect: {
-          label: 'translatedLabel3',
-          type: 'select',
-          placeholder: 'select',
-          options: [
-            { label: 'someLabel1', value: 'someValue1' },
-            { label: 'someLabel2', value: 'someValue2' }],
-        },
-        someNumber: { label: 'translatedLabel4', type: 'number', render: () => true },
-      },
-      value: {},
-    },
     someObjectMultiple: {
       type: 'objectmultiple',
       label: null,
