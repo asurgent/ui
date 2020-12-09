@@ -43,7 +43,7 @@ const Text = forwardRef((props, ref) => {
     disabled,
   } = props;
   const input = createRef();
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(props.value || '');
 
   useImperativeHandle(ref, () => ({
     value: () => parseOutput(value),
