@@ -142,7 +142,7 @@ export const defaultForm = () => {
       label: 'Im true or false',
       tooltipPosition: 'left',
       tooltip: 'Select me',
-      value: true,
+      value: false,
       disabled: () => false,
     },
     someNumber: {
