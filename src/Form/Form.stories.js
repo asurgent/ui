@@ -76,7 +76,13 @@ export const defaultForm = () => {
       type: 'text',
       label: 'Some Text',
       tooltip: 'hejhej',
-      disabled: () => true,
+      value: 'text text',
+    },
+    someTextArea: {
+      type: 'textarea',
+      label: 'Some Text',
+      tooltip: 'hejhej',
+      value: 'text area text',
     },
     someTextMultiple: {
       type: 'textmultiple',
@@ -84,6 +90,7 @@ export const defaultForm = () => {
       tooltip: 'hejhej',
       parseOutput: (r) => r.filter((entry) => entry !== ''),
       placeholder: 'Add something cool',
+      value: ['first', 'second'],
     },
     someObject: {
       type: 'objectsingle',
@@ -113,6 +120,7 @@ export const defaultForm = () => {
         },
         someNumber: { label: 'translatedLabel4', type: 'number', render: () => true },
       },
+      value: {},
     },
     someObjectMultiple: {
       type: 'objectmultiple',
@@ -129,8 +137,8 @@ export const defaultForm = () => {
         },
       },
       options: {
-        someName: { label: 'translatedMultiLabel1', type: 'string' },
-        someOtherName: { label: 'translatedMultiLabel2', type: 'string', render: () => false },
+        someName: { label: 'must be "hello" to add', type: 'string' },
+        someOtherName: { label: 'translatedMultiLabel2', type: 'string', render: () => true },
         someNumber: { label: 'translatedMultiLabel3', type: 'number' },
         someSelect: {
           label: 'translatedMultiLabel3',
@@ -142,6 +150,12 @@ export const defaultForm = () => {
           ],
         },
       },
+      value: [{
+        someName: 'someName',
+        someNumber: 23,
+        someOtherName: 'someOtherName',
+        someSelect: 'someValue3',
+      }],
     },
     email: {
       type: 'email',
@@ -151,21 +165,22 @@ export const defaultForm = () => {
         condition: (v) => v === 'asdf',
         errorMessage: 'I did not validate',
       },
-      value: '',
+      value: 'my@email.com',
     },
     imABoolean: {
       type: 'bool',
       label: 'Im true or false',
       tooltipPosition: 'left',
       tooltip: 'Select me',
-      value: false,
-      disabled: () => true,
+      value: true,
+      disabled: () => false,
     },
     someNumber: {
       type: 'number',
       label: 'Some Number (max 100)',
       tooltip: 'hejhej',
       maxValue: 100,
+      value: 50,
     },
     someRadioGroup: {
       type: 'radiogroup',
@@ -174,6 +189,7 @@ export const defaultForm = () => {
         { label: 'label1', value: 'value1' },
         { label: 'label2', value: 'value2' },
       ],
+      value: 'value2',
     },
     someRadioGroup2: {
       type: 'radiogroup',
@@ -184,17 +200,20 @@ export const defaultForm = () => {
       ],
       render: (s) => s.someRadioGroup && s.someRadioGroup === 'value2',
       tooltip: 'tooltip',
+      value: 'value3',
     },
     someSelect: {
       type: 'select',
       label: 'Select with empty option',
+      placeholder: 'select me',
       options: [
         { value: '1', label: 'First option' },
         { value: '2', label: 'Second option' },
         { value: '3', label: 'Third option' },
       ],
+      props: {},
       tooltip: 'tooltip',
-      placeholder: 'select',
+      value: '2', // no value -> shows placeholder
     },
     someSelect2: {
       type: 'select',
@@ -205,27 +224,40 @@ export const defaultForm = () => {
         { value: '3', label: 'Third option' },
       ],
       tooltip: 'tooltip',
+      value: '3', // no value -> sets first option
     },
     someFilterSelectSingle: {
       type: 'filterselect',
       label: 'Some Filterselect (single)',
-      options: [],
       tooltip: 'tooltip',
       props: {
         searchPlaceholder: 'Search in me plz',
       },
       placeholder: 'Select me',
+      options: [
+        { value: '1', label: 'one' },
+        { value: '2', label: 'two' },
+        '3',
+        '4',
+      ],
+      value: '3',
     },
     someFilterSelectMulti: {
       type: 'filterselect',
       label: 'Some Filterselect (multi)',
-      options: [],
       tooltip: 'tooltip',
       parseOutput: (r) => r.join(','),
       props: {
         multiSelect: true,
         searchPlaceholder: 'Search in me plz',
       },
+      options: [
+        { value: '1', label: 'one' },
+        { value: '2', label: 'two' },
+        '3',
+        '4',
+      ],
+      value: ['3', '4'],
     },
     someDate: {
       type: 'datepicker',
@@ -233,73 +265,10 @@ export const defaultForm = () => {
       render: (spec) => spec.someText && spec.someText.length < 10,
       tooltip: 'tooltip',
       label: 'Some date',
+      value: '2020-12-24',
     },
   });
   const renderErrors = boolean('render errors', false);
-
-  useEffect(() => {
-    formData.updateFields([
-      { name: 'someText', value: 'Good bye' },
-      { name: 'someTextMultiple', value: ['Good', 'bye'] },
-      {
-        name: 'someObject',
-        value: {
-          someName: 'hello',
-          someOtherName: 'goodbye',
-          someNumber: 1,
-          someSelect: 'someValue2',
-        },
-      },
-      { name: 'email', value: 'mail@asdf.se' },
-      {
-        name: 'someObjectMultiple',
-        value: [{
-          someName: 'goodbye',
-          someOtherName: 'whats up',
-          someNumber: 1,
-          someSelect: 'someValue3',
-        },
-        {
-          someName: 'hello',
-          someOtherName: 'cya',
-          someNumber: 3,
-          someSelect: 'someValue4',
-        }],
-      },
-      { name: 'someNumber', value: 10 },
-      { name: 'someRadioGroup', value: 'value1' },
-      { name: 'someRadioGroup2', value: 'value4' },
-      { name: 'someSelect', value: '' },
-      { name: 'someSelect2', options: [{ value: '6', label: 'six' }, { value: '7', label: 'seven' }] },
-      {
-        name: 'someFilterSelectSingle',
-        options: [
-          { value: '1', label: 'one' },
-          { value: '2', label: 'two' },
-          '3',
-          '4',
-        ],
-        value: '3',
-      },
-      {
-        name: 'someFilterSelectMulti',
-        value: ['1 First option First option First option First option', '0 Zero option', '2 Second option'],
-        options: [
-          '2 Second option',
-          '3 Third option',
-          '4 Fourth option',
-          '5 Fifth option',
-          '6 Sixth option',
-          '7 Seventh option',
-          '8 Eigth option',
-          '9 Ninth option',
-          '10 Tenth option',
-        ],
-      },
-      { name: 'someDate', value: moment().startOf('day').toISOString() },
-    ]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     if (renderErrors) {

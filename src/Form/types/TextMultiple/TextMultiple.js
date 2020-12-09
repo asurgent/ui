@@ -36,7 +36,7 @@ const TextMultiple = forwardRef((props, ref) => {
     validator,
   } = props;
 
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState(props.value || []);
   const [newEntry, setNewEntry] = useState('');
 
   useEffect(() => {
