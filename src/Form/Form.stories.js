@@ -189,12 +189,12 @@ export const defaultForm = () => {
       type: 'select',
       label: 'Select with default value',
       options: [
-        { value: '1', label: 'First option' },
+        { value: '1', label: 'First option', disabled: true },
         { value: '2', label: 'Second option' },
         { value: '3', label: 'Third option' },
       ],
       tooltip: 'tooltip',
-      value: '3', // no value -> sets first option
+      // value: '3', // no value -> sets first option
     },
     someFilterSelectSingle: {
       type: 'filterselect',
