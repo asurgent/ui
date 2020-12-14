@@ -26,15 +26,15 @@ const defaultProps = {
   disabled: () => false,
 };
 
-const getDefaultSort = (sortKeys) => {
-  if (Array.isArray(sortKeys) && sortKeys.length > 0) {
-    const sort = sortKeys.find(({ default: sortByDefault }) => sortByDefault);
+const getDefaultValue = (options) => {
+  if (Array.isArray(options) && options.length > 0) {
+    const defaultOption = options.find(({ default: isDefault }) => isDefault);
 
-    if (sort) {
-      return sort.value;
+    if (defaultOption) {
+      return defaultOption.value;
     }
 
-    const first = sortKeys[0];
+    const first = options.find((option) => !option.disabledOption);
     return first.value;
   }
 
@@ -68,7 +68,7 @@ const Select = forwardRef((props, ref) => {
     // only set "default value" if it doesnt have a inital prop-value AND
     // not uses a placeholder like 'Select me'
     if (!placeholder && !props.value) {
-      setValue(getDefaultSort(options));
+      setValue(getDefaultValue(options));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
