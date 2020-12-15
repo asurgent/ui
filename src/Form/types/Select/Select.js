@@ -34,7 +34,7 @@ const getDefaultValue = (options) => {
       return defaultOption.value;
     }
 
-    const first = options.find((option) => !option.disabledOption);
+    const first = options.find((option) => !option.disabled);
     return first.value;
   }
 
@@ -93,7 +93,7 @@ const Select = forwardRef((props, ref) => {
             value: optionValue,
             label: optionLabel,
             key,
-            disabledOption,
+            disabled: disabledOption,
             disabledPreFix,
             disabledPostFix,
           }) => (
