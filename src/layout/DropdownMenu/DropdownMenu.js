@@ -57,6 +57,7 @@ const DropdownMenu = ({
       label: (translations.languageSelector || 'Language'),
       value: selectedLanguage,
       options: languages,
+      noLabel: true,
     },
   });
 
@@ -67,7 +68,8 @@ const DropdownMenu = ({
           <Transition.FadeInSlideDown isVisible={isOpen} timeout={80}>
             <U.DesktopMenu>
               <div className="user-details">
-                <b>{email}</b>
+                <b>{name}</b>
+                <small>{email}</small>
                 <small>{customerName}</small>
               </div>
               <Form.Primary
@@ -77,11 +79,12 @@ const DropdownMenu = ({
                 }}
               />
               <U.DesktopMenuFooter>
-                <Button.Transparent onClick={onLogout}>
-                  <Icon.ExitToApp className="exit-icon" fontSize="large" style={{ marginRight: `${0.8}rem`, marginBottom: `${0.2}rem` }} />
-                  {' '}
-                  {translations.logout || 'Sign out'}
-                </Button.Transparent>
+                <Button.Plain onClick={onLogout}>
+                  <U.CreateItem>
+                    <Icon.ExitToApp className="exit-icon" fontSize="large" />
+                    <U.CreateTitle>{translations.logout || 'Sign out'}</U.CreateTitle>
+                  </U.CreateItem>
+                </Button.Plain>
               </U.DesktopMenuFooter>
             </U.DesktopMenu>
           </Transition.FadeInSlideDown>
@@ -93,18 +96,16 @@ const DropdownMenu = ({
               <Button.Icon className="close" onClick={onClose} icon={<Icon.Close fontSize="large" />} />
               <div className="user">
                 <UserImage.Circle
-                  size="10rem"
+                  size="6rem"
                   name={name}
                   email={email}
                   href={imageLink}
                 />
-                <b>{email}</b>
-                <small>{customerName}</small>
-                <Button.Transparent onClick={onLogout}>
-                  <Icon.ExitToApp className="exit-icon" fontSize="large" />
-                  {' '}
-                  {translations.logout || 'Sign out'}
-                </Button.Transparent>
+                <div className="meta">
+                  <b>{name}</b>
+                  <small>{email}</small>
+                  <small>{customerName}</small>
+                </div>
               </div>
 
               { mobileMenuTab === MENU_TAB && (
@@ -124,6 +125,14 @@ const DropdownMenu = ({
                         navigationList={navigationList}
                       />
                     )}
+                    <div className="wrapper">
+                      <Button.Plain onClick={onLogout}>
+                        <U.CreateItem>
+                          <Icon.ExitToApp className="exit-icon" fontSize="large" />
+                          <U.CreateTitle>{translations.logout || 'Sign out'}</U.CreateTitle>
+                        </U.CreateItem>
+                      </Button.Plain>
+                    </div>
                   </div>
                 </>
               )}

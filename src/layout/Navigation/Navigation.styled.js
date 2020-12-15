@@ -4,31 +4,46 @@ import { NavLink } from 'react-router-dom';
 export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: left;
+    align-items: stretch;
+    width: 100%;
+    padding: .8rem 0;
+    border-bottom: 1px solid ${({ theme }) => theme.gray300};
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
-        width: 100%;
+        padding: 0;
+        border-bottom: none;
     }
 `;
 
 export const NavigationItem = styled(NavLink)`
     display: flex;
-    justify-content: left;
+    justify-content: flex-start;
     align-items: center;
     text-decoration: none;
     position: relative;
-    margin: ${({ theme }) => (theme.menuItemsSpacing || '0')} 0;
-    padding: ${({ theme }) => (theme.menuItemsSpacing || '1.6rem 0')};
-    font-size: ${({ theme }) => (theme.menuFontSize || 'inherit')};
-    color: ${({ theme }) => theme.linkColor};
+    padding: 1.2rem 2.4rem;
+    color: ${({ theme }) => theme.black};
     width: 100%;
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         justify-content: center;
+        color: ${({ theme }) => theme.white};
+        padding: 1.6rem 0;
+    }
+
+    &:hover {
+        background: ${({ theme }) => theme.gray100};
+        @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
+            background: inherit;
+        }
     }
 
     &.active {
-        background: ${({ theme }) => theme.activeBackground};
-        color: ${({ theme }) => theme.activeLinkColor};
+        background: ${({ theme }) => theme.gray100};
+        font-weight: 700;
+        @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
+            background: ${({ theme }) => theme.activeBackground};
+            color: ${({ theme }) => theme.activeLinkColor};
+        }
     }
 
     span {
