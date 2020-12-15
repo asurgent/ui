@@ -41,6 +41,18 @@ export const Center = styled.div`
     padding: 1.6rem;
 `;
 
+export const ClickShield = styled.div`
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: ${({ isVisible }) => (isVisible ? 'block' : 'none')}
+`;
+
 export const Dropdown = styled.div`
     position: fixed;
     top: -1px;
