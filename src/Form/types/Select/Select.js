@@ -26,15 +26,15 @@ const defaultProps = {
   disabled: () => false,
 };
 
-const getDefaultSort = (sortKeys) => {
-  if (Array.isArray(sortKeys) && sortKeys.length > 0) {
-    const sort = sortKeys.find(({ default: sortByDefault }) => sortByDefault);
+const getDefaultValue = (options) => {
+  if (Array.isArray(options) && options.length > 0) {
+    const defaultOption = options.find(({ default: isDefault }) => isDefault);
 
-    if (sort) {
-      return sort.value;
+    if (defaultOption) {
+      return defaultOption.value;
     }
 
-    const first = sortKeys[0];
+    const first = options.find((option) => !option.disabled);
     return first.value;
   }
 
@@ -51,7 +51,7 @@ const Select = forwardRef((props, ref) => {
   } = props;
 
   const input = createRef();
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(props.value || '');
 
   useImperativeHandle(ref, () => ({
     value: () => parseOutput(value),
@@ -65,9 +65,10 @@ const Select = forwardRef((props, ref) => {
   }, [props.value, props.options]);
 
   useEffect(() => {
-    // only set default value if doesn't have empty option
-    if (!placeholder) {
-      setValue(getDefaultSort(options));
+    // only set "default value" if it doesnt have a inital prop-value AND
+    // not uses a placeholder like 'Select me'
+    if (!placeholder && !props.value) {
+      setValue(getDefaultValue(options));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -92,7 +93,7 @@ const Select = forwardRef((props, ref) => {
             value: optionValue,
             label: optionLabel,
             key,
-            disabledOption,
+            disabled: disabledOption,
             disabledPreFix,
             disabledPostFix,
           }) => (

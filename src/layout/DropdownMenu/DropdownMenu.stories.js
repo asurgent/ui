@@ -4,7 +4,7 @@ import {
 } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import {
-  Dashboard, Explore, Comment, LibraryBooks,
+  Dashboard, Explore, Message, LibraryBooks,
 } from '@material-ui/icons';
 import DropdownMenu from './index';
 
@@ -26,7 +26,7 @@ export const dropdownMenu = () => (
           label: 'Explore', tooltip: 'Explore Environment', icon: (<Explore fontSize="large" />), link: '/',
         },
         {
-          label: 'Tickets', tooltip: 'View tickets', icon: (<Comment fontSize="large" />), link: '/',
+          label: 'Tickets', tooltip: 'View tickets', icon: (<Message fontSize="large" />), link: '/',
         },
         {
           label: 'Documentation', tooltip: 'Documentation', icon: (<LibraryBooks fontSize="large" />), link: '/',

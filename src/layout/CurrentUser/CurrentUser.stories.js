@@ -2,7 +2,7 @@ import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import {
-  Dashboard, Explore, Comment, LibraryBooks,
+  Dashboard, Explore, Message, LibraryBooks,
 } from '@material-ui/icons';
 import CurrentUser from './index';
 
@@ -17,7 +17,7 @@ export const currentUser = () => (
           label: 'Dashbaord', tooltip: 'Dashboard', active: true, icon: (<Dashboard fontSize="large" />),
         },
         { label: 'Explore', tooltip: 'Explore Environment', icon: (<Explore fontSize="large" />) },
-        { label: 'Tickets', tooltip: 'View tickets', icon: (<Comment fontSize="large" />) },
+        { label: 'Tickets', tooltip: 'View tickets', icon: (<Message fontSize="large" />) },
         { label: 'Docs', tooltip: 'Documentation', icon: (<LibraryBooks fontSize="large" />) },
       ]}
       languages={[{ value: 'en', label: 'English' }, { value: 'sv', label: 'Swedish' }]}

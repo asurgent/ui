@@ -35,7 +35,7 @@ const RadioGroup = forwardRef((props, ref) => {
     parseOutput,
     disabled,
   } = props;
-  const [val, setVal] = useState(null);
+  const [val, setVal] = useState(props.value || null);
   const input = createRef();
 
   useEffect(() => {
