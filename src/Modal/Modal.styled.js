@@ -42,6 +42,7 @@ export const Content = styled.div`
   flex-direction: column;
   overflow-y: auto;
   margin-top: 3.2rem;
+  justify-content: center;
   margin-bottom: ${({ withActionbar }) => (withActionbar ? '5.6rem' : '0')};
 
   @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
