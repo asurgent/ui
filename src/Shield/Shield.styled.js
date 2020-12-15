@@ -7,7 +7,7 @@ export const Overlay = styled.div`
     left: 0;
     bottom: 0;
     right: 0;
-    z-index: 3;
+    z-index: 1;
     position: fixed;
     background: ${({ theme, backgroundColor, dark }) => {
     if (typeof backgroundColor === 'function') {

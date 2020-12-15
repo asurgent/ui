@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const TooltipWrapper = styled.div`
   top: 0;
   left: 0;
-  z-index: 4;
+  z-index: 2;
   position: fixed;
   background-color: #161616;
   padding: .8rem;
