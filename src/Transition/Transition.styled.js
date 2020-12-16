@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const FadeIn = styled.div`
     width: 100%;
     position: relative;
-    z-index: 1;
+    z-index: 2;
     transition: ${({ timeout }) => `${parseInt(timeout, 10) / 1000}s`};
     opacity: ${({ state }) => {
     switch (state) {

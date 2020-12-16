@@ -6,7 +6,6 @@ import * as Spinner from '../../../Spinner';
 import * as Form from '../../../Form';
 import * as VirtualRender from '../../../VirtualRender';
 import * as Button from '../../../Button';
-import * as Shield from '../../../Shield';
 import * as C from './FilterCategory.styled';
 import * as Transition from '../../../Transition';
 import FilterItem from './FilterItem';
@@ -55,18 +54,18 @@ const FilterCategory = (props) => {
   return (
     <C.FilterWrapper>
       <Button.Filter onClick={() => groupHook.setOpen(true)}>{label}</Button.Filter>
-      <Shield.OutsideEvent onClick={() => groupHook.setOpen(false)}>
-        <C.ShieldTargetWrapper>
-          <Transition.FadeInSlideDownOnDesktop isVisible={groupHook.isOpen()} timeout={80}>
-            <C.Dropdown>
-              {
+      <C.ShieldTargetWrapper>
+        <C.ClickShield isVisible={groupHook.isOpen()} onClick={() => groupHook.setOpen(false)} />
+        <Transition.FadeInSlideDownOnDesktop isVisible={groupHook.isOpen()} timeout={80}>
+          <C.Dropdown>
+            {
               tableHook.isFilterLoading && (
                 <C.Center>
                   <Spinner.Ring size={24} color={theme.blue400} />
                 </C.Center>
               )
             }
-              {
+            {
               !tableHook.isFilterLoading && filterHook.isReady && (
                 <>
                   <C.Search>
@@ -104,11 +103,10 @@ const FilterCategory = (props) => {
                 </>
               )
             }
-              <Button.Icon className="close" onClick={() => groupHook.setOpen(false)} icon={<Icon.Close fontSize="large" />} />
-            </C.Dropdown>
-          </Transition.FadeInSlideDownOnDesktop>
-        </C.ShieldTargetWrapper>
-      </Shield.OutsideEvent>
+            <Button.Icon className="close" onClick={() => groupHook.setOpen(false)} icon={<Icon.Close fontSize="large" />} />
+          </C.Dropdown>
+        </Transition.FadeInSlideDownOnDesktop>
+      </C.ShieldTargetWrapper>
     </C.FilterWrapper>
   );
 };
