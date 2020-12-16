@@ -94,6 +94,7 @@ export const Header = styled.div`
   margin-bottom: .8rem;
   display: flex;
   max-width: 700px;
+  justify-content: space-between;
 `;
 
 export const TooltipIcon = styled(HelpOutline)`
