@@ -7,8 +7,8 @@ export const hasValue = (val) => {
   if (val?.constructor === Object && Object.entries(val).length === 0) {
     return false;
   }
-  // null/undefined
-  if (val === null || val === undefined) {
+  // null/undefined/empty-string
+  if (val === null || val === undefined || val === '') {
     return false;
   }
   return true;
