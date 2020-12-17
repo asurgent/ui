@@ -7,6 +7,7 @@ import * as C from './Squares.styled';
 import translation from './Squares.translation';
 import { getColor } from '../../helpers';
 import { addMonthText, addWeekdays } from './helpers';
+import { marginFromWeekdays } from '../../constants';
 
 const { t } = translation;
 
@@ -103,9 +104,9 @@ const Squares = ({
         .attr(
           'x',
           (d) => {
-            const firstOfYear = startDate ? moment(startDate) : moment(d.date).startOf('year');
-            const week = d3.utcSunday.count(firstOfYear, d.date);
-            return week * cellSize + 40;
+            const firstDate = startDate ? moment(startDate) : moment(d.date).startOf('year');
+            const week = d3.utcSunday.count(firstDate, d.date);
+            return (week * cellSize) + cellPadding + marginFromWeekdays;
           },
         )
         .attr('y', (d) => (moment(d.date).isoWeekday() - 1) * cellSize + 20)

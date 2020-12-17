@@ -9,6 +9,7 @@ import translation from './Heatmap.translation';
 import * as C from './Heatmap.styled';
 import Squares from './components/Squares';
 import Legend from './components/Legend';
+import { marginFromWeekdays } from './constants';
 
 const { t } = translation;
 
@@ -101,10 +102,10 @@ const Heatmap = ({
     return { date: moment(d), value: null };
   });
 
-  const colorScale = d3
+  const colorScale = useMemo(() => d3
     .scaleLinear()
     .domain([0, steps - 1])
-    .range([theme.ruby50 || 'white', color || theme.ruby800]);
+    .range([theme.ruby50 || 'white', color || theme.ruby800]), [color, steps, theme.ruby50, theme.ruby800]);
 
   const legendCategories = useMemo(() => [...Array(steps)].map((_, i) => {
     const upperBound = (maxValue / steps) * (i + 1);
@@ -116,25 +117,23 @@ const Heatmap = ({
     };
   }), [colorScale, maxValue, steps]);
 
-  useEffect(() => {
-    if (data && legendCategories && svgRef?.current) {
-      const { width } = containerRef.current.getBoundingClientRect();
-      const { height } = groupRef.current.getBoundingClientRect();
+  const svgGroupWidth = useSvgGroupSize(containerRef);
 
-      svgRef.current.setAttribute('width', width);
-      svgRef.current.setAttribute('height', height);
-    }
-  }, [data, legendCategories]);
+  const weeks = useMemo(() => d3.utcSunday.count(startDate, endDate), [endDate, startDate]);
+  const cellSize = svgGroupWidth === 0 ? cellPadding
+    : (svgGroupWidth / (weeks + 1) - (marginFromWeekdays / (weeks + 1)));
+
+  useEffect(() => {
+    const { height } = groupRef?.current?.getBoundingClientRect();
+    const { width } = containerRef?.current?.getBoundingClientRect();
+
+    svgRef.current.setAttribute('width', width);
+    svgRef.current.setAttribute('height', height);
+  }, [cellSize]);
 
   if (!data || !legendCategories) {
     return <p>{t('noData', 'asurgentui')}</p>;
   }
-
-  const svgGroupWidth = useSvgGroupSize(containerRef);
-  const weeks = d3.utcSunday.count(startDate, endDate);
-  const squareWidth = svgGroupWidth === 0
-    ? cellPadding
-    : (svgGroupWidth / (weeks) - cellPadding);
 
   return (
     <div ref={containerRef}>
@@ -146,7 +145,7 @@ const Heatmap = ({
             endDate={endDate}
             valueLabel={valueLabel}
             onDateClick={onDateClick}
-            cellSize={Math.abs(squareWidth)}
+            cellSize={cellSize}
             cellPadding={cellPadding}
             cellRadius={cellRadius}
             emptyColor={emptyColor}
@@ -159,7 +158,7 @@ const Heatmap = ({
               startDate={startDate}
               endDate={endDate}
               legendCategories={legendCategories}
-              cellSize={squareWidth}
+              cellSize={cellSize}
               cellPadding={cellPadding}
               cellRadius={cellRadius}
             />

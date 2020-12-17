@@ -50,7 +50,6 @@ const Legend = ({
       legendContainer
         .attr(
           'transform',
-          // cellSize * vertical day-squares + top-margin
           `translate(${centerOfLastSquare()}, ${(cellSize * 7) + 30})`,
         );
       legendContainer
@@ -59,7 +58,6 @@ const Legend = ({
         .join('rect')
         .attr('fill', (d) => d.color)
         .attr('x', (_, i) => widthOfSquares - 10 + (cellSize * i))
-        .attr('y', 2)
         .attr('width', cellSize - cellPadding)
         .attr('height', cellSize - cellPadding)
         .attr('rx', cellRadius)
@@ -69,8 +67,8 @@ const Legend = ({
 
   return (
     <C.Legend ref={legendRef}>
-      <C.Text x={widthOfSquares - 50} y={13}>{t('less', 'asurgentui')}</C.Text>
-      <C.Text x={0} y={13}>{t('more', 'asurgentui')}</C.Text>
+      <C.Text x={widthOfSquares - 50} y={3 + (cellSize / 2)}>{t('less', 'asurgentui')}</C.Text>
+      <C.Text x={0} y={3 + (cellSize / 2)}>{t('more', 'asurgentui')}</C.Text>
     </C.Legend>
   );
 };
