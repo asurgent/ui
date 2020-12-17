@@ -7,7 +7,7 @@ export const Modal = styled.div`
   left: 0;
   right: 0;
   overflow: hidden;
-  background: ${({ theme }) => theme.white};
+  background: ${({ theme, transparent }) => (transparent ? 'transparent' : theme.white)};
   display: flex;
   flex-direction: column;
   padding: 1.6rem;
@@ -42,6 +42,7 @@ export const Content = styled.div`
   flex-direction: column;
   overflow-y: auto;
   margin-top: 3.2rem;
+  justify-content: center;
   margin-bottom: ${({ withActionbar }) => (withActionbar ? '5.6rem' : '0')};
 
   @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {

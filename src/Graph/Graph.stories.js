@@ -1,9 +1,14 @@
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
+import {
+  withKnobs, text, number,
+} from '@storybook/addon-knobs';
+import moment from 'moment';
+import { action } from '@storybook/addon-actions';
 import * as Graph from './index';
 import data from './data';
 import data2 from './data2';
 import data3 from './data3';
+import data4 from './data4';
 
 export default {
   title: 'UI Components|Graph',
@@ -112,4 +117,27 @@ export const lineGraph = () => (
       <Graph.LineGraph data={data3} xProp="timestamp" markerLines={[{ value: 0.7, title: 'one', color: '#C62929' }]} />
     </div>
   </>
+);
+
+export const heatmap = () => (
+  <div style={{
+    border: '1px solid #dadada',
+    borderRadius: '5px',
+    marginTop: '20rem',
+    width: '500px',
+  }}
+  >
+    <Graph.Heatmap
+      data={data4}
+      steps={number('Steps', 5)}
+      color={text('Color', '#C6403B')}
+      emptyColor={text('Empty color', '#F2F2F2')}
+      cellPadding={number('Cell padding', 2)}
+      cellRadius={number('Cell radius', 1)}
+      onDateClick={(d) => action('Clicked!')(d)}
+      showLegend={() => true}
+      startDate={text('Start date', moment('2020-08-05'))}
+      endDate={text('End date', moment('2020-12-27'))}
+    />
+  </div>
 );

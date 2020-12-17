@@ -46,7 +46,6 @@ export const buildFilterObjectFromStateString = (stateString) => {
 
         return groups;
       }, {});
-
     return unminify;
   } catch (e) {
     return {};
@@ -56,6 +55,7 @@ export const buildFilterObjectFromStateString = (stateString) => {
 /**
  * @param  {Object} selectedFilters - State-object that will be parsed to our state string format
  */
+
 export const buildFilterStateString = (selectedFilters) => {
   // Simplyfy the filter-state object in order to minimize the URL/Query-param length
   // example Output { customer_id: [['1122', 'eq']]}
@@ -73,7 +73,6 @@ export const buildFilterStateString = (selectedFilters) => {
 
       return groups;
     }, {});
-
   /*
     If we have any selected filters we will preform
     1. Stringify the minified object
@@ -132,11 +131,11 @@ export const buildFilterQuery = (
       const filterGroup = selectedFilters[groupKey];
       const outputGroupKey = parseRequestKey(groupKey);
 
-      const filterTypeList = (collection, type, condition, joinOpperator) => {
+      const filterTypeList = (collection, type, joinOpperator) => {
         // Find all selected filters that match a certain type, eg. EXCLUDE.
         const typeList = filterGroup.filter((s) => s.state === type);
         // Build filter string
-        const filterString = (filterItem) => `${outputGroupKey} ${condition} '${parseRequestItem(filterItem, groupKey)}'`;
+        const filterString = (filterItem) => `${outputGroupKey} ${type} '${parseRequestItem(filterItem, groupKey)}'`;
         // Build a new list with filter fomrated filter items
         const filterList = typeList.reduce((incl, s) => [...incl, filterString(s)], []);
 
@@ -149,13 +148,12 @@ export const buildFilterQuery = (
       if (filterGroup && filterGroup.length > 0) {
         const filterTypes = []; // list that can contain two types of filters, equals or not-equals
 
-        filterTypeList(filterTypes, INCLUDE, 'eq', 'or');
-        filterTypeList(filterTypes, EXCLUDE, 'ne', 'and');
+        filterTypeList(filterTypes, INCLUDE, 'or');
+        filterTypeList(filterTypes, EXCLUDE, 'and');
         const join = filterJoiner(filterTypes, 'and');
 
         filters.push(join);
       }
-
       return filters;
     }, []);
 
