@@ -46,17 +46,6 @@ export const Count = styled.div`
       
         svg {
           margin-left: .8rem;
-          visibility: hidden;
-          opacity: 0;
-        }
-      }
-      &:hover {
-        .label {
-          svg {
-            visibility:visible;
-            opacity: 1;
-            transition: opacity .15s ease-in-out; 
-          }
         }
       }
     }
