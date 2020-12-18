@@ -136,7 +136,7 @@ export const heatmap = () => (
       cellRadius={number('Cell radius', 1)}
       onDateClick={(d) => action('Clicked!')(d)}
       showLegend={() => true}
-      startDate={text('Start date', moment('2020-08-05'))}
+      startDate={text('Start date', moment('2020-01-05'))}
       endDate={text('End date', moment('2020-12-27'))}
     />
   </div>

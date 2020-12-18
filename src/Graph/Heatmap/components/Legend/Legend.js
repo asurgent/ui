@@ -24,9 +24,8 @@ const { t } = translation;
 const centerOfLastSquare = () => {
   try {
     const lastSquare = d3.select('#squares rect:last-child');
-    const x = parseInt(lastSquare.attr('x'), 10);
-    const width = parseInt(lastSquare.attr('width'), 10);
-    return x - (width / 2);
+    const x = parseInt(lastSquare.node().getAttribute('x'), 10);
+    return x;
   } catch (e) {
     return 0;
   }
@@ -40,9 +39,7 @@ const Legend = ({
   steps,
 }) => {
   const legendRef = useRef(null);
-
   const widthOfSquares = -(steps * cellSize);
-
   useEffect(() => {
     if (legendRef.current) {
       const legendContainer = d3.select(legendRef.current);
@@ -50,7 +47,8 @@ const Legend = ({
       legendContainer
         .attr(
           'transform',
-          `translate(${centerOfLastSquare()}, ${(cellSize * 7) + 30})`,
+          `translate(${centerOfLastSquare() - 20}, ${(cellSize * 7) + 30})`,
+          // 20: appr width of less-text, 30: top-margin
         );
       legendContainer
         .selectAll('rect')
