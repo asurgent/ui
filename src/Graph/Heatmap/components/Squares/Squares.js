@@ -25,6 +25,7 @@ const propTypes = {
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
   ]),
+  useDateToggle: PropTypes.func,
   theme: PropTypes.instanceOf(Object),
 };
 
@@ -38,6 +39,7 @@ const defaultProps = {
   emptyColor: '#F2F2F2',
   legendCategories: null,
   startDate: moment().startOf('year'),
+  useDateToggle: () => false,
   theme: {},
 };
 
@@ -51,6 +53,7 @@ const Squares = ({
   cellRadius,
   emptyColor,
   legendCategories,
+  useDateToggle,
   theme,
 }) => {
   const squareRef = useRef(null);
@@ -93,8 +96,10 @@ const Squares = ({
         .on('mouseleave', mouseleave)
         .on('click', (d) => {
           onDateClick(d);
-          if (d.value !== null) {
-            toggleSelected(d);
+          if (useDateToggle()) {
+            if (d.value !== null) {
+              toggleSelected(d);
+            }
           }
         });
 
@@ -133,18 +138,7 @@ const Squares = ({
         addWeekdays({ ref: weekdayRef.current, cellSize });
       }
     }
-  }, [cellPadding,
-    cellRadius,
-    cellSize,
-    data,
-    emptyColor,
-    legendCategories,
-    monthTextRef,
-    onDateClick,
-    selected,
-    startDate,
-    theme.gray100,
-    valueLabel]);
+  }, [cellPadding, cellRadius, cellSize, data, emptyColor, legendCategories, monthTextRef, onDateClick, selected, startDate, theme.gray100, useDateToggle, valueLabel]);
 
   return (
     <>

@@ -137,6 +137,7 @@ export const heatmap = () => (
       onDateClick={(d) => action('Clicked!')(d)}
       showLegend={() => true}
       startDate={text('Start date', moment('2020-01-05'))}
+      useDateToggle={() => false}
       endDate={text('End date', moment('2020-12-27'))}
     />
   </div>

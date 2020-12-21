@@ -23,6 +23,7 @@ const propTypes = {
   cellRadius: PropTypes.number,
   valueLabel: PropTypes.string,
   onDateClick: PropTypes.func,
+  useDateToggle: PropTypes.func,
   showLegend: PropTypes.func,
   startDate: PropTypes.oneOfType([
     PropTypes.string,
@@ -46,6 +47,7 @@ const defaultProps = {
   cellPadding: 2,
   valueLabel: 'something',
   onDateClick: () => null,
+  useDateToggle: () => false,
   showLegend: () => true,
   startDate: moment().startOf('year'),
   endDate: moment().endOf('year'),
@@ -79,6 +81,7 @@ const Heatmap = ({
   cellPadding,
   valueLabel,
   onDateClick,
+  useDateToggle,
   showLegend,
   startDate,
   endDate,
@@ -145,6 +148,7 @@ const Heatmap = ({
             endDate={endDate}
             valueLabel={valueLabel}
             onDateClick={onDateClick}
+            useDateToggle={useDateToggle}
             cellSize={cellSize}
             cellPadding={cellPadding}
             cellRadius={cellRadius}
