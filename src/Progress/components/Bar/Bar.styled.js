@@ -10,7 +10,6 @@ export const FilledPart = styled.div`
   background: ${({ theme }) => theme.blue900};
   height: ${({ progress }) => `${progress}%`};
   width: 100%;
-  transition: all 0.5s ease;
 `;
 
 export const Container = styled.div`

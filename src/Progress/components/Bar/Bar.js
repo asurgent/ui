@@ -20,7 +20,7 @@ const Bar = ({
   progress, showNumber, width, height,
 }) => (
   <C.Container height={height}>
-    {showNumber && <T.P.Main style={{ margin: '0 2rem 0 0' }}>{`${progress}%`}</T.P.Main>}
+    {showNumber && <T.P.Main style={{ margin: '0 2rem 0 0', width: '4rem' }}>{`${progress}%`}</T.P.Main>}
     <C.ProgessBar width={width}>
       <C.FilledPart progress={progress} />
     </C.ProgessBar>

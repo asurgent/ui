@@ -138,7 +138,20 @@ const Squares = ({
         addWeekdays({ ref: weekdayRef.current, cellSize });
       }
     }
-  }, [cellPadding, cellRadius, cellSize, data, emptyColor, legendCategories, monthTextRef, onDateClick, selected, startDate, theme.gray100, useDateToggle, valueLabel]);
+  }, [
+    cellPadding,
+    cellRadius,
+    cellSize,
+    data,
+    emptyColor,
+    legendCategories,
+    monthTextRef,
+    onDateClick,
+    selected,
+    startDate,
+    theme.gray100,
+    useDateToggle,
+    valueLabel]);
 
   return (
     <>
