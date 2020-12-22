@@ -52,7 +52,7 @@ const FilterCategory = (props) => {
   });
 
   return (
-    <C.FilterWrapper>
+    <C.FilterWrapper active={groupHook.hasSelectedOptions()}>
       <Button.Filter onClick={() => groupHook.setOpen(true)}>{label}</Button.Filter>
       <C.ShieldTargetWrapper>
         <C.ClickShield isVisible={groupHook.isOpen()} onClick={() => groupHook.setOpen(false)} />
