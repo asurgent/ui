@@ -1,7 +1,17 @@
 import styled from 'styled-components';
 
 export const FilterWrapper = styled.div`
-    background-color: ${({ active }) => (active ? 'orange' : 'white')}
+    position: relative;
+    &:before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        height: 2px;
+        width: 100%;
+        border-radius: 0 0 3px 3px;
+        background-color: ${({ active }) => (active ? ({ theme }) => theme.blue800 : 'transparent')};
+        z-index: 1;
+    }
 `;
 
 export const ShieldTargetWrapper = styled.div``;
