@@ -129,22 +129,33 @@ export const subnavigationBlock = () => (
   <Block.SubnavigationBlock
     title="Hello"
     navigationList={[
-      iWontRender && {
-        label: 'On call',
-        path: 'http://google.com',
-        icon: '',
-        isActive: () => true,
-        iconStyle: { background: 'pink' },
-        navigationStyle: { background: 'magenta' },
-        labelStyle: { background: 'orange' },
-      },
-      {
-        label: 'Other stuff', path: 'http://apple.com', icon: '',
-      },
-      {
-        label: 'Hidden stuff', path: 'http://apple.com', icon: '', render: () => false,
-      },
-    ]}
+      [
+        {
+          label: 'Other stuff', path: 'http://apple.com',
+        },
+        {
+          label: 'Hidden stuff', path: 'http://apple.com', render: () => false,
+        },
+      ],
+      [
+        {
+          row: (<div>hello</div>),
+        },
+        iWontRender && {
+          label: 'On call',
+          path: 'http://google.com',
+          isActive: true,
+          iconStyle: { background: 'pink' },
+          navigationStyle: { background: 'magenta' },
+          labelStyle: { background: 'orange' },
+        },
+        {
+          label: 'Im an active one', path: 'http://apple.com', isActive: true,
+        },
+        {
+          label: 'Hidden stuff', path: 'http://apple.com', render: () => false,
+        },
+      ]]}
   >
     <h2>I am title</h2>
     <Block.Bordered noShadow withPadding>

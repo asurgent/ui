@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
 import * as T from '../../../Typography';
 
 export const Wrapper = styled.div`
@@ -15,7 +14,7 @@ export const Wrapper = styled.div`
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {
         overflow-x: unset;
-        grid-column-gap: 1.6rem;
+        grid-column-gap: 4rem;
         grid-template-columns: 25rem minmax(20rem , 101rem);
         grid-template-areas:
             ". title"
@@ -33,7 +32,19 @@ export const Content = styled.div`
     overflow-x: auto;
     
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {
-            overflow-x: unset;
+        overflow-x: unset;
+    }
+`;
+
+export const Group = styled.div`
+    display: flex;
+    flex-direction: column;
+    border: 1px solid ${({ theme }) => theme.gray300};
+    border-radius: 3px;
+    margin-top: 1.6rem;
+
+    &:first-of-type{
+        margin-top: 0;
     }
 `;
 
@@ -43,28 +54,26 @@ export const Navigation = styled.div`
     flex-direction: column;
 `;
 
-export const NavigationItem = styled(NavLink)`
+export const NavigationItem = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 3.2rem;
+    height: 4rem;
     color: ${({ theme }) => theme.black};
     font-size: 1.6rem;
     line-height: 2rem;
     border-left: 2px solid transparent;
-    margin-bottom: .8rem;
+    border-bottom: 1px solid ${({ theme }) => theme.gray300};
+    padding-left: 1.6rem;
+
+    &:last-of-type {
+        border-bottom: none;
+    }
 
     &.active {
-        background-color: ${({ theme }) => theme.gray50};
-        border-color: #133A5D;
+        background-color: ${({ theme }) => theme.gray300};
         font-weight: bold;
     }
-`;
-
-export const Icon = styled.div`
-    display: flex;
-    margin-left: 1.6rem;
-    margin-right: 1.6rem;
 `;
 
 export const Label = styled.div``;
