@@ -86,6 +86,7 @@ Link.displayName = '@asurgent.ui.Button.Link';
 Link.displayName = '@asurgent.ui.Button.Pill';
 
 export {
+  withStyle,
   Primary,
   Secondary,
   Hollow,

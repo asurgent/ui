@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import { useLocation, NavLink } from 'react-router-dom';
 import * as Spinner from '../Spinner';
 import * as Tooltip from '../Tooltip/index';
 import * as Styles from './Button.styled';
 import {
-  isExternalLink, isInteralLink, isValidMail, fileSaver,
+  isExternalLink,
+  isInteralLink,
+  isValidMail,
+  fileSaver,
 } from './helper';
 
 const propTyps = {
@@ -26,13 +29,14 @@ const propTyps = {
   mailto: PropTypes.string,
   tooltip: PropTypes.string,
   className: PropTypes.string,
-  passLocationState: PropTypes.bool,
+  clearLocationState: PropTypes.bool,
   history: PropTypes.instanceOf(Object).isRequired,
   theme: PropTypes.instanceOf(Object).isRequired,
   renderStyle: PropTypes.instanceOf(Object).isRequired,
   type: PropTypes.string, // Add button[type="submit"] as an ovelay to native trigger in forms
   tooltipOrientation: PropTypes.string,
   style: PropTypes.instanceOf(Object),
+  renderContentWithoutWrapper: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -49,10 +53,11 @@ const defaultProps = {
   mailto: '',
   tooltip: null,
   className: '',
-  passLocationState: false,
+  clearLocationState: false,
   type: '',
   tooltipOrientation: 'middle',
   style: {},
+  renderContentWithoutWrapper: false,
 };
 
 const propTypesTooltip = {
@@ -110,7 +115,7 @@ const Button = (props) => {
     history,
     tooltip,
     tooltipOrientation,
-    passLocationState,
+    clearLocationState,
     className,
     theme,
     saveToFile,
@@ -118,10 +123,10 @@ const Button = (props) => {
     type,
     style,
     renderStyle: Component,
+    renderContentWithoutWrapper,
   } = props;
 
   const location = useLocation();
-  const isValidLink = (link && (isExternalLink(link) || isInteralLink(link)));
   const isValidMailto = mailto && (isValidMail(mailto));
   const tooltTipProps = { tooltip, tooltipOrientation };
 
@@ -136,13 +141,13 @@ const Button = (props) => {
         onClick(event);
       }
 
-      if (isValidLink && isInteralLink(link)) {
+      if (isInteralLink(link)) {
         event.preventDefault();
 
-        if (passLocationState) {
-          history.push(`${link}${location.search}`);
-        } else {
+        if (clearLocationState) {
           history.push(link);
+        } else {
+          history.push(`${link}${location.search}`);
         }
       }
     } else {
@@ -163,7 +168,7 @@ const Button = (props) => {
     <>
       {mainIcon && mainIcon }
       {iconLeft && <Styles.Spacer right>{iconLeft}</Styles.Spacer>}
-      <span className="label">{children}</span>
+      {renderContentWithoutWrapper ? children : <span className="label">{children}</span>}
       {iconRight && <Styles.Spacer left>{iconRight}</Styles.Spacer>}
       { loading && (
       <Styles.Spacer left data-testid="ring-spinner">
@@ -174,30 +179,41 @@ const Button = (props) => {
   );
 
   // If we pass a link/mailto, convert component to a-tag
-  if (isValidLink || isValidMailto) {
+  if (isExternalLink(link) || isValidMailto) {
     const Link = Component.withComponent('a');
     const upddatedAttrs = { ...attrs };
 
-    if (isValidLink) {
-      if (passLocationState) {
-        Object.assign(upddatedAttrs, {
-          href: `${link}${location.search}`,
-        });
-      } else {
-        Object.assign(upddatedAttrs, {
-          href: link,
-        });
-      }
-    } else if (isValidMailto) {
+    Object.assign(upddatedAttrs, {
+      href: link,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    });
+
+    if (isValidMailto) {
       Object.assign(upddatedAttrs, {
         href: `mailto:${mailto}`,
       });
     }
 
-    if (isExternalLink(link)) {
+    return (
+      <TooltipWrapper {...tooltTipProps}>
+        <Link {...upddatedAttrs}>
+          {content}
+        </Link>
+      </TooltipWrapper>
+    );
+  }
+  if (isInteralLink(link)) {
+    const Link = Component.withComponent(NavLink);
+    const upddatedAttrs = { ...attrs };
+
+    if (clearLocationState) {
       Object.assign(upddatedAttrs, {
-        target: '_blank',
-        rel: 'noopener noreferrer',
+        to: link,
+      });
+    } else {
+      Object.assign(upddatedAttrs, {
+        to: `${link}${location.search}`,
       });
     }
 
