@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Title = styled.div`
-    padding: 1.6rem .8rem;
+    padding: 1.6rem 1.6rem 1.6rem 0;
     font-family: "Poppins";
     font-style: normal;
     font-weight: normal;
