@@ -60,18 +60,20 @@ export const NavigationItem = styled.div`
     align-items: center;
     height: 4rem;
     color: ${({ theme }) => theme.black};
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     line-height: 2rem;
-    border-left: 2px solid transparent;
-    border-bottom: 1px solid ${({ theme }) => theme.gray300};
     padding-left: 1.6rem;
 
     &:last-of-type {
         border-bottom: none;
     }
 
+    &:hover {
+        background: ${({ theme }) => theme.gray50};
+    }
+
     &.active {
-        background-color: ${({ theme }) => theme.gray300};
+        background-color: ${({ theme }) => theme.gray100};
         font-weight: bold;
     }
 `;

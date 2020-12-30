@@ -63,7 +63,7 @@ export const CreateItem = styled.div`
     width: 100%;
 
     &:hover {
-        background: ${({ theme }) => theme.gray100};
+        background: ${({ theme }) => theme.gray50};
     }
 
     .create-icon {
