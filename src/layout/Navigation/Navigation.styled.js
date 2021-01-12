@@ -31,7 +31,7 @@ export const NavigationItem = styled(NavLink)`
     }
 
     &:hover {
-        background: ${({ theme }) => theme.gray100};
+        background: ${({ theme }) => theme.gray50};
         @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
             background: inherit;
         }

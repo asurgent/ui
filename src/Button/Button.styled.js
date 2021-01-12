@@ -293,7 +293,7 @@ export const Stretched = styled.div`
     flex: 1;
     display: flex;
     justify-content: space-between;
-    padding: 1.6rem .8rem;
+    padding: 1.6rem 0;
     border: none;
     color: ${({ theme }) => theme.blue900};
 

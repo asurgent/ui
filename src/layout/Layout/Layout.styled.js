@@ -58,6 +58,7 @@ export const Left = styled.div`
 `;
 
 export const Content = styled.div`
+    z-index: 0;
     display: grid;
     overflow: hidden;
     grid-template-rows: auto 1fr;
