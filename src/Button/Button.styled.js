@@ -38,7 +38,7 @@ export const Button = styled.div`
 
         font-family: 'Poppins', sans-serif;
         text-align: center;
-        letter-spacing: 0.13rem;
+        letter-spacing: 0.08rem;
         text-decoration: none;
         font-size: 1.4rem;
         text-transform: uppercase;
@@ -92,8 +92,8 @@ export const Spacer = styled.span`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: ${({ left }) => (left ? '.4rem' : 0)};
-    margin-right: ${({ right }) => (right ? '.4rem' : 0)};
+    margin-left: ${({ left }) => (left ? '.8rem' : 0)};
+    margin-right: ${({ right }) => (right ? '.8rem' : 0)};
 `;
 
 export const Plain = styled.div`
@@ -156,12 +156,15 @@ export const Link = styled.div`
     outline: none;
     margin: 0;
     padding: 0;
-    color: ${({ theme }) => theme.black};
-    text-decoration: underline;
+    color: ${({ theme }) => theme.blue800};
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+
+    &:hover {
+        text-decoration: underline;
+    }
 
     button {
         cursor: pointer;
@@ -196,7 +199,7 @@ export const Icon = styled.div`
     text-align: center;
     white-space: normal;
     font-weight: 500;
-    letter-spacing: 0.12rem;
+    letter-spacing: 0.08rem;
     text-transform: uppercase;
     text-decoration: none;
     font-size: 1.6rem;
@@ -281,7 +284,7 @@ export const CreateBlock = styled.div`
 
         font-family: 'Poppins', sans-serif;
         text-align: center;
-        letter-spacing: 0.13rem;
+        letter-spacing: 0.08rem;
         text-decoration: none;
         font-size: 1.4rem;
         text-transform: uppercase;
@@ -304,7 +307,7 @@ export const Stretched = styled.div`
 
         font-family: 'Poppins', sans-serif;
         text-align: center;
-        letter-spacing: 0.13rem;
+        letter-spacing: 0.08rem;
         text-decoration: none;
         font-size: 1.4rem;
         text-transform: uppercase;

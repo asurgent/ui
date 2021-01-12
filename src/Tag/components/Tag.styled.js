@@ -4,12 +4,13 @@ import * as Button from '../../Button/Button.styled';
 export const Default = styled.div`
     font-size: 1rem;
     line-height: 1rem;
-    border: 1px solid ${({ theme }) => theme.gray300};
+    border: 1px solid ${({ theme }) => theme.gold100};
     border-radius: 2px;
-    background: ${({ theme }) => theme.white};
+    background: ${({ theme }) => theme.gold100};
     display: flex;
     align-items: center;
     max-width: 100%;
+    font-weight: 700;
 
     .label {
         padding: .4rem;
