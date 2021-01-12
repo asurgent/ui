@@ -40,6 +40,7 @@ const NavGroup = ({ page }) => {
     isActive,
     navigationStyle,
     labelStyle,
+    clearLocationState = false,
   } = page;
 
   return (
@@ -48,6 +49,7 @@ const NavGroup = ({ page }) => {
       isActive={isActive}
       style={navigationStyle}
       renderContentWithoutWrapper
+      clearLocationState={clearLocationState}
     >
       <C.Label style={labelStyle}>{label}</C.Label>
     </NavigationItem>
