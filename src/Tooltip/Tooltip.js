@@ -9,6 +9,7 @@ const tooltipRoot = document.getElementById('tooltip-root');
 
 const propTypes = {
   children: PropTypes.oneOfType([
+    PropTypes.string,
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element),
   ]),

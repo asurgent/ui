@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const TooltipWrapper = styled.div`
+export const TooltipWrapper = styled.span`
   top: 0;
   left: 0;
   z-index: 3;
@@ -42,6 +42,6 @@ export const TooltipWrapper = styled.div`
 }
 `;
 
-export const TooltipParent = styled.div`
+export const TooltipParent = styled.span`
   background: transparent!important;
 `;
