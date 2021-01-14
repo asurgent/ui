@@ -157,14 +157,17 @@ const generateRows = (props, components) => props.rowData
         const clickRow = props.clickRowConfigutation(rowData);
         if (typeof clickRow === 'object') {
           const {
-            link, onClick, clearLocationState = false,
+            link,
+            onClick,
+            clearStateKeys = [],
           } = clickRow;
+
           const linkRow = (
             <Button.Plain
               key={rowData.id}
+              clearStateKeys={clearStateKeys}
               link={link}
               onClick={onClick}
-              clearLocationState={clearLocationState}
             >
               {row}
             </Button.Plain>

@@ -21,7 +21,10 @@ const defaultProps = {
 };
 
 const propTypesNavGroup = {
-  page: PropTypes.instanceOf(Object),
+  page: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.instanceOf(Object),
+  ]),
 };
 
 const defaultPropsNavGroup = {
@@ -40,7 +43,7 @@ const NavGroup = ({ page }) => {
     isActive,
     navigationStyle,
     labelStyle,
-    clearLocationState = false,
+    clearStateKeys = [],
   } = page;
 
   return (
@@ -49,7 +52,7 @@ const NavGroup = ({ page }) => {
       isActive={isActive}
       style={navigationStyle}
       renderContentWithoutWrapper
-      clearLocationState={clearLocationState}
+      clearStateKeys={clearStateKeys}
     >
       <C.Label style={labelStyle}>{label}</C.Label>
     </NavigationItem>
