@@ -48,7 +48,7 @@ const useTableHook = (payloadOverrides) => {
   const [filterData, setFilterData] = useState([]);
   const [requestFailed, setRequestFailed] = useState('');
 
-  const getQueryParamKey = (queryPrefix) => `${queryPrefix ? `${queryPrefix}_q` : 'q'}`;
+  const getQueryParamKey = (queryPrefix) => `${queryPrefix ? `${queryPrefix}` : 'q'}`;
 
   // Is triggered whenever the state is changed by a state-changing hook as pagination, filter etc.
   useEffect(() => {

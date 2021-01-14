@@ -9,6 +9,7 @@ import {
   isInteralLink,
   isValidMail,
   fileSaver,
+  cleanUpSearchString,
 } from './helper';
 
 const propTyps = {
@@ -29,7 +30,7 @@ const propTyps = {
   mailto: PropTypes.string,
   tooltip: PropTypes.string,
   className: PropTypes.string,
-  clearLocationState: PropTypes.bool,
+  clearStateKeys: PropTypes.instanceOf(Array),
   history: PropTypes.instanceOf(Object).isRequired,
   theme: PropTypes.instanceOf(Object).isRequired,
   renderStyle: PropTypes.instanceOf(Object).isRequired,
@@ -53,7 +54,7 @@ const defaultProps = {
   mailto: '',
   tooltip: null,
   className: '',
-  clearLocationState: false,
+  clearStateKeys: [],
   type: '',
   tooltipOrientation: 'middle',
   style: {},
@@ -115,7 +116,7 @@ const Button = (props) => {
     history,
     tooltip,
     tooltipOrientation,
-    clearLocationState,
+    clearStateKeys,
     className,
     theme,
     saveToFile,
@@ -143,12 +144,9 @@ const Button = (props) => {
 
       if (isInteralLink(link)) {
         event.preventDefault();
+        const search = cleanUpSearchString(clearStateKeys, location);
 
-        if (clearLocationState) {
-          history.push(link);
-        } else {
-          history.push(`${link}${location.search}`);
-        }
+        history.push(`${link}${search}`);
       }
     } else {
       event.preventDefault();
@@ -207,15 +205,10 @@ const Button = (props) => {
     const Link = Component.withComponent(NavLink);
     const upddatedAttrs = { ...attrs };
 
-    if (clearLocationState) {
-      Object.assign(upddatedAttrs, {
-        to: link,
-      });
-    } else {
-      Object.assign(upddatedAttrs, {
-        to: `${link}${location.search}`,
-      });
-    }
+    const search = cleanUpSearchString(clearStateKeys, location);
+    Object.assign(upddatedAttrs, {
+      to: `${link}${search}`,
+    });
 
     return (
       <TooltipWrapper {...tooltTipProps}>
