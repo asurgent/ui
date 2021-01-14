@@ -21,7 +21,10 @@ const defaultProps = {
 };
 
 const propTypesNavGroup = {
-  page: PropTypes.instanceOf(Object),
+  page: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.instanceOf(Object),
+  ]),
 };
 
 const defaultPropsNavGroup = {
