@@ -46,7 +46,7 @@ const TableFilter = ({ filterHook, tableHook, className }) => (
     </C.Filters>
     {filterHook.hasActiveFilter() && (
       <Button.Plain onClick={() => filterHook.clearFilter()} disabled={tableHook.isLoading}>
-        <Icons.HighlightOff fontSize="16" />
+        <Icons.HighlightOff />
         {` ${t('clear', 'asurgentui')}`}
       </Button.Plain>
     )}

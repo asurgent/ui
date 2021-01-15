@@ -4,16 +4,44 @@ export const isExternalLink = (link) => (link || '').toString().match(/^(http(s)
 export const isInteralLink = (link) => (link || '').toString().match(/^(\/)/);
 export const isValidMail = (link) => (link || '').toString().match(/^(.+@.+\.[a-zAZ]+)$/);
 
-export const cleanUpSearchString = (clearStateKeys, location) => {
-  const search = queryString.parse(location.search);
+export const buildTableState = (overrideState, paramKey) => Object
+  .entries(overrideState[paramKey])
+  .reduce((state, [key, value]) => {
+    if (key === 'search') {
+      return `${state} ${encodeURIComponent(value)}`;
+    }
 
-  const result = Object.keys(search)
+    if (key === 'filter') {
+      return `${state} ${key}:${btoa(JSON.stringify(value))}`;
+    }
+
+    return `${state} ${key}:${value}`;
+  }, '').trim();
+
+export const cleanUpSearchString = (clearStateKeys, overrideTableState, location) => {
+  const search = queryString.parse(location.search);
+  const paramSet = { ...search, ...overrideTableState };
+
+  const result = Object.keys(paramSet)
     .reduce((acc, paramKey) => {
+      // Logic that builds and overrides a state-key for table-state
+      // It has to be returned first since its to override a existing state
+      if (overrideTableState?.[paramKey]) {
+        return {
+          ...acc,
+          [paramKey]: buildTableState(overrideTableState, paramKey),
+        };
+      }
+
+      // State-keys that we want to remove from location.search
       if (Array.isArray(clearStateKeys) && clearStateKeys.includes(paramKey)) {
         return acc;
       }
 
-      return { ...acc, [paramKey]: search[paramKey] };
+      return {
+        ...acc,
+        [paramKey]: paramSet[paramKey],
+      };
     }, {});
 
   return `?${queryString.stringify(result)}`;
