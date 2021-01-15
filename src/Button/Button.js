@@ -128,6 +128,7 @@ const Button = (props) => {
     renderStyle: Component,
     renderContentWithoutWrapper,
     setTableState,
+    ...passingProps
   } = props;
 
   const location = useLocation();
@@ -163,6 +164,7 @@ const Button = (props) => {
     onClick: handleClick,
     // onMouseDown needed because of onBlur on form fields
     onMouseDown: (e) => e.preventDefault(),
+    ...passingProps,
   };
 
   const content = (
