@@ -5,10 +5,10 @@ import translation from './Squares.translation';
 const { t } = translation;
 
 export const addMonthText = ({
-  ref, data, startDate, cellSize,
+  ref, primaryData, startDate, cellSize,
 }) => {
   const monthText = d3.select(ref);
-  const firsts = data.filter((d) => moment(d.date).date() === 1);
+  const firsts = primaryData.filter((d) => moment(d.date).date() === 1);
   monthText
     .selectAll('text')
     .data(firsts)

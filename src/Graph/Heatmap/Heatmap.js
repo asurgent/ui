@@ -14,7 +14,8 @@ import { marginFromWeekdays } from './constants';
 const { t } = translation;
 
 const propTypes = {
-  data: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
+  primaryData: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
+  secondaryData: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   steps: PropTypes.number,
   color: PropTypes.string,
   emptyColor: PropTypes.string,
@@ -22,8 +23,6 @@ const propTypes = {
   cellPadding: PropTypes.number,
   cellRadius: PropTypes.number,
   valueLabel: PropTypes.string,
-  onDateClick: PropTypes.func,
-  useDateToggle: PropTypes.func,
   showLegend: PropTypes.func,
   startDate: PropTypes.oneOfType([
     PropTypes.string,
@@ -38,7 +37,8 @@ const propTypes = {
 };
 
 const defaultProps = {
-  data: null,
+  primaryData: [],
+  secondaryData: [],
   steps: 5,
   color: null,
   emptyColor: '#F2F2F2',
@@ -46,8 +46,6 @@ const defaultProps = {
   cellRadius: 1,
   cellPadding: 2,
   valueLabel: 'something',
-  onDateClick: () => null,
-  useDateToggle: () => false,
   showLegend: () => true,
   startDate: moment().startOf('year'),
   endDate: moment().endOf('year'),
@@ -73,37 +71,35 @@ const useSvgGroupSize = (ref) => {
 };
 
 const Heatmap = ({
-  data,
+  primaryData,
+  secondaryData,
   steps,
   color,
   emptyColor,
   cellRadius,
   cellPadding,
   valueLabel,
-  onDateClick,
-  useDateToggle,
   showLegend,
   startDate,
   endDate,
   theme,
 }) => {
+  console.log('primaryData', primaryData);
+  console.log('secondaryData', secondaryData);
   const monthTextRef = useRef(null);
   const groupRef = useRef(null);
   const svgRef = useRef(null);
   const containerRef = useRef(null);
 
-  const values = useMemo(() => (data?.length > 0 ? data.map((c) => c.value) : null), [data]);
-  const maxValue = useMemo(() => (values ? Math.max(...values) : null), [values]);
+  // const values = useMemo(() => (data?.length > 0 ? data.map((c) => c.value) : null), [data]);
+  const maxValue = useMemo(() => {
+    if (primaryData.find((d) => d.value)) {
+      const values = primaryData.map((d) => d.value);
 
-  const dateRange = d3.timeDays(startDate, moment(endDate).add(1, 'days'));
-
-  const filledData = dateRange.map((d) => {
-    const inpDate = data.find((dat) => moment(dat.date).isSame(moment(d), 'day'));
-    if (inpDate) {
-      return { ...inpDate, date: moment(inpDate.date).startOf('day') };
+      return Math.max(...values);
     }
-    return { date: moment(d), value: null };
-  });
+    return null;
+  }, [primaryData]);
 
   const colorScale = useMemo(() => d3
     .scaleLinear()
@@ -119,10 +115,9 @@ const Heatmap = ({
       color: colorScale(i),
     };
   }), [colorScale, maxValue, steps]);
+  const weeks = useMemo(() => d3.utcSunday.count(startDate, endDate), [endDate, startDate]);
 
   const svgGroupWidth = useSvgGroupSize(containerRef);
-
-  const weeks = useMemo(() => d3.utcSunday.count(startDate, endDate), [endDate, startDate]);
   const cellSize = svgGroupWidth === 0 ? cellPadding
     : (svgGroupWidth / (weeks + 1) - (marginFromWeekdays / (weeks + 1)));
 
@@ -134,21 +129,22 @@ const Heatmap = ({
     svgRef.current.setAttribute('height', height);
   }, [cellSize]);
 
+  /*
+
   if (!data || !legendCategories) {
     return <p>{t('noData', 'asurgentui')}</p>;
-  }
+  } */
 
   return (
     <div ref={containerRef}>
       <svg preserveAspectRatio="none" ref={svgRef}>
         <C.Group ref={groupRef}>
           <Squares
-            data={filledData}
+            primaryData={primaryData}
+            secondaryData={secondaryData}
             startDate={startDate}
             endDate={endDate}
             valueLabel={valueLabel}
-            onDateClick={onDateClick}
-            useDateToggle={useDateToggle}
             cellSize={cellSize}
             cellPadding={cellPadding}
             cellRadius={cellRadius}
@@ -156,17 +152,21 @@ const Heatmap = ({
             legendCategories={legendCategories}
             monthTextRef={monthTextRef}
           />
+
+          {/*
+
           {showLegend() && (
-            <Legend
-              steps={steps}
-              startDate={startDate}
-              endDate={endDate}
-              legendCategories={legendCategories}
-              cellSize={cellSize}
-              cellPadding={cellPadding}
-              cellRadius={cellRadius}
-            />
+          <Legend
+            steps={steps}
+            startDate={startDate}
+            endDate={endDate}
+            legendCategories={legendCategories}
+            cellSize={cellSize}
+            cellPadding={cellPadding}
+            cellRadius={cellRadius}
+          />
           )}
+            */}
         </C.Group>
       </svg>
       <C.Tooltip id="tooltip" />

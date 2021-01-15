@@ -8,7 +8,7 @@ import * as Graph from './index';
 import data from './data';
 import data2 from './data2';
 import data3 from './data3';
-import data4 from './data4';
+import sampleData from './data4';
 
 export default {
   title: 'UI Components|Graph',
@@ -119,26 +119,30 @@ export const lineGraph = () => (
   </>
 );
 
-export const heatmap = () => (
-  <div style={{
-    border: '1px solid #dadada',
-    borderRadius: '5px',
-    marginTop: '20rem',
-    width: '500px',
-  }}
-  >
-    <Graph.Heatmap
-      data={data4}
-      steps={number('Steps', 5)}
-      color={text('Color', '#C6403B')}
-      emptyColor={text('Empty color', '#F2F2F2')}
-      cellPadding={number('Cell padding', 2)}
-      cellRadius={number('Cell radius', 1)}
-      onDateClick={(d) => action('Clicked!')(d)}
-      showLegend={() => true}
-      startDate={text('Start date', moment('2020-01-05'))}
-      useDateToggle={() => false}
-      endDate={text('End date', moment('2020-12-27'))}
-    />
-  </div>
-);
+export const heatmap = () => {
+  const primaryData = sampleData(100);
+  const secondaryData = sampleData(100);
+  console.clear();
+  return (
+    <div style={{
+      border: '1px solid #dadada',
+      borderRadius: '5px',
+      marginTop: '20rem',
+      width: '90vw',
+    }}
+    >
+      <Graph.Heatmap
+        primaryData={primaryData}
+        secondaryData={secondaryData}
+        steps={number('Steps', 5)}
+        color={text('Color', '#C6403B')}
+        emptyColor={text('Empty color', '#F2F2F2')}
+        cellPadding={number('Cell padding', 2)}
+        cellRadius={number('Cell radius', 1)}
+        showLegend={() => true}
+        startDate={text('Start date', moment('2020-01-05'))}
+        endDate={text('End date', moment('2020-12-27'))}
+      />
+    </div>
+  );
+};
