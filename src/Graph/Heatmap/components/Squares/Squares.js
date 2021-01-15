@@ -129,15 +129,10 @@ const Squares = ({
   const squareGroup = d3.select(squareRef.current);
 
   const days = useMemo(() => moment(endDate).diff(moment(startDate), 'days') + 1, [endDate, startDate]);
-  console.log('days', days);
-
   const reduceToObject = (arr) => arr.reduce((acc, cur) => ({ ...acc, [cur.date]: cur.value }), {});
 
   const primObj = useMemo(() => reduceToObject(primaryData), [primaryData]);
   const secObj = useMemo(() => reduceToObject(secondaryData), [secondaryData]);
-
-  console.log('primObj', primObj);
-  console.log('secObj', secObj);
 
   const allSquares = [...Array(days)].map((_, index) => {
     const curDate = moment(moment(startDate).add(index, 'days')).format('YYYY-MM-DD');
@@ -147,31 +142,28 @@ const Squares = ({
       secValue: secObj[curDate],
     };
   });
-  console.log(allSquares);
 
   // TODO: move text groups to separate components
   // Add weekdays
-  const weekdayText = useMemo(() => {
+  useEffect(() => {
     if (primaryData && weekdayRef.current) {
-      return addWeekdays({
+      addWeekdays({
         ref: weekdayRef.current,
         cellSize,
       });
     }
-    return null;
   }, [cellSize, primaryData]);
 
   // Add months
-  const monthText = useMemo(() => {
+  useEffect(() => {
     if (primaryData && monthTextRef.current) {
-      return addMonthText({
+      addMonthText({
         ref: monthTextRef.current,
         primaryData,
         startDate,
         cellSize,
       });
     }
-    return null;
   }, [cellSize, primaryData, startDate]);
 
   const squares = useMemo(() => {
@@ -200,7 +192,7 @@ const Squares = ({
     }
   }, [emptyColor, legendCategories, squareGroup, squares]);
 
-  /* // Add radius to squares
+  // Add radius to squares
   useEffect(() => {
     if (squareGroup) {
       addRadiusToSquares(squares, cellRadius);
@@ -214,7 +206,7 @@ const Squares = ({
       }))
       .on('mouseover', () => mouseover(tooltip))
       .on('mouseleave', () => mouseleave(tooltip));
-  }, [cellSize, squareGroup, squares, tooltip, valueLabel]); */
+  }, [cellSize, squareGroup, squares, tooltip, valueLabel]);
 
   return (
     <>

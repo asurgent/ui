@@ -3,12 +3,11 @@ import {
   withKnobs, text, number,
 } from '@storybook/addon-knobs';
 import moment from 'moment';
-import { action } from '@storybook/addon-actions';
 import * as Graph from './index';
 import data from './data';
 import data2 from './data2';
 import data3 from './data3';
-import sampleData from './data4';
+import heatData from './data4';
 
 export default {
   title: 'UI Components|Graph',
@@ -120,9 +119,9 @@ export const lineGraph = () => (
 );
 
 export const heatmap = () => {
-  const primaryData = sampleData(100);
-  const secondaryData = sampleData(100);
-  console.clear();
+  const primaryData = heatData(100);
+  const secondaryData = heatData(100);
+
   return (
     <div style={{
       border: '1px solid #dadada',

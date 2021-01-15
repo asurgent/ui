@@ -5,13 +5,13 @@ import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as d3 from 'd3';
-import translation from './Heatmap.translation';
+// import translation from './Heatmap.translation';
 import * as C from './Heatmap.styled';
 import Squares from './components/Squares';
-import Legend from './components/Legend';
+// import Legend from './components/Legend';
 import { marginFromWeekdays } from './constants';
 
-const { t } = translation;
+// const { t } = translation;
 
 const propTypes = {
   primaryData: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
@@ -23,7 +23,7 @@ const propTypes = {
   cellPadding: PropTypes.number,
   cellRadius: PropTypes.number,
   valueLabel: PropTypes.string,
-  showLegend: PropTypes.func,
+  // showLegend: PropTypes.func,
   startDate: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
@@ -46,7 +46,7 @@ const defaultProps = {
   cellRadius: 1,
   cellPadding: 2,
   valueLabel: 'something',
-  showLegend: () => true,
+  // showLegend: () => true,
   startDate: moment().startOf('year'),
   endDate: moment().endOf('year'),
 };
@@ -79,19 +79,16 @@ const Heatmap = ({
   cellRadius,
   cellPadding,
   valueLabel,
-  showLegend,
+  // showLegend,
   startDate,
   endDate,
   theme,
 }) => {
-  console.log('primaryData', primaryData);
-  console.log('secondaryData', secondaryData);
   const monthTextRef = useRef(null);
   const groupRef = useRef(null);
   const svgRef = useRef(null);
   const containerRef = useRef(null);
 
-  // const values = useMemo(() => (data?.length > 0 ? data.map((c) => c.value) : null), [data]);
   const maxValue = useMemo(() => {
     if (primaryData.find((d) => d.value)) {
       const values = primaryData.map((d) => d.value);
