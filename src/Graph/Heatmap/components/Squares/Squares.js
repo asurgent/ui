@@ -1,5 +1,5 @@
 import React, {
-  useRef, useEffect, useState, useMemo,
+  useRef, useEffect, useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -27,6 +27,11 @@ const propTypes = {
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
   ]),
+  endDate: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+    PropTypes.instanceOf(moment),
+  ]),
 };
 
 const defaultProps = {
@@ -39,11 +44,12 @@ const defaultProps = {
   emptyColor: '#F2F2F2',
   legendCategories: null,
   startDate: moment().startOf('year'),
+  endDate: moment().endOf('year'),
 };
 
-const createSquareBlocks = (group, primaryData, cellSize, cellPadding) => group
+const createSquareBlocks = (group, data, cellSize, cellPadding) => group
   .selectAll('rect')
-  .data(primaryData)
+  .data(data)
   .join('rect')
   .attr('width', cellSize - cellPadding)
   .attr('height', cellSize - cellPadding);
@@ -52,10 +58,14 @@ const moveSquares = (squares, startDate, cellSize, cellPadding) => {
   squares
     .attr(
       'x',
-      (d) => {
-        const firstDate = startDate ? moment(startDate) : moment(d.date).startOf('year');
-        const week = d3.utcSunday.count(firstDate, d.date);
-        return (week * cellSize) + cellPadding + marginFromWeekdays;
+      ({ date }) => {
+        // If specified startdate, use that, otherwise start of the year
+        const firstDate = startDate
+          ? moment(startDate)
+          : moment(date).startOf('year');
+
+        const weekOffset = d3.utcSunday.count(moment(firstDate), moment(date));
+        return (weekOffset * cellSize) + cellPadding + marginFromWeekdays;
       },
     )
     .attr('y', (d) => {
@@ -68,10 +78,18 @@ const addRadiusToSquares = (squares, cellRadius) => {
   squares.attr('rx', cellRadius)
     .attr('ry', cellRadius);
 };
-
+// looping over all days, try to find prim, otherwise sec, otherwise null
 const fillSquares = (squares, emptyColor, legendCategories) => {
   squares
-    .attr('fill', (d) => getColor(d.value, emptyColor, legendCategories))
+    .attr('fill', ({ primValue, secValue }) => {
+      if (primValue) {
+        return getColor(primValue, emptyColor, legendCategories);
+      }
+      if (secValue) {
+        return 'rgb(19, 190, 105)';
+      }
+      return 'rgb(245,246,247)';
+    })
     .transition()
     .duration(500);
 };
@@ -95,6 +113,7 @@ const Squares = ({
   primaryData,
   secondaryData,
   startDate,
+  endDate,
   valueLabel,
   cellSize,
   cellPadding,
@@ -109,31 +128,70 @@ const Squares = ({
   const tooltip = d3.select('#tooltip');
   const squareGroup = d3.select(squareRef.current);
 
+  const days = useMemo(() => moment(endDate).diff(moment(startDate), 'days') + 1, [endDate, startDate]);
+  console.log('days', days);
+
+  const reduceToObject = (arr) => arr.reduce((acc, cur) => ({ ...acc, [cur.date]: cur.value }), {});
+
+  const primObj = useMemo(() => reduceToObject(primaryData), [primaryData]);
+  const secObj = useMemo(() => reduceToObject(secondaryData), [secondaryData]);
+
+  console.log('primObj', primObj);
+  console.log('secObj', secObj);
+
+  const allSquares = [...Array(days)].map((_, index) => {
+    const curDate = moment(moment(startDate).add(index, 'days')).format('YYYY-MM-DD');
+    return {
+      date: curDate,
+      primValue: primObj[curDate],
+      secValue: secObj[curDate],
+    };
+  });
+  console.log(allSquares);
+
+  // TODO: move text groups to separate components
+  // Add weekdays
+  const weekdayText = useMemo(() => {
+    if (primaryData && weekdayRef.current) {
+      return addWeekdays({
+        ref: weekdayRef.current,
+        cellSize,
+      });
+    }
+    return null;
+  }, [cellSize, primaryData]);
+
+  // Add months
+  const monthText = useMemo(() => {
+    if (primaryData && monthTextRef.current) {
+      return addMonthText({
+        ref: monthTextRef.current,
+        primaryData,
+        startDate,
+        cellSize,
+      });
+    }
+    return null;
+  }, [cellSize, primaryData, startDate]);
+
   const squares = useMemo(() => {
     if (squareGroup) {
       return createSquareBlocks(
         squareGroup,
-        primaryData,
+        allSquares,
         cellSize,
         cellPadding,
       );
     }
     return null;
-  }, [cellPadding, cellSize, primaryData, squareGroup]);
+  }, [allSquares, cellPadding, cellSize, squareGroup]);
 
   // Placement of squares
   useEffect(() => {
-    if (squareGroup) {
+    if (squareGroup && squares) {
       moveSquares(squares, startDate, cellSize, cellPadding);
     }
-  }, [cellPadding, cellSize, squareGroup, squares, startDate]);
-
-  // Add radius to squares
-  useEffect(() => {
-    if (squareGroup) {
-      addRadiusToSquares(squares, cellRadius);
-    }
-  }, [cellRadius, squareGroup, squares]);
+  }, [cellPadding, cellSize, startDate, squareGroup, squares]);
 
   // Fill squares
   useEffect(() => {
@@ -142,29 +200,21 @@ const Squares = ({
     }
   }, [emptyColor, legendCategories, squareGroup, squares]);
 
-  // Add weekdays
+  /* // Add radius to squares
   useEffect(() => {
-    if (primaryData && monthTextRef.current) {
-      if (weekdayRef.current) {
-        addWeekdays({
-          ref: weekdayRef.current,
-          cellSize,
-        });
-      }
+    if (squareGroup) {
+      addRadiusToSquares(squares, cellRadius);
     }
-  }, [cellSize, primaryData]);
+  }, [cellRadius, squareGroup, squares]);
 
-  // Add months
   useEffect(() => {
-    if (primaryData && monthTextRef.current) {
-      addMonthText({
-        ref: monthTextRef.current,
-        primaryData,
-        startDate,
-        cellSize,
-      });
-    }
-  }, [cellSize, primaryData, startDate]);
+    squares
+      .on('mousemove', ({ date, value }) => mousemove({
+        date, value, valueLabel, cellSize,
+      }))
+      .on('mouseover', () => mouseover(tooltip))
+      .on('mouseleave', () => mouseleave(tooltip));
+  }, [cellSize, squareGroup, squares, tooltip, valueLabel]); */
 
   return (
     <>
