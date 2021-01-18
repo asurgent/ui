@@ -43,7 +43,7 @@ const defaultProps = {
   color: null,
   emptyColor: '#F2F2F2',
   theme: {},
-  cellRadius: 1,
+  cellRadius: 0,
   cellPadding: 2,
   valueLabel: 'something',
   // showLegend: () => true,

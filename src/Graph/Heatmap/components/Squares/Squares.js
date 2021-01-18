@@ -86,23 +86,49 @@ const fillSquares = (squares, emptyColor, legendCategories) => {
         return getColor(primValue, emptyColor, legendCategories);
       }
       if (secValue) {
-        return 'rgb(19, 190, 105)';
+        return '#F2F2F2';
       }
-      return 'rgb(245,246,247)';
+      return '#fff';
     })
+    .style('stroke', ({ date, primValue, secValue }) => {
+      if (moment(date).isSame(moment().format('YYYY-MM-DD'))) {
+        // console.log('toda');
+        return '#333';
+      }
+      console.log('primValue', primValue);
+      if (primValue === undefined && secValue === undefined) {
+        return '#f2f2f2';
+      }
+    })
+    .style('stroke-width', '2px')
+    .style('stroke-dasharray', '100%')
     .transition()
     .duration(500);
+};
+
+const getValueText = ({ val1, val2 }) => {
+  if (val1 === undefined && val2 === undefined) {
+    return t('noData', 'asurgentui');
+  }
+  if (val1 !== undefined && val2 !== undefined) {
+    return `${val1} of ${val1 + val2}`;
+  }
+  if (val1 !== undefined) {
+    return val1;
+  }
+  return val2;
 };
 
 const mouseover = (tooltip) => tooltip.style('opacity', 1);
 const mouseleave = (tooltip) => tooltip.style('opacity', 0);
 const mousemove = ({
-  date, value, valueLabel, cellSize,
+  date, primValue, secValue, valueLabel, cellSize,
 }) => {
   const tooltip = d3.select('#tooltip');
   const { x, y } = d3.event;
   const { width, height } = tooltip.node().getBoundingClientRect();
-  const valueText = value === null ? t('noData', 'asurgentui') : `${value} ${valueLabel}`;
+  const valueText = getValueText({ val1: primValue, val2: secValue });
+
   tooltip
     .html(`${valueText} ${t('on', 'asurgentui')} ${moment(date).format('YYYY-MM-DD')}`)
     .style('left', `${x - (width / 2)}px`)
@@ -136,6 +162,7 @@ const Squares = ({
 
   const allSquares = [...Array(days)].map((_, index) => {
     const curDate = moment(moment(startDate).add(index, 'days')).format('YYYY-MM-DD');
+
     return {
       date: curDate,
       primValue: primObj[curDate],
@@ -193,16 +220,16 @@ const Squares = ({
   }, [emptyColor, legendCategories, squareGroup, squares]);
 
   // Add radius to squares
-  useEffect(() => {
+  /*  useEffect(() => {
     if (squareGroup) {
       addRadiusToSquares(squares, cellRadius);
     }
-  }, [cellRadius, squareGroup, squares]);
+  }, [cellRadius, squareGroup, squares]); */
 
   useEffect(() => {
     squares
-      .on('mousemove', ({ date, value }) => mousemove({
-        date, value, valueLabel, cellSize,
+      .on('mousemove', ({ date, primValue, secValue }) => mousemove({
+        date, primValue, secValue, valueLabel, cellSize,
       }))
       .on('mouseover', () => mouseover(tooltip))
       .on('mouseleave', () => mouseleave(tooltip));

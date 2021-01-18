@@ -127,7 +127,7 @@ export const heatmap = () => {
       border: '1px solid #dadada',
       borderRadius: '5px',
       marginTop: '20rem',
-      width: '50vw',
+      width: '80vw',
     }}
     >
       <Graph.Heatmap
@@ -136,11 +136,12 @@ export const heatmap = () => {
         steps={number('Steps', 5)}
         color={text('Color', '#C6403B')}
         emptyColor={text('Empty color', '#F2F2F2')}
-        cellPadding={number('Cell padding', 2)}
+        cellPadding={number('Cell padding', 4)}
         cellRadius={number('Cell radius', 1)}
+        borderColor="#133A5D"
         showLegend={() => true}
         startDate={text('Start date', moment('2020-06-01'))}
-        endDate={text('End date', moment('2020-12-31'))}
+        endDate={text('End date', moment('2021-02-20'))}
       />
     </div>
   );
