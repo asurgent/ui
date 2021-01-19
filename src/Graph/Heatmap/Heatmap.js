@@ -14,14 +14,23 @@ import { marginFromWeekdays } from './constants';
 // const { t } = translation;
 
 const propTypes = {
-  primaryData: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
-  secondaryData: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
+  primaryData: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string,
+      value: PropTypes.number,
+    }),
+  ),
+  secondaryData: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string,
+      value: PropTypes.number,
+    }),
+  ),
   steps: PropTypes.number,
   color: PropTypes.string,
   emptyColor: PropTypes.string,
   theme: PropTypes.instanceOf(Object),
-  cellPadding: PropTypes.number,
-  cellRadius: PropTypes.number,
+  cellGap: PropTypes.number,
   valueLabel: PropTypes.string,
   // showLegend: PropTypes.func,
   startDate: PropTypes.oneOfType([
@@ -43,8 +52,7 @@ const defaultProps = {
   color: null,
   emptyColor: '#F2F2F2',
   theme: {},
-  cellRadius: 0,
-  cellPadding: 2,
+  cellGap: 2,
   valueLabel: 'something',
   // showLegend: () => true,
   startDate: moment().startOf('year'),
@@ -76,8 +84,7 @@ const Heatmap = ({
   steps,
   color,
   emptyColor,
-  cellRadius,
-  cellPadding,
+  cellGap,
   valueLabel,
   // showLegend,
   startDate,
@@ -115,7 +122,7 @@ const Heatmap = ({
   const weeks = useMemo(() => d3.utcSunday.count(startDate, endDate), [endDate, startDate]);
 
   const svgGroupWidth = useSvgGroupSize(containerRef);
-  const cellSize = svgGroupWidth === 0 ? cellPadding
+  const cellSize = svgGroupWidth === 0 ? cellGap
     : (svgGroupWidth / (weeks + 1) - (marginFromWeekdays / (weeks + 1)));
 
   useEffect(() => {
@@ -143,8 +150,7 @@ const Heatmap = ({
             endDate={endDate}
             valueLabel={valueLabel}
             cellSize={cellSize}
-            cellPadding={cellPadding}
-            cellRadius={cellRadius}
+            cellGap={cellGap}
             emptyColor={emptyColor}
             legendCategories={legendCategories}
             monthTextRef={monthTextRef}
@@ -159,8 +165,7 @@ const Heatmap = ({
             endDate={endDate}
             legendCategories={legendCategories}
             cellSize={cellSize}
-            cellPadding={cellPadding}
-            cellRadius={cellRadius}
+            cellGap={cellGap}
           />
           )}
             */}

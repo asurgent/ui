@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import moment from 'moment';
 import translation from './Squares.translation';
+import { marginFromWeekdays } from '../../constants';
 
 const { t } = translation;
 
@@ -24,13 +25,36 @@ export const addMonthText = ({
     });
 };
 
-export const addWeekdays = ({ ref, cellSize }) => {
+export const addWeekdays = ({ ref, cellSize, cellGap }) => {
   const dayText = d3.select(ref);
   dayText
     .selectAll('text')
     .data(d3.range(7).map((i) => new Date(new Date().getFullYear(), 0, i)))
     .join('text')
-    .attr('y', (d) => (d.getUTCDay() + 0.5) * cellSize + 20)
+    .attr('y', (d) => (d.getUTCDay() + 0.5) * cellSize + cellGap)
     .attr('dy', '0.31em')
     .text((d) => t(`day${new Date(d).getUTCDay()}`, 'asurgentui'));
+};
+
+export const isToday = (date) => moment(date).isSame(moment().format('YYYY-MM-DD'));
+
+export const getX = (startDate, date, cellSize, cellGap) => {
+  const firstDate = startDate
+    ? moment(startDate)
+    : moment(date).startOf('year');
+  const weekOffset = d3
+    .utcSunday
+    .count(moment(firstDate), moment(date));
+  const todayOffset = isToday(date)
+    ? cellSize * 0.5
+    : cellSize;
+
+  return (weekOffset * (cellSize + cellGap)) + marginFromWeekdays - (todayOffset / 2);
+};
+
+export const getY = (date, cellSize, cellGap) => {
+  const dayRow = moment(date).isoWeekday() - 1;
+  const monthTextOffset = 20;
+  const todayOffset = isToday(date) ? cellSize * 0.5 : cellSize;
+  return (dayRow * (cellSize + cellGap)) + monthTextOffset - (todayOffset / 2);
 };

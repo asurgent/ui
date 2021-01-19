@@ -8,8 +8,11 @@ import { withTheme } from 'styled-components';
 import * as C from './Squares.styled';
 import translation from './Squares.translation';
 import { getColor } from '../../helpers';
-import { addMonthText, addWeekdays } from './helpers';
-import { marginFromWeekdays } from '../../constants';
+import {
+  addMonthText, addWeekdays, isToday, getY, getX,
+} from './helpers';
+
+const STROKE_WIDTH = 2;
 
 const { t } = translation;
 
@@ -18,8 +21,7 @@ const propTypes = {
   secondaryData: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   valueLabel: PropTypes.string,
   cellSize: PropTypes.number,
-  cellPadding: PropTypes.number,
-  cellRadius: PropTypes.number,
+  cellGap: PropTypes.number,
   emptyColor: PropTypes.string,
   legendCategories: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   startDate: PropTypes.oneOfType([
@@ -39,47 +41,30 @@ const defaultProps = {
   secondaryData: [],
   valueLabel: 'value',
   cellSize: 18,
-  cellPadding: 2,
-  cellRadius: 1,
+  cellGap: 2,
   emptyColor: '#F2F2F2',
   legendCategories: null,
   startDate: moment().startOf('year'),
   endDate: moment().endOf('year'),
 };
 
-const createSquareBlocks = (group, data, cellSize, cellPadding) => group
+const createSquareBlocks = (group, data, cellSize) => group
   .selectAll('rect')
   .data(data)
   .join('rect')
-  .attr('width', cellSize - cellPadding)
-  .attr('height', cellSize - cellPadding);
+  .attr('shape-rendering', 'crispedges')
+  .attr('width', ({ date }) => (isToday(date) ? cellSize * 0.5 : cellSize))
+  .attr('height', ({ date }) => (isToday(date) ? cellSize * 0.5 : cellSize));
 
-const moveSquares = (squares, startDate, cellSize, cellPadding) => {
+const moveSquares = (squares, startDate, cellSize, cellGap) => {
   squares
-    .attr(
-      'x',
-      ({ date }) => {
-        // If specified startdate, use that, otherwise start of the year
-        const firstDate = startDate
-          ? moment(startDate)
-          : moment(date).startOf('year');
-
-        const weekOffset = d3.utcSunday.count(moment(firstDate), moment(date));
-        return (weekOffset * cellSize) + cellPadding + marginFromWeekdays;
-      },
-    )
-    .attr('y', (d) => {
-      const dayRow = moment(d.date).isoWeekday() - 1;
-      return dayRow * cellSize + 20;
-    });
+    .attr('x', ({ date }) => getX(startDate, date, cellSize, cellGap))
+    .attr('y', ({ date }) => getY(date, cellSize, cellGap))
+    .attr('id', ({ date }) => (isToday(date) ? 'today' : ''));
 };
 
-const addRadiusToSquares = (squares, cellRadius) => {
-  squares.attr('rx', cellRadius)
-    .attr('ry', cellRadius);
-};
 // looping over all days, try to find prim, otherwise sec, otherwise null
-const fillSquares = (squares, emptyColor, legendCategories) => {
+const fillSquares = (squares, emptyColor, legendCategories, cellSize) => {
   squares
     .attr('fill', ({ primValue, secValue }) => {
       if (primValue) {
@@ -91,32 +76,31 @@ const fillSquares = (squares, emptyColor, legendCategories) => {
       return '#fff';
     })
     .style('stroke', ({ date, primValue, secValue }) => {
-      if (moment(date).isSame(moment().format('YYYY-MM-DD'))) {
-        // console.log('toda');
-        return '#333';
+      if (isToday(date)) {
+        return 'none';
       }
-      console.log('primValue', primValue);
       if (primValue === undefined && secValue === undefined) {
         return '#f2f2f2';
       }
+      return getColor(primValue, emptyColor, legendCategories);
     })
-    .style('stroke-width', '2px')
+    .style('stroke-width', `${STROKE_WIDTH}px`)
     .style('stroke-dasharray', '100%')
-    .transition()
-    .duration(500);
+    .style('outline', ({ date }) => (isToday(date) ? '2px solid black' : 'none'))
+    .style('outline-offset', ({ date }) => (isToday(date) ? `${(cellSize * 0.25) - 1}px` : '0'));
 };
 
-const getValueText = ({ val1, val2 }) => {
+const getValueText = ({ val1, val2, valueLabel }) => {
   if (val1 === undefined && val2 === undefined) {
     return t('noData', 'asurgentui');
   }
   if (val1 !== undefined && val2 !== undefined) {
-    return `${val1} of ${val1 + val2}`;
+    return `${val1} ${valueLabel} of ${val1 + val2}`;
   }
   if (val1 !== undefined) {
-    return val1;
+    return `${val1} ${valueLabel}`;
   }
-  return val2;
+  return `${val2} ${valueLabel}`;
 };
 
 const mouseover = (tooltip) => tooltip.style('opacity', 1);
@@ -127,7 +111,7 @@ const mousemove = ({
   const tooltip = d3.select('#tooltip');
   const { x, y } = d3.event;
   const { width, height } = tooltip.node().getBoundingClientRect();
-  const valueText = getValueText({ val1: primValue, val2: secValue });
+  const valueText = getValueText({ val1: primValue, val2: secValue, valueLabel });
 
   tooltip
     .html(`${valueText} ${t('on', 'asurgentui')} ${moment(date).format('YYYY-MM-DD')}`)
@@ -142,8 +126,7 @@ const Squares = ({
   endDate,
   valueLabel,
   cellSize,
-  cellPadding,
-  cellRadius,
+  cellGap,
   emptyColor,
   legendCategories,
 }) => {
@@ -177,9 +160,10 @@ const Squares = ({
       addWeekdays({
         ref: weekdayRef.current,
         cellSize,
+        cellGap,
       });
     }
-  }, [cellSize, primaryData]);
+  }, [cellGap, cellSize, primaryData]);
 
   // Add months
   useEffect(() => {
@@ -195,36 +179,31 @@ const Squares = ({
 
   const squares = useMemo(() => {
     if (squareGroup) {
-      return createSquareBlocks(
+      const blocks = createSquareBlocks(
         squareGroup,
         allSquares,
         cellSize,
-        cellPadding,
+        cellGap,
       );
+
+      return blocks;
     }
     return null;
-  }, [allSquares, cellPadding, cellSize, squareGroup]);
+  }, [allSquares, cellGap, cellSize, squareGroup]);
 
   // Placement of squares
   useEffect(() => {
     if (squareGroup && squares) {
-      moveSquares(squares, startDate, cellSize, cellPadding);
+      moveSquares(squares, startDate, cellSize, cellGap);
     }
-  }, [cellPadding, cellSize, startDate, squareGroup, squares]);
+  }, [cellGap, cellSize, startDate, squareGroup, squares]);
 
   // Fill squares
   useEffect(() => {
     if (squareGroup) {
-      fillSquares(squares, emptyColor, legendCategories);
+      fillSquares(squares, emptyColor, legendCategories, cellSize);
     }
-  }, [emptyColor, legendCategories, squareGroup, squares]);
-
-  // Add radius to squares
-  /*  useEffect(() => {
-    if (squareGroup) {
-      addRadiusToSquares(squares, cellRadius);
-    }
-  }, [cellRadius, squareGroup, squares]); */
+  }, [squares, emptyColor, legendCategories, squareGroup, cellSize]);
 
   useEffect(() => {
     squares

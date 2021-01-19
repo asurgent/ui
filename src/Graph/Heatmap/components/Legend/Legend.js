@@ -7,15 +7,13 @@ import * as C from './Legend.styled';
 const propTypes = {
   legendCategories: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   cellSize: PropTypes.number,
-  cellPadding: PropTypes.number,
-  cellRadius: PropTypes.number,
+  cellGap: PropTypes.number,
   steps: PropTypes.number,
 };
 const defaultProps = {
   legendCategories: null,
   cellSize: 18,
-  cellPadding: 2,
-  cellRadius: 1,
+  cellGap: 2,
   steps: 5,
 };
 
@@ -34,8 +32,7 @@ const centerOfLastSquare = () => {
 const Legend = ({
   legendCategories,
   cellSize,
-  cellPadding,
-  cellRadius,
+  cellGap,
   steps,
 }) => {
   const legendRef = useRef(null);
@@ -56,12 +53,10 @@ const Legend = ({
         .join('rect')
         .attr('fill', (d) => d.color)
         .attr('x', (_, i) => widthOfSquares - 10 + (cellSize * i))
-        .attr('width', cellSize - cellPadding)
-        .attr('height', cellSize - cellPadding)
-        .attr('rx', cellRadius)
-        .attr('ry', cellRadius);
+        .attr('width', cellSize - cellGap)
+        .attr('height', cellSize - cellGap);
     }
-  }, [cellPadding, cellRadius, cellSize, legendCategories, steps, widthOfSquares]);
+  }, [cellGap, cellSize, legendCategories, steps, widthOfSquares]);
 
   return (
     <C.Legend ref={legendRef}>
