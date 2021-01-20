@@ -58,3 +58,16 @@ export const getY = (date, cellSize, cellGap) => {
   const todayOffset = isToday(date) ? cellSize * 0.5 : cellSize;
   return (dayRow * (cellSize + cellGap)) + monthTextOffset - (todayOffset / 2);
 };
+
+export const getValueText = ({ val1, val2, valueLabel }) => {
+  if (val1 === undefined && val2 === undefined) {
+    return t('noData', 'asurgentui');
+  }
+  if (val1 !== undefined && val2 !== undefined) {
+    return `${val1} ${valueLabel} of ${val1 + val2}`;
+  }
+  if (val1 !== undefined) {
+    return `${val1} ${valueLabel}`;
+  }
+  return `${val2} ${valueLabel}`;
+};

@@ -9,7 +9,7 @@ import * as C from './Squares.styled';
 import translation from './Squares.translation';
 import { getColor } from '../../helpers';
 import {
-  addMonthText, addWeekdays, isToday, getY, getX,
+  addMonthText, addWeekdays, isToday, getY, getX, getValueText,
 } from './helpers';
 
 const STROKE_WIDTH = 2;
@@ -50,17 +50,16 @@ const defaultProps = {
 
 const createSquareBlocks = (group, data, cellSize) => group
   .selectAll('rect')
-  .data(data)
+  .data(data.filter(({ date }) => !isToday(date)))
   .join('rect')
   .attr('shape-rendering', 'crispedges')
-  .attr('width', ({ date }) => (isToday(date) ? cellSize * 0.5 : cellSize))
-  .attr('height', ({ date }) => (isToday(date) ? cellSize * 0.5 : cellSize));
+  .attr('width', cellSize)
+  .attr('height', cellSize);
 
 const moveSquares = (squares, startDate, cellSize, cellGap) => {
   squares
     .attr('x', ({ date }) => getX(startDate, date, cellSize, cellGap))
-    .attr('y', ({ date }) => getY(date, cellSize, cellGap))
-    .attr('id', ({ date }) => (isToday(date) ? 'today' : ''));
+    .attr('y', ({ date }) => getY(date, cellSize, cellGap));
 };
 
 // looping over all days, try to find prim, otherwise sec, otherwise null
@@ -75,32 +74,14 @@ const fillSquares = (squares, emptyColor, legendCategories, cellSize) => {
       }
       return '#fff';
     })
-    .style('stroke', ({ date, primValue, secValue }) => {
-      if (isToday(date)) {
-        return 'none';
-      }
+    .style('stroke', ({ primValue, secValue }) => {
       if (primValue === undefined && secValue === undefined) {
         return '#f2f2f2';
       }
       return getColor(primValue, emptyColor, legendCategories);
     })
     .style('stroke-width', `${STROKE_WIDTH}px`)
-    .style('stroke-dasharray', '100%')
-    .style('outline', ({ date }) => (isToday(date) ? '2px solid black' : 'none'))
-    .style('outline-offset', ({ date }) => (isToday(date) ? `${(cellSize * 0.25) - 1}px` : '0'));
-};
-
-const getValueText = ({ val1, val2, valueLabel }) => {
-  if (val1 === undefined && val2 === undefined) {
-    return t('noData', 'asurgentui');
-  }
-  if (val1 !== undefined && val2 !== undefined) {
-    return `${val1} ${valueLabel} of ${val1 + val2}`;
-  }
-  if (val1 !== undefined) {
-    return `${val1} ${valueLabel}`;
-  }
-  return `${val2} ${valueLabel}`;
+    .style('stroke-dasharray', '100%');
 };
 
 const mouseover = (tooltip) => tooltip.style('opacity', 1);
@@ -177,19 +158,59 @@ const Squares = ({
     }
   }, [cellSize, primaryData, startDate]);
 
+  // Create squares
   const squares = useMemo(() => {
     if (squareGroup) {
-      const blocks = createSquareBlocks(
-        squareGroup,
-        allSquares,
-        cellSize,
-        cellGap,
-      );
+      const today = allSquares.find(({ date }) => isToday(date));
+      const rest = allSquares.filter(({ date }) => !isToday(date));
+      const sq = createSquareBlocks(squareGroup, rest, cellSize, cellGap);
+      const gr = squareGroup.append('g');
 
-      return blocks;
+      const polygons = [
+        {
+          color: '#133A5D',
+          date: today.date,
+          points: [
+            { x: 0, y: 0 },
+            { x: cellSize, y: 0 },
+            { x: cellSize, y: cellSize },
+          ],
+        }, {
+          date: today.date,
+          secValue: today.secValue,
+          primValue: today.primValue,
+          points: [
+            { x: 0, y: cellSize },
+            { x: 0, y: 0 },
+            { x: cellSize, y: cellSize },
+          ],
+        },
+      ];
+
+      gr.selectAll('polygon')
+        .data(polygons)
+        .enter()
+        .append('polygon')
+        .attr('points', (d) => d.points.map((p) => [p.x, p.y].join(',')).join(' '))
+        .attr('fill', (a) => {
+          if (a.color) {
+            return a.color;
+          }
+          if (!a.secValue || !a.primValue) {
+            return emptyColor;
+          }
+          const colorVal = today.primValue || today.secValue;
+          return getColor(colorVal, emptyColor, legendCategories);
+        })
+        .attr('stroke-width', 2)
+        .attr('transform', () => `translate(
+          ${getX(startDate, today.date, cellSize, cellGap)}, 
+          ${getY(today.date, cellSize, cellGap)}
+        )`);
+      return sq;
     }
     return null;
-  }, [allSquares, cellGap, cellSize, squareGroup]);
+  }, [allSquares, cellGap, cellSize, emptyColor, legendCategories, squareGroup, startDate]);
 
   // Placement of squares
   useEffect(() => {
@@ -200,10 +221,10 @@ const Squares = ({
 
   // Fill squares
   useEffect(() => {
-    if (squareGroup) {
+    if (squareGroup && squares) {
       fillSquares(squares, emptyColor, legendCategories, cellSize);
     }
-  }, [squares, emptyColor, legendCategories, squareGroup, cellSize]);
+  }, [emptyColor, legendCategories, squareGroup, cellSize, squares]);
 
   useEffect(() => {
     squares
