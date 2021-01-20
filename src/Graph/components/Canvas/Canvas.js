@@ -51,7 +51,7 @@ const Canvas = ({
         ? [...markerLines]
         : [markerLines])
         .reduce((acc, item) => [...acc, {
-          [yProp]: item.value || item,
+          [yProp]: item?.value !== undefined ? item.value : item,
         }], [])
       : [];
 

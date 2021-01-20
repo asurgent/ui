@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import * as Canvas from '../components/Canvas';
 import Zoom from '../components/Zoom';
@@ -54,6 +54,14 @@ const LineGraph = ({
       setTooltip(event.targetData);
     }
   }, []);
+
+  const legend = useMemo(() => {
+    if (!markerLines?.length) {
+      return [];
+    }
+
+    return markerLines.filter((val) => val !== false);
+  }, [markerLines]);
 
   return (
     <C.Wrapper>
@@ -129,7 +137,7 @@ const LineGraph = ({
               <b>{dataTitle || 'Hover data'}</b>
               {capDecimals(tooltip[yProp])}
             </C.Stat>
-            {markerLines && markerLines.map((marker) => (
+            { legend.map((marker) => (
               <C.Stat key={marker.title} color={marker.color}>
                 <b>{marker.title}</b>
                 {marker.value}
