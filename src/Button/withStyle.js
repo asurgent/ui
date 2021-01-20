@@ -5,13 +5,16 @@ import withMapProps from 'high-order-components/withMapProps';
 import Button from './Button';
 
 const withStyle = (theme) => (Style) => {
-  const mapper = (props) => ({ renderStyle: Style, ...props });
+  const mapper = ({
+    staticContext,
+    match,
+    location,
+    ...props
+  }) => ({ renderStyle: Style, ...props });
 
   return withThemeOverride(theme)(
     withTheme(
-      withRouter(
-        withMapProps(mapper)(Button),
-      ),
+      withRouter(withMapProps(mapper)(Button)),
     ),
   );
 };
