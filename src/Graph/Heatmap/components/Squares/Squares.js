@@ -161,56 +161,61 @@ const Squares = ({
   // Create squares
   const squares = useMemo(() => {
     if (squareGroup) {
-      const today = allSquares.find(({ date }) => isToday(date));
       const rest = allSquares.filter(({ date }) => !isToday(date));
       const sq = createSquareBlocks(squareGroup, rest, cellSize, cellGap);
-      const gr = squareGroup.append('g');
 
-      const polygons = [
-        {
-          color: '#133A5D',
-          date: today.date,
-          points: [
-            { x: 0, y: 0 },
-            { x: cellSize, y: 0 },
-            { x: cellSize, y: cellSize },
-          ],
-        }, {
-          date: today.date,
-          secValue: today.secValue,
-          primValue: today.primValue,
-          points: [
-            { x: 0, y: cellSize },
-            { x: 0, y: 0 },
-            { x: cellSize, y: cellSize },
-          ],
-        },
-      ];
-
-      gr.selectAll('polygon')
-        .data(polygons)
-        .enter()
-        .append('polygon')
-        .attr('points', (d) => d.points.map((p) => [p.x, p.y].join(',')).join(' '))
-        .attr('fill', (a) => {
-          if (a.color) {
-            return a.color;
-          }
-          if (!a.secValue || !a.primValue) {
-            return emptyColor;
-          }
-          const colorVal = today.primValue || today.secValue;
-          return getColor(colorVal, emptyColor, legendCategories);
-        })
-        .attr('stroke-width', 2)
-        .attr('transform', () => `translate(
-          ${getX(startDate, today.date, cellSize, cellGap)}, 
-          ${getY(today.date, cellSize, cellGap)}
-        )`);
       return sq;
     }
     return null;
-  }, [allSquares, cellGap, cellSize, emptyColor, legendCategories, squareGroup, startDate]);
+  }, [allSquares, cellGap, cellSize, squareGroup]);
+
+  const todayPolygon = useMemo(() => {
+    const gr = d3.select('#today');
+    const today = allSquares.find(({ date }) => isToday(date));
+
+    const polygons = [
+      {
+        color: '#133A5D',
+        date: today.date,
+        points: [
+          { x: 0, y: 0 },
+          { x: cellSize, y: 0 },
+          { x: cellSize, y: cellSize },
+        ],
+      }, {
+        date: today.date,
+        secValue: today.secValue,
+        primValue: today.primValue,
+        points: [
+          { x: 0, y: cellSize },
+          { x: 0, y: 0 },
+          { x: cellSize, y: cellSize },
+        ],
+      },
+    ];
+
+    gr.attr('transform', () => `translate(
+      ${getX(startDate, today.date, cellSize, cellGap)}, 
+      ${getY(today.date, cellSize, cellGap)}
+    )`);
+
+    gr.selectAll('polygon')
+      .data(polygons)
+      .enter()
+      .append('polygon')
+      .attr('points', (d) => d.points.map((p) => [p.x, p.y].join(',')).join(' '))
+      .attr('fill', (a) => {
+        if (a.color) {
+          return a.color;
+        }
+        if (!a.secValue || !a.primValue) {
+          return emptyColor;
+        }
+        const colorVal = today.primValue || today.secValue;
+        return getColor(colorVal, emptyColor, legendCategories);
+      })
+      .attr('stroke-width', 2);
+  }, [allSquares, cellGap, cellSize, emptyColor, legendCategories, startDate]);
 
   // Placement of squares
   useEffect(() => {
@@ -239,7 +244,9 @@ const Squares = ({
     <>
       <C.Months ref={monthTextRef} />
       <C.Weekdays ref={weekdayRef} />
-      <C.Squares id="squares" ref={squareRef} />
+      <C.Squares id="squares" ref={squareRef}>
+        <g id="today" />
+      </C.Squares>
     </>
   );
 };
