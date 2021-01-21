@@ -6,10 +6,10 @@ import { marginFromWeekdays } from '../../constants';
 const { t } = translation;
 
 export const addMonthText = ({
-  ref, primaryData, startDate, cellSize,
+  ref, data, startDate, cellSize,
 }) => {
   const monthText = d3.select(ref);
-  const firsts = primaryData.filter((d) => moment(d.date).date() === 1);
+  const firsts = data.filter((d) => moment(d.date).date() === 1);
   monthText
     .selectAll('text')
     .data(firsts)

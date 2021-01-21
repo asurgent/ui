@@ -84,6 +84,57 @@ const fillSquares = (squares, emptyColor, legendCategories, cellSize) => {
     .style('stroke-dasharray', '100%');
 };
 
+const getPolygons = (today, cellSize) => {
+  return [
+  {
+    color: '#133A5D',
+    date: today.date,
+    points: [
+      { x: 0, y: 0 },
+      { x: cellSize, y: 0 },
+      { x: cellSize, y: cellSize },
+    ],
+  }, {
+    date: today.date,
+    secValue: today.secValue,
+    primValue: today.primValue,
+    points: [
+      { x: 0, y: cellSize },
+      { x: 0, y: 0 },
+      { x: cellSize, y: cellSize },
+    ],
+  },
+]};
+
+const placeToday = (mergedData, cellSize,startDate, cellGap, emptyColor, legendCategories) => {
+  const g = d3.select('#today');
+  const today = mergedData.find(({ date }) => isToday(date));
+
+  const polys = getPolygons(today, cellSize);
+
+  g.attr('transform', () => `translate(
+    ${getX(startDate, today.date, cellSize, cellGap)}, 
+    ${getY(today.date, cellSize, cellGap)}
+  )`);
+
+  g.selectAll('polygon')
+    .data(polys)
+    .join('polygon')
+    .attr('points', ({points}) => points.map((p) => [p.x, p.y].join(',')).join(' '))
+    .attr('fill', ({color}) => {
+      if (color) {
+        return color;
+      }
+      const colorVal = today.primValue || today.secValue;
+      if (!colorVal) {
+        return emptyColor;
+      }
+      
+      return getColor(colorVal, emptyColor, legendCategories);
+    })
+    .attr('stroke-width', 4);
+}
+
 const mouseover = (tooltip) => tooltip.style('opacity', 1);
 const mouseleave = (tooltip) => tooltip.style('opacity', 0);
 const mousemove = ({
@@ -124,7 +175,7 @@ const Squares = ({
   const primObj = useMemo(() => reduceToObject(primaryData), [primaryData]);
   const secObj = useMemo(() => reduceToObject(secondaryData), [secondaryData]);
 
-  const allSquares = [...Array(days)].map((_, index) => {
+  const mergedData = [...Array(days)].map((_, index) => {
     const curDate = moment(moment(startDate).add(index, 'days')).format('YYYY-MM-DD');
 
     return {
@@ -136,8 +187,9 @@ const Squares = ({
 
   // TODO: move text groups to separate components
   // Add weekdays
+  // TODO: byt ut mergedData
   useEffect(() => {
-    if (primaryData && weekdayRef.current) {
+    if (mergedData && weekdayRef.current) {
       addWeekdays({
         ref: weekdayRef.current,
         cellSize,
@@ -148,10 +200,10 @@ const Squares = ({
 
   // Add months
   useEffect(() => {
-    if (primaryData && monthTextRef.current) {
+    if (mergedData && monthTextRef.current) {
       addMonthText({
         ref: monthTextRef.current,
-        primaryData,
+        data: mergedData,
         startDate,
         cellSize,
       });
@@ -160,62 +212,21 @@ const Squares = ({
 
   // Create squares
   const squares = useMemo(() => {
+    console.log('squares', cellSize);
     if (squareGroup) {
-      const rest = allSquares.filter(({ date }) => !isToday(date));
-      const sq = createSquareBlocks(squareGroup, rest, cellSize, cellGap);
-
-      return sq;
+      const noToday = mergedData.filter(({ date }) => !isToday(date));
+      return createSquareBlocks(squareGroup, noToday, cellSize, cellGap);
     }
     return null;
-  }, [allSquares, cellGap, cellSize, squareGroup]);
+  }, [mergedData, cellGap, cellSize, squareGroup]);
 
-  const todayPolygon = useMemo(() => {
-    const gr = d3.select('#today');
-    const today = allSquares.find(({ date }) => isToday(date));
+  useEffect(() => {
+   
+    if (squareGroup) {
+      placeToday(mergedData, cellSize,startDate, cellGap, emptyColor, legendCategories)
+    }
+  }, [mergedData, cellGap, cellSize, emptyColor, legendCategories, startDate, squareGroup]);
 
-    const polygons = [
-      {
-        color: '#133A5D',
-        date: today.date,
-        points: [
-          { x: 0, y: 0 },
-          { x: cellSize, y: 0 },
-          { x: cellSize, y: cellSize },
-        ],
-      }, {
-        date: today.date,
-        secValue: today.secValue,
-        primValue: today.primValue,
-        points: [
-          { x: 0, y: cellSize },
-          { x: 0, y: 0 },
-          { x: cellSize, y: cellSize },
-        ],
-      },
-    ];
-
-    gr.attr('transform', () => `translate(
-      ${getX(startDate, today.date, cellSize, cellGap)}, 
-      ${getY(today.date, cellSize, cellGap)}
-    )`);
-
-    gr.selectAll('polygon')
-      .data(polygons)
-      .enter()
-      .append('polygon')
-      .attr('points', (d) => d.points.map((p) => [p.x, p.y].join(',')).join(' '))
-      .attr('fill', (a) => {
-        if (a.color) {
-          return a.color;
-        }
-        if (!a.secValue || !a.primValue) {
-          return emptyColor;
-        }
-        const colorVal = today.primValue || today.secValue;
-        return getColor(colorVal, emptyColor, legendCategories);
-      })
-      .attr('stroke-width', 2);
-  }, [allSquares, cellGap, cellSize, emptyColor, legendCategories, startDate]);
 
   // Placement of squares
   useEffect(() => {
