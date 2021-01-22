@@ -63,7 +63,8 @@ export const useChartDimensions = () => {
     resizeObserver.observe(element);
 
     return () => { resizeObserver.unobserve(element); };
-  }, [dimensions, height, width]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const newSettings = ({
     ...dimensions,

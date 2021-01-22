@@ -49,6 +49,7 @@ const LineGraph = ({
   gridLines,
 }) => {
   const [tooltip, setTooltip] = useState({});
+
   const handleTooltipData = useCallback((event) => {
     if (event?.targetData) {
       setTooltip(event.targetData);
@@ -62,6 +63,20 @@ const LineGraph = ({
 
     return markerLines.filter((val) => val !== false);
   }, [markerLines]);
+
+  const title = useMemo(() => {
+    if (dataTitle) {
+      if (typeof dataTitle === 'function') {
+        return dataTitle(tooltip);
+      }
+
+      return dataTitle;
+    } if (tooltip[xProp]?.format()) {
+      return tooltip[xProp]?.format('YYYY-MM-DD HH:mm:ss');
+    }
+
+    return 'Hover data';
+  }, [dataTitle, tooltip, xProp]);
 
   return (
     <C.Wrapper>
@@ -134,7 +149,7 @@ const LineGraph = ({
           </C.Graph>
           <C.Stats>
             <C.Stat>
-              <b>{dataTitle || 'Hover data'}</b>
+              <b>{ title }</b>
               {capDecimals(tooltip[yProp])}
             </C.Stat>
             { legend.map((marker) => (

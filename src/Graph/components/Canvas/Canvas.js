@@ -60,9 +60,11 @@ const Canvas = ({
       ...treasholdValues,
     ], ({ [yProp]: y }) => y);
 
+    const diff = 0.05 * Math.abs(max - min);
+
     return (
       d3.scaleLinear()
-        .domain([Math.floor(min), Math.ceil(max)])
+        .domain([Math.floor(min), Math.ceil(max + diff)])
         .range([dimensions.boundedHeight, 0])
     );
   }, [dimensions.boundedHeight, sortedData, markerLines, yProp]);
