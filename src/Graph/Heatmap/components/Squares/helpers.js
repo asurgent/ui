@@ -5,37 +5,6 @@ import { marginFromWeekdays } from '../../constants';
 
 const { t } = translation;
 
-export const addMonthText = ({
-  ref, data, startDate, cellSize,
-}) => {
-  const monthText = d3.select(ref);
-  const firsts = data.filter((d) => moment(d.date).date() === 1);
-  monthText
-    .selectAll('text')
-    .data(firsts)
-    .join('text')
-    .text((d) => t(`month${moment(d.date).month()}`, 'asurgentui'))
-    .attr('text-anchor', 'middle')
-    .attr('dominant-baseline', 'hanging')
-    .attr('x', ({ date }) => {
-      const currentYear = startDate ? moment(startDate) : moment(date).startOf('year');
-      const week = d3.utcSunday.count(currentYear, date);
-      const x = (week * cellSize) + 47;
-      return x;
-    });
-};
-
-export const addWeekdays = ({ ref, cellSize, cellGap }) => {
-  const dayText = d3.select(ref);
-  dayText
-    .selectAll('text')
-    .data(d3.range(7).map((i) => new Date(new Date().getFullYear(), 0, i)))
-    .join('text')
-    .attr('y', (d) => (d.getUTCDay() + 0.5) * cellSize + cellGap)
-    .attr('dy', '0.31em')
-    .text((d) => t(`day${new Date(d).getUTCDay()}`, 'asurgentui'));
-};
-
 export const isToday = (date) => moment(date).isSame(moment().format('YYYY-MM-DD'));
 
 export const getX = (startDate, date, cellSize, cellGap) => {
@@ -66,4 +35,33 @@ export const getValueText = ({ val1, val2, valueLabel }) => {
     return `${val1} ${valueLabel}`;
   }
   return `${val2} ${valueLabel}`;
+};
+
+export const addMonthText = ({
+  ref, data, startDate, cellSize, cellGap,
+}) => {
+  const monthText = d3.select(ref);
+  const firstDaysOfMonths = data.filter((d) => moment(d.date).date() === 1);
+  monthText
+    .selectAll('text')
+    .data(firstDaysOfMonths)
+    .join('text')
+    .text((d) => t(`month${moment(d.date).month()}`, 'asurgentui'))
+    .attr('text-anchor', 'middle')
+    .attr('dominant-baseline', 'hanging')
+    .attr('x', ({ date }) => {
+      const centerOfSquareOffset = (cellSize / 2);
+      return getX(startDate, date, cellSize, cellGap) + centerOfSquareOffset;
+    });
+};
+
+export const addWeekdays = ({ ref, cellSize, cellGap }) => {
+  const dayText = d3.select(ref);
+  dayText
+    .selectAll('text')
+    .data(d3.range(7).map((i) => new Date(new Date().getFullYear(), 0, i)))
+    .join('text')
+    .attr('y', (d) => (d.getUTCDay() + 0.5) * cellSize + cellGap)
+    .attr('dy', '0.31em')
+    .text((d) => t(`day${new Date(d).getUTCDay()}`, 'asurgentui'));
 };

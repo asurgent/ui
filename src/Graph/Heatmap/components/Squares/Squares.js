@@ -198,31 +198,6 @@ const Squares = ({
     };
   });
 
-  // TODO: move text groups to separate components
-  // Add weekdays
-  // TODO: byt ut mergedData
-  useEffect(() => {
-    if (mergedData && weekdayRef.current) {
-      addWeekdays({
-        ref: weekdayRef.current,
-        cellSize,
-        cellGap,
-      });
-    }
-  }, [cellGap, cellSize, mergedData, primaryData]);
-
-  // Add months
-  useEffect(() => {
-    if (mergedData && monthTextRef.current) {
-      addMonthText({
-        ref: monthTextRef.current,
-        data: mergedData,
-        startDate,
-        cellSize,
-      });
-    }
-  }, [cellSize, mergedData, primaryData, startDate]);
-
   // Create squares
   const squares = useMemo(() => {
     if (squareGroup) {
@@ -232,6 +207,7 @@ const Squares = ({
     return null;
   }, [mergedData, cellGap, cellSize, squareGroup]);
 
+  // Place today
   useEffect(() => {
     if (squareGroup) {
       placeToday(mergedData,
@@ -267,6 +243,7 @@ const Squares = ({
     }
   }, [emptyColor, legendCategories, squareGroup, cellSize, squares]);
 
+  // Move squares
   useEffect(() => {
     squares
       .on('mousemove', ({ date, primValue, secValue }) => mousemove({
@@ -275,6 +252,30 @@ const Squares = ({
       .on('mouseover', () => mouseover(tooltip))
       .on('mouseleave', () => mouseleave(tooltip));
   }, [cellSize, squareGroup, squares, tooltip, valueLabel]);
+
+  // Add weekdays
+  useEffect(() => {
+    if (mergedData && weekdayRef.current) {
+      addWeekdays({
+        ref: weekdayRef.current,
+        cellSize,
+        cellGap,
+      });
+    }
+  }, [cellGap, cellSize, mergedData, primaryData]);
+
+  // Add months
+  useEffect(() => {
+    if (mergedData && monthTextRef.current) {
+      addMonthText({
+        ref: monthTextRef.current,
+        data: mergedData,
+        startDate,
+        cellSize,
+        cellGap,
+      });
+    }
+  }, [cellGap, cellSize, mergedData, primaryData, startDate]);
 
   return (
     <>
