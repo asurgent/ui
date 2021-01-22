@@ -1,5 +1,5 @@
 import React, {
-  useEffect, useMemo, useRef, useLayoutEffect, useState,
+  useEffect, useMemo, useRef, useLayoutEffect, useState, createRef,
 } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
@@ -60,7 +60,7 @@ const defaultProps = {
 };
 
 const useSvgGroupSize = (ref) => {
-  const [size, setSize] = useState(0);
+  const [size, setSize] = useState(ref?.current?.getBoundingClientRect()?.width || 0);
 
   useLayoutEffect(() => {
     const updateSize = () => {
@@ -93,7 +93,7 @@ const Heatmap = ({
 }) => {
   const monthTextRef = useRef(null);
   const groupRef = useRef(null);
-  const svgRef = useRef(null);
+  const svgRef = createRef(null);
   const containerRef = useRef(null);
 
   const maxValue = useMemo(() => {
@@ -121,42 +121,46 @@ const Heatmap = ({
   }), [colorScale, maxValue, steps]);
   const weeks = useMemo(() => d3.utcSunday.count(startDate, endDate), [endDate, startDate]);
 
-  const svgGroupWidth = useSvgGroupSize(containerRef);
+  const svgGroupWidth = useSvgGroupSize(svgRef);
+  console.log('svgGroupWidth', svgGroupWidth);
   const cellSize = svgGroupWidth === 0 ? cellGap
     : (svgGroupWidth / (weeks + 1) - (marginFromWeekdays / (weeks + 1)));
 
-  useEffect(() => {
+  /*  useEffect(() => {
     const { height } = groupRef?.current?.getBoundingClientRect();
-    const { width } = containerRef?.current?.getBoundingClientRect();
+    const { width } = groupRef?.current?.getBoundingClientRect();
 
     svgRef.current.setAttribute('width', width);
     svgRef.current.setAttribute('height', height);
-  }, [cellSize]);
+  }, [cellSize]); */
 
   /*
 
   if (!data || !legendCategories) {
     return <p>{t('noData', 'asurgentui')}</p>;
   } */
+  const containerWidth = svgRef?.current?.getBoundingClientRect().width;
 
   return (
-    <div ref={containerRef}>
-      <svg preserveAspectRatio="none" ref={svgRef}>
-        <C.Group ref={groupRef}>
-          <Squares
-            primaryData={primaryData}
-            secondaryData={secondaryData}
-            startDate={startDate}
-            endDate={endDate}
-            valueLabel={valueLabel}
-            cellSize={cellSize}
-            cellGap={cellGap}
-            emptyColor={emptyColor}
-            legendCategories={legendCategories}
-            monthTextRef={monthTextRef}
-          />
 
-          {/*
+    <svg ref={svgRef} width="100%" height="100%">
+      {/* preserveAspectRatio="none"  viewBox="0 0 100 100" */}
+      {/* <C.Group ref={groupRef}> */}
+      <Squares
+        primaryData={primaryData}
+        secondaryData={secondaryData}
+        startDate={startDate}
+        endDate={endDate}
+        valueLabel={valueLabel}
+        cellSize={cellSize}
+        cellGap={cellGap}
+        emptyColor={emptyColor}
+        legendCategories={legendCategories}
+        monthTextRef={monthTextRef}
+        containerWidth={svgGroupWidth}
+      />
+
+      {/*
 
           {showLegend() && (
           <Legend
@@ -169,10 +173,9 @@ const Heatmap = ({
           />
           )}
             */}
-        </C.Group>
-      </svg>
-      <C.Tooltip id="tooltip" />
-    </div>
+      {/* </C.Group> */}
+    </svg>
+
   );
 };
 
@@ -180,3 +183,7 @@ Heatmap.propTypes = propTypes;
 Heatmap.defaultProps = defaultProps;
 
 export default withTheme(Heatmap);
+
+/* <div ref={containerRef}> */
+/* <C.Tooltip id="tooltip" />
+    </div> */

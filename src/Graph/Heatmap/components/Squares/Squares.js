@@ -13,6 +13,7 @@ import {
 } from './helpers';
 
 const STROKE_WIDTH = 2;
+const WEEKDAY_WIDTH = 25;
 
 const { t } = translation;
 
@@ -137,7 +138,7 @@ const placeToday = (
   const polys = getPolygons(today, cellSize);
 
   g.attr('transform', () => `translate(
-    ${getX(startDate, today.date, cellSize, cellGap)}, 
+    ${getX(startDate, today.date, cellSize, cellGap)},
     ${getY(today.date, cellSize, cellGap)}
   )`)
     .on('mousemove', () => mousemove({
@@ -170,17 +171,30 @@ const Squares = ({
   startDate,
   endDate,
   valueLabel,
-  cellSize,
+
   cellGap,
   emptyColor,
   legendCategories,
+  containerWidth,
 }) => {
   const squareRef = useRef(null);
   const monthTextRef = useRef(null);
   const weekdayRef = useRef(null);
 
   const tooltip = d3.select('#tooltip');
-  const squareGroup = d3.select(squareRef.current);
+  const daysGroup = d3.select('#days');
+
+  const weeks = useMemo(() => d3
+    .utcSunday
+    .count(moment(startDate), moment(endDate)) + 1, [endDate, startDate]);
+
+  console.log('containerWidth', containerWidth);
+
+  const cellSize = useMemo(() => {
+    const cellGapOffset = weeks * cellGap;
+    return (containerWidth - cellGapOffset) / weeks;
+  }, [cellGap, containerWidth, weeks]);
+  console.log('cellSize', cellSize, weeks);
 
   const days = useMemo(() => moment(endDate).diff(moment(startDate), 'days') + 1, [endDate, startDate]);
   const reduceToObject = (arr) => arr.reduce((acc, cur) => ({ ...acc, [cur.date]: cur.value }), {});
@@ -200,16 +214,17 @@ const Squares = ({
 
   // Create squares
   const squares = useMemo(() => {
-    if (squareGroup) {
+    if (daysGroup) {
       const noToday = mergedData.filter(({ date }) => !isToday(date));
-      return createSquareBlocks(squareGroup, noToday, cellSize, cellGap);
+      console.log('noToday', noToday, cellSize);
+      return createSquareBlocks(daysGroup, noToday, cellSize, cellGap);
     }
     return null;
-  }, [mergedData, cellGap, cellSize, squareGroup]);
+  }, [mergedData, cellGap, cellSize, daysGroup]);
 
   // Place today
   useEffect(() => {
-    if (squareGroup) {
+    if (daysGroup) {
       placeToday(mergedData,
         cellSize,
         startDate,
@@ -219,29 +234,30 @@ const Squares = ({
         tooltip,
         valueLabel);
     }
-  }, [mergedData,
+  }, [
+    mergedData,
     cellGap,
     cellSize,
     emptyColor,
     legendCategories,
     startDate,
-    squareGroup,
     tooltip,
-    valueLabel]);
+    valueLabel,
+    daysGroup]);
 
   // Placement of squares
   useEffect(() => {
-    if (squareGroup && squares) {
+    if (daysGroup && squares) {
       moveSquares(squares, startDate, cellSize, cellGap);
     }
-  }, [cellGap, cellSize, startDate, squareGroup, squares]);
+  }, [cellGap, cellSize, startDate, squares, daysGroup]);
 
   // Fill squares
   useEffect(() => {
-    if (squareGroup && squares) {
+    if (daysGroup && squares) {
       fillSquares(squares, emptyColor, legendCategories, cellSize);
     }
-  }, [emptyColor, legendCategories, squareGroup, cellSize, squares]);
+  }, [emptyColor, legendCategories, cellSize, squares, daysGroup]);
 
   // Move squares
   useEffect(() => {
@@ -251,9 +267,9 @@ const Squares = ({
       }))
       .on('mouseover', () => mouseover(tooltip))
       .on('mouseleave', () => mouseleave(tooltip));
-  }, [cellSize, squareGroup, squares, tooltip, valueLabel]);
+  }, [cellSize, squares, tooltip, valueLabel]);
 
-  // Add weekdays
+  /* // Add weekdays
   useEffect(() => {
     if (mergedData && weekdayRef.current) {
       addWeekdays({
@@ -275,13 +291,14 @@ const Squares = ({
         cellGap,
       });
     }
-  }, [cellGap, cellSize, mergedData, primaryData, startDate]);
+  }, [cellGap, cellSize, mergedData, primaryData, startDate]); */
 
   return (
     <>
-      <C.Months ref={monthTextRef} />
-      <C.Weekdays ref={weekdayRef} />
+      {/*       <C.Months ref={monthTextRef} />
+      <C.Weekdays ref={weekdayRef} /> */}
       <C.Squares id="squares" ref={squareRef}>
+        <g id="days" />
         <g id="today" />
       </C.Squares>
     </>

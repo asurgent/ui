@@ -127,7 +127,7 @@ export const heatmap = () => {
       border: '1px solid #dadada',
       borderRadius: '5px',
       marginTop: '20rem',
-      width: '50vw',
+      width: '80vw',
     }}
     >
       <Graph.Heatmap
@@ -139,7 +139,7 @@ export const heatmap = () => {
         cellGap={number('Cell gap', 6)}
         borderColor="#133A5D"
         showLegend={() => true}
-        startDate={text('Start date', moment('2020-12-01'))}
+        startDate={text('Start date', moment('2020-08-01'))}
         endDate={text('End date', moment('2021-02-20'))}
       />
     </div>

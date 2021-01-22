@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import moment from 'moment';
+import { WeekendTwoTone } from '@material-ui/icons';
 import translation from './Squares.translation';
 import { marginFromWeekdays } from '../../constants';
 
@@ -15,13 +16,15 @@ export const getX = (startDate, date, cellSize, cellGap) => {
     .utcSunday
     .count(moment(firstDate), moment(date));
 
-  return (weekOffset * (cellSize + cellGap)) + marginFromWeekdays;
+  const x = (weekOffset * (cellSize + cellGap));// + marginFromWeekdays;
+  return x;
 };
 
 export const getY = (date, cellSize, cellGap) => {
   const dayRow = moment(date).isoWeekday() - 1;
   const monthTextOffset = 20;
-  return (dayRow * (cellSize + cellGap)) + monthTextOffset;
+  const y = (dayRow * (cellSize + cellGap));// + monthTextOffset;
+  return y;
 };
 
 export const getValueText = ({ val1, val2, valueLabel }) => {
