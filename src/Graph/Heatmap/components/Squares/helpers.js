@@ -45,18 +45,14 @@ export const getX = (startDate, date, cellSize, cellGap) => {
   const weekOffset = d3
     .utcSunday
     .count(moment(firstDate), moment(date));
-  const todayOffset = isToday(date)
-    ? cellSize * 0.5
-    : cellSize;
 
-  return (weekOffset * (cellSize + cellGap)) + marginFromWeekdays - (todayOffset / 2);
+  return (weekOffset * (cellSize + cellGap)) + marginFromWeekdays;
 };
 
 export const getY = (date, cellSize, cellGap) => {
   const dayRow = moment(date).isoWeekday() - 1;
   const monthTextOffset = 20;
-  const todayOffset = isToday(date) ? cellSize * 0.5 : cellSize;
-  return (dayRow * (cellSize + cellGap)) + monthTextOffset - (todayOffset / 2);
+  return (dayRow * (cellSize + cellGap)) + monthTextOffset;
 };
 
 export const getValueText = ({ val1, val2, valueLabel }) => {

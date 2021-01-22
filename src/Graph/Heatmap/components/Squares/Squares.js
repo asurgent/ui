@@ -48,6 +48,22 @@ const defaultProps = {
   endDate: moment().endOf('year'),
 };
 
+const mouseover = (tooltip) => tooltip.style('opacity', 1);
+const mouseleave = (tooltip) => tooltip.style('opacity', 0);
+const mousemove = ({
+  date, primValue, secValue, valueLabel, cellSize,
+}) => {
+  const tooltip = d3.select('#tooltip');
+  const { x, y } = d3.event;
+  const { width, height } = tooltip.node().getBoundingClientRect();
+  const valueText = getValueText({ val1: primValue, val2: secValue, valueLabel });
+
+  tooltip
+    .html(`${valueText} ${t('on', 'asurgentui')} ${moment(date).format('YYYY-MM-DD')}`)
+    .style('left', `${x - (width / 2)}px`)
+    .style('top', `${y - (height + cellSize)}px`);
+};
+
 const createSquareBlocks = (group, data, cellSize) => group
   .selectAll('rect')
   .data(data.filter(({ date }) => !isToday(date)))
@@ -63,7 +79,7 @@ const moveSquares = (squares, startDate, cellSize, cellGap) => {
 };
 
 // looping over all days, try to find prim, otherwise sec, otherwise null
-const fillSquares = (squares, emptyColor, legendCategories, cellSize) => {
+const fillSquares = (squares, emptyColor, legendCategories) => {
   squares
     .attr('fill', ({ primValue, secValue }) => {
       if (primValue) {
@@ -84,8 +100,7 @@ const fillSquares = (squares, emptyColor, legendCategories, cellSize) => {
     .style('stroke-dasharray', '100%');
 };
 
-const getPolygons = (today, cellSize) => {
-  return [
+const getPolygons = (today, cellSize) => [
   {
     color: '#133A5D',
     date: today.date,
@@ -104,24 +119,38 @@ const getPolygons = (today, cellSize) => {
       { x: cellSize, y: cellSize },
     ],
   },
-]};
+];
 
-const placeToday = (mergedData, cellSize,startDate, cellGap, emptyColor, legendCategories) => {
+const placeToday = (
+  mergedData,
+  cellSize,
+  startDate,
+  cellGap,
+  emptyColor,
+  legendCategories,
+  tooltip,
+  valueLabel,
+) => {
   const g = d3.select('#today');
   const today = mergedData.find(({ date }) => isToday(date));
-
+  const { primValue, secValue, date } = today;
   const polys = getPolygons(today, cellSize);
 
   g.attr('transform', () => `translate(
     ${getX(startDate, today.date, cellSize, cellGap)}, 
     ${getY(today.date, cellSize, cellGap)}
-  )`);
+  )`)
+    .on('mousemove', () => mousemove({
+      date, primValue, secValue, valueLabel, cellSize,
+    }))
+    .on('mouseover', () => mouseover(tooltip))
+    .on('mouseleave', () => mouseleave(tooltip));
 
   g.selectAll('polygon')
     .data(polys)
     .join('polygon')
-    .attr('points', ({points}) => points.map((p) => [p.x, p.y].join(',')).join(' '))
-    .attr('fill', ({color}) => {
+    .attr('points', ({ points }) => points.map((p) => [p.x, p.y].join(',')).join(' '))
+    .attr('fill', ({ color }) => {
       if (color) {
         return color;
       }
@@ -129,26 +158,10 @@ const placeToday = (mergedData, cellSize,startDate, cellGap, emptyColor, legendC
       if (!colorVal) {
         return emptyColor;
       }
-      
+
       return getColor(colorVal, emptyColor, legendCategories);
     })
     .attr('stroke-width', 4);
-}
-
-const mouseover = (tooltip) => tooltip.style('opacity', 1);
-const mouseleave = (tooltip) => tooltip.style('opacity', 0);
-const mousemove = ({
-  date, primValue, secValue, valueLabel, cellSize,
-}) => {
-  const tooltip = d3.select('#tooltip');
-  const { x, y } = d3.event;
-  const { width, height } = tooltip.node().getBoundingClientRect();
-  const valueText = getValueText({ val1: primValue, val2: secValue, valueLabel });
-
-  tooltip
-    .html(`${valueText} ${t('on', 'asurgentui')} ${moment(date).format('YYYY-MM-DD')}`)
-    .style('left', `${x - (width / 2)}px`)
-    .style('top', `${y - (height + cellSize)}px`);
 };
 
 const Squares = ({
@@ -196,7 +209,7 @@ const Squares = ({
         cellGap,
       });
     }
-  }, [cellGap, cellSize, primaryData]);
+  }, [cellGap, cellSize, mergedData, primaryData]);
 
   // Add months
   useEffect(() => {
@@ -208,11 +221,10 @@ const Squares = ({
         cellSize,
       });
     }
-  }, [cellSize, primaryData, startDate]);
+  }, [cellSize, mergedData, primaryData, startDate]);
 
   // Create squares
   const squares = useMemo(() => {
-    console.log('squares', cellSize);
     if (squareGroup) {
       const noToday = mergedData.filter(({ date }) => !isToday(date));
       return createSquareBlocks(squareGroup, noToday, cellSize, cellGap);
@@ -221,12 +233,25 @@ const Squares = ({
   }, [mergedData, cellGap, cellSize, squareGroup]);
 
   useEffect(() => {
-   
     if (squareGroup) {
-      placeToday(mergedData, cellSize,startDate, cellGap, emptyColor, legendCategories)
+      placeToday(mergedData,
+        cellSize,
+        startDate,
+        cellGap,
+        emptyColor,
+        legendCategories,
+        tooltip,
+        valueLabel);
     }
-  }, [mergedData, cellGap, cellSize, emptyColor, legendCategories, startDate, squareGroup]);
-
+  }, [mergedData,
+    cellGap,
+    cellSize,
+    emptyColor,
+    legendCategories,
+    startDate,
+    squareGroup,
+    tooltip,
+    valueLabel]);
 
   // Placement of squares
   useEffect(() => {
