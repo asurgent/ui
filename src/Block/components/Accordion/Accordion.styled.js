@@ -35,7 +35,7 @@ export const Wrapper = styled.div`
     border: 1px solid ${({ theme }) => theme.gray100};
     box-sizing: border-box;
     box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.1);
-    margin: 1.6rem 0;
+    margin-bottom: 1.6rem;
     width: 100%;
     display: grid;
     overflow: hidden;
@@ -56,6 +56,10 @@ export const Wrapper = styled.div`
 
     .content {
         grid-area: content;
+    }
+
+    :first-of-type {
+        margin-top: 1.6rem;
     }
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {

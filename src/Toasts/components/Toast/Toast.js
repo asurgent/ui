@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Close from '@material-ui/icons/Close';
+import Flag from '@material-ui/icons/Flag';
 import * as C from './Toast.styled';
 
 const propTypes = {
@@ -84,6 +85,7 @@ const Toast = ({
 
   return (
     <C.Toast type={type} onMouseEnter={onCancelTimer} onMouseLeave={onSetTimer}>
+      <Flag fontSize="large" className="icon" />
       <C.Message>{message}</C.Message>
       <Close fontSize="large" onClick={onRemove} className="close" />
       <C.Bar type={type} done={percentageDone} />

@@ -53,7 +53,7 @@ export const Calendar = styled.div`
 `;
 
 export const StartDate = styled(Calendar)`
-  border-top-color: ${({ hasExpired, theme }) => (hasExpired ? theme.gray600 : theme.green800)};
+  border-top-color: ${({ hasExpired, theme }) => (hasExpired ? theme.gray600 : theme.green700)};
 `;
 export const EndDate = styled(Calendar)`
   border-top-color: ${({ hasExpired, theme }) => (hasExpired ? theme.gray600 : theme.ruby800)};

@@ -5,12 +5,12 @@ const getColor = (theme, type) => {
   switch (type) {
     case C.TYPE_SUCCESS:
       return {
-        border: theme.green900,
+        border: theme.green700,
         background: theme.green100,
       };
     case C.TYPE_INFORMATION:
       return {
-        border: theme.blue800,
+        border: theme.blue900,
         background: theme.blue100,
       };
     case C.TYPE_ERROR:
@@ -38,21 +38,30 @@ export const Message = styled.div`
 export const Toast = styled.div`
     position: relative;
     display: grid;
-    width: 32rem;
+    width: 36rem;
     justify-content: center;
     align-items: center;
-    grid-template-columns: 1fr 2rem;
+    grid-template-columns: 2rem 1fr 2rem;
     grid-column-gap: .8rem;
-    grid-template-areas: "text close";
+    grid-template-areas: "icon text close";
     padding: 1.6rem;
     border-radius: 5px;
     box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.1);
     background-color: ${({ theme }) => theme.white};
-    color: ${({ theme, type }) => getColor(theme, type).border};
     margin-bottom: .8rem;
+
+    p {
+      margin: .8rem;
+    }
+
+    .icon {
+      fill: ${({ theme, type }) => getColor(theme, type).border};
+    }
 
     .close {
         fill: ${({ theme }) => theme.black};
+        align-self: flex-start;
+        margin-top: .8rem;
         right: .4rem;
         height: 2rem;
         width: 2rem;
