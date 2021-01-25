@@ -99,7 +99,8 @@ const fillSquares = (squares, emptyColor, legendCategories) => {
       return getColor(primValue, emptyColor, legendCategories);
     })
     .style('stroke-width', `${STROKE_WIDTH}px`)
-    .style('stroke-dasharray', '100%');
+    .style('stroke-dasharray', '100%')
+    .style('stroke-linecap', 'square');
 };
 
 const getPolygons = (today, cellSize) => [
