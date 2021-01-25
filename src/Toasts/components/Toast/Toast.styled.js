@@ -47,6 +47,7 @@ export const Toast = styled.div`
     padding: 1.6rem;
     border-radius: 5px;
     box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.1);
+    border: 1px solid ${({ theme }) => theme.gray100};
     background-color: ${({ theme }) => theme.white};
     margin-bottom: .8rem;
 
