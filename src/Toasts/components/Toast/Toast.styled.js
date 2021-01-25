@@ -32,7 +32,10 @@ const getColor = (theme, type) => {
 };
 
 export const Message = styled.div`
-    word-break: break-all;
+    word-break: break-word;  
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
 `;
 
 export const Toast = styled.div`
