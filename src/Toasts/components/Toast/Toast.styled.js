@@ -46,7 +46,7 @@ export const Toast = styled.div`
     grid-template-areas: "icon text close";
     padding: 1.6rem;
     border-radius: 5px;
-    box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 8px 24px rgba(149, 157, 165, 0.2);
     border: 1px solid ${({ theme }) => theme.gray100};
     background-color: ${({ theme }) => theme.white};
     margin-bottom: .8rem;

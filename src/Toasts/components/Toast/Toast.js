@@ -104,8 +104,6 @@ const Toast = ({
 
   const Icon = useMemo(() => {
     const a = getIconOnType(type);
-    console.log(type);
-    console.log(a);
 
     return a;
   }, [type]);
