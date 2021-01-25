@@ -134,37 +134,38 @@ const Heatmap = ({
   const svgHeight = ((cellSize + cellGap) * 7) + monthHeight + legendHeight;
 
   return (
+    <>
+      <svg ref={svgRef} width="100%" height={svgHeight}>
+        <C.Group ref={groupRef}>
+          <Squares
+            primaryData={primaryData}
+            secondaryData={secondaryData}
+            startDate={startDate}
+            endDate={endDate}
+            valueLabel={valueLabel}
+            cellGap={cellGap}
+            emptyColor={emptyColor}
+            legendCategories={legendCategories}
+            monthTextRef={monthTextRef}
+            containerWidth={svgGroupWidth}
+            cellSize={Math.abs(cellSize)}
+          />
 
-    <svg ref={svgRef} width="100%" height={svgHeight}>
-      <C.Group ref={groupRef}>
-        <Squares
-          primaryData={primaryData}
-          secondaryData={secondaryData}
-          startDate={startDate}
-          endDate={endDate}
-          valueLabel={valueLabel}
-          cellGap={cellGap}
-          emptyColor={emptyColor}
-          legendCategories={legendCategories}
-          monthTextRef={monthTextRef}
-          containerWidth={svgGroupWidth}
-          cellSize={cellSize}
-        />
-
-        {showLegend() && (
+          {showLegend() && (
           <Legend
             steps={steps}
             startDate={startDate}
             endDate={endDate}
             legendCategories={legendCategories}
-            cellSize={cellSize}
+            cellSize={Math.abs(cellSize)}
             cellGap={cellGap}
           />
-        )}
+          )}
 
-      </C.Group>
-    </svg>
-
+        </C.Group>
+      </svg>
+      <C.Tooltip id="tooltip" />
+    </>
   );
 };
 
@@ -172,7 +173,3 @@ Heatmap.propTypes = propTypes;
 Heatmap.defaultProps = defaultProps;
 
 export default withTheme(Heatmap);
-
-/* <div ref={containerRef}> */
-/* <C.Tooltip id="tooltip" />
-    </div> */
