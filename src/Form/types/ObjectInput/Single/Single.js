@@ -61,6 +61,8 @@ const Single = forwardRef((props, ref) => {
     setValue(newValue);
   };
 
+  console.log('options', options);
+
   return (
     <C.Container>
       <input
@@ -72,8 +74,10 @@ const Single = forwardRef((props, ref) => {
       />
 
       <C.Entry>
-        {Object.keys(value)?.map((key) => {
+        {Object.keys(options)?.map((key) => {
           const option = options[key];
+          console.log('option', option);
+
           const entryValidator = validator?.conditions()[key];
           return (
             <InputWrapper
@@ -88,8 +92,8 @@ const Single = forwardRef((props, ref) => {
               validator={error ? entryValidator : null}
               options={option.options}
               placeholder={option.placeholder}
+              {...props}
             />
-
           );
         })}
       </C.Entry>

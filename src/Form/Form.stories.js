@@ -97,24 +97,26 @@ export const defaultForm = () => {
       label: 'asd',
       tooltip: 'hej',
       options: {
-        someName: { label: 'must be "hello" to add', type: 'string' },
-        someOtherName: { label: 'translatedMultiLabel2', type: 'string', render: () => true },
-        someNumber: { label: 'translatedMultiLabel3', type: 'number' },
-        someSelect: {
-          label: 'translatedMultiLabel3',
-          type: 'select',
+        someName: { label: 'My string', type: 'string' },
+        someNumber: { label: 'My number', type: 'number' },
+        someFilterSelect: {
+          label: 'My filter select',
+          type: 'filterselect',
           placeholder: 'select',
           options: [
             { label: 'someLabel3', value: 'someValue3' },
             { label: 'someLabel4', value: 'someValue4' },
           ],
+          props: {
+            multiSelect: true,
+            searchPlaceholder: 'Search in me plz',
+          },
         },
       },
       value: {
         someName: 'someName',
         someNumber: 23,
-        someOtherName: 'someOtherName',
-        someSelect: 'someValue3',
+        someFilterSelect: 'someValue3',
       },
     },
     someObjectMultiple: {

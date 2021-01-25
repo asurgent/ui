@@ -1,6 +1,10 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import * as C from './ObjectInput.styled';
+import FilterSelect from '../FilterSelect';
+import Select from '../Select';
+import Text from '../Text';
+import Number from '../Number';
 
 const propTypes = {
   type: PropTypes.string,
@@ -28,23 +32,33 @@ const defaultProps = {
   placeholder: '',
 };
 
+const inputType = (type, props, label, value) => {
+  switch (type) {
+    case 'filterselect':
+      return <FilterSelect label={label} value={value} {...props} />;
+    case 'number':
+      return <Number label={label} value={value} {...props} />;
+    case 'select':
+      return <Select label={label} value={value} {...props} />;
+    default:
+      return <Text label={label} value={value} {...props} />;
+  }
+};
+
 const InputWrapper = (props) => {
   const {
     type,
     label,
     value,
-    name,
-    disabled,
     render,
-    onChange,
     validator,
-    options,
     tooltip,
-    placeholder,
+    ...rest
   } = props;
+  console.log('rest', rest);
 
   const error = useMemo(() => {
-    if (validator && validator.valid(value) === false) {
+    if (validator?.valid && validator?.valid(value) === false) {
       return validator.errorMessage;
     }
     return null;
@@ -54,27 +68,7 @@ const InputWrapper = (props) => {
     return (
       <>
         <C.InputContainer type={type} tooltip={tooltip} error={error || false} label={label}>
-          {type === 'select' ? (
-            <select
-              value={value}
-              name={name}
-              onChange={onChange}
-              disabled={disabled()}
-            >
-              <option disabled value="">
-                {placeholder}
-              </option>
-              {options.map((opt) => <option value={opt.value} key={`${opt.value}-${opt.label}`}>{opt.label}</option>)}
-            </select>
-          ) : (
-            <input
-              value={value || ''}
-              name={name}
-              type={type}
-              onChange={onChange}
-              disabled={disabled()}
-            />
-          )}
+          {inputType(type, rest, label, value)}
           {error && <C.Error>{error}</C.Error>}
         </C.InputContainer>
       </>
