@@ -10,7 +10,7 @@ const getColor = (theme, type) => {
       };
     case C.TYPE_INFORMATION:
       return {
-        border: theme.blue900,
+        border: theme.blue700,
         background: theme.blue100,
       };
     case C.TYPE_ERROR:
@@ -47,8 +47,8 @@ export const Toast = styled.div`
     padding: 1.6rem;
     border-radius: 5px;
     box-shadow: 0px 8px 24px rgba(149, 157, 165, 0.2);
-    border: 1px solid ${({ theme }) => theme.gray100};
-    background-color: ${({ theme }) => theme.white};
+    background-color: ${({ theme }) => theme.black};
+    color: ${({ theme }) => theme.white};
     margin-bottom: .8rem;
 
     p {
@@ -56,11 +56,15 @@ export const Toast = styled.div`
     }
 
     .icon {
-      fill: ${({ theme, type }) => getColor(theme, type).border};
+      background: ${({ theme, type }) => getColor(theme, type).border};
+      fill: ${({ theme }) => theme.white};
+      border: ${({ theme, type }) => getColor(theme, type).border};
+      border-radius: 100%;
+      padding: 3px;
     }
 
     .close {
-        fill: ${({ theme }) => theme.black};
+        fill: ${({ theme }) => theme.white};
         align-self: flex-start;
         margin-top: .8rem;
         right: .4rem;
@@ -80,5 +84,5 @@ export const Bar = styled.div`
     width: ${({ done }) => `${100 - done}%`};
     transition: width 100ms;
     border-top-right-radius: 5px;
-    border-top-left-radius: ${({ done }) => (done > 10 ? '0px' : '5px')};
+    border-top-left-radius: ${({ done }) => (done > 2 ? '0px' : '5px')};
 `;

@@ -4,7 +4,7 @@ import Close from '@material-ui/icons/Close';
 import Flag from '@material-ui/icons/Flag';
 import ErrorIcon from '@material-ui/icons/ErrorOutline';
 import Check from '@material-ui/icons/Check';
-import Info from '@material-ui/icons/Info';
+import Info from '@material-ui/icons/InfoOutlined';
 import * as C from './Toast.styled';
 import * as Consts from '../../constants';
 
