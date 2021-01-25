@@ -2,8 +2,9 @@ import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Close from '@material-ui/icons/Close';
 import Flag from '@material-ui/icons/Flag';
-import Face from '@material-ui/icons/Face';
+import ErrorIcon from '@material-ui/icons/ErrorOutline';
 import Check from '@material-ui/icons/Check';
+import Info from '@material-ui/icons/Info';
 import * as C from './Toast.styled';
 import * as Consts from '../../constants';
 
@@ -12,13 +13,13 @@ const getIconOnType = (type) => {
     case Consts.TYPE_SUCCESS:
       return Check;
     case Consts.TYPE_INFORMATION:
-      return Face;
+      return Info;
     case Consts.TYPE_ERROR:
-      return Flag;
+      return ErrorIcon;
     case Consts.TYPE_WARNING:
-      return Face;
-    default:
       return Flag;
+    default:
+      return Info;
   }
 };
 
