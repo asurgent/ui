@@ -31,6 +31,7 @@ const propTyps = {
   tooltip: PropTypes.string,
   className: PropTypes.string,
   clearStateKeys: PropTypes.instanceOf(Array),
+  setTableState: PropTypes.instanceOf(Object),
   history: PropTypes.instanceOf(Object).isRequired,
   theme: PropTypes.instanceOf(Object).isRequired,
   renderStyle: PropTypes.instanceOf(Object).isRequired,
@@ -55,6 +56,7 @@ const defaultProps = {
   tooltip: null,
   className: '',
   clearStateKeys: [],
+  setTableState: {},
   type: '',
   tooltipOrientation: 'middle',
   style: {},
@@ -125,6 +127,8 @@ const Button = (props) => {
     style,
     renderStyle: Component,
     renderContentWithoutWrapper,
+    setTableState,
+    ...passingProps
   } = props;
 
   const location = useLocation();
@@ -144,7 +148,7 @@ const Button = (props) => {
 
       if (isInteralLink(link)) {
         event.preventDefault();
-        const search = cleanUpSearchString(clearStateKeys, location);
+        const search = cleanUpSearchString(clearStateKeys, setTableState, location);
 
         history.push(`${link}${search}`);
       }
@@ -160,6 +164,7 @@ const Button = (props) => {
     onClick: handleClick,
     // onMouseDown needed because of onBlur on form fields
     onMouseDown: (e) => e.preventDefault(),
+    ...passingProps,
   };
 
   const content = (
@@ -205,7 +210,7 @@ const Button = (props) => {
     const Link = Component.withComponent(NavLink);
     const upddatedAttrs = { ...attrs };
 
-    const search = cleanUpSearchString(clearStateKeys, location);
+    const search = cleanUpSearchString(clearStateKeys, setTableState, location);
     Object.assign(upddatedAttrs, {
       to: `${link}${search}`,
     });

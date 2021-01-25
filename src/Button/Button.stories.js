@@ -16,6 +16,24 @@ export const saveToFileButton = () => (
     <Button.Icon saveToFilename="another_file" tooltip="Saves from object" saveToFile={() => ['a', 'b']} icon={<Icon.ConfirmationNumber fontSize="large" onClick={(e) => action('Clicked!')(e)} />} />
   </>
 );
+
+export const setTableState = () => {
+  const state = {
+    search: 'asd',
+    sort: 'timestamp-asc',
+    page: 1,
+    filter: {
+      timestamp: [['2121-12-12', 'eq']],
+    },
+  };
+
+  return (
+    <Button.Primary link="/123/12" setTableState={{ key: state }}>
+      Test link
+    </Button.Primary>
+  );
+};
+
 export const iconButton = () => (
   <Button.Icon tooltip="Hello" saveLinkState link="/test" icon={<Icon.ConfirmationNumber fontSize="large" onClick={(e) => action('Clicked!')(e)} />} />
 );

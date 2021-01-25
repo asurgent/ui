@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import * as Canvas from '../components/Canvas';
 import Zoom from '../components/Zoom';
@@ -49,11 +49,34 @@ const LineGraph = ({
   gridLines,
 }) => {
   const [tooltip, setTooltip] = useState({});
+
   const handleTooltipData = useCallback((event) => {
     if (event?.targetData) {
       setTooltip(event.targetData);
     }
   }, []);
+
+  const legend = useMemo(() => {
+    if (!markerLines?.length) {
+      return [];
+    }
+
+    return markerLines.filter((val) => val !== false);
+  }, [markerLines]);
+
+  const title = useMemo(() => {
+    if (dataTitle) {
+      if (typeof dataTitle === 'function') {
+        return dataTitle(tooltip);
+      }
+
+      return dataTitle;
+    } if (tooltip[xProp]?.format()) {
+      return tooltip[xProp]?.format('YYYY-MM-DD HH:mm:ss');
+    }
+
+    return 'Hover data';
+  }, [dataTitle, tooltip, xProp]);
 
   return (
     <C.Wrapper>
@@ -126,10 +149,10 @@ const LineGraph = ({
           </C.Graph>
           <C.Stats>
             <C.Stat>
-              <b>{dataTitle || 'Hover data'}</b>
+              <b>{ title }</b>
               {capDecimals(tooltip[yProp])}
             </C.Stat>
-            {markerLines && markerLines.map((marker) => (
+            { legend.map((marker) => (
               <C.Stat key={marker.title} color={marker.color}>
                 <b>{marker.title}</b>
                 {marker.value}

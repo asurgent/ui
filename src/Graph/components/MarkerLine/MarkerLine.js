@@ -15,17 +15,22 @@ const defaultProps = {
 const MarkerLine = ({ yScale, markerLines, dimensions }) => {
   const threasholdLines = useMemo(() => {
     if (Array.isArray(markerLines)) {
-      return markerLines.map((marker) => ({
-        y0: yScale(marker.value || marker),
+      const filtered = markerLines
+        .filter((val) => val !== false);
+
+      return filtered.map((marker) => ({
+        y0: yScale(marker.value),
         color: marker.color || null,
       }));
     }
-    if (markerLines instanceof Object && markerLines.value) {
+
+    if (markerLines?.value) {
       return [{
         y0: yScale(markerLines.value),
         color: markerLines.color || null,
       }];
     }
+
     if (Number.isInteger(markerLines)) {
       return [{ y0: yScale(markerLines), color: null }];
     }
