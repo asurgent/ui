@@ -13,7 +13,8 @@ import {
 } from './helpers';
 
 const STROKE_WIDTH = 2;
-const WEEKDAY_WIDTH = 25;
+const WEEKDAYS_WIDTH = 30;
+const MONTHS_HEIGHT = 25;
 
 const { t } = translation;
 
@@ -171,11 +172,10 @@ const Squares = ({
   startDate,
   endDate,
   valueLabel,
-
+  cellSize,
   cellGap,
   emptyColor,
   legendCategories,
-  containerWidth,
 }) => {
   const squareRef = useRef(null);
   const monthTextRef = useRef(null);
@@ -183,18 +183,6 @@ const Squares = ({
 
   const tooltip = d3.select('#tooltip');
   const daysGroup = d3.select('#days');
-
-  const weeks = useMemo(() => d3
-    .utcSunday
-    .count(moment(startDate), moment(endDate)) + 1, [endDate, startDate]);
-
-  console.log('containerWidth', containerWidth);
-
-  const cellSize = useMemo(() => {
-    const cellGapOffset = weeks * cellGap;
-    return (containerWidth - cellGapOffset) / weeks;
-  }, [cellGap, containerWidth, weeks]);
-  console.log('cellSize', cellSize, weeks);
 
   const days = useMemo(() => moment(endDate).diff(moment(startDate), 'days') + 1, [endDate, startDate]);
   const reduceToObject = (arr) => arr.reduce((acc, cur) => ({ ...acc, [cur.date]: cur.value }), {});
@@ -216,7 +204,6 @@ const Squares = ({
   const squares = useMemo(() => {
     if (daysGroup) {
       const noToday = mergedData.filter(({ date }) => !isToday(date));
-      console.log('noToday', noToday, cellSize);
       return createSquareBlocks(daysGroup, noToday, cellSize, cellGap);
     }
     return null;
@@ -269,7 +256,7 @@ const Squares = ({
       .on('mouseleave', () => mouseleave(tooltip));
   }, [cellSize, squares, tooltip, valueLabel]);
 
-  /* // Add weekdays
+  // Add weekdays
   useEffect(() => {
     if (mergedData && weekdayRef.current) {
       addWeekdays({
@@ -289,15 +276,16 @@ const Squares = ({
         startDate,
         cellSize,
         cellGap,
+        weekdayOffset: WEEKDAYS_WIDTH,
       });
     }
-  }, [cellGap, cellSize, mergedData, primaryData, startDate]); */
+  }, [cellGap, cellSize, mergedData, primaryData, startDate]);
 
   return (
     <>
-      {/*       <C.Months ref={monthTextRef} />
-      <C.Weekdays ref={weekdayRef} /> */}
-      <C.Squares id="squares" ref={squareRef}>
+      <C.Months ref={monthTextRef} />
+      <C.Weekdays ref={weekdayRef} />
+      <C.Squares id="squares" ref={squareRef} style={{ transform: `translate(${WEEKDAYS_WIDTH}px, ${MONTHS_HEIGHT}px)` }}>
         <g id="days" />
         <g id="today" />
       </C.Squares>

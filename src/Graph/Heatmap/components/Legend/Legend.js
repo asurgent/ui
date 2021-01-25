@@ -36,7 +36,7 @@ const Legend = ({
   steps,
 }) => {
   const legendRef = useRef(null);
-  const widthOfSquares = -(steps * cellSize);
+  const widthOfSquares = -(steps * (cellSize + cellGap));
   useEffect(() => {
     if (legendRef.current) {
       const legendContainer = d3.select(legendRef.current);
@@ -44,17 +44,16 @@ const Legend = ({
       legendContainer
         .attr(
           'transform',
-          `translate(${centerOfLastSquare() - 20}, ${(cellSize * 7) + 30})`,
-          // 20: appr width of less-text, 30: top-margin
+          `translate(${centerOfLastSquare() - 20}, ${((cellSize + cellGap) * 7) + 30})`,
         );
       legendContainer
         .selectAll('rect')
         .data(legendCategories)
         .join('rect')
         .attr('fill', (d) => d.color)
-        .attr('x', (_, i) => widthOfSquares - 10 + (cellSize * i))
-        .attr('width', cellSize - cellGap)
-        .attr('height', cellSize - cellGap);
+        .attr('x', (_, i) => widthOfSquares - 10 + ((cellSize + cellGap) * i))
+        .attr('width', cellSize)
+        .attr('height', cellSize);
     }
   }, [cellGap, cellSize, legendCategories, steps, widthOfSquares]);
 

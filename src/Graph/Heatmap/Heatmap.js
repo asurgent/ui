@@ -1,5 +1,5 @@
 import React, {
-  useEffect, useMemo, useRef, useLayoutEffect, useState, createRef,
+  useMemo, useRef, useLayoutEffect, useState, createRef,
 } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
@@ -8,8 +8,7 @@ import * as d3 from 'd3';
 // import translation from './Heatmap.translation';
 import * as C from './Heatmap.styled';
 import Squares from './components/Squares';
-// import Legend from './components/Legend';
-import { marginFromWeekdays } from './constants';
+import Legend from './components/Legend';
 
 // const { t } = translation;
 
@@ -32,7 +31,7 @@ const propTypes = {
   theme: PropTypes.instanceOf(Object),
   cellGap: PropTypes.number,
   valueLabel: PropTypes.string,
-  // showLegend: PropTypes.func,
+  showLegend: PropTypes.func,
   startDate: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Date),
@@ -54,7 +53,7 @@ const defaultProps = {
   theme: {},
   cellGap: 2,
   valueLabel: 'something',
-  // showLegend: () => true,
+  showLegend: () => true,
   startDate: moment().startOf('year'),
   endDate: moment().endOf('year'),
 };
@@ -86,7 +85,7 @@ const Heatmap = ({
   emptyColor,
   cellGap,
   valueLabel,
-  // showLegend,
+  showLegend,
   startDate,
   endDate,
   theme,
@@ -94,7 +93,6 @@ const Heatmap = ({
   const monthTextRef = useRef(null);
   const groupRef = useRef(null);
   const svgRef = createRef(null);
-  const containerRef = useRef(null);
 
   const maxValue = useMemo(() => {
     if (primaryData.find((d) => d.value)) {
@@ -119,50 +117,41 @@ const Heatmap = ({
       color: colorScale(i),
     };
   }), [colorScale, maxValue, steps]);
-  const weeks = useMemo(() => d3.utcSunday.count(startDate, endDate), [endDate, startDate]);
 
   const svgGroupWidth = useSvgGroupSize(svgRef);
-  console.log('svgGroupWidth', svgGroupWidth);
-  const cellSize = svgGroupWidth === 0 ? cellGap
-    : (svgGroupWidth / (weeks + 1) - (marginFromWeekdays / (weeks + 1)));
 
-  /*  useEffect(() => {
-    const { height } = groupRef?.current?.getBoundingClientRect();
-    const { width } = groupRef?.current?.getBoundingClientRect();
+  const weeks = useMemo(() => d3
+    .utcSunday
+    .count(moment(startDate), moment(endDate)) + 1, [endDate, startDate]);
 
-    svgRef.current.setAttribute('width', width);
-    svgRef.current.setAttribute('height', height);
-  }, [cellSize]); */
+  const cellSize = useMemo(() => {
+    const cellGapOffset = weeks * cellGap;
+    return (svgGroupWidth - cellGapOffset) / weeks;
+  }, [cellGap, svgGroupWidth, weeks]);
 
-  /*
-
-  if (!data || !legendCategories) {
-    return <p>{t('noData', 'asurgentui')}</p>;
-  } */
-  const containerWidth = svgRef?.current?.getBoundingClientRect().width;
+  const monthHeight = 20;
+  const legendHeight = 30;
+  const svgHeight = ((cellSize + cellGap) * 7) + monthHeight + legendHeight;
 
   return (
 
-    <svg ref={svgRef} width="100%" height="100%">
-      {/* preserveAspectRatio="none"  viewBox="0 0 100 100" */}
-      {/* <C.Group ref={groupRef}> */}
-      <Squares
-        primaryData={primaryData}
-        secondaryData={secondaryData}
-        startDate={startDate}
-        endDate={endDate}
-        valueLabel={valueLabel}
-        cellSize={cellSize}
-        cellGap={cellGap}
-        emptyColor={emptyColor}
-        legendCategories={legendCategories}
-        monthTextRef={monthTextRef}
-        containerWidth={svgGroupWidth}
-      />
+    <svg ref={svgRef} width="100%" height={svgHeight}>
+      <C.Group ref={groupRef}>
+        <Squares
+          primaryData={primaryData}
+          secondaryData={secondaryData}
+          startDate={startDate}
+          endDate={endDate}
+          valueLabel={valueLabel}
+          cellGap={cellGap}
+          emptyColor={emptyColor}
+          legendCategories={legendCategories}
+          monthTextRef={monthTextRef}
+          containerWidth={svgGroupWidth}
+          cellSize={cellSize}
+        />
 
-      {/*
-
-          {showLegend() && (
+        {showLegend() && (
           <Legend
             steps={steps}
             startDate={startDate}
@@ -171,9 +160,9 @@ const Heatmap = ({
             cellSize={cellSize}
             cellGap={cellGap}
           />
-          )}
-            */}
-      {/* </C.Group> */}
+        )}
+
+      </C.Group>
     </svg>
 
   );

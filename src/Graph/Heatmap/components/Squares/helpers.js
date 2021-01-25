@@ -1,8 +1,6 @@
 import * as d3 from 'd3';
 import moment from 'moment';
-import { WeekendTwoTone } from '@material-ui/icons';
 import translation from './Squares.translation';
-import { marginFromWeekdays } from '../../constants';
 
 const { t } = translation;
 
@@ -16,14 +14,13 @@ export const getX = (startDate, date, cellSize, cellGap) => {
     .utcSunday
     .count(moment(firstDate), moment(date));
 
-  const x = (weekOffset * (cellSize + cellGap));// + marginFromWeekdays;
+  const x = (weekOffset * (cellSize + cellGap));
   return x;
 };
 
 export const getY = (date, cellSize, cellGap) => {
   const dayRow = moment(date).isoWeekday() - 1;
-  const monthTextOffset = 20;
-  const y = (dayRow * (cellSize + cellGap));// + monthTextOffset;
+  const y = (dayRow * (cellSize + cellGap));
   return y;
 };
 
@@ -41,7 +38,7 @@ export const getValueText = ({ val1, val2, valueLabel }) => {
 };
 
 export const addMonthText = ({
-  ref, data, startDate, cellSize, cellGap,
+  ref, data, startDate, cellSize, cellGap, weekdayOffset,
 }) => {
   const monthText = d3.select(ref);
   const firstDaysOfMonths = data.filter((d) => moment(d.date).date() === 1);
@@ -54,17 +51,19 @@ export const addMonthText = ({
     .attr('dominant-baseline', 'hanging')
     .attr('x', ({ date }) => {
       const centerOfSquareOffset = (cellSize / 2);
-      return getX(startDate, date, cellSize, cellGap) + centerOfSquareOffset;
+      return getX(startDate, date, cellSize, cellGap) + centerOfSquareOffset + weekdayOffset;
     });
 };
 
-export const addWeekdays = ({ ref, cellSize, cellGap }) => {
+export const addWeekdays = ({
+  ref, cellSize, cellGap, monthsHeight = 25,
+}) => {
   const dayText = d3.select(ref);
   dayText
     .selectAll('text')
     .data(d3.range(7).map((i) => new Date(new Date().getFullYear(), 0, i)))
     .join('text')
-    .attr('y', (d) => (d.getUTCDay() + 0.5) * cellSize + cellGap)
+    .attr('y', (d) => (d.getUTCDay() + 0.5) * cellSize + cellGap + monthsHeight)
     .attr('dy', '0.31em')
     .text((d) => t(`day${new Date(d).getUTCDay()}`, 'asurgentui'));
 };
