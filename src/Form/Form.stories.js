@@ -92,6 +92,31 @@ export const defaultForm = () => {
       placeholder: 'Add something cool',
       value: ['first', 'second'],
     },
+    someObjectSingle: {
+      type: 'objectsingle',
+      label: 'asd',
+      tooltip: 'hej',
+      options: {
+        someName: { label: 'must be "hello" to add', type: 'string' },
+        someOtherName: { label: 'translatedMultiLabel2', type: 'string', render: () => true },
+        someNumber: { label: 'translatedMultiLabel3', type: 'number' },
+        someSelect: {
+          label: 'translatedMultiLabel3',
+          type: 'select',
+          placeholder: 'select',
+          options: [
+            { label: 'someLabel3', value: 'someValue3' },
+            { label: 'someLabel4', value: 'someValue4' },
+          ],
+        },
+      },
+      value: {
+        someName: 'someName',
+        someNumber: 23,
+        someOtherName: 'someOtherName',
+        someSelect: 'someValue3',
+      },
+    },
     someObjectMultiple: {
       type: 'objectmultiple',
       label: null,

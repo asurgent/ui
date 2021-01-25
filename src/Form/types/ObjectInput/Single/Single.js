@@ -71,15 +71,13 @@ const Single = forwardRef((props, ref) => {
         readOnly
       />
 
-      {Object.keys(value).length > 0 && (
       <C.Entry>
-        {Object.keys(value).map((key, index) => {
+        {Object.keys(value)?.map((key) => {
           const option = options[key];
           const entryValidator = validator?.conditions()[key];
           return (
             <InputWrapper
-              /* eslint-disable-next-line react/no-array-index-key */
-              key={index}
+              key={key}
               name={key}
               label={option.label}
               value={value[key]}
@@ -91,10 +89,11 @@ const Single = forwardRef((props, ref) => {
               options={option.options}
               placeholder={option.placeholder}
             />
+
           );
         })}
       </C.Entry>
-      )}
+
     </C.Container>
   );
 });
