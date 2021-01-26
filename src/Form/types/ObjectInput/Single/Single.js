@@ -3,13 +3,11 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import * as C from '../ObjectInput.styled';
-import FilterSelect from '../../FilterSelect';
-import Select from '../../Select';
-import Text from '../../Text';
-import Number from '../../Number';
+
 import {
   clearObjectValues,
   valuePassedValidation,
+  getInputComponent,
 } from '../helpers';
 
 const propTypes = {
@@ -36,44 +34,6 @@ const defaultProps = {
     errorMessage: 'some error',
   },
   error: false,
-};
-
-const InputWrapper = ({
-  option,
-  value,
-  name,
-  onChange,
-  type,
-  label,
-  options,
-  disabled,
-  render,
-  validator,
-  placeholder,
-}) => {
-  switch (type) {
-    case 'filterselect':
-      return (
-        <FilterSelect
-          name={name}
-          onChange={onChange}
-          disabled={disabled}
-          render={render}
-          validator={validator}
-          placeholder={placeholder}
-          label={label}
-          options={options}
-          props={option.props}
-          value={value}
-        />
-      );
-    case 'number':
-      return <Number name={name} onChange={onChange} label={label} value={value} />;
-    case 'select':
-      return <Select name={name} onChange={onChange} label={label} value={value} />;
-    default:
-      return <Text type="text" onChange={onChange} name={name} label={label} value={value} />;
-  }
 };
 
 const Single = forwardRef((props, ref) => {
@@ -115,10 +75,16 @@ const Single = forwardRef((props, ref) => {
         {Object.keys(options)?.map((key) => {
           const option = options[key];
           const entryValidator = validator?.conditions()[key];
+          const InputComponent = getInputComponent(option.type);
           return (
-            <C.InputContainer key={key} type={option.type} error={error || false} label={option.label}>
+            <C.InputContainer
+              key={key}
+              type={option.type}
+              error={error || false}
+              label={option.label}
+            >
               {/* tooltip={tooltip} */}
-              <InputWrapper
+              <InputComponent
                 name={key}
                 option={option}
                 type={option.type}
@@ -130,6 +96,7 @@ const Single = forwardRef((props, ref) => {
                 validator={error ? entryValidator : null}
                 placeholder={option.placeholder}
                 onChange={handleChange}
+                props={option.props}
               />
             </C.InputContainer>
           );
