@@ -3,7 +3,10 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import * as C from '../ObjectInput.styled';
-import InputWrapper from '../InputWrapper';
+import FilterSelect from '../../FilterSelect';
+import Select from '../../Select';
+import Text from '../../Text';
+import Number from '../../Number';
 import {
   clearObjectValues,
   valuePassedValidation,
@@ -35,6 +38,44 @@ const defaultProps = {
   error: false,
 };
 
+const InputWrapper = ({
+  option,
+  value,
+  name,
+  onChange,
+  type,
+  label,
+  options,
+  disabled,
+  render,
+  validator,
+  placeholder,
+}) => {
+  switch (type) {
+    case 'filterselect':
+      return (
+        <FilterSelect
+          name={name}
+          onChange={onChange}
+          disabled={disabled}
+          render={render}
+          validator={validator}
+          placeholder={placeholder}
+          label={label}
+          options={options}
+          props={option.props}
+          value={value}
+        />
+      );
+    case 'number':
+      return <Number name={name} onChange={onChange} label={label} value={value} />;
+    case 'select':
+      return <Select name={name} onChange={onChange} label={label} value={value} />;
+    default:
+      return <Text type="text" onChange={onChange} name={name} label={label} value={value} />;
+  }
+};
+
 const Single = forwardRef((props, ref) => {
   const {
     options, name, parseOutput, validator, error,
@@ -55,13 +96,10 @@ const Single = forwardRef((props, ref) => {
     validator: () => valuePassedValidation({ validators: validator.conditions(), value }),
   }));
 
-  const handleChange = ({ target }) => {
-    const val = target.type === 'number' ? parseInt(target.value, 10) : target.value;
-    const newValue = { ...value, [target.name]: val };
+  const handleChange = ({ name, val, type }) => {
+    const newValue = { ...value, [name]: val };
     setValue(newValue);
   };
-
-  console.log('options', options);
 
   return (
     <C.Container>
@@ -76,24 +114,24 @@ const Single = forwardRef((props, ref) => {
       <C.Entry>
         {Object.keys(options)?.map((key) => {
           const option = options[key];
-          console.log('option', option);
-
           const entryValidator = validator?.conditions()[key];
           return (
-            <InputWrapper
-              key={key}
-              name={key}
-              label={option.label}
-              value={value[key]}
-              type={option.type}
-              onChange={handleChange}
-              disabled={option.disabled}
-              render={option.render}
-              validator={error ? entryValidator : null}
-              options={option.options}
-              placeholder={option.placeholder}
-              {...props}
-            />
+            <C.InputContainer key={key} type={option.type} error={error || false} label={option.label}>
+              {/* tooltip={tooltip} */}
+              <InputWrapper
+                name={key}
+                option={option}
+                type={option.type}
+                value={value[key]}
+                label={option.label}
+                options={option.options}
+                disabled={option.disabled}
+                render={option.render}
+                validator={error ? entryValidator : null}
+                placeholder={option.placeholder}
+                onChange={handleChange}
+              />
+            </C.InputContainer>
           );
         })}
       </C.Entry>

@@ -68,7 +68,9 @@ const FilterInput = forwardRef((props, ref) => {
     parseOutput,
     props: inputProps,
     disabled,
+    onChange,
   } = props;
+
   const placeholdeOutput = placeholder || t('selectPlaceholder', 'asurgentui');
   const searchInput = createRef();
   const { multiSelect } = inputProps;
@@ -82,6 +84,7 @@ const FilterInput = forwardRef((props, ref) => {
 
   const handleChange = (item) => {
     const selected = filterSelectHook.selectItem(item);
+    onChange({ name, val: selected });
     dispatchEvent(selected, filterSelectHook.inputRef);
   };
 

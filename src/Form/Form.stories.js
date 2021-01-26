@@ -78,7 +78,7 @@ export const defaultForm = () => {
       tooltip: 'hejhej',
       value: 'text text',
     },
-    someTextArea: {
+    /*     someTextArea: {
       type: 'textarea',
       label: 'Some Text',
       tooltip: 'hejhej',
@@ -91,15 +91,15 @@ export const defaultForm = () => {
       parseOutput: (r) => r.filter((entry) => entry !== ''),
       placeholder: 'Add something cool',
       value: ['first', 'second'],
-    },
+    }, */
     someObjectSingle: {
       type: 'objectsingle',
-      label: 'asd',
+      label: 'some object single',
       tooltip: 'hej',
       options: {
-        someName: { label: 'My string', type: 'string' },
-        someNumber: { label: 'My number', type: 'number' },
-        someFilterSelect: {
+        objectName: { label: 'My string', type: 'string' },
+        objectNumber: { label: 'My number', type: 'number' },
+        objectFilterSelect: {
           label: 'My filter select',
           type: 'filterselect',
           placeholder: 'select',
@@ -114,12 +114,12 @@ export const defaultForm = () => {
         },
       },
       value: {
-        someName: 'someName',
-        someNumber: 23,
-        someFilterSelect: 'someValue3',
+        objectName: 'someName',
+        objectNumber: 23,
+        objectFilterSelect: 'someValue3',
       },
     },
-    someObjectMultiple: {
+  /*   someObjectMultiple: {
       type: 'objectmultiple',
       label: null,
       tooltip: 'hejhej',
@@ -153,8 +153,7 @@ export const defaultForm = () => {
         someOtherName: 'someOtherName',
         someSelect: 'someValue3',
       }],
-    },
-    email: {
+    }, email: {
       type: 'email',
       label: 'Email',
       tooltip: 'Select me',
@@ -263,7 +262,7 @@ export const defaultForm = () => {
       tooltip: 'tooltip',
       label: 'Some date',
       value: '2020-12-24',
-    },
+    }, */
   });
   const renderErrors = boolean('render errors', false);
 

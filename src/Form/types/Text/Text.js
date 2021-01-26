@@ -41,6 +41,7 @@ const Text = forwardRef((props, ref) => {
     parseOutput,
     validator,
     disabled,
+    onChange,
   } = props;
   const input = createRef();
   const [value, setValue] = useState(props.value || '');
@@ -63,7 +64,10 @@ const Text = forwardRef((props, ref) => {
       type="text"
       value={value}
       placeholder={placeholder}
-      onChange={({ target }) => setValue(target.value)}
+      onChange={({ target }) => {
+        setValue(target.value);
+        onChange({ name: target.name, val: target.value });
+      }}
       name={name}
       ref={input}
       disabled={disabled()}
