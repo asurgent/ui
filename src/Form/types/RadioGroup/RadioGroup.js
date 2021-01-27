@@ -49,7 +49,11 @@ const RadioGroup = forwardRef((props, ref) => {
   }));
 
   return (
-    <C.FieldSet onChange={({ target }) => setVal(target.value)}>
+    <C.FieldSet onChange={({ target }) => {
+      console.log('val', target.value);
+      setVal(target.value);
+    }}
+    >
       <C.RadioWrapper wrapRadios={wrapRadios}>
         {options.map((opt) => (
           <C.Label key={opt.label || opt.value}>

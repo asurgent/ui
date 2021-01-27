@@ -15,6 +15,7 @@ const propTyps = {
   name: PropTypes.string.isRequired,
   props: PropTypes.instanceOf(Object),
   disabled: PropTypes.func,
+  onChange: PropTypes.func,
 };
 
 const defaultProps = {
@@ -22,6 +23,7 @@ const defaultProps = {
   label: '',
   props: {},
   disabled: () => false,
+  onChange: () => null,
 };
 
 const Bool = forwardRef((props, ref) => {
@@ -38,6 +40,7 @@ const Bool = forwardRef((props, ref) => {
 
   useEffect(() => {
     setValue(`${!!props.value}`);
+    console.log('!!props.value', !!props.value);
   }, [props.value]);
 
   return (
@@ -50,6 +53,7 @@ const Bool = forwardRef((props, ref) => {
       ref={ref}
       props={props.props}
       disabled={disabled}
+      onChange={() => console.log(1)}
     />
   );
 });

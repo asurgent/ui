@@ -34,6 +34,7 @@ const propTyps = {
     errorMessage: PropTypes.string,
   }),
   disabled: PropTypes.func,
+  onChange: PropTypes.func,
 };
 
 const defaultProps = {
@@ -47,6 +48,7 @@ const defaultProps = {
     errorMessage: '',
   },
   disabled: () => false,
+  onChange: () => null,
 };
 
 const dispatchEvent = (value, ref) => {
@@ -84,7 +86,7 @@ const FilterInput = forwardRef((props, ref) => {
 
   const handleChange = (item) => {
     const selected = filterSelectHook.selectItem(item);
-    onChange({ name, val: selected });
+    onChange({ inputName: name, inputValue: selected });
     dispatchEvent(selected, filterSelectHook.inputRef);
   };
 

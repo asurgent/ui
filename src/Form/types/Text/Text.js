@@ -19,6 +19,7 @@ const propTyps = {
     errorMessage: PropTypes.string,
   }),
   disabled: PropTypes.func,
+  onChange: PropTypes.func,
 };
 
 const defaultProps = {
@@ -32,6 +33,7 @@ const defaultProps = {
     errorMessage: '',
   },
   disabled: () => false,
+  onChange: () => null,
 };
 
 const Text = forwardRef((props, ref) => {
@@ -58,16 +60,18 @@ const Text = forwardRef((props, ref) => {
     setValue(props.value || '');
   }, [props.value]);
 
+  const handleChange = ({ target }) => {
+    setValue(target.value);
+    onChange({ inputName: target.name, inputValue: target.value });
+  };
+
   return (
     <input
       {...props.props}
       type="text"
       value={value}
       placeholder={placeholder}
-      onChange={({ target }) => {
-        setValue(target.value);
-        onChange({ name: target.name, val: target.value });
-      }}
+      onChange={handleChange}
       name={name}
       ref={input}
       disabled={disabled()}

@@ -56,8 +56,8 @@ const Single = forwardRef((props, ref) => {
     validator: () => valuePassedValidation({ validators: validator.conditions(), value }),
   }));
 
-  const handleChange = ({ name, val, type }) => {
-    const newValue = { ...value, [name]: val };
+  const handleChange = ({ inputName, inputValue }) => {
+    const newValue = { ...value, [inputName]: inputValue };
     setValue(newValue);
   };
 

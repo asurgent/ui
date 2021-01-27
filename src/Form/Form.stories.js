@@ -119,6 +119,14 @@ export const defaultForm = () => {
         objectFilterSelect: 'someValue3',
       },
     },
+    imABoolean: {
+      type: 'bool',
+      label: 'Im true or false',
+      tooltipPosition: 'left',
+      tooltip: 'Select me',
+      value: false,
+      disabled: () => false,
+    },
   /*   someObjectMultiple: {
       type: 'objectmultiple',
       label: null,
@@ -163,14 +171,7 @@ export const defaultForm = () => {
       },
       value: 'my@email.com',
     },
-    imABoolean: {
-      type: 'bool',
-      label: 'Im true or false',
-      tooltipPosition: 'left',
-      tooltip: 'Select me',
-      value: false,
-      disabled: () => false,
-    },
+
     someNumber: {
       type: 'number',
       label: 'Some Number (max 100)',
