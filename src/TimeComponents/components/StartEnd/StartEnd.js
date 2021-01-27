@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import PlayIcon from '@material-ui/icons/PlayArrow';
-import StopIcon from '@material-ui/icons/Stop';
+import MdiIcon from '@mdi/react';
+import { mdiStop, mdiPlay } from '@mdi/js';
 import { withTheme } from 'styled-components';
 import * as C from '../../TimeComponents.styled';
 import translation from './StartEnd.translation';
@@ -67,7 +67,7 @@ const StartEnd = ({
       <C.Dates>
         <C.Container marginRight>
           <C.TextSmall withBottomMargin>{t('started', 'asurgentui')}</C.TextSmall>
-          <PlayIcon fontSize="large" style={{ fill: theme.blue900 }} />
+          <MdiIcon size={1.6} path={mdiPlay} color={theme.blue900} />
           <C.TextNormal>{newMoment(dates.from).format('HH:mm')}</C.TextNormal>
           <C.TextSmall withBottomMargin>{newMoment(dates.from).format('YYYY-MM-DD')}</C.TextSmall>
         </C.Container>
@@ -82,7 +82,7 @@ const StartEnd = ({
 
         <C.Container marginLeft>
           <C.TextSmall withBottomMargin>{t('ends', 'asurgentui')}</C.TextSmall>
-          <StopIcon fontSize="large" style={{ fill: theme.blue900 }} />
+          <MdiIcon size={1.6} path={mdiStop} color={theme.blue900} />
           <C.TextNormal>{newMoment(dates.to).format('HH:mm')}</C.TextNormal>
           <C.TextSmall withBottomMargin>{newMoment(dates.to).format('YYYY-MM-DD')}</C.TextSmall>
         </C.Container>

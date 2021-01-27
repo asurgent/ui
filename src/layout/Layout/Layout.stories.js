@@ -1,7 +1,13 @@
 import React, { useEffect } from 'react';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import * as Icons from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import {
+  mdiCompass,
+  mdiViewDashboard,
+  mdiAndroidMessages,
+  mdiTimerOutline,
+} from '@mdi/js';
 import * as Layout from '../index';
 import * as Block from '../../Block';
 import * as Modal from '../../Modal';
@@ -12,19 +18,19 @@ const navigationList = (t, customerId) => [
     label: t('linkDashboardLabel'),
     tooltip: t('linkDashboardTooltip'),
     active: true,
-    icon: (<Icons.Dashboard fontSize="large" />),
+    icon: (<MdiIcon path={mdiViewDashboard} size={1.4} />),
     link: '/dashboard',
   },
   {
     label: t('linkExploreLabel'),
     tooltip: t('linkExploreTooltip'),
-    icon: (<Icons.Explore fontSize="large" />),
+    icon: (<MdiIcon path={mdiCompass} size={1.4} />),
     link: `/my-environment/${customerId || ''}`,
   },
   {
     label: t('linkTicketsLabel'),
     tooltip: t('linkTicketsTooltip'),
-    icon: (<Icons.Message fontSize="large" />),
+    icon: (<MdiIcon path={mdiAndroidMessages} size={1.4} />),
     link: '/tickets',
   },
 ];
@@ -39,13 +45,13 @@ const createList = () => [
   {
     title: 'Ticket',
     description: 'create a new ticket',
-    icon: (Icons.Message),
+    icon: (mdiAndroidMessages),
     onClick: action('create ticket'),
   },
   {
     title: 'Service window',
     description: 'setup a new service window',
-    icon: (Icons.Timer),
+    icon: (mdiTimerOutline),
     onClick: action('create ticket'),
   },
 ];

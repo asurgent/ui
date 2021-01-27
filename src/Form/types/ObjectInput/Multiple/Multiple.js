@@ -2,8 +2,9 @@ import React, {
   forwardRef, useState, createRef, useImperativeHandle, useEffect, useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
-import Delete from '@material-ui/icons/Block';
-import Add from '@material-ui/icons/Add';
+import MdiIcon from '@mdi/react';
+import { mdiCancel, mdiPlus } from '@mdi/js';
+
 import * as C from '../ObjectInput.styled';
 import * as Button from '../../../../Button';
 import translation from '../ObjectInput.translation';
@@ -148,7 +149,7 @@ const Multiple = forwardRef((props, ref) => {
           })}
           <C.ButtonContainer>
             <Button.Reject
-              iconRight={<Delete />}
+              iconRight={<MdiIcon path={mdiCancel} size={1.4} />}
               onClick={() => handleRemove({ index })}
             >
               {t('remove', 'asurgentui')}
@@ -181,7 +182,7 @@ const Multiple = forwardRef((props, ref) => {
             ))}
           <C.ButtonContainer>
             <Button.Hollow
-              iconRight={<Add />}
+              iconRight={<MdiIcon path={mdiPlus} size={1.4} />}
               disabled={!canAdd}
               onClick={handleAdd}
             >

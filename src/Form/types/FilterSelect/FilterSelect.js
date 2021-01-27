@@ -4,7 +4,8 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import PropTypes from 'prop-types';
-import * as Icons from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiMenuDown } from '@mdi/js';
 import * as VirtualRender from '../../../VirtualRender';
 import * as Shield from '../../../Shield';
 import * as Tag from '../../../Tag';
@@ -111,7 +112,7 @@ const FilterInput = forwardRef((props, ref) => {
             { filterSelectHook.showPlaceHolder() && placeholdeOutput}
             {!filterSelectHook.showTags() && (filterSelectHook.getOutput())}
           </C.Value>
-          <Icons.ArrowDropDown className="down-arrow" fontSize="large" />
+          <MdiIcon path={mdiMenuDown} size={1.4} className="down-arrow" />
         </C.Output>
         <Transition.FadeInFitted isVisible={filterSelectHook.isOpen} timeout={80}>
           <C.Dropdown>

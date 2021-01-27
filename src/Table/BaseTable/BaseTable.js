@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
-import * as Icons from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiTrayArrowDown } from '@mdi/js';
 import * as Spinner from '../../Spinner';
 import TableHeader from '../TableHeader';
 import * as Button from '../../Button';
@@ -131,7 +132,7 @@ const BaseTable = withTheme((props) => {
                 saveToFile={exportResultsAction}
               >
                 {`${itemCount} ${t('results', 'asurgentui')}`}
-                <Icons.SaveAlt />
+                <MdiIcon size={1.4} path={mdiTrayArrowDown} />
               </Button.Plain>
             )}
           </C.Count>

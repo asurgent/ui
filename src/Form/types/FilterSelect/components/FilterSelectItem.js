@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Icons from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiCheck } from '@mdi/js';
 import * as C from './FilterSelectItem.styled';
 
 const propTypes = {
@@ -16,7 +17,7 @@ const FilterItem = ({
 }) => (
   <C.FilterItem onClick={() => onChange(filterItem)}>
     <C.Active>
-      {filterItem.selected && <Icons.Check />}
+      {filterItem.selected && <MdiIcon path={mdiCheck} size={1.4} />}
     </C.Active>
     <C.FilterLabel>
       { filterItem.label }

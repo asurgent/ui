@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Icon from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiClose } from '@mdi/js';
 import * as U from './DropdownCreate.styled';
 import * as Button from '../../Button';
 import * as Shield from '../../Shield';
@@ -26,11 +27,11 @@ const CreateItemButton = ({
   title,
   description,
   onClose,
-  icon: IconComponent,
+  icon,
 }) => (
   <Button.Plain onClick={() => { onClick(); onClose(); }}>
     <U.CreateItem>
-      <IconComponent className="create-icon" fontSize="large" />
+      <MdiIcon path={icon} className="create-icon" size={1.4} />
       <U.CreateTitle>{title}</U.CreateTitle>
       <U.CreateDescription>{description}</U.CreateDescription>
     </U.CreateItem>
@@ -79,7 +80,11 @@ const DropdownCreate = ({
         <U.Mobile>
           <Transition.FadeIn isVisible={isOpen} timeout={80}>
             <U.MobileMenu>
-              <Button.Icon className="close" onClick={onClose} icon={<Icon.Close fontSize="large" />} />
+              <Button.Icon
+                className="close"
+                onClick={onClose}
+                icon={(<MdiIcon size={1.4} path={mdiClose} />)}
+              />
               <U.MobileContent>
                 {
                   createActionList

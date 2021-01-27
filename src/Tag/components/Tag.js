@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Close from '@material-ui/icons/Close';
+import MdiIcon from '@mdi/react';
+import { mdiClose } from '@mdi/js';
 import * as Button from '../../Button';
 
 const propTypes = {
@@ -31,7 +32,11 @@ const Tag = ({
     <Styled>
       <div className="label">{parsedLabel}</div>
       { onDelete && (
-        <Button.Plain className="delete" mainIcon={<Close fontSize="small" />} onClick={onDelete} />
+        <Button.Plain
+          className="delete"
+          onClick={onDelete}
+          mainIcon={<MdiIcon size={0.8} path={mdiClose} />}
+        />
       )}
     </Styled>
   );

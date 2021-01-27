@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import Close from '@material-ui/icons/Close';
+import MdiIcon from '@mdi/react';
+import { mdiClose } from '@mdi/js';
 import * as C from './Toast.styled';
 
 const propTypes = {
@@ -85,7 +86,7 @@ const Toast = ({
   return (
     <C.Toast type={type} onMouseEnter={onCancelTimer} onMouseLeave={onSetTimer}>
       <C.Message>{message}</C.Message>
-      <Close fontSize="large" onClick={onRemove} className="close" />
+      <MdiIcon size={1.6} path={mdiClose} className="close" />
       <C.Bar type={type} done={percentageDone} />
     </C.Toast>
   );
