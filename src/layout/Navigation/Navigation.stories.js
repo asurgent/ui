@@ -2,7 +2,12 @@ import React from 'react';
 import {
   withKnobs, boolean, text,
 } from '@storybook/addon-knobs';
-import * as Icon from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import {
+  mdiCompass,
+  mdiViewDashboard,
+  mdiAndroidMessages,
+} from '@mdi/js';
 import { action } from '@storybook/addon-actions';
 import Navigation from './index';
 
@@ -30,13 +35,13 @@ export const navigation = () => (
           isActive: () => true,
         },
         {
-          label: 'Explore', tooltip: 'Explore Environment', icon: (<Icon.Explore fontSize="large" />), link: '/test2',
+          label: 'Explore', tooltip: 'Explore Environment', icon: (<MdiIcon path={mdiViewDashboard} size={1.4} />), link: '/test2',
         },
         {
-          label: 'Tickets', tooltip: 'View tickets', icon: (<Icon.Message fontSize="large" />), link: '/test3',
+          label: 'Tickets', tooltip: 'View tickets', icon: (<MdiIcon path={mdiCompass} size={1.4} />), link: '/test3',
         },
         {
-          label: 'Docs', tooltip: 'Documentation', icon: (<Icon.LibraryBooks fontSize="large" />), link: '/test4',
+          label: 'Docs', tooltip: 'Documentation', icon: (<MdiIcon path={mdiAndroidMessages} size={1.4} />), link: '/test4',
         },
       ]}
     />
