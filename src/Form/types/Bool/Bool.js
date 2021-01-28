@@ -27,6 +27,11 @@ const defaultProps = {
 
 const { t } = translation;
 
+const options = [
+  { label: t('yes', 'asurgentui'), value: true },
+  { label: t('no', 'asurgentui'), value: false },
+];
+
 const Bool = forwardRef((props, ref) => {
   const {
     name, label, disabled, onChange,
@@ -34,11 +39,6 @@ const Bool = forwardRef((props, ref) => {
 
   const [value, setValue] = useState(props.value);
   const parser = useCallback((val) => (val === true), []);
-
-  const options = [
-    { label: t('yes', 'asurgentui'), value: true },
-    { label: t('no', 'asurgentui'), value: false },
-  ];
 
   useEffect(() => {
     setValue(props.value);

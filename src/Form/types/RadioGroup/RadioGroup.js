@@ -54,7 +54,8 @@ const RadioGroup = forwardRef((props, ref) => {
 
   return (
     <C.FieldSet onChange={({ target }) => {
-      const value = target.value === 'true';
+      const isBool = target.value.toLowerCase().includes('true', 'false');
+      const value = isBool ? target.value === 'true' : target.value;
       setVal(value);
       onChange({ inputName: name, inputValue: value });
     }}

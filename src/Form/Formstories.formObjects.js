@@ -24,14 +24,14 @@ export const defaultFormObject = {
           label: 'Email',
           value: 'my@email.com',
         }, */
-        objectBoolean: {
+        /*   objectBoolean: {
           type: 'bool',
           label: 'Im true or false',
           tooltipPosition: 'left',
           tooltip: 'Select me',
           value: false,
           disabled: () => false,
-        },
+        }, */
         objectRadioGroup: {
           type: 'radiogroup',
           label: 'Some Radio Group',
