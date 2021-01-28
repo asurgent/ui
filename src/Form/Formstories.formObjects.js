@@ -53,8 +53,8 @@ export const defaultFormObject = {
           label: 'Some date',
           value: new Date(),
         },
-        objectString: { label: 'My string', type: 'string' },
-        objectNumber: { label: 'My number', type: 'number' },
+        /*      objectString: { label: 'My string', type: 'string' }, */
+        /*   objectNumber: { label: 'My number', type: 'number' }, */
         /*  objectFilterSelect: {
           label: 'My filter select',
           type: 'filterselect',

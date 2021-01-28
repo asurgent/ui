@@ -42,7 +42,6 @@ const Bool = forwardRef((props, ref) => {
 
   useEffect(() => {
     setValue(props.value);
-    // onChange({ inputName: name, inputValue: !!props.value });
   }, [props.value]);
 
   return (
@@ -55,6 +54,7 @@ const Bool = forwardRef((props, ref) => {
       ref={ref}
       props={props.props}
       disabled={disabled}
+      onChange={onChange}
     />
   );
 });

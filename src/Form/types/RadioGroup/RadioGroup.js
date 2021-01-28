@@ -16,6 +16,7 @@ const propTypes = {
   parseOutput: PropTypes.func,
   props: PropTypes.instanceOf(Object),
   disabled: PropTypes.func,
+  onChange: PropTypes.func,
 };
 
 const defaultProps = {
@@ -25,6 +26,7 @@ const defaultProps = {
   props: {},
   parseOutput: (val) => val || '',
   disabled: () => false,
+  onChange: () => null,
 };
 
 const RadioGroup = forwardRef((props, ref) => {
@@ -34,6 +36,7 @@ const RadioGroup = forwardRef((props, ref) => {
     wrapRadios,
     parseOutput,
     disabled,
+    onChange,
   } = props;
 
   const [val, setVal] = useState(props.value || null);
@@ -51,7 +54,9 @@ const RadioGroup = forwardRef((props, ref) => {
 
   return (
     <C.FieldSet onChange={({ target }) => {
-      setVal(target.value === 'true');
+      const value = target.value === 'true';
+      setVal(value);
+      onChange({ inputName: name, inputValue: value });
     }}
     >
       <C.RadioWrapper wrapRadios={wrapRadios}>
