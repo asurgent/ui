@@ -14,6 +14,7 @@ const propTyps = {
     errorMessage: PropTypes.string,
   }),
   disabled: PropTypes.func,
+  onChange: PropTypes.func,
 };
 
 const defaultProps = {
@@ -26,6 +27,7 @@ const defaultProps = {
     errorMessage: '',
   },
   disabled: () => false,
+  onChange: () => null,
 };
 
 const TextArea = forwardRef((props, ref) => {
@@ -35,6 +37,7 @@ const TextArea = forwardRef((props, ref) => {
     parseOutput,
     validator,
     disabled,
+    onChange,
   } = props;
 
   const [value, setValue] = useState(props.value || '');
@@ -49,13 +52,18 @@ const TextArea = forwardRef((props, ref) => {
     validationErrorMessage: validator.errorMessage,
   }));
 
+  const handleChange = ({ target }) => {
+    setValue(target.value);
+    onChange({ inputName: target.name, inputValue: target.value });
+  };
+
   return (
     <textarea
       {...props.props}
       type="text"
       value={value}
       placeholder={placeholder}
-      onChange={({ target }) => setValue(target.value)}
+      onChange={handleChange}
       name={name}
       autoComplete="off"
       disabled={disabled()}

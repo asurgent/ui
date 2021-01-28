@@ -2,7 +2,6 @@ import React, {
   forwardRef,
   useState,
   useEffect,
-  useMemo,
   useCallback,
 } from 'react';
 import PropTypes from 'prop-types';

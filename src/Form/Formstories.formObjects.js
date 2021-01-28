@@ -6,25 +6,24 @@ export const defaultFormObject = {
       tooltip: 'hejhej',
       value: 'text text',
     },
-    /*     someTextArea: {
-      type: 'textarea',
-      label: 'Some Text',
-      tooltip: 'hejhej',
-      value: 'text area text',
-    },
-    someTextMultiple: {
-      type: 'textmultiple',
-      label: 'Some Multiple Text',
-      tooltip: 'hejhej',
-      parseOutput: (r) => r.filter((entry) => entry !== ''),
-      placeholder: 'Add something cool',
-      value: ['first', 'second'],
-    }, */
     someObjectSingle: {
       type: 'objectsingle',
       label: 'some object single',
       tooltip: 'hej',
       options: {
+        objectTextMultiple: {
+          type: 'textmultiple',
+          label: 'Some Multiple Text',
+          tooltip: 'hejhej',
+          parseOutput: (r) => r.filter((entry) => entry !== ''),
+          placeholder: 'Add something cool',
+          value: ['first', 'second'],
+        },
+        /* objectEmail: {
+          type: 'email',
+          label: 'Email',
+          value: 'my@email.com',
+        }, */
         objectBoolean: {
           type: 'bool',
           label: 'Im true or false',
@@ -33,15 +32,30 @@ export const defaultFormObject = {
           value: false,
           disabled: () => false,
         },
-        objectTextArea: {
+        objectRadioGroup: {
+          type: 'radiogroup',
+          label: 'Some Radio Group',
+          options: [
+            { label: 'label1', value: 'value1' },
+            { label: 'label2', value: 'value2' },
+          ],
+          value: 'value2',
+        },
+        /* objectTextArea: {
           type: 'textarea',
           label: 'Some Textarea',
           tooltip: 'hejhej',
           value: 'text area text',
+        }, */
+        objectDate: {
+          type: 'datepicker',
+          options: [],
+          label: 'Some date',
+          value: new Date(),
         },
-        objectName: { label: 'My string', type: 'string' },
+        objectString: { label: 'My string', type: 'string' },
         objectNumber: { label: 'My number', type: 'number' },
-        objectFilterSelect: {
+        /*  objectFilterSelect: {
           label: 'My filter select',
           type: 'filterselect',
           placeholder: 'select',
@@ -53,7 +67,7 @@ export const defaultFormObject = {
             multiSelect: true,
             searchPlaceholder: 'Search in me plz',
           },
-        },
+        }, */
       },
       value: {
         objectName: 'someName',

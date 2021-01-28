@@ -16,6 +16,7 @@ const propTypes = {
     condition: PropTypes.func,
     errorMessage: PropTypes.string,
   }),
+  onChange: PropTypes.func,
 };
 
 const defaultProps = {
@@ -26,6 +27,7 @@ const defaultProps = {
     condition: () => true,
     errorMessage: '',
   },
+  onChange: () => null,
 };
 
 const TextMultiple = forwardRef((props, ref) => {
@@ -34,6 +36,7 @@ const TextMultiple = forwardRef((props, ref) => {
     placeholder,
     parseOutput,
     validator,
+    onChange,
   } = props;
 
   const [value, setValue] = useState(props.value || []);
@@ -52,19 +55,23 @@ const TextMultiple = forwardRef((props, ref) => {
   }));
 
   const handleAdd = () => {
+    console.log(1);
     const newArr = [...value, newEntry];
     setValue(newArr);
     setNewEntry('');
+    onChange({ inputName: name, inputValue: newArr });
   };
 
   const handleRemove = ({ index }) => {
     const newArr = value.filter((el, ind) => ind !== index);
     setValue(newArr);
+    onChange({ inputName: name, inputValue: newArr });
   };
 
   const handleChange = ({ target, index }) => {
     const newArr = value.map((ent, ind) => (ind === index ? target.value : ent));
     setValue(newArr);
+    onChange({ inputName: name, inputValue: newArr });
   };
 
   const handleNewEntryChange = ({ target }) => {
@@ -96,7 +103,7 @@ const TextMultiple = forwardRef((props, ref) => {
           placeholder={placeholder}
           value={newEntry}
           onChange={handleNewEntryChange}
-          onKeyPress={({ key }) => {
+          onKeyUp={({ key }) => {
             if (key === 'Enter' && newEntry.length > 0) {
               handleAdd();
             }

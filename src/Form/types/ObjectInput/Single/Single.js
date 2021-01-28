@@ -76,6 +76,7 @@ const Single = forwardRef((props, ref) => {
           const option = options[key];
           const entryValidator = validator?.conditions()[key];
           const InputComponent = getInputComponent(option.type);
+
           return (
             <C.InputContainer
               key={key}
@@ -88,7 +89,7 @@ const Single = forwardRef((props, ref) => {
                 name={key}
                 option={option}
                 type={option.type}
-                value={value[key]}
+                value={option.value}
                 label={option.label}
                 options={option.options}
                 disabled={option.disabled}

@@ -55,7 +55,6 @@ const InputWrapper = (props) => {
     tooltip,
     ...rest
   } = props;
-  console.log('rest', rest);
 
   const error = useMemo(() => {
     if (validator?.valid && validator?.valid(value) === false) {

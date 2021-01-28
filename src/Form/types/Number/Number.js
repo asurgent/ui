@@ -24,6 +24,7 @@ const propTyps = {
     errorMessage: PropTypes.string,
   }),
   disabled: PropTypes.func,
+  onChange: PropTypes.func,
 };
 
 const defaultProps = {
@@ -39,6 +40,7 @@ const defaultProps = {
     errorMessage: '',
   },
   disabled: () => false,
+  onChange: () => null,
 };
 
 const NumberInput = forwardRef((props, ref) => {
@@ -50,6 +52,7 @@ const NumberInput = forwardRef((props, ref) => {
     parseOutput,
     validator,
     disabled,
+    onChange,
   } = props;
   const input = createRef();
   const { hook: form } = useContext(FormContext);
@@ -101,6 +104,13 @@ const NumberInput = forwardRef((props, ref) => {
     element.dispatchEvent(inputEvent);
   };
 
+  const handleChange = ({ target }) => {
+    const num = parseInt(target.value, 10);
+    const newValue = Number.isNaN(num) ? '' : num;
+    setValue(newValue);
+    onChange({ inputName: name, inputValue: newValue });
+  };
+
   return (
     <input
       {...props.props}
@@ -116,10 +126,7 @@ const NumberInput = forwardRef((props, ref) => {
           dispatchEvent(0);
         }
       }}
-      onChange={({ target }) => {
-        const num = parseInt(target.value, 10);
-        setValue(Number.isNaN(num) ? '' : num);
-      }}
+      onChange={handleChange}
       name={name}
       ref={input}
       disabled={disabled()}
