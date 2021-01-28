@@ -1,7 +1,27 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Close from '@material-ui/icons/Close';
+import Flag from '@material-ui/icons/Flag';
+import ErrorIcon from '@material-ui/icons/ErrorOutline';
+import Check from '@material-ui/icons/Check';
+import Info from '@material-ui/icons/InfoOutlined';
 import * as C from './Toast.styled';
+import * as Consts from '../../constants';
+
+const getIconOnType = (type) => {
+  switch (type) {
+    case Consts.TYPE_SUCCESS:
+      return Check;
+    case Consts.TYPE_INFORMATION:
+      return Info;
+    case Consts.TYPE_ERROR:
+      return ErrorIcon;
+    case Consts.TYPE_WARNING:
+      return Flag;
+    default:
+      return Info;
+  }
+};
 
 const propTypes = {
   message: PropTypes.oneOfType([
@@ -82,8 +102,15 @@ const Toast = ({
     }
   };
 
+  const Icon = useMemo(() => {
+    const a = getIconOnType(type);
+
+    return a;
+  }, [type]);
+
   return (
     <C.Toast type={type} onMouseEnter={onCancelTimer} onMouseLeave={onSetTimer}>
+      <Icon fontSize="large" className="icon" />
       <C.Message>{message}</C.Message>
       <Close fontSize="large" onClick={onRemove} className="close" />
       <C.Bar type={type} done={percentageDone} />
