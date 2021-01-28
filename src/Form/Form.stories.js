@@ -97,6 +97,14 @@ export const defaultForm = () => {
       label: 'some object single',
       tooltip: 'hej',
       options: {
+        objectBoolean: {
+          type: 'bool',
+          label: 'Im true or false',
+          tooltipPosition: 'left',
+          tooltip: 'Select me',
+          value: false,
+          disabled: () => false,
+        },
         objectName: { label: 'My string', type: 'string' },
         objectNumber: { label: 'My number', type: 'number' },
         objectFilterSelect: {
@@ -119,14 +127,7 @@ export const defaultForm = () => {
         objectFilterSelect: 'someValue3',
       },
     },
-    imABoolean: {
-      type: 'bool',
-      label: 'Im true or false',
-      tooltipPosition: 'left',
-      tooltip: 'Select me',
-      value: false,
-      disabled: () => false,
-    },
+
   /*   someObjectMultiple: {
       type: 'objectmultiple',
       label: null,

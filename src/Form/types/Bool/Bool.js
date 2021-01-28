@@ -19,28 +19,31 @@ const propTyps = {
 };
 
 const defaultProps = {
-  value: 'false',
+  value: false,
   label: '',
   props: {},
   disabled: () => false,
   onChange: () => null,
 };
 
+const { t } = translation;
+
 const Bool = forwardRef((props, ref) => {
-  const { name, label, disabled } = props;
-  const { t } = translation;
+  const {
+    name, label, disabled, onChange,
+  } = props;
 
-  const [value, setValue] = useState(`${props.value}`);
-  const parser = useCallback((val) => (val === 'true'), []);
+  const [value, setValue] = useState(props.value);
+  const parser = useCallback((val) => (val === true), []);
 
-  const options = useMemo(() => [
-    { label: t('yes', 'asurgentui'), value: 'true' },
-    { label: t('no', 'asurgentui'), value: 'false' },
-  ], [t]);
+  const options = [
+    { label: t('yes', 'asurgentui'), value: true },
+    { label: t('no', 'asurgentui'), value: false },
+  ];
 
   useEffect(() => {
-    setValue(`${!!props.value}`);
-    console.log('!!props.value', !!props.value);
+    setValue(props.value);
+    // onChange({ inputName: name, inputValue: !!props.value });
   }, [props.value]);
 
   return (
@@ -53,7 +56,6 @@ const Bool = forwardRef((props, ref) => {
       ref={ref}
       props={props.props}
       disabled={disabled}
-      onChange={() => console.log(1)}
     />
   );
 });

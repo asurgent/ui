@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import * as C from './RadioGroup.styled';
 
 const propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.bool,
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   wrapRadios: PropTypes.bool,
@@ -19,7 +19,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  value: '',
+  value: null,
   options: [],
   wrapRadios: false,
   props: {},
@@ -35,6 +35,7 @@ const RadioGroup = forwardRef((props, ref) => {
     parseOutput,
     disabled,
   } = props;
+
   const [val, setVal] = useState(props.value || null);
   const input = createRef();
 
@@ -50,8 +51,7 @@ const RadioGroup = forwardRef((props, ref) => {
 
   return (
     <C.FieldSet onChange={({ target }) => {
-      console.log('val', target.value);
-      setVal(target.value);
+      setVal(target.value === 'true');
     }}
     >
       <C.RadioWrapper wrapRadios={wrapRadios}>
