@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import * as C from './RadioGroup.styled';
 
 const propTypes = {
-  value: PropTypes.bool,
+  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   wrapRadios: PropTypes.bool,

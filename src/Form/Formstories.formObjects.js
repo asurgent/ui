@@ -19,7 +19,7 @@ export const defaultFormObject = {
           placeholder: 'Add something cool',
           value: ['first', 'second'],
         },
-        objectEmail: {
+        /*   objectEmail: {
           type: 'email',
           label: 'Email',
           value: 'my@email.com',
@@ -32,7 +32,7 @@ export const defaultFormObject = {
           value: false,
           disabled: () => false,
         },
-        /*  objectRadioGroup: {
+        objectRadioGroup: {
           type: 'radiogroup',
           label: 'Some Radio Group',
           options: [
