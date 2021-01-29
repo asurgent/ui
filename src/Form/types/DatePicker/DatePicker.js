@@ -14,71 +14,7 @@ import * as C from './DatePicker.styled';
 
 const getStartOfDay = (val) => moment(val).startOf('day').toISOString();
 
-const DatePicker = forwardRef((props, ref) => {
-  const {
-    name,
-    format,
-    parseOutput,
-    validator,
-    maxDate,
-    maxDateMessage,
-    minDate,
-    minDateMessage,
-    disabled,
-  } = props;
-
-  const input = createRef();
-  const [value, setValue] = useState(getStartOfDay(props.value));
-
-  useEffect(() => {
-    setValue(getStartOfDay(props.value));
-  }, [props.value]);
-
-  const dispatchEvent = (d) => {
-    const element = input.current;
-    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
-    nativeInputValueSetter.call(element, d);
-    const inputEvent = new Event('input', { bubbles: true });
-    element.dispatchEvent(inputEvent);
-  };
-
-  useImperativeHandle(ref, () => ({
-    value: () => parseOutput(value),
-    validator: () => validator.condition(value),
-    validationErrorMessage: validator.errorMessage,
-    focus: () => input.current.focus(),
-    blur: () => input.current.blur(),
-  }));
-
-  return (
-    <ThemeProvider>
-      <MuiPickersUtilsProvider utils={MomentUtils}>
-        <C.DatePicker
-          format={format}
-          fullWidth
-          maxDate={maxDate}
-          minDate={minDate}
-          value={value}
-          onChange={(momentDate) => {
-            setValue(getStartOfDay(momentDate));
-            dispatchEvent(getStartOfDay(momentDate));
-          }}
-          maxDateMessage={maxDateMessage}
-          minDateMessage={minDateMessage}
-          inputVariant="outlined"
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-          disabled={disabled()}
-          {...props.props}
-        />
-      </MuiPickersUtilsProvider>
-      <input type="text" style={{ display: 'none' }} readOnly name={name} value={value} ref={input} />
-    </ThemeProvider>
-  );
-});
-
-DatePicker.propTypes = {
+const propTypes = {
   label: PropTypes.string,
   format: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -108,9 +44,10 @@ DatePicker.propTypes = {
     errorMessage: PropTypes.string,
   }),
   disabled: PropTypes.func,
+  onChange: PropTypes.func,
 };
 
-DatePicker.defaultProps = {
+const defaultProps = {
   label: '',
   format: 'YYYY-MM-DD',
   value: getStartOfDay(moment()),
@@ -127,8 +64,83 @@ DatePicker.defaultProps = {
     errorMessage: '',
   },
   disabled: () => false,
+  onChange: () => null,
 };
 
+const DatePicker = forwardRef((props, ref) => {
+  const {
+    name,
+    format,
+    parseOutput,
+    validator,
+    maxDate,
+    maxDateMessage,
+    minDate,
+    minDateMessage,
+    disabled,
+    onChange,
+  } = props;
+
+  const input = createRef();
+  const [value, setValue] = useState(getStartOfDay(props.value));
+
+  useEffect(() => {
+    setValue(getStartOfDay(props.value));
+  }, [props.value]);
+
+  const dispatchEvent = (d) => {
+    const element = input.current;
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+    nativeInputValueSetter.call(element, d);
+    const inputEvent = new Event('input', { bubbles: true });
+    element.dispatchEvent(inputEvent);
+  };
+
+  useImperativeHandle(ref, () => ({
+    value: () => parseOutput(value),
+    validator: () => validator.condition(value),
+    validationErrorMessage: validator.errorMessage,
+    focus: () => input.current.focus(),
+    blur: () => input.current.blur(),
+  }));
+
+  const handleChange = (date) => {
+    // component state
+    setValue(getStartOfDay(date));
+    // dispatch to form
+    dispatchEvent(getStartOfDay(date));
+    // optional state if part of object form type
+    onChange({ inputName: name, inputValue: date });
+  };
+
+  return (
+    <ThemeProvider>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <C.DatePicker
+          format={format}
+          fullWidth
+          maxDate={maxDate}
+          minDate={minDate}
+          value={value}
+          onChange={handleChange}
+          maxDateMessage={maxDateMessage}
+          minDateMessage={minDateMessage}
+          inputVariant="outlined"
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+          disabled={disabled()}
+          {...props.props}
+        />
+      </MuiPickersUtilsProvider>
+      <input type="text" style={{ display: 'none' }} readOnly name={name} value={value} ref={input} />
+    </ThemeProvider>
+  );
+});
+
 DatePicker.displayName = '@asurgent.ui.Form.Input.DatePicker';
+
+DatePicker.propTypes = propTypes;
+DatePicker.defaultProps = defaultProps;
 
 export default DatePicker;

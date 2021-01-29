@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import * as C from '../ObjectInput.styled';
 
 import {
-  clearObjectValues,
   valuePassedValidation,
   getInputComponent,
 } from '../helpers';
@@ -43,8 +42,14 @@ const Single = forwardRef((props, ref) => {
 
   const [value, setValue] = useState(props.value || {});
 
+  const setValuesFromOptions = (opt) => Object.entries(opt).reduce((acc, cur) => {
+    const key = cur[0];
+    const { value: optionValue } = cur[1];
+    return { ...acc, [key]: optionValue || null };
+  }, {});
+
   useEffect(() => {
-    const val = props.value || clearObjectValues(options) || {};
+    const val = setValuesFromOptions(options) || {};
     setValue(val);
   }, [props.value, options]);
 

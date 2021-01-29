@@ -19,20 +19,20 @@ export const defaultFormObject = {
           placeholder: 'Add something cool',
           value: ['first', 'second'],
         },
-        /* objectEmail: {
+        objectEmail: {
           type: 'email',
           label: 'Email',
           value: 'my@email.com',
-        }, */
-        /*   objectBoolean: {
+        },
+        objectBoolean: {
           type: 'bool',
           label: 'Im true or false',
           tooltipPosition: 'left',
           tooltip: 'Select me',
           value: false,
           disabled: () => false,
-        }, */
-        objectRadioGroup: {
+        },
+        /*  objectRadioGroup: {
           type: 'radiogroup',
           label: 'Some Radio Group',
           options: [
@@ -40,19 +40,19 @@ export const defaultFormObject = {
             { label: 'label2', value: 'value2' },
           ],
           value: 'value2',
-        },
+        }, */
         /* objectTextArea: {
           type: 'textarea',
           label: 'Some Textarea',
           tooltip: 'hejhej',
           value: 'text area text',
         }, */
-        objectDate: {
+        /* objectDate: {
           type: 'datepicker',
           options: [],
           label: 'Some date',
           value: new Date(),
-        },
+        }, */
         /*      objectString: { label: 'My string', type: 'string' }, */
         /*   objectNumber: { label: 'My number', type: 'number' }, */
         /*  objectFilterSelect: {
@@ -69,11 +69,7 @@ export const defaultFormObject = {
           },
         }, */
       },
-      value: {
-        objectName: 'someName',
-        objectNumber: 23,
-        objectFilterSelect: 'someValue3',
-      },
+
     },
 
   /*   someObjectMultiple: {
