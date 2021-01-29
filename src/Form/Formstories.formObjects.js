@@ -19,7 +19,7 @@ export const defaultFormObject = {
           placeholder: 'Add something cool',
           value: ['first', 'second'],
         },
-        /*   objectEmail: {
+        objectEmail: {
           type: 'email',
           label: 'Email',
           value: 'my@email.com',
@@ -40,22 +40,22 @@ export const defaultFormObject = {
             { label: 'label2', value: 'value2' },
           ],
           value: 'value2',
-        }, */
-        /* objectTextArea: {
+        },
+        objectTextArea: {
           type: 'textarea',
           label: 'Some Textarea',
           tooltip: 'hejhej',
           value: 'text area text',
-        }, */
-        /* objectDate: {
+        },
+        objectDate: {
           type: 'datepicker',
           options: [],
           label: 'Some date',
           value: new Date(),
-        }, */
-        /*      objectString: { label: 'My string', type: 'string' }, */
-        /*   objectNumber: { label: 'My number', type: 'number' }, */
-        /*  objectFilterSelect: {
+        },
+        objectString: { label: 'My string', type: 'string' },
+        objectNumber: { label: 'My number', type: 'number' },
+        objectFilterSelect: {
           label: 'My filter select',
           type: 'filterselect',
           placeholder: 'select',
@@ -67,7 +67,7 @@ export const defaultFormObject = {
             multiSelect: true,
             searchPlaceholder: 'Search in me plz',
           },
-        }, */
+        },
       },
 
     },

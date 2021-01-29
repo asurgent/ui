@@ -71,8 +71,112 @@ export const simpleForm = () => {
   );
 };
 
-export const defaultForm = () => {
+export const formInForm = () => {
   const formData = Form.useFormBuilder(defaultFormObject.data);
+  const renderErrors = boolean('render errors', false);
+
+  useEffect(() => {
+    if (renderErrors) {
+      formData.errors(defaultFormObject.errors, translation);
+    } else {
+      formData.errors([]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [renderErrors]);
+
+  return (
+    <div style={{ padding: '3rem' }}>
+      <Form.Primary
+        form={formData}
+        msTimer={15}
+        onSubmit={({ values, isDirty }) => {
+          action()('isDirty', isDirty);
+          action()('Submitted', values);
+        }}
+        onChange={({
+          values, isDirty, dirtyItems, name, validates,
+        }) => {
+          action()('Changed', name || 'form');
+          action()('Form values', values);
+          action()('Form dirty', isDirty);
+          action()('Dirty items', dirtyItems);
+          action()('Validating fields', validates);
+        }}
+      >
+        {({
+          render,
+          onSubmitAction,
+          onResetAction,
+          isDirty,
+        }) => (
+          <>
+            {render}
+            <Block.SpaceBetween>
+              <Button.Hollow onClick={() => {
+                formData.updateField('someSelect', {
+                  options: [{ value: '8', label: '8' }, { value: '9', label: '9' }],
+                });
+              }}
+              >
+                Update someSelect-options
+              </Button.Hollow>
+              <Button.Secondary disabled={!isDirty} onClick={onResetAction}>
+                Reset
+              </Button.Secondary>
+              <Button.Primary disabled={!isDirty} onClick={onSubmitAction}>Submit</Button.Primary>
+            </Block.SpaceBetween>
+          </>
+        )}
+      </Form.Primary>
+    </div>
+  );
+};
+
+export const defaultForm = () => {
+  const formData = Form.useFormBuilder({
+    email: {
+      type: 'email',
+      label: 'Email',
+      tooltip: 'Select me',
+      validator: {
+        condition: (v) => v === 'asdf',
+        errorMessage: 'I did not validate',
+      },
+      value: 'my@email.com',
+    },
+    someFilterSelectSingle: {
+      type: 'filterselect',
+      label: 'Some Filterselect (single)',
+      tooltip: 'tooltip',
+      props: {
+        searchPlaceholder: 'Search in me plz',
+      },
+      placeholder: 'Select me',
+      options: [
+        { value: '1', label: 'one' },
+        { value: '2', label: 'two' },
+        '3',
+        '4',
+      ],
+      value: '3',
+    },
+    someNumber: {
+      type: 'number',
+      label: 'Some Number (max 100)',
+      tooltip: 'hejhej',
+      maxValue: 100,
+      value: 50,
+    },
+    someRadioGroup: {
+      type: 'radiogroup',
+      label: 'Some Radio Group',
+      options: [
+        { label: 'label1', value: 'value1' },
+        { label: 'label2', value: 'value2' },
+      ],
+      value: 'value2',
+    },
+  });
   const renderErrors = boolean('render errors', false);
 
   useEffect(() => {
