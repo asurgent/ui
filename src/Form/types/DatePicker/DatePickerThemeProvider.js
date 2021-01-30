@@ -13,9 +13,9 @@ const defaultProps = {
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: '#757ce8',
-      main: '#44ADE1',
-      dark: '#002884',
+      light: '#44ADE1',
+      main: '#28658D',
+      dark: '#133A5D',
       contrastText: '#fff',
     },
     secondary: {

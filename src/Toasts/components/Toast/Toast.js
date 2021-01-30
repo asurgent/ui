@@ -1,8 +1,30 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import MdiIcon from '@mdi/react';
-import { mdiClose } from '@mdi/js';
+import {
+  mdiClose,
+  mdiCheck,
+  mdiFlag,
+  mdiAlertCircleOutline,
+  mdiInformationOutline,
+} from '@mdi/js';
 import * as C from './Toast.styled';
+import * as Consts from '../../constants';
+
+const getIconOnType = (type) => {
+  switch (type) {
+    case Consts.TYPE_SUCCESS:
+      return mdiCheck;
+    case Consts.TYPE_INFORMATION:
+      return mdiInformationOutline;
+    case Consts.TYPE_ERROR:
+      return mdiAlertCircleOutline;
+    case Consts.TYPE_WARNING:
+      return mdiFlag;
+    default:
+      return mdiInformationOutline;
+  }
+};
 
 const propTypes = {
   message: PropTypes.oneOfType([
@@ -85,6 +107,7 @@ const Toast = ({
 
   return (
     <C.Toast type={type} onMouseEnter={onCancelTimer} onMouseLeave={onSetTimer}>
+      <MdiIcon size={2.4} path={getIconOnType(type)} />
       <C.Message>{message}</C.Message>
       <MdiIcon size={1.6} path={mdiClose} className="close" />
       <C.Bar type={type} done={percentageDone} />
