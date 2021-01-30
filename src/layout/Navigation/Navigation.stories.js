@@ -7,6 +7,7 @@ import {
   mdiCompass,
   mdiViewDashboard,
   mdiAndroidMessages,
+  mdiFileDocumentOutline,
 } from '@mdi/js';
 import { action } from '@storybook/addon-actions';
 import Navigation from './index';
@@ -29,19 +30,19 @@ export const navigation = () => (
           label: 'Dashbaord',
           tooltip: 'Dashboard',
           active: true,
-          icon: (<Icon.Dashboard fontSize="large" />),
+          icon: (<MdiIcon path={mdiViewDashboard} size={1.4} />),
           link: '/',
           // isActive => (match, location)
           isActive: () => true,
         },
         {
-          label: 'Explore', tooltip: 'Explore Environment', icon: (<MdiIcon path={mdiViewDashboard} size={1.4} />), link: '/test2',
+          label: 'Explore', tooltip: 'Explore Environment', icon: (<MdiIcon path={mdiCompass} size={1.4} />), link: '/test2',
         },
         {
-          label: 'Tickets', tooltip: 'View tickets', icon: (<MdiIcon path={mdiCompass} size={1.4} />), link: '/test3',
+          label: 'Tickets', tooltip: 'View tickets', icon: (<MdiIcon path={mdiAndroidMessages} size={1.4} />), link: '/test3',
         },
         {
-          label: 'Docs', tooltip: 'Documentation', icon: (<MdiIcon path={mdiAndroidMessages} size={1.4} />), link: '/test4',
+          label: 'Docs', tooltip: 'Documentation', icon: (<MdiIcon path={mdiFileDocumentOutline} size={1.4} />), link: '/test4',
         },
       ]}
     />

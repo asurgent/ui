@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import { withTheme } from 'styled-components';
 import MdiIcon from '@mdi/react';
 import {
   mdiClose,
@@ -10,6 +11,36 @@ import {
 } from '@mdi/js';
 import * as C from './Toast.styled';
 import * as Consts from '../../constants';
+
+const getColor = (theme, type) => {
+  switch (type) {
+    case Consts.TYPE_SUCCESS:
+      return {
+        border: theme.green700,
+        background: theme.green100,
+      };
+    case Consts.TYPE_INFORMATION:
+      return {
+        border: theme.blue700,
+        background: theme.blue100,
+      };
+    case Consts.TYPE_ERROR:
+      return {
+        border: theme.ruby800,
+        background: theme.ruby100,
+      };
+    case Consts.TYPE_WARNING:
+      return {
+        border: theme.gold900,
+        background: theme.gold50,
+      };
+    default:
+      return {
+        border: theme.blue800,
+        background: theme.blue100,
+      };
+  }
+};
 
 const getIconOnType = (type) => {
   switch (type) {
@@ -49,6 +80,7 @@ const Toast = ({
   autoClose,
   onRemove,
   timeout,
+  theme,
 }) => {
   const [timer, setTimer] = useState(null);
   const [timerStart, setTimerStart] = useState(null);
@@ -107,10 +139,25 @@ const Toast = ({
 
   return (
     <C.Toast type={type} onMouseEnter={onCancelTimer} onMouseLeave={onSetTimer}>
-      <MdiIcon size={2.4} path={getIconOnType(type)} />
+      <MdiIcon
+        className="icon"
+        size={1.8}
+        path={getIconOnType(type)}
+        style={{
+          background: getColor(theme, type).border,
+          borderColor: getColor(theme, type).border,
+        }}
+      />
       <C.Message>{message}</C.Message>
       <MdiIcon size={1.6} path={mdiClose} className="close" />
-      <C.Bar type={type} done={percentageDone} />
+      <C.Bar
+        type={type}
+        done={percentageDone}
+        style={{
+          background: getColor(theme, type).border,
+          borderColor: getColor(theme, type).border,
+        }}
+      />
     </C.Toast>
   );
 };
@@ -119,4 +166,4 @@ Toast.defaultProps = defaultProps;
 Toast.propTypes = propTypes;
 Toast.displayName = '@asurgent.ui.Toast';
 
-export default Toast;
+export default withTheme(Toast);
