@@ -46,7 +46,7 @@ const CreateList = ({ shouldShow, createList, translations }) => {
           <MdiIcon
             size={1.4}
             path={mdiChevronDown}
-            rotate={createOpen ? 0 : 180}
+            rotate={createOpen ? 180 : 0}
           />
         )}
       >

@@ -50,7 +50,7 @@ const UserDropdown = ({
               <MdiIcon
                 size={1.4}
                 path={mdiChevronDown}
-                rotate={open ? 0 : 180}
+                rotate={open ? 180 : 0}
               />
             )}
           />
@@ -63,7 +63,7 @@ const UserDropdown = ({
             <MdiIcon
               size={1.4}
               path={mdiMenu}
-              rotate={open ? 0 : 180}
+              rotate={open ? 180 : 0}
             />
             )}
         />
