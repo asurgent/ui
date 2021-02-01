@@ -17,21 +17,21 @@ export const defaultFormObject = {
           tooltip: 'hejhej',
           parseOutput: (r) => r.filter((entry) => entry !== ''),
           placeholder: 'Add something cool',
-          value: ['first', 'second'],
+          // value: ['first', 'second'],
         },
         objectBoolean: {
           type: 'bool',
           label: 'Im true or false',
           tooltipPosition: 'left',
           tooltip: 'Select me',
-          value: false,
+          // value: false,
           disabled: () => false,
         },
         objectDate: {
           type: 'datepicker',
           options: [],
           label: 'Some date',
-          value: new Date(),
+          // value: new Date(),
         },
         objectFilterSelect: {
           label: 'My filter select',
@@ -45,9 +45,17 @@ export const defaultFormObject = {
             multiSelect: true,
             searchPlaceholder: 'Search in me plz',
           },
+          // value: 'someValue3',
         },
       },
+      value: {
+        objectTextMultiple: ['first', 'second'],
+        objectBoolean: false,
+        objectDate: new Date(),
+        objectFilterSelect: 'someValue3',
+      },
     },
+
   },
   errors: [],
 };
