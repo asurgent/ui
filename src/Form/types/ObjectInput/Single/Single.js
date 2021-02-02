@@ -88,7 +88,6 @@ const Single = forwardRef((props, ref) => {
               error={error || false}
               label={option.label}
             >
-              {/* tooltip={tooltip} */}
               <InputComponent
                 name={key}
                 option={option}

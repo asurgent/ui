@@ -7,7 +7,6 @@ import Add from '@material-ui/icons/Add';
 import * as C from '../ObjectInput.styled';
 import * as Button from '../../../../Button';
 import translation from '../ObjectInput.translation';
-import InputWrapper from '../InputWrapper';
 import {
   clearObjectValues,
   valuePassedValidation,
@@ -75,7 +74,7 @@ const Multiple = forwardRef((props, ref) => {
     validator: () => valuesPassedValidation({ validators: validator.conditions(), value }),
   }));
 
-  const handleChange = ({inputName, inputValue, index}) => {
+  const handleChange = ({ inputName, inputValue }, index) => {
     const newArr = value.map((ent, ind) => {
       if (ind === index) {
         return { ...ent, [inputName]: inputValue };
@@ -118,48 +117,45 @@ const Multiple = forwardRef((props, ref) => {
       />
 
       {/* Value-array */}
-      {value?.map((entry, index) => (
+      {value.map((entry, index) => (
         /* eslint-disable-next-line react/no-array-index-key */
         <C.Entry key={index}>
           <h5>{`${t('entry', 'asurgentui')} ${index + 1}`}</h5>
 
-         
           {/* Loop over key-value pair */}
           {Object.keys(entry).map((key) => {
             const val = entry[key];
             const option = options[key];
             const entryValidator = validator?.conditions()[key];
             const InputComponent = getInputComponent(option.type);
-            
+
             return (
               <C.InputContainer
+                /* eslint-disable-next-line react/no-array-index-key */
                 key={`${key}-${index}`}
                 type={option.type}
-                error={error || false}
-                label={option.label}>
-                  <InputComponent 
-                    name={key}
-                    option={option}
-                    type={option.type}
-                    value={val}
-                    label={option.label}
-                    options={option.options}
-                    disabled={option.disabled}
-                    render={option.render}
-                    validator={error ? entryValidator : null}
-                    placeholder={option.placeholder}
-                    onChange={({ inputValue, inputName }) => handleChange({inputValue, inputName, index})}
-                    props={option.props}
-                  />
+                label={option.label}
+              >
+                <InputComponent
+                  name={key}
+                  option={option}
+                  type={option.type}
+                  value={val}
+                  label={option.label}
+                  options={option.options}
+                  disabled={option.disabled}
+                  render={option.render}
+                  validator={error ? entryValidator : null}
+                  placeholder={option.placeholder}
+                  onChange={(target) => handleChange(target, index)}
+                  props={option.props}
+                />
               </C.InputContainer>
             );
           })}
-          
+
           <C.ButtonContainer>
-            <Button.Reject
-              iconRight={<Delete />}
-              onClick={() => handleRemove({ index })}
-            >
+            <Button.Reject iconRight={<Delete />} onClick={() => handleRemove({ index })}>
               {t('remove', 'asurgentui')}
             </Button.Reject>
           </C.ButtonContainer>
@@ -171,30 +167,31 @@ const Multiple = forwardRef((props, ref) => {
         <C.Entry>
           <h5>{t('addNew', 'asurgentui')}</h5>
 
-            {/* Loop over newEntry key-value pairs (options) */}
-            {Object.keys(options).map((key, index) => {
-              const InputComponent = getInputComponent(options[key]?.type);
-              return (
-                <C.InputContainer
-                  key={key}
+          {/* Loop over newEntry key-value pairs (options) */}
+          {Object.keys(options).map((key) => {
+            const InputComponent = getInputComponent(options[key]?.type);
+            return (
+              <C.InputContainer
+                key={key}
+                type={options[key].type}
+                error={error || false}
+                label={options[key].label}
+              >
+                <InputComponent
+                  name={key}
+                  label={options[key].label}
+                  value={newEntry[key] || null}
                   type={options[key].type}
-                  error={error || false}
-                  label={options[key].label}>
-                  <InputComponent
-                    name={key}
-                    label={options[key].label}
-                    value={newEntry[key] || null}
-                    type={options[key].type}
-                    onChange={({ inputValue }) => handleChangeNewEntry({ inputValue, inputName: key })}
-                    disabled={options[key].disabled}
-                    render={options[key].render}
-                    options={options[key].options}
-                    tooltip={options[key].tooltip}
-                    placeholder={options[key].placeholder}
-                  />
-                </C.InputContainer>
-              );
-            })}
+                  onChange={handleChangeNewEntry}
+                  disabled={options[key].disabled}
+                  render={options[key].render}
+                  options={options[key].options}
+                  tooltip={options[key].tooltip}
+                  placeholder={options[key].placeholder}
+                />
+              </C.InputContainer>
+            );
+          })}
           <C.ButtonContainer>
             <Button.Hollow
               iconRight={<Add />}

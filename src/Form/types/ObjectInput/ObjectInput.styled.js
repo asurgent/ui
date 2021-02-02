@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Input from '../../components/InputWrapper';
 
 export const ButtonContainer = styled.div`
     display: flex;
@@ -11,13 +10,13 @@ export const HiddenInput = styled.input`
     display: none;
 `;
 
-export const InputContainer = styled(Input)`
+export const InputContainer = styled.div`
     margin-bottom: 2.4rem;
 `;
 
 export const Entry = styled.div`
   border-bottom: ${({ theme }) => `1px solid ${theme.gray200}`};
-  ${InputContainer} { // :not(:last-child)
+  ${InputContainer} {
       margin-bottom: 2.4rem;
   }
   h5 {
