@@ -1,7 +1,6 @@
-import React, {
+import {
   createContext,
   useContext,
-  useEffect,
   useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -30,37 +29,17 @@ const defaultProps = {
 };
 
 const getFeatures = (permissions) => Object.values(permissions)
-  .reduce((acc, features) => {
-    const merged = Object.keys(features)
-      .reduce((all, key) => {
-        if (!all[key]) {
-          return { ...all, [key]: features[key] };
-        }
-
-        const featureList = [...new Set([...features[key], ...all[key]])];
-
-        return { ...all, [key]: featureList };
-      }, acc);
-
-    return merged;
-  }, {});
+  .reduce((acc, features) => [...new Set([...features, ...acc])], []);
 
 const getRoles = (permissions) => Object.keys(permissions);
 
-const isObject = (val) => {
-  if (typeof val === 'object' && val !== null && !Array.isArray(val)) {
-    return true;
-  }
-  return false;
-};
-
-export const shouldRender = (roles, permissions, withRoles, withFeature) => {
-  const hasFeatures = isObject(withFeature) && Object.keys(withFeature).length > 0;
+export const shouldRender = (roles, features, withRoles, withFeature) => {
   const hasRoles = Array.isArray(withRoles) && withRoles.length > 0;
+  const hasFeatures = Array.isArray(withFeature) && withFeature.length > 0;
 
   if (hasFeatures || hasRoles) {
     if (hasRoles) {
-      const res = withRoles.reduce((result, key) => {
+      return withRoles.reduce((result, key) => {
         if (!result) {
           if (roles.includes(key)) {
             return true;
@@ -69,26 +48,17 @@ export const shouldRender = (roles, permissions, withRoles, withFeature) => {
 
         return result;
       }, false);
-      return res;
     }
 
-    return Object.entries(withFeature)
-      .reduce((result, [key, features]) => {
-        if (!result) {
-          if (permissions?.[key]) {
-            if (features.length > 0) {
-              const matches = features.filter((obj) => permissions[key].includes(obj));
-              return matches.length > 0;
-            }
-
-            return true;
-          }
+    return withFeature.reduce((result, key) => {
+      if (!result) {
+        if (features.includes(key)) {
+          return true;
         }
+      }
 
-        return result;
-      }, false);
-  } if (withFeature.length === 0) {
-    return true;
+      return result;
+    }, false);
   }
 
   return true;
@@ -107,7 +77,6 @@ const Permission = ({
   const roles = useMemo(() => getRoles(permissions), [permissions]);
   const render = useMemo(() => shouldRender(roles, features, withRoles, withFeature),
     [features, roles, withFeature, withRoles]);
-
   if (render) {
     const renderChildren = () => (typeof children === 'function' ? children() : children);
     return renderChildren();

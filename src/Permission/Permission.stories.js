@@ -1,5 +1,5 @@
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
+import { withKnobs, boolean } from '@storybook/addon-knobs';
 import Permission, { Context } from './index';
 
 export default {
@@ -8,78 +8,60 @@ export default {
 };
 
 export const withPermissions = () => {
-  // User context
-  const permissions = {
-    reader: { ticket: ['canViewComment'] },
-    guest: { ticket: ['canViewComment'], myEnv: ['canRemoveAlertRule'] },
-    superAdmin: { ticket: ['canDeleteComment'] },
+  const isSuperAdmin = boolean('@role.SuperAdmin', true);
+
+  const permissionsFromUserContext = {
+    // If only have this role you will just be able to view tickets
+    'some-read-role': ['@feature.ticket'],
+    'some-write-role': [
+      boolean('@feature.ticket', true) && '@feature.ticket',
+      boolean('@feature.ticket.comment.create', false) && '@feature.ticket.comment.create',
+      boolean('@feature.ticket.delete', false) && '@feature.ticket.delete',
+      boolean('@feature.ticket.comment.delete', false) && '@feature.ticket.comment.delete',
+    ],
   };
 
+  if (isSuperAdmin) {
+    Object.assign(permissionsFromUserContext, {
+      superAdmin: [
+        '@feature.ticket',
+        '@feature.ticket.comment.create',
+        '@feature.ticket.delete',
+        '@feature.ticket.comment.delete',
+      ],
+    });
+  }
+
   return (
-    <Context value={permissions}>
-      {/* <Permission>
-        {() => <p>Im only viable for all</p>}
-      </Permission> */}
+    <Context value={permissionsFromUserContext}>
 
-      {/* My env page */}
-      {/* <Permission roles={['reader', 'guest']}>
+      <Permission withFeature={['@feature.ticket']}>
+        {() => <h2>Tickets</h2>}
+      </Permission>
+
+      <Permission withFeature={['@feature.ticket.comment.create']}>
+        {() => <div><button type="button">Create Comment</button></div>}
+      </Permission>
+
+      <Permission withFeature={['@feature.ticket.comment.delete']}>
+        {() => <div><button type="button">Remove Comment</button></div>}
+      </Permission>
+
+      <Permission withFeature={['@feature.ticket.delete']}>
+        {() => <div><button style={{ background: 'red' }} type="button">Delete Ticket</button></div>}
+      </Permission>
+
+      <Permission withRoles={['superAdmin']} fallback={<p>Hello regular user</p>}>
         {() => (
-          <>
-            <Permission whiteList={{ ticket: ['canViewTickets'] }}>
-              {() => <p>all the tickets</p>}
-            </Permission>
-          </>
-        )}
-      </Permission> */}
-
-      {/* Ticket page */}
-      <Permission withRoles={['guest']}>
-        {() => (
-          <>
-            <Permission withFeature={{ ticket: ['canViewComment'] }}>
-              {() => <p>Comment here</p>}
-            </Permission>
-
-            <Permission
-              withFeature={{ ticket: ['canDeleteComment'] }}
-              fallback={<p style={{ color: 'red' }}>You dont have permission to view this</p>}
-            >
-              {() => <p>Delete comment</p>}
-            </Permission>
-
-            <Permission withFeature={{ myEnv: ['canRemoveAlertRule'] }}>
-              {() => <p>Remove alert rule</p>}
-            </Permission>
-          </>
+          <div>
+            <hr />
+            <h4 style={{ color: 'red' }}>Danger zone</h4>
+            <p>I will only render for super-admins</p>
+            <hr />
+          </div>
         )}
       </Permission>
 
-      {/* <Permission whiteList={{ permissionKey1: [] }}>
-        {() => <p>Im only viable for users with permissionKey1</p>}
-      </Permission>
-
-      <Permission whiteList={{ permissionKey2: [] }}>
-        {() => <p>Im only viable for users with permissionKey2</p>}
-      </Permission>
-
-      <Permission whiteList={{ permissionKey2: ['feature-2'] }}>
-        {() => <p>Im only viable for users with permissionKey2 and feature-2</p>}
-      </Permission>
-
-      <Permission whiteList={{ permissionKey2: ['feature-3'] }}>
-        {() => <p>Im only viable for users with permissionKey2 and feature-3</p>}
-      </Permission>
-
-      <Permission
-        whiteList={{ permissionKey3: [] }}
-        fallback={<p style={{ color: 'red' }}>You dont have permission to view this</p>}
-      >
-        {() => <p>Im only viable for users with permissionKey3</p>}
-      </Permission>
-
-      <Permission superAdminOnly>
-        {() => <p>Im only viable for super admins</p>}
-      </Permission> */}
     </Context>
   );
 };
