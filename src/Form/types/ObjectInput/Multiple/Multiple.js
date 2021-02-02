@@ -131,7 +131,7 @@ const Multiple = forwardRef((props, ref) => {
             const option = options[key];
             const entryValidator = validator?.conditions()[key];
             const InputComponent = getInputComponent(option.type);
-          
+            
             return (
               <C.InputContainer
                 key={`${key}-${index}`}

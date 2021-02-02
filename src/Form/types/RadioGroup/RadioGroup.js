@@ -47,8 +47,6 @@ const RadioGroup = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     value: () => parseOutput(val),
-    focus: () => input.current.focus(),
-    blur: () => input.current.blur(),
   }));
 
   const handleChange = ({ target }) => {
@@ -57,16 +55,14 @@ const RadioGroup = forwardRef((props, ref) => {
   };
 
   return (
-    <C.FieldSet onChange={handleChange}>
+    <C.FieldSet onChange={handleChange} ref={input} name={name}>
       <C.RadioWrapper wrapRadios={wrapRadios}>
         {options.map((opt) => (
           <C.Label key={opt.label || opt.value}>
             <C.RadioInput
               type="radio"
-              name={name}
               value={opt.value}
               checked={val === opt.value}
-              ref={val === opt.value ? input : null}
               readOnly
               disabled={disabled()}
               {...props.props}

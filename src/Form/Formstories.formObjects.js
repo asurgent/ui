@@ -14,7 +14,7 @@ export const defaultFormObject = {
       value: false,
       disabled: () => false,
     },
-    someObjectSingle: {
+    /*  someObjectSingle: {
       type: 'objectsingle',
       label: 'some object single',
       tooltip: 'hej',
@@ -62,13 +62,20 @@ export const defaultFormObject = {
         objectDate: new Date(),
         objectFilterSelect: 'someValue3',
       },
-    },
-    /*  someObjectMultiple: {
+    }, */
+    someObjectMultiple: {
       type: 'objectmultiple',
       label: 'some object single',
       tooltip: 'hej',
       options: {
-        objectBoolean: {
+        objectRadioGroup: {
+          type: 'radiogroup',
+          label: 'Radiogroup',
+          tooltipPosition: 'left',
+          tooltip: 'Klick me',
+          options: [{ label: '1', value: '1' }, { label: '2', value: '2' }],
+        },
+        objectBool: {
           type: 'bool',
           label: 'Im true or false',
           tooltipPosition: 'left',
@@ -82,11 +89,11 @@ export const defaultFormObject = {
         },
       },
       value: [
-        { objectBoolean: false, objectText: 'ay' },
-        { objectBoolean: true, objectText: 'bee' },
-        { objectBoolean: true, objectText: 'see' },
+        { objectRadioGroup: '1', objectBool: true, objectText: 'ay' },
+        { objectRadioGroup: '2', objectBool: true, objectText: 'bee' },
+        { objectRadioGroup: '2', objectBool: false, objectText: 'see' },
       ],
-    }, */
+    },
   },
   errors: [],
 };

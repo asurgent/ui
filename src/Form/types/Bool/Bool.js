@@ -32,7 +32,7 @@ const Bool = forwardRef((props, ref) => {
   } = props;
   const { t } = translation;
 
-  const [value, setValue] = useState(`${props.value}`);
+  const [value, setValue] = useState(`${!!props.value}`);
   const parser = useCallback((val) => (val === 'true'), []);
 
   const options = useMemo(() => [
@@ -59,6 +59,7 @@ const Bool = forwardRef((props, ref) => {
       props={props.props}
       disabled={disabled}
       onChange={handleChange}
+      {...props.props}
     />
   );
 });
