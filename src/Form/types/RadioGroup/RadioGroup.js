@@ -16,7 +16,6 @@ const propTypes = {
   parseOutput: PropTypes.func,
   props: PropTypes.instanceOf(Object),
   disabled: PropTypes.func,
-  onChange: PropTypes.func,
 };
 
 const defaultProps = {
@@ -26,7 +25,6 @@ const defaultProps = {
   props: {},
   parseOutput: (val) => val || '',
   disabled: () => false,
-  onChange: () => null,
 };
 
 const RadioGroup = forwardRef((props, ref) => {
@@ -36,16 +34,13 @@ const RadioGroup = forwardRef((props, ref) => {
     wrapRadios,
     parseOutput,
     disabled,
-    onChange,
-    value,
   } = props;
-
-  const [val, setVal] = useState(value);
+  const [val, setVal] = useState(props.value || null);
   const input = createRef();
 
   useEffect(() => {
-    setVal(value);
-  }, [value]);
+    setVal(props.value);
+  }, [props.value]);
 
   useImperativeHandle(ref, () => ({
     value: () => parseOutput(val),
@@ -53,14 +48,8 @@ const RadioGroup = forwardRef((props, ref) => {
     blur: () => input.current.blur(),
   }));
 
-  const handleChange = ({ target }) => {
-    setVal(target.value);
-    onChange({ inputName: name, inputValue: target.value });
-  };
-  console.log('val', val);
-
   return (
-    <C.FieldSet>
+    <C.FieldSet onChange={({ target }) => setVal(target.value)}>
       <C.RadioWrapper wrapRadios={wrapRadios}>
         {options.map((opt) => (
           <C.Label key={opt.label || opt.value}>
@@ -71,7 +60,6 @@ const RadioGroup = forwardRef((props, ref) => {
               checked={val === opt.value}
               ref={val === opt.value ? input : null}
               readOnly
-              onClick={handleChange}
               disabled={disabled()}
               {...props.props}
             />

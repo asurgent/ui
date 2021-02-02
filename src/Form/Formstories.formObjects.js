@@ -6,6 +6,14 @@ export const defaultFormObject = {
       tooltip: 'hejhej',
       value: 'text text',
     },
+    objectBoolean: {
+      type: 'bool',
+      label: 'Im true or false',
+      tooltipPosition: 'left',
+      tooltip: 'Select me',
+      value: false,
+      disabled: () => false,
+    },
     /*  someObjectSingle: {
       type: 'objectsingle',
       label: 'some object single',
