@@ -12,6 +12,7 @@ import {
   clearObjectValues,
   valuePassedValidation,
   valuesPassedValidation,
+  getInputComponent,
 } from '../helpers';
 
 const { t } = translation;
@@ -74,20 +75,19 @@ const Multiple = forwardRef((props, ref) => {
     validator: () => valuesPassedValidation({ validators: validator.conditions(), value }),
   }));
 
-  const handleChange = ({ target, index }) => {
+  const handleChange = ({inputName, inputValue, index}) => {
+    console.log('change', inputName, inputValue, index);
     const newArr = value.map((ent, ind) => {
       if (ind === index) {
-        const val = target.type === 'number' ? parseInt(target.value, 10) : target.value;
-        return { ...ent, [target.name]: val };
+        return { ...ent, [inputName]: inputValue };
       }
       return ent;
     });
     setValue(newArr);
   };
 
-  const handleChangeNewEntry = ({ target, key }) => {
-    const val = options[key].type === 'number' ? parseInt(target.value, 10) : target.value;
-    setNewEntry({ ...newEntry, [key]: val });
+  const handleChangeNewEntry = ({ inputName, inputValue }) => {
+    setNewEntry({ ...newEntry, [inputName]: inputValue });
   };
 
   const handleAdd = () => {
@@ -119,33 +119,43 @@ const Multiple = forwardRef((props, ref) => {
       />
 
       {/* Value-array */}
-      {value.map((entry, index) => (
+      {value?.map((entry, index) => (
         /* eslint-disable-next-line react/no-array-index-key */
         <C.Entry key={index}>
           <h5>{`${t('entry', 'asurgentui')} ${index + 1}`}</h5>
 
+         
           {/* Loop over key-value pair */}
           {Object.keys(entry).map((key) => {
             const val = entry[key];
             const option = options[key];
             const entryValidator = validator?.conditions()[key];
+            const InputComponent = getInputComponent(option.type);
+          
             return (
-              <InputWrapper
-                key={key}
-                label={option.label}
-                value={val}
-                name={key}
+              <C.InputContainer
+                key={`${key}-${index}`}
                 type={option.type}
-                onChange={({ target }) => handleChange({ target, index })}
-                disabled={option.disabled}
-                render={option.render}
-                validator={error ? entryValidator : null}
-                options={option.options}
-                tooltip={option.tooltip}
-                placeholder={options[key].placeholder}
-              />
+                error={error || false}
+                label={option.label}>
+                  <InputComponent 
+                    name={key}
+                    option={option}
+                    type={option.type}
+                    value={val}
+                    label={option.label}
+                    options={option.options}
+                    disabled={option.disabled}
+                    render={option.render}
+                    validator={error ? entryValidator : null}
+                    placeholder={option.placeholder}
+                    onChange={({ inputValue, inputName }) => handleChange({inputValue, inputName, index})}
+                    props={option.props}
+                  />
+              </C.InputContainer>
             );
           })}
+          
           <C.ButtonContainer>
             <Button.Reject
               iconRight={<Delete />}
@@ -163,22 +173,31 @@ const Multiple = forwardRef((props, ref) => {
           <h5>{t('addNew', 'asurgentui')}</h5>
 
             {/* Loop over newEntry key-value pairs (options) */}
-            {Object.keys(newEntry).map((key, index) => (
-              <InputWrapper
+            {Object.keys(options).map((key, index) => {
+              const InputComponent = getInputComponent(options[key]?.type);
+              return (
+                <C.InputContainer
+                  key={key}
+                  type={options[key].type}
+                  error={error || false}
+                  label={options[key].label}>
+                <InputComponent
                 /* eslint-disable-next-line react/no-array-index-key */
-                key={index}
-                name={key}
-                label={options[key].label}
-                value={newEntry[key]}
-                type={options[key].type}
-                onChange={({ target }) => handleChangeNewEntry({ target, key })}
-                disabled={options[key].disabled}
-                render={options[key].render}
-                options={options[key].options}
-                tooltip={options[key].tooltip}
-                placeholder={options[key].placeholder}
-              />
-            ))}
+                  key={index}
+                  name={key}
+                  label={options[key].label}
+                  value={newEntry[key]}
+                  type={options[key].type}
+                  onChange={({ target }) => handleChangeNewEntry({ target, key })}
+                  disabled={options[key].disabled}
+                  render={options[key].render}
+                  options={options[key].options}
+                  tooltip={options[key].tooltip}
+                  placeholder={options[key].placeholder}
+                />
+                </C.InputContainer>
+              );
+            })}
           <C.ButtonContainer>
             <Button.Hollow
               iconRight={<Add />}

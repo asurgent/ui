@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import * as C from './RadioGroup.styled';
 
 const propTypes = {
-  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  value: PropTypes.string,
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   wrapRadios: PropTypes.bool,
@@ -20,7 +20,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  value: null,
+  value: '',
   options: [],
   wrapRadios: false,
   props: {},
@@ -37,14 +37,15 @@ const RadioGroup = forwardRef((props, ref) => {
     parseOutput,
     disabled,
     onChange,
+    value,
   } = props;
 
-  const [val, setVal] = useState(props.value || null);
+  const [val, setVal] = useState(value);
   const input = createRef();
 
   useEffect(() => {
-    setVal(props.value);
-  }, [props.value]);
+    setVal(value);
+  }, [value]);
 
   useImperativeHandle(ref, () => ({
     value: () => parseOutput(val),
@@ -52,14 +53,14 @@ const RadioGroup = forwardRef((props, ref) => {
     blur: () => input.current.blur(),
   }));
 
+  const handleChange = ({ target }) => {
+    setVal(target.value);
+    onChange({ inputName: name, inputValue: target.value });
+  };
+  console.log('val', val);
+
   return (
-    <C.FieldSet onChange={({ target }) => {
-      const isBool = target.value.toLowerCase().includes('true', 'false');
-      const value = isBool ? target.value === 'true' : target.value;
-      setVal(value);
-      onChange({ inputName: name, inputValue: value });
-    }}
-    >
+    <C.FieldSet>
       <C.RadioWrapper wrapRadios={wrapRadios}>
         {options.map((opt) => (
           <C.Label key={opt.label || opt.value}>
@@ -70,6 +71,7 @@ const RadioGroup = forwardRef((props, ref) => {
               checked={val === opt.value}
               ref={val === opt.value ? input : null}
               readOnly
+              onClick={handleChange}
               disabled={disabled()}
               {...props.props}
             />

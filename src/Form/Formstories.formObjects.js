@@ -6,7 +6,7 @@ export const defaultFormObject = {
       tooltip: 'hejhej',
       value: 'text text',
     },
-    someObjectSingle: {
+    /*  someObjectSingle: {
       type: 'objectsingle',
       label: 'some object single',
       tooltip: 'hej',
@@ -54,8 +54,31 @@ export const defaultFormObject = {
         objectDate: new Date(),
         objectFilterSelect: 'someValue3',
       },
+    }, */
+    someObjectMultiple: {
+      type: 'objectmultiple',
+      label: 'some object single',
+      tooltip: 'hej',
+      options: {
+        objectBoolean: {
+          type: 'bool',
+          label: 'Im true or false',
+          tooltipPosition: 'left',
+          tooltip: 'Klick me',
+        },
+        objectText: {
+          type: 'text',
+          label: 'Text me',
+          tooltipPosition: 'left',
+          tooltip: 'Text me',
+        },
+      },
+      value: [
+        { objectBoolean: false, objectText: 'ay' },
+        { objectBoolean: true, objectText: 'bee' },
+        { objectBoolean: true, objectText: 'see' },
+      ],
     },
-
   },
   errors: [],
 };

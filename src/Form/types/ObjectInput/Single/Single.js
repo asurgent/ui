@@ -42,14 +42,13 @@ const Single = forwardRef((props, ref) => {
 
   const [value, setValue] = useState(props.value || {});
 
-  const setValuesFromOptions = (opt) => Object.entries(opt).reduce((acc, cur) => {
-    const key = cur[0];
-    const { value: optionValue } = cur[1];
-    return { ...acc, [key]: optionValue || null };
-  }, {});
-
   useEffect(() => {
-    const val = setValuesFromOptions(options) || {};
+    const mapOptionValues = ({ values }) => Object.keys(options).reduce((acc, key) => {
+      const val = values[key];
+      return { ...acc, [key]: val };
+    }, {});
+
+    const val = mapOptionValues({ values: props.value }) || {};
     setValue(val);
   }, [props.value, options]);
 
@@ -94,7 +93,7 @@ const Single = forwardRef((props, ref) => {
                 name={key}
                 option={option}
                 type={option.type}
-                value={option.value}
+                value={value[key]}
                 label={option.label}
                 options={option.options}
                 disabled={option.disabled}
