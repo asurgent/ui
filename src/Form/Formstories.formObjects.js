@@ -1,6 +1,6 @@
 export const defaultFormObject = {
   data: {
-    someText: {
+    /*  someText: {
       type: 'text',
       label: 'Some Text',
       tooltip: 'hejhej',
@@ -14,7 +14,7 @@ export const defaultFormObject = {
       value: false,
       disabled: () => false,
     },
-    /*  someObjectSingle: {
+    someObjectSingle: {
       type: 'objectsingle',
       label: 'some object single',
       tooltip: 'hej',
@@ -25,7 +25,6 @@ export const defaultFormObject = {
           tooltip: 'hejhej',
           parseOutput: (r) => r.filter((entry) => entry !== ''),
           placeholder: 'Add something cool',
-          // value: ['first', 'second'],
         },
         objectBoolean: {
           type: 'bool',
@@ -39,7 +38,6 @@ export const defaultFormObject = {
           type: 'datepicker',
           options: [],
           label: 'Some date',
-          // value: new Date(),
         },
         objectFilterSelect: {
           label: 'My filter select',
@@ -53,7 +51,6 @@ export const defaultFormObject = {
             multiSelect: true,
             searchPlaceholder: 'Search in me plz',
           },
-          // value: 'someValue3',
         },
       },
       value: {
@@ -64,6 +61,29 @@ export const defaultFormObject = {
       },
     }, */
     someObjectMultiple: {
+      type: 'objectmultiple',
+      label: 'some object single',
+      tooltip: 'hej',
+      options: {
+        objectText: {
+          type: 'textmultiple',
+          label: 'Text me',
+          tooltipPosition: 'left',
+          tooltip: 'Text me',
+        },
+      },
+      value: [
+        { objectText: ['first', 'second'] },
+        { objectText: ['third'] },
+
+      ],
+    },
+  },
+  errors: [],
+};
+
+/*
+  someObjectMultiple: {
       type: 'objectmultiple',
       label: 'some object single',
       tooltip: 'hej',
@@ -94,6 +114,4 @@ export const defaultFormObject = {
         { objectRadioGroup: '2', objectBool: false, objectText: 'see' },
       ],
     },
-  },
-  errors: [],
-};
+*/

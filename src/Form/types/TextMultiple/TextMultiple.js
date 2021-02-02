@@ -55,7 +55,6 @@ const TextMultiple = forwardRef((props, ref) => {
   }));
 
   const handleAdd = () => {
-    console.log(1);
     const newArr = [...value, newEntry];
     setValue(newArr);
     setNewEntry('');

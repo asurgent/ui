@@ -76,7 +76,6 @@ const Multiple = forwardRef((props, ref) => {
   }));
 
   const handleChange = ({inputName, inputValue, index}) => {
-    console.log('change', inputName, inputValue, index);
     const newArr = value.map((ent, ind) => {
       if (ind === index) {
         return { ...ent, [inputName]: inputValue };
@@ -181,20 +180,18 @@ const Multiple = forwardRef((props, ref) => {
                   type={options[key].type}
                   error={error || false}
                   label={options[key].label}>
-                <InputComponent
-                /* eslint-disable-next-line react/no-array-index-key */
-                  key={index}
-                  name={key}
-                  label={options[key].label}
-                  value={newEntry[key]}
-                  type={options[key].type}
-                  onChange={({ target }) => handleChangeNewEntry({ target, key })}
-                  disabled={options[key].disabled}
-                  render={options[key].render}
-                  options={options[key].options}
-                  tooltip={options[key].tooltip}
-                  placeholder={options[key].placeholder}
-                />
+                  <InputComponent
+                    name={key}
+                    label={options[key].label}
+                    value={newEntry[key] || null}
+                    type={options[key].type}
+                    onChange={({ inputValue }) => handleChangeNewEntry({ inputValue, inputName: key })}
+                    disabled={options[key].disabled}
+                    render={options[key].render}
+                    options={options[key].options}
+                    tooltip={options[key].tooltip}
+                    placeholder={options[key].placeholder}
+                  />
                 </C.InputContainer>
               );
             })}
