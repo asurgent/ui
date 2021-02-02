@@ -176,6 +176,14 @@ export const defaultForm = () => {
       ],
       value: 'value2',
     },
+    imABoolean: {
+      type: 'bool',
+      label: 'Im true or false',
+      tooltipPosition: 'left',
+      tooltip: 'Select me',
+      value: false,
+      disabled: () => false,
+    },
   });
   const renderErrors = boolean('render errors', false);
 

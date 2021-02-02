@@ -15,6 +15,7 @@ const propTyps = {
   name: PropTypes.string.isRequired,
   props: PropTypes.instanceOf(Object),
   disabled: PropTypes.func,
+  onChange: PropTypes.func,
 };
 
 const defaultProps = {
@@ -22,23 +23,30 @@ const defaultProps = {
   label: '',
   props: {},
   disabled: () => false,
+  onChange: () => null,
 };
-const { t } = translation;
-
-const options = [
-  { label: t('yes', 'asurgentui'), value: 'true' },
-  { label: t('no', 'asurgentui'), value: 'false' },
-];
 
 const Bool = forwardRef((props, ref) => {
-  const { name, label, disabled } = props;
+  const {
+    name, label, disabled, onChange,
+  } = props;
+  const { t } = translation;
 
   const [value, setValue] = useState(`${props.value}`);
   const parser = useCallback((val) => (val === 'true'), []);
 
+  const options = useMemo(() => [
+    { label: t('yes', 'asurgentui'), value: 'true' },
+    { label: t('no', 'asurgentui'), value: 'false' },
+  ], [t]);
+
   useEffect(() => {
     setValue(`${!!props.value}`);
   }, [props.value]);
+
+  const handleChange = ({ inputValue }) => {
+    onChange({ inputName: name, inputValue: inputValue === 'true' });
+  };
 
   return (
     <RadioGroup
@@ -50,6 +58,7 @@ const Bool = forwardRef((props, ref) => {
       ref={ref}
       props={props.props}
       disabled={disabled}
+      onChange={handleChange}
     />
   );
 });
