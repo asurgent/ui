@@ -1,6 +1,6 @@
 export const defaultFormObject = {
   data: {
-    /*  someText: {
+    someText: {
       type: 'text',
       label: 'Some Text',
       tooltip: 'hejhej',
@@ -59,59 +59,39 @@ export const defaultFormObject = {
         objectDate: new Date(),
         objectFilterSelect: 'someValue3',
       },
-    }, */
+    },
     someObjectMultiple: {
       type: 'objectmultiple',
       label: 'some object single',
       tooltip: 'hej',
       options: {
-        objectText: {
-          type: 'textmultiple',
+        subText: {
+          type: 'text',
+          label: 'Some Text',
+          tooltip: 'hejhej',
+          value: 'text text',
+        },
+        subSelect: {
+          type: 'filterselect',
           label: 'Text me',
           tooltipPosition: 'left',
           tooltip: 'Text me',
+          placeholder: 'select',
+          options: [{ value: '1', label: '1' },
+            { value: '2', label: '2' },
+            { value: '3', label: '3' },
+          ],
+          props: {
+            multiSelect: true,
+            searchPlaceholder: 'Search in me plz',
+          },
         },
       },
       value: [
-        { objectText: ['first', 'second'] },
-        { objectText: ['third'] },
-
+        { subText: 'Hi', subSelect: ['2', '3'] },
+        { subText: 'bye', subSelect: ['1'] },
       ],
     },
   },
   errors: [],
 };
-
-/*
-  someObjectMultiple: {
-      type: 'objectmultiple',
-      label: 'some object single',
-      tooltip: 'hej',
-      options: {
-        objectRadioGroup: {
-          type: 'radiogroup',
-          label: 'Radiogroup',
-          tooltipPosition: 'left',
-          tooltip: 'Klick me',
-          options: [{ label: '1', value: '1' }, { label: '2', value: '2' }],
-        },
-        objectBool: {
-          type: 'bool',
-          label: 'Im true or false',
-          tooltipPosition: 'left',
-          tooltip: 'Klick me',
-        },
-        objectText: {
-          type: 'text',
-          label: 'Text me',
-          tooltipPosition: 'left',
-          tooltip: 'Text me',
-        },
-      },
-      value: [
-        { objectRadioGroup: '1', objectBool: true, objectText: 'ay' },
-        { objectRadioGroup: '2', objectBool: true, objectText: 'bee' },
-        { objectRadioGroup: '2', objectBool: false, objectText: 'see' },
-      ],
-    },
-*/
