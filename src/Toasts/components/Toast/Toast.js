@@ -66,6 +66,7 @@ const propTypes = {
   timeout: PropTypes.number,
   autoClose: PropTypes.bool,
   onRemove: PropTypes.func.isRequired,
+  theme: PropTypes.instanceOf(Object).isRequired,
 };
 
 const defaultProps = {
