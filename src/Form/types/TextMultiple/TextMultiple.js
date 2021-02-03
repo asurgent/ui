@@ -2,8 +2,8 @@ import React, {
   useState, forwardRef, createRef, useEffect, useImperativeHandle,
 } from 'react';
 import PropTypes from 'prop-types';
-import Delete from '@material-ui/icons/Block';
-import Add from '@material-ui/icons/Add';
+import MdiIcon from '@mdi/react';
+import { mdiCancel, mdiPlus } from '@mdi/js';
 import * as C from './TextMultiple.styled';
 import * as Button from '../../../Button';
 
@@ -87,7 +87,10 @@ const TextMultiple = forwardRef((props, ref) => {
             value={entry}
             onChange={({ target }) => handleChange({ target, index })}
           />
-          <Button.Icon icon={<Delete fontSize="large" onClick={() => handleRemove({ index })} />} />
+          <Button.Icon
+            icon={<MdiIcon path={mdiCancel} size={1.4} />}
+            onClick={() => handleRemove({ index })}
+          />
         </C.Entry>
       ))}
       <C.Entry>
@@ -102,7 +105,11 @@ const TextMultiple = forwardRef((props, ref) => {
             }
           }}
         />
-        <Button.Icon disabled={newEntry.length === 0} onClick={handleAdd} icon={(<Add fontSize="large" />)} />
+        <Button.Icon
+          disabled={newEntry.length === 0}
+          onClick={handleAdd}
+          icon={<MdiIcon path={mdiPlus} size={1.4} />}
+        />
       </C.Entry>
     </C.Container>
   );

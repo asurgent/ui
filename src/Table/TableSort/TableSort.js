@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiArrowDown, mdiArrowUp } from '@mdi/js';
 import { Primary as Form, useFormBuilder } from '../../Form';
 import * as Button from '../../Button';
 import { SortWrapper } from './TableSort.styled';
@@ -58,7 +59,9 @@ const TableSort = (props) => {
           <Button.Icon
             disabled={tableHook.isLoading}
             onClick={() => sortHook.toggleCurrentSortDirection()}
-            icon={direction ? <ArrowDownward /> : <ArrowUpward />}
+            icon={
+              <MdiIcon size={1.4} path={direction ? mdiArrowDown : mdiArrowUp} />
+            }
           />
         </SortWrapper>
       )}

@@ -3,9 +3,13 @@ import {
   withKnobs, boolean,
 } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
+import MdiIcon from '@mdi/react';
 import {
-  Dashboard, Explore, Message, LibraryBooks,
-} from '@material-ui/icons';
+  mdiCompass,
+  mdiViewDashboard,
+  mdiAndroidMessages,
+  mdiBookOpenVariant,
+} from '@mdi/js';
 import DropdownMenu from './index';
 
 export const dropdownMenu = () => (
@@ -19,17 +23,17 @@ export const dropdownMenu = () => (
         {
           label: 'Dashbaord',
           tooltip: 'Dashboard',
-          icon: (<Dashboard fontSize="large" />),
+          icon: (<MdiIcon path={mdiViewDashboard} size={1.4} />),
           link: '/',
         },
         {
-          label: 'Explore', tooltip: 'Explore Environment', icon: (<Explore fontSize="large" />), link: '/',
+          label: 'Explore', tooltip: 'Explore Environment', icon: (<MdiIcon path={mdiCompass} size={1.4} />), link: '/',
         },
         {
-          label: 'Tickets', tooltip: 'View tickets', icon: (<Message fontSize="large" />), link: '/',
+          label: 'Tickets', tooltip: 'View tickets', icon: (<MdiIcon path={mdiAndroidMessages} size={1.4} />), link: '/',
         },
         {
-          label: 'Documentation', tooltip: 'Documentation', icon: (<LibraryBooks fontSize="large" />), link: '/',
+          label: 'Documentation', tooltip: 'Documentation', icon: (<MdiIcon path={mdiBookOpenVariant} size={1.4} />), link: '/',
         },
       ]}
       translations={{

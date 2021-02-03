@@ -1,5 +1,6 @@
 import React from 'react';
-import * as Icon from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiTicketConfirmation } from '@mdi/js';
 import {
   withKnobs, boolean, text,
 } from '@storybook/addon-knobs';
@@ -12,8 +13,30 @@ export default { title: 'UI Components|Buttons', decorators: [withKnobs] };
 
 export const saveToFileButton = () => (
   <>
-    <Button.Icon saveToFilename="some_file" tooltip="Saves from promise" saveToFile={() => new Promise((r) => r(['a', 'b']))} icon={<Icon.ConfirmationNumber fontSize="large" onClick={(e) => action('Clicked!')(e)} />} />
-    <Button.Icon saveToFilename="another_file" tooltip="Saves from object" saveToFile={() => ['a', 'b']} icon={<Icon.ConfirmationNumber fontSize="large" onClick={(e) => action('Clicked!')(e)} />} />
+    <Button.Icon
+      saveToFilename="some_file"
+      tooltip="Saves from promise"
+      saveToFile={() => new Promise((r) => r(['a', 'b']))}
+      onClick={(e) => action('Clicked!')(e)}
+      icon={(
+        <MdiIcon
+          path={mdiTicketConfirmation}
+          size={1.4}
+        />
+      )}
+    />
+    <Button.Icon
+      saveToFilename="another_file"
+      tooltip="Saves from object"
+      saveToFile={() => ['a', 'b']}
+      onClick={(e) => action('Clicked!')(e)}
+      icon={(
+        <MdiIcon
+          path={mdiTicketConfirmation}
+          size={1.4}
+        />
+      )}
+    />
   </>
 );
 
@@ -35,7 +58,18 @@ export const setTableState = () => {
 };
 
 export const iconButton = () => (
-  <Button.Icon tooltip="Hello" saveLinkState link="/test" icon={<Icon.ConfirmationNumber fontSize="large" onClick={(e) => action('Clicked!')(e)} />} />
+  <Button.Icon
+    tooltip="Hello"
+    saveLinkState
+    link="/test"
+    onClick={(e) => action('Clicked!')(e)}
+    icon={(
+      <MdiIcon
+        path={mdiTicketConfirmation}
+        size={1.4}
+      />
+    )}
+  />
 );
 
 export const submitButton = () => (
@@ -69,7 +103,18 @@ export const plainButton = () => (
 );
 
 export const linkButton = () => (
-  <Button.Link iconLeft={<Icon.ConfirmationNumber onClick={(e) => action('Clicked!')(e)} />}>{content}</Button.Link>
+  <Button.Link
+    onClick={(e) => action('Clicked!')(e)}
+    iconLeft={(
+      <MdiIcon
+        path={mdiTicketConfirmation}
+        size={1.4}
+      />
+    )}
+  >
+    {content}
+
+  </Button.Link>
 );
 
 export const transparentButton = () => (
@@ -85,15 +130,47 @@ export const acceptButton = () => (
 );
 
 export const pillButton = () => (
-  <Button.Pill onClick={(e) => action('Clicked!')(e)} iconRight={<Icon.ConfirmationNumber />}>{content}</Button.Pill>
+  <Button.Pill
+    onClick={(e) => action('Clicked!')(e)}
+    iconRight={(
+      <MdiIcon
+        path={mdiTicketConfirmation}
+        size={1.4}
+      />
+    )}
+  >
+    {content}
+  </Button.Pill>
 );
 
 export const createBlock = () => (
-  <Button.CreateBlock link="/sdf/2" onClick={(e) => action('Clicked!')(e)} iconLeft={<Icon.Add fontSize="large" />}>{content}</Button.CreateBlock>
+  <Button.CreateBlock
+    link="/sdf/2"
+    onClick={(e) => action('Clicked!')(e)}
+    iconLeft={(
+      <MdiIcon
+        path={mdiTicketConfirmation}
+        size={1.4}
+      />
+    )}
+  >
+    {content}
+  </Button.CreateBlock>
 );
 
 export const Stretched = () => (
-  <Button.Stretched link="/sdf/2" onClick={(e) => action('Clicked!')(e)} iconRight={<Icon.ArrowForward fontSize="large" />}>{content}</Button.Stretched>
+  <Button.Stretched
+    link="/sdf/2"
+    onClick={(e) => action('Clicked!')(e)}
+    iconRight={(
+      <MdiIcon
+        path={mdiTicketConfirmation}
+        size={1.4}
+      />
+    )}
+  >
+    {content}
+  </Button.Stretched>
 );
 
 export const tooltipButton = () => (
