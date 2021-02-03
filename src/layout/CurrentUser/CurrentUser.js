@@ -46,6 +46,7 @@ const UserDropdown = ({
             <small>{customerName}</small>
           </U.Name>
           <Button.Icon
+            style={{ margin: '0 .4rem' }}
             icon={(
               <MdiIcon
                 size={1.4}
@@ -61,7 +62,7 @@ const UserDropdown = ({
           onClick={() => setOpen(true)}
           icon={(
             <MdiIcon
-              size={1.4}
+              size={1.2}
               path={mdiMenu}
               rotate={open ? 180 : 0}
             />

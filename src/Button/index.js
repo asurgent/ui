@@ -25,6 +25,12 @@ const Reject = withStyle((theme) => ({
   spinnerColor: theme.white,
 }))(C.Button);
 
+const Accept = withStyle((theme) => ({
+  backgroundColor: theme.green400,
+  borderColor: darken(0.08, theme.green400),
+  spinnerColor: theme.white,
+}))(C.Button);
+
 const Create = withStyle((theme) => ({
   backgroundColor: theme.blue900,
   borderColor: theme.blue900,
@@ -51,7 +57,7 @@ const Pill = withStyle((theme) => ({
 }))(C.Pill);
 
 const filterPropsMapper = (props) => ({
-  iconRight: (<MdiIcon path={mdiChevronDown} size={1} />),
+  iconRight: (<MdiIcon path={mdiChevronDown} size={1.2} />),
   ...props,
 });
 const Filter = withMapProps(filterPropsMapper)(withStyle(() => ({
@@ -82,6 +88,7 @@ const Plain = withStyle()(C.Plain);
 const Link = withStyle()(C.Link);
 
 Primary.displayName = '@asurgent.ui.Button.Primary';
+Accept.displayName = '@asurgent.ui.Button.Primary';
 Secondary.displayName = '@asurgent.ui.Button.Secondary';
 Hollow.displayName = '@asurgent.ui.Button.Hollow';
 Plain.displayName = '@asurgent.ui.Button.Plain';
@@ -97,6 +104,7 @@ export {
   Hollow,
   Plain,
   Reject,
+  Accept,
   Icon,
   Transparent,
   Link,

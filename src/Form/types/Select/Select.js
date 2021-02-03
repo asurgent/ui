@@ -105,7 +105,7 @@ const Select = forwardRef((props, ref) => {
             </option>
           ))}
       </select>
-      <MdiIcon path={mdiMenuDown} size={1.4} className="down-arrow" />
+      <MdiIcon path={mdiMenuDown} size={1.2} className="down-arrow" />
     </>
   );
 });

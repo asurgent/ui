@@ -44,7 +44,7 @@ const CreateList = ({ shouldShow, createList, translations }) => {
         onClick={() => setCreateOpen(true)}
         iconRight={(
           <MdiIcon
-            size={1.4}
+            size={1.2}
             path={mdiChevronDown}
             rotate={createOpen ? 180 : 0}
           />

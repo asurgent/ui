@@ -48,7 +48,7 @@ const TableFilter = ({ filterHook, tableHook, className }) => (
     {filterHook.hasActiveFilter() && (
       <Button.Plain onClick={() => filterHook.clearFilter()} disabled={tableHook.isLoading}>
         <MdiIcon
-          size={1.4}
+          size={1.2}
           path={mdiCloseCircleOutline}
         />
         {` ${t('clear', 'asurgentui')}`}

@@ -112,7 +112,7 @@ const FilterInput = forwardRef((props, ref) => {
             { filterSelectHook.showPlaceHolder() && placeholdeOutput}
             {!filterSelectHook.showTags() && (filterSelectHook.getOutput())}
           </C.Value>
-          <MdiIcon path={mdiMenuDown} size={1.4} className="down-arrow" />
+          <MdiIcon path={mdiMenuDown} size={1.2} className="down-arrow" />
         </C.Output>
         <Transition.FadeInFitted isVisible={filterSelectHook.isOpen} timeout={80}>
           <C.Dropdown>

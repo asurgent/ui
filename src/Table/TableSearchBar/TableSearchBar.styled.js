@@ -6,10 +6,17 @@ export const SearchBarContainer = styled.div`
     .custom-table-search {
         border-radius: 5rem;
         max-width: 100%;
+        border-color: transparent;
 
         input {
             border-radius: 5rem;
-            margin-left: 3.2rem;
+            padding-left: 4.8rem;
+            border: 1px solid ${({ theme }) => theme.gray300};
+            transition: all .1s ease-in-out;
+            &:focus, &:hover {
+                border-color: transparent;
+                box-shadow: 0 1px 6px rgba(0,0,0,.2);
+            }
         }
      
         &:before {
