@@ -65,10 +65,9 @@ const Tooltip = ({
     handleMouseLeave();
   }, [children]);
 
-  if (header || footer) {
+  if (header || footer || content) {
     return (
       <>
-
         <C.TooltipParent
           ref={ref}
           onMouseEnter={handleMouseEnter}
@@ -82,6 +81,7 @@ const Tooltip = ({
             {header && (
             <C.Header>
               {header}
+              <C.Separator />
             </C.Header>
             )}
 
@@ -93,6 +93,7 @@ const Tooltip = ({
 
             {footer && (
             <C.Footer>
+              <C.Separator />
               {footer}
             </C.Footer>
             )}
@@ -100,7 +101,6 @@ const Tooltip = ({
           tooltipRoot,
         )}
       </>
-
     );
   }
 

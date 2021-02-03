@@ -51,34 +51,30 @@ export const TooltipCard = styled(TooltipWrapper)`
     display: flex;
     flex-direction: column;
   }
+  max-width: min(45rem, 80vw);
 `;
 
 export const TooltipParent = styled.span`
   background: transparent!important;
 `;
 
-export const Header = styled.div`
-  &:after {
-    content: '';
-    left: 0;
-    right: 0;
-    height: 1px;
-    position: absolute;
-    background: ${({ theme }) => theme.gray300};
-  }
-`;
+export const Header = styled.div``;
 
 export const Content = styled.div`
+  margin-top: 1.6rem;
+  margin-bottom: 1.6rem; 
+`;
 
+export const Separator = styled.div`
+    height: 1px;
+    left: 0;
+    right: 0;
+    position: absolute;
+    background: ${({ theme }) => theme.gray300};
 `;
 
 export const Footer = styled.div`
-  &:before {
-    content: '';
-    left: 0;
-    right: 0;
-    height: 1px;
-    position: absolute;
-    background: ${({ theme }) => theme.gray300};
+  & *:nth-child(2) {
+    margin-top: 2rem;
   }
 `;

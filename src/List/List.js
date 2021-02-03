@@ -12,6 +12,7 @@ const propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
+  compact: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -20,6 +21,7 @@ const defaultProps = {
   children: null,
   borderBottom: false,
   borderTop: false,
+  compact: false,
 };
 
 const List = ({
@@ -28,8 +30,9 @@ const List = ({
   children,
   borderBottom,
   borderTop,
+  compact,
 }) => (
-  <C.Wrapper style={style} borderBottom={borderBottom} borderTop={borderTop}>
+  <C.Wrapper style={style} borderBottom={borderBottom} borderTop={borderTop} compact={compact}>
     { rows.map((item, index) => {
       if (!item) { return null; }
 

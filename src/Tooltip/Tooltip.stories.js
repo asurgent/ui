@@ -5,6 +5,7 @@ import {
 import * as Tooltip from './index';
 import * as T from '../Typography';
 import * as Tag from '../Tag';
+import * as List from '../List';
 
 const center = {
   height: '100vh', width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center',
@@ -17,28 +18,38 @@ Some paragraphy text text text text text text text.
 Some other text.
 `;
 
-export const card = () => {
-  const tags = Array.from({ length: 10 }, (_, i) => `Tag-${i}`);
-  return (
-    <div style={center}>
-      <Tooltip.Card
-        header={<T.P.Main>header</T.P.Main>}
-        content={<p>i am content</p>}
-        footer={(
-          <Tag.Collection
-            tags={tags}
-            maxTags={3}
-            maxLength={5}
-          />
-)}
-      >
-        <div>
-          <h1 style={{ display: 'inline-block' }}>Hover asdf</h1>
-        </div>
-      </Tooltip.Card>
-    </div>
-  );
-};
+const tags = Array.from({ length: 10 }, (_, i) => `Tag-${i}`);
+const TooltipHeader = () => (<><T.P.Main>header</T.P.Main></>);
+const TooltipContent = () => (
+  <>
+    <T.Title.H3>asurgent-cloudops-streamanalytics-prod</T.Title.H3>
+    <List.Primary
+      compact
+      rows={[
+        { label: 'Entity Type', value: 'subscription' },
+        { label: 'Resource Group', value: 'rg-asurgent-sentinel-test' },
+        { label: 'Region', value: 'westeurope' },
+        { label: 'Customer', value: 'Asurgent AB (1168)' },
+        { label: 'Id', value: '4A7B1D85F2CB1AB4E006E8BBEEA6D4ADBC55C9A6' },
+      ]}
+    />
+  </>
+);
+const TooltipFooter = () => <Tag.Collection tags={tags} maxTags={2} />;
+
+export const card = () => (
+  <div style={center}>
+    <Tooltip.Card
+      header={<TooltipHeader />}
+      content={<TooltipContent />}
+      footer={<TooltipFooter />}
+    >
+      <div>
+        <h1 style={{ display: 'inline-block' }}>Hover asdf</h1>
+      </div>
+    </Tooltip.Card>
+  </div>
+);
 
 export const bottomMiddle = () => (
   <div style={center}>
