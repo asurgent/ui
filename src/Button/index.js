@@ -1,7 +1,9 @@
 import React from 'react';
 import { darken } from 'polished';
 import withMapProps from 'high-order-components/withMapProps';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import MdiIcon from '@mdi/react';
+import { mdiChevronDown } from '@mdi/js';
+
 import withStyle from './withStyle';
 import * as C from './Button.styled';
 
@@ -48,7 +50,10 @@ const Pill = withStyle((theme) => ({
   spinnerColor: theme.black,
 }))(C.Pill);
 
-const filterPropsMapper = (props) => ({ iconRight: <ExpandMore />, ...props });
+const filterPropsMapper = (props) => ({
+  iconRight: (<MdiIcon path={mdiChevronDown} size={1} />),
+  ...props,
+});
 const Filter = withMapProps(filterPropsMapper)(withStyle(() => ({
   backgroundColor: '#eff3f6',
   borderColor: darken(0.1, '#eff3f6'),

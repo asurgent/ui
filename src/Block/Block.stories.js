@@ -2,7 +2,8 @@ import React from 'react';
 import {
   withKnobs, boolean, number,
 } from '@storybook/addon-knobs';
-import * as Icon from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiMenuDown } from '@mdi/js';
 import * as Block from './index';
 import * as List from '../List';
 import * as Button from '../Button';
@@ -117,7 +118,19 @@ export const accordion = () => (
             { label: 'Label', value: 'Hello' },
             { label: 'Label', value: '' },
             { label: 'Label 123123', value: 'Hello' },
-            { row: (<Button.Stretched iconRight={<Icon.ArrowForward fontSize="large" />}>Next</Button.Stretched>) },
+            {
+              row: (
+                <Button.Stretched
+                  iconRight={(
+                    <MdiIcon
+                      path={mdiMenuDown}
+                      size={1.4}
+                    />
+                  )}
+                >
+                  Next
+                </Button.Stretched>),
+            },
           ]}
         />
       )}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import * as Icon from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiChevronDown, mdiMenu } from '@mdi/js';
 import * as U from './CurrentUser.styled';
 import * as UserImage from '../../UserImage';
 import * as Button from '../../Button';
@@ -44,11 +45,28 @@ const UserDropdown = ({
             <b>{name}</b>
             <small>{customerName}</small>
           </U.Name>
-          <Button.Icon icon={open ? <Icon.ExpandLess fontSize="large" /> : <Icon.ExpandMore fontSize="large" />} />
+          <Button.Icon
+            icon={(
+              <MdiIcon
+                size={1.4}
+                path={mdiChevronDown}
+                rotate={open ? 180 : 0}
+              />
+            )}
+          />
         </Button.Plain>
       </U.Desktop>
       <U.Mobile>
-        <Button.Icon onClick={() => setOpen(true)} icon={<Icon.Menu fontSize="large" />} />
+        <Button.Icon
+          onClick={() => setOpen(true)}
+          icon={(
+            <MdiIcon
+              size={1.4}
+              path={mdiMenu}
+              rotate={open ? 180 : 0}
+            />
+            )}
+        />
       </U.Mobile>
       {(children({ isOpen: open, onClose: () => { setOpen(false); } }))}
     </U.Wrapper>

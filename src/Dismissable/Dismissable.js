@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Close from '@material-ui/icons/Close';
+import MdiIcon from '@mdi/react';
+import { mdiClose } from '@mdi/js';
 import * as C from './Dismissable.styled';
 import * as Transitions from '../Transition';
 
@@ -50,7 +51,10 @@ export const DismissablePrimary = ({
         <C.Header>
           <h3>{title}</h3>
           <C.Dismiss onClick={() => handleDismiss()}>
-            <Close fontSize="large" />
+            <MdiIcon
+              path={mdiClose}
+              size={1.6}
+            />
           </C.Dismiss>
         </C.Header>
         {children}
@@ -92,7 +96,10 @@ export const DismissablePlain = ({
         <C.Header>
           <h3>{title}</h3>
           <C.Dismiss onClick={() => handleDismiss()}>
-            <Close fontSize="large" />
+            <MdiIcon
+              path={mdiClose}
+              size={1.6}
+            />
           </C.Dismiss>
         </C.Header>
         {children}

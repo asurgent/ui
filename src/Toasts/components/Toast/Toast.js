@@ -1,25 +1,59 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import Close from '@material-ui/icons/Close';
-import Flag from '@material-ui/icons/Flag';
-import ErrorIcon from '@material-ui/icons/ErrorOutline';
-import Check from '@material-ui/icons/Check';
-import Info from '@material-ui/icons/InfoOutlined';
+import { withTheme } from 'styled-components';
+import MdiIcon from '@mdi/react';
+import {
+  mdiClose,
+  mdiCheck,
+  mdiFlag,
+  mdiAlertCircleOutline,
+  mdiInformationOutline,
+} from '@mdi/js';
 import * as C from './Toast.styled';
 import * as Consts from '../../constants';
+
+const getColor = (theme, type) => {
+  switch (type) {
+    case Consts.TYPE_SUCCESS:
+      return {
+        border: theme.green700,
+        background: theme.green100,
+      };
+    case Consts.TYPE_INFORMATION:
+      return {
+        border: theme.blue700,
+        background: theme.blue100,
+      };
+    case Consts.TYPE_ERROR:
+      return {
+        border: theme.ruby800,
+        background: theme.ruby100,
+      };
+    case Consts.TYPE_WARNING:
+      return {
+        border: theme.gold900,
+        background: theme.gold50,
+      };
+    default:
+      return {
+        border: theme.blue800,
+        background: theme.blue100,
+      };
+  }
+};
 
 const getIconOnType = (type) => {
   switch (type) {
     case Consts.TYPE_SUCCESS:
-      return Check;
+      return mdiCheck;
     case Consts.TYPE_INFORMATION:
-      return Info;
+      return mdiInformationOutline;
     case Consts.TYPE_ERROR:
-      return ErrorIcon;
+      return mdiAlertCircleOutline;
     case Consts.TYPE_WARNING:
-      return Flag;
+      return mdiFlag;
     default:
-      return Info;
+      return mdiInformationOutline;
   }
 };
 
@@ -32,6 +66,7 @@ const propTypes = {
   timeout: PropTypes.number,
   autoClose: PropTypes.bool,
   onRemove: PropTypes.func.isRequired,
+  theme: PropTypes.instanceOf(Object).isRequired,
 };
 
 const defaultProps = {
@@ -46,6 +81,7 @@ const Toast = ({
   autoClose,
   onRemove,
   timeout,
+  theme,
 }) => {
   const [timer, setTimer] = useState(null);
   const [timerStart, setTimerStart] = useState(null);
@@ -102,18 +138,27 @@ const Toast = ({
     }
   };
 
-  const Icon = useMemo(() => {
-    const a = getIconOnType(type);
-
-    return a;
-  }, [type]);
-
   return (
     <C.Toast type={type} onMouseEnter={onCancelTimer} onMouseLeave={onSetTimer}>
-      <Icon fontSize="large" className="icon" />
+      <MdiIcon
+        className="icon"
+        size={1.8}
+        path={getIconOnType(type)}
+        style={{
+          background: getColor(theme, type).border,
+          borderColor: getColor(theme, type).border,
+        }}
+      />
       <C.Message>{message}</C.Message>
-      <Close fontSize="large" onClick={onRemove} className="close" />
-      <C.Bar type={type} done={percentageDone} />
+      <MdiIcon size={1.6} path={mdiClose} className="close" />
+      <C.Bar
+        type={type}
+        done={percentageDone}
+        style={{
+          background: getColor(theme, type).border,
+          borderColor: getColor(theme, type).border,
+        }}
+      />
     </C.Toast>
   );
 };
@@ -122,4 +167,4 @@ Toast.defaultProps = defaultProps;
 Toast.propTypes = propTypes;
 Toast.displayName = '@asurgent.ui.Toast';
 
-export default Toast;
+export default withTheme(Toast);

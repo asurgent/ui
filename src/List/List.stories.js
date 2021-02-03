@@ -1,6 +1,7 @@
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
-import * as Icon from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiCompass } from '@mdi/js';
 import * as List from './index';
 import * as Button from '../Button/index';
 
@@ -21,7 +22,7 @@ export const primaryList = () => (
         { label: 'Label value null', value: null },
         { label: 'Label value undefined', value: undefined },
 
-        { row: (<Button.Stretched link="/asd/123" iconRight={<Icon.ArrowForward fontSize="large" />}>Next</Button.Stretched>) },
+        { row: (<Button.Stretched link="/asd/123" iconRight={<MdiIcon path={mdiCompass} size={1.4} />}>Next</Button.Stretched>) },
       ]}
     />
   </>
