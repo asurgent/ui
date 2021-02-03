@@ -34,17 +34,3 @@ export const Container = styled.div`
         border-bottom: none;
     }
 `;
-
-export const Label = styled.small`
-   
-`;
-
-export const Error = styled.div`
-  flex: 1;
-  margin-top: .4rem;
-  font-size: 1.1rem;
-  letter-spacing: .1rem;
-  color: ${({ theme }) => theme.ruby800};
-  position: absolute; 
-  top: 100%;
-`;

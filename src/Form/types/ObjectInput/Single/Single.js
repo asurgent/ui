@@ -3,11 +3,9 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import * as C from '../ObjectInput.styled';
+import InputComponent from '../InputComponent';
 
-import {
-  valuePassedValidation,
-  getInputComponent,
-} from '../helpers';
+import { valuePassedValidation } from '../helpers';
 
 const propTypes = {
   options: PropTypes.instanceOf(Object),
@@ -79,30 +77,24 @@ const Single = forwardRef((props, ref) => {
         {Object.keys(options)?.map((key) => {
           const option = options[key];
           const entryValidator = validator?.conditions()[key];
-          const InputComponent = getInputComponent(option.type);
 
           return (
-            <C.InputContainer
+            <InputComponent
               key={key}
+              name={key}
+              option={option}
               type={option.type}
-              error={error || false}
+              value={value[key]}
               label={option.label}
-            >
-              <InputComponent
-                name={key}
-                option={option}
-                type={option.type}
-                value={value[key]}
-                label={option.label}
-                options={option.options}
-                disabled={option.disabled}
-                render={option.render}
-                validator={error ? entryValidator : null}
-                placeholder={option.placeholder}
-                onChange={handleChange}
-                props={option.props}
-              />
-            </C.InputContainer>
+              options={option.options}
+              disabled={option.disabled}
+              render={option.render}
+              validator={error ? entryValidator : null}
+              tooltip={option.tooltip}
+              placeholder={option.placeholder}
+              onChange={handleChange}
+              props={option.props}
+            />
           );
         })}
       </C.Entry>

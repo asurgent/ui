@@ -7,11 +7,11 @@ import Add from '@material-ui/icons/Add';
 import * as C from '../ObjectInput.styled';
 import * as Button from '../../../../Button';
 import translation from '../ObjectInput.translation';
+import InputComponent from '../InputComponent';
 import {
   clearObjectValues,
   valuePassedValidation,
   valuesPassedValidation,
-  getInputComponent,
 } from '../helpers';
 
 const { t } = translation;
@@ -127,30 +127,24 @@ const Multiple = forwardRef((props, ref) => {
             const val = entry[key];
             const option = options[key];
             const entryValidator = validator?.conditions()[key];
-            const InputComponent = getInputComponent(option.type);
-
             return (
-              <C.InputContainer
+              <InputComponent
                 /* eslint-disable-next-line react/no-array-index-key */
                 key={`${key}-${index}`}
+                name={key}
+                option={option}
                 type={option.type}
+                value={val}
                 label={option.label}
-              >
-                <InputComponent
-                  name={key}
-                  option={option}
-                  type={option.type}
-                  value={val}
-                  label={option.label}
-                  options={option.options}
-                  disabled={option.disabled}
-                  render={option.render}
-                  validator={error ? entryValidator : null}
-                  placeholder={option.placeholder}
-                  onChange={(target) => handleChange(target, index)}
-                  props={option.props}
-                />
-              </C.InputContainer>
+                options={option.options}
+                disabled={option.disabled}
+                render={option.render}
+                validator={error ? entryValidator : null}
+                placeholder={option.placeholder}
+                onChange={(target) => handleChange(target, index)}
+                tooltip={option.tooltip}
+                props={option.props}
+              />
             );
           })}
 
@@ -168,30 +162,21 @@ const Multiple = forwardRef((props, ref) => {
           <h5>{t('addNew', 'asurgentui')}</h5>
 
           {/* Loop over newEntry key-value pairs (options) */}
-          {Object.keys(options).map((key) => {
-            const InputComponent = getInputComponent(options[key]?.type);
-            return (
-              <C.InputContainer
-                key={key}
-                type={options[key].type}
-                error={error || false}
-                label={options[key].label}
-              >
-                <InputComponent
-                  name={key}
-                  label={options[key].label}
-                  value={newEntry[key] || null}
-                  type={options[key].type}
-                  onChange={handleChangeNewEntry}
-                  disabled={options[key].disabled}
-                  render={options[key].render}
-                  options={options[key].options}
-                  tooltip={options[key].tooltip}
-                  placeholder={options[key].placeholder}
-                />
-              </C.InputContainer>
-            );
-          })}
+          {Object.keys(options).map((key) => (
+            <InputComponent
+              key={key}
+              name={key}
+              label={options[key].label}
+              value={newEntry[key] || null}
+              type={options[key].type}
+              onChange={handleChangeNewEntry}
+              disabled={options[key].disabled}
+              render={options[key].render}
+              options={options[key].options}
+              tooltip={options[key].tooltip}
+              placeholder={options[key].placeholder}
+            />
+          ))}
           <C.ButtonContainer>
             <Button.Hollow
               iconRight={<Add />}
