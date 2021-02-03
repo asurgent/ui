@@ -12,14 +12,13 @@ const btnPropTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   onClose: PropTypes.func,
-  icon: PropTypes.instanceOf(Object),
+  icon: PropTypes.string.isRequired,
 };
 const btnDefaultProps = {
   onClick: null,
   title: '',
   description: '',
   onClose: null,
-  icon: null,
 };
 
 const CreateItemButton = ({
