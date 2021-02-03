@@ -76,7 +76,7 @@ const Tooltip = ({
           {children}
         </C.TooltipParent>
 
-        { createPortal(
+        { show === true && createPortal(
           <C.TooltipCard position={position} style={coordinates}>
             {header && (
             <C.Header>
@@ -105,24 +105,25 @@ const Tooltip = ({
   }
 
   return (
-    <>
-      { tip && (
-      <C.TooltipParent
-        ref={ref}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        {children}
-      </C.TooltipParent>
-      ) }
-      { show === true && tip
+    tip ? (
+      <>
+        <C.TooltipParent
+          ref={ref}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {children}
+        </C.TooltipParent>
+
+        { show === true
             && createPortal(
               <C.TooltipWrapper position={position} style={coordinates}>
                 {tip}
               </C.TooltipWrapper>,
               tooltipRoot,
             )}
-    </>
+      </>
+    ) : null
   );
 };
 Tooltip.propTypes = propTypes;
