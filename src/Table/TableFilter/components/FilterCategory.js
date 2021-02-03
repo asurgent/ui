@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
-import * as Icon from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiClose } from '@mdi/js';
 import * as Spinner from '../../../Spinner';
 import * as Form from '../../../Form';
 import * as VirtualRender from '../../../VirtualRender';
@@ -103,7 +104,12 @@ const FilterCategory = (props) => {
                 </>
               )
             }
-            <Button.Icon className="close" onClick={() => groupHook.setOpen(false)} icon={<Icon.Close fontSize="large" />} />
+
+            <Button.Icon
+              className="close"
+              onClick={() => groupHook.setOpen(false)}
+              icon={<MdiIcon size={1.4} path={mdiClose} />}
+            />
           </C.Dropdown>
         </Transition.FadeInSlideDownOnDesktop>
       </C.ShieldTargetWrapper>

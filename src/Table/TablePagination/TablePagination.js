@@ -1,8 +1,7 @@
-/* eslint-disable react/no-array-index-key */
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Icons from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 import * as Button from '../../Button';
 import * as C from './TablePagination.styled';
 
@@ -21,13 +20,19 @@ const TablePagination = ({
     <C.Pagination isLoading={tableHook.isLoading}>
       <Button.Icon
         onClick={paginationHook.previousPage}
-        icon={<Icons.NavigateBefore fontSize="large" />}
+        icon={(
+          <MdiIcon
+            size={1.4}
+            path={mdiChevronLeft}
+          />
+        )}
       />
 
       {
           paginationHook.getPaginationList()
             .map(({ value, clickable }, index) => (
               <C.Page
+                // eslint-disable-next-line react/no-array-index-key
                 key={`${value}-${index}`}
                 isClickable={clickable}
                 activePage={paginationHook.getActivePage() === value}
@@ -40,7 +45,12 @@ const TablePagination = ({
 
       <Button.Icon
         onClick={paginationHook.nextPage}
-        icon={<Icons.NavigateNext fontSize="large" />}
+        icon={(
+          <MdiIcon
+            size={1.4}
+            path={mdiChevronRight}
+          />
+        )}
       />
 
     </C.Pagination>
