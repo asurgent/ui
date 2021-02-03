@@ -3,6 +3,7 @@ import {
   withKnobs,
 } from '@storybook/addon-knobs';
 import * as Tooltip from './index';
+import * as T from '../Typography';
 
 const center = {
   height: '100vh', width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center',
@@ -14,6 +15,21 @@ Some paragraphy text text text text text text text.
 
 Some other text.
 `;
+
+export const card = () => (
+  <div style={center}>
+    <Tooltip.Card
+      header={<T.P.Main>header</T.P.Main>}
+      footer={<p>footer</p>}
+      content={<p>i am content</p>}
+      tip={someFormattedToolTip}
+    >
+      <div>
+        <h1 style={{ display: 'inline-block' }}>Hover asdf</h1>
+      </div>
+    </Tooltip.Card>
+  </div>
+);
 
 export const bottomMiddle = () => (
   <div style={center}>

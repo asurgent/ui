@@ -15,15 +15,35 @@ const propTypes = {
   ]),
   tip: PropTypes.string,
   position: PropTypes.string,
+  header: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]),
+  content: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]),
+  footer: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]),
 };
 
 const defaultProps = {
   tip: '',
   position: positions.middle,
   children: null,
+  header: null,
+  content: null,
+  footer: null,
 };
 
-const Tooltip = ({ position, tip, children }) => {
+const Tooltip = ({
+  position, tip, header, content, footer, children,
+}) => {
   const [show, setShow] = useState(false);
   const [coordinates, setCoordinates] = useState({ left: 0, top: 0 });
 
@@ -44,6 +64,45 @@ const Tooltip = ({ position, tip, children }) => {
   useEffect(() => {
     handleMouseLeave();
   }, [children]);
+
+  if (header || footer) {
+    return (
+      <>
+
+        <C.TooltipParent
+          ref={ref}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {children}
+        </C.TooltipParent>
+
+        { createPortal(
+          <C.TooltipCard position={position} style={coordinates}>
+            {header && (
+            <C.Header>
+              {header}
+            </C.Header>
+            )}
+
+            {content && (
+              <C.Content>
+                {content}
+              </C.Content>
+            )}
+
+            {footer && (
+            <C.Footer>
+              {footer}
+            </C.Footer>
+            )}
+          </C.TooltipCard>,
+          tooltipRoot,
+        )}
+      </>
+
+    );
+  }
 
   return (
     <>
