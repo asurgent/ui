@@ -6,7 +6,8 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import PropTypes from 'prop-types';
-import * as Icons from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiMenuDown } from '@mdi/js';
 
 const propTyps = {
   value: PropTypes.string,
@@ -104,7 +105,7 @@ const Select = forwardRef((props, ref) => {
             </option>
           ))}
       </select>
-      <Icons.ArrowDropDown className="down-arrow" fontSize="large" />
+      <MdiIcon path={mdiMenuDown} size={1.2} className="down-arrow" />
     </>
   );
 });

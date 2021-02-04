@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import * as Icon from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiExitToApp, mdiClose } from '@mdi/js';
 import * as U from './DropdownMenu.styled';
 import * as UserImage from '../../UserImage';
 import * as Button from '../../Button';
@@ -81,7 +82,7 @@ const DropdownMenu = ({
               <U.DesktopMenuFooter>
                 <Button.Plain onClick={onLogout}>
                   <U.CreateItem>
-                    <Icon.ExitToApp className="exit-icon" fontSize="large" />
+                    <MdiIcon size={1.2} path={mdiExitToApp} className="exit-icon" />
                     <U.CreateTitle>{translations.logout || 'Sign out'}</U.CreateTitle>
                   </U.CreateItem>
                 </Button.Plain>
@@ -93,7 +94,11 @@ const DropdownMenu = ({
         <U.Mobile>
           <Transition.FadeIn isVisible={isOpen} timeout={80}>
             <U.MobileMenu>
-              <Button.Icon className="close" onClick={onClose} icon={<Icon.Close fontSize="large" />} />
+              <Button.Icon
+                className="close"
+                onClick={onClose}
+                icon={<MdiIcon size={1.2} path={mdiClose} />}
+              />
               <div className="user">
                 <UserImage.Circle
                   size="6rem"
@@ -128,7 +133,7 @@ const DropdownMenu = ({
                     <div className="wrapper">
                       <Button.Plain onClick={onLogout}>
                         <U.CreateItem>
-                          <Icon.ExitToApp className="exit-icon" fontSize="large" />
+                          <MdiIcon size={1.4} path={mdiExitToApp} className="exit-icon" />
                           <U.CreateTitle>{translations.logout || 'Sign out'}</U.CreateTitle>
                         </U.CreateItem>
                       </Button.Plain>

@@ -1,9 +1,14 @@
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
+import MdiIcon from '@mdi/react';
 import {
-  Dashboard, Explore, Message, LibraryBooks,
-} from '@material-ui/icons';
+  mdiCompass,
+  mdiViewDashboard,
+  mdiAndroidMessages,
+  mdiBookOpenVariant,
+} from '@mdi/js';
+
 import CurrentUser from './index';
 
 export const currentUser = () => (
@@ -14,11 +19,11 @@ export const currentUser = () => (
       selectedLanguage="sv"
       navigationList={[
         {
-          label: 'Dashbaord', tooltip: 'Dashboard', active: true, icon: (<Dashboard fontSize="large" />),
+          label: 'Dashbaord', tooltip: 'Dashboard', active: true, icon: (<MdiIcon path={mdiViewDashboard} size={1.4} />),
         },
-        { label: 'Explore', tooltip: 'Explore Environment', icon: (<Explore fontSize="large" />) },
-        { label: 'Tickets', tooltip: 'View tickets', icon: (<Message fontSize="large" />) },
-        { label: 'Docs', tooltip: 'Documentation', icon: (<LibraryBooks fontSize="large" />) },
+        { label: 'Explore', tooltip: 'Explore Environment', icon: (<MdiIcon path={mdiCompass} size={1.4} />) },
+        { label: 'Tickets', tooltip: 'View tickets', icon: (<MdiIcon path={mdiAndroidMessages} size={1.4} />) },
+        { label: 'Docs', tooltip: 'Documentation', icon: (<MdiIcon path={mdiBookOpenVariant} size={1.4} />) },
       ]}
       languages={[{ value: 'en', label: 'English' }, { value: 'sv', label: 'Swedish' }]}
       name="Kalle Anka"

@@ -1,7 +1,9 @@
 import React from 'react';
 import { darken } from 'polished';
 import withMapProps from 'high-order-components/withMapProps';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import MdiIcon from '@mdi/react';
+import { mdiChevronDown } from '@mdi/js';
+
 import withStyle from './withStyle';
 import * as C from './Button.styled';
 
@@ -20,6 +22,12 @@ const Secondary = withStyle((theme) => ({
 const Reject = withStyle((theme) => ({
   backgroundColor: theme.ruby400,
   borderColor: darken(0.08, theme.ruby400),
+  spinnerColor: theme.white,
+}))(C.Button);
+
+const Accept = withStyle((theme) => ({
+  backgroundColor: theme.green400,
+  borderColor: darken(0.08, theme.green400),
   spinnerColor: theme.white,
 }))(C.Button);
 
@@ -48,7 +56,10 @@ const Pill = withStyle((theme) => ({
   spinnerColor: theme.black,
 }))(C.Pill);
 
-const filterPropsMapper = (props) => ({ iconRight: <ExpandMore />, ...props });
+const filterPropsMapper = (props) => ({
+  iconRight: (<MdiIcon path={mdiChevronDown} size={1.2} />),
+  ...props,
+});
 const Filter = withMapProps(filterPropsMapper)(withStyle(() => ({
   backgroundColor: '#eff3f6',
   borderColor: darken(0.1, '#eff3f6'),
@@ -77,6 +88,7 @@ const Plain = withStyle()(C.Plain);
 const Link = withStyle()(C.Link);
 
 Primary.displayName = '@asurgent.ui.Button.Primary';
+Accept.displayName = '@asurgent.ui.Button.Primary';
 Secondary.displayName = '@asurgent.ui.Button.Secondary';
 Hollow.displayName = '@asurgent.ui.Button.Hollow';
 Plain.displayName = '@asurgent.ui.Button.Plain';
@@ -92,6 +104,7 @@ export {
   Hollow,
   Plain,
   Reject,
+  Accept,
   Icon,
   Transparent,
   Link,

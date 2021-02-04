@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import * as Icons from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiChevronDown } from '@mdi/js';
 import IconAsurget from '../../icons/IconAsurget';
 import CurrentUser from '../CurrentUser';
 import DropdownMenu from '../DropdownMenu';
@@ -41,7 +42,13 @@ const CreateList = ({ shouldShow, createList, translations }) => {
     <>
       <Button.Create
         onClick={() => setCreateOpen(true)}
-        iconRight={createOpen ? <Icons.ExpandLess /> : <Icons.ExpandMore />}
+        iconRight={(
+          <MdiIcon
+            size={1.2}
+            path={mdiChevronDown}
+            rotate={createOpen ? 180 : 0}
+          />
+        )}
       >
         {translations.create}
       </Button.Create>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
+import MdiIcon from '@mdi/react';
+import { mdiChevronDown } from '@mdi/js';
 import * as C from './Accordion.styled';
 import * as Transition from '../../../Transition';
 import * as Tooltip from '../../../Tooltip';
@@ -52,7 +53,7 @@ const Accordion = ({
         isOpen={isOpen}
       >
         <Tooltip.Middle tip={t('details', 'asurgentui')}>
-          <KeyboardArrowDown fontSize="large" />
+          <MdiIcon path={mdiChevronDown} size={1.4} />
         </Tooltip.Middle>
       </C.Arrow>
       <Transition.FadeInAndOut isVisible={isOpen} timeout={80} className="content">

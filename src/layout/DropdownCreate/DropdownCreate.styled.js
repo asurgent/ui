@@ -49,13 +49,13 @@ export const MobileMenu = styled.div`
 
 export const CreateTitle = styled.div``;
 export const CreateDescription = styled.div`
-    color: ${({ theme }) => theme.gray600};
+    color: ${({ theme }) => theme.gray700};
     font-size: 1.2rem;
 `;
 
 export const CreateItem = styled.div`
     display: grid;
-    grid-template-columns: 3.2rem 1fr;
+    grid-template-columns: 4rem 1fr;
     grid-template-areas:
         "logo title"
         "logo desc";

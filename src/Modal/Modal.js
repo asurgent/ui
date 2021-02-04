@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import * as Icon from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiClose } from '@mdi/js';
 import * as C from './Modal.styled';
 import {
   modalRoot,
@@ -67,7 +68,10 @@ class Modal extends Component {
           <C.Modal fullscreen={fullscreen} transparent={transparent} style={style}>
             { !withoutHeader && (
             <C.Close onClick={onClose}>
-              <Icon.Close fontSize="large" />
+              <MdiIcon
+                size={1.2}
+                path={mdiClose}
+              />
             </C.Close>
             )}
             {title && <C.ModalTitle>{title}</C.ModalTitle>}

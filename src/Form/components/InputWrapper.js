@@ -1,16 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import i18next from 'i18next';
+import { mdiHelpCircleOutline } from '@mdi/js';
 import * as Tooltip from '../../Tooltip';
 import * as T from '../../Typography';
-
-import {
-  Main,
-  Wrapper,
-  Header,
-  Error,
-  TooltipIcon,
-} from './InputWrapper.styled';
+import * as C from './InputWrapper.styled';
 
 const propTyps = {
   tooltip: PropTypes.string,
@@ -69,19 +63,19 @@ const InputWrapper = (props) => {
   } = props;
 
   return (
-    <Main type={type} className={className} style={style}>
+    <C.Main type={type} className={className} style={style}>
       { noLabel === false && (
-        <Header>
+        <C.Header>
           <T.P.Small capitalize bold style={{ margin: 0 }}>{label}</T.P.Small>
           { tooltip && (
             <Tooltip.Primary tip={tooltip} position={tooltipPosition}>
-              <TooltipIcon />
+              <C.TooltipIcon path={mdiHelpCircleOutline} size={1} />
             </Tooltip.Primary>
           )}
-        </Header>
+        </C.Header>
       )}
       { description && <T.P.Main style={{ margin: 0 }}>{description}</T.P.Main>}
-      <Wrapper
+      <C.Wrapper
         style={wrapperStyle}
         disabled={disabled()}
         hasError={showContainerError && Boolean(error)}
@@ -89,17 +83,17 @@ const InputWrapper = (props) => {
         className={classNameWrapper}
       >
         {children}
-      </Wrapper>
+      </C.Wrapper>
       {showContainerError && error && (
-        <Error>
+        <C.Error>
           {
             i18next.exists(`${error.translationKey}`)
               ? i18next.t(error.translationKey)
               : error.message
           }
-        </Error>
+        </C.Error>
       )}
-    </Main>
+    </C.Main>
   );
 };
 

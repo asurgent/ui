@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import HelpOutline from '@material-ui/icons/HelpOutline';
+import MdiIcon from '@mdi/react';
 
 export const Main = styled.div`
   width: 100%;
@@ -101,7 +101,7 @@ export const Header = styled.div`
   justify-content: space-between;
 `;
 
-export const TooltipIcon = styled(HelpOutline)`
+export const TooltipIcon = styled(MdiIcon)`
   color: ${({ theme }) => theme.gray700};
   cursor: pointer;
 `;

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Icons from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiCheck, mdiCancel } from '@mdi/js';
 import * as C from './FilterItem.styled';
 import translation from '../TableFilter.translation';
 import useFilterItemHook from '../useFilterItemHook';
@@ -40,8 +41,8 @@ const FilterItem = ({
     >
       {!filterItem.label && (
         <C.Active>
-          {hook.isIncluded() && <Icons.Check />}
-          {hook.isExcluded() && <Icons.Block />}
+          {hook.isIncluded() && <MdiIcon size={1.2} path={mdiCheck} />}
+          {hook.isExcluded() && <MdiIcon size={1.2} path={mdiCancel} />}
         </C.Active>
       )}
       {!filterItem.label && (

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Icons from '@material-ui/icons';
+import MdiIcon from '@mdi/react';
+import { mdiCloseCircleOutline } from '@mdi/js';
 import * as Button from '../../../Button';
 import * as C from './TableFilter.styled';
 import FilterCategory from './FilterCategory';
@@ -46,7 +47,10 @@ const TableFilter = ({ filterHook, tableHook, className }) => (
     </C.Filters>
     {filterHook.hasActiveFilter() && (
       <Button.Plain onClick={() => filterHook.clearFilter()} disabled={tableHook.isLoading}>
-        <Icons.HighlightOff />
+        <MdiIcon
+          size={1.2}
+          path={mdiCloseCircleOutline}
+        />
         {` ${t('clear', 'asurgentui')}`}
       </Button.Plain>
     )}
