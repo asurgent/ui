@@ -42,11 +42,11 @@ const Single = forwardRef((props, ref) => {
 
   useEffect(() => {
     const mapOptionValues = ({ values }) => Object.keys(options).reduce((acc, key) => {
-      const val = values[key];
+      const val = values[key] || null;
       return { ...acc, [key]: val };
     }, {});
 
-    const val = mapOptionValues({ values: props.value }) || {};
+    const val = mapOptionValues({ values: props.value || {} });
     setValue(val);
   }, [props.value, options]);
 
