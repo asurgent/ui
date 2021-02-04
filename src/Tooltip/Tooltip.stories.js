@@ -2,6 +2,7 @@ import React from 'react';
 import {
   withKnobs,
 } from '@storybook/addon-knobs';
+import styled from 'styled-components';
 import * as Tooltip from './index';
 import * as T from '../Typography';
 import * as Tag from '../Tag';
@@ -17,11 +18,15 @@ Some paragraphy text text text text text text text.
 
 Some other text.
 `;
+const StoryContent = styled.div`
+  * {font-size: 1.2rem!important;}
+`;
 
 const tags = Array.from({ length: 10 }, (_, i) => `Tag-${i}`);
 const TooltipHeader = () => (<T.P.Main bold style={{ marginTop: '0' }}>Header</T.P.Main>);
+
 const TooltipContent = () => (
-  <>
+  <StoryContent>
     <T.Title.H3>asurgent-cloudops-streamanalytics-prod</T.Title.H3>
     <List.Primary
       compact
@@ -33,7 +38,7 @@ const TooltipContent = () => (
         { label: 'Id', value: '4A7B1D85F2CB1AB4E006E8BBEEA6D4ADBC55C9A6' },
       ]}
     />
-  </>
+  </StoryContent>
 );
 const TooltipFooter = () => <Tag.Collection tags={tags} maxTags={2} />;
 

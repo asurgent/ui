@@ -78,7 +78,7 @@ const Tooltip = ({
           {children}
         </C.TooltipParent>
 
-        { show === true && createPortal(
+        {show === true && createPortal(
           <C.TooltipCard className={position} position={position} style={coordinates}>
             {header && (
             <C.Header>
