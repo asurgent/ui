@@ -35,7 +35,7 @@ const propTypes = {
 
 const defaultProps = {
   tip: '',
-  position: positions.bottom,
+  position: positions.middle,
   children: null,
   isCard: false,
   header: null,

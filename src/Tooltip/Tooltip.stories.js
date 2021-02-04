@@ -55,7 +55,7 @@ export const card = () => (
 export const bottomMiddle = () => (
   <div style={center}>
     <Tooltip.Middle tip={someFormattedToolTip}>
-      <div style={{ background: 'red', color: 'white  ' }}>
+      <div>
         <h1 style={{ display: 'inline-block' }}>Hover me</h1>
       </div>
     </Tooltip.Middle>
