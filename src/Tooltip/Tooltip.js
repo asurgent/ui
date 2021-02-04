@@ -15,6 +15,7 @@ const propTypes = {
   ]),
   tip: PropTypes.string,
   position: PropTypes.string,
+  isCard: PropTypes.bool,
   header: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
@@ -34,15 +35,16 @@ const propTypes = {
 
 const defaultProps = {
   tip: '',
-  position: positions.middle,
+  position: positions.bottom,
   children: null,
+  isCard: false,
   header: null,
   content: null,
   footer: null,
 };
 
 const Tooltip = ({
-  position, tip, header, content, footer, children,
+  position, tip, isCard, header, content, footer, children,
 }) => {
   const [show, setShow] = useState(false);
   const [coordinates, setCoordinates] = useState({ left: 0, top: 0 });
@@ -65,7 +67,7 @@ const Tooltip = ({
     handleMouseLeave();
   }, [children]);
 
-  if (header || footer || content) {
+  if (isCard) {
     return (
       <>
         <C.TooltipParent
@@ -77,7 +79,7 @@ const Tooltip = ({
         </C.TooltipParent>
 
         { show === true && createPortal(
-          <C.TooltipCard position={position} style={coordinates}>
+          <C.TooltipCard className={position} position={position} style={coordinates}>
             {header && (
             <C.Header>
               {header}
@@ -85,11 +87,7 @@ const Tooltip = ({
             </C.Header>
             )}
 
-            {content && (
-              <C.Content>
-                {content}
-              </C.Content>
-            )}
+            {content && (<C.Content>{content}</C.Content>)}
 
             {footer && (
             <C.Footer>

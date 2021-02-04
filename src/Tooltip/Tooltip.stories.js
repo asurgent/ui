@@ -19,7 +19,7 @@ Some other text.
 `;
 
 const tags = Array.from({ length: 10 }, (_, i) => `Tag-${i}`);
-const TooltipHeader = () => (<><T.P.Main>header</T.P.Main></>);
+const TooltipHeader = () => (<T.P.Main bold style={{ marginTop: '0' }}>Header</T.P.Main>);
 const TooltipContent = () => (
   <>
     <T.Title.H3>asurgent-cloudops-streamanalytics-prod</T.Title.H3>
@@ -39,7 +39,8 @@ const TooltipFooter = () => <Tag.Collection tags={tags} maxTags={2} />;
 
 export const card = () => (
   <div style={center}>
-    <Tooltip.Card
+    <Tooltip.Top
+      isCard
       header={<TooltipHeader />}
       content={<TooltipContent />}
       footer={<TooltipFooter />}
@@ -47,14 +48,14 @@ export const card = () => (
       <div>
         <h1 style={{ display: 'inline-block' }}>Hover asdf</h1>
       </div>
-    </Tooltip.Card>
+    </Tooltip.Top>
   </div>
 );
 
 export const bottomMiddle = () => (
   <div style={center}>
     <Tooltip.Middle tip={someFormattedToolTip}>
-      <div>
+      <div style={{ background: 'red', color: 'white  ' }}>
         <h1 style={{ display: 'inline-block' }}>Hover me</h1>
       </div>
     </Tooltip.Middle>
