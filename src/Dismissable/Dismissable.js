@@ -53,7 +53,7 @@ export const DismissablePrimary = ({
           <C.Dismiss onClick={() => handleDismiss()}>
             <MdiIcon
               path={mdiClose}
-              size={1.6}
+              size={1.2}
             />
           </C.Dismiss>
         </C.Header>
@@ -98,7 +98,7 @@ export const DismissablePlain = ({
           <C.Dismiss onClick={() => handleDismiss()}>
             <MdiIcon
               path={mdiClose}
-              size={1.6}
+              size={1.2}
             />
           </C.Dismiss>
         </C.Header>

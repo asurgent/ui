@@ -69,7 +69,7 @@ class Modal extends Component {
             { !withoutHeader && (
             <C.Close onClick={onClose}>
               <MdiIcon
-                size={1.4}
+                size={1.2}
                 path={mdiClose}
               />
             </C.Close>

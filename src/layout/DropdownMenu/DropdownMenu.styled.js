@@ -54,7 +54,7 @@ export const CreateTitle = styled.div``;
 
 export const CreateItem = styled.div`
     display: grid;
-    grid-template-columns: 2.1875rem 1fr;
+    grid-template-columns: 2.1rem 1fr;
     grid-column-gap: 1.6rem;
     grid-template-areas:
         "logo title"
@@ -70,6 +70,11 @@ export const CreateItem = styled.div`
         grid-area: logo;
         align-self: center;
         font-weight: 500;
+    }
+    .exit-icon {
+        @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
+            margin-top: 1px;
+        }
     }
     ${CreateTitle} {
         grid-area: title;

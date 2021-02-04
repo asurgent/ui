@@ -94,6 +94,9 @@ export const Spacer = styled.span`
     align-items: center;
     margin-left: ${({ left }) => (left ? '.8rem' : 0)};
     margin-right: ${({ right }) => (right ? '.8rem' : 0)};
+    svg {
+        margin-top: -1px;
+    }
 `;
 
 export const Plain = styled.div`
@@ -123,11 +126,12 @@ export const Plain = styled.div`
 
 export const Filter = styled(Button)`
     padding: .8rem;
-    background-color: transparent;
+    background-color: ${({ theme }) => theme.gray50};
     color: ${({ theme }) => theme.black};
-    border-color: ${({ theme }) => theme.gray100};
+    border-color: transparent;
     position: relative;
     transition: 0.05s;
+    border: none;
 
     button {
         cursor: pointer;
@@ -139,7 +143,6 @@ export const Filter = styled(Button)`
     }
 
     &:hover {
-      border-color: ${({ theme }) => theme.gray100};
       background: ${({ theme }) => theme.gray100};
       color: ${({ theme }) => darken(0.02, (theme.textColor))};
     }

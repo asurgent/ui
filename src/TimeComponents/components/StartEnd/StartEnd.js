@@ -67,7 +67,7 @@ const StartEnd = ({
       <C.Dates>
         <C.Container marginRight>
           <C.TextSmall withBottomMargin>{t('started', 'asurgentui')}</C.TextSmall>
-          <MdiIcon size={1.6} path={mdiPlay} color={theme.blue900} />
+          <MdiIcon size={1.4} path={mdiPlay} color={theme.blue900} />
           <C.TextNormal>{newMoment(dates.from).format('HH:mm')}</C.TextNormal>
           <C.TextSmall withBottomMargin>{newMoment(dates.from).format('YYYY-MM-DD')}</C.TextSmall>
         </C.Container>
@@ -82,7 +82,7 @@ const StartEnd = ({
 
         <C.Container marginLeft>
           <C.TextSmall withBottomMargin>{t('ends', 'asurgentui')}</C.TextSmall>
-          <MdiIcon size={1.6} path={mdiStop} color={theme.blue900} />
+          <MdiIcon size={1.4} path={mdiStop} color={theme.blue900} />
           <C.TextNormal>{newMoment(dates.to).format('HH:mm')}</C.TextNormal>
           <C.TextSmall withBottomMargin>{newMoment(dates.to).format('YYYY-MM-DD')}</C.TextSmall>
         </C.Container>

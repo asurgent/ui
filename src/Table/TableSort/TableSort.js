@@ -60,7 +60,7 @@ const TableSort = (props) => {
             disabled={tableHook.isLoading}
             onClick={() => sortHook.toggleCurrentSortDirection()}
             icon={
-              <MdiIcon size={1.4} path={direction ? mdiArrowDown : mdiArrowUp} />
+              <MdiIcon size={1.2} path={direction ? mdiArrowDown : mdiArrowUp} />
             }
           />
         </SortWrapper>

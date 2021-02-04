@@ -17,7 +17,7 @@ const FilterItem = ({
 }) => (
   <C.FilterItem onClick={() => onChange(filterItem)}>
     <C.Active>
-      {filterItem.selected && <MdiIcon path={mdiCheck} size={1.4} />}
+      {filterItem.selected && <MdiIcon path={mdiCheck} size={1.2} />}
     </C.Active>
     <C.FilterLabel>
       { filterItem.label }

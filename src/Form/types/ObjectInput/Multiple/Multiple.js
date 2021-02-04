@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import MdiIcon from '@mdi/react';
-import { mdiCancel, mdiPlus } from '@mdi/js';
+import { mdiTrashCan, mdiPlus } from '@mdi/js';
 
 import * as C from '../ObjectInput.styled';
 import * as Button from '../../../../Button';
@@ -149,7 +149,7 @@ const Multiple = forwardRef((props, ref) => {
           })}
           <C.ButtonContainer>
             <Button.Reject
-              iconRight={<MdiIcon path={mdiCancel} size={1.4} />}
+              iconLeft={<MdiIcon path={mdiTrashCan} size={1.2} />}
               onClick={() => handleRemove({ index })}
             >
               {t('remove', 'asurgentui')}
@@ -182,7 +182,7 @@ const Multiple = forwardRef((props, ref) => {
             ))}
           <C.ButtonContainer>
             <Button.Hollow
-              iconRight={<MdiIcon path={mdiPlus} size={1.4} />}
+              iconLeft={<MdiIcon path={mdiPlus} size={1.2} />}
               disabled={!canAdd}
               onClick={handleAdd}
             >
