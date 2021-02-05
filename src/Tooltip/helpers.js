@@ -17,7 +17,7 @@ export const getCoordinates = ({ position, ref }) => {
     return { left: x - spacing, top: top + (height / 2) };
   }
   if (position === positions.top) {
-    return { left: x + (width / 2), bottom: top + height, top: 'unset' };
+    return { left: x + (width / 2), bottom: top + height + spacing, top: 'unset' };
   }
   // Middle (bottom)
   return { left: x + (width / 2), top: top + height + spacing };
