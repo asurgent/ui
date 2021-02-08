@@ -42,4 +42,7 @@ export const Row = styled.div`
     display: flex;
     grid-column: 1/-1;
     border-bottom: 1px solid ${({ theme }) => theme.gray300};
+    &:last-of-type {
+        border-bottom: none;
+    }
 `;

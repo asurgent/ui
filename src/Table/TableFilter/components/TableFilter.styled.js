@@ -16,13 +16,15 @@ export const Wrapper = styled.div`
 
     ${Button.Plain} {
         grid-area: clear;
+        align-self: flex-start;
         span {
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             font-size: 1.2rem;
+            line-height: 1.8rem;
             text-transform: uppercase;
-            padding: .8rem;
+            padding: .6rem .8rem;
             border-radius: 3px;
             transition: .03s;
 

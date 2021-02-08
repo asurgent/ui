@@ -82,7 +82,7 @@ const DropdownMenu = ({
               <U.DesktopMenuFooter>
                 <Button.Plain onClick={onLogout}>
                   <U.CreateItem>
-                    <MdiIcon size={1.2} path={mdiExitToApp} className="exit-icon" />
+                    <MdiIcon size={1.4} path={mdiExitToApp} className="exit-icon" />
                     <U.CreateTitle>{translations.logout || 'Sign out'}</U.CreateTitle>
                   </U.CreateItem>
                 </Button.Plain>
@@ -97,7 +97,7 @@ const DropdownMenu = ({
               <Button.Icon
                 className="close"
                 onClick={onClose}
-                icon={<MdiIcon size={1.2} path={mdiClose} />}
+                icon={<MdiIcon size={1.4} path={mdiClose} />}
               />
               <div className="user">
                 <UserImage.Circle

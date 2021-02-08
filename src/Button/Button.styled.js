@@ -125,7 +125,7 @@ export const Plain = styled.div`
 `;
 
 export const Filter = styled(Button)`
-    padding: .8rem;
+    padding: .6rem .8rem;
     background-color: ${({ theme }) => theme.gray50};
     color: ${({ theme }) => theme.black};
     border-color: transparent;
