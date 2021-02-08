@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import * as Button from '../../../Button/Button.styled';
 
 export const Wrapper = styled.div`
+    z-index: 1;
     display: grid;
     grid-template-columns: 1fr auto;
     grid-column-gap: 0;

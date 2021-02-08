@@ -78,10 +78,9 @@ export const Actionbar = styled.div`
 export const Overlay = styled.div`
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 2;
   position: fixed;
   background: rgba(0, 0, 0, 0.3);
-
   overflow: hidden;
   height: 100vh;
   width: 100vw;
