@@ -9,6 +9,7 @@ import DropdownCreate from '../DropdownCreate';
 import * as Button from '../../Button';
 import * as C from './Layout.styled';
 import Navigation from '../Navigation';
+import translation from './Layout.translation';
 
 const propTypes = {
   provider: PropTypes.instanceOf(Object).isRequired,
@@ -21,23 +22,21 @@ const propTypes = {
 const defaultProps = {};
 
 const createListPropTypes = {
-  shouldShow: PropTypes.bool,
   createList: PropTypes.instanceOf(Array),
-  translations: PropTypes.instanceOf(Object),
 };
 
 const createListDefaultProps = {
-  shouldShow: true,
   createList: [],
-  translations: null,
 };
 
-const CreateList = ({ shouldShow, createList, translations }) => {
+const CreateList = ({ createList }) => {
+  const { t } = translation;
   const [createOpen, setCreateOpen] = useState(false);
 
-  if (!shouldShow) {
+  if (createList && createList.length === 0) {
     return null;
   }
+
   return (
     <>
       <Button.Create
@@ -50,7 +49,7 @@ const CreateList = ({ shouldShow, createList, translations }) => {
           />
         )}
       >
-        {translations.create}
+        { t('create', 'asurgentui') }
       </Button.Create>
       <DropdownCreate
         onClose={() => setCreateOpen(false)}
@@ -69,8 +68,11 @@ const Layout = ({ provider, children }) => {
   const languages = provider.getAvaliableLanguages();
   const selectedLanguage = provider.getCurrentLanguage();
   const {
-    name, email, imageLink, isAdmin,
+    name,
+    email,
+    imageLink,
   } = provider.getUser();
+
   const customerName = provider.getCustomerName();
 
   return (
@@ -94,11 +96,7 @@ const Layout = ({ provider, children }) => {
         <C.Logo>
           <IconAsurget />
         </C.Logo>
-        <CreateList
-          shouldShow={isAdmin}
-          createList={provider.getCreateList()}
-          translations={provider.getMenuTranslations()}
-        />
+        <CreateList createList={provider.getCreateList()} />
         <CurrentUser
           name={name}
           email={email}
@@ -117,7 +115,6 @@ const Layout = ({ provider, children }) => {
               navigationList={navigation}
               onNavigate={onClose}
               selectedLanguage={selectedLanguage}
-              translations={provider.getMenuTranslations()}
               onChangeLanguage={provider.onChangeLanguage}
               onLogout={provider.onLogout}
             />

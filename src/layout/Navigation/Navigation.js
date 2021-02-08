@@ -1,6 +1,7 @@
 import React from 'react';
 import withTheme from 'high-order-components/withTheme';
 import PropTypes from 'prop-types';
+import MdiIcon from '@mdi/react';
 import * as C from './Navigation.styled';
 import * as Tooltip from '../../Tooltip';
 
@@ -32,7 +33,7 @@ const Navigation = ({
       }) => (
         <Tooltip.Right tip={tooltip} key={tooltip}>
           <C.NavigationItem to={link} onClick={onNavigate} isActive={isActive}>
-            {icon}
+            <MdiIcon path={icon} size={1.4} />
             {' '}
             {withLabel && (<span>{label}</span>)}
           </C.NavigationItem>

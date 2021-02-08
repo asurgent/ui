@@ -1,6 +1,6 @@
 import React from 'react';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
-import Permission, { Context } from './index';
+import Permission, { PermissionContext } from './index';
 
 export default {
   title: 'UI Components|Permission',
@@ -33,7 +33,7 @@ export const withPermissions = () => {
   }
 
   return (
-    <Context value={permissionsFromUserContext}>
+    <PermissionContext value={permissionsFromUserContext}>
 
       <Permission withFeature={['@feature.ticket']}>
         {() => <h2>Tickets</h2>}
@@ -62,6 +62,6 @@ export const withPermissions = () => {
         )}
       </Permission>
 
-    </Context>
+    </PermissionContext>
   );
 };

@@ -33,7 +33,10 @@ const getFeatures = (permissions) => Object.values(permissions)
 
 const getRoles = (permissions) => Object.keys(permissions);
 
-export const shouldRender = (roles, features, withRoles, withFeature) => {
+export const shouldGrantWithPermissions = (permissions, withRoles, withFeature) => {
+  const features = getFeatures(permissions);
+  const roles = getRoles(permissions);
+
   const hasRoles = Array.isArray(withRoles) && withRoles.length > 0;
   const hasFeatures = Array.isArray(withFeature) && withFeature.length > 0;
 
@@ -73,10 +76,9 @@ const Permission = ({
   withFeature,
 }) => {
   const permissions = useContext(PermissionContext);
-  const features = useMemo(() => getFeatures(permissions), [permissions]);
-  const roles = useMemo(() => getRoles(permissions), [permissions]);
-  const render = useMemo(() => shouldRender(roles, features, withRoles, withFeature),
-    [features, roles, withFeature, withRoles]);
+  const render = useMemo(() => shouldGrantWithPermissions(permissions, withRoles, withFeature),
+
+    [permissions, withFeature, withRoles]);
   if (render) {
     const renderChildren = () => (typeof children === 'function' ? children() : children);
     return renderChildren();
