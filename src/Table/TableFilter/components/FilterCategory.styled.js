@@ -10,7 +10,6 @@ export const FilterWrapper = styled.div`
         width: 100%;
         border-radius: 0 0 3px 3px;
         background-color: ${({ active }) => (active ? ({ theme }) => theme.blue800 : 'transparent')};
-        z-index: 1;
     }
 `;
 
@@ -62,7 +61,7 @@ export const ClickShield = styled.div`
     right: 0;
     width: 100%;
     height: 100%;
-    z-index: 2;
+    z-index: 1;
     display: ${({ isVisible }) => (isVisible ? 'block' : 'none')}
 `;
 
