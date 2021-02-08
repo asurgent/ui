@@ -8,7 +8,20 @@ export const Omnibar = styled.div`
     align-items: center;
     justify-content: space-evenly;
     padding: .8rem;
-    z-index: 1;
+    position: relative;
+
+    &:before {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        height: 5px;
+        width: 100%;
+        background: black;
+        overflow: visible;
+        background: rgb(2,0,36);
+        background: linear-gradient( 180deg, rgba(2,0,36,0.2) 0%, rgba(0,0,0,0) 100%);
+        z-index: 1;
+    }
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         padding: 1.6rem;
