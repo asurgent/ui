@@ -282,7 +282,7 @@ const Squares = ({
   return (
     <>
       <C.Months ref={monthTextRef} />
-      <C.Weekdays ref={weekdayRef} />
+      <C.Weekdays ref={weekdayRef} style={{ transform: `translateY(${MONTHS_HEIGHT}px)` }} />
       <C.Squares id="squares" ref={squareRef} style={{ transform: `translate(${WEEKDAYS_WIDTH}px, ${MONTHS_HEIGHT}px)` }}>
         <g id="days" />
         <g id="today" />

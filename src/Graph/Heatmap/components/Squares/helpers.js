@@ -56,14 +56,17 @@ export const addMonthText = ({
 };
 
 export const addWeekdays = ({
-  ref, cellSize, cellGap, monthsHeight = 25,
+  ref, cellSize, cellGap,
 }) => {
   const dayText = d3.select(ref);
   dayText
     .selectAll('text')
     .data(d3.range(7).map((i) => new Date(new Date().getFullYear(), 0, i)))
     .join('text')
-    .attr('y', (d) => (d.getUTCDay() + 0.5) * cellSize + cellGap + monthsHeight)
-    .attr('dy', '0.31em')
+    .attr('y', (d) => {
+      const squareOffset = cellSize + cellGap;
+      const day = d.getUTCDay();
+      return day * squareOffset + (squareOffset / 2);
+    })
     .text((d) => t(`day${new Date(d).getUTCDay()}`, 'asurgentui'));
 };
