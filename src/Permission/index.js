@@ -1,11 +1,12 @@
-import Permission, { PermissionContext, shouldGrantWithPermissions } from './Permission';
+import Permission, { PermissionContext } from './Permission';
 import usePermission from './usePermissionHook';
+import { hasPermission } from './helpers';
 
 const Context = PermissionContext.Provider;
 
-export default Permission;
 export {
-  Context as PermissionContext,
-  shouldGrantWithPermissions,
+  Permission as Render,
+  Context,
+  hasPermission,
   usePermission,
 };

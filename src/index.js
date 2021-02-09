@@ -27,7 +27,7 @@ import * as Typography from './Typography';
 import * as Layout from './layout';
 import * as Toasts from './Toasts';
 import * as Selector from './Selector';
-import Permission, { shouldGrantWithPermissions, PermissionContext, usePermission } from './Permission';
+import * as Permission from './Permission';
 import ThemeVaraiables from '../lib/style/theme';
 
 export {
@@ -60,7 +60,4 @@ export {
   Selector,
   Toasts,
   Permission,
-  PermissionContext,
-  usePermission,
-  shouldGrantWithPermissions,
 };
