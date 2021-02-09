@@ -140,6 +140,8 @@ export const heatmap = () => {
         cellGap={number('Cell gap', 6)}
         borderColor="#133A5D"
         showLegend={() => true}
+        primaryLabel="fails"
+        secondaryLabel="successes"
         startDate={text('Start date', moment().subtract(numberOfDays, 'days'))}
         endDate={text('End date', moment())}
       />

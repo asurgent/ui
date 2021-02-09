@@ -18,7 +18,8 @@ const { t } = translation;
 const propTypes = {
   primaryData: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   secondaryData: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
-  valueLabel: PropTypes.string,
+  primaryLabel: PropTypes.string,
+  secondaryLabel: PropTypes.string,
   cellSize: PropTypes.number,
   cellGap: PropTypes.number,
   emptyColor: PropTypes.string,
@@ -38,7 +39,8 @@ const propTypes = {
 const defaultProps = {
   primaryData: [],
   secondaryData: [],
-  valueLabel: 'value',
+  primaryLabel: 'something',
+  secondaryLabel: 'something else',
   cellSize: 18,
   cellGap: 2,
   emptyColor: '#F2F2F2',
@@ -50,12 +52,14 @@ const defaultProps = {
 const mouseover = (tooltip) => tooltip.style('opacity', 1);
 const mouseleave = (tooltip) => tooltip.style('opacity', 0);
 const mousemove = ({
-  date, primValue, secValue, valueLabel, cellSize,
+  date, primValue, secValue, primaryLabel, secondaryLabel, cellSize,
 }) => {
   const tooltip = d3.select('#tooltip');
   const { x, y } = d3.event;
   const { width, height } = tooltip.node().getBoundingClientRect();
-  const valueText = getValueText({ val1: primValue, val2: secValue, valueLabel });
+  const valueText = getValueText({
+    val1: primValue, val2: secValue, primaryLabel, secondaryLabel,
+  });
 
   tooltip
     .html(`${valueText} ${t('on', 'asurgentui')} ${moment(date).format('YYYY-MM-DD')}`)
@@ -129,7 +133,8 @@ const placeToday = (
   emptyColor,
   legendCategories,
   tooltip,
-  valueLabel,
+  primaryLabel,
+  secondaryLabel,
 ) => {
   const g = d3.select('#today');
   const today = mergedData.find(({ date }) => isToday(date));
@@ -141,7 +146,12 @@ const placeToday = (
     ${getY(today.date, cellSize, cellGap)}
   )`)
     .on('mousemove', () => mousemove({
-      date, primValue, secValue, valueLabel, cellSize,
+      date,
+      primValue,
+      secValue,
+      primaryLabel,
+      secondaryLabel,
+      cellSize,
     }))
     .on('mouseover', () => mouseover(tooltip))
     .on('mouseleave', () => mouseleave(tooltip));
@@ -169,7 +179,8 @@ const Squares = ({
   secondaryData,
   startDate,
   endDate,
-  valueLabel,
+  primaryLabel,
+  secondaryLabel,
   cellSize,
   cellGap,
   emptyColor,
@@ -217,7 +228,8 @@ const Squares = ({
         emptyColor,
         legendCategories,
         tooltip,
-        valueLabel);
+        primaryLabel,
+        secondaryLabel);
     }
   }, [
     mergedData,
@@ -227,7 +239,8 @@ const Squares = ({
     legendCategories,
     startDate,
     tooltip,
-    valueLabel,
+    primaryLabel,
+    secondaryLabel,
     daysGroup]);
 
   // Placement of squares
@@ -248,11 +261,16 @@ const Squares = ({
   useEffect(() => {
     squares
       .on('mousemove', ({ date, primValue, secValue }) => mousemove({
-        date, primValue, secValue, valueLabel, cellSize,
+        date,
+        primValue,
+        secValue,
+        primaryLabel,
+        secondaryLabel,
+        cellSize,
       }))
       .on('mouseover', () => mouseover(tooltip))
       .on('mouseleave', () => mouseleave(tooltip));
-  }, [cellSize, squares, tooltip, valueLabel]);
+  }, [cellSize, primaryLabel, secondaryLabel, squares, tooltip]);
 
   // Add weekdays
   useEffect(() => {

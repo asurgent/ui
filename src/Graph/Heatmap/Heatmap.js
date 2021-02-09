@@ -28,7 +28,8 @@ const propTypes = {
   emptyColor: PropTypes.string,
   theme: PropTypes.instanceOf(Object),
   cellGap: PropTypes.number,
-  valueLabel: PropTypes.string,
+  primaryLabel: PropTypes.string,
+  secondaryLabel: PropTypes.string,
   showLegend: PropTypes.func,
   startDate: PropTypes.oneOfType([
     PropTypes.string,
@@ -50,7 +51,8 @@ const defaultProps = {
   emptyColor: '#F2F2F2',
   theme: {},
   cellGap: 2,
-  valueLabel: 'something',
+  primaryLabel: 'something',
+  secondaryLabel: 'something else',
   showLegend: () => true,
   startDate: moment().startOf('year'),
   endDate: moment().endOf('year'),
@@ -82,7 +84,8 @@ const Heatmap = ({
   color,
   emptyColor,
   cellGap,
-  valueLabel,
+  primaryLabel,
+  secondaryLabel,
   showLegend,
   startDate,
   endDate,
@@ -140,7 +143,8 @@ const Heatmap = ({
             secondaryData={secondaryData}
             startDate={startDate}
             endDate={endDate}
-            valueLabel={valueLabel}
+            primaryLabel={primaryLabel}
+            secondaryLabel={secondaryLabel}
             cellGap={cellGap}
             emptyColor={emptyColor}
             legendCategories={legendCategories}

@@ -24,17 +24,21 @@ export const getY = (date, cellSize, cellGap) => {
   return y;
 };
 
-export const getValueText = ({ val1, val2, valueLabel }) => {
-  if (val1 === undefined && val2 === undefined) {
+const nullOrUndefined = (val) => val === undefined || val === null;
+
+export const getValueText = ({
+  val1, val2, primaryLabel, secondaryLabel,
+}) => {
+  if (nullOrUndefined(val1) && nullOrUndefined(val2)) {
     return t('noData', 'asurgentui');
   }
-  if (val1 !== undefined && val2 !== undefined) {
-    return `${val1} ${valueLabel} of ${val1 + val2}`;
+  if (!nullOrUndefined(val1) && !nullOrUndefined(val2)) {
+    return `${val1} ${primaryLabel} ${t('of', 'asurgentui')} ${val1 + val2}`;
   }
-  if (val1 !== undefined) {
-    return `${val1} ${valueLabel}`;
+  if (!nullOrUndefined(val1)) {
+    return `${val1} ${primaryLabel}`;
   }
-  return `${val2} ${valueLabel}`;
+  return `${val2} ${secondaryLabel}`;
 };
 
 export const addMonthText = ({
