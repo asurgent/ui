@@ -119,7 +119,7 @@ export const lineGraph = () => (
 );
 
 export const heatmap = () => {
-  const numberOfDays = 200;
+  const numberOfDays = 365;
   const primaryData = heatData(numberOfDays);
   const secondaryData = heatData(numberOfDays);
 

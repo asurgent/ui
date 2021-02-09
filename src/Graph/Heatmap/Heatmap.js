@@ -128,7 +128,7 @@ const Heatmap = ({
   }, [cellGap, svgGroupWidth, weeks]);
 
   const monthHeight = 20;
-  const legendHeight = cellSize * 2;
+  const legendHeight = cellSize + 15; // 15 => text height
   const svgHeight = ((cellSize + cellGap) * 7) + monthHeight + legendHeight;
 
   return (
