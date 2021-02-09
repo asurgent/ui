@@ -7,15 +7,13 @@ import * as C from './Legend.styled';
 const propTypes = {
   legendCategories: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   cellSize: PropTypes.number,
-  cellPadding: PropTypes.number,
-  cellRadius: PropTypes.number,
+  cellGap: PropTypes.number,
   steps: PropTypes.number,
 };
 const defaultProps = {
   legendCategories: null,
   cellSize: 18,
-  cellPadding: 2,
-  cellRadius: 1,
+  cellGap: 1,
   steps: 5,
 };
 
@@ -34,12 +32,11 @@ const centerOfLastSquare = () => {
 const Legend = ({
   legendCategories,
   cellSize,
-  cellPadding,
-  cellRadius,
+  cellGap,
   steps,
 }) => {
   const legendRef = useRef(null);
-  const widthOfSquares = -(steps * cellSize);
+  const widthOfSquares = -(steps * (cellSize + cellGap));
   useEffect(() => {
     if (legendRef.current) {
       const legendContainer = d3.select(legendRef.current);
@@ -47,21 +44,18 @@ const Legend = ({
       legendContainer
         .attr(
           'transform',
-          `translate(${centerOfLastSquare() - 20}, ${(cellSize * 7) + 30})`,
-          // 20: appr width of less-text, 30: top-margin
+          `translate(${centerOfLastSquare() - 20}, ${((cellSize + cellGap) * 7) + 30})`,
         );
       legendContainer
         .selectAll('rect')
         .data(legendCategories)
         .join('rect')
         .attr('fill', (d) => d.color)
-        .attr('x', (_, i) => widthOfSquares - 10 + (cellSize * i))
-        .attr('width', cellSize - cellPadding)
-        .attr('height', cellSize - cellPadding)
-        .attr('rx', cellRadius)
-        .attr('ry', cellRadius);
+        .attr('x', (_, i) => widthOfSquares - 10 + ((cellSize + cellGap) * i))
+        .attr('width', cellSize)
+        .attr('height', cellSize);
     }
-  }, [cellPadding, cellRadius, cellSize, legendCategories, steps, widthOfSquares]);
+  }, [cellGap, cellSize, legendCategories, steps, widthOfSquares]);
 
   return (
     <C.Legend ref={legendRef}>

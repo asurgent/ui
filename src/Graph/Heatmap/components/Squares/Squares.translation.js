@@ -27,6 +27,8 @@ export default addTranslation({
     month11: 'Dec',
 
     noData: 'Ingen data',
+
+    of: 'av',
   },
   en: {
     on: 'on',
@@ -53,5 +55,7 @@ export default addTranslation({
     month11: 'Dec',
 
     noData: 'No data',
+
+    of: 'of',
   },
 });
