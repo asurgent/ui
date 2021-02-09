@@ -8,13 +8,10 @@ import { withTheme } from 'styled-components';
 import * as C from './Squares.styled';
 import translation from './Squares.translation';
 import { getColor } from '../../helpers';
+import { STROKE_WIDTH, WEEKDAYS_WIDTH, MONTHS_HEIGHT } from '../../Constants';
 import {
   addMonthText, addWeekdays, isToday, getY, getX, getValueText,
 } from './helpers';
-
-const STROKE_WIDTH = 2;
-const WEEKDAYS_WIDTH = 30;
-const MONTHS_HEIGHT = 25;
 
 const { t } = translation;
 
@@ -247,7 +244,7 @@ const Squares = ({
     }
   }, [emptyColor, legendCategories, cellSize, squares, daysGroup]);
 
-  // Move squares
+  // Mouse events
   useEffect(() => {
     squares
       .on('mousemove', ({ date, primValue, secValue }) => mousemove({

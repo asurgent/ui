@@ -5,12 +5,10 @@ import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as d3 from 'd3';
-// import translation from './Heatmap.translation';
 import * as C from './Heatmap.styled';
 import Squares from './components/Squares';
 import Legend from './components/Legend';
-
-// const { t } = translation;
+import { WEEKDAYS_WIDTH } from './Constants';
 
 const propTypes = {
   primaryData: PropTypes.arrayOf(
@@ -126,11 +124,11 @@ const Heatmap = ({
 
   const cellSize = useMemo(() => {
     const cellGapOffset = weeks * cellGap;
-    return (svgGroupWidth - cellGapOffset) / weeks;
+    return (svgGroupWidth - cellGapOffset - WEEKDAYS_WIDTH) / weeks;
   }, [cellGap, svgGroupWidth, weeks]);
 
   const monthHeight = 20;
-  const legendHeight = 30;
+  const legendHeight = cellSize * 2;
   const svgHeight = ((cellSize + cellGap) * 7) + monthHeight + legendHeight;
 
   return (
@@ -152,14 +150,14 @@ const Heatmap = ({
           />
 
           {showLegend() && (
-          <Legend
-            steps={steps}
-            startDate={startDate}
-            endDate={endDate}
-            legendCategories={legendCategories}
-            cellSize={Math.abs(cellSize)}
-            cellGap={cellGap}
-          />
+            <Legend
+              steps={steps}
+              startDate={startDate}
+              endDate={endDate}
+              legendCategories={legendCategories}
+              cellSize={Math.abs(cellSize)}
+              cellGap={cellGap}
+            />
           )}
 
         </C.Group>

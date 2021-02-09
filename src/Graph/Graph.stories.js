@@ -119,8 +119,9 @@ export const lineGraph = () => (
 );
 
 export const heatmap = () => {
-  const primaryData = heatData(100);
-  const secondaryData = heatData(100);
+  const numberOfDays = 200;
+  const primaryData = heatData(numberOfDays);
+  const secondaryData = heatData(numberOfDays);
 
   return (
     <div style={{
@@ -139,8 +140,8 @@ export const heatmap = () => {
         cellGap={number('Cell gap', 6)}
         borderColor="#133A5D"
         showLegend={() => true}
-        startDate={text('Start date', moment('2020-08-01'))}
-        endDate={text('End date', moment('2021-02-20'))}
+        startDate={text('Start date', moment().subtract(numberOfDays, 'days'))}
+        endDate={text('End date', moment())}
       />
     </div>
   );
