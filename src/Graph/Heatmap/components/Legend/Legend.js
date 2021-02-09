@@ -13,7 +13,7 @@ const propTypes = {
 const defaultProps = {
   legendCategories: null,
   cellSize: 18,
-  cellGap: 2,
+  cellGap: 1,
   steps: 5,
 };
 

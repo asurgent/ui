@@ -122,29 +122,56 @@ export const heatmap = () => {
   const numberOfDays = 365;
   const primaryData = heatData(numberOfDays);
   const secondaryData = heatData(numberOfDays);
+  const primaryData2 = heatData(numberOfDays);
+  const secondaryData2 = heatData(numberOfDays);
 
   return (
-    <div style={{
-      border: '1px solid #dadada',
-      borderRadius: '5px',
-      marginTop: '20rem',
-      width: '80vw',
-    }}
-    >
-      <Graph.Heatmap
-        primaryData={primaryData}
-        secondaryData={secondaryData}
-        steps={number('Steps', 5)}
-        color={text('Color', '#C6403B')}
-        emptyColor={text('Empty color', '#F2F2F2')}
-        cellGap={number('Cell gap', 6)}
-        borderColor="#133A5D"
-        showLegend={() => true}
-        primaryLabel="fails"
-        secondaryLabel="successes"
-        startDate={text('Start date', moment().subtract(numberOfDays, 'days'))}
-        endDate={text('End date', moment())}
-      />
-    </div>
+    <>
+      <div style={{
+        border: '1px solid #dadada',
+        borderRadius: '5px',
+        marginTop: '20rem',
+        width: '80vw',
+      }}
+      >
+
+        <Graph.Heatmap
+          primaryData={primaryData}
+          secondaryData={secondaryData}
+          steps={number('Steps', 5)}
+          color={text('Color', '#C6403B')}
+          emptyColor={text('Empty color', '#F2F2F2')}
+          cellGap={number('Cell gap', 6)}
+          borderColor="#133A5D"
+          showLegend={() => true}
+          primaryLabel="fails"
+          secondaryLabel="successes"
+          startDate={text('Start date', moment().subtract(numberOfDays, 'days'))}
+          endDate={text('End date', moment())}
+        />
+      </div>
+      <div style={{
+        border: '1px solid #dadada',
+        borderRadius: '5px',
+        marginTop: '20rem',
+        width: '80vw',
+      }}
+      >
+        <Graph.Heatmap
+          primaryData={primaryData2}
+          secondaryData={secondaryData2}
+          steps={number('Steps', 5)}
+          color={text('Color', '#C6403B')}
+          emptyColor={text('Empty color', '#F2F2F2')}
+          cellGap={number('Cell gap', 6)}
+          borderColor="#133A5D"
+          showLegend={() => true}
+          primaryLabel="fails"
+          secondaryLabel="successes"
+          startDate={text('Start date', moment().subtract(numberOfDays, 'days'))}
+          endDate={text('End date', moment())}
+        />
+      </div>
+    </>
   );
 };

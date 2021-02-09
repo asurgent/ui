@@ -34,6 +34,7 @@ const propTypes = {
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
   ]),
+  tooltipRef: PropTypes.instanceOf(Object),
 };
 
 const defaultProps = {
@@ -47,14 +48,14 @@ const defaultProps = {
   legendCategories: null,
   startDate: moment().startOf('year'),
   endDate: moment().endOf('year'),
+  tooltipRef: null,
 };
 
 const mouseover = (tooltip) => tooltip.style('opacity', 1);
 const mouseleave = (tooltip) => tooltip.style('opacity', 0);
 const mousemove = ({
-  date, primValue, secValue, primaryLabel, secondaryLabel, cellSize,
+  date, primValue, secValue, primaryLabel, secondaryLabel, cellSize, tooltip,
 }) => {
-  const tooltip = d3.select('#tooltip');
   const { x, y } = d3.event;
   const { width, height } = tooltip.node().getBoundingClientRect();
   const valueText = getValueText({
@@ -135,8 +136,9 @@ const placeToday = (
   tooltip,
   primaryLabel,
   secondaryLabel,
+  todayRef,
 ) => {
-  const g = d3.select('#today');
+  const g = d3.select(todayRef);
   const today = mergedData.find(({ date }) => isToday(date));
   const { primValue, secValue, date } = today;
   const polys = getPolygons(today, cellSize);
@@ -152,6 +154,7 @@ const placeToday = (
       primaryLabel,
       secondaryLabel,
       cellSize,
+      tooltip,
     }))
     .on('mouseover', () => mouseover(tooltip))
     .on('mouseleave', () => mouseleave(tooltip));
@@ -185,13 +188,16 @@ const Squares = ({
   cellGap,
   emptyColor,
   legendCategories,
+  tooltipRef,
 }) => {
   const squareRef = useRef(null);
   const monthTextRef = useRef(null);
   const weekdayRef = useRef(null);
+  const todayRef = useRef(null);
+  const daysRef = useRef(null);
+  const tooltip = d3.select(tooltipRef?.current);
 
-  const tooltip = d3.select('#tooltip');
-  const daysGroup = d3.select('#days');
+  const daysGroup = d3.select(daysRef?.current);
 
   const days = useMemo(() => moment(endDate).diff(moment(startDate), 'days') + 1, [endDate, startDate]);
   const reduceToObject = (arr) => arr.reduce((acc, cur) => ({ ...acc, [cur.date]: cur.value }), {});
@@ -229,19 +235,19 @@ const Squares = ({
         legendCategories,
         tooltip,
         primaryLabel,
-        secondaryLabel);
+        secondaryLabel,
+        todayRef?.current);
     }
-  }, [
-    mergedData,
+  }, [mergedData,
     cellGap,
     cellSize,
     emptyColor,
     legendCategories,
     startDate,
-    tooltip,
     primaryLabel,
     secondaryLabel,
-    daysGroup]);
+    daysGroup,
+    tooltip]);
 
   // Placement of squares
   useEffect(() => {
@@ -267,6 +273,7 @@ const Squares = ({
         primaryLabel,
         secondaryLabel,
         cellSize,
+        tooltip,
       }))
       .on('mouseover', () => mouseover(tooltip))
       .on('mouseleave', () => mouseleave(tooltip));
@@ -302,8 +309,8 @@ const Squares = ({
       <C.Months ref={monthTextRef} />
       <C.Weekdays ref={weekdayRef} style={{ transform: `translateY(${MONTHS_HEIGHT}px)` }} />
       <C.Squares id="squares" ref={squareRef} style={{ transform: `translate(${WEEKDAYS_WIDTH}px, ${MONTHS_HEIGHT}px)` }}>
-        <g id="days" />
-        <g id="today" />
+        <g ref={daysRef} />
+        <g ref={todayRef} />
       </C.Squares>
     </>
   );

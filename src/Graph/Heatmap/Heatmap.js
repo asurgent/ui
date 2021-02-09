@@ -94,6 +94,7 @@ const Heatmap = ({
   const monthTextRef = useRef(null);
   const groupRef = useRef(null);
   const svgRef = createRef(null);
+  const tooltipRef = useRef(null);
 
   const maxValue = useMemo(() => {
     if (primaryData.find((d) => d.value)) {
@@ -151,6 +152,7 @@ const Heatmap = ({
             monthTextRef={monthTextRef}
             containerWidth={svgGroupWidth}
             cellSize={Math.abs(cellSize)}
+            tooltipRef={tooltipRef}
           />
 
           {showLegend() && (
@@ -166,7 +168,7 @@ const Heatmap = ({
 
         </C.Group>
       </svg>
-      <C.Tooltip id="tooltip" />
+      <C.Tooltip ref={tooltipRef} id="tooltip" />
     </>
   );
 };
