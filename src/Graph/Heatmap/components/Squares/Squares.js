@@ -16,8 +16,7 @@ import {
 const { t } = translation;
 
 const propTypes = {
-  primaryData: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
-  secondaryData: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
+  data: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   primaryLabel: PropTypes.string,
   secondaryLabel: PropTypes.string,
   cellSize: PropTypes.number,
@@ -38,16 +37,15 @@ const propTypes = {
 };
 
 const defaultProps = {
-  primaryData: [],
-  secondaryData: [],
+  data: null,
   primaryLabel: 'something',
   secondaryLabel: 'something else',
   cellSize: 18,
   cellGap: 2,
   emptyColor: '#F2F2F2',
   legendCategories: null,
-  startDate: moment().startOf('year'),
-  endDate: moment().endOf('year'),
+  startDate: null,
+  endDate: null,
   tooltipRef: null,
 };
 
@@ -108,7 +106,7 @@ const fillSquares = (squares, emptyColor, legendCategories) => {
 const getPolygons = (today, cellSize) => [
   {
     color: '#133A5D',
-    date: today.date,
+    date: today?.date,
     points: [
       { x: 0, y: 0 },
       { x: cellSize, y: 0 },
@@ -116,8 +114,8 @@ const getPolygons = (today, cellSize) => [
     ],
   }, {
     date: today.date,
-    secValue: today.secValue,
-    primValue: today.primValue,
+    secValue: today?.secValue,
+    primValue: today?.primValue,
     points: [
       { x: 0, y: cellSize },
       { x: 0, y: 0 },
@@ -127,7 +125,7 @@ const getPolygons = (today, cellSize) => [
 ];
 
 const placeToday = (
-  mergedData,
+  data,
   cellSize,
   startDate,
   cellGap,
@@ -139,7 +137,7 @@ const placeToday = (
   todayRef,
 ) => {
   const g = d3.select(todayRef);
-  const today = mergedData.find(({ date }) => isToday(date));
+  const today = data.find(({ date }) => isToday(date));
   const { primValue, secValue, date } = today;
   const polys = getPolygons(today, cellSize);
 
@@ -178,8 +176,7 @@ const placeToday = (
 };
 
 const Squares = ({
-  primaryData,
-  secondaryData,
+  data,
   startDate,
   endDate,
   primaryLabel,
@@ -199,35 +196,19 @@ const Squares = ({
 
   const daysGroup = d3.select(daysRef?.current);
 
-  const days = useMemo(() => moment(endDate).diff(moment(startDate), 'days') + 1, [endDate, startDate]);
-  const reduceToObject = (arr) => arr.reduce((acc, cur) => ({ ...acc, [cur.date]: cur.value }), {});
-
-  const primObj = useMemo(() => reduceToObject(primaryData), [primaryData]);
-  const secObj = useMemo(() => reduceToObject(secondaryData), [secondaryData]);
-
-  const mergedData = [...Array(days)].map((_, index) => {
-    const curDate = moment(moment(startDate).add(index, 'days')).format('YYYY-MM-DD');
-
-    return {
-      date: curDate,
-      primValue: primObj[curDate],
-      secValue: secObj[curDate],
-    };
-  });
-
   // Create squares
   const squares = useMemo(() => {
-    if (daysGroup) {
-      const noToday = mergedData.filter(({ date }) => !isToday(date));
+    if (daysGroup && data) {
+      const noToday = data.filter(({ date }) => !isToday(date));
       return createSquareBlocks(daysGroup, noToday, cellSize, cellGap);
     }
     return null;
-  }, [mergedData, cellGap, cellSize, daysGroup]);
+  }, [data, cellGap, cellSize, daysGroup]);
 
   // Place today
   useEffect(() => {
     if (daysGroup) {
-      placeToday(mergedData,
+      placeToday(data,
         cellSize,
         startDate,
         cellGap,
@@ -238,7 +219,7 @@ const Squares = ({
         secondaryLabel,
         todayRef?.current);
     }
-  }, [mergedData,
+  }, [data,
     cellGap,
     cellSize,
     emptyColor,
@@ -281,28 +262,28 @@ const Squares = ({
 
   // Add weekdays
   useEffect(() => {
-    if (mergedData && weekdayRef.current) {
+    if (data && weekdayRef.current) {
       addWeekdays({
         ref: weekdayRef.current,
         cellSize,
         cellGap,
       });
     }
-  }, [cellGap, cellSize, mergedData, primaryData]);
+  }, [cellGap, cellSize, data]);
 
   // Add months
   useEffect(() => {
-    if (mergedData && monthTextRef.current) {
+    if (data && monthTextRef.current) {
       addMonthText({
         ref: monthTextRef.current,
-        data: mergedData,
+        data,
         startDate,
         cellSize,
         cellGap,
         weekdayOffset: WEEKDAYS_WIDTH,
       });
     }
-  }, [cellGap, cellSize, mergedData, primaryData, startDate]);
+  }, [cellGap, cellSize, data, startDate]);
 
   return (
     <>

@@ -31,21 +31,11 @@ const propTypes = {
   primaryLabel: PropTypes.string,
   secondaryLabel: PropTypes.string,
   showLegend: PropTypes.func,
-  startDate: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-    PropTypes.instanceOf(moment),
-  ]),
-  endDate: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-    PropTypes.instanceOf(moment),
-  ]),
 };
 
 const defaultProps = {
-  primaryData: [],
-  secondaryData: [],
+  primaryData: null,
+  secondaryData: null,
   steps: 5,
   color: null,
   emptyColor: '#F2F2F2',
@@ -54,8 +44,6 @@ const defaultProps = {
   primaryLabel: 'something',
   secondaryLabel: 'something else',
   showLegend: () => true,
-  startDate: moment().startOf('year'),
-  endDate: moment().endOf('year'),
 };
 
 const useSvgGroupSize = (ref) => {
@@ -87,8 +75,6 @@ const Heatmap = ({
   primaryLabel,
   secondaryLabel,
   showLegend,
-  startDate,
-  endDate,
   theme,
 }) => {
   const monthTextRef = useRef(null);
@@ -96,8 +82,26 @@ const Heatmap = ({
   const svgRef = createRef(null);
   const tooltipRef = useRef(null);
 
+  // TODO: skapa merged data här istället för i squares
+
+  const startDate = useMemo(() => {
+    if (primaryData && secondaryData) {
+      const dates = [...primaryData, ...secondaryData].map((d) => moment(d.date));
+      return moment.min(dates);
+    }
+    return null;
+  }, [primaryData, secondaryData]);
+
+  const endDate = useMemo(() => {
+    if (primaryData && secondaryData) {
+      const dates = [...primaryData, ...secondaryData].map((d) => moment(d.date));
+      return moment.max(dates);
+    }
+    return null;
+  }, [primaryData, secondaryData]);
+
   const maxValue = useMemo(() => {
-    if (primaryData.find((d) => d.value)) {
+    if (primaryData?.find((d) => d.value)) {
       const values = primaryData.map((d) => d.value);
 
       return Math.max(...values);
@@ -122,55 +126,80 @@ const Heatmap = ({
 
   const svgGroupWidth = useSvgGroupSize(svgRef);
 
-  const weeks = useMemo(() => d3
-    .utcSunday
-    .count(moment(startDate), moment(endDate)) + 1, [endDate, startDate]);
-
   const cellSize = useMemo(() => {
-    const cellGapOffset = weeks * cellGap;
-    return (svgGroupWidth - cellGapOffset - WEEKDAYS_WIDTH) / weeks;
-  }, [cellGap, svgGroupWidth, weeks]);
+    if (startDate && endDate) {
+      const weeks = d3
+        .utcSunday
+        .count(moment(startDate), moment(endDate)) + 1;
+      const cellGapOffset = weeks * cellGap;
+      return (svgGroupWidth - cellGapOffset - WEEKDAYS_WIDTH) / weeks;
+    }
+    return null;
+  }, [cellGap, endDate, startDate, svgGroupWidth]);
 
   const monthHeight = 20;
   const legendHeight = cellSize + 15; // 15 => text height
   const svgHeight = ((cellSize + cellGap) * 7) + monthHeight + legendHeight;
 
-  return (
-    <>
-      <svg ref={svgRef} width="100%" height={svgHeight}>
-        <C.Group ref={groupRef}>
-          <Squares
-            primaryData={primaryData}
-            secondaryData={secondaryData}
-            startDate={startDate}
-            endDate={endDate}
-            primaryLabel={primaryLabel}
-            secondaryLabel={secondaryLabel}
-            cellGap={cellGap}
-            emptyColor={emptyColor}
-            legendCategories={legendCategories}
-            monthTextRef={monthTextRef}
-            containerWidth={svgGroupWidth}
-            cellSize={Math.abs(cellSize)}
-            tooltipRef={tooltipRef}
-          />
+  const reduceToObject = (arr) => arr.reduce((acc, cur) => ({ ...acc, [cur.date]: cur.value }), {});
+  const mergedData = useMemo(() => {
+    if (endDate && startDate && primaryData && secondaryData) {
+      const primObj = reduceToObject(primaryData);
+      const secObj = reduceToObject(secondaryData);
+      const days = moment(endDate).diff(moment(startDate), 'days') + 1;
 
-          {showLegend() && (
-            <Legend
-              steps={steps}
+      return [...Array(days)].map((_, index) => {
+        const curDate = moment(moment(startDate).add(index, 'days')).format('YYYY-MM-DD');
+
+        return {
+          date: curDate,
+          primValue: primObj[curDate],
+          secValue: secObj[curDate],
+        };
+      });
+    }
+    return null;
+  }, [endDate, primaryData, secondaryData, startDate]);
+
+  console.log('mergedData', mergedData);
+
+  if (mergedData) {
+    return (
+      <>
+        <svg ref={svgRef} width="100%" height={svgHeight}>
+          <C.Group ref={groupRef}>
+
+            <Squares
+              data={mergedData}
               startDate={startDate}
               endDate={endDate}
-              legendCategories={legendCategories}
-              cellSize={Math.abs(cellSize)}
+              primaryLabel={primaryLabel}
+              secondaryLabel={secondaryLabel}
               cellGap={cellGap}
+              emptyColor={emptyColor}
+              legendCategories={legendCategories}
+              monthTextRef={monthTextRef}
+              containerWidth={svgGroupWidth}
+              cellSize={Math.abs(cellSize)}
+              tooltipRef={tooltipRef}
             />
-          )}
 
-        </C.Group>
-      </svg>
-      <C.Tooltip ref={tooltipRef} id="tooltip" />
-    </>
-  );
+            {showLegend() && (
+              <Legend
+                steps={steps}
+                legendCategories={legendCategories}
+                cellSize={Math.abs(cellSize)}
+                cellGap={cellGap}
+              />
+            )}
+
+          </C.Group>
+        </svg>
+        <C.Tooltip ref={tooltipRef} id="tooltip" />
+      </>
+    );
+  }
+  return null;
 };
 
 Heatmap.propTypes = propTypes;
