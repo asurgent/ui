@@ -7,9 +7,7 @@ export const Base = styled.div`
     padding: 1.6rem;
 `;
 
-export const Active = styled(Base)`
-    width: 3.2rem;
-`;
+export const Active = styled(Base)``;
 
 export const FilterItem = styled.div`
     display: flex;
@@ -39,12 +37,14 @@ export const FilterLabel = styled.div`
     white-space: nowrap;
     overflow: hidden;
 `;
+
 export const Labels = styled.div`
     width: 100%;
     display:flex;
     justify-content: space-between;
     align-items: center;
 `;
+
 export const Label = styled.div`
     flex: 1;
     display: block;
