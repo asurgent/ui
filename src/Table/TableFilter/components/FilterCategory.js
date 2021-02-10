@@ -57,7 +57,11 @@ const FilterCategory = (props) => {
       <Button.Filter onClick={() => groupHook.setOpen(true)}>{label}</Button.Filter>
       <C.ShieldTargetWrapper>
         <C.ClickShield isVisible={groupHook.isOpen()} onClick={() => groupHook.setOpen(false)} />
-        <Transition.FadeInSlideDownOnDesktop isVisible={groupHook.isOpen()} timeout={80}>
+        <Transition.FadeInSlideDownOnDesktop
+          isVisible={groupHook.isOpen()}
+          timeout={80}
+          style={{ zIndex: 1 }}
+        >
           <C.Dropdown>
             {
               tableHook.isFilterLoading && (

@@ -11,12 +11,14 @@ const propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
+  style: PropTypes.instanceOf(Object),
 };
 
 const defaultProps = {
   timeout: 500,
   unmountChildren: true,
   className: '',
+  style: {},
 };
 
 const withTransitionEffect = (TransitionComponent) => {
@@ -26,10 +28,16 @@ const withTransitionEffect = (TransitionComponent) => {
     unmountChildren,
     children,
     className,
+    style,
   }) => (
     <Transition timeout={timeout} in={isVisible}>
       {(state) => (
-        <TransitionComponent state={state} timeout={timeout} className={className}>
+        <TransitionComponent
+          state={state}
+          style={style}
+          timeout={timeout}
+          className={className}
+        >
           { (state !== 'exited' || !unmountChildren) && children}
         </TransitionComponent>
       )}
