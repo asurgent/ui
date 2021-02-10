@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import MdiIcon from '@mdi/react';
 import { mdiMenuDown } from '@mdi/js';
 import * as VirtualRender from '../../../VirtualRender';
-import * as Shield from '../../../Shield';
 import * as Tag from '../../../Tag';
 import * as Transition from '../../../Transition';
 import translation from './FilterSelect.translation';
@@ -101,34 +100,37 @@ const FilterInput = forwardRef((props, ref) => {
   }));
 
   return (
-    <Shield.OutsideEvent onClick={() => filterSelectHook.setOpen(false)}>
-      <C.SelectFilter onClick={() => !disabled() && filterSelectHook.setOpen(true)}>
-        <C.Input type="text" name={name} ref={filterSelectHook.inputRef} disabled {...inputProps} />
-        <C.Output>
-          <C.Value disabled={disabled()} asPlaceholder={filterSelectHook.showPlaceHolder()}>
-            { filterSelectHook.showTags() && (
-              <Tag.Collection tags={filterSelectHook.getTags()} max={3} />
-            )}
-            { filterSelectHook.showPlaceHolder() && placeholdeOutput}
-            {!filterSelectHook.showTags() && (filterSelectHook.getOutput())}
-          </C.Value>
-          <MdiIcon path={mdiMenuDown} size={1.2} className="down-arrow" />
-        </C.Output>
-        <Transition.FadeInFitted isVisible={filterSelectHook.isOpen} timeout={80}>
-          <C.Dropdown>
-            <C.SearchWrapper>
-              <C.Search
-                forwardRef={searchInput}
-                type="text"
-                placeholder={inputProps.searchPlaceholder || t('searchPlaceHolder', 'asurgentui')}
-                value={filterSelectHook.searchValue}
-                onChange={({ target }) => {
-                  filterSelectHook.setSearch(target.value);
-                }}
-              />
-            </C.SearchWrapper>
-            <C.ListWrapper>
-              {
+    <C.SelectFilter>
+      <C.Input type="text" name={name} ref={filterSelectHook.inputRef} disabled {...inputProps} />
+      <C.Output onClick={() => !disabled() && filterSelectHook.setOpen(true)}>
+        <C.Value disabled={disabled()} asPlaceholder={filterSelectHook.showPlaceHolder()}>
+          { filterSelectHook.showTags() && (
+          <Tag.Collection tags={filterSelectHook.getTags()} max={3} />
+          )}
+          { filterSelectHook.showPlaceHolder() && placeholdeOutput}
+          {!filterSelectHook.showTags() && (filterSelectHook.getOutput())}
+        </C.Value>
+        <MdiIcon path={mdiMenuDown} size={1.2} className="down-arrow" />
+      </C.Output>
+      <Transition.FadeInFitted
+        withClickShield={() => filterSelectHook.setOpen(false)}
+        isVisible={filterSelectHook.isOpen}
+        timeout={80}
+      >
+        <C.Dropdown>
+          <C.SearchWrapper>
+            <C.Search
+              forwardRef={searchInput}
+              type="text"
+              placeholder={inputProps.searchPlaceholder || t('searchPlaceHolder', 'asurgentui')}
+              value={filterSelectHook.searchValue}
+              onChange={({ target }) => {
+                filterSelectHook.setSearch(target.value);
+              }}
+            />
+          </C.SearchWrapper>
+          <C.ListWrapper>
+            {
                   filterSelectHook.hasOptions() && (
                     <VirtualRender.List
                       rowHeight={48}
@@ -145,11 +147,10 @@ const FilterInput = forwardRef((props, ref) => {
                     </VirtualRender.List>
                   )
               }
-            </C.ListWrapper>
-          </C.Dropdown>
-        </Transition.FadeInFitted>
-      </C.SelectFilter>
-    </Shield.OutsideEvent>
+          </C.ListWrapper>
+        </C.Dropdown>
+      </Transition.FadeInFitted>
+    </C.SelectFilter>
   );
 });
 
