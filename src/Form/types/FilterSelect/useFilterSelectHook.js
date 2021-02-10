@@ -53,7 +53,7 @@ const getValuesAndLabel = (list) => {
 
 const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlaceholder) => {
   const inputRef = createRef();
-  const [isOpen, setOpen] = useState(true);
+  const [isOpen, setOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [selectedOptions, setSelected] = useState([]);
   const [isReady, setReady] = useState(false);
