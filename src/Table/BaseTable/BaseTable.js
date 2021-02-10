@@ -132,7 +132,7 @@ const BaseTable = withTheme((props) => {
                 saveToFile={exportResultsAction}
               >
                 {`${itemCount} ${t('results', 'asurgentui')}`}
-                <MdiIcon size={1.4} path={mdiDownload} />
+                <MdiIcon size={1} path={mdiDownload} />
               </Button.Plain>
             )}
           </C.Count>

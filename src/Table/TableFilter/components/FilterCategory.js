@@ -108,7 +108,7 @@ const FilterCategory = (props) => {
             <Button.Icon
               className="close"
               onClick={() => groupHook.setOpen(false)}
-              icon={<MdiIcon size={1.4} path={mdiClose} />}
+              icon={<MdiIcon size={1.2} path={mdiClose} />}
             />
           </C.Dropdown>
         </Transition.FadeInSlideDownOnDesktop>

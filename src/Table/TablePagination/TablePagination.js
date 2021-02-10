@@ -22,7 +22,7 @@ const TablePagination = ({
         onClick={paginationHook.previousPage}
         icon={(
           <MdiIcon
-            size={1.4}
+            size={1.2}
             path={mdiChevronLeft}
           />
         )}
@@ -47,7 +47,7 @@ const TablePagination = ({
         onClick={paginationHook.nextPage}
         icon={(
           <MdiIcon
-            size={1.4}
+            size={1.2}
             path={mdiChevronRight}
           />
         )}

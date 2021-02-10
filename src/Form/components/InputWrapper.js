@@ -69,7 +69,7 @@ const InputWrapper = (props) => {
           <T.P.Small capitalize bold style={{ margin: 0 }}>{label}</T.P.Small>
           { tooltip && (
             <Tooltip.Primary tip={tooltip} position={tooltipPosition}>
-              <C.TooltipIcon path={mdiHelpCircleOutline} size={0.8} />
+              <C.TooltipIcon path={mdiHelpCircleOutline} size={1} />
             </Tooltip.Primary>
           )}
         </C.Header>

@@ -4,7 +4,7 @@ import * as C from './ToastManager.styled';
 import Toast from '../Toast';
 import { EVENT_TYPE } from '../../constants';
 
-const modalRoot = document.getElementById('modal-root');
+const modalRoot = document.getElementById('tooltip-root');
 const removedToastIds = [];
 
 const ToastManager = () => {

@@ -1,29 +1,35 @@
 import React, {
-  useEffect, useMemo, useRef, useLayoutEffect, useState,
+  useMemo, useRef, useLayoutEffect, useState, createRef,
 } from 'react';
 import { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as d3 from 'd3';
-import translation from './Heatmap.translation';
 import * as C from './Heatmap.styled';
 import Squares from './components/Squares';
 import Legend from './components/Legend';
-import { marginFromWeekdays } from './constants';
-
-const { t } = translation;
+import { WEEKDAYS_WIDTH } from './Constants';
 
 const propTypes = {
-  data: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
+  primaryData: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string,
+      value: PropTypes.number,
+    }),
+  ),
+  secondaryData: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string,
+      value: PropTypes.number,
+    }),
+  ),
   steps: PropTypes.number,
   color: PropTypes.string,
   emptyColor: PropTypes.string,
   theme: PropTypes.instanceOf(Object),
-  cellPadding: PropTypes.number,
-  cellRadius: PropTypes.number,
-  valueLabel: PropTypes.string,
-  onDateClick: PropTypes.func,
-  useDateToggle: PropTypes.func,
+  cellGap: PropTypes.number,
+  primaryLabel: PropTypes.string,
+  secondaryLabel: PropTypes.string,
   showLegend: PropTypes.func,
   startDate: PropTypes.oneOfType([
     PropTypes.string,
@@ -38,23 +44,22 @@ const propTypes = {
 };
 
 const defaultProps = {
-  data: null,
+  primaryData: [],
+  secondaryData: [],
   steps: 5,
   color: null,
   emptyColor: '#F2F2F2',
   theme: {},
-  cellRadius: 1,
-  cellPadding: 2,
-  valueLabel: 'something',
-  onDateClick: () => null,
-  useDateToggle: () => false,
+  cellGap: 2,
+  primaryLabel: 'something',
+  secondaryLabel: 'something else',
   showLegend: () => true,
   startDate: moment().startOf('year'),
   endDate: moment().endOf('year'),
 };
 
 const useSvgGroupSize = (ref) => {
-  const [size, setSize] = useState(0);
+  const [size, setSize] = useState(ref?.current?.getBoundingClientRect()?.width || 0);
 
   useLayoutEffect(() => {
     const updateSize = () => {
@@ -73,15 +78,14 @@ const useSvgGroupSize = (ref) => {
 };
 
 const Heatmap = ({
-  data,
+  primaryData,
+  secondaryData,
   steps,
   color,
   emptyColor,
-  cellRadius,
-  cellPadding,
-  valueLabel,
-  onDateClick,
-  useDateToggle,
+  cellGap,
+  primaryLabel,
+  secondaryLabel,
   showLegend,
   startDate,
   endDate,
@@ -89,21 +93,17 @@ const Heatmap = ({
 }) => {
   const monthTextRef = useRef(null);
   const groupRef = useRef(null);
-  const svgRef = useRef(null);
-  const containerRef = useRef(null);
+  const svgRef = createRef(null);
+  const tooltipRef = useRef(null);
 
-  const values = useMemo(() => (data?.length > 0 ? data.map((c) => c.value) : null), [data]);
-  const maxValue = useMemo(() => (values ? Math.max(...values) : null), [values]);
+  const maxValue = useMemo(() => {
+    if (primaryData.find((d) => d.value)) {
+      const values = primaryData.map((d) => d.value);
 
-  const dateRange = d3.timeDays(startDate, moment(endDate).add(1, 'days'));
-
-  const filledData = dateRange.map((d) => {
-    const inpDate = data.find((dat) => moment(dat.date).isSame(moment(d), 'day'));
-    if (inpDate) {
-      return { ...inpDate, date: moment(inpDate.date).startOf('day') };
+      return Math.max(...values);
     }
-    return { date: moment(d), value: null };
-  });
+    return null;
+  }, [primaryData]);
 
   const colorScale = useMemo(() => d3
     .scaleLinear()
@@ -120,57 +120,56 @@ const Heatmap = ({
     };
   }), [colorScale, maxValue, steps]);
 
-  const svgGroupWidth = useSvgGroupSize(containerRef);
+  const svgGroupWidth = useSvgGroupSize(svgRef);
 
-  const weeks = useMemo(() => d3.utcSunday.count(startDate, endDate), [endDate, startDate]);
-  const cellSize = svgGroupWidth === 0 ? cellPadding
-    : (svgGroupWidth / (weeks + 1) - (marginFromWeekdays / (weeks + 1)));
+  const weeks = useMemo(() => d3
+    .utcSunday
+    .count(moment(startDate), moment(endDate)) + 1, [endDate, startDate]);
 
-  useEffect(() => {
-    const { height } = groupRef?.current?.getBoundingClientRect();
-    const { width } = containerRef?.current?.getBoundingClientRect();
+  const cellSize = useMemo(() => {
+    const cellGapOffset = weeks * cellGap;
+    return (svgGroupWidth - cellGapOffset - WEEKDAYS_WIDTH) / weeks;
+  }, [cellGap, svgGroupWidth, weeks]);
 
-    svgRef.current.setAttribute('width', width);
-    svgRef.current.setAttribute('height', height);
-  }, [cellSize]);
-
-  if (!data || !legendCategories) {
-    return <p>{t('noData', 'asurgentui')}</p>;
-  }
+  const monthHeight = 20;
+  const legendHeight = cellSize + 15; // 15 => text height
+  const svgHeight = ((cellSize + cellGap) * 7) + monthHeight + legendHeight;
 
   return (
-    <div ref={containerRef}>
-      <svg preserveAspectRatio="none" ref={svgRef}>
+    <>
+      <svg ref={svgRef} width="100%" height={svgHeight}>
         <C.Group ref={groupRef}>
           <Squares
-            data={filledData}
+            primaryData={primaryData}
+            secondaryData={secondaryData}
             startDate={startDate}
             endDate={endDate}
-            valueLabel={valueLabel}
-            onDateClick={onDateClick}
-            useDateToggle={useDateToggle}
-            cellSize={cellSize}
-            cellPadding={cellPadding}
-            cellRadius={cellRadius}
+            primaryLabel={primaryLabel}
+            secondaryLabel={secondaryLabel}
+            cellGap={cellGap}
             emptyColor={emptyColor}
             legendCategories={legendCategories}
             monthTextRef={monthTextRef}
+            containerWidth={svgGroupWidth}
+            cellSize={Math.abs(cellSize)}
+            tooltipRef={tooltipRef}
           />
+
           {showLegend() && (
             <Legend
               steps={steps}
               startDate={startDate}
               endDate={endDate}
               legendCategories={legendCategories}
-              cellSize={cellSize}
-              cellPadding={cellPadding}
-              cellRadius={cellRadius}
+              cellSize={Math.abs(cellSize)}
+              cellGap={cellGap}
             />
           )}
+
         </C.Group>
       </svg>
-      <C.Tooltip id="tooltip" />
-    </div>
+      <C.Tooltip ref={tooltipRef} id="tooltip" />
+    </>
   );
 };
 

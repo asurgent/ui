@@ -53,7 +53,7 @@ const Accordion = ({
         isOpen={isOpen}
       >
         <Tooltip.Middle tip={t('details', 'asurgentui')}>
-          <MdiIcon path={mdiChevronDown} size={1.6} />
+          <MdiIcon path={mdiChevronDown} size={1.4} />
         </Tooltip.Middle>
       </C.Arrow>
       <Transition.FadeInAndOut isVisible={isOpen} timeout={80} className="content">
