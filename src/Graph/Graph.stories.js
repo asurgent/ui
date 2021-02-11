@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   withKnobs, text, number,
 } from '@storybook/addon-knobs';
-import moment from 'moment';
 import * as Graph from './index';
 import data from './data';
 import data2 from './data2';
@@ -121,8 +120,8 @@ export const lineGraph = () => (
 export const heatmap = () => {
   const numberOfDays = 365;
 
-  const [primaryData, setPrimaryData] = useState(heatData(numberOfDays));
-  const [secondaryData, setSecondaryData] = useState(heatData(numberOfDays));
+  const primaryData = heatData(numberOfDays);
+  const secondaryData = heatData(numberOfDays);
 
   return (
     <div style={{
@@ -132,19 +131,6 @@ export const heatmap = () => {
       width: '80vw',
     }}
     >
-      <button
-        type="button"
-        onClick={() => {
-          setSecondaryData([]);
-          setPrimaryData([]);
-          setTimeout(() => {
-            setPrimaryData(heatData(numberOfDays - 2));
-            setSecondaryData(heatData(numberOfDays - 2));
-          }, 2000);
-        }}
-      >
-        rand
-      </button>
       <Graph.Heatmap
         primaryData={primaryData}
         secondaryData={secondaryData}

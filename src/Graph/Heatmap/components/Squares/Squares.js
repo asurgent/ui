@@ -28,11 +28,6 @@ const propTypes = {
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
   ]),
-  endDate: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Date),
-    PropTypes.instanceOf(moment),
-  ]),
   tooltipRef: PropTypes.instanceOf(Object),
 };
 
@@ -45,7 +40,6 @@ const defaultProps = {
   emptyColor: '#F2F2F2',
   legendCategories: null,
   startDate: null,
-  endDate: null,
   tooltipRef: null,
 };
 
@@ -137,7 +131,7 @@ const placeToday = (
   todayRef,
 ) => {
   const g = d3.select(todayRef);
-  const today = data.find(({ date }) => isToday(date));
+  const today = data.find(({ date }) => isToday(date)) || {};
   const { primValue, secValue, date } = today;
   const polys = getPolygons(today, cellSize);
 
@@ -178,7 +172,6 @@ const placeToday = (
 const Squares = ({
   data,
   startDate,
-  endDate,
   primaryLabel,
   secondaryLabel,
   cellSize,

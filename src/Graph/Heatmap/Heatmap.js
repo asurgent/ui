@@ -82,8 +82,6 @@ const Heatmap = ({
   const svgRef = createRef(null);
   const tooltipRef = useRef(null);
 
-  // TODO: skapa merged data här istället för i squares
-
   const startDate = useMemo(() => {
     if (primaryData && secondaryData) {
       const dates = [...primaryData, ...secondaryData].map((d) => moment(d.date));
@@ -142,6 +140,7 @@ const Heatmap = ({
   const svgHeight = ((cellSize + cellGap) * 7) + monthHeight + legendHeight;
 
   const reduceToObject = (arr) => arr.reduce((acc, cur) => ({ ...acc, [cur.date]: cur.value }), {});
+
   const mergedData = useMemo(() => {
     if (endDate && startDate && primaryData && secondaryData) {
       const primObj = reduceToObject(primaryData);
@@ -161,8 +160,6 @@ const Heatmap = ({
     return null;
   }, [endDate, primaryData, secondaryData, startDate]);
 
-  console.log('mergedData', mergedData);
-
   if (mergedData) {
     return (
       <>
@@ -172,7 +169,6 @@ const Heatmap = ({
             <Squares
               data={mergedData}
               startDate={startDate}
-              endDate={endDate}
               primaryLabel={primaryLabel}
               secondaryLabel={secondaryLabel}
               cellGap={cellGap}
