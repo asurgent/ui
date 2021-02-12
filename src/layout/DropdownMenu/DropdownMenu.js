@@ -8,6 +8,7 @@ import * as Button from '../../Button';
 import * as Form from '../../Form';
 import Navigation from '../Navigation';
 import * as Transition from '../../Transition';
+import translation from './DropdownMenu.translation';
 
 const MENU_TAB = 'menu_tab';
 const SETTINGS_TAB = 'settings_tab';
@@ -25,11 +26,9 @@ const propTypes = {
   onChangeLanguage: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onClose: PropTypes.func,
-  translations: PropTypes.instanceOf(Object),
 };
 
 const defaultProps = {
-  translations: {},
   onClose: (() => {}),
   imageLink: '',
 };
@@ -43,18 +42,18 @@ const DropdownMenu = ({
   navigationList,
   selectedLanguage,
   onChangeLanguage,
-  translations,
   onLogout,
   onClose,
   onNavigate,
   isOpen,
 }) => {
+  const { t } = translation;
   const [mobileMenuTab, setMobileMenuTab] = useState(MENU_TAB);
 
   const langaugeForm = Form.useFormBuilder({
     selectLanguage: {
       type: 'select',
-      label: (translations.languageSelector || 'Language'),
+      label: t('languageSelector', 'asurgentui'),
       value: selectedLanguage,
       options: languages,
       noLabel: true,
@@ -81,7 +80,7 @@ const DropdownMenu = ({
               <Button.Plain onClick={onLogout}>
                 <U.CreateItem>
                   <MdiIcon size={1.2} path={mdiExitToApp} className="exit-icon" />
-                  <U.CreateTitle>{translations.logout || 'Sign out'}</U.CreateTitle>
+                  <U.CreateTitle>{t('logout', 'asurgentui')}</U.CreateTitle>
                 </U.CreateItem>
               </Button.Plain>
             </U.DesktopMenuFooter>
@@ -90,7 +89,7 @@ const DropdownMenu = ({
       </U.Desktop>
 
       <U.Mobile>
-        <Transition.FadeIn isVisible={isOpen} timeout={80} withClickShield={onClose}>
+        <Transition.FadeIn isVisible={isOpen} timeout={80}>
           <U.MobileMenu>
             <Button.Icon
               className="close"
@@ -131,8 +130,8 @@ const DropdownMenu = ({
                 <div className="wrapper">
                   <Button.Plain onClick={onLogout}>
                     <U.CreateItem>
-                      <MdiIcon size={1.4} path={mdiExitToApp} className="exit-icon" />
-                      <U.CreateTitle>{translations.logout || 'Sign out'}</U.CreateTitle>
+                      <MdiIcon size={1.2} path={mdiExitToApp} className="exit-icon" />
+                      <U.CreateTitle>{t('logout', 'asurgentui')}</U.CreateTitle>
                     </U.CreateItem>
                   </Button.Plain>
                 </div>
@@ -156,13 +155,13 @@ const DropdownMenu = ({
                 active={mobileMenuTab === MENU_TAB}
                 onClick={() => setMobileMenuTab(MENU_TAB)}
               >
-                {translations.menu || 'Menu'}
+                {t('menu', 'asurgentui')}
               </U.TabButton>
               <U.TabButton
                 active={mobileMenuTab === SETTINGS_TAB}
                 onClick={() => setMobileMenuTab(SETTINGS_TAB)}
               >
-                {translations.settings || 'Settings'}
+                {t('settings', 'asurgentui')}
               </U.TabButton>
             </U.Tabs>
           </U.MobileMenu>
