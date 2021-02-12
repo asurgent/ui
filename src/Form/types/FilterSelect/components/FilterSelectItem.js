@@ -15,12 +15,15 @@ const FilterItem = ({
   filterItem,
   onChange,
 }) => (
-  <C.FilterItem onClick={() => onChange(filterItem)}>
+  <C.FilterItem
+    onClick={() => !filterItem.disabled && onChange(filterItem)}
+    disabled={filterItem.disabled}
+  >
     <C.Active>
       {filterItem.selected && <MdiIcon path={mdiCheck} size={1.2} />}
     </C.Active>
     <C.FilterLabel>
-      { filterItem.label }
+      <span>{ filterItem.label }</span>
     </C.FilterLabel>
   </C.FilterItem>
 );

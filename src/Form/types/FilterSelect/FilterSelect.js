@@ -105,7 +105,7 @@ const FilterInput = forwardRef((props, ref) => {
       <C.Output onClick={() => !disabled() && filterSelectHook.setOpen(true)}>
         <C.Value disabled={disabled()} asPlaceholder={filterSelectHook.showPlaceHolder()}>
           { filterSelectHook.showTags() && (
-          <Tag.Collection tags={filterSelectHook.getTags()} max={3} />
+            <Tag.Collection tags={filterSelectHook.getTags()} max={3} />
           )}
           { filterSelectHook.showPlaceHolder() && placeholdeOutput}
           {!filterSelectHook.showTags() && (filterSelectHook.getOutput())}

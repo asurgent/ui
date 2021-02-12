@@ -28,25 +28,34 @@ const getDetfaultSingleValue = (values, options, hasPlaceholder) => {
 
 const getValuesAndLabel = (list) => {
   const result = list.reduce((acc, item) => {
-    const [labels, options] = acc;
+    const [labels, options, disabled] = acc;
 
     if (typeof item === 'object' && item?.value) {
       Object.assign(labels, {
         [item.value]: item.label || item.value,
       });
       options.push(item.value);
+
+      Object.assign(disabled, {
+        [item.value]: Boolean(item.disabled),
+      });
     } else {
       Object.assign(labels, {
         [item]: item,
       });
+      Object.assign(disabled, {
+        [item.value]: false,
+      });
+
       options.push(item);
     }
 
     return [
       labels,
       options,
+      disabled,
     ];
-  }, [{}, []]);
+  }, [{}, [], {}]);
   return result;
 };
 
@@ -83,7 +92,11 @@ const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlac
     }
   }, [multiSelect, selectedOptions]);
 
-  const [labelsList, optionsList] = useMemo(() => getValuesAndLabel(options), [options]);
+  const [
+    labelsList,
+    optionsList,
+    disabledList,
+  ] = useMemo(() => getValuesAndLabel(options), [options]);
   const selectedOptionsOutputList = useMemo(() => selectedOptions
     .map((value) => (labelsList[value] || value)),
   [labelsList, selectedOptions]);
@@ -98,6 +111,7 @@ const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlac
         .reduce((acc, item) => [{
           label: `${labelsList[item] || item}`,
           value: item,
+          disabled: disabledList[item],
           selected: selectedOptions.some((val) => val === item),
         }, ...acc], []);
 
@@ -133,7 +147,7 @@ const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlac
       return filterd;
     }
     return [];
-  }, [labelsList, options, optionsList, search, selectedOptions, values]);
+  }, [disabledList, labelsList, options, optionsList, search, selectedOptions, values]);
 
   return {
     inputRef,

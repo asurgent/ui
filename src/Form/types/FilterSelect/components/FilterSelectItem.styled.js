@@ -7,13 +7,17 @@ export const Base = styled.div`
     padding: 1.6rem;
 `;
 
-export const Active = styled(Base)``;
+export const Active = styled(Base)`
+    width: 4.5rem;
+`;
 
 export const FilterItem = styled.div`
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid ${({ theme }) => theme.gray200};    
-    opacity: ${({ matched }) => (matched ? 1 : 0.5)};
+    opacity: ${({ matched, disabled }) => ((matched || !disabled) ? 1 : 0.5)};
+    text-decoration: ${({ disabled }) => ((disabled) && 'line-through')};
+     
     cursor: pointer;
 
     &:hover {
@@ -32,7 +36,7 @@ export const FilterLabel = styled.div`
     justify-content: flex-start;
     align-items: center;
     padding: 1.6rem;
-    max-width: 29.5rem;
+    display: block;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
