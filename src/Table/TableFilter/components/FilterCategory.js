@@ -56,11 +56,10 @@ const FilterCategory = (props) => {
     <C.FilterWrapper active={groupHook.hasSelectedOptions()}>
       <Button.Filter onClick={() => groupHook.setOpen(true)}>{label}</Button.Filter>
       <C.ShieldTargetWrapper>
-        <C.ClickShield isVisible={groupHook.isOpen()} onClick={() => groupHook.setOpen(false)} />
         <Transition.FadeInSlideDownOnDesktop
-          isVisible={groupHook.isOpen()}
           timeout={80}
-          style={{ zIndex: 1 }}
+          isVisible={groupHook.isOpen()}
+          withClickShield={() => groupHook.setOpen(false)}
         >
           <C.Dropdown>
             {

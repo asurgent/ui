@@ -47,7 +47,6 @@ const getValuesAndLabel = (list) => {
       options,
     ];
   }, [{}, []]);
-
   return result;
 };
 
@@ -57,6 +56,7 @@ const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlac
   const [search, setSearch] = useState('');
   const [selectedOptions, setSelected] = useState([]);
   const [isReady, setReady] = useState(false);
+
   useEffect(() => {
     if (!isOpen) {
       // Wait for slideuptransition to complete
@@ -149,7 +149,6 @@ const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlac
       if (!multiSelect) {
         return outputParser(selectedOptionsOutputList[0]);
       }
-
       return outputParser(selectedOptionsOutputList);
     },
     getInputValue: () => {
@@ -161,13 +160,15 @@ const useFilterSelectHook = (values, options, multiSelect, outputParser, hasPlac
     },
     showPlaceHolder: () => selectedOptions.length === 0,
     showTags: () => Boolean(multiSelect) && selectedOptions.length > 0,
-    getTags: () => selectedOptions.sort((a, b) => {
-      const textA = (a || '').toUpperCase();
-      const textB = (b || '').toUpperCase();
-      if (textA < textB) { return -1; }
-      if (textA > textB) { return 1; }
-      return 0;
-    }).map((val) => ({ value: val })),
+    getTags: () => selectedOptions
+      .sort((a, b) => {
+        const textA = (a || '').toUpperCase();
+        const textB = (b || '').toUpperCase();
+
+        if (textA < textB) { return -1; }
+        if (textA > textB) { return 1; }
+        return 0;
+      }).map((val) => ({ value: labelsList?.[val] || val })),
     selectItem: (item) => {
       if (multiSelect) {
         if (item.selected) {
