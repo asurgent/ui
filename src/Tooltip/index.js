@@ -21,6 +21,12 @@ const Primary = ({ children, position, ...props }) => (
   </Tooltip>
 );
 
+const Top = ({ children, position, ...props }) => (
+  <Tooltip {...props} position="top">
+    {children}
+  </Tooltip>
+);
+
 const Middle = ({ children, position, ...props }) => (
   <Tooltip {...props} position="middle">
     {children}
@@ -54,6 +60,10 @@ Primary.propTypes = propTypes;
 Primary.defaultProps = defaultProps;
 Primary.displayName = '@asurgent.ui.Tooltip.Primary';
 
+Top.propTypes = propTypes;
+Top.defaultProps = defaultProps;
+Top.displayName = '@asurgent.ui.Tooltip.Card';
+
 export {
-  Middle, Right, Left, Primary,
+  Middle, Right, Left, Primary, Top,
 };

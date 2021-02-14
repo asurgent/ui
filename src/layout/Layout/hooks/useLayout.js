@@ -3,9 +3,7 @@ import { useState } from 'react';
 const useLayout = (config) => {
   const {
     translator,
-    navigationListConstructor,
     avaliableLanguagesConstructor,
-    createListConstructor,
     onLogout,
     onChangeLanguage,
   } = config;
@@ -13,6 +11,8 @@ const useLayout = (config) => {
   const [userState, setUserState] = useState({
     name: '', email: '', imageLink: '', isAdmin: false,
   });
+  const [navigationList, setNavigationList] = useState([]);
+  const [createList, setCreateList] = useState([]);
   const [customerIdState, setCustomerIdState] = useState('');
   const [customerNameState, setCustomerNameState] = useState('');
   const [selectedLanguageState, setSelectedLanguageState] = useState(config.currentLanguage || '');
@@ -27,16 +27,11 @@ const useLayout = (config) => {
     setCustomerId: (customerId) => setCustomerIdState(customerId),
     setCustomerName: (customerName) => setCustomerNameState(customerName),
     getUser: () => userState,
-    getNavigationItems: () => navigationListConstructor(translator, customerIdState),
+    getNavigationItems: () => navigationList,
+    setNavigationList: (list) => setNavigationList(list),
     getAvaliableLanguages: () => avaliableLanguagesConstructor(translator, selectedLanguageState),
-    getCreateList: () => createListConstructor(translator),
-    getMenuTranslations: () => ({
-      create: translator('menuCreate'),
-      languageSelector: translator('menuLanguageSelector'),
-      logout: translator('menuButtonLogout'),
-      menu: translator('menuButtonMenu'),
-      settings: translator('menuButtonSettings'),
-    }),
+    setCreateList: (list) => setCreateList(list),
+    getCreateList: () => createList,
     getCurrentLanguage: () => selectedLanguageState,
     getCustomerId: () => customerIdState,
     getCustomerName: () => customerNameState,

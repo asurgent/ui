@@ -1,4 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, {
+  useRef, useEffect, useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import * as d3 from 'd3';
@@ -6,18 +8,19 @@ import { withTheme } from 'styled-components';
 import * as C from './Squares.styled';
 import translation from './Squares.translation';
 import { getColor } from '../../helpers';
-import { addMonthText, addWeekdays } from './helpers';
-import { marginFromWeekdays } from '../../constants';
+import { STROKE_WIDTH, WEEKDAYS_WIDTH, MONTHS_HEIGHT } from '../../Constants';
+import {
+  addMonthText, addWeekdays, isToday, getY, getX, getValueText,
+} from './helpers';
 
 const { t } = translation;
 
 const propTypes = {
   data: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
-  valueLabel: PropTypes.string,
-  onDateClick: PropTypes.func,
+  primaryLabel: PropTypes.string,
+  secondaryLabel: PropTypes.string,
   cellSize: PropTypes.number,
-  cellPadding: PropTypes.number,
-  cellRadius: PropTypes.number,
+  cellGap: PropTypes.number,
   emptyColor: PropTypes.string,
   legendCategories: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
   startDate: PropTypes.oneOfType([
@@ -25,139 +28,264 @@ const propTypes = {
     PropTypes.instanceOf(Date),
     PropTypes.instanceOf(moment),
   ]),
-  useDateToggle: PropTypes.func,
-  theme: PropTypes.instanceOf(Object),
+  tooltipRef: PropTypes.instanceOf(Object),
 };
 
 const defaultProps = {
   data: null,
-  valueLabel: 'value',
-  onDateClick: () => null,
+  primaryLabel: 'something',
+  secondaryLabel: 'something else',
   cellSize: 18,
-  cellPadding: 2,
-  cellRadius: 1,
+  cellGap: 2,
   emptyColor: '#F2F2F2',
   legendCategories: null,
-  startDate: moment().startOf('year'),
-  useDateToggle: () => false,
-  theme: {},
+  startDate: null,
+  tooltipRef: null,
+};
+
+const mouseover = (tooltip) => tooltip.style('opacity', 1);
+const mouseleave = (tooltip) => tooltip.style('opacity', 0);
+const mousemove = ({
+  date, primValue, secValue, primaryLabel, secondaryLabel, cellSize, tooltip,
+}) => {
+  const { x, y } = d3.event;
+  const { width, height } = tooltip.node().getBoundingClientRect();
+  const valueText = getValueText({
+    val1: primValue, val2: secValue, primaryLabel, secondaryLabel,
+  });
+
+  tooltip
+    .html(`${valueText} ${t('on', 'asurgentui')} ${moment(date).format('YYYY-MM-DD')}`)
+    .style('left', `${x - (width / 2)}px`)
+    .style('top', `${y - (height + cellSize)}px`);
+};
+
+const createSquareBlocks = (group, data, cellSize) => group
+  .selectAll('rect')
+  .data(data.filter(({ date }) => !isToday(date)))
+  .join('rect')
+  .attr('shape-rendering', 'crispedges')
+  .attr('width', cellSize)
+  .attr('height', cellSize);
+
+const moveSquares = (squares, startDate, cellSize, cellGap) => {
+  squares
+    .attr('x', ({ date }) => getX(startDate, date, cellSize, cellGap))
+    .attr('y', ({ date }) => getY(date, cellSize, cellGap));
+};
+
+// looping over all days, try to find prim, otherwise sec, otherwise null
+const fillSquares = (squares, emptyColor, legendCategories) => {
+  squares
+    .attr('fill', ({ primValue, secValue }) => {
+      if (primValue) {
+        return getColor(primValue, emptyColor, legendCategories);
+      }
+      if (secValue) {
+        return '#F2F2F2';
+      }
+      return '#fff';
+    })
+    .style('stroke', ({ primValue, secValue }) => {
+      if (primValue === undefined && secValue === undefined) {
+        return '#f2f2f2';
+      }
+      return getColor(primValue, emptyColor, legendCategories);
+    })
+    .style('stroke-width', `${STROKE_WIDTH}px`)
+    .style('stroke-dasharray', '100%')
+    .style('stroke-linecap', 'square');
+};
+
+const getPolygons = (today, cellSize) => [
+  {
+    color: '#133A5D',
+    date: today?.date,
+    points: [
+      { x: 0, y: 0 },
+      { x: cellSize, y: 0 },
+      { x: cellSize, y: cellSize },
+    ],
+  }, {
+    date: today.date,
+    secValue: today?.secValue,
+    primValue: today?.primValue,
+    points: [
+      { x: 0, y: cellSize },
+      { x: 0, y: 0 },
+      { x: cellSize, y: cellSize },
+    ],
+  },
+];
+
+const placeToday = (
+  data,
+  cellSize,
+  startDate,
+  cellGap,
+  emptyColor,
+  legendCategories,
+  tooltip,
+  primaryLabel,
+  secondaryLabel,
+  todayRef,
+) => {
+  const g = d3.select(todayRef);
+  const today = data.find(({ date }) => isToday(date)) || {};
+  const { primValue, secValue, date } = today;
+  const polys = getPolygons(today, cellSize);
+
+  g.attr('transform', () => `translate(
+    ${getX(startDate, today.date, cellSize, cellGap)},
+    ${getY(today.date, cellSize, cellGap)}
+  )`)
+    .on('mousemove', () => mousemove({
+      date,
+      primValue,
+      secValue,
+      primaryLabel,
+      secondaryLabel,
+      cellSize,
+      tooltip,
+    }))
+    .on('mouseover', () => mouseover(tooltip))
+    .on('mouseleave', () => mouseleave(tooltip));
+
+  g.selectAll('polygon')
+    .data(polys)
+    .join('polygon')
+    .attr('points', ({ points }) => points.map((p) => [p.x, p.y].join(',')).join(' '))
+    .attr('fill', ({ color }) => {
+      if (color) {
+        return color;
+      }
+      const colorVal = today.primValue || today.secValue;
+      if (!colorVal) {
+        return emptyColor;
+      }
+
+      return getColor(colorVal, emptyColor, legendCategories);
+    })
+    .attr('stroke-width', 4);
 };
 
 const Squares = ({
   data,
   startDate,
-  valueLabel,
-  onDateClick,
+  primaryLabel,
+  secondaryLabel,
   cellSize,
-  cellPadding,
-  cellRadius,
+  cellGap,
   emptyColor,
   legendCategories,
-  useDateToggle,
-  theme,
+  tooltipRef,
 }) => {
   const squareRef = useRef(null);
   const monthTextRef = useRef(null);
   const weekdayRef = useRef(null);
+  const todayRef = useRef(null);
+  const daysRef = useRef(null);
+  const tooltip = d3.select(tooltipRef?.current);
 
-  const [selected, setSelected] = useState(null);
+  const daysGroup = d3.select(daysRef?.current);
 
-  useEffect(() => {
-    const toggleSelected = (d) => {
-      if (selected && d.date === selected.date) {
-        setSelected(null);
-      } else {
-        setSelected(d);
-      }
-    };
-
-    if (squareRef.current) {
-      const tooltip = d3.select('#tooltip');
-
-      const mouseover = () => tooltip.style('opacity', 1);
-      const mouseleave = () => tooltip.style('opacity', 0);
-      const mousemove = ({ date, value }) => {
-        const { x, y } = d3.event;
-        const { width, height } = tooltip.node().getBoundingClientRect();
-        const valueText = value === null ? t('noData', 'asurgentui') : `${value} ${valueLabel}`;
-        tooltip
-          .html(`${valueText} ${t('on', 'asurgentui')} ${moment(date).format('YYYY-MM-DD')}`)
-          .style('left', `${x - (width / 2)}px`)
-          .style('top', `${y - (height + cellSize)}px`);
-      };
-
-      const squareGroup = d3.select(squareRef.current);
-      const squares = squareGroup
-        .selectAll('rect')
-        .data(data)
-        .join('rect')
-        .on('mousemove', mousemove)
-        .on('mouseover', mouseover)
-        .on('mouseleave', mouseleave)
-        .on('click', (d) => {
-          onDateClick(d);
-          if (useDateToggle()) {
-            if (d.value !== null) {
-              toggleSelected(d);
-            }
-          }
-        });
-
-      squares
-        .attr('width', cellSize - cellPadding)
-        .attr('height', cellSize - cellPadding)
-        .attr(
-          'x',
-          (d) => {
-            const firstDate = startDate ? moment(startDate) : moment(d.date).startOf('year');
-            const week = d3.utcSunday.count(firstDate, d.date);
-            return (week * cellSize) + cellPadding + marginFromWeekdays;
-          },
-        )
-        .attr('y', (d) => (moment(d.date).isoWeekday() - 1) * cellSize + 20)
-        .attr('rx', cellRadius)
-        .attr('ry', cellRadius)
-        .attr('fill', (d) => {
-          if (selected) {
-            if (d.date === selected.date) {
-              return getColor(d.value, emptyColor || theme.gray100, legendCategories);
-            }
-            return emptyColor;
-          }
-          return getColor(d.value, emptyColor || theme.gray100, legendCategories);
-        })
-        .transition()
-        .duration(500);
-
-      if (monthTextRef.current) {
-        addMonthText({
-          ref: monthTextRef.current, data, startDate, cellSize,
-        });
-      }
-      if (weekdayRef.current) {
-        addWeekdays({ ref: weekdayRef.current, cellSize });
-      }
+  // Create squares
+  const squares = useMemo(() => {
+    if (daysGroup && data) {
+      const noToday = data.filter(({ date }) => !isToday(date));
+      return createSquareBlocks(daysGroup, noToday, cellSize, cellGap);
     }
-  }, [
-    cellPadding,
-    cellRadius,
+    return null;
+  }, [data, cellGap, cellSize, daysGroup]);
+
+  // Place today
+  useEffect(() => {
+    if (daysGroup) {
+      placeToday(data,
+        cellSize,
+        startDate,
+        cellGap,
+        emptyColor,
+        legendCategories,
+        tooltip,
+        primaryLabel,
+        secondaryLabel,
+        todayRef?.current);
+    }
+  }, [data,
+    cellGap,
     cellSize,
-    data,
     emptyColor,
     legendCategories,
-    monthTextRef,
-    onDateClick,
-    selected,
     startDate,
-    theme.gray100,
-    useDateToggle,
-    valueLabel]);
+    primaryLabel,
+    secondaryLabel,
+    daysGroup,
+    tooltip]);
+
+  // Placement of squares
+  useEffect(() => {
+    if (daysGroup && squares) {
+      moveSquares(squares, startDate, cellSize, cellGap);
+    }
+  }, [cellGap, cellSize, startDate, squares, daysGroup]);
+
+  // Fill squares
+  useEffect(() => {
+    if (daysGroup && squares) {
+      fillSquares(squares, emptyColor, legendCategories, cellSize);
+    }
+  }, [emptyColor, legendCategories, cellSize, squares, daysGroup]);
+
+  // Mouse events
+  useEffect(() => {
+    squares
+      .on('mousemove', ({ date, primValue, secValue }) => mousemove({
+        date,
+        primValue,
+        secValue,
+        primaryLabel,
+        secondaryLabel,
+        cellSize,
+        tooltip,
+      }))
+      .on('mouseover', () => mouseover(tooltip))
+      .on('mouseleave', () => mouseleave(tooltip));
+  }, [cellSize, primaryLabel, secondaryLabel, squares, tooltip]);
+
+  // Add weekdays
+  useEffect(() => {
+    if (data && weekdayRef.current) {
+      addWeekdays({
+        ref: weekdayRef.current,
+        cellSize,
+        cellGap,
+      });
+    }
+  }, [cellGap, cellSize, data]);
+
+  // Add months
+  useEffect(() => {
+    if (data && monthTextRef.current) {
+      addMonthText({
+        ref: monthTextRef.current,
+        data,
+        startDate,
+        cellSize,
+        cellGap,
+        weekdayOffset: WEEKDAYS_WIDTH,
+      });
+    }
+  }, [cellGap, cellSize, data, startDate]);
 
   return (
     <>
       <C.Months ref={monthTextRef} />
-      <C.Weekdays ref={weekdayRef} />
-      <C.Squares id="squares" ref={squareRef} />
+      <C.Weekdays ref={weekdayRef} style={{ transform: `translateY(${MONTHS_HEIGHT}px)` }} />
+      <C.Squares id="squares" ref={squareRef} style={{ transform: `translate(${WEEKDAYS_WIDTH}px, ${MONTHS_HEIGHT}px)` }}>
+        <g ref={daysRef} />
+        <g ref={todayRef} />
+      </C.Squares>
     </>
   );
 };

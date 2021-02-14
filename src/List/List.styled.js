@@ -1,16 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-    position: relative;
-    width: 100%;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    border-top: 1px solid ${({ theme, borderTop }) => (borderTop ? theme.gray300 : 'transprent')};
-    border-bottom: 1px solid ${({ theme, borderBottom }) => (borderBottom ? theme.gray300 : 'transprent')};
-`;
-
 export const Title = styled.div`
-    padding: 1.6rem 1.6rem 1.6rem 0;
     font-family: "Poppins";
     font-style: normal;
     font-weight: normal;
@@ -18,11 +8,14 @@ export const Title = styled.div`
     text-transform: uppercase;
     display: flex;
     align-items: flex-start;
-    border-bottom: 1px solid ${({ theme }) => theme.gray300};
     word-break: break-all;
     min-width: 8rem;
     flex-wrap: wrap;
     align-items: center;
+    border-bottom: 1px solid ${({ theme }) => theme.gray300};
+    &:nth-last-child(1), &:nth-last-child(2){
+        border-bottom-color: ${({ theme, borderBottom }) => (borderBottom ? theme.gray300 : 'transparent')}
+    }
 `;
 
 export const Value = styled(Title)`
@@ -35,6 +28,19 @@ export const Value = styled(Title)`
 export const NoValue = styled(Value)`
     color: ${({ theme }) => theme.gray300};
     font-size: 1.4rem;
+`;
+
+export const Wrapper = styled.div`
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    border-top: 1px solid ${({ theme, borderTop }) => (borderTop ? theme.gray300 : 'transparent')};
+    border-bottom: 1px solid ${({ theme, borderBottom }) => (borderBottom ? theme.gray300 : 'transparent')};
+
+    ${Title} {
+        padding: ${({ compact }) => (compact ? '.4rem .4rem .4rem 0 ' : '1.6rem 1.6rem 1.6rem 0')};
+    }
 `;
 
 export const Row = styled.div`

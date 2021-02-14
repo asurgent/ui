@@ -4,7 +4,6 @@ import MdiIcon from '@mdi/react';
 import { mdiClose } from '@mdi/js';
 import * as U from './DropdownCreate.styled';
 import * as Button from '../../Button';
-import * as Shield from '../../Shield';
 import * as Transition from '../../Transition';
 
 const btnPropTypes = {
@@ -54,12 +53,15 @@ const DropdownCreate = ({
   onClose,
 }) => (
   <>
-    <Shield.Transparent onClick={onClose} shieldIsUp={isOpen}>
-      <U.MenuWrapper>
-        <U.Desktop>
-          <Transition.FadeInSlideDown isVisible={isOpen} timeout={80}>
-            <U.DesktopMenu>
-              {
+    <U.MenuWrapper>
+      <U.Desktop>
+        <Transition.FadeInSlideDown
+          withClickShield={onClose}
+          isVisible={isOpen}
+          timeout={80}
+        >
+          <U.DesktopMenu>
+            {
               createActionList
                 .map((action) => (
                   <CreateItemButton
@@ -72,20 +74,23 @@ const DropdownCreate = ({
                   />
                 ))
             }
-            </U.DesktopMenu>
-          </Transition.FadeInSlideDown>
-        </U.Desktop>
-
-        <U.Mobile>
-          <Transition.FadeIn isVisible={isOpen} timeout={80}>
-            <U.MobileMenu>
-              <Button.Icon
-                className="close"
-                onClick={onClose}
-                icon={(<MdiIcon size={1.4} path={mdiClose} />)}
-              />
-              <U.MobileContent>
-                {
+          </U.DesktopMenu>
+        </Transition.FadeInSlideDown>
+      </U.Desktop>
+      <U.Mobile>
+        <Transition.FadeIn
+          withClickShield={onClose}
+          isVisible={isOpen}
+          timeout={80}
+        >
+          <U.MobileMenu>
+            <Button.Icon
+              className="close"
+              onClick={onClose}
+              icon={(<MdiIcon size={1.2} path={mdiClose} />)}
+            />
+            <U.MobileContent>
+              {
                   createActionList
                     .map((action) => (
                       <CreateItemButton
@@ -98,12 +103,11 @@ const DropdownCreate = ({
                       />
                     ))
               }
-              </U.MobileContent>
-            </U.MobileMenu>
-          </Transition.FadeIn>
-        </U.Mobile>
-      </U.MenuWrapper>
-    </Shield.Transparent>
+            </U.MobileContent>
+          </U.MobileMenu>
+        </Transition.FadeIn>
+      </U.Mobile>
+    </U.MenuWrapper>
   </>
 
 );

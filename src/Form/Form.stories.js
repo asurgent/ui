@@ -222,7 +222,7 @@ export const defaultForm = () => {
         searchPlaceholder: 'Search in me plz',
       },
       options: [
-        { value: '1', label: 'one' },
+        { value: '1', label: 'one', disabled: true },
         { value: '2', label: 'two' },
         '3',
         '4',
