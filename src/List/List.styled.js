@@ -13,9 +13,6 @@ export const Title = styled.div`
     flex-wrap: wrap;
     align-items: center;
     border-bottom: 1px solid ${({ theme }) => theme.gray300};
-    &:nth-last-child(1), &:nth-last-child(2){
-        border-bottom-color: ${({ theme, borderBottom }) => (borderBottom ? theme.gray300 : 'transparent')}
-    }
 `;
 
 export const Value = styled(Title)`
