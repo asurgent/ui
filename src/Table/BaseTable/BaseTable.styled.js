@@ -1,6 +1,8 @@
 import styled from 'styled-components';
+import { lighten } from 'polished';
 import { Plain } from '../../Button/Button.styled';
 import * as Button from '../../Button';
+import * as T from '../../Typography';
 
 export const Arrow = styled.div`
     border: solid black;
@@ -147,6 +149,9 @@ export const RemoveBtn = styled(Button.Transparent)`
   color: ${({ theme }) => theme.ruby800}; 
   font-size: 1.2rem; 
   padding: 0;
+  &:hover {
+    color: ${({ theme }) => theme.ruby800}; 
+  }
 `;
 
 export const AddBtn = styled(Button.Primary)`
@@ -154,22 +159,26 @@ export const AddBtn = styled(Button.Primary)`
   border: none;
   padding: 0.4rem 1.6rem;
   font-size: 1.2rem;
-  margin: 0 3.2rem;
+  &:hover {
+    background: ${({ theme }) => lighten(0.03, theme.green400)};
+  }
 `;
 
-export const AddRemove = styled.div`
-  display: flex;
-  justify-content: flex-start; 
-  align-items: center; 
-  flex-wrap: wrap; 
-  margin-left: 2rem;
+export const SelectedNumber = styled(T.P.Main)`
+  margin: 0; 
+  font-size: 1.4rem;
 `;
 
 export const ActionMenu = styled.div`
-  display: flex; 
-  justify-content: flex-start; 
-  align-items: center; 
   margin-bottom: 2rem; 
   flex-wrap: wrap; 
   margin-left: 2rem;
+
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 2rem;
+
+  @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {
+    grid-template-columns: auto auto auto auto;
+  }
 `;

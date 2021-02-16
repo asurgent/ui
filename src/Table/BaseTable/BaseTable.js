@@ -153,10 +153,10 @@ const BaseTable = withTheme((props) => {
           </C.Count>
           )}
           {onAddRemove && (
-            <C.AddRemove>
-              <T.P.Main bold style={{ margin: '0', fontSize: '1.4rem' }}>
-                {`${selected.length} ${t('added', 'asurgentui')}}`}
-              </T.P.Main>
+            <>
+              <C.SelectedNumber bold>
+                {`${selected.length} ${t('added', 'asurgentui')}`}
+              </C.SelectedNumber>
               <C.AddBtn
                 tooltip={`${itemCount - selected.length} ${t('more', 'asurgentui')}`}
                 onClick={async () => {
@@ -179,7 +179,7 @@ const BaseTable = withTheme((props) => {
               >
                 {t('removeAll', 'asurgentui')}
               </C.RemoveBtn>
-            </C.AddRemove>
+            </>
           )}
         </C.ActionMenu>
 
