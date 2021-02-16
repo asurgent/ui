@@ -170,12 +170,9 @@ export const SelectedNumber = styled(T.P.Main)`
 `;
 
 export const ActionMenu = styled.div`
-  margin-bottom: 2rem; 
-  flex-wrap: wrap; 
-  margin-left: 2rem;
-
+  margin: 2rem 0 2rem 2rem;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: repeat(auto);
   gap: 2rem;
 
   @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {
