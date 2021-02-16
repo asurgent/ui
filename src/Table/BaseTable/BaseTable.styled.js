@@ -176,7 +176,7 @@ export const ActionMenu = styled.div`
   gap: 2rem;
 
   @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: auto auto auto 1fr;
   }
   & > * {
     display: flex;
