@@ -47,7 +47,12 @@ export const MonthSlector = styled(WeekSelector)`
     grid-template-rows: repeat(5, 1fr);
 `;
 
-export const Editor = styled.div``;
+export const Editor = styled.div`
+    width: 100%;
+    @media screen and (min-width: 1024px) {
+        max-width: 700px;
+    }
+`;
 
 export const Text = styled.div`
     margin-bottom: .8rem;
