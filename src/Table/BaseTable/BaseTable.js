@@ -9,6 +9,7 @@ import * as Button from '../../Button';
 import * as C from './BaseTable.styled';
 import generateRows from './helpers';
 import translation from './BaseTable.translation';
+import * as T from '../../Typography';
 
 export const propTypes = {
   canExportResults: PropTypes.bool,
@@ -53,6 +54,7 @@ export const propTypes = {
   emptystate: PropTypes.string,
   itemCount: PropTypes.number,
   displayCount: PropTypes.bool,
+  onAddRemove: PropTypes.func,
 };
 
 export const defaultProps = {
@@ -72,6 +74,7 @@ export const defaultProps = {
   itemCount: 0,
   exportFileName: '',
   displayCount: false,
+  onAddRemove: null,
 };
 
 const bodyComponents = {
@@ -98,11 +101,7 @@ const BaseTable = withTheme((props) => {
 
   const [rows, setRows] = useState([]);
 
-  useEffect(() => {
-    const defaultRows = generateRows(props, bodyComponents);
-    setRows(defaultRows);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rowData, cardView]);
+  const [selected, setSelected] = useState([]);
 
   const {
     zebra,
@@ -112,17 +111,33 @@ const BaseTable = withTheme((props) => {
     isLoading,
     emptystate,
     displayCount,
+    onAddRemove,
     canExportResults,
     exportResultsAction,
     exportFileName,
   } = props;
 
+  useEffect(() => {
+    const handleSelect = (item) => {
+      const isSelected = selected.some((i) => i.id === item.id);
+      if (isSelected) {
+        setSelected(selected.filter((i) => i.id !== item.id));
+      } else {
+        setSelected([...selected, item]);
+      }
+    };
+    const defaultRows = generateRows(props, bodyComponents, handleSelect, onAddRemove);
+    setRows(defaultRows);
+  }, [rowData, cardView, props, selected, onAddRemove]);
+
   const noContent = rows.length === 0 && isLoading === false;
   const { t } = translation;
+
   return (
     <C.Wrapper>
       <C.Base>
-        { displayCount && (
+        <C.ActionMenu>
+          { displayCount && (
           <C.Count>
             { canExportResults && exportResultsAction && (
               <Button.Plain
@@ -136,7 +151,38 @@ const BaseTable = withTheme((props) => {
               </Button.Plain>
             )}
           </C.Count>
-        )}
+          )}
+          {onAddRemove && (
+            <C.AddRemove>
+              <T.P.Main bold style={{ margin: '0', fontSize: '1.4rem' }}>
+                {`${selected.length} ${t('added', 'asurgentui')}}`}
+              </T.P.Main>
+              <C.AddBtn
+                tooltip={`${itemCount - selected.length} ${t('more', 'asurgentui')}`}
+                onClick={async () => {
+                  const filteredResults = await exportResultsAction();
+                  setSelected(filteredResults);
+                  onAddRemove(filteredResults);
+                }}
+              >
+                {t('addAll', 'asurgentui')}
+              </C.AddBtn>
+              <C.RemoveBtn
+                onClick={async () => {
+                  const filteredResults = await exportResultsAction();
+                  const selectedIds = filteredResults.map((s) => s.id);
+                  const filteredSelected = selected.filter((s) => !selectedIds.includes(s.id));
+
+                  setSelected(filteredSelected);
+                  onAddRemove(filteredSelected);
+                }}
+              >
+                {t('removeAll', 'asurgentui')}
+              </C.RemoveBtn>
+            </C.AddRemove>
+          )}
+        </C.ActionMenu>
+
         <C.Content
           zebra={zebra}
           striped={striped}

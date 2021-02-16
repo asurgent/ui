@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Plain } from '../../Button/Button.styled';
+import * as Button from '../../Button';
 
 export const Arrow = styled.div`
     border: solid black;
@@ -23,20 +24,16 @@ export const Arrow = styled.div`
 /* Content styling */
 
 export const Count = styled.div`
-    width: 100%;
-    max-width: 100%;
-    min-width: 100%;
     display: flex;
     font-weight: 400;
     font-size: 1.4rem;
     align-items: center;
     justify-content: flex-start;
     flex-direction: row;
-    padding: .8rem 2.4rem 2.4rem;
     
     ${Plain} {
       width: 10rem;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       white-space: nowrap;
     
       .label {
@@ -144,4 +141,35 @@ export const Loading = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+`;
+
+export const RemoveBtn = styled(Button.Transparent)`
+  color: ${({ theme }) => theme.ruby800}; 
+  font-size: 1.2rem; 
+  padding: 0;
+`;
+
+export const AddBtn = styled(Button.Primary)`
+  background: ${({ theme }) => theme.green400};
+  border: none;
+  padding: 0.4rem 1.6rem;
+  font-size: 1.2rem;
+  margin: 0 3.2rem;
+`;
+
+export const AddRemove = styled.div`
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center; 
+  flex-wrap: wrap; 
+  margin-left: 2rem;
+`;
+
+export const ActionMenu = styled.div`
+  display: flex; 
+  justify-content: flex-start; 
+  align-items: center; 
+  margin-bottom: 2rem; 
+  flex-wrap: wrap; 
+  margin-left: 2rem;
 `;

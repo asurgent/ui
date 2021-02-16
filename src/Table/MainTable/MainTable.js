@@ -35,6 +35,7 @@ const propTypes = {
   searchLabel: PropTypes.string,
   emptystate: PropTypes.string,
   onPagination: PropTypes.func,
+  onAddRemove: PropTypes.func,
   activePage: PropTypes.number,
   pages: PropTypes.number,
   rowData: PropTypes.instanceOf(Array),
@@ -60,6 +61,7 @@ const defaultProps = {
   searchLabel: '',
   emptystate: '',
   onPagination: () => { },
+  onAddRemove: null,
   activePage: 1,
   pages: 0,
   rowData: [],
@@ -93,6 +95,7 @@ const Table = (props) => {
     parseFilterLabelOutput,
     displayCount,
     exportFileName,
+    onAddRemove,
     canExportResults,
     ...rest
   } = props;
@@ -126,6 +129,7 @@ const Table = (props) => {
         exportResultsAction={() => tableHook.exportSearchResult()}
         exportFileName={exportFileName}
         displayCount={displayCount}
+        onAddRemove={onAddRemove}
         itemCount={tableHook.getItemCount()}
         emptystate={getEmptystate(tableHook, props)}
         isLoading={tableHook.isLoading}
