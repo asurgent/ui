@@ -9,7 +9,6 @@ import * as Button from '../../Button';
 import * as C from './BaseTable.styled';
 import generateRows from './helpers';
 import translation from './BaseTable.translation';
-import * as T from '../../Typography';
 
 export const propTypes = {
   canExportResults: PropTypes.bool,
