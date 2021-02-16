@@ -79,7 +79,7 @@ const DropdownMenu = ({
             <U.DesktopMenuFooter>
               <Button.Plain onClick={onLogout}>
                 <U.CreateItem>
-                  <MdiIcon size={1.2} path={mdiExitToApp} className="exit-icon" />
+                  <MdiIcon size={1.4} path={mdiExitToApp} className="exit-icon" />
                   <U.CreateTitle>{t('logout', 'asurgentui')}</U.CreateTitle>
                 </U.CreateItem>
               </Button.Plain>
@@ -89,7 +89,7 @@ const DropdownMenu = ({
       </U.Desktop>
 
       <U.Mobile>
-        <Transition.FadeIn isVisible={isOpen} timeout={80}>
+        <Transition.FadeIn isVisible={isOpen} timeout={80} withClickShield={onClose}>
           <U.MobileMenu>
             <Button.Icon
               className="close"
@@ -130,7 +130,7 @@ const DropdownMenu = ({
                 <div className="wrapper">
                   <Button.Plain onClick={onLogout}>
                     <U.CreateItem>
-                      <MdiIcon size={1.2} path={mdiExitToApp} className="exit-icon" />
+                      <MdiIcon size={1.4} path={mdiExitToApp} className="exit-icon" />
                       <U.CreateTitle>{t('logout', 'asurgentui')}</U.CreateTitle>
                     </U.CreateItem>
                   </Button.Plain>

@@ -13,18 +13,18 @@ export const Omnibar = styled.div`
     &:before {
         content: "";
         position: absolute;
-        bottom: -5px;
-        height: 5px;
+        bottom: -8px;
+        height: 8px;
         width: 100%;
         background: black;
         overflow: visible;
         background: rgb(2,0,36);
-        background: linear-gradient( 180deg, rgba(2,0,36,0.2) 0%, rgba(0,0,0,0) 100%);
+        background: linear-gradient( 180deg, rgba(2,0,36,0.1) 0%, rgba(0,0,0,0) 100%);
         z-index: 1;
     }
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
-        padding: 1.6rem;
+        padding: 1.6rem 1.6rem .8rem;;
     }   
 `;
 

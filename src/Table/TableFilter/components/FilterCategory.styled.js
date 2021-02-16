@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const FilterWrapper = styled.div`
     position: relative;
-    &:before {
+    &:after {
         content: "";
         position: absolute;
         bottom: 0;
