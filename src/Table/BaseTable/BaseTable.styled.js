@@ -181,4 +181,9 @@ export const ActionMenu = styled.div`
   @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {
     grid-template-columns: auto auto auto auto;
   }
+  & > * {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
 `;
