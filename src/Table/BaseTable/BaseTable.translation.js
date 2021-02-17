@@ -9,7 +9,7 @@ export default addTranslation({
     more: 'flera',
     addAll: 'Lägg till alla',
     removeAll: 'Ta bort alla',
-    added: 'tillagda',
+    added: 'valda',
   },
   en: {
     emptystate: 'No items found',
@@ -18,6 +18,6 @@ export default addTranslation({
     more: 'more',
     addAll: 'Add all',
     removeAll: 'Remove all',
-    added: 'added',
+    added: 'selected',
   },
 });
