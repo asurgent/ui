@@ -54,6 +54,7 @@ export const propTypes = {
   itemCount: PropTypes.number,
   displayCount: PropTypes.bool,
   onAddRemove: PropTypes.func,
+  initiallySelected: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
 };
 
 export const defaultProps = {
@@ -74,6 +75,7 @@ export const defaultProps = {
   exportFileName: '',
   displayCount: false,
   onAddRemove: null,
+  initiallySelected: null,
 };
 
 const bodyComponents = {
@@ -111,11 +113,11 @@ const BaseTable = withTheme((props) => {
     emptystate,
     displayCount,
     onAddRemove,
+    initiallySelected,
     canExportResults,
     exportResultsAction,
     exportFileName,
   } = props;
-
   useEffect(() => {
     const handleSelect = (item) => {
       const isSelected = selected.some((i) => i.id === item.id);
@@ -128,6 +130,12 @@ const BaseTable = withTheme((props) => {
     const defaultRows = generateRows(props, bodyComponents, handleSelect, onAddRemove);
     setRows(defaultRows);
   }, [rowData, cardView, props, selected, onAddRemove]);
+
+  useEffect(() => {
+    if (initiallySelected) {
+      setSelected(initiallySelected);
+    }
+  }, [initiallySelected]);
 
   const noContent = rows.length === 0 && isLoading === false;
   const { t } = translation;

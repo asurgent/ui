@@ -121,7 +121,6 @@ export const Cell = styled.div`
 
 export const Card = styled.div`
     display: flex;
-    padding: .8rem;
     position: relative;
     overflow: hidden;
     min-height: 5.6rem;

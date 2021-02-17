@@ -35,7 +35,6 @@ const propTypes = {
   searchLabel: PropTypes.string,
   emptystate: PropTypes.string,
   onPagination: PropTypes.func,
-  onAddRemove: PropTypes.func,
   activePage: PropTypes.number,
   pages: PropTypes.number,
   rowData: PropTypes.instanceOf(Array),
@@ -50,6 +49,8 @@ const propTypes = {
   displayCount: PropTypes.bool,
   canExportResults: PropTypes.bool,
   exportFileName: PropTypes.string,
+  onAddRemove: PropTypes.func,
+  initiallySelected: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
 };
 
 const defaultProps = {
@@ -61,7 +62,6 @@ const defaultProps = {
   searchLabel: '',
   emptystate: '',
   onPagination: () => { },
-  onAddRemove: null,
   activePage: 1,
   pages: 0,
   rowData: [],
@@ -73,6 +73,8 @@ const defaultProps = {
   displayCount: true,
   canExportResults: true,
   exportFileName: '',
+  onAddRemove: null,
+  initiallySelected: null,
 };
 
 const Table = (props) => {
@@ -96,6 +98,7 @@ const Table = (props) => {
     displayCount,
     exportFileName,
     onAddRemove,
+    initiallySelected,
     canExportResults,
     ...rest
   } = props;
@@ -130,6 +133,7 @@ const Table = (props) => {
         exportFileName={exportFileName}
         displayCount={displayCount}
         onAddRemove={onAddRemove}
+        initiallySelected={initiallySelected}
         itemCount={tableHook.getItemCount()}
         emptystate={getEmptystate(tableHook, props)}
         isLoading={tableHook.isLoading}

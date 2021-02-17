@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
 export const Row = styled.div`
     margin-top: 2.4rem;
     display: grid;
+    grid-gap: 2.4rem;
     grid-template-columns: 1fr 1fr;
     align-items: flex-end;
 
