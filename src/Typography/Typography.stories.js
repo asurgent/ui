@@ -14,7 +14,9 @@ export const typography = () => {
       <T.Title.H2>{`${myText} (Title.H2)`}</T.Title.H2>
       <T.Title.H3>{`${myText} (Title.H3)`}</T.Title.H3>
       <T.P.Main>{`${myText} (P.Main)`}</T.P.Main>
-      <T.P.Secondary>{`${myText} (P.Secondary)`}</T.P.Secondary>
+      <T.P.Main gray>{`${myText} gray`}</T.P.Main>
+      <T.P.Main bold>{`${myText} bold`}</T.P.Main>
+      <T.P.Small>{`${myText} small`}</T.P.Small>
     </div>
   );
 };

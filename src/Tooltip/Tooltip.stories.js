@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import * as Tooltip from './index';
 import * as T from '../Typography';
 import * as Tag from '../Tag';
-import * as List from '../List';
 
 const center = {
   height: '100vh', width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center',
@@ -18,29 +17,55 @@ Some paragraphy text text text text text text text.
 
 Some other text.
 `;
-const StoryContent = styled.div`
-  * {font-size: 1.2rem!important;}
+const tags = Array.from({ length: 10 }, (_, i) => `Tag-${i}`);
+
+const MyHeader = styled.div`
+  p {
+    font-size: 1.4rem;
+    margin: 0;
+  }
+  p:last-child {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
 `;
 
-const tags = Array.from({ length: 10 }, (_, i) => `Tag-${i}`);
-const TooltipHeader = () => (<T.P.Main bold style={{ marginTop: '0' }}>Header</T.P.Main>);
-
-const TooltipContent = () => (
-  <StoryContent>
-    <T.Title.H3>asurgent-cloudops-streamanalytics-prod</T.Title.H3>
-    <List.Primary
-      compact
-      rows={[
-        { label: 'Entity Type', value: 'subscription' },
-        { label: 'Resource Group', value: 'rg-asurgent-sentinel-test' },
-        { label: 'Region', value: 'westeurope' },
-        { label: 'Customer', value: 'Asurgent AB (1168)' },
-        { label: 'Id', value: '4A7B1D85F2CB1AB4E006E8BBEEA6D4ADBC55C9A6' },
-      ]}
-    />
-  </StoryContent>
+const TooltipHeader = () => (
+  <MyHeader>
+    <T.P.Main bold>Asurgent-cloudops-streamanalytics</T.P.Main>
+    <T.P.Small>ID 4A7B1D85F2CB1AB4E006E8BBEEA6D4ADBC55C9A6</T.P.Small>
+  </MyHeader>
 );
-const TooltipFooter = () => <Tag.Collection tags={tags} maxTags={2} />;
+
+const MyContent = styled.div`
+  p {
+    margin: 0;
+    font-size: 12px;
+  }
+`;
+const Gray = styled.span`
+  color: gray;
+`;
+const TooltipContent = () => (
+  <MyContent>
+    <T.P.Main bold>Asurgent AB (1168)</T.P.Main>
+    <T.P.Small>
+      <Gray>Entity type </Gray>
+      subscribtion
+    </T.P.Small>
+
+    <T.P.Small>
+      <Gray>Resource group </Gray>
+      rg-asurgent-sentinel-test
+    </T.P.Small>
+
+    <T.P.Small>
+      <Gray>Region </Gray>
+      westeurope
+    </T.P.Small>
+    <Tag.Collection tags={tags} maxTags={3} maxLength={4} style={{ marginTop: '0.8rem' }} />
+  </MyContent>
+);
 
 export const card = () => (
   <>
@@ -49,7 +74,6 @@ export const card = () => (
         isCard
         header={<TooltipHeader />}
         content={<TooltipContent />}
-        footer={<TooltipFooter />}
       >
         <div style={{ background: 'black', color: 'white' }}>
           <h1 style={{ display: 'inline-block' }}>Hover me</h1>
