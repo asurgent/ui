@@ -14,6 +14,8 @@ export const TooltipWrapper = styled.span`
   animation: fade-in .1s ease;
   transform: ${({ position }) => {
     switch (position) {
+      case 'top':
+        return 'translate(-50%, -100%)';
       case 'left':
         return 'translate( -100%, -50%)';
       case 'right':

@@ -43,25 +43,28 @@ const TooltipContent = () => (
 const TooltipFooter = () => <Tag.Collection tags={tags} maxTags={2} />;
 
 export const card = () => (
-  <div style={center}>
-    <Tooltip.Top
-      isCard
-      header={<TooltipHeader />}
-      content={<TooltipContent />}
-      footer={<TooltipFooter />}
-    >
-      <div>
-        <h1 style={{ display: 'inline-block' }}>Hover asdf</h1>
-      </div>
-    </Tooltip.Top>
-  </div>
+  <>
+    <div style={center}>
+      <Tooltip.Top
+        isCard
+        header={<TooltipHeader />}
+        content={<TooltipContent />}
+        footer={<TooltipFooter />}
+      >
+        <div style={{ background: 'black', color: 'white' }}>
+          <h1 style={{ display: 'inline-block' }}>Hover asdf</h1>
+        </div>
+      </Tooltip.Top>
+    </div>
+
+  </>
 );
 
 export const bottomMiddle = () => (
   <div style={center}>
     <Tooltip.Middle tip={someFormattedToolTip}>
       <div>
-        <h1 style={{ display: 'inline-block' }}>Hover me</h1>
+        <h1 style={{ display: 'inline-block' }}>Hover 3</h1>
       </div>
     </Tooltip.Middle>
   </div>
