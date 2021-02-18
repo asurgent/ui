@@ -52,7 +52,7 @@ export const card = () => (
         footer={<TooltipFooter />}
       >
         <div style={{ background: 'black', color: 'white' }}>
-          <h1 style={{ display: 'inline-block' }}>Hover asdf</h1>
+          <h1 style={{ display: 'inline-block' }}>Hover me</h1>
         </div>
       </Tooltip.Top>
     </div>
@@ -63,8 +63,8 @@ export const card = () => (
 export const bottomMiddle = () => (
   <div style={center}>
     <Tooltip.Middle tip={someFormattedToolTip}>
-      <div>
-        <h1 style={{ display: 'inline-block' }}>Hover 3</h1>
+      <div style={{ background: 'black', color: 'white' }}>
+        <h1 style={{ display: 'inline-block' }}>Hover me</h1>
       </div>
     </Tooltip.Middle>
   </div>
