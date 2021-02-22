@@ -113,7 +113,7 @@ const generateRowId = (columnData, index) => {
   }
 };
 
-const generateCard = (props, cardData, components) => {
+const generateCard = (props, cardData, components, handleSelect, onAddRemove) => {
   const { cardConfiguration, cardComponent } = props;
 
   const content = cardConfiguration(cardData);
@@ -122,21 +122,26 @@ const generateCard = (props, cardData, components) => {
   const CardContainer = cardComponent ? cardComponent(components, cardData) : components.card;
 
   const element = (
-    <CardContainer {...cardProps} key={`${cardData.id}-card`} cardView>
-      {content}
-    </CardContainer>
+    handleSelect && onAddRemove ? (
+      <CardContainer {...cardProps} key={`${cardData.id}-card`} cardView onClick={() => handleSelect(cardData)} onSelect={onAddRemove}>
+        {content}
+      </CardContainer>
+    ) : (
+      <CardContainer {...cardProps} key={`${cardData.id}-card`} cardView>
+        {content}
+      </CardContainer>
+    )
   );
-
   return element;
 };
 
-const generateRows = (props, components) => props.rowData
+const generateRows = (props, components, handleSelect, onAddRemove) => props.rowData
   .reduce((acc, rowData, index) => {
     generateRowId(rowData, index);
     const { cardView } = props;
 
     if (cardView && typeof props.cardConfiguration === 'function') {
-      const card = generateCard(props, rowData, components);
+      const card = generateCard(props, rowData, components, handleSelect, onAddRemove);
       acc.push(card);
     } else {
       // Make it possible to override default styling of rows
@@ -148,6 +153,8 @@ const generateRows = (props, components) => props.rowData
           striped={props.striped}
           zebra={props.zebra}
           equalSize={props.equalSizeColumns}
+          onSelect={handleSelect}
+          onClick={() => handleSelect(rowData)}
         >
           {generateCells(props, rowData, components)}
         </Row>

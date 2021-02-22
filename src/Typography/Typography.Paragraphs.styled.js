@@ -10,6 +10,7 @@ export const Main = styled.p`
     if (lowercase) return 'lowercase';
     return 'initial';
   }};
+    color: ${({ theme, gray }) => (gray ? theme.gray600 : theme.black)};
     font-weight: ${({ bold }) => (bold ? 700 : 400)};
     line-height: 2rem;
     letter-spacing: 0em;
@@ -21,8 +22,4 @@ export const Main = styled.p`
 export const Small = styled(Main)`
     line-height: 1.8rem;
     font-size: 1.4rem;
-`;
-
-export const Secondary = styled(Main)`
-    color: ${({ theme }) => theme.gray600};
 `;

@@ -49,6 +49,8 @@ const propTypes = {
   displayCount: PropTypes.bool,
   canExportResults: PropTypes.bool,
   exportFileName: PropTypes.string,
+  onAddRemove: PropTypes.func,
+  initiallySelected: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
 };
 
 const defaultProps = {
@@ -71,6 +73,8 @@ const defaultProps = {
   displayCount: true,
   canExportResults: true,
   exportFileName: '',
+  onAddRemove: null,
+  initiallySelected: null,
 };
 
 const Table = (props) => {
@@ -93,6 +97,8 @@ const Table = (props) => {
     parseFilterLabelOutput,
     displayCount,
     exportFileName,
+    onAddRemove,
+    initiallySelected,
     canExportResults,
     ...rest
   } = props;
@@ -126,6 +132,8 @@ const Table = (props) => {
         exportResultsAction={() => tableHook.exportSearchResult()}
         exportFileName={exportFileName}
         displayCount={displayCount}
+        onAddRemove={onAddRemove}
+        initiallySelected={initiallySelected}
         itemCount={tableHook.getItemCount()}
         emptystate={getEmptystate(tableHook, props)}
         isLoading={tableHook.isLoading}

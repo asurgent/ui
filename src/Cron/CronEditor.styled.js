@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
 export const Row = styled.div`
     margin-top: 2.4rem;
     display: grid;
+    grid-gap: 2.4rem;
     grid-template-columns: 1fr 1fr;
     align-items: flex-end;
 
@@ -47,7 +48,12 @@ export const MonthSlector = styled(WeekSelector)`
     grid-template-rows: repeat(5, 1fr);
 `;
 
-export const Editor = styled.div``;
+export const Editor = styled.div`
+    width: 100%;
+    @media screen and (min-width: 1024px) {
+        max-width: 700px;
+    }
+`;
 
 export const Text = styled.div`
     margin-bottom: .8rem;
