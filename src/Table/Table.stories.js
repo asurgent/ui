@@ -225,7 +225,7 @@ export const main = () => {
         historyStatePrefix="tickets"
         tableHook={table}
         displayCount
-        onAddRemove={(props) => console.log('props', props)}
+        onAddRemove={(props) => action('props', props)}
         exportFileName={text('export file name', 'myexport.csv')}
         withSearch={boolean('With search', true)}
         parseSearchStringOutput={(query) => `${query} My special string`}
