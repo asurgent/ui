@@ -44,7 +44,13 @@ const defaultProps = {
 };
 
 const Tooltip = ({
-  position, tip, isCard, header, content, footer, children,
+  tip,
+  footer,
+  isCard,
+  header,
+  content,
+  position,
+  children,
 }) => {
   const [show, setShow] = useState(false);
   const [coordinates, setCoordinates] = useState({ left: 0, top: 0 });

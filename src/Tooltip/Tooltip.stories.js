@@ -110,6 +110,22 @@ export const LeftCenter = () => (
   </div>
 );
 
+export const EntityCard = () => (
+  <div style={center}>
+    <Tooltip.Cards.Entity.Top
+      id={123}
+      name="Gurka"
+      type="Mine"
+      resourceGroup="Sweden"
+      region="Sthlm"
+      displayName="Asurgent"
+      tags={['test-tag']}
+    >
+      Hej
+    </Tooltip.Cards.Entity.Top>
+  </div>
+);
+
 export default {
   title: 'UI Components|Tooltip',
   decorators: [withKnobs],
