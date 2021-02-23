@@ -488,6 +488,7 @@ export const filter = () => {
             label: 'guys',
             facetKey: 'guys',
             multiSelect: false,
+            operator: 'custom_operator',
             defaultSelect: { value: 'Mike(1133)', count: 32 },
             onChange: (a) => {
               action('OnChange')(a);
