@@ -179,6 +179,8 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
     hasOptions: () => getGroupFilter().length > 0,
     getOptions: () => options,
     getGroupKey: () => filterGroupKey,
+    getGroup: () => filterHook.getFilterGroups()
+      .find(({ facetKey }) => facetKey === filterGroupKey),
     onSearchOptions: ({ values }) => setSearch(values.searchQuery),
     hasSelectedOptions: () => hasSelected,
   };

@@ -135,7 +135,7 @@ export const buildFilterQuery = (
         // Find all selected filters that match a certain type, eg. EXCLUDE.
         const typeList = filterGroup.filter((s) => s.state === type);
         // Build filter string
-        const filterString = (filterItem) => `${outputGroupKey} ${type} '${parseRequestItem(filterItem, groupKey)}'`;
+        const filterString = (filterItem) => `${outputGroupKey} ${filterItem.operator || type} '${parseRequestItem(filterItem, groupKey)}'`;
         // Build a new list with filter fomrated filter items
         const filterList = typeList.reduce((incl, s) => [...incl, filterString(s)], []);
 
