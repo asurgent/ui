@@ -124,8 +124,12 @@ const FilterInput = forwardRef((props, ref) => {
               type="text"
               placeholder={inputProps.searchPlaceholder || t('searchPlaceHolder', 'asurgentui')}
               value={filterSelectHook.searchValue}
-              onChange={({ target }) => {
+              onChange={(ev) => {
+                const { target } = ev;
                 filterSelectHook.setSearch(target.value);
+                // don't spam forms onChange handler on search
+                ev.preventDefault();
+                ev.stopPropagation();
               }}
             />
           </C.SearchWrapper>
