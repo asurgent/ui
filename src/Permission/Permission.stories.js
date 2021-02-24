@@ -1,5 +1,6 @@
 import React from 'react';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import * as Permission from './index';
 
 export default {
@@ -13,9 +14,9 @@ const Content = () => {
   const hasFeature = permissions.withFeatures('@feature.ticket');
   const hasRole = permissions.withRoles('some-read-role');
 
-  console.log('isAdmin: ', isGlobalAdmin);
-  console.log('hasFeature: ', hasFeature);
-  console.log('hasRole: ', hasRole);
+  action('isAdmin: ', isGlobalAdmin);
+  action('hasFeature: ', hasFeature);
+  action('hasRole: ', hasRole);
 
   return (
     <>
