@@ -24,7 +24,10 @@ const defaultProps = {
 
 const propTypes = {
   position: PropTypes.string,
-  id: PropTypes.string,
+  id: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   name: PropTypes.string,
   type: PropTypes.string,
   resourceGroup: PropTypes.string,
@@ -80,11 +83,6 @@ const EntityTooltipCard = (props) => {
           <T.P.Small>
             <C.Gray>{`${t('resourceGroup', 'asurgentui')} `}</C.Gray>
             {resourceGroup || 'N/A'}
-          </T.P.Small>
-
-          <T.P.Small>
-            <C.Gray>{`${t('entityType', 'asurgentui')} `}</C.Gray>
-            {type || 'N/A'}
           </T.P.Small>
 
           <T.P.Small>
