@@ -65,7 +65,7 @@ const FilterCategory = (props) => {
             {
               tableHook.isFilterLoading && (
                 <C.Center>
-                  <Spinner.Ring size={24} color={theme.blue400} />
+                  <Spinner.Ring size={24} color={theme.blue900} />
                 </C.Center>
               )
             }
