@@ -10,16 +10,18 @@ const propTypes = {
   searchHook: PropTypes.instanceOf(Object).isRequired,
   searchLabel: PropTypes.string,
   className: PropTypes.string,
+  autoFocus: PropTypes.bool,
 };
 
 const defaultProps = {
   searchLabel: '',
   className: '',
+  autoFocus: true,
 };
 
 const TableSearchBar = (props) => {
   const {
-    tableHook, searchHook, searchLabel, className,
+    tableHook, searchHook, searchLabel, className, autoFocus,
   } = props;
   const { t } = translation;
   const formData = useFormBuilder({
@@ -36,7 +38,7 @@ const TableSearchBar = (props) => {
   useEffect(() => {
     if (tableHook.isLoading) {
       formData.blurField('search');
-    } else if (!isMobile) {
+    } else if (!isMobile && autoFocus === true) {
       formData.focusOnField('search');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -51,6 +51,7 @@ const propTypes = {
   exportFileName: PropTypes.string,
   onAddRemove: PropTypes.func,
   initiallySelected: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
+  autoFocus: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -75,6 +76,7 @@ const defaultProps = {
   exportFileName: '',
   onAddRemove: null,
   initiallySelected: null,
+  autoFocus: true,
 };
 
 const Table = (props) => {
@@ -100,11 +102,11 @@ const Table = (props) => {
     onAddRemove,
     initiallySelected,
     canExportResults,
+    autoFocus,
     ...rest
   } = props;
 
   const { tableHook } = props;
-
   return (
     <Wrapper>
       { tableHook.isExporting() && (
@@ -125,6 +127,7 @@ const Table = (props) => {
           parseFilterItemRequestOutput={parseFilterItemRequestOutput}
           parseFilterKeyRequestOutput={parseFilterKeyRequestOutput}
           parseFilterLabelOutput={parseFilterLabelOutput}
+          autoFocus={autoFocus}
         />
       )}
       <BaseTable
