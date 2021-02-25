@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, NavLink } from 'react-router-dom';
 import * as Spinner from '../Spinner';
-import * as Tooltip from '../Tooltip/index';
+import Tooltip from '../Tooltip/Tooltip';
 import * as Styles from './Button.styled';
 import {
   isExternalLink,
@@ -63,47 +63,6 @@ const defaultProps = {
   renderContentWithoutWrapper: false,
 };
 
-const propTypesTooltip = {
-  tooltipOrientation: PropTypes.string,
-  tooltip: PropTypes.string,
-  children: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
-  ]).isRequired,
-};
-
-const defaultPropsTooltip = {
-  tooltipOrientation: '',
-  tooltip: '',
-};
-
-const TooltipWrapper = ({ children, tooltipOrientation, tooltip }) => {
-  if (!tooltip) {
-    return children;
-  }
-  switch (tooltipOrientation) {
-    case 'left':
-      return (
-        <Tooltip.Left tip={tooltip}>
-          {children}
-        </Tooltip.Left>
-      );
-    case 'right':
-      return (
-        <Tooltip.Right tip={tooltip}>
-          {children}
-        </Tooltip.Right>
-      );
-    default:
-      return (
-        <Tooltip.Middle tip={tooltip}>
-          {children}
-        </Tooltip.Middle>
-      );
-  }
-};
-
 const Button = (props) => {
   const {
     mainIcon,
@@ -133,7 +92,6 @@ const Button = (props) => {
 
   const location = useLocation();
   const isValidMailto = mailto && (isValidMail(mailto));
-  const tooltTipProps = { tooltip, tooltipOrientation };
 
   const handleClick = async (event) => {
     if (!disabled) {
@@ -199,11 +157,11 @@ const Button = (props) => {
     }
 
     return (
-      <TooltipWrapper {...tooltTipProps}>
+      <Tooltip position={tooltipOrientation} tip={tooltip}>
         <Link {...upddatedAttrs}>
           {content}
         </Link>
-      </TooltipWrapper>
+      </Tooltip>
     );
   }
   if (isInteralLink(link)) {
@@ -216,11 +174,11 @@ const Button = (props) => {
     });
 
     return (
-      <TooltipWrapper {...tooltTipProps}>
+      <Tooltip position={tooltipOrientation} tip={tooltip}>
         <Link {...upddatedAttrs}>
           {content}
         </Link>
-      </TooltipWrapper>
+      </Tooltip>
     );
   }
 
@@ -229,27 +187,25 @@ const Button = (props) => {
   if (type === 'submit') {
     const { onClick: buttonOnClick, ...rest } = attrs;
     return (
-      <TooltipWrapper {...tooltTipProps}>
+      <Tooltip position={tooltipOrientation} tip={tooltip}>
         <Component {...rest}>
           <button onClick={buttonOnClick} type="submit">{' '}</button>
           {content}
         </Component>
-      </TooltipWrapper>
+      </Tooltip>
     );
   }
 
   return (
-    <TooltipWrapper {...tooltTipProps}>
+    <Tooltip position={tooltipOrientation} tip={tooltip}>
       <Component {...attrs}>
         {content}
       </Component>
-    </TooltipWrapper>
+    </Tooltip>
   );
 };
 
 Button.defaultProps = defaultProps;
 Button.propTypes = propTyps;
-TooltipWrapper.defaultProps = defaultPropsTooltip;
-TooltipWrapper.propTypes = propTypesTooltip;
 
 export default Button;

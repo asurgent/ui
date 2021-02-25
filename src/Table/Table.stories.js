@@ -225,7 +225,7 @@ export const main = () => {
         historyStatePrefix="tickets"
         tableHook={table}
         displayCount
-        onAddRemove={(props) => console.log('props', props)}
+        onAddRemove={(props) => action('props', props)}
         exportFileName={text('export file name', 'myexport.csv')}
         withSearch={boolean('With search', true)}
         parseSearchStringOutput={(query) => `${query} My special string`}
@@ -488,6 +488,7 @@ export const filter = () => {
             label: 'guys',
             facetKey: 'guys',
             multiSelect: false,
+            operator: 'custom_operator',
             defaultSelect: { value: 'Mike(1133)', count: 32 },
             onChange: (a) => {
               action('OnChange')(a);

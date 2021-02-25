@@ -1,7 +1,6 @@
 import React, { createRef, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
-
 import * as C from './Tooltip.styled';
 import { positions, getCoordinates } from './helpers';
 
@@ -44,7 +43,13 @@ const defaultProps = {
 };
 
 const Tooltip = ({
-  position, tip, isCard, header, content, footer, children,
+  tip,
+  footer,
+  isCard,
+  header,
+  content,
+  position,
+  children,
 }) => {
   const [show, setShow] = useState(false);
   const [coordinates, setCoordinates] = useState({ left: 0, top: 0 });
@@ -102,26 +107,27 @@ const Tooltip = ({
     );
   }
 
-  return (
-    tip ? (
-      <>
-        <C.TooltipParent
-          ref={ref}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          {children}
-        </C.TooltipParent>
+  if (!tip) {
+    return children;
+  }
 
-        { show === true
-            && createPortal(
-              <C.TooltipWrapper position={position} style={coordinates}>
-                {tip}
-              </C.TooltipWrapper>,
-              tooltipRoot,
-            )}
-      </>
-    ) : null
+  return (
+    <>
+      <C.TooltipParent
+        ref={ref}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {children}
+      </C.TooltipParent>
+
+      { show === true && createPortal(
+        <C.TooltipWrapper position={position} style={coordinates}>
+          {tip}
+        </C.TooltipWrapper>,
+        tooltipRoot,
+      )}
+    </>
   );
 };
 Tooltip.propTypes = propTypes;
