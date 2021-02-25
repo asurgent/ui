@@ -11,6 +11,7 @@ const propTypes = {
   withSort: PropTypes.instanceOf(Array),
   withSearch: PropTypes.bool,
   searchLabel: PropTypes.string,
+  autoFocus: PropTypes.bool,
   parseSearchStringOutput: PropTypes.func,
   parseFilterRequestStringOutput: PropTypes.func,
   parseFilterKeyRequestOutput: PropTypes.func,
@@ -23,6 +24,7 @@ const defaultProps = {
   withSearch: true,
   withFilter: [],
   searchLabel: '',
+  autoFocus: true,
   parseSearchStringOutput: null,
   parseFilterRequestStringOutput: null,
   parseFilterKeyRequestOutput: null,
@@ -36,6 +38,7 @@ const TableControlls = ({
   withSearch,
   withFilter,
   searchLabel,
+  autoFocus,
   parseSearchStringOutput,
   parseFilterRequestStringOutput,
   parseFilterKeyRequestOutput,
@@ -46,6 +49,7 @@ const TableControlls = ({
     { withSearch && (
       <TableSearchBar
         className="search"
+        autoFocus={autoFocus}
         tableHook={tableHook}
         searchLabel={searchLabel}
         parseSearchStringOutput={parseSearchStringOutput}
