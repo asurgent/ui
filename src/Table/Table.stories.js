@@ -225,7 +225,7 @@ export const main = () => {
         historyStatePrefix="tickets"
         tableHook={table}
         displayCount
-        autoFocus={false}
+        autoFocus={boolean('Autofocus', true)}
         onAddRemove={(props) => action('props', props)}
         exportFileName={text('export file name', 'myexport.csv')}
         withSearch={boolean('With search', true)}
