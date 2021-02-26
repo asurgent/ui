@@ -12,12 +12,14 @@ const btnPropTypes = {
   description: PropTypes.string,
   onClose: PropTypes.func,
   icon: PropTypes.string.isRequired,
+  link: PropTypes.string,
 };
 const btnDefaultProps = {
   onClick: null,
   title: '',
   description: '',
   onClose: null,
+  link: null,
 };
 
 const CreateItemButton = ({
@@ -26,15 +28,29 @@ const CreateItemButton = ({
   description,
   onClose,
   icon,
-}) => (
-  <Button.Plain onClick={() => { onClick(); onClose(); }}>
-    <U.CreateItem>
-      <MdiIcon path={icon} className="create-icon" size={1.4} />
-      <U.CreateTitle>{title}</U.CreateTitle>
-      <U.CreateDescription>{description}</U.CreateDescription>
-    </U.CreateItem>
-  </Button.Plain>
-);
+  link,
+}) => {
+  if (link) {
+    return (
+      <Button.Plain link={link} onClick={() => onClose()}>
+        <U.CreateItem>
+          <MdiIcon path={icon} className="create-icon" size={1.4} />
+          <U.CreateTitle>{title}</U.CreateTitle>
+          <U.CreateDescription>{description}</U.CreateDescription>
+        </U.CreateItem>
+      </Button.Plain>
+    );
+  }
+  return (
+    <Button.Plain onClick={() => { onClick(); onClose(); }}>
+      <U.CreateItem>
+        <MdiIcon path={icon} className="create-icon" size={1.4} />
+        <U.CreateTitle>{title}</U.CreateTitle>
+        <U.CreateDescription>{description}</U.CreateDescription>
+      </U.CreateItem>
+    </Button.Plain>
+  );
+};
 
 CreateItemButton.propTypes = btnPropTypes;
 CreateItemButton.defaultProps = btnDefaultProps;
@@ -63,16 +79,32 @@ const DropdownCreate = ({
           <U.DesktopMenu>
             {
               createActionList
-                .map((action) => (
-                  <CreateItemButton
-                    key={action.title}
-                    icon={action.icon}
-                    title={action.title}
-                    description={action.description}
-                    onClick={action.onClick}
-                    onClose={onClose}
-                  />
-                ))
+                .map((action) => {
+                  const { link } = action;
+
+                  if (link) {
+                    return (
+                      <CreateItemButton
+                        key={action.title}
+                        icon={action.icon}
+                        title={action.title}
+                        description={action.description}
+                        link={link}
+                        onClose={onClose}
+                      />
+                    );
+                  }
+                  return (
+                    <CreateItemButton
+                      key={action.title}
+                      icon={action.icon}
+                      title={action.title}
+                      description={action.description}
+                      onClick={action.onClick}
+                      onClose={onClose}
+                    />
+                  );
+                })
             }
           </U.DesktopMenu>
         </Transition.FadeInSlideDown>
@@ -92,16 +124,32 @@ const DropdownCreate = ({
             <U.MobileContent>
               {
                   createActionList
-                    .map((action) => (
-                      <CreateItemButton
-                        icon={action.icon}
-                        key={action.title}
-                        title={action.title}
-                        description={action.description}
-                        onClick={action.onClick}
-                        onClose={onClose}
-                      />
-                    ))
+                    .map((action) => {
+                      const { link } = action;
+
+                      if (link) {
+                        return (
+                          <CreateItemButton
+                            icon={action.icon}
+                            key={action.title}
+                            title={action.title}
+                            description={action.description}
+                            link={link}
+                            onClose={onClose}
+                          />
+                        );
+                      }
+                      return (
+                        <CreateItemButton
+                          icon={action.icon}
+                          key={action.title}
+                          title={action.title}
+                          description={action.description}
+                          onClick={action.onClick}
+                          onClose={onClose}
+                        />
+                      );
+                    })
               }
             </U.MobileContent>
           </U.MobileMenu>
