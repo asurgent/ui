@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as C from './Selector.styled';
-import * as T from '../Typography';
 
 const propTypes = {
   entries: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
@@ -32,7 +31,7 @@ const Selector = ({ entries, onSelect }) => {
             onSelect(ent.value);
           }}
         >
-          <T.P.Main>{ent.label}</T.P.Main>
+          <C.Label selected={selected === ind}>{ent.label}</C.Label>
         </C.Year>
       ))}
     </C.Container>
