@@ -15,7 +15,7 @@ const btnPropTypes = {
   link: PropTypes.string,
 };
 const btnDefaultProps = {
-  onClick: null,
+  onClick: () => null,
   title: '',
   description: '',
   onClose: null,
@@ -29,28 +29,18 @@ const CreateItemButton = ({
   onClose,
   icon,
   link,
-}) => {
-  if (link) {
-    return (
-      <Button.Plain link={link} onClick={() => onClose()}>
-        <U.CreateItem>
-          <MdiIcon path={icon} className="create-icon" size={1.4} />
-          <U.CreateTitle>{title}</U.CreateTitle>
-          <U.CreateDescription>{description}</U.CreateDescription>
-        </U.CreateItem>
-      </Button.Plain>
-    );
-  }
-  return (
-    <Button.Plain onClick={() => { onClick(); onClose(); }}>
-      <U.CreateItem>
-        <MdiIcon path={icon} className="create-icon" size={1.4} />
-        <U.CreateTitle>{title}</U.CreateTitle>
-        <U.CreateDescription>{description}</U.CreateDescription>
-      </U.CreateItem>
-    </Button.Plain>
-  );
-};
+}) => (
+  <Button.Plain
+    link={link}
+    onClick={() => { onClick(); onClose(); }}
+  >
+    <U.CreateItem>
+      <MdiIcon path={icon} className="create-icon" size={1.4} />
+      <U.CreateTitle>{title}</U.CreateTitle>
+      <U.CreateDescription>{description}</U.CreateDescription>
+    </U.CreateItem>
+  </Button.Plain>
+);
 
 CreateItemButton.propTypes = btnPropTypes;
 CreateItemButton.defaultProps = btnDefaultProps;
@@ -79,32 +69,17 @@ const DropdownCreate = ({
           <U.DesktopMenu>
             {
               createActionList
-                .map((action) => {
-                  const { link } = action;
-
-                  if (link) {
-                    return (
-                      <CreateItemButton
-                        key={action.title}
-                        icon={action.icon}
-                        title={action.title}
-                        description={action.description}
-                        link={link}
-                        onClose={onClose}
-                      />
-                    );
-                  }
-                  return (
-                    <CreateItemButton
-                      key={action.title}
-                      icon={action.icon}
-                      title={action.title}
-                      description={action.description}
-                      onClick={action.onClick}
-                      onClose={onClose}
-                    />
-                  );
-                })
+                .map((action) => (
+                  <CreateItemButton
+                    key={action.title}
+                    icon={action.icon}
+                    title={action.title}
+                    description={action.description}
+                    link={action.link}
+                    onClick={action.onClick}
+                    onClose={onClose}
+                  />
+                ))
             }
           </U.DesktopMenu>
         </Transition.FadeInSlideDown>
