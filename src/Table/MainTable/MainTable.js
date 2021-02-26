@@ -112,7 +112,7 @@ const Table = (props) => {
       { tableHook.isExporting() && (
         <Shield.Dark>
           <TableLoader>
-            <Spinner.Ring size={50} color={theme.blue400} />
+            <Spinner.Ring size={50} color={theme.blue900} />
           </TableLoader>
         </Shield.Dark>
       )}

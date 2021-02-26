@@ -62,7 +62,7 @@ export const CreateItem = styled.div`
     padding: .8rem 2.4rem;
 
     &:hover {
-        background: ${({ theme }) => theme.gray100};
+        background: ${({ theme }) => theme.gray50};
     }
 
     .create-icon {

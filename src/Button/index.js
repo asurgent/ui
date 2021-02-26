@@ -39,9 +39,9 @@ const Create = withStyle((theme) => ({
 
 const Hollow = withStyle((theme) => ({
   backgroundColor: 'transparent',
-  borderColor: theme.blue400,
-  textColor: theme.blue400,
-  spinnerColor: theme.blue400,
+  borderColor: theme.blue900,
+  textColor: theme.blue900,
+  spinnerColor: theme.blue900,
 }))(C.Button);
 
 const Transparent = withStyle((theme) => ({
