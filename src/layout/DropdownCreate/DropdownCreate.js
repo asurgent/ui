@@ -12,12 +12,14 @@ const btnPropTypes = {
   description: PropTypes.string,
   onClose: PropTypes.func,
   icon: PropTypes.string.isRequired,
+  link: PropTypes.string,
 };
 const btnDefaultProps = {
-  onClick: null,
+  onClick: () => null,
   title: '',
   description: '',
   onClose: null,
+  link: null,
 };
 
 const CreateItemButton = ({
@@ -26,8 +28,12 @@ const CreateItemButton = ({
   description,
   onClose,
   icon,
+  link,
 }) => (
-  <Button.Plain onClick={() => { onClick(); onClose(); }}>
+  <Button.Plain
+    link={link}
+    onClick={() => { onClick(); onClose(); }}
+  >
     <U.CreateItem>
       <MdiIcon path={icon} className="create-icon" size={1.4} />
       <U.CreateTitle>{title}</U.CreateTitle>
@@ -69,6 +75,7 @@ const DropdownCreate = ({
                     icon={action.icon}
                     title={action.title}
                     description={action.description}
+                    link={action.link}
                     onClick={action.onClick}
                     onClose={onClose}
                   />
@@ -98,6 +105,7 @@ const DropdownCreate = ({
                         key={action.title}
                         title={action.title}
                         description={action.description}
+                        link={action.link}
                         onClick={action.onClick}
                         onClose={onClose}
                       />
