@@ -99,32 +99,17 @@ const DropdownCreate = ({
             <U.MobileContent>
               {
                   createActionList
-                    .map((action) => {
-                      const { link } = action;
-
-                      if (link) {
-                        return (
-                          <CreateItemButton
-                            icon={action.icon}
-                            key={action.title}
-                            title={action.title}
-                            description={action.description}
-                            link={link}
-                            onClose={onClose}
-                          />
-                        );
-                      }
-                      return (
-                        <CreateItemButton
-                          icon={action.icon}
-                          key={action.title}
-                          title={action.title}
-                          description={action.description}
-                          onClick={action.onClick}
-                          onClose={onClose}
-                        />
-                      );
-                    })
+                    .map((action) => (
+                      <CreateItemButton
+                        icon={action.icon}
+                        key={action.title}
+                        title={action.title}
+                        description={action.description}
+                        link={action.link}
+                        onClick={action.onClick}
+                        onClose={onClose}
+                      />
+                    ))
               }
             </U.MobileContent>
           </U.MobileMenu>
