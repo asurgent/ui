@@ -19,6 +19,7 @@ const MarkerLine = ({ yScale, markerLines, dimensions }) => {
         .filter((val) => val !== false);
 
       return filtered.map((marker) => ({
+        key: marker.title,
         y0: yScale(marker.value),
         color: marker.color || null,
       }));
@@ -40,9 +41,9 @@ const MarkerLine = ({ yScale, markerLines, dimensions }) => {
 
   return (
     <>
-      {threasholdLines.map(({ y0, color }) => (
+      {threasholdLines.map(({ y0, color, key }) => (
         <C.MarkerLine
-          key={y0}
+          key={key}
           y1={y0}
           y2={y0}
           color={color}
