@@ -1,16 +1,8 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import * as Canvas from '../components/Canvas';
-import Zoom from '../components/Zoom';
-import * as Axis from '../components/Axis';
 import ClipPath from '../components/ClipPath';
-import Grid from '../components/Grid';
 import Line from '../components/Line';
-import MarkerLine from '../components/MarkerLine';
-import translation from './PlainLineGraph.translation';
-import * as C from './PlainLineGraph.styled';
-
-const { t } = translation;
 
 const propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
