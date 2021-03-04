@@ -117,6 +117,21 @@ export const lineGraph = () => (
   </>
 );
 
+export const plainGraph = () => (
+  <>
+    <Graph.PlainLineGraph
+      customDimensions={{
+        height: 40,
+        marginTop: 0,
+        marginRight: 0,
+        marginBottom: 0,
+        marginLeft: 0,
+      }}
+      data={dataset}
+    />
+  </>
+);
+
 export const heatmap = () => {
   const numberOfDays = 365;
 

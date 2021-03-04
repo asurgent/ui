@@ -1,14 +1,23 @@
 import { ResizeObserver } from '@juggle/resize-observer';
 import { useRef, useState, useEffect } from 'react';
 
-const combineChartDimensions = (dimensions = {}) => {
+const isNumber = (value, fallback) => {
+  if (Number.isInteger(value)) {
+    return value;
+  }
+
+  return fallback;
+};
+
+const combineChartDimensions = (dimensions) => {
   const parsedDimensions = {
     ...dimensions,
-    marginTop: dimensions.marginTop || 10,
-    marginRight: dimensions.marginRight || 10,
-    marginBottom: dimensions.marginBottom || 30,
-    marginLeft: dimensions.marginLeft || 40,
+    marginTop: isNumber(dimensions.marginTop, 10),
+    marginRight: isNumber(dimensions.marginRight, 10),
+    marginBottom: isNumber(dimensions.marginBottom, 30),
+    marginLeft: isNumber(dimensions.marginLeft, 40),
   };
+
   return {
     ...parsedDimensions,
     totalHeight: (
@@ -36,26 +45,27 @@ const combineChartDimensions = (dimensions = {}) => {
   };
 };
 
-export const useChartDimensions = () => {
+export const useChartDimensions = (customDimensions) => {
   const ref = useRef();
-  const [width, setWidth] = useState(500);
-  const [height, setHeight] = useState(200);
+  const [width, setWidth] = useState(customDimensions.width || null);
+  const [height, setHeight] = useState(customDimensions.height || null);
 
-  const dimensions = combineChartDimensions({ width, height });
+  const dimensions = combineChartDimensions({ ...customDimensions, width, height });
 
   useEffect(() => {
     const element = ref.current;
-
     const resizeObserver = new ResizeObserver(
       (entries) => {
         if (!Array.isArray(entries)) return;
         if (!entries.length) return;
         const entry = entries[0];
 
-        if (width !== entry.contentRect.width) {
+        if (!dimensions.width
+          && width !== entry.contentRect.width) {
           setWidth(entry.contentRect.width);
         }
-        if (height !== entry.contentRect.height) {
+        if (!dimensions.height
+          && height !== entry.contentRect.height) {
           setHeight(entry.contentRect.height);
         }
       },
