@@ -5,78 +5,78 @@ import * as Block from './index';
 /* import * as List from '../List';
 import * as Button from '../Button'; */
 
-const content = 'Hello there im in a block';
-
 const Story = {
   title: 'Block',
   component: Block,
   argTypes: {
-    backgroundColor: { control: 'color' },
-    color: { control: 'color' },
+    content: { control: 'text' },
+    withMargins: { control: 'boolean' },
+    renderTransparent: { control: 'boolean' },
   },
 };
 export default Story;
 
-// 👇 We create a “template” of how args map to rendering
-const Template = (args) => <Block.Center {...args}>{content}</Block.Center>;
-
-// 👇 Each story then reuses that template
-export const CenterBlock = Template.bind({});
-
-CenterBlock.args = {
-  content: 'Center Block',
+export const Center = (args) => (<Block.Center {...args}>{args.content}</Block.Center>);
+Center.args = {
+  content: 'hejhej',
 };
 
-/* export const leftBlock = () => (
-  <Block.Left>{content}</Block.Left>
-);
+export const Left = (args) => <Block.Left {...args}>{args.content}</Block.Left>;
+Left.args = {
+  content: 'hejhej',
+};
 
-export const rightBlock = () => (
-  <Block.Right>{content}</Block.Right>
-);
+export const Right = (args) => <Block.Right {...args}>{args.content}</Block.Right>;
+Right.args = {
+  content: 'hejhej',
+};
 
-export const borderedBlock = () => (
-  <div style={{ height: '20vh' }}>
-    <Block.Bordered noShadow={boolean('Without shadow', false)}>{content}</Block.Bordered>
-  </div>
+export const Bordered = (args) => (
+  <Block.Bordered {...args}>
+    {args.content}
+  </Block.Bordered>
 );
+Bordered.args = {
+  noShadow: true,
+  content: 'hejhej',
+};
 
-export const plainBlock = () => (
-  <Block.Plain>{content}</Block.Plain>
-);
+export const Plain = (args) => <Block.Plain {...args}>{args.content}</Block.Plain>;
+Plain.args = {
+  content: 'hejhej',
+};
 
-export const stretchBlock = () => (
-  <Block.Stretch>
+export const Stretch = (args) => (
+  <Block.Stretch {...args}>
     <div style={{ border: '1px solid' }}>
-      {content}
+      {args.content}
     </div>
   </Block.Stretch>
 );
+Stretch.args = {
+  content: 'hejhej',
+};
 
-export const renderTransparentBlock = () => (
-  <Block.Plain renderTransparent={boolean('Transparent', true)}>{content}</Block.Plain>
-);
-
-export const spaceBetweenBlock = () => (
-  <Block.SpaceBetween>
-    <span>{content}</span>
-    <span>{content}</span>
+export const SpaceBetween = (args) => (
+  <Block.SpaceBetween {...args}>
+    <span>left</span>
+    <span>right</span>
   </Block.SpaceBetween>
 );
+SpaceBetween.args = {};
 
-export const wrapBlock = () => (
-  <Block.Wrap wrapReverse={boolean('Reverse order', false)}>
+export const Wrap = (args) => (
+  <Block.Wrap {...args}>
     <div style={{ minWidth: '400px', border: '1px solid', padding: '1rem' }}>I am block #1 (min-width: 400px)</div>
     <div style={{ minWidth: '400px', border: '1px solid', padding: '1rem' }}>I am block #2 (min-width: 400px)</div>
   </Block.Wrap>
 );
-
-export const wrapGridBlock = () => (
-  <Block.WrapGrid
-    columnMinWidth={number('Min width of column', 500)}
-    gridGap={number('Gap between columns (unwrapped)', 20)}
-    stretchColumns={boolean('Stretch columns', false)}
-  >
+Wrap.args = {
+  content: 'hejhej',
+  wrapReverse: true,
+};
+export const WrapGrid = (args) => (
+  <Block.WrapGrid {...args}>
     <div style={{ border: '1px solid black' }}>
       <div style={{ padding: '10rem' }}>
         Block with lots of content
@@ -89,68 +89,78 @@ export const wrapGridBlock = () => (
     </div>
   </Block.WrapGrid>
 );
+WrapGrid.args = {
+  content: 'hejhej',
+  columnMinWidth: 500,
+  gridGap: 20,
+  stretchColumns: false,
+};
 
-export const errorBlock = () => (
-  <Block.Error hideLeftBorder={boolean('Hide left border', true)} title="Error ocurred">
-    <p>Something is broken</p>
-  </Block.Error>
-);
+export const Error = (args) => <Block.Error {...args}>{args.content}</Block.Error>;
+Error.args = {
+  title: 'title',
+  content: 'hejhej',
+  hideLeftBorder: false,
+};
 
-export const warningBlock = () => (
-  <Block.Warning hideLeftBorder={boolean('Hide left border', true)} title="Some warning">
-    <p>More warnings</p>
-  </Block.Warning>
-);
+export const Warning = (args) => <Block.Warning {...args}>{args.content}</Block.Warning>;
+Warning.args = {
+  title: 'title',
+  content: 'hejhej',
+  hideLeftBorder: false,
+};
 
-export const infoBlock = () => (
-  <Block.Info
-    hideLeftBorder={boolean('Hide left border', true)}
-    withMargins={boolean('Add margin (all)', false)}
-    withBottomMargin={boolean('Add margin (bottom)', false)}
-    title="Some information"
-  >
-    <p>Additional information</p>
-  </Block.Info>
-);
+export const Info = (args) => <Block.Info {...args}>{args.content}</Block.Info>;
+Info.args = {
+  title: 'title',
+  content: 'hejhej',
+  hideLeftBorder: false,
+  withBottomMargin: false,
+};
 
-export const emptyState = () => (
-  <Block.Emptystate title="Error ocurred">
-    <p>Somethings broken</p>
-  </Block.Emptystate>
-);
+export const Emptystate = (args) => <Block.Emptystate {...args}>{args.content}</Block.Emptystate>;
+Emptystate.args = {
+  content: 'hejhej',
+  title: 'title',
+};
 
-export const accordion = () => (
-  <div style={{ padding: '5rem' }}>
-    <Block.Accordion title="Hello" description="Desc">
-      {() => (
-        <List.Primary
-          rows={[
-            { label: 'Label', value: 'Hello' },
-            { label: 'Label', value: 'Hello' },
-            { label: 'Label', value: '' },
-            { label: 'Label 123123', value: 'Hello' },
-            {
-              row: (
-                <Button.Stretched
-                  iconRight={(
-                    <MdiIcon
-                      path={mdiMenuDown}
-                      size={1.4}
-                    />
+export const Accordion = (args) => (
+
+  <Block.Accordion {...args} title="Hello" description="Desc">
+    {() => (
+      <p>hej</p>
+      /*  <List.Primary
+        rows={[
+          { label: 'Label', value: 'Hello' },
+          { label: 'Label', value: 'Hello' },
+          { label: 'Label', value: '' },
+          { label: 'Label 123123', value: 'Hello' },
+          {
+            row: (
+              <Button.Stretched
+                iconRight={(
+                  <MdiIcon
+                    path={mdiMenuDown}
+                    size={1.4}
+                  />
                   )}
-                >
-                  Next
-                </Button.Stretched>),
-            },
-          ]}
-        />
-      )}
-    </Block.Accordion>
-  </div>
+              >
+                Next
+              </Button.Stretched>),
+          },
+        ]}
+      /> */
+    )}
+  </Block.Accordion>
 );
-const iWontRender = false;
-export const subnavigationBlock = () => (
+Accordion.args = {
+  content: 'hejhej',
+};
+
+/* const iWontRender = false;
+export const SubnavigationBlock = (args) => (
   <Block.SubnavigationBlock
+    {...args}
     title="Hello"
     navigationList={[
       [
@@ -192,27 +202,7 @@ export const subnavigationBlock = () => (
     </Block.Bordered>
   </Block.SubnavigationBlock>
 );
- */
-
-/* leftBlock.story = {
-  name: 'Left Block',
-};
-rightBlock.story = {
-  name: 'Right Block',
-};
-borderedBlock.story = {
-  name: 'Bordered Block',
-};
-plainBlock.story = {
-  name: 'Plain Block',
-};
-spaceBetweenBlock.story = {
-  name: 'SpaceBetween Block',
-};
-wrapBlock.story = {
-  name: 'Wrap Block',
-};
-renderTransparentBlock.story = {
-  name: 'Transparent Block',
+SubnavigationBlock.args = {
+  content: 'hejhej',
 };
  */

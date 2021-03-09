@@ -8,7 +8,7 @@ import {
   Stretch,
   Wrap,
   WrapGrid,
-} from './components/Block.styled';
+} from './components/Block';
 
 Center.displayName = '@asurgent.ui.Block.Center';
 Left.displayName = '@asurgent.ui.Block.Left';
