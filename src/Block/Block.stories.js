@@ -1,22 +1,33 @@
 import React from 'react';
-import {
-  withKnobs, boolean, number,
-} from '@storybook/addon-knobs';
-import MdiIcon from '@mdi/react';
-import { mdiMenuDown } from '@mdi/js';
+/* import MdiIcon from '@mdi/react';
+import { mdiMenuDown } from '@mdi/js'; */
 import * as Block from './index';
-import * as List from '../List';
-import * as Button from '../Button';
+/* import * as List from '../List';
+import * as Button from '../Button'; */
 
 const content = 'Hello there im in a block';
 
-export default { title: 'UI Components|Block', decorators: [withKnobs] };
+const Story = {
+  title: 'Block',
+  component: Block,
+  argTypes: {
+    backgroundColor: { control: 'color' },
+    color: { control: 'color' },
+  },
+};
+export default Story;
 
-export const centerBlock = () => (
-  <Block.Center>{content}</Block.Center>
-);
+// 👇 We create a “template” of how args map to rendering
+const Template = (args) => <Block.Center {...args}>{content}</Block.Center>;
 
-export const leftBlock = () => (
+// 👇 Each story then reuses that template
+export const CenterBlock = Template.bind({});
+
+CenterBlock.args = {
+  content: 'Center Block',
+};
+
+/* export const leftBlock = () => (
   <Block.Left>{content}</Block.Left>
 );
 
@@ -181,11 +192,9 @@ export const subnavigationBlock = () => (
     </Block.Bordered>
   </Block.SubnavigationBlock>
 );
+ */
 
-centerBlock.story = {
-  name: 'Center Block',
-};
-leftBlock.story = {
+/* leftBlock.story = {
   name: 'Left Block',
 };
 rightBlock.story = {
@@ -206,3 +215,4 @@ wrapBlock.story = {
 renderTransparentBlock.story = {
   name: 'Transparent Block',
 };
+ */
