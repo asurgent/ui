@@ -2,7 +2,7 @@ import React from 'react';
 import ErrorBoundary from './index';
 
 const Story = {
-  title: 'Components/ErrorBounddary',
+  title: 'Components/ErrorBoundary',
   component: ErrorBoundary,
   argTypes: {
     crash: { control: 'boolean' },
