@@ -1,17 +1,18 @@
 import React from 'react';
-import {
-  withKnobs, text, number,
-} from '@storybook/addon-knobs';
 import * as Graph from './index';
 import data from './data';
 import data2 from './data2';
 import data3 from './data3';
 import heatData from './data4';
 
-export default {
-  title: 'UI Components|Graph',
-  decorators: [withKnobs],
+const Story = {
+  title: 'Data/Graph',
+  component: Graph,
+  argTypes: {
+   
+  },
 };
+export default Story;
 const dataset = [
   {
     date: '2018-04-14',
@@ -82,7 +83,7 @@ const dataset2 = [
   },
 ];
 
-export const lineGraph = () => (
+export const LineGraph = () => (
   <>
     <div style={{ height: '200px' }}>
       <Graph.LineGraph data={[]} />
@@ -116,23 +117,24 @@ export const lineGraph = () => (
     </div>
   </>
 );
+LineGraph.argTypes = {
 
-export const plainGraph = () => (
-  <>
-    <Graph.PlainLineGraph
-      customDimensions={{
-        height: 40,
-        marginTop: 0,
-        marginRight: 0,
-        marginBottom: 0,
-        marginLeft: 0,
-      }}
-      data={dataset}
-    />
-  </>
+};
+
+export const PlainGraph = () => (
+    <Graph.PlainLineGraph data={dataset}/>
 );
+PlainGraph.argTypes = {
+  customDimensions: {
+    height: 40,
+    marginTop: 0,
+    marginRight: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+  }
+}
 
-export const heatmap = () => {
+export const Heatmap = (args) => {
   const numberOfDays = 365;
 
   const primaryData = heatData(numberOfDays);
@@ -149,16 +151,19 @@ export const heatmap = () => {
       <Graph.Heatmap
         primaryData={primaryData}
         secondaryData={secondaryData}
-        steps={number('Steps', 5)}
-        color={text('Color', '#C6403B')}
-        emptyColor={text('Empty color', '#F2F2F2')}
-        cellGap={number('Cell gap', 6)}
         borderColor="#133A5D"
-        showLegend={() => true}
         primaryLabel="fails"
         secondaryLabel="successes"
+        {...args}
       />
     </div>
 
   );
 };
+Heatmap.argTypes = {
+  steps: 5,
+  color: '#C6403B',
+  emptyColor: '#F2F2F2',
+  cellGap: 6,
+  showLegend: true
+}

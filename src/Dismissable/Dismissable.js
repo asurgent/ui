@@ -6,13 +6,22 @@ import * as C from './Dismissable.styled';
 import * as Transitions from '../Transition';
 
 const propTypes = {
+  /**
+  * ID that's stored in localstorage to keep track if dismissed or not 
+  */
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  /**
+  * Fade out speed in milliseconds
+  */
   fadeOutSpeed: PropTypes.number,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element,
   ]),
+  /**
+  * How large should the button be?
+  */
   withBottomMargin: PropTypes.bool,
 };
 
@@ -65,7 +74,6 @@ export const DismissablePrimary = ({
 
 DismissablePrimary.propTypes = propTypes;
 DismissablePrimary.defaultProps = defaultProps;
-DismissablePrimary.displayName = '@asurgent.ui.Dismissable.Primary';
 
 export const DismissablePlain = ({
   id, title, fadeOutSpeed, withBottomMargin, children,
@@ -110,4 +118,3 @@ export const DismissablePlain = ({
 
 DismissablePlain.propTypes = propTypes;
 DismissablePlain.defaultProps = defaultProps;
-DismissablePlain.displayName = '@asurgent.ui.Dismissable.Plain';

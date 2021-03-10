@@ -6,7 +6,7 @@ import * as Block from './index';
 import * as Button from '../Button'; */
 
 const Story = {
-  title: 'Block',
+  title: 'Components/Block',
   component: Block,
   argTypes: {
     content: { control: 'text' },

@@ -1,45 +1,41 @@
 import React from 'react';
 import MdiIcon from '@mdi/react';
 import { mdiTicketConfirmation } from '@mdi/js';
-import {
-  withKnobs, boolean, text,
-} from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
 import * as Button from './index';
 
-const content = 'Button text ';
+const Story = {
+  title: 'Components/Buttons',
+  component: Button,
+  argTypes: {
+    onClick: () => console.log('asdfasdf'),
+    content: 'Button text'
+  },
+};
+export default Story;
 
-export default { title: 'UI Components|Buttons', decorators: [withKnobs] };
-
-export const saveToFileButton = () => (
+export const SaveToFileButton = (args) => (
   <>
-    <Button.Icon
+    <Button.Plain
       saveToFilename="some_file"
       tooltip="Saves from promise"
       saveToFile={() => new Promise((r) => r(['a', 'b']))}
-      onClick={(e) => action('Clicked!')(e)}
-      icon={(
-        <MdiIcon
-          path={mdiTicketConfirmation}
-          size={1.4}
-        />
-      )}
+      onClick={(e) => args.onClick('clicked', e)}
+      icon={<MdiIcon path={mdiTicketConfirmation} size={1.4}/>}
     />
-    <Button.Icon
+    <Button.Plain
       saveToFilename="another_file"
       tooltip="Saves from object"
       saveToFile={() => ['a', 'b']}
-      onClick={(e) => action('Clicked!')(e)}
-      icon={(
-        <MdiIcon
-          path={mdiTicketConfirmation}
-          size={1.4}
-        />
-      )}
+      onClick={(e) => args.onClick('clicked', e)}
+      icon={<MdiIcon path={mdiTicketConfirmation} size={1.4}/>}
     />
   </>
 );
+SaveToFileButton.args = {
+  onClick: () => console.log('asdf'),
+};
 
+/* 
 export const setTableState = () => {
   const state = {
     search: 'asd',
@@ -178,3 +174,4 @@ export const tooltipButton = () => (
     {content}
   </Button.Primary>
 );
+ */
