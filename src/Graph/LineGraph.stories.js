@@ -6,12 +6,13 @@ import data3 from './data3';
 
 const Story = {
   title: 'Graphs/Line',
-  component: Graph,
+  component: Graph.LineGraph,
   argTypes: {
    
   },
 };
 export default Story;
+
 const dataset = [
   {
     date: '2018-04-14',
@@ -94,7 +95,7 @@ export const LineGraph = () => (
       <Graph.LineGraph
         dataTitle="Special data set"
         data={dataset}
-        markerLines={[{ value: 10000, title: 'Threashold', color: '#C62929' }]}
+        markerLines={[{ value: 10000, title: 'Threshold', color: '#C62929' }]}
       />
     </div>
     <div style={{ height: '200px' }}>
@@ -116,16 +117,14 @@ export const LineGraph = () => (
     </div>
   </>
 );
-LineGraph.argTypes = {
 
-};
 
-export const PlainGraph = () => (
-    <Graph.PlainLineGraph data={dataset}/>
+export const PlainGraph = (args) => (
+    <Graph.PlainLineGraph data={dataset} {...args} />
 );
-PlainGraph.argTypes = {
+PlainGraph.args = {
   customDimensions: {
-    height: 40,
+    height: 200,
     marginTop: 0,
     marginRight: 0,
     marginBottom: 0,
