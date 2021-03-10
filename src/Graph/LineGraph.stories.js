@@ -3,10 +3,9 @@ import * as Graph from './index';
 import data from './data';
 import data2 from './data2';
 import data3 from './data3';
-import heatData from './data4';
 
 const Story = {
-  title: 'Data/Graph',
+  title: 'Graphs/Line',
   component: Graph,
   argTypes: {
    
@@ -132,38 +131,4 @@ PlainGraph.argTypes = {
     marginBottom: 0,
     marginLeft: 0,
   }
-}
-
-export const Heatmap = (args) => {
-  const numberOfDays = 365;
-
-  const primaryData = heatData(numberOfDays);
-  const secondaryData = heatData(numberOfDays);
-
-  return (
-    <div style={{
-      border: '1px solid #dadada',
-      borderRadius: '5px',
-      marginTop: '20rem',
-      width: '80vw',
-    }}
-    >
-      <Graph.Heatmap
-        primaryData={primaryData}
-        secondaryData={secondaryData}
-        borderColor="#133A5D"
-        primaryLabel="fails"
-        secondaryLabel="successes"
-        {...args}
-      />
-    </div>
-
-  );
-};
-Heatmap.argTypes = {
-  steps: 5,
-  color: '#C6403B',
-  emptyColor: '#F2F2F2',
-  cellGap: 6,
-  showLegend: true
 }
