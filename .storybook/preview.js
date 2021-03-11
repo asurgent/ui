@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { ThemeProvider } from 'styled-components';
 import Normalize from '../lib/style/Normalize.styled';
 import theme from '../lib/style/theme'
@@ -26,7 +25,6 @@ i18n
 export const decorators = [
   (Story) => (
     <>
- 
       <Normalize />
       <I18nextProvider i18n={i18n}>
         <ThemeProvider theme={theme}>

@@ -4,14 +4,18 @@ import MdiIcon from '@mdi/react';
 import { mdiChevronDown } from '@mdi/js';
 import withMapProps from '../../high-order-components/withMapProps';
 
-import withStyle from './withStyle';
+// import withStyle from './withStyle';
 import * as C from './Button.styled';
-
-/* const Primary = withStyle((theme) => ({
+const Primary = C.Button;
+/* 
+withStyle((theme) => ({
   backgroundColor: theme.blue900,
   borderColor: darken(0.08, theme.blue900),
   spinnerColor: theme.white,
-}))(C.Button);
+}))(); 
+*/
+
+/* 
 
 const Secondary = withStyle((theme) => ({
   backgroundColor: theme.gold800,
@@ -84,10 +88,11 @@ const iconPropsMapper = ({
   ...rest
 }) => ({ mainIcon: icon, ...rest });
 const Icon = (withMapProps(iconPropsMapper)(withStyle()(C.Icon))); */
-const Plain = withStyle()(C.Plain);
+const Plain = C.Plain;
 /* const Link = withStyle()(C.Link); */
 
-/* Primary.displayName = '@asurgent.ui.Button.Primary';
+ Primary.displayName = '@asurgent.ui.Button.Primary';
+ /*
 Accept.displayName = '@asurgent.ui.Button.Primary';
 Secondary.displayName = '@asurgent.ui.Button.Secondary';
 Hollow.displayName = '@asurgent.ui.Button.Hollow'; */
@@ -99,9 +104,10 @@ Pill.displayName = '@asurgent.ui.Button.Pill'; */
 
 export {
 /*   withStyle,
-  Primary,
+ 
   Secondary,
   Hollow, */
+  Primary,
   Plain,
  /*  Reject,
   Accept,

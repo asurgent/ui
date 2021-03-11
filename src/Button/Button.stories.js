@@ -13,7 +13,7 @@ const Story = {
 };
 export default Story;
 
-export const SaveToFileButton = (args) => (
+export const SaveToFile = (args) => (
   <>
     <Button.Plain
       saveToFilename="some_file"
@@ -31,10 +31,18 @@ export const SaveToFileButton = (args) => (
     />
   </>
 );
-SaveToFileButton.args = {
+SaveToFile.args = {
   onClick: () => console.log('asdf'),
 };
 
+export const Primary = (args) => (
+  <Button.Primary {...args}>{args.content}</Button.Primary>
+);
+Primary.args = {
+  loading: false,
+  onClick: () => console.log('asdf'),
+  content: 'hej'
+};
 /* 
 export const setTableState = () => {
   const state = {
@@ -78,9 +86,7 @@ export const submitButton = () => (
   </form>
 );
 
-export const primaryButton = () => (
-  <Button.Primary loading={boolean('loading', true)} onClick={(e) => action('Clicked!')(e)}>{content}</Button.Primary>
-);
+
 
 export const secondaryButton = () => (
   <Button.Secondary onClick={(e) => action('Clicked!')(e)}>{content}</Button.Secondary>

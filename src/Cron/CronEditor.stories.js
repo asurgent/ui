@@ -1,0 +1,22 @@
+import React from 'react';
+import * as Cron from './index';
+
+const Story = {
+  title: 'Components/CronEditor',
+  component: Cron.Editor,
+  argTypes: {
+    backgroundColor: { control: 'color' },
+  },
+};
+export default Story;
+
+const Template = (args) => <Cron.Editor {...args} />;
+
+export const Main = Template.bind({});
+Main.args = {
+  onChange: (e) => console.log('onChange', e),
+  end: new Date(),
+  start: new Date(), 
+  duration: '3600',
+  expression: "*/5 * * * *"
+}

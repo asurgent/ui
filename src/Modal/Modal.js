@@ -63,7 +63,7 @@ class Modal extends Component {
     } = this.props;
 
     return ReactDOM.createPortal(
-      <Transition.FadeIn isVisible={isOpen} timeout={50}>
+     /*  <Transition.FadeIn isVisible={isOpen} timeout={50}> */
         <C.Overlay>
           <C.Modal fullscreen={fullscreen} transparent={transparent} style={style}>
             { !withoutHeader && (
@@ -79,8 +79,8 @@ class Modal extends Component {
               {children}
             </C.Content>
           </C.Modal>
-        </C.Overlay>
-      </Transition.FadeIn>,
+        </C.Overlay>,
+      /* </Transition.FadeIn>, */
       modalRoot,
     );
   }
