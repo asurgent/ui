@@ -1,12 +1,5 @@
 import React from 'react';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
 import * as Permission from './index';
-
-export default {
-  title: 'UI Components|Permission',
-  decorators: [withKnobs],
-};
 
 const Content = () => {
   const permissions = Permission.usePermission();
@@ -14,13 +7,12 @@ const Content = () => {
   const hasFeature = permissions.withFeatures('@feature.ticket');
   const hasRole = permissions.withRoles('some-read-role');
 
-  action('isAdmin: ', isGlobalAdmin);
-  action('hasFeature: ', hasFeature);
-  action('hasRole: ', hasRole);
+  console.log('isAdmin: ', isGlobalAdmin);
+  console.log('hasFeature: ', hasFeature);
+  console.log('hasRole: ', hasRole);
 
   return (
     <>
-
       <Permission.Render withFeature={['@feature.ticket']}>
         {() => <h2>Tickets</h2>}
       </Permission.Render>
@@ -51,22 +43,36 @@ const Content = () => {
   );
 };
 
-export const withPermissions = () => {
-  const isSuperAdmin = boolean('@role.SuperAdmin', true);
+const Story = {
+  title: 'Helpers/Permissions',
+  component: Permission,
+  argTypes: {
+    permissions: { 
+      control: {
+        type: 'check',
+        options: [
+          '@feature.ticket',
+          '@feature.ticket.comment.create',
+          '@feature.ticket.delete',
+          '@feature.ticket.comment.delete',
+        ],
+      },
+    },
+    isSuperAdmin: { 
+      control: {
+        type: 'check',
+        options: ['@role.SuperAdmin'],
+      },
+    },
+  }
+};
+export default Story;
 
-  const permissionsFromUserContext = {
-    // If only have this role you will just be able to view tickets
-    'some-read-role': ['@feature.ticket'],
-    'some-write-role': [
-      boolean('@feature.ticket', true) && '@feature.ticket',
-      boolean('@feature.ticket.comment.create', false) && '@feature.ticket.comment.create',
-      boolean('@feature.ticket.delete', false) && '@feature.ticket.delete',
-      boolean('@feature.ticket.comment.delete', false) && '@feature.ticket.comment.delete',
-    ],
-  };
 
-  if (isSuperAdmin) {
-    Object.assign(permissionsFromUserContext, {
+const Template = (args) =>  {
+  console.log('args', args);
+  if (args.value) {
+    Object.assign(args.value, {
       globalAdminKey: 'super-admin-role',
       'super-admin-role': [
         '@feature.ticket',
@@ -76,10 +82,17 @@ export const withPermissions = () => {
       ],
     });
   }
-
+  console.log('args,value', args.value);
   return (
-    <Permission.Context value={permissionsFromUserContext}>
+    <Permission.Context {...args}>
       <Content />
     </Permission.Context>
   );
 };
+
+export const Permissions = Template.bind({});
+Permissions.args = {
+  value: {'some-read-role': ['@feature.ticket']},
+  isSuperAdmin: ['@role.SuperAdmin'],
+  permissions: ['@feature.ticket']
+}
