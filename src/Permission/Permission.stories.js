@@ -47,7 +47,7 @@ const Story = {
   title: 'Helpers/Permissions',
   component: Permission,
   argTypes: {
-    permissions: { 
+    'some-read-role': { 
       control: {
         type: 'check',
         options: [
@@ -58,21 +58,22 @@ const Story = {
         ],
       },
     },
-    isSuperAdmin: { 
-      control: {
-        type: 'check',
-        options: ['@role.SuperAdmin'],
-      },
-    },
   }
 };
 export default Story;
 
 
 const Template = (args) =>  {
-  console.log('args', args);
-  if (args.value) {
-    Object.assign(args.value, {
+  const isSuperAdmin = args['@role.SuperAdmin'];
+
+  const permissionsFromUserContext = {
+    // If only have this role you will just be able to view tickets
+    'some-read-role': ['@feature.ticket'],
+    'some-read-role': args['some-read-role']
+  };
+
+  if (isSuperAdmin) {
+    Object.assign(permissionsFromUserContext, {
       globalAdminKey: 'super-admin-role',
       'super-admin-role': [
         '@feature.ticket',
@@ -82,9 +83,9 @@ const Template = (args) =>  {
       ],
     });
   }
-  console.log('args,value', args.value);
+
   return (
-    <Permission.Context {...args}>
+    <Permission.Context value={permissionsFromUserContext}>
       <Content />
     </Permission.Context>
   );
@@ -92,7 +93,6 @@ const Template = (args) =>  {
 
 export const Permissions = Template.bind({});
 Permissions.args = {
-  value: {'some-read-role': ['@feature.ticket']},
-  isSuperAdmin: ['@role.SuperAdmin'],
-  permissions: ['@feature.ticket']
+  'some-read-role': ['@feature.ticket'],
+  '@role.SuperAdmin': true,
 }
