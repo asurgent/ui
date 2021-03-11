@@ -2,7 +2,7 @@ import React from 'react';
 import * as Cron from './index';
 
 const Story = {
-  title: 'Components/CronEditor',
+  title: 'Helpers/CronEditor',
   component: Cron.Editor,
   argTypes: {
     backgroundColor: { control: 'color' },

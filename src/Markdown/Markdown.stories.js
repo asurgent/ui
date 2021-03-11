@@ -3,7 +3,7 @@ import Markdown from './index';
 import myMarkdown from './exampleMarkdown.md';
 
 const Story = {
-  title: 'Components/Markdown',
+  title: 'Helpers/Markdown',
   component: Markdown,
   argTypes: {
     backgroundColor: { control: 'color' },

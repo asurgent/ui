@@ -2,7 +2,7 @@ import React from 'react';
 import * as Spinner from './index';
 
 const Story = {
-  title: 'Components/Spinner',
+  title: 'Graphics/Spinner',
   component: Spinner.Ring,
   argTypes: {
     color: { control: 'color' },
