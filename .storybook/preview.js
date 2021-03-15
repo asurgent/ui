@@ -1,5 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import { BrowserRouter } from 'react-router-dom';
 import Normalize from '../lib/style/Normalize.styled';
 import theme from '../lib/style/theme'
 import { I18nextProvider,initReactI18next } from 'react-i18next';
@@ -25,12 +26,14 @@ i18n
 export const decorators = [
   (Story) => (
     <>
+     <BrowserRouter> 
       <Normalize />
       <I18nextProvider i18n={i18n}>
         <ThemeProvider theme={theme}>
           <Story />
         </ThemeProvider>
       </I18nextProvider>
+      </BrowserRouter> 
     </>
   ),
 ];

@@ -14,7 +14,6 @@ const Square = ({ square, ...props }) => <UserPhoto square {...props} />;
 
 Square.propTypes = propTypes;
 Square.defaultProps = defaultProps;
-Square.displayName = '@asurgent.ui.UserImage.Square';
 
 export { UserPhoto as Circle };
 export { Square };

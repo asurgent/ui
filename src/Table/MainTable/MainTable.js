@@ -153,6 +153,5 @@ const Table = (props) => {
 
 Table.propTypes = propTypes;
 Table.defaultProps = defaultProps;
-Table.displayName = '@asurgent.ui.Table.Main';
 
 export default withTheme(Table);

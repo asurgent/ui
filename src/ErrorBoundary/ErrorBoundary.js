@@ -48,6 +48,5 @@ class ErrorBoundary extends React.Component {
 
 ErrorBoundary.propTypes = propTypes;
 ErrorBoundary.defaultProps = defaultProps;
-ErrorBoundary.displayName = '@asurgent.ui.ErrorBoundary';
 
 export default ErrorBoundary;

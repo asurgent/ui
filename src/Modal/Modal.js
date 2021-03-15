@@ -88,6 +88,5 @@ class Modal extends Component {
 
 Modal.propTypes = propTypes;
 Modal.defaultProps = defaultProps;
-Modal.displayName = '@asurgent.ui.Modal';
 
 export default Modal;

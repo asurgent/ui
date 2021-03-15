@@ -42,6 +42,5 @@ const MainTableProxy = (props) => {
 
 MainTableProxy.propTypes = propTypes;
 MainTableProxy.defaultProps = defaultProps;
-MainTableProxy.displayName = '@asurgent.ui.Table.Proxy.Main';
 
 export default MainTableProxy;

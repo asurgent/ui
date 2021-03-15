@@ -160,6 +160,5 @@ const FilterInput = forwardRef((props, ref) => {
 
 FilterInput.defaultProps = defaultProps;
 FilterInput.propTypes = propTyps;
-FilterInput.displayName = '@asurgent.ui.Form.Input.FilterSelect';
 
 export default FilterInput;

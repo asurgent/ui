@@ -77,6 +77,5 @@ const UserPhoto = (props) => {
 
 UserPhoto.propTypes = propTypes;
 UserPhoto.defaultProps = defaultProps;
-UserPhoto.displayName = '@asurgent.ui.UserPhoto';
 
 export default UserPhoto;

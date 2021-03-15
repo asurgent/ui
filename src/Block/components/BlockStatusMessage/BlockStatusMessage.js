@@ -34,7 +34,6 @@ const ErrorMessage = ({
 
 ErrorMessage.propTypes = propTypes;
 ErrorMessage.defaultProps = defaultProps;
-ErrorMessage.displayName = '@asurgent.ui.Block.ErrorMessage';
 
 const WarningMessage = ({
   title, hideLeftBorder, children, ...props
@@ -47,7 +46,6 @@ const WarningMessage = ({
 
 WarningMessage.propTypes = propTypes;
 WarningMessage.defaultProps = defaultProps;
-WarningMessage.displayName = '@asurgent.ui.Block.WarningMessage';
 
 const InfoMessage = ({
   title, hideLeftBorder, children, ...props
@@ -60,6 +58,5 @@ const InfoMessage = ({
 
 InfoMessage.propTypes = propTypes;
 InfoMessage.defaultProps = defaultProps;
-InfoMessage.displayName = '@asurgent.ui.Block.InfoMessage';
 
 export { ErrorMessage, WarningMessage, InfoMessage };

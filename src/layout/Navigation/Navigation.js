@@ -45,6 +45,5 @@ const Navigation = ({
 
 Navigation.propTypes = propTypes;
 Navigation.defaultProps = defaultProps;
-Navigation.displayName = '@asurgent.ui.layout.Navigation';
 
 export default withTheme()(Navigation);

@@ -48,6 +48,5 @@ const TableFilterProxy = ({
 
 TableFilterProxy.propTypes = propTypes;
 TableFilterProxy.defaultProps = defaultProps;
-TableFilterProxy.displayName = '@asurgent.ui.Table.TableFilterProxyProxy';
 
 export default TableFilterProxy;

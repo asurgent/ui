@@ -76,6 +76,5 @@ const FilterItem = ({
 
 FilterItem.propTypes = propTypes;
 FilterItem.defaultProps = defaultProps;
-FilterItem.displayName = '@asurgent.ui.Table.TableFilter.FilterItem';
 
 export default FilterItem;

@@ -1,6 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable camelcase */
-
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -33,6 +31,13 @@ const CardWrapper = styled.div`
   }
 `;
 
+const propTypes = {
+  row: PropTypes.instanceOf(Object),
+};
+
+const defaultProps = {
+  row: {},
+};
 
 const Card = ({ row }) => {
   const { valueD, valueA } = row;
@@ -58,6 +63,11 @@ const rowDummyData = Array.from({ length: 5 }, () => ({
   valueC: 'Cell 3',
   valueD: 'Cell 4',
 }));
+const myRes = Array.from(Array(10)).map((e, i) => (
+  { name: `Name${i}`, 
+  age: Math.floor(Math.random() * 80 + 20)}
+  ));
+
 
 const rowComponentOverride = ({ row }) => {
   const OverrideRow = styled(row)`
@@ -101,7 +111,6 @@ const cellComponentOverride = ({ cell }) => {
   return OverrideCell;
 };
 
-
 const Story = {
   title: 'Data/Table',
   component: Table,
@@ -109,13 +118,46 @@ const Story = {
 };
 export default Story;
 
-const BaseTemplate = (args) => <StoryWrapper><Table.Base {...args} /></StoryWrapper>;
+const BaseTemplate = (args) => (
+<StoryWrapper>
+  <Table.Base {...args} 
+    cellComponent={cellComponentOverride}
+    rowComponent={rowComponentOverride}
+    cardComponent={cardComponentOverride}
+    rowData={rowDummyData}
+    headerData={[
+      {
+        label: lorem,
+        size: 'minmax(30rem, 1fr)',
+      },
+      { label: 'B', key: 'test' },
+      { label: 'C', sortKey: 'sort-C' },
+      {
+        label: 'D',
+        size: 'minmax(8rem, 10rem)',
+        props: { style: { textAlign: 'center' } },
+      },
+    ]}
+    cardConfiguration={(row) => <Card row={row} />}
+    clickRowConfigutation={(row) => ({ link: '/', onClick: () => console.log(`Click row: ${row.id}`) })}
+    columnConfiguration={(row) => {
+      const {
+        valueA, valueB, valueC, valueD,
+      } = row;
+  
+      return [
+        { value: valueB },
+        valueA,
+        () => valueC,
+        () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
+        () => ({ value: 'IM AM HIDDEN' }),
+      ];
+    }}
+  />
+</StoryWrapper>);
 
-const Base = BaseTemplate.bind({});
+export const Base = BaseTemplate.bind({});
 Base.args = {
-  cellComponent: cellComponentOverride,
-  rowComponent: rowComponentOverride,
-  cardComponent: cardComponentOverride,
   emptystate: 'No items found',
   isLoading: false,
   zebra: true,
@@ -124,40 +166,9 @@ Base.args = {
   withHeader: true,
   withPagination: true,
   equalSizeColumns: false,
-  headerData: [
-    {
-      label: lorem,
-      size: 'minmax(30rem, 1fr)',
-    },
-    { label: 'B', key: 'test' },
-    { label: 'C', sortKey: 'sort-C' },
-    {
-      label: 'D',
-      size: 'minmax(8rem, 10rem)',
-      props: { style: { textAlign: 'center' } },
-    },
-  ],
-  cardConfiguration: (row) => <Card row={row} />,
-  clickRowConfigutation: (row) => ({ link: '/', onClick: action(`Click row: ${row.id}`) }),
-  columnConfiguration: (row) => {
-    const {
-      valueA, valueB, valueC, valueD,
-    } = row;
-
-    return [
-      { value: valueB },
-      valueA,
-      () => valueC,
-      () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
-      () => ({ value: 'IM AM HIDDEN' }),
-    ];
-  }
 }
 
-const myRes = Array.from(Array(10)).map((e, i) => ({ name: `Name${i}`, age: Math.floor(Math.random() * 80 + 20)}));
-
-
-/* export const pagination = () => {
+const PaginationTemplate = (args) => {
   const hook = Table.useTableHook();
   useEffect(() => {
     // registerRowFetchCallback => (payload, onSuccess, onFail)
@@ -168,13 +179,14 @@ const myRes = Array.from(Array(10)).map((e, i) => ({ name: `Name${i}`, age: Math
   }, []);
 
   return (
-    <StoryWrapper>
-      <Table.Pagination tableHook={hook} />
-    </StoryWrapper>
-  );
-}; */
+  <StoryWrapper>
+     <Table.Pagination tableHook={hook} />
+  </StoryWrapper>)};
 
-/* export const sort = () => {
+export const Pagination = PaginationTemplate.bind({});
+Pagination.args = {};
+
+const SortTemplate = (args) => {
   const hook = Table.useTableHook();
 
   useEffect(() => {
@@ -186,27 +198,28 @@ const myRes = Array.from(Array(10)).map((e, i) => ({ name: `Name${i}`, age: Math
 
   return (
     <StoryWrapper>
-      <Table.Sort
-        tableHook={hook}
-        sortKeys={[
-          { value: 'created', label: 'Created' },
-          {
-            value: 'modified', label: 'Modified', default: true, direction: 'asc',
-          },
-          { value: 'closed', label: 'Closed' },
-          { value: 'due', label: 'Due' },
-        ]}
-      />
+      <Table.Sort tableHook={hook} {...args}/>
     </StoryWrapper>
   );
-}; */
-/* 
-export const filter = () => {
+}
+export const Sort = SortTemplate.bind({});
+Sort.args = {
+  sortKeys: [
+    { value: 'created', label: 'Created' },
+    {
+      value: 'modified', label: 'Modified', default: true, direction: 'asc',
+    },
+    { value: 'closed', label: 'Closed' },
+    { value: 'due', label: 'Due' },
+  ]
+}
+
+const FilterTemplate = (args) => {
   const hook = Table.useTableHook();
 
   useEffect(() => {
     hook.registerRowFetchCallback((payload, onSuccess) => {
-      action('fetch')(payload);
+      console.log('fetch', payload);
       onSuccess({ });
     });
     hook.registerFilterFetchCallback((payload, onSuccess) => {
@@ -230,8 +243,7 @@ export const filter = () => {
 
   return (
     <StoryWrapper>
-      <Table.Filter
-        tableHook={hook}
+      <Table.Filter tableHook={hook} {...args}
         filterKeys={[
           {
             label: 'guys',
@@ -239,9 +251,7 @@ export const filter = () => {
             multiSelect: false,
             operator: 'custom_operator',
             defaultSelect: { value: 'Mike(1133)', count: 32 },
-            onChange: (a) => {
-              action('OnChange')(a);
-            },
+            onChange: (a) => console.log('OnChange', a)
           },
           { label: 'Pankaka', facetKey: 'pankaka' },
         ]}
@@ -251,9 +261,12 @@ export const filter = () => {
       />
     </StoryWrapper>
   );
-}; */
-/* 
-export const searchBar = () => {
+};
+
+export const Filter = FilterTemplate.bind({});
+Filter.args = {};
+
+const SearchBarTemplate = (args) => {
   const hook = Table.useTableHook();
 
   useEffect(() => {
@@ -265,12 +278,17 @@ export const searchBar = () => {
 
   return (
     <StoryWrapper>
-      <Table.SearchBar tableHook={hook} searchLabel="Search here" />
+      <Table.SearchBar tableHook={hook} {...args} />
     </StoryWrapper>
   );
-}; */
-/* 
-export const controlls = () => {
+};
+
+export const SearchBar = SearchBarTemplate.bind({});
+SearchBar.args = {
+  searchLabel: 'Search here'
+};
+
+const ControllsTemplate = (args) => {
   const hook = Table.useTableHook();
 
   useEffect(() => {
@@ -298,7 +316,7 @@ export const controlls = () => {
     <StoryWrapper>
       <Table.Controlls
         tableHook={hook}
-        withSearch={boolean('With search', true)}
+        {...args}
         withFilter={[
           { label: 'Gurka', facetKey: 'gurka' },
           { label: 'Pankaka', facetKey: 'pankaka' },
@@ -306,7 +324,7 @@ export const controlls = () => {
         withSort={[
           { value: 'created', label: 'Created' },
           {
-            value: 'modified', label: 'Modified', default: true, direction: 'asc',
+          value: 'modified', label: 'Modified', default: true, direction: 'asc',
           },
           { value: 'closed', label: 'Closed' },
           { value: 'due', label: 'Due' },
@@ -314,9 +332,14 @@ export const controlls = () => {
       />
     </StoryWrapper>
   );
-}; */
-/* 
-export const separate = () => {
+};
+
+export const Controlls = ControllsTemplate.bind({});
+Controlls.args = {
+  withSearch: true,
+}
+
+const SeparateTemplate = (args) => {
   const hook = Table.useTableHook();
   const [add, setAdd] = useState([]);
   const [renderAdd, setRenderAdd] = useState([]);
@@ -333,7 +356,7 @@ export const separate = () => {
 
   useEffect(() => {
     hook.registerRowFetchCallback((payload, onSuccess) => {
-      action('fetch row')(payload);
+      console.log('fetch row', payload);
 
       onSuccess({
         result: [...rowDummyData],
@@ -357,7 +380,7 @@ export const separate = () => {
     });
 
     hook.registerFilterFetchCallback((payload, onSuccess) => {
-      action('fetch facet')(payload);
+      console.log('fetch facet', payload);
       onSuccess({
         guys: [
           { value: 'Mike(1133)', count: 23 },
@@ -386,26 +409,7 @@ export const separate = () => {
       </pre>
       <Table.Controlls
         tableHook={hook}
-        withSearch={boolean('With search', true)}
-        // parseFilterLabelOutput => (filter, filterKey)
-        parseFilterLabelOutput={(tableFilter) => {
-          if (tableFilter === '') {
-            return 'Missing';
-          }
-          return null;
-        }}
-        withFilter={[
-          { label: 'Guys', facetKey: 'guys' },
-          { label: 'Pankaka', facetKey: 'pankaka' },
-        ]}
-        withSort={[
-          { value: 'created', label: 'Created' },
-          {
-            value: 'modified', label: 'Modified', default: true, direction: 'asc',
-          },
-          { value: 'closed', label: 'Closed' },
-          { value: 'due', label: 'Due' },
-        ]}
+        {...args}
       />
       <Table.Main
         withHeader
@@ -443,4 +447,9 @@ export const separate = () => {
       <Table.Pagination tableHook={hook} />
     </StoryWrapper>
   );
-}; */
+};
+
+export const Separate = SeparateTemplate.bind({});
+Separate.args = {
+  withSearch: true
+}

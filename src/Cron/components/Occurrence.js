@@ -55,6 +55,5 @@ const Occurrence = ({ hook }) => (
 
 Occurrence.propTypes = propTypes;
 Occurrence.defaultProps = defaultProps;
-Occurrence.displayName = '@asurgent.ui.CronEditor.Occurrence';
 
 export default Occurrence;

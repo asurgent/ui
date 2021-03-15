@@ -23,6 +23,5 @@ const TableSortProxy = (props) => {
 
 TableSortProxy.propTypes = propTypes;
 TableSortProxy.defaultProps = defaultProps;
-TableSortProxy.displayName = '@asurgent.ui.Table.TableSortProxy';
 
 export default TableSortProxy;

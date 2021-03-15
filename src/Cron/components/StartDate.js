@@ -45,6 +45,5 @@ const CronEditor = ({ hook }) => (
 
 CronEditor.propTypes = propTypes;
 CronEditor.defaultProps = defaultProps;
-CronEditor.displayName = '@asurgent.ui.CronEditor';
 
 export default CronEditor;

@@ -188,5 +188,4 @@ const NoTicketsImage = (props) => {
 };
 NoTicketsImage.propTypes = propTypes;
 NoTicketsImage.defaultProps = defaultProps;
-NoTicketsImage.displayName = '@asurgent.ui.icon.NoTickets';
 export default NoTicketsImage;

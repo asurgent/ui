@@ -85,6 +85,5 @@ const Switch = forwardRef((props, ref) => {
 
 Switch.propTypes = propTypes;
 Switch.defaultProps = defaultProps;
-Switch.displayName = '@asurgent.ui.Switch';
 
 export default Switch;

@@ -44,6 +44,5 @@ const Tag = ({
 
 Tag.defaultProps = defaultProps;
 Tag.propTypes = propTypes;
-Tag.displayName = '@asurgent.ui.Tag';
 
 export default Tag;

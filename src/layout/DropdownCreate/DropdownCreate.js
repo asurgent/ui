@@ -122,6 +122,5 @@ const DropdownCreate = ({
 
 DropdownCreate.propTypes = dropdownPropTypes;
 DropdownCreate.defaultProps = dropdownDefaultProps;
-DropdownCreate.displayName = '@asurgent.ui.layout.DropdownCreate';
 
 export default DropdownCreate;

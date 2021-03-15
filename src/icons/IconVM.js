@@ -34,5 +34,4 @@ const IconVM = (props) => {
 };
 IconVM.propTypes = propTypes;
 IconVM.defaultProps = defaultProps;
-IconVM.displayName = '@asurgent.ui.icon.VM';
 export default IconVM;

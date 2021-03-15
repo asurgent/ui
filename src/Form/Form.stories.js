@@ -1,18 +1,9 @@
 import React, { useEffect } from 'react';
-import { action } from '@storybook/addon-actions';
-import {
-  withKnobs, boolean,
-} from '@storybook/addon-knobs';
 import moment from 'moment';
 import * as Form from './index';
 import * as Button from '../Button';
 import * as Block from '../Block';
 import translation from './Formstories.translation';
-
-export default {
-  title: 'UI Components|Form',
-  decorators: [withKnobs],
-};
 
 const formObj = {
   label: {
@@ -60,17 +51,27 @@ const ticketValues = {
   ticketStatus: 'Pending',
 };
 
-export const simpleForm = () => {
+const Story = {
+  title: 'Data/Form',
+  component: Form,
+  argTypes: {},
+};
+export default Story;
+
+const SimpleTemplate = (args) => {
   const formData = Form.useFormBuilder(formObj);
   return (
     <Form.Primary
       form={formData}
       onChangeTimer={(values) => action()('Changed', values)}
+      {...args}
     />
   );
-};
+}
+export const Simple = SimpleTemplate.bind({});
+Simple.args = {};
 
-export const defaultForm = () => {
+const DefaultTemplate = (args) => {
   const formData = Form.useFormBuilder({
     someText: {
       type: 'text',
@@ -238,10 +239,9 @@ export const defaultForm = () => {
       value: '2020-12-24',
     },
   });
-  const renderErrors = boolean('render errors', false);
 
   useEffect(() => {
-    if (renderErrors) {
+    if (args.renderErrors) {
       formData.errors([
         { property: 'someText', message: 'You need some text', message_translation_key: 'error1' },
         { property: 'someNumber', message: 'You need a number', message_translation_key: 'error2' },
@@ -262,17 +262,17 @@ export const defaultForm = () => {
         form={formData}
         msTimer={15}
         onSubmit={({ values, isDirty }) => {
-          action()('isDirty', isDirty);
-          action()('Submitted', values);
+          console.log('isDirty', isDirty);
+          console.log('Submitted', values);
         }}
         onChange={({
           values, isDirty, dirtyItems, name, validates,
         }) => {
-          action()('Changed', name || 'form');
-          action()('Form values', values);
-          action()('Form dirty', isDirty);
-          action()('Dirty items', dirtyItems);
-          action()('Validating fields', validates);
+          console.log('Changed', name || 'form');
+          console.log('Form values', values);
+          console.log('Form dirty', isDirty);
+          console.log('Dirty items', dirtyItems);
+          console.log('Validating fields', validates);
         }}
       >
         {({
@@ -304,36 +304,18 @@ export const defaultForm = () => {
   );
 };
 
-export const secondaryThemeForm = () => {
-  const formData = Form.useFormBuilder(formObj);
+export const Default = DefaultTemplate.bind({});
+Default.args = {
+  renderErrors: false
+}
 
-  return (
-    <Block.Info hideLeftBorder withPadding>
-      <Form.Primary
-        form={formData}
-        onSubmit={({ values }) => action()('Submitted', values)}
-      >
-        {({ render, onSubmitAction }) => (
-          <>
-            {render}
-            <Block.SpaceBetween renderTransparent>
-              <Button.Hollow>Cancel</Button.Hollow>
-              <Button.Primary onClick={onSubmitAction}>Submit</Button.Primary>
-            </Block.SpaceBetween>
-          </>
-        )}
-      </Form.Primary>
-    </Block.Info>
-  );
-};
-
-export const advancedRender = () => {
+const AdvancedTemplate = (args) => {
   const formData = Form.useFormBuilder(formObj);
 
   return (
     <Form.Primary
       form={formData}
-      onSubmit={({ values }) => action()('Submitted', values)}
+      onSubmit={({ values }) => console.log('Submitted', values)}
     >
       {({ fields, onSubmitAction }) => (
         <>
@@ -359,13 +341,16 @@ export const advancedRender = () => {
   );
 };
 
-export const apiForm = () => {
+export const Advanced = AdvancedTemplate.bind({});
+Advanced.args = {};
+
+const APITemplate = (args) => {
   const formData = Form.useFormBuilder(specs, ticketValues);
 
   return (
     <Form.Primary
       form={formData}
-      onSubmit={({ values }) => action()('Submitted', values)}
+      onSubmit={({ values }) => console.log('Submitted', values)}
     >
       {({ render, onSubmitAction }) => (
         <>
@@ -378,9 +363,12 @@ export const apiForm = () => {
       )}
     </Form.Primary>
   );
-};
+}
 
-export const updateForm = () => {
+export const API = APITemplate.bind({});
+API.args = {};
+
+const UpdateTemplate = (args) => {
   const formData = Form.useFormBuilder(formObj);
 
   useEffect(() => {
@@ -397,9 +385,12 @@ export const updateForm = () => {
       onChangeTimer={({ values }) => action()('Updated', values)}
     />
   );
-};
+}
 
-export const dynamicMinMaxAttributes = () => {
+export const Update = UpdateTemplate.bind({});
+Update.args = {};
+
+const DynamicMinMaxTemplate = (args) => {
   const formData = Form.useFormBuilder({
     threshold_comparison: {
       type: 'select',
@@ -465,16 +456,16 @@ export const dynamicMinMaxAttributes = () => {
         form={formData}
         msTimer={15}
         onSubmit={({ values, isDirty }) => {
-          action()('isDirty', isDirty);
-          action()('Submitted', values);
+          console.log('isDirty', isDirty);
+          console.log('Submitted', values);
         }}
         onChange={({
           values, isDirty, dirtyItems, name,
         }) => {
-          action()('Changed', name || 'form');
-          action()('Form values', values);
-          action()('Form dirty', isDirty);
-          action()('Dirty items', dirtyItems);
+          console.log('Changed', name || 'form');
+          console.log('Form values', values);
+          console.log('Form dirty', isDirty);
+          console.log('Dirty items', dirtyItems);
         }}
       >
         {({
@@ -495,3 +486,6 @@ export const dynamicMinMaxAttributes = () => {
     </div>
   );
 };
+
+export const DynamicMinMax = DynamicMinMaxTemplate.bind({});
+DynamicMinMax.args = {};

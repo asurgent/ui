@@ -71,6 +71,5 @@ const TableSort = (props) => {
 
 TableSort.propTypes = propTypes;
 TableSort.defaultProps = defaultProps;
-TableSort.displayName = '@asurgent.ui.Table.Sort';
 
 export default TableSort;

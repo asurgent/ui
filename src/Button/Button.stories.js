@@ -32,17 +32,92 @@ export const SaveToFile = (args) => (
   </>
 );
 SaveToFile.args = {
-  onClick: () => console.log('asdf'),
+  onClick: () => console.log('clicked'),
 };
 
-export const Primary = (args) => (
-  <Button.Primary {...args}>{args.content}</Button.Primary>
-);
+const PrimaryTemplate = (args) => <Button.Primary {...args}>{args.content}</Button.Primary>;
+
+export const Primary = PrimaryTemplate.bind({});
 Primary.args = {
   loading: false,
-  onClick: () => console.log('asdf'),
-  content: 'hej'
+  onClick: () => console.log('clicked'),
+  content: 'knapp'
 };
+
+export const HREF = PrimaryTemplate.bind({});
+HREF.args = {
+  disabled: true,
+  link: "https://google.com",
+  onClick: () => console.log('clicked'),
+  content: 'knapp'
+}
+
+export const Secondary = (args) => (
+  <Button.Secondary {...args}>{args.content}</Button.Secondary>
+);
+Secondary.args = {
+  loading: false,
+  onClick: () => console.log('clicked'),
+  content: 'knapp'
+};
+
+export const Hollow = (args) => (<Button.Hollow {...args}>{args.content}</Button.Hollow>);
+Hollow.args = {
+  loading: false,
+  onClick: () => console.log('clicked'),
+  content: 'knapp'
+}
+
+export const Reject = (args) => (<Button.Reject {...args}>{args.content}</Button.Reject>);
+Reject.args = {
+  loading: false,
+  onClick: () => console.log('clicked'),
+  content: 'knapp'
+}
+
+export const Accept = (args) => (<Button.Accept {...args}>{args.content}</Button.Accept>);
+Accept.args = {
+  loading: false,
+  onClick: () => console.log('clicked'),
+  content: 'knapp'
+}
+
+export const Plain = (args) => (<Button.Plain {...args}>{args.content}</Button.Plain>);
+Plain.args = {
+  loading: false,
+  onClick: () => console.log('clicked'),
+  content: 'knapp'
+}
+
+export const Transparent = (args) => (<Button.Transparent {...args}>{args.content}</Button.Transparent>);
+Transparent.args = {
+  loading: false,
+  onClick: () => console.log('clicked'),
+  content: 'knapp'
+}
+
+export const Create = (args) => (<Button.Create {...args}>{args.content}</Button.Create>);
+Create.args = {
+  loading: false,
+  onClick: () => console.log('clicked'),
+  content: 'knapp'
+}
+
+export const Pill = (args) => (<Button.Pill {...args}>{args.content}</Button.Pill>);
+Pill.args = {
+  loading: false,
+  onClick: () => console.log('clicked'),
+  content: 'knapp'
+}
+
+export const Icon = (args) => (<Button.Icon iconRight={args.icon} {...args}>{args.content}</Button.Icon>);
+Icon.args = {
+  loading: false,
+  onClick: () => console.log('clicked'),
+  content: 'knapp',
+  icon: <MdiIcon path={mdiTicketConfirmation} size={1.4}/>
+}
+
 /* 
 export const setTableState = () => {
   const state = {
@@ -88,22 +163,6 @@ export const submitButton = () => (
 
 
 
-export const secondaryButton = () => (
-  <Button.Secondary onClick={(e) => action('Clicked!')(e)}>{content}</Button.Secondary>
-);
-
-export const hollowButton = () => (
-  <Button.Hollow onClick={(e) => action('Clicked!')(e)}>{content}</Button.Hollow>
-);
-
-export const hrefButton = () => (
-  <Button.Primary disabled link="https://google.com" onClick={(e) => action('Clicked!')(e)}>{content}</Button.Primary>
-);
-
-export const plainButton = () => (
-  <Button.Plain onClick={(e) => action('Clicked!')(e)}>{content}</Button.Plain>
-);
-
 export const linkButton = () => (
   <Button.Link
     onClick={(e) => action('Clicked!')(e)}
@@ -119,17 +178,6 @@ export const linkButton = () => (
   </Button.Link>
 );
 
-export const transparentButton = () => (
-  <Button.Transparent onClick={(e) => action('Clicked!')(e)}>{content}</Button.Transparent>
-);
-
-export const rejectButton = () => (
-  <Button.Reject onClick={(e) => action('Clicked!')(e)}>{content}</Button.Reject>
-);
-
-export const acceptButton = () => (
-  <Button.Create style={{ padding: '4rem' }} onClick={(e) => action('Clicked!')(e)}>{content}</Button.Create>
-);
 
 export const pillButton = () => (
   <Button.Pill

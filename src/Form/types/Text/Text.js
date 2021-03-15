@@ -73,6 +73,5 @@ const Text = forwardRef((props, ref) => {
 
 Text.defaultProps = defaultProps;
 Text.propTypes = propTyps;
-Text.displayName = '@asurgent.ui.Form.Input.Text';
 
 export default Text;

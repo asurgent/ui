@@ -59,6 +59,5 @@ const TableFilter = ({ filterHook, tableHook, className }) => (
 
 TableFilter.propTypes = propTypes;
 TableFilter.defaultProps = defaultProps;
-TableFilter.displayName = '@asurgent.ui.Table.TableFilter';
 
 export default TableFilter;

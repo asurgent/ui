@@ -30,6 +30,5 @@ const FilterItem = ({
 
 FilterItem.propTypes = propTypes;
 FilterItem.defaultProps = defaultProps;
-FilterItem.displayName = '@asurgent.ui.Form.FilterSelect.FilterSelectItem';
 
 export default FilterItem;

@@ -14,6 +14,5 @@ const Label = ({ value }) => <C.Label>{value}</C.Label>;
 
 Label.defaultProps = defaultProps;
 Label.propTypes = propTyps;
-Label.displayName = '@asurgent.ui.Form.Label';
 
 export default Label;

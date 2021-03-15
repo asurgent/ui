@@ -101,6 +101,5 @@ const SubnavigationBlock = ({ navigationList, title, children }) => {
 
 SubnavigationBlock.propTypes = propTypes;
 SubnavigationBlock.defaultProps = defaultProps;
-SubnavigationBlock.displayName = '@asurgent.ui.Block.SubnavigationBlock';
 
 export default SubnavigationBlock;

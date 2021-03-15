@@ -41,6 +41,5 @@ const Duration = ({ hook }) => (
 
 Duration.propTypes = propTypes;
 Duration.defaultProps = defaultProps;
-Duration.displayName = '@asurgent.ui.Duration';
 
 export default Duration;

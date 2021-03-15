@@ -1,21 +1,17 @@
 import React from 'react';
 import { darken } from 'polished';
+import withMapProps from '../../high-order-components/withMapProps';
 import MdiIcon from '@mdi/react';
 import { mdiChevronDown } from '@mdi/js';
-import withMapProps from '../../high-order-components/withMapProps';
 
-// import withStyle from './withStyle';
+import withStyle from './withStyle';
 import * as C from './Button.styled';
-const Primary = C.Button;
-/* 
-withStyle((theme) => ({
+
+const Primary = withStyle((theme) => ({
   backgroundColor: theme.blue900,
   borderColor: darken(0.08, theme.blue900),
   spinnerColor: theme.white,
-}))(); 
-*/
-
-/* 
+}))(C.Button);
 
 const Secondary = withStyle((theme) => ({
   backgroundColor: theme.gold800,
@@ -87,29 +83,17 @@ const iconPropsMapper = ({
   mainIcon,
   ...rest
 }) => ({ mainIcon: icon, ...rest });
-const Icon = (withMapProps(iconPropsMapper)(withStyle()(C.Icon))); */
-const Plain = C.Plain;
-/* const Link = withStyle()(C.Link); */
-
- Primary.displayName = '@asurgent.ui.Button.Primary';
- /*
-Accept.displayName = '@asurgent.ui.Button.Primary';
-Secondary.displayName = '@asurgent.ui.Button.Secondary';
-Hollow.displayName = '@asurgent.ui.Button.Hollow'; */
-Plain.displayName = '@asurgent.ui.Button.Plain';
-/* Reject.displayName = '@asurgent.ui.Button.Reject';
-Transparent.displayName = '@asurgent.ui.Button.Transparent';
-Link.displayName = '@asurgent.ui.Button.Link';
-Pill.displayName = '@asurgent.ui.Button.Pill'; */
+const Icon = (withMapProps(iconPropsMapper)(withStyle()(C.Icon)));
+const Plain = withStyle()(C.Plain);
+const Link = withStyle()(C.Link);
 
 export {
-/*   withStyle,
- 
-  Secondary,
-  Hollow, */
+  withStyle,
   Primary,
+  Secondary,
+  Hollow,
   Plain,
- /*  Reject,
+  Reject,
   Accept,
   Icon,
   Transparent,
@@ -118,5 +102,5 @@ export {
   Filter,
   Pill,
   CreateBlock,
-  Stretched, */
+  Stretched,
 };

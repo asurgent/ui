@@ -51,6 +51,5 @@ const Permission = ({
 
 Permission.propTypes = propTypes;
 Permission.defaultProps = defaultProps;
-Permission.displayName = '@asurgent.ui.Permission.Main';
 
 export default Permission;

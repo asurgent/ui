@@ -68,6 +68,5 @@ const List = ({
 
 List.propTypes = propTypes;
 List.defaultProps = defaultProps;
-List.displayName = '@asurgent.ui.List.Primary';
 
 export default List;

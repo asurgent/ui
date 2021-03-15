@@ -190,6 +190,5 @@ const Form = (props) => {
 
 Form.defaultProps = defaultProps;
 Form.propTypes = propTyps;
-Form.displayName = '@asurgent.ui.Form';
 
 export default Form;

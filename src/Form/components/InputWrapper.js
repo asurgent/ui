@@ -99,6 +99,5 @@ const InputWrapper = (props) => {
 
 InputWrapper.defaultProps = defaultProps;
 InputWrapper.propTypes = propTyps;
-InputWrapper.displayName = '@asurgent.ui.Form.InputWrapper';
 
 export default InputWrapper;

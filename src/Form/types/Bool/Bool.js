@@ -56,6 +56,5 @@ const Bool = forwardRef((props, ref) => {
 
 Bool.defaultProps = defaultProps;
 Bool.propTypes = propTyps;
-Bool.displayName = '@asurgent.ui.Form.Input.Bool';
 
 export default Bool;
