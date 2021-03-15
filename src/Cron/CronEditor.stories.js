@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import * as Cron from './index';
 
@@ -16,7 +17,7 @@ export const Main = Template.bind({});
 Main.args = {
   onChange: (e) => console.log('onChange', e),
   end: new Date(),
-  start: new Date(), 
+  start: new Date(),
   duration: '3600',
-  expression: "*/5 * * * *"
-}
+  expression: '*/5 * * * *',
+};

@@ -1,9 +1,9 @@
 import React from 'react';
-/* import MdiIcon from '@mdi/react';
-import { mdiMenuDown } from '@mdi/js'; */
+import MdiIcon from '@mdi/react';
+import { mdiMenuDown } from '@mdi/js';
 import * as Block from './index';
-/* import * as List from '../List';
-import * as Button from '../Button'; */
+import * as List from '../List';
+import * as Button from '../Button';
 
 const Story = {
   title: 'Components/Block',
@@ -125,31 +125,32 @@ Emptystate.args = {
 };
 
 export const Accordion = (args) => (
-
   <Block.Accordion {...args} title="Hello" description="Desc">
     {() => (
-      <p>hej</p>
-      /*  <List.Primary
-        rows={[
-          { label: 'Label', value: 'Hello' },
-          { label: 'Label', value: 'Hello' },
-          { label: 'Label', value: '' },
-          { label: 'Label 123123', value: 'Hello' },
-          {
-            row: (
-              <Button.Stretched
-                iconRight={(
-                  <MdiIcon
-                    path={mdiMenuDown}
-                    size={1.4}
-                  />
+      <>
+        <p>hej</p>
+        <List.Primary
+          rows={[
+            { label: 'Label', value: 'Hello' },
+            { label: 'Label', value: 'Hello' },
+            { label: 'Label', value: '' },
+            { label: 'Label 123123', value: 'Hello' },
+            {
+              row: (
+                <Button.Stretched
+                  iconRight={(
+                    <MdiIcon
+                      path={mdiMenuDown}
+                      size={1.4}
+                    />
                   )}
-              >
-                Next
-              </Button.Stretched>),
-          },
-        ]}
-      /> */
+                >
+                  Next
+                </Button.Stretched>),
+            },
+          ]}
+        />
+      </>
     )}
   </Block.Accordion>
 );
@@ -157,25 +158,16 @@ Accordion.args = {
   content: 'hejhej',
 };
 
-/* const iWontRender = false;
-export const SubnavigationBlock = (args) => (
+const SubnavigationTemplate = (args) => (
   <Block.SubnavigationBlock
-    {...args}
-    title="Hello"
     navigationList={[
       [
-        {
-          label: 'Other stuff', path: 'http://apple.com',
-        },
-        {
-          label: 'Hidden stuff', path: 'http://apple.com', render: () => false,
-        },
+        { label: 'Other stuff', path: 'http://apple.com' },
+        { label: 'Hidden stuff', path: 'http://apple.com', render: () => false },
       ],
       [
-        {
-          row: (<div>hello</div>),
-        },
-        iWontRender && {
+        { row: (<div>hello</div>) },
+        args.iWontRender && {
           label: 'On call',
           path: 'http://google.com',
           isActive: true,
@@ -183,13 +175,10 @@ export const SubnavigationBlock = (args) => (
           navigationStyle: { background: 'magenta' },
           labelStyle: { background: 'orange' },
         },
-        {
-          label: 'Im an active one', path: 'http://apple.com', isActive: true,
-        },
-        {
-          label: 'Hidden stuff', path: 'http://apple.com', render: () => false,
-        },
+        { label: 'Im an active one', path: 'http://apple.com', isActive: true },
+        { label: 'Hidden stuff', path: 'http://apple.com', render: () => false },
       ]]}
+    {...args}
   >
     <h2>I am title</h2>
     <Block.Bordered noShadow withPadding>
@@ -202,7 +191,9 @@ export const SubnavigationBlock = (args) => (
     </Block.Bordered>
   </Block.SubnavigationBlock>
 );
-SubnavigationBlock.args = {
-  content: 'hejhej',
+
+export const SubNavigation = SubnavigationTemplate.bind({});
+SubNavigation.args = {
+  iWontRender: false,
+  title: 'Hello',
 };
- */

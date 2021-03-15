@@ -16,13 +16,13 @@ const Wrapper = styled.div`
 const Story = {
   title: 'Components/Virtual Render',
   component: VirtualRender,
-  argTypes: {}
+  argTypes: {},
 };
 export default Story;
 
 const ListTemplate = (args) => {
-  const items = Array.from({length: args.numberOfEntries}, (_, i) => ({pos: i}));
-    
+  const items = Array.from({ length: args.numberOfEntries }, (_, i) => ({ pos: i }));
+
   return (
     <Wrapper>
       <VirtualRender.List items={items} {...args}>
@@ -33,10 +33,11 @@ const ListTemplate = (args) => {
         )}
       </VirtualRender.List>
     </Wrapper>
-)};
+  );
+};
 
 export const List = ListTemplate.bind({});
 List.args = {
   rowHeight: 60,
-  numberOfEntries: 100
-}
+  numberOfEntries: 100,
+};

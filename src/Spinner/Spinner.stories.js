@@ -16,5 +16,5 @@ export const Ring = Template.bind({});
 Ring.args = {
   size: 100,
   speed: 2,
-  color: '#239d34'
+  color: '#239d34',
 };

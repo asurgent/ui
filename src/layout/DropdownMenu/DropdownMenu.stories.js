@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import MdiIcon from '@mdi/react';
 import {
@@ -14,7 +15,6 @@ const Story = {
   argTypes: {},
 };
 export default Story;
-
 
 const DropdownMenuTemplate = (args) => (
   <div style={{ height: '100vh' }}>
@@ -57,7 +57,7 @@ const DropdownMenuTemplate = (args) => (
 export const DropDownMenu = DropdownMenuTemplate.bind({});
 DropDownMenu.args = {
   isOpen: false,
-  name: "Kalle Anka",
-  customerName: "Google",
-  email: "test@mail.com"
-}
+  name: 'Kalle Anka',
+  customerName: 'Google',
+  email: 'test@mail.com',
+};

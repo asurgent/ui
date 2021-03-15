@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react';
 import moment from 'moment';
 import * as Form from './index';
@@ -63,11 +64,11 @@ const SimpleTemplate = (args) => {
   return (
     <Form.Primary
       form={formData}
-      onChangeTimer={(values) => action()('Changed', values)}
+      onChangeTimer={(values) => console.log('Changed', values)}
       {...args}
     />
   );
-}
+};
 export const Simple = SimpleTemplate.bind({});
 Simple.args = {};
 
@@ -254,7 +255,7 @@ const DefaultTemplate = (args) => {
       formData.errors([]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [renderErrors]);
+  }, [args.renderErrors]);
 
   return (
     <div style={{ padding: '3rem' }}>
@@ -306,10 +307,10 @@ const DefaultTemplate = (args) => {
 
 export const Default = DefaultTemplate.bind({});
 Default.args = {
-  renderErrors: false
-}
+  renderErrors: false,
+};
 
-const AdvancedTemplate = (args) => {
+const AdvancedTemplate = () => {
   const formData = Form.useFormBuilder(formObj);
 
   return (
@@ -344,7 +345,7 @@ const AdvancedTemplate = (args) => {
 export const Advanced = AdvancedTemplate.bind({});
 Advanced.args = {};
 
-const APITemplate = (args) => {
+const APITemplate = () => {
   const formData = Form.useFormBuilder(specs, ticketValues);
 
   return (
@@ -363,12 +364,12 @@ const APITemplate = (args) => {
       )}
     </Form.Primary>
   );
-}
+};
 
 export const API = APITemplate.bind({});
 API.args = {};
 
-const UpdateTemplate = (args) => {
+const UpdateTemplate = () => {
   const formData = Form.useFormBuilder(formObj);
 
   useEffect(() => {
@@ -382,15 +383,15 @@ const UpdateTemplate = (args) => {
   return (
     <Form.Primary
       form={formData}
-      onChangeTimer={({ values }) => action()('Updated', values)}
+      onChangeTimer={({ values }) => console.log('Updated', values)}
     />
   );
-}
+};
 
 export const Update = UpdateTemplate.bind({});
 Update.args = {};
 
-const DynamicMinMaxTemplate = (args) => {
+const DynamicMinMaxTemplate = () => {
   const formData = Form.useFormBuilder({
     threshold_comparison: {
       type: 'select',

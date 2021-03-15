@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import * as Permission from './index';
 
@@ -47,7 +48,7 @@ const Story = {
   title: 'Helpers/Permissions',
   component: Permission,
   argTypes: {
-    'some-read-role': { 
+    'some-read-role': {
       control: {
         type: 'check',
         options: [
@@ -58,18 +59,17 @@ const Story = {
         ],
       },
     },
-  }
+  },
 };
 export default Story;
 
-
-const Template = (args) =>  {
+const Template = (args) => {
   const isSuperAdmin = args['@role.SuperAdmin'];
 
   const permissionsFromUserContext = {
     // If only have this role you will just be able to view tickets
     'some-read-role': ['@feature.ticket'],
-    'some-read-role': args['some-read-role']
+    'some-write-role': args['some-read-role'],
   };
 
   if (isSuperAdmin) {
@@ -93,6 +93,6 @@ const Template = (args) =>  {
 
 export const Permissions = Template.bind({});
 Permissions.args = {
-  'some-read-role': ['@feature.ticket'],
+  'some-write-role': ['@feature.ticket'],
   '@role.SuperAdmin': true,
-}
+};

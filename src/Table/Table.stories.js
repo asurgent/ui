@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -63,11 +64,6 @@ const rowDummyData = Array.from({ length: 5 }, () => ({
   valueC: 'Cell 3',
   valueD: 'Cell 4',
 }));
-const myRes = Array.from(Array(10)).map((e, i) => (
-  { name: `Name${i}`, 
-  age: Math.floor(Math.random() * 80 + 20)}
-  ));
-
 
 const rowComponentOverride = ({ row }) => {
   const OverrideRow = styled(row)`
@@ -119,42 +115,44 @@ const Story = {
 export default Story;
 
 const BaseTemplate = (args) => (
-<StoryWrapper>
-  <Table.Base {...args} 
-    cellComponent={cellComponentOverride}
-    rowComponent={rowComponentOverride}
-    cardComponent={cardComponentOverride}
-    rowData={rowDummyData}
-    headerData={[
-      {
-        label: lorem,
-        size: 'minmax(30rem, 1fr)',
-      },
-      { label: 'B', key: 'test' },
-      { label: 'C', sortKey: 'sort-C' },
-      {
-        label: 'D',
-        size: 'minmax(8rem, 10rem)',
-        props: { style: { textAlign: 'center' } },
-      },
-    ]}
-    cardConfiguration={(row) => <Card row={row} />}
-    clickRowConfigutation={(row) => ({ link: '/', onClick: () => console.log(`Click row: ${row.id}`) })}
-    columnConfiguration={(row) => {
-      const {
-        valueA, valueB, valueC, valueD,
-      } = row;
-  
-      return [
-        { value: valueB },
-        valueA,
-        () => valueC,
-        () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
-        () => ({ value: 'IM AM HIDDEN' }),
-      ];
-    }}
-  />
-</StoryWrapper>);
+  <StoryWrapper>
+    <Table.Base
+      {...args}
+      cellComponent={cellComponentOverride}
+      rowComponent={rowComponentOverride}
+      cardComponent={cardComponentOverride}
+      rowData={rowDummyData}
+      headerData={[
+        {
+          label: lorem,
+          size: 'minmax(30rem, 1fr)',
+        },
+        { label: 'B', key: 'test' },
+        { label: 'C', sortKey: 'sort-C' },
+        {
+          label: 'D',
+          size: 'minmax(8rem, 10rem)',
+          props: { style: { textAlign: 'center' } },
+        },
+      ]}
+      cardConfiguration={(row) => <Card row={row} />}
+      clickRowConfigutation={(row) => ({ link: '/', onClick: () => console.log(`Click row: ${row.id}`) })}
+      columnConfiguration={(row) => {
+        const {
+          valueA, valueB, valueC, valueD,
+        } = row;
+
+        return [
+          { value: valueB },
+          valueA,
+          () => valueC,
+          () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
+          () => ({ value: 'IM AM HIDDEN' }),
+        ];
+      }}
+    />
+  </StoryWrapper>
+);
 
 export const Base = BaseTemplate.bind({});
 Base.args = {
@@ -166,9 +164,9 @@ Base.args = {
   withHeader: true,
   withPagination: true,
   equalSizeColumns: false,
-}
+};
 
-const PaginationTemplate = (args) => {
+const PaginationTemplate = () => {
   const hook = Table.useTableHook();
   useEffect(() => {
     // registerRowFetchCallback => (payload, onSuccess, onFail)
@@ -179,9 +177,11 @@ const PaginationTemplate = (args) => {
   }, []);
 
   return (
-  <StoryWrapper>
-     <Table.Pagination tableHook={hook} />
-  </StoryWrapper>)};
+    <StoryWrapper>
+      <Table.Pagination tableHook={hook} />
+    </StoryWrapper>
+  );
+};
 
 export const Pagination = PaginationTemplate.bind({});
 Pagination.args = {};
@@ -198,10 +198,10 @@ const SortTemplate = (args) => {
 
   return (
     <StoryWrapper>
-      <Table.Sort tableHook={hook} {...args}/>
+      <Table.Sort tableHook={hook} {...args} />
     </StoryWrapper>
   );
-}
+};
 export const Sort = SortTemplate.bind({});
 Sort.args = {
   sortKeys: [
@@ -211,8 +211,8 @@ Sort.args = {
     },
     { value: 'closed', label: 'Closed' },
     { value: 'due', label: 'Due' },
-  ]
-}
+  ],
+};
 
 const FilterTemplate = (args) => {
   const hook = Table.useTableHook();
@@ -243,7 +243,9 @@ const FilterTemplate = (args) => {
 
   return (
     <StoryWrapper>
-      <Table.Filter tableHook={hook} {...args}
+      <Table.Filter
+        tableHook={hook}
+        {...args}
         filterKeys={[
           {
             label: 'guys',
@@ -251,7 +253,7 @@ const FilterTemplate = (args) => {
             multiSelect: false,
             operator: 'custom_operator',
             defaultSelect: { value: 'Mike(1133)', count: 32 },
-            onChange: (a) => console.log('OnChange', a)
+            onChange: (a) => console.log('OnChange', a),
           },
           { label: 'Pankaka', facetKey: 'pankaka' },
         ]}
@@ -285,7 +287,7 @@ const SearchBarTemplate = (args) => {
 
 export const SearchBar = SearchBarTemplate.bind({});
 SearchBar.args = {
-  searchLabel: 'Search here'
+  searchLabel: 'Search here',
 };
 
 const ControllsTemplate = (args) => {
@@ -324,7 +326,7 @@ const ControllsTemplate = (args) => {
         withSort={[
           { value: 'created', label: 'Created' },
           {
-          value: 'modified', label: 'Modified', default: true, direction: 'asc',
+            value: 'modified', label: 'Modified', default: true, direction: 'asc',
           },
           { value: 'closed', label: 'Closed' },
           { value: 'due', label: 'Due' },
@@ -337,7 +339,7 @@ const ControllsTemplate = (args) => {
 export const Controlls = ControllsTemplate.bind({});
 Controlls.args = {
   withSearch: true,
-}
+};
 
 const SeparateTemplate = (args) => {
   const hook = Table.useTableHook();
@@ -451,5 +453,5 @@ const SeparateTemplate = (args) => {
 
 export const Separate = SeparateTemplate.bind({});
 Separate.args = {
-  withSearch: true
-}
+  withSearch: true,
+};

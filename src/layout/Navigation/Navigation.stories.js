@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import {
   mdiCompass,
@@ -11,9 +12,9 @@ const Story = {
   title: 'Layout/Navigation',
   component: Navigation,
   argTypes: {
-    activeBackground: {control: 'color'},
-    activeLinkColor: {control: 'color'},
-    linkColor: {control: 'color'}
+    activeBackground: { control: 'color' },
+    activeLinkColor: { control: 'color' },
+    linkColor: { control: 'color' },
   },
 };
 export default Story;
@@ -24,8 +25,8 @@ const NavigationTemplate = (args) => (
     <Navigation
       theme={({ white, blue800 }) => ({
         activeBackground: args.activeBackground || blue800,
-        activeLinkColor: args.activeLinkColor ||  white,
-        linkColor: args.linkColor || white,
+        activeLinkColor: args.activeLinkColor || white,
+        linkColor: args.linkColor || white,
         menuItemsSpacing: '.4rem',
         menuFontSize: '1.6rem',
       })}
@@ -43,7 +44,7 @@ const NavigationTemplate = (args) => (
           label: 'Explore', tooltip: 'Explore Environment', icon: mdiCompass, link: '/test2',
         },
         {
-          label: 'Tickets', tooltip: 'View tickets', icon:mdiAndroidMessages, link: '/test3',
+          label: 'Tickets', tooltip: 'View tickets', icon: mdiAndroidMessages, link: '/test3',
         },
         {
           label: 'Docs', tooltip: 'Documentation', icon: mdiFileDocumentOutline, link: '/test4',

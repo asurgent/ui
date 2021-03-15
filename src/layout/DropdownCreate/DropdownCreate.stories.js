@@ -9,26 +9,24 @@ const Story = {
 };
 export default Story;
 
-const DropdownCreateTemplate = (args) => {
-  return (
-    <div style={{ height: '100vh' }}>
-      <DropdownCreate
-        onClose={() => setOpen(false)}
-        createActionList={[
-          {
-            title: 'Ticket',
-            description: 'create a new ticket',
-            icon: (mdiViewDashboard),
-            onClick: () => console.log('create ticket'),
-          },
-        ]}
-        {...args}
-      />
-    </div>
-  );
-};
+const DropdownCreateTemplate = (args) => (
+  <div style={{ height: '100vh' }}>
+    <DropdownCreate
+      createActionList={[
+        {
+          title: 'Ticket',
+          description: 'create a new ticket',
+          icon: (mdiViewDashboard),
+          /* eslint-disable no-console */
+          onClick: () => console.log('create ticket'),
+        },
+      ]}
+      {...args}
+    />
+  </div>
+);
 
 export const Dropdown = DropdownCreateTemplate.bind({});
 Dropdown.args = {
-  isOpen: true
+  isOpen: true,
 };

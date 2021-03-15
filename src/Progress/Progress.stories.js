@@ -20,7 +20,7 @@ Ring.args = {
   showPercentage: false,
   color: '#faaaab',
   useShadow: false,
-  useAnimation: false
+  useAnimation: false,
 };
 
 const BarTemplate = (args) => <Progress.Bar {...args} />;
@@ -30,5 +30,5 @@ Bar.args = {
   progress: 75,
   height: '300px',
   width: '2px',
-  showNumber: true
+  showNumber: true,
 };

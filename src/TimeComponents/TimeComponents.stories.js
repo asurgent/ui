@@ -6,12 +6,16 @@ import { newMoment } from '../Moment/momentParsers';
 /* story variables */
 const durationInSeconds = 3600;
 const currentHour = newMoment().hours();
-const onGoingFrom = newMoment().set({
-  hour: currentHour, minute: 0, second: 0, millisecond: 0,
-}).toISOString();
-
-const onGoingTo = newMoment(onGoingFrom).add(durationInSeconds, 'seconds').toISOString();
-const nextExecution = newMoment(onGoingFrom).add(1, 'days').toISOString();
+const onGoingFrom = newMoment()
+  .set({
+    hour: currentHour, minute: 0, second: 0, millisecond: 0,
+  }).toISOString();
+const onGoingTo = newMoment(onGoingFrom)
+  .add(durationInSeconds, 'seconds')
+  .toISOString();
+const nextExecution = newMoment(onGoingFrom)
+  .add(1, 'days')
+  .toISOString();
 /* story variables */
 
 const Story = {
@@ -35,8 +39,8 @@ DateSpan.args = {
     .add(45, 'days')
     .set({ hour: 19, minute: 11 })
     .toISOString(),
-  hasExpired: false
-}
+  hasExpired: false,
+};
 
 const RepeatTemplate = (args) => <TimeComponents.Repeat {...args} />;
 
@@ -53,8 +57,8 @@ Repeat.args = {
   isOngoing: true,
   cronCategory: 'custom',
   useAnimation: true,
-  showPercentage: true
-}
+  showPercentage: true,
+};
 
 const StartEndTemplate = (args) => <TimeComponents.StartEnd {...args} />;
 

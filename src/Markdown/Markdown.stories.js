@@ -17,5 +17,5 @@ export const Main = Template.bind({});
 Main.args = {
   className: 'mySpecificClass',
   flavor: 'github',
-  markdown: myMarkdown
-}
+  markdown: myMarkdown,
+};

@@ -5,9 +5,7 @@ import heatData from './data4';
 const Story = {
   title: 'Graphs/Heatmap',
   component: Graph,
-  argTypes: {
-   
-  },
+  argTypes: {},
 };
 export default Story;
 
@@ -42,5 +40,5 @@ Heatmap.argTypes = {
   color: '#C6403B',
   emptyColor: '#F2F2F2',
   cellGap: 6,
-  showLegend: true
-}
+  showLegend: true,
+};

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react';
 import MdiIcon from '@mdi/react';
 import {
@@ -15,8 +16,8 @@ const Story = {
   title: 'Layout/Layout',
   component: Layout.Main,
   argTypes: {
-    provider: {control: false},
-    children: {control: false},
+    provider: { control: false },
+    children: { control: false },
   },
 };
 export default Story;
@@ -190,5 +191,5 @@ const MainLayoutTemplate = (args) => {
 export const MainLayout = MainLayoutTemplate.bind({});
 MainLayout.args = {
   isOpen: false,
-  withSearch: false
+  withSearch: false,
 };

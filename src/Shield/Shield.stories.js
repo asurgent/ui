@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import React from 'react';
-import * as Shield from './index';
 import styled from 'styled-components';
+import * as Shield from './index';
 
 const Container = styled.div`
   height: 100vh;
@@ -16,8 +17,8 @@ const Story = {
   title: 'Helpers/Shield',
   component: Shield,
   argTypes: {
-    backgroundColor: {control: 'color'}
-  }
+    backgroundColor: { control: 'color' },
+  },
 };
 export default Story;
 
@@ -31,8 +32,8 @@ const DarkTemplate = (args) => (
 
 export const Dark = DarkTemplate.bind({});
 Dark.args = {
-  onClick: () => console.log('clicked')
-}
+  onClick: () => console.log('clicked'),
+};
 
 const TransparentTemplate = (args) => (
   <Container>
@@ -44,8 +45,8 @@ const TransparentTemplate = (args) => (
 
 export const Transparent = TransparentTemplate.bind({});
 Transparent.args = {
-  onClick: () => console.log('clicked')
-}
+  onClick: () => console.log('clicked'),
+};
 
 const CustomTemplate = (args) => (
   <Container>
@@ -58,5 +59,5 @@ const CustomTemplate = (args) => (
 export const Custom = CustomTemplate.bind({});
 Custom.args = {
   onClick: () => console.log('clicked'),
-  backgroundColor: '#d59a24'
-}
+  backgroundColor: '#d59a24',
+};

@@ -25,16 +25,15 @@ i18n
 
 export const decorators = [
   (Story) => (
-    <>
-     <BrowserRouter> 
+
+    <BrowserRouter> 
       <Normalize />
       <I18nextProvider i18n={i18n}>
         <ThemeProvider theme={theme}>
           <Story />
         </ThemeProvider>
       </I18nextProvider>
-      </BrowserRouter> 
-    </>
+    </BrowserRouter> 
   ),
 ];
 

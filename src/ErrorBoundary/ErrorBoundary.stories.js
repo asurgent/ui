@@ -7,7 +7,7 @@ const Story = {
   argTypes: {
     crash: { control: 'boolean' },
     children: { control: false },
-    fallback: { control: false }
+    fallback: { control: false },
   },
 };
 export default Story;
@@ -27,5 +27,5 @@ export const Fallback = (args) => (
   </ErrorBoundary>
 );
 Fallback.args = {
-  crash: false
-}
+  crash: false,
+};

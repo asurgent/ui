@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 import React from 'react';
 import { Manager, addToast } from './index';
 
@@ -10,7 +9,6 @@ const Story = {
   },
 };
 export default Story;
-
 
 const message = (
   <p>
@@ -26,15 +24,15 @@ const error = () => addToast(message, 'error');
 const success = () => addToast(message, 'success');
 const warning = () => addToast(message, 'warning');
 
-
-const Template = (args) => ( 
-<>
-  <button onClick={add}>Add</button>
-  <button onClick={error}>Error</button>
-  <button onClick={success}>Success</button>
-  <button onClick={warning}>Warning</button>
-  <Manager {...args} />
-</>)
+const Template = (args) => (
+  <>
+    <button type="button" onClick={add}>Add</button>
+    <button type="button" onClick={error}>Error</button>
+    <button type="button" onClick={success}>Success</button>
+    <button type="button" onClick={warning}>Warning</button>
+    <Manager {...args} />
+  </>
+);
 
 export const Toasts = Template.bind({});
-Toasts.args = {}
+Toasts.args = {};

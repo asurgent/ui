@@ -7,7 +7,7 @@ import * as Transitions from '../Transition';
 
 const propTypes = {
   /**
-  * ID that's stored in localstorage to keep track if dismissed or not 
+  * ID that's stored in localstorage to keep track if dismissed or not
   */
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,

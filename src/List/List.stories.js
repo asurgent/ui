@@ -1,11 +1,8 @@
 import React from 'react';
-import MdiIcon from '@mdi/react';
-import { mdiCompass } from '@mdi/js';
 import * as List from './index';
-import * as Button from '../Button/index';
 
 const Story = {
-  title: 'Components/List',
+  title: 'Data/List',
   component: List.Primary,
   argTypes: {
     backgroundColor: { control: 'color' },
@@ -28,5 +25,5 @@ Primary.args = {
     { label: 'Label value {}', value: {} },
     { label: 'Label value null', value: null },
     { label: 'Label value undefined', value: undefined },
-  ]
+  ],
 };
