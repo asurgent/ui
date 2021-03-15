@@ -165,6 +165,5 @@ const Toast = ({
 
 Toast.defaultProps = defaultProps;
 Toast.propTypes = propTypes;
-Toast.displayName = '@asurgent.ui.Toast';
 
 export default withTheme(Toast);

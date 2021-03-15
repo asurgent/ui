@@ -28,6 +28,5 @@ const TableHeader = ({
 
 TableHeader.propTypes = propTypes;
 TableHeader.defaultProps = defaultProps;
-TableHeader.displayName = '@asurgent.ui.Table.TableHeader';
 
 export default TableHeader;

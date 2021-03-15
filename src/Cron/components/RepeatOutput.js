@@ -46,6 +46,5 @@ const RepeatOutput = ({
 
 RepeatOutput.propTypes = propTypes;
 RepeatOutput.defaultProps = defaultProps;
-RepeatOutput.displayName = '@asurgent.ui.CronEditor.RepeatOutput';
 
 export default RepeatOutput;

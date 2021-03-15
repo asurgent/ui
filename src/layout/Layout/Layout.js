@@ -127,6 +127,5 @@ const Layout = ({ provider, children }) => {
 
 Layout.propTypes = propTypes;
 Layout.defaultProps = defaultProps;
-Layout.displayName = '@asurgent.ui.layout.Main';
 
 export default Layout;

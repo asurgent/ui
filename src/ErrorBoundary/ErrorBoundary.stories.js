@@ -1,22 +1,31 @@
 import React from 'react';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
 import ErrorBoundary from './index';
 
-export default { title: 'UI Components|Error Boundary', decorators: [withKnobs] };
+const Story = {
+  title: 'Components/ErrorBoundary',
+  component: ErrorBoundary,
+  argTypes: {
+    crash: { control: 'boolean' },
+    children: { control: false },
+    fallback: { control: false },
+  },
+};
+export default Story;
 
-const FaulthyComponent = () => {
+const FaultyComponent = () => {
   throw new Error('Break');
 };
 
-const Fallback = () => (
+const FallbackComponent = () => (
   <p>Im the fallback component that renders if a causes an error</p>
 );
 
-export const fallback = () => (
-  <ErrorBoundary fallback={<Fallback />}>
-    { boolean('Cause component to crash', false) && (
-      <FaulthyComponent />
-    )}
+export const Fallback = (args) => (
+  <ErrorBoundary fallback={<FallbackComponent />}>
+    { args.crash && (<FaultyComponent />)}
     <p>I will render untill sibling fails</p>
   </ErrorBoundary>
 );
+Fallback.args = {
+  crash: false,
+};

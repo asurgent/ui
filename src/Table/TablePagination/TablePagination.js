@@ -59,6 +59,5 @@ const TablePagination = ({
 
 TablePagination.propTypes = propTypes;
 TablePagination.defaultProps = defaultProps;
-TablePagination.displayName = '@asurgent.ui.Table.Pagination';
 
 export default TablePagination;

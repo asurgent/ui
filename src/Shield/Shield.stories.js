@@ -1,39 +1,63 @@
+/* eslint-disable no-console */
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import styled from 'styled-components';
 import * as Shield from './index';
 
-export const darkShield = () => (
-  <div style={{ height: '100vh' }}>
-    <Shield.Dark onClick={action('Clicked')}>
-      <h1 style={{ background: 'pink', padding: '2rem' }}>
-        Click outside me!
-      </h1>
+const Container = styled.div`
+  height: 100vh;
+`;
+
+const content = (
+  <h1 style={{ background: 'pink', padding: '2rem' }}>
+    Click outside me!
+  </h1>
+);
+
+const Story = {
+  title: 'Helpers/Shield',
+  component: Shield,
+  argTypes: {
+    backgroundColor: { control: 'color' },
+  },
+};
+export default Story;
+
+const DarkTemplate = (args) => (
+  <Container>
+    <Shield.Dark {...args}>
+      {content}
     </Shield.Dark>
-  </div>
+  </Container>
 );
 
-export const transparentShield = () => (
-  <div style={{ height: '100vh' }}>
-    <Shield.Transparent onClick={action('Clicked')}>
-      <h1 style={{ background: 'pink', padding: '2rem' }}>
-        Click outside me!
-      </h1>
+export const Dark = DarkTemplate.bind({});
+Dark.args = {
+  onClick: () => console.log('clicked'),
+};
+
+const TransparentTemplate = (args) => (
+  <Container>
+    <Shield.Transparent {...args}>
+      {content}
     </Shield.Transparent>
-  </div>
+  </Container>
 );
 
-export const customColorShield = () => (
-  <div style={{ height: '100vh' }}>
-    <Shield.Custom backgroundColor={(theme) => theme.rgba(theme.blue900, 0.8)} onClick={action('Clicked')}>
-      <h1 style={{ background: 'pink', padding: '2rem' }}>
-        Click outside me!
-      </h1>
+export const Transparent = TransparentTemplate.bind({});
+Transparent.args = {
+  onClick: () => console.log('clicked'),
+};
+
+const CustomTemplate = (args) => (
+  <Container>
+    <Shield.Custom {...args}>
+      {content}
     </Shield.Custom>
-  </div>
+  </Container>
 );
 
-export default {
-  title: 'UI Components|Shield',
-  decorators: [withKnobs],
+export const Custom = CustomTemplate.bind({});
+Custom.args = {
+  onClick: () => console.log('clicked'),
+  backgroundColor: '#d59a24',
 };

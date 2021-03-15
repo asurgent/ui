@@ -74,6 +74,5 @@ const TableSearchBar = (props) => {
 
 TableSearchBar.propTypes = propTypes;
 TableSearchBar.defaultProps = defaultProps;
-TableSearchBar.displayName = '@asurgent.ui.Table.Searchbar';
 
 export default TableSearchBar;

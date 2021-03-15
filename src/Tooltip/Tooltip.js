@@ -132,6 +132,5 @@ const Tooltip = ({
 };
 Tooltip.propTypes = propTypes;
 Tooltip.defaultProps = defaultProps;
-Tooltip.displayName = '@asurgent.ui.Tooltip';
 
 export default Tooltip;

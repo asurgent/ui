@@ -25,6 +25,5 @@ const TableSearchBarProxy = ({ tableHook, parseSearchStringOutput, ...props }) =
 
 TableSearchBarProxy.propTypes = propTypes;
 TableSearchBarProxy.defaultProps = defaultProps;
-TableSearchBarProxy.displayName = '@asurgent.ui.Table.TableSearchBarProxy';
 
 export default TableSearchBarProxy;

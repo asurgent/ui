@@ -1,15 +1,14 @@
 import React from 'react';
-import {
-  withKnobs,
-} from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import * as Tooltip from './index';
-import * as T from '../Typography';
-import * as Tag from '../Tag';
 
-const center = {
-  height: '100vh', width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center',
-};
+const Center = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+`;
 
 const someFormattedToolTip = `Headertext blablabal:
 
@@ -17,116 +16,69 @@ Some paragraphy text text text text text text text.
 
 Some other text.
 `;
-const tags = Array.from({ length: 10 }, (_, i) => `Tag-${i}`);
 
-const MyHeader = styled.div`
-  p {
-    font-size: 1.4rem;
-    margin: 0;
-  }
-  p:last-child {
-    font-size: 1rem;
-    margin-bottom: 0.8rem;
-  }
-`;
+const Story = {
+  title: 'Components/Tooltip',
+  component: Tooltip,
+  argTypes: {},
+};
+export default Story;
 
-const TooltipHeader = () => (
-  <MyHeader>
-    <T.P.Main bold>Asurgent-cloudops-streamanalytics</T.P.Main>
-    <T.P.Small>ID 4A7B1D85F2CB1AB4E006E8BBEEA6D4ADBC55C9A6</T.P.Small>
-  </MyHeader>
+const content = (<h1 style={{ display: 'inline-block' }}>Hover me</h1>);
+
+const MiddleTemplate = (args) => (
+  <Center>
+    <Tooltip.Middle {...args}>{content}</Tooltip.Middle>
+  </Center>
 );
+export const Middle = MiddleTemplate.bind({});
+Middle.args = {
+  tip: someFormattedToolTip,
+};
 
-const MyContent = styled.div`
-  p {
-    margin: 0;
-    font-size: 12px;
-  }
-`;
-const Gray = styled.span`
-  color: gray;
-`;
-const TooltipContent = () => (
-  <MyContent>
-    <T.P.Main bold>Asurgent AB (1168)</T.P.Main>
-    <T.P.Small>
-      <Gray>Entity type </Gray>
-      subscribtion
-    </T.P.Small>
+const TopTemplate = (args) => <Center><Tooltip.Top {...args}>{content}</Tooltip.Top></Center>;
+export const Top = TopTemplate.bind({});
+Top.args = {
+  tip: someFormattedToolTip,
+};
 
-    <T.P.Small>
-      <Gray>Resource group </Gray>
-      rg-asurgent-sentinel-test
-    </T.P.Small>
+const LeftTemplate = (args) => <Center><Tooltip.Left {...args}>{content}</Tooltip.Left></Center>;
+export const Left = LeftTemplate.bind({});
+Left.args = {
+  tip: someFormattedToolTip,
+};
 
-    <T.P.Small>
-      <Gray>Region </Gray>
-      westeurope
-    </T.P.Small>
-    <Tag.Collection tags={tags} maxTags={3} maxLength={4} style={{ marginTop: '0.8rem' }} />
-  </MyContent>
+const RightTemplate = (args) => <Center><Tooltip.Right {...args}>{content}</Tooltip.Right></Center>;
+export const Right = RightTemplate.bind({});
+Right.args = {
+  tip: someFormattedToolTip,
+};
+
+const EntityTemplate = (args) => (
+  <Center>
+    <Tooltip.Cards.Entity.Top {...args}>{content}</Tooltip.Cards.Entity.Top>
+  </Center>
 );
+export const Entity = EntityTemplate.bind({});
+Entity.args = {
+  id: 123,
+  name: 'Gurka',
+  type: 'Mine',
+  resourceGroup: 'Sweden',
+  region: 'Sthlm',
+  displayName: 'Asurgent',
+  tags: ['test-tag'],
+};
 
-export const card = () => (
-  <>
-    <div style={center}>
-      <Tooltip.Top
-        isCard
-        header={<TooltipHeader />}
-        content={<TooltipContent />}
-      >
-        <div style={{ background: 'black', color: 'white' }}>
-          <h1 style={{ display: 'inline-block' }}>Hover me</h1>
-        </div>
-      </Tooltip.Top>
-    </div>
-
-  </>
+const CardTemplate = (args) => (
+  <Center>
+    <Tooltip.Middle {...args}>{content}</Tooltip.Middle>
+  </Center>
 );
-
-export const bottomMiddle = () => (
-  <div style={center}>
-    <Tooltip.Middle tip={someFormattedToolTip}>
-      <div style={{ background: 'black', color: 'white' }}>
-        <h1 style={{ display: 'inline-block' }}>Hover me</h1>
-      </div>
-    </Tooltip.Middle>
-  </div>
-);
-
-export const rightCenter = () => (
-  <div style={center}>
-    <Tooltip.Right tip="Hello">
-      <h1 style={{ display: 'inline-block' }}>Hover me</h1>
-    </Tooltip.Right>
-  </div>
-);
-
-export const LeftCenter = () => (
-  <div style={center}>
-    <Tooltip.Left tip="Hello">
-      <h1 style={{ display: 'inline-block' }}>Hover me</h1>
-    </Tooltip.Left>
-  </div>
-);
-
-export const EntityCard = () => (
-  <div style={center}>
-    <Tooltip.Cards.Entity.Top
-      id={123}
-      name="Gurka"
-      type="Mine"
-      resourceGroup="Sweden"
-      region="Sthlm"
-      displayName="Asurgent"
-      tags={['test-tag']}
-    >
-      Hej
-    </Tooltip.Cards.Entity.Top>
-  </div>
-);
-
-export default {
-  title: 'UI Components|Tooltip',
-  decorators: [withKnobs],
+export const Card = CardTemplate.bind({});
+Card.args = {
+  isCard: true,
+  header: <p>header</p>,
+  content: <p>content</p>,
+  footer: <p>footer</p>,
 };

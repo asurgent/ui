@@ -1,32 +1,32 @@
-import React, { useState } from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import React from 'react';
 import { mdiViewDashboard } from '@mdi/js';
 import DropdownCreate from './index';
 
-export default {
-  title: 'Layout|Dropdown create list',
-  decorators: [withKnobs],
+const Story = {
+  title: 'Layout/Dropdown Create',
+  component: DropdownCreate,
+  argTypes: {},
 };
+export default Story;
 
-export const dropdownCreate = () => {
-  const [open, setOpen] = useState(false);
+const DropdownCreateTemplate = (args) => (
+  <div style={{ height: '100vh' }}>
+    <DropdownCreate
+      createActionList={[
+        {
+          title: 'Ticket',
+          description: 'create a new ticket',
+          icon: (mdiViewDashboard),
+          /* eslint-disable no-console */
+          onClick: () => console.log('create ticket'),
+        },
+      ]}
+      {...args}
+    />
+  </div>
+);
 
-  return (
-    <div style={{ height: '100vh' }}>
-      <button type="button" onClick={() => setOpen(true)}>Open</button>
-      <DropdownCreate
-        onClose={() => setOpen(false)}
-        isOpen={open}
-        createActionList={[
-          {
-            title: 'Ticket',
-            description: 'create a new ticket',
-            icon: (mdiViewDashboard),
-            onClick: action('create ticket'),
-          },
-        ]}
-      />
-    </div>
-  );
+export const Dropdown = DropdownCreateTemplate.bind({});
+Dropdown.args = {
+  isOpen: true,
 };

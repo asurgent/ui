@@ -10,5 +10,4 @@ export const AsurgentLogo = (props) => (
   </svg>
 );
 
-AsurgentLogo.displayName = '@asurgent.ui.icon.AsurgentLogo';
 export default AsurgentLogo;

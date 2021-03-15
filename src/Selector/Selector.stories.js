@@ -1,23 +1,22 @@
+/* eslint-disable no-console */
 import React from 'react';
-import {
-  withKnobs,
-} from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
 import * as Selector from './index';
 
-export default { title: 'UI Components|Selector', decorators: [withKnobs] };
+const Story = {
+  title: 'Components/Selector',
+  component: Selector,
+  argTypes: {},
+};
+export default Story;
 
-export const main = () => (
-  <Selector.Main
-    entries={[
-      { label: '2020', value: 2020 },
-      { label: 'tvåtusen och nitton', value: 2019, default: true },
-      { label: '2k18', value: 2018, default: false },
-    ]}
-    onSelect={(d) => action()('clicked', d)}
-  />
-);
+const Template = (args) => <Selector.Main {...args} />;
 
-main.story = {
-  name: 'Selector Main',
+export const Main = Template.bind({});
+Main.args = {
+  entries: [
+    { label: '2020', value: 2020 },
+    { label: 'tvåtusen och nitton', value: 2019, default: true },
+    { label: '2k18', value: 2018, default: false },
+  ],
+  onSelect: (e) => console.log('clicked', e),
 };

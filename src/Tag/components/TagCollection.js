@@ -66,6 +66,5 @@ const TagCollection = ({
 
 TagCollection.propTypes = propTypes;
 TagCollection.defaultProps = defaultProps;
-TagCollection.displayName = '@asurgent.ui.Tag.Collection';
 
 export default TagCollection;

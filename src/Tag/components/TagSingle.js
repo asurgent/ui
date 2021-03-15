@@ -4,6 +4,4 @@ import { Default } from './Tag.styled';
 
 const SingleTag = (props) => <Tag {...props} component={Default} />;
 
-SingleTag.displayName = '@asurgent.ui.Tag.Single';
-
 export default SingleTag;

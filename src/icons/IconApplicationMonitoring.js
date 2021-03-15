@@ -7,5 +7,4 @@ export const ApplicationMonitoring = (props) => (
   </svg>
 );
 
-ApplicationMonitoring.displayName = '@asurgent.ui.icon.ApplicationMonitoring';
 export default ApplicationMonitoring;

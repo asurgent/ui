@@ -1,7 +1,7 @@
 import { withTheme } from 'styled-components';
 import { withRouter } from 'react-router-dom';
-import withThemeOverride from 'high-order-components/withTheme';
-import withMapProps from 'high-order-components/withMapProps';
+import withThemeOverride from '../../high-order-components/withTheme';
+import withMapProps from '../../high-order-components/withMapProps';
 import Button from './Button';
 
 const withStyle = (theme) => (Style) => {

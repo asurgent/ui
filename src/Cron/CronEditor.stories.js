@@ -1,20 +1,21 @@
+/* eslint-disable no-console */
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
-
 import * as Cron from './index';
 
-export default {
-  title: 'UI Components|CronEditor',
-  decorators: [withKnobs],
+const Story = {
+  title: 'Helpers/CronEditor',
+  component: Cron.Editor,
+  argTypes: {},
 };
+export default Story;
 
-export const main = () => (
-  <Cron.Editor
-    end={new Date()}
-    start={new Date()}
-    duration="3600"
-    expression="*/5 * * * *"
-    onChange={(e) => action()('onChange', e)}
-  />
-);
+const Template = (args) => <Cron.Editor {...args} />;
+
+export const Main = Template.bind({});
+Main.args = {
+  onChange: (e) => console.log('onChange', e),
+  end: new Date(),
+  start: new Date(),
+  duration: '3600',
+  expression: '*/5 * * * *',
+};

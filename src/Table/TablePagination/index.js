@@ -22,6 +22,5 @@ const TablePaginationProxy = (props) => {
 
 TablePaginationProxy.propTypes = propTypes;
 TablePaginationProxy.defaultProps = defaultProps;
-TablePaginationProxy.displayName = '@asurgent.ui.Table.Proxy.Pagination';
 
 export default TablePaginationProxy;

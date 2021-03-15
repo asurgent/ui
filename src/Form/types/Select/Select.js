@@ -112,6 +112,5 @@ const Select = forwardRef((props, ref) => {
 
 Select.defaultProps = defaultProps;
 Select.propTypes = propTyps;
-Select.displayName = '@asurgent.ui.Form.Input.Select';
 
 export default Select;

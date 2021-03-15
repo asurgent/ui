@@ -1,9 +1,9 @@
 import React from 'react';
 import { darken } from 'polished';
-import withMapProps from 'high-order-components/withMapProps';
 import MdiIcon from '@mdi/react';
 import { mdiChevronDown } from '@mdi/js';
 
+import withMapProps from '../../high-order-components/withMapProps';
 import withStyle from './withStyle';
 import * as C from './Button.styled';
 
@@ -86,16 +86,6 @@ const iconPropsMapper = ({
 const Icon = (withMapProps(iconPropsMapper)(withStyle()(C.Icon)));
 const Plain = withStyle()(C.Plain);
 const Link = withStyle()(C.Link);
-
-Primary.displayName = '@asurgent.ui.Button.Primary';
-Accept.displayName = '@asurgent.ui.Button.Primary';
-Secondary.displayName = '@asurgent.ui.Button.Secondary';
-Hollow.displayName = '@asurgent.ui.Button.Hollow';
-Plain.displayName = '@asurgent.ui.Button.Plain';
-Reject.displayName = '@asurgent.ui.Button.Reject';
-Transparent.displayName = '@asurgent.ui.Button.Transparent';
-Link.displayName = '@asurgent.ui.Button.Link';
-Link.displayName = '@asurgent.ui.Button.Pill';
 
 export {
   withStyle,

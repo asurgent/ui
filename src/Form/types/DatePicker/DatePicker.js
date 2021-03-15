@@ -129,6 +129,4 @@ DatePicker.defaultProps = {
   disabled: () => false,
 };
 
-DatePicker.displayName = '@asurgent.ui.Form.Input.DatePicker';
-
 export default DatePicker;

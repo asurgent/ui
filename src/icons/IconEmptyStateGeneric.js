@@ -113,5 +113,4 @@ const EmptyStateGenericImage = (props) => {
 };
 EmptyStateGenericImage.propTypes = propTypes;
 EmptyStateGenericImage.defaultProps = defaultProps;
-EmptyStateGenericImage.displayName = '@asurgent.ui.icon.EmptyStateGeneric';
 export default EmptyStateGenericImage;

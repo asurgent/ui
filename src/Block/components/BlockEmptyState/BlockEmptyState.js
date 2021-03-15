@@ -25,6 +25,5 @@ const Emptystate = ({ title, children }) => (
 
 Emptystate.propTypes = propTypes;
 Emptystate.defaultProps = defaultProps;
-Emptystate.displayName = '@asurgent.ui.Block.Emptystate';
 
 export default Emptystate;

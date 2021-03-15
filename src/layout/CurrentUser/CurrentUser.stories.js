@@ -1,6 +1,5 @@
+/* eslint-disable no-console */
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
 import MdiIcon from '@mdi/react';
 import {
   mdiCompass,
@@ -11,12 +10,17 @@ import {
 
 import CurrentUser from './index';
 
-export const currentUser = () => (
+const Story = {
+  title: 'Layout/Current User',
+  component: CurrentUser,
+  argTypes: {},
+};
+export default Story;
+
+const UserTemplate = (args) => (
   <div style={{ height: '100vh', textAlign: 'center' }}>
     <p>Try in mobile view</p>
-
     <CurrentUser
-      selectedLanguage="sv"
       navigationList={[
         {
           label: 'Dashbaord', tooltip: 'Dashboard', active: true, icon: (<MdiIcon path={mdiViewDashboard} size={1.4} />),
@@ -25,17 +29,18 @@ export const currentUser = () => (
         { label: 'Tickets', tooltip: 'View tickets', icon: (<MdiIcon path={mdiAndroidMessages} size={1.4} />) },
         { label: 'Docs', tooltip: 'Documentation', icon: (<MdiIcon path={mdiBookOpenVariant} size={1.4} />) },
       ]}
-      languages={[{ value: 'en', label: 'English' }, { value: 'sv', label: 'Swedish' }]}
-      name="Kalle Anka"
-      customerName="Google"
-      email="test@mail.com"
-      onChangeLanguage={(lang) => action()('Changed language', lang)}
-      onLogout={action('logout action')}
+      onChangeLanguage={(lang) => console.log('Changed language', lang)}
+      onLogout={() => console.log('logout action')}
+      {...args}
     />
   </div>
 );
 
-export default {
-  title: 'Layout|Current User',
-  decorators: [withKnobs],
+export const User = UserTemplate.bind({});
+User.args = {
+  selectedLanguage: 'sv',
+  languages: [{ value: 'en', label: 'English' }, { value: 'sv', label: 'Swedish' }],
+  name: 'Kalle Anka',
+  customerName: 'Google',
+  email: 'test@mail.com',
 };

@@ -53,6 +53,7 @@ const Zoom = ({
     .extent([[0, 0], [boundedWidth, boundedHeight]]),
   [boundedHeight, boundedWidth]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const timeout = useMemo(timer((extent) => {
     if (!extent) {
       xScale.domain([...d3.extent(data, ({ [xProp]: x }) => x)]);

@@ -32,7 +32,6 @@ const Custom = ({
 );
 Custom.propTypes = propTypes;
 Custom.defaultProps = defaultProps;
-Custom.displayName = '@asurgent.ui.Shield.Custom';
 
 const Dark = ({
   children, dark, backgroundColor, ...props
@@ -43,7 +42,6 @@ const Dark = ({
 );
 Dark.propTypes = propTypes;
 Dark.defaultProps = defaultProps;
-Dark.displayName = '@asurgent.ui.Shield.Dark';
 
 const Transparent = ({
   children, dark, backgroundColor, ...props
@@ -54,7 +52,6 @@ const Transparent = ({
 );
 Transparent.propTypes = propTypes;
 Transparent.defaultProps = defaultProps;
-Transparent.displayName = '@asurgent.ui.Shield.Transparent';
 
 const OutsideEvent = ({ children, onClick, ...props }) => (
   <Outside onClick={onClick} {...props}>
@@ -63,7 +60,6 @@ const OutsideEvent = ({ children, onClick, ...props }) => (
 );
 OutsideEvent.propTypes = propTypes;
 OutsideEvent.defaultProps = defaultProps;
-OutsideEvent.displayName = '@asurgent.ui.Shield.OutsideEvent';
 
 export {
   Custom, Transparent, Dark, OutsideEvent,

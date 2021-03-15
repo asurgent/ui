@@ -67,6 +67,5 @@ const Accordion = ({
 
 Accordion.propTypes = propTypes;
 Accordion.defaultProps = defaultProps;
-Accordion.displayName = '@asurgent.ui.Block.Accordion';
 
 export default Accordion;

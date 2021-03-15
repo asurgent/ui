@@ -1,40 +1,34 @@
 import React from 'react';
-import {
-  withKnobs, number, boolean, text,
-} from '@storybook/addon-knobs';
 import * as Progress from './index';
 
-export default { title: 'UI Components|Progress', decorators: [withKnobs] };
+const Story = {
+  title: 'Components/Progress',
+  component: Progress,
+  argTypes: {
+    color: { control: 'color' },
+  },
+};
+export default Story;
 
-export const ring = () => (
-  <div style={{ padding: '2rem' }}>
-    <Progress.Ring
-      radius={number('Radius', 80)}
-      stroke={number('Stroke', 5)}
-      progress={number('Progress', 75)}
-      showPercentage={boolean('Show percentage', false)}
-      color={text('Color', null)}
-      useShadow={boolean('Use shadow', false)}
-      useAnimation={boolean('Animated', false)}
-    />
-  </div>
-);
+const RingTemplate = (args) => <Progress.Ring {...args} />;
 
-ring.story = {
-  name: 'Ring',
+export const Ring = RingTemplate.bind({});
+Ring.args = {
+  radius: 80,
+  stroke: 5,
+  progress: 75,
+  showPercentage: false,
+  color: '#faaaab',
+  useShadow: false,
+  useAnimation: false,
 };
 
-export const bar = () => (
-  <div style={{ margin: '2rem', height: '300px' }}>
-    <Progress.Bar
-      progress={number('Progress', 75)}
-      height={text('Height', '300px')}
-      width={text('Width', '2px')}
-      showNumber={boolean('Show number', true)}
-    />
-  </div>
-);
+const BarTemplate = (args) => <Progress.Bar {...args} />;
 
-bar.story = {
-  name: 'Bar',
+export const Bar = BarTemplate.bind({});
+Bar.args = {
+  progress: 75,
+  height: '300px',
+  width: '2px',
+  showNumber: true,
 };

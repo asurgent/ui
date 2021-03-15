@@ -80,6 +80,7 @@ class Modal extends Component {
             </C.Content>
           </C.Modal>
         </C.Overlay>
+        ,
       </Transition.FadeIn>,
       modalRoot,
     );
@@ -88,6 +89,5 @@ class Modal extends Component {
 
 Modal.propTypes = propTypes;
 Modal.defaultProps = defaultProps;
-Modal.displayName = '@asurgent.ui.Modal';
 
 export default Modal;

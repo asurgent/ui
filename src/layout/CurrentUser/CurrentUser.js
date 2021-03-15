@@ -76,6 +76,5 @@ const UserDropdown = ({
 
 UserDropdown.propTypes = propTypes;
 UserDropdown.defaultProps = defaultProps;
-UserDropdown.displayName = '@asurgent.ui.layout.UserDropdown';
 
 export default UserDropdown;

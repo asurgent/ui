@@ -1,83 +1,33 @@
-/* eslint-disable camelcase */
 import React from 'react';
-import {
-  withKnobs, text, number,
-} from '@storybook/addon-knobs';
 import * as Truncate from './index';
 
-export default { title: 'UI Components|Truncate', decorators: [withKnobs] };
+const Story = {
+  title: 'Helpers/Truncate',
+  component: Truncate,
+  argTypes: {},
+};
+export default Story;
 
-export const start = () => (
-  <div style={{ padding: '2rem' }}>
-    <Truncate.Start
-      string={text('String', 'I am truncated string')}
-      maxLength={number('Max length', 6)}
-    />
-    <h1>
-      <Truncate.Start
-        string={text('String', 'I am truncated string')}
-        maxLength={number('Max length', 6)}
-      />
-    </h1>
-    <p>
-      <Truncate.Start
-        string={text('String', 'I am truncated string')}
-        maxLength={number('Max length', 6)}
-      />
-    </p>
-  </div>
-);
+const StartTemplate = (args) => <Truncate.Start {...args} />;
 
-start.story = {
-  name: 'Start',
+export const Start = StartTemplate.bind({});
+Start.args = {
+  string: 'I am truncated string',
+  maxLength: 6,
 };
 
-export const center = () => (
-  <div style={{ padding: '2rem' }}>
-    <Truncate.Center
-      string={text('String', 'I am truncated string')}
-      maxLength={number('Max length', 6)}
-    />
-    <h1>
-      <Truncate.Center
-        string={text('String', 'I am truncated string')}
-        maxLength={number('Max length', 6)}
-      />
-    </h1>
-    <p>
-      <Truncate.Center
-        string={text('String', 'I am truncated string')}
-        maxLength={number('Max length', 6)}
-      />
-    </p>
-  </div>
-);
+const CenterTemplate = (args) => <Truncate.Center {...args} />;
 
-center.story = {
-  name: 'Center',
+export const Center = CenterTemplate.bind({});
+Center.args = {
+  string: 'I am truncated string',
+  maxLength: 6,
 };
 
-export const end = () => (
-  <div style={{ padding: '2rem' }}>
-    <Truncate.End
-      string={text('String', 'I am truncated string')}
-      maxLength={number('Max length', 6)}
-    />
-    <h1>
-      <Truncate.End
-        string={text('String', 'I am truncated string')}
-        maxLength={number('Max length', 6)}
-      />
-    </h1>
-    <p>
-      <Truncate.End
-        string={text('String', 'I am truncated string')}
-        maxLength={number('Max length', 6)}
-      />
-    </p>
-  </div>
-);
+const EndTemplate = (args) => <Truncate.End {...args} />;
 
-end.story = {
-  name: 'End',
+export const End = EndTemplate.bind({});
+End.args = {
+  string: 'I am truncated string',
+  maxLength: 6,
 };

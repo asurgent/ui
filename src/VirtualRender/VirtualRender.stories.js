@@ -1,7 +1,4 @@
 import React from 'react';
-import {
-  withKnobs, number,
-} from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import * as VirtualRender from './index';
 
@@ -16,21 +13,19 @@ const Wrapper = styled.div`
     border: 1px solid ${({ theme }) => theme.gray200};
 `;
 
-export default {
-  title: 'UI Components|Virtual Render',
-  decorators: [withKnobs],
+const Story = {
+  title: 'Components/Virtual Render',
+  component: VirtualRender,
+  argTypes: {},
 };
+export default Story;
 
-export const list = () => {
-  const rowDummyData = Array.from({
-    length: number('Number of entries', 100),
-  }, (_, i) => ({
-    pos: i,
-  }));
+const ListTemplate = (args) => {
+  const items = Array.from({ length: args.numberOfEntries }, (_, i) => ({ pos: i }));
 
   return (
     <Wrapper>
-      <VirtualRender.List items={rowDummyData} rowHeight={number('Row height', 60)}>
+      <VirtualRender.List items={items} {...args}>
         {({ pos }, i) => (
           <p key={i}>
             {`Position ${pos}`}
@@ -39,4 +34,10 @@ export const list = () => {
       </VirtualRender.List>
     </Wrapper>
   );
+};
+
+export const List = ListTemplate.bind({});
+List.args = {
+  rowHeight: 60,
+  numberOfEntries: 100,
 };

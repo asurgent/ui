@@ -82,6 +82,5 @@ const DurationComponent = ({ start, end, seconds: durationInSeconds }) => {
 
 DurationComponent.defaultProps = defaultProps;
 DurationComponent.propTypes = propTypes;
-DurationComponent.displayName = '@asurgent.ui.moment.Duration';
 
 export default DurationComponent;

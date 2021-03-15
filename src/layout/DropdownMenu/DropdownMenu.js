@@ -173,6 +173,5 @@ const DropdownMenu = ({
 
 DropdownMenu.propTypes = propTypes;
 DropdownMenu.defaultProps = defaultProps;
-DropdownMenu.displayName = '@asurgent.ui.layout.DropdownMenu';
 
 export default DropdownMenu;

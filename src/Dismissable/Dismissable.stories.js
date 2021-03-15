@@ -1,52 +1,51 @@
-import React, { useState } from 'react';
-import {
-  withKnobs, text, number,
-} from '@storybook/addon-knobs';
+import React from 'react';
 import * as Dismissable from './index';
 
-export default { title: 'UI Components|Dismissable', decorators: [withKnobs] };
+export default {
+  title: 'Components/Dismissable',
+  component: Dismissable.Primary,
+  argTypes: {
+    id: { control: 'text' },
+    title: { control: 'text' },
+    fadeOutSpeed: { control: 'number' },
+  },
+};
 
-export const plain = () => (
-  <Dismissable.Plain
-    id={text('Id', 'some.banner.id')}
-    title={text('Title', 'I am a title')}
-    description={text('Description', 'I am some description')}
-    fadeOutSpeed={number('Fade out speed (ms)', 500)}
-  >
-    <p>some content</p>
+const Template = (args) => (
+  <Dismissable.Plain {...args} id={args.id} title={args.title}>
+    <p>
+      some content
+      {args.title}
+    </p>
   </Dismissable.Plain>
 );
 
-plain.story = {
-  name: 'Plain',
+export const Plain = Template.bind({});
+Plain.args = {
+  id: 'some.banner.id',
+  title: 'I am a title',
+  fadeOutSpeed: 500,
 };
 
-export const primary = () => {
-  const [id, setId] = useState('banner.storybook.primary');
-  return (
-    <>
-      <Dismissable.Primary
-        id={id}
-        title={text('Title', 'I am a title')}
-        description={text('Description', 'I am some description')}
-        fadeOutSpeed={number('Fade out speed (ms)', 500)}
-        withBottomMargin
-      >
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-          <p>some content</p>
-          <button type="button">some button</button>
-        </div>
-      </Dismissable.Primary>
-
+export const Primary = (args) => (
+  <>
+    <Dismissable.Primary {...args} withBottomMargin>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-        <p>Not part of component (just for the sake of the Storybook)</p>
-        <input type="text" value={id} onChange={({ target }) => setId(target.value)} />
-        <button type="button" onClick={() => window.localStorage.removeItem(id)}>Clear ID-value (refresh)</button>
+        <p>some content</p>
+        <button type="button">some button</button>
       </div>
-    </>
-  );
-};
+    </Dismissable.Primary>
 
-primary.story = {
-  name: 'Primary',
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+      <p>Not part of component (just for the sake of the Storybook)</p>
+      <button type="button" onClick={() => window.localStorage.removeItem(args.id)}>Clear ID-value (refresh)</button>
+    </div>
+  </>
+);
+
+Primary.args = {
+  id: 'banner.storybook.primary',
+  title: 'I am a title',
+  description: 'I am some description',
+  fadeOutSpeed: 500,
 };

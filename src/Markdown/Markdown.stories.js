@@ -1,20 +1,19 @@
 import React from 'react';
-import {
-  withKnobs, text,
-} from '@storybook/addon-knobs';
-import * as Markdown from './index';
+import Markdown from './index';
 import myMarkdown from './exampleMarkdown.md';
 
-export default {
-  title: 'UI Components|Markdown',
-  decorators: [withKnobs({ escapeHTML: false })],
+const Story = {
+  title: 'Helpers/Markdown',
+  component: Markdown,
+  argTypes: {},
 };
+export default Story;
 
-export const markdown = () => (
-  <Markdown.Primary
-    className={text('Some extra class', 'mySpecificClass')}
-    flavor={text('Flavor (github, original, vanilla)', 'github')}
-    markdown={text('Markdown', myMarkdown)}
-    style={{ padding: '1rem' }}
-  />
-);
+const Template = (args) => <Markdown {...args} />;
+
+export const Main = Template.bind({});
+Main.args = {
+  className: 'mySpecificClass',
+  flavor: 'github',
+  markdown: myMarkdown,
+};

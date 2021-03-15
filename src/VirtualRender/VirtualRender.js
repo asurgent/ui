@@ -80,6 +80,5 @@ const VirtualRender = (props) => {
 
 VirtualRender.propTypes = propTypes;
 VirtualRender.defaultProps = defaultProps;
-VirtualRender.displayName = '@asurgent.ui.VirtualRender';
 
 export default VirtualRender;

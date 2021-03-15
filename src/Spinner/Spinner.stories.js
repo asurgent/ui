@@ -1,15 +1,20 @@
 import React from 'react';
-import {
-  withKnobs, number, text,
-} from '@storybook/addon-knobs';
 import * as Spinner from './index';
 
-export default { title: 'UI Components|Spinner', decorators: [withKnobs] };
+const Story = {
+  title: 'Graphics/Spinner',
+  component: Spinner.Ring,
+  argTypes: {
+    color: { control: 'color' },
+  },
+};
+export default Story;
 
-export const spinner = () => (
-  <Spinner.Ring size={number('Size', 100)} speed={number('Speed', 2)} color={text('Color', '#239d34')} />
-);
+const Template = (args) => <Spinner.Ring {...args} />;
 
-spinner.story = {
-  name: 'Spinner Ring',
+export const Ring = Template.bind({});
+Ring.args = {
+  size: 100,
+  speed: 2,
+  color: '#239d34',
 };

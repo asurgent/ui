@@ -122,6 +122,5 @@ const FilterCategory = (props) => {
 
 FilterCategory.propTypes = propTypes;
 FilterCategory.defaultProps = defaultProps;
-FilterCategory.displayName = '@asurgent.ui.Table.TableFilter.FilterCategory';
 
 export default withTheme(FilterCategory);

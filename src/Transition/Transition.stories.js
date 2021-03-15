@@ -1,60 +1,64 @@
-import React, { useState } from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
+import React, { useState, useEffect } from 'react';
 import * as Transitions from './index';
 
-export const fadeIn = () => {
-  const [open, setOpen] = useState(false);
+const Story = {
+  title: 'Graphics/Transition',
+  component: Transitions,
+};
+export default Story;
+
+const content = <p>Hello</p>;
+
+const FadeInTemplate = (args) => {
+  const [hidden, setHidden] = useState(args.isVisible);
+  useEffect(() => setHidden(args.isHidden), [args.isHidden]);
+
+  return <Transitions.FadeIn isVisible={!hidden}>{content}</Transitions.FadeIn>;
+};
+
+export const FadeIn = FadeInTemplate.bind({});
+FadeIn.args = {
+  isHidden: false,
+};
+
+const FadeOutTemplate = (args) => {
+  const [hidden, setHidden] = useState(args.isVisible);
+  useEffect(() => setHidden(args.isHidden), [args.isHidden]);
+
+  return (<Transitions.FadeOut isVisible={!hidden}>{content}</Transitions.FadeOut>);
+};
+
+export const FadeOut = FadeOutTemplate.bind({});
+FadeOut.args = {
+  isHidden: false,
+};
+
+const SlideDownTemplate = (args) => {
+  const [hidden, setHidden] = useState(args.isVisible);
+  useEffect(() => setHidden(args.isHidden), [args.isHidden]);
+
+  return (<Transitions.FadeInSlideDown isVisible={!hidden}>{content}</Transitions.FadeInSlideDown>);
+};
+
+export const SlideDown = SlideDownTemplate.bind({});
+SlideDown.args = {
+  isHidden: false,
+};
+
+const SlideDownDesktipTemplate = (args) => {
+  const [hidden, setHidden] = useState(args.isVisible);
+  useEffect(() => setHidden(args.isHidden), [args.isHidden]);
 
   return (
-    <div style={{ height: '100vh' }}>
-      <button type="button" onClick={() => setOpen(!open)}>{open ? 'hide' : 'show'}</button>
-      <Transitions.FadeIn isVisible={open}>
-        <p>Hello</p>
-      </Transitions.FadeIn>
-    </div>
+    <Transitions.FadeInSlideDownOnDesktop
+      isVisible={!hidden}
+    >
+      {content}
+    </Transitions.FadeInSlideDownOnDesktop>
   );
 };
 
-export const fadeOut = () => {
-  const [hidden, setHidden] = useState(false);
-
-  return (
-    <div style={{ height: '100vh' }}>
-      <button type="button" onClick={() => setHidden(!hidden)}>{hidden ? 'show' : 'hide'}</button>
-      <Transitions.FadeOut isVisible={!hidden}>
-        <p>Hello</p>
-      </Transitions.FadeOut>
-    </div>
-  );
-};
-
-export const fadeInSlideDown = () => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div style={{ height: '100vh' }}>
-      <button type="button" onClick={() => setOpen(!open)}>{open ? 'hide' : 'show'}</button>
-      <Transitions.FadeInSlideDown isVisible={open}>
-        <p>Hello from content!</p>
-      </Transitions.FadeInSlideDown>
-    </div>
-  );
-};
-
-export const fadeInSlideDownOnDesktop = () => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div style={{ height: '100vh' }}>
-      <button type="button" onClick={() => setOpen(!open)}>{open ? 'hide' : 'show'}</button>
-      <Transitions.FadeInSlideDownOnDesktop isVisible={open}>
-        <p>Hello slide on desktop</p>
-      </Transitions.FadeInSlideDownOnDesktop>
-    </div>
-  );
-};
-
-export default {
-  title: 'Ui Components|Transitions',
-  decorators: [withKnobs],
+export const SlideDownDesktop = SlideDownDesktipTemplate.bind({});
+SlideDownDesktop.args = {
+  isHidden: false,
 };

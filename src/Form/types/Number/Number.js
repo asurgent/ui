@@ -129,6 +129,5 @@ const NumberInput = forwardRef((props, ref) => {
 
 NumberInput.defaultProps = defaultProps;
 NumberInput.propTypes = propTyps;
-NumberInput.displayName = '@asurgent.ui.Form.Input.NumberInput';
 
 export default NumberInput;

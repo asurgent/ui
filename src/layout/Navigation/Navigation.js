@@ -1,7 +1,7 @@
 import React from 'react';
-import withTheme from 'high-order-components/withTheme';
 import PropTypes from 'prop-types';
 import MdiIcon from '@mdi/react';
+import withTheme from '../../../high-order-components/withTheme';
 import * as C from './Navigation.styled';
 import * as Tooltip from '../../Tooltip';
 
@@ -45,6 +45,5 @@ const Navigation = ({
 
 Navigation.propTypes = propTypes;
 Navigation.defaultProps = defaultProps;
-Navigation.displayName = '@asurgent.ui.layout.Navigation';
 
 export default withTheme()(Navigation);

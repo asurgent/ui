@@ -1,9 +1,12 @@
-/* eslint-disable react/button-has-type */
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 import { Manager, addToast } from './index';
 
-export default { title: 'UI Components|Toasts', decorators: [withKnobs] };
+const Story = {
+  title: 'Components/Toasts',
+  component: Manager,
+  argTypes: {},
+};
+export default Story;
 
 const message = (
   <p>
@@ -14,23 +17,20 @@ const message = (
   </p>
 );
 
-export const toasts = () => {
-  const add = () => addToast(message, 'info');
-  const error = () => addToast(message, 'error');
-  const success = () => addToast(message, 'success');
-  const warning = () => addToast(message, 'warning');
+const add = () => addToast(message, 'info');
+const error = () => addToast(message, 'error');
+const success = () => addToast(message, 'success');
+const warning = () => addToast(message, 'warning');
 
-  return (
-    <>
-      <button onClick={add}>Add</button>
-      <button onClick={error}>Error</button>
-      <button onClick={success}>Success</button>
-      <button onClick={warning}>Warning</button>
-      <Manager />
-    </>
-  );
-};
+const Template = (args) => (
+  <>
+    <button type="button" onClick={add}>Add</button>
+    <button type="button" onClick={error}>Error</button>
+    <button type="button" onClick={success}>Success</button>
+    <button type="button" onClick={warning}>Warning</button>
+    <Manager {...args} />
+  </>
+);
 
-toasts.story = {
-  name: 'Single Tag',
-};
+export const Toasts = Template.bind({});
+Toasts.args = {};

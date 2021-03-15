@@ -75,6 +75,5 @@ const Email = forwardRef((props, ref) => {
 
 Email.defaultProps = defaultProps;
 Email.propTypes = propTyps;
-Email.displayName = '@asurgent.ui.Form.Input.Email';
 
 export default Email;

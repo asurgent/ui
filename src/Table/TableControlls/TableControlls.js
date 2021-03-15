@@ -78,6 +78,5 @@ const TableControlls = ({
 
 TableControlls.propTypes = propTypes;
 TableControlls.defaultProps = defaultProps;
-TableControlls.displayName = '@asurgent.ui.Table.Controlls';
 
 export default TableControlls;

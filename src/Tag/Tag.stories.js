@@ -1,59 +1,48 @@
+/* eslint-disable no-console */
 import React from 'react';
-import {
-  withKnobs, number, text, boolean,
-} from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
 import * as Tag from './index';
 
-export default { title: 'UI Components|Tag', decorators: [withKnobs] };
+const Story = {
+  title: 'Components/Tags',
+  component: Tag,
+  argTypes: {
+    content: { control: 'text' },
+    withMargins: { control: 'boolean' },
+    renderTransparent: { control: 'boolean' },
+  },
+};
+export default Story;
 
-export const singeTag = () => (
-  <>
-    <Tag.Single
-      onDelete={boolean('Has delete action', false) ? (action('click')) : false}
-      label={text('Tag label', 'Tag')}
-      maxLength={number('Max letter count (0 is unlimited)', 0)}
-    />
-  </>
+export const Single = (args) => (
+  <Tag.Single onDelete={args.hasDeleteAction ? console.log('click') : false} {...args} />
 );
-
-singeTag.story = {
-  name: 'Single Tag',
+Single.args = {
+  hasDeleteAction: false,
+  label: 'Tag',
+  maxLength: 4,
 };
 
-export const tagCollection = () => {
+export const Collection = (args) => {
   const tags = Array.from({ length: 10 }, (_, i) => `Tag-${i}`);
   return (
-    <>
-      <Tag.Collection
-        tags={tags}
-        maxTags={number('Max tags (0 is unlimited)', 0)}
-        maxLength={number('Max letter count (0 is unlimited', 0)}
-      />
-    </>
+    <Tag.Collection tags={tags} {...args} />
   );
 };
-
-tagCollection.story = {
-  name: 'Tag Collection from string array',
+Collection.args = {
+  label: 'Tag',
+  maxLength: 4,
 };
 
-export const tagCollectionObject = () => {
+export const CollectionObject = (args) => {
   const tags = Array.from({ length: 10 }, (_, i) => ({
     value: `Tag-${i}`,
-    onDelete: (() => action('click')(`Tag-${i}`)),
+    onDelete: () => console.log('click', `Tag-${i}`),
   }));
   return (
-    <>
-      <Tag.Collection
-        tags={tags}
-        maxTags={number('Max tags (default is unlimited)', 0)}
-        maxLength={number('Max letter count (0 is unlimited', 0)}
-      />
-    </>
+    <Tag.Collection tags={tags} {...args} />
   );
 };
-
-tagCollectionObject.story = {
-  name: 'Tag Collection from object',
+CollectionObject.args = {
+  label: 'Tag',
+  maxLength: 4,
 };

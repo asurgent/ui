@@ -74,6 +74,5 @@ const RadioGroup = forwardRef((props, ref) => {
 
 RadioGroup.propTypes = propTypes;
 RadioGroup.defaultProps = defaultProps;
-RadioGroup.displayName = '@asurgent.ui.RadioGroup';
 
 export default RadioGroup;

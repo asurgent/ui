@@ -1,8 +1,5 @@
+/* eslint-disable no-console */
 import React from 'react';
-import {
-  withKnobs, boolean,
-} from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
 import MdiIcon from '@mdi/react';
 import {
   mdiCompass,
@@ -12,12 +9,18 @@ import {
 } from '@mdi/js';
 import DropdownMenu from './index';
 
-export const dropdownMenu = () => (
+const Story = {
+  title: 'Layout/Dropdown menu',
+  component: DropdownMenu,
+  argTypes: {},
+};
+export default Story;
+
+const DropdownMenuTemplate = (args) => (
   <div style={{ height: '100vh' }}>
     <p>Try in mobile view</p>
 
     <DropdownMenu
-      isOpen={boolean('open', false)}
       selectedLanguage="sv"
       navigationList={[
         {
@@ -43,17 +46,18 @@ export const dropdownMenu = () => (
         settings: 'Inställningar',
       }}
       languages={[{ value: 'en', label: 'English' }, { value: 'sv', label: 'Swedish' }]}
-      name="Kalle Anka"
-      customerName="Google"
-      email="test@mail.com"
-      onNavigate={action('on navigate')}
-      onChangeLanguage={(lang) => action('Changed language')(lang)}
-      onLogout={action('logout action')}
+      onNavigate={() => console.log('on navigate')}
+      onChangeLanguage={(lang) => console.log('Changed language', lang)}
+      onLogout={() => console.log('logout action')}
+      {...args}
     />
   </div>
 );
 
-export default {
-  title: 'Layout|Dropdown Menu',
-  decorators: [withKnobs],
+export const DropDownMenu = DropdownMenuTemplate.bind({});
+DropDownMenu.args = {
+  isOpen: false,
+  name: 'Kalle Anka',
+  customerName: 'Google',
+  email: 'test@mail.com',
 };

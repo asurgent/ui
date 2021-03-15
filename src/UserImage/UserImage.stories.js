@@ -1,41 +1,35 @@
 import React from 'react';
-import { withKnobs, number, text } from '@storybook/addon-knobs';
 import * as UserImage from './index';
 
-export default { title: 'UI Components|User Image', decorators: [withKnobs] };
+const Story = {
+  title: 'Components/User Image',
+  component: UserImage,
+};
+export default Story;
 
-export const squareImage = () => (
-  <>
-    <UserImage.Square
-      size="10rem"
-      name="Kalle Anka"
-      email="mail@mail.com"
-      href="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
-    />
-  </>
-);
+const SquareTemplate = (args) => <UserImage.Square {...args} />;
 
-export const circleImage = () => (
-  <>
-    <UserImage.Circle
-      size="10rem"
-      name="Kalle Anka"
-      email="mail@mail.com"
-      href="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
-    />
-  </>
-);
-
-circleImage.story = {
-  name: 'Circle',
+export const Square = SquareTemplate.bind({});
+Square.args = {
+  size: '10rem',
+  name: 'Kalle Anka',
+  email: 'mail@mail.com',
+  href: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
 };
 
-export const initials = () => (
-  <>
-    <UserImage.Circle
-      size={`${number('size size', '10')}rem`}
-      name={text('Name for initials', 'Kalle Anka')}
-      email={text('email adress (changes color)', 'mailmail')}
-    />
-  </>
-);
+const CircleTemplate = (args) => <UserImage.Circle {...args} />;
+
+export const Circle = CircleTemplate.bind({});
+Circle.args = {
+  size: '10rem',
+  name: 'Kalle Anka',
+  email: 'mail@mail.com',
+  href: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50',
+};
+
+export const Initials = CircleTemplate.bind({});
+Initials.args = {
+  size: '10rem',
+  name: 'Kalle Anka',
+  email: 'mail@mail.com',
+};

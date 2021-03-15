@@ -15,7 +15,6 @@ import {
 const propTyps = {
   iconLeft: PropTypes.element,
   iconRight: PropTypes.element,
-  mainIcon: PropTypes.element,
   link: PropTypes.string,
   onClick: PropTypes.func,
   saveToFile: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
@@ -44,7 +43,6 @@ const propTyps = {
 const defaultProps = {
   iconLeft: null,
   iconRight: null,
-  mainIcon: null,
   link: '',
   onClick: () => {},
   saveToFile: false,
@@ -65,7 +63,6 @@ const defaultProps = {
 
 const Button = (props) => {
   const {
-    mainIcon,
     iconRight,
     iconLeft,
     link,
@@ -127,7 +124,6 @@ const Button = (props) => {
 
   const content = (
     <>
-      {mainIcon && mainIcon }
       {iconLeft && <Styles.Spacer right>{iconLeft}</Styles.Spacer>}
       {renderContentWithoutWrapper ? children : <span className="label">{children}</span>}
       {iconRight && <Styles.Spacer left>{iconRight}</Styles.Spacer>}
