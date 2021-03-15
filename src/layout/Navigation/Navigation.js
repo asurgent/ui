@@ -1,5 +1,5 @@
 import React from 'react';
-import withTheme from 'high-order-components/withTheme';
+import withTheme from '../../../high-order-components/withTheme';
 import PropTypes from 'prop-types';
 import MdiIcon from '@mdi/react';
 import * as C from './Navigation.styled';

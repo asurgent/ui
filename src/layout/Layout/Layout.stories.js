@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
 import MdiIcon from '@mdi/react';
 import {
   mdiCompass,
@@ -12,6 +10,16 @@ import * as Layout from '../index';
 import * as Block from '../../Block';
 import * as Modal from '../../Modal';
 import * as Table from '../../Table';
+
+const Story = {
+  title: 'Layout/Layout',
+  component: Layout.Main,
+  argTypes: {
+    provider: {control: false},
+    children: {control: false},
+  },
+};
+export default Story;
 
 const navigationList = (t, customerId) => [
   {
@@ -46,25 +54,25 @@ const createList = () => [
     title: 'Ticket',
     description: 'create a new ticket',
     icon: (mdiAndroidMessages),
-    onClick: action('create ticket'),
+    onClick: () => console.log('create ticket'),
   },
   {
     title: 'Service window',
     description: 'setup a new service window',
     icon: (mdiTimerOutline),
-    onClick: action('create ticket'),
+    onClick: () => console.log('create ticket'),
   },
 ];
 
-export const mainLayout = () => {
+const MainLayoutTemplate = (args) => {
   const table = Table.useTableHook();
   const provider = Layout.useLayout({
     translator: (t) => t,
     navigationListConstructor: navigationList,
     avaliableLanguagesConstructor: avaliableLanguages,
     createListConstructor: createList,
-    onLogout: action('Logout action'),
-    onChangeLanguage: (lang) => action('Selected language')(lang),
+    onLogout: () => console.log('Logout action'),
+    onChangeLanguage: (lang) => console.log('Selected language', lang),
   });
 
   useEffect(() => {
@@ -136,7 +144,6 @@ export const mainLayout = () => {
             useHistoryState
             historyStatePrefix="tickets"
             tableHook={table}
-            withSearch={false}
             headerData={[
               {
                 value: 'Cell 1',
@@ -163,10 +170,11 @@ export const mainLayout = () => {
                 () => ({ value: valueD, props: { style: { background: 'transparent' } } }),
               ];
             }}
+            {...args}
           />
         </Block.Center>
         <Block.Center>
-          <Modal.Primary isOpen={boolean('open', false)}>
+          <Modal.Primary {...args}>
             hello
           </Modal.Primary>
         </Block.Center>
@@ -179,7 +187,8 @@ export const mainLayout = () => {
   );
 };
 
-export default {
-  title: 'Layout|Main',
-  decorators: [withKnobs],
+export const MainLayout = MainLayoutTemplate.bind({});
+MainLayout.args = {
+  isOpen: false,
+  withSearch: false
 };
