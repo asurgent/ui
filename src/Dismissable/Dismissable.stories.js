@@ -3,8 +3,6 @@ import * as Dismissable from './index';
 
 export default {
   title: 'Components/Dismissable',
-  // autosets types and necc for descriptions given in proptypes,
-  // otherwise use like argTypes: {id: {control: 'text', description: 'desc'}}
   component: Dismissable.Primary,
   argTypes: {
     id: { control: 'text' },

@@ -10,25 +10,28 @@ const Story = {
   argTypes: {
     onClick: () => console.log('asdfasdf'),
     content: 'Button text',
+    tooltipOrientation: {
+      control: { type: 'radio', options: ['middle', 'left', 'right'] },
+    },
   },
 };
 export default Story;
 
 export const SaveToFile = (args) => (
   <>
-    <Button.Plain
+    <Button.Icon
       saveToFilename="some_file"
       tooltip="Saves from promise"
       saveToFile={() => new Promise((r) => r(['a', 'b']))}
-      onClick={(e) => args.onClick('clicked', e)}
       icon={<MdiIcon path={mdiTicketConfirmation} size={1.4} />}
+      {...args}
     />
-    <Button.Plain
+    <Button.Icon
       saveToFilename="another_file"
       tooltip="Saves from object"
       saveToFile={() => ['a', 'b']}
-      onClick={(e) => args.onClick('clicked', e)}
       icon={<MdiIcon path={mdiTicketConfirmation} size={1.4} />}
+      {...args}
     />
   </>
 );
@@ -127,8 +130,86 @@ Icon.args = {
   icon: <MdiIcon path={mdiTicketConfirmation} size={1.4} />,
 };
 
-/*
-export const setTableState = () => {
+export const Stretched = (args) => (
+  <Button.Stretched
+    iconRight={<MdiIcon path={mdiTicketConfirmation} size={1.4} />}
+    {...args}
+  >
+    {args.content}
+  </Button.Stretched>
+);
+Stretched.args = {
+  link: '/sdf/2',
+  onClick: (e) => console.log('Clicked!', e),
+};
+
+export const IconButton = (args) => (
+  <Button.Icon
+    icon={<MdiIcon path={mdiTicketConfirmation} size={1.4} />}
+    {...args}
+  />
+);
+IconButton.args = {
+  tooltip: 'Hello',
+  saveLinkState: true,
+  link: '/test',
+  onClick: (e) => console.log('Clicked!', e),
+};
+
+export const Link = (args) => (
+  <Button.Link icon={<MdiIcon path={mdiTicketConfirmation} size={1.4} />}>
+    {args.content}
+  </Button.Link>
+);
+Link.args = {
+  link: '/test',
+  onClick: (e) => console.log('Clicked!', e),
+};
+
+export const Submit = (args) => (
+  <form onSubmit={(e) => {
+    e.preventDefault();
+    console.log('Submit with submit-button', e);
+  }}
+  >
+    <Button.Primary type="submit">{args.content}</Button.Primary>
+  </form>
+);
+Submit.args = {
+  content: 'hejhej',
+};
+
+export const CreateBlock = (args) => (
+  <Button.CreateBlock
+    iconLeft={(
+      <MdiIcon
+        path={mdiTicketConfirmation}
+        size={1.4}
+      />
+    )}
+  >
+    {args.content}
+  </Button.CreateBlock>
+);
+CreateBlock.args = {
+  content: 'hejhej',
+  link: '/sdf/2',
+  onClick: (e) => console.log('Clicked!', e),
+};
+
+export const TooltipButton = (args) => (
+  <Button.Primary {...args}>
+    {args.content}
+  </Button.Primary>
+);
+TooltipButton.args = {
+  content: 'hejhej',
+  tooltip: 'hello',
+  onClick: (e) => console.log('clicked', e),
+  tooltipOrientation: 'middle',
+};
+
+export const SetTableState = (args) => {
   const state = {
     search: 'asd',
     sort: 'timestamp-asc',
@@ -139,101 +220,11 @@ export const setTableState = () => {
   };
 
   return (
-    <Button.Primary link="/123/12" setTableState={{ key: state }}>
+    <Button.Primary setTableState={{ key: state }} {...args}>
       Test link
     </Button.Primary>
   );
 };
-
-export const iconButton = () => (
-  <Button.Icon
-    tooltip="Hello"
-    saveLinkState
-    link="/test"
-    onClick={(e) => action('Clicked!')(e)}
-    icon={(
-      <MdiIcon
-        path={mdiTicketConfirmation}
-        size={1.4}
-      />
-    )}
-  />
-);
-
-export const submitButton = () => (
-  <form onSubmit={(e) => {
-    e.preventDefault();
-    action('Submit')('Submit with submit-button', e);
-  }}
-  >
-    <Button.Primary type="submit">{content}</Button.Primary>
-  </form>
-);
-
-export const linkButton = () => (
-  <Button.Link
-    onClick={(e) => action('Clicked!')(e)}
-    iconLeft={(
-      <MdiIcon
-        path={mdiTicketConfirmation}
-        size={1.4}
-      />
-    )}
-  >
-    {content}
-
-  </Button.Link>
-);
-
-export const pillButton = () => (
-  <Button.Pill
-    onClick={(e) => action('Clicked!')(e)}
-    iconRight={(
-      <MdiIcon
-        path={mdiTicketConfirmation}
-        size={1.4}
-      />
-    )}
-  >
-    {content}
-  </Button.Pill>
-);
-
-export const createBlock = () => (
-  <Button.CreateBlock
-    link="/sdf/2"
-    onClick={(e) => action('Clicked!')(e)}
-    iconLeft={(
-      <MdiIcon
-        path={mdiTicketConfirmation}
-        size={1.4}
-      />
-    )}
-  >
-    {content}
-  </Button.CreateBlock>
-);
-
-export const Stretched = () => (
-  <Button.Stretched
-    link="/sdf/2"
-    onClick={(e) => action('Clicked!')(e)}
-    iconRight={(
-      <MdiIcon
-        path={mdiTicketConfirmation}
-        size={1.4}
-      />
-    )}
-  >
-    {content}
-  </Button.Stretched>
-);
-
-export const tooltipButton = () => (
-  <Button.Primary tooltip="hello"
-  tooltipOrientation={text('orientation (middle,left,right)', 'middle')}
-  onClick={(e) => action('Clicked!')(e)}>
-    {content}
-  </Button.Primary>
-);
- */
+SetTableState.args = {
+  link: '/123/12',
+};

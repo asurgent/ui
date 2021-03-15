@@ -3,7 +3,7 @@ import { darken } from 'polished';
 import MdiIcon from '@mdi/react';
 import { mdiChevronDown } from '@mdi/js';
 
-import withMapProps from 'high-order-components/withMapProps';
+import withMapProps from '../../high-order-components/withMapProps';
 import withStyle from './withStyle';
 import * as C from './Button.styled';
 

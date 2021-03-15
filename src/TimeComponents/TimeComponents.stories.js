@@ -21,9 +21,7 @@ const nextExecution = newMoment(onGoingFrom)
 const Story = {
   title: 'Components/TimeComponents',
   component: TimeComponents,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
+  argTypes: {},
 };
 export default Story;
 

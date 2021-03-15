@@ -4,9 +4,7 @@ import * as List from './index';
 const Story = {
   title: 'Data/List',
   component: List.Primary,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
+  argTypes: {},
 };
 export default Story;
 

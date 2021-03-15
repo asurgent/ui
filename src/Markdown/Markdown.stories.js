@@ -5,9 +5,7 @@ import myMarkdown from './exampleMarkdown.md';
 const Story = {
   title: 'Helpers/Markdown',
   component: Markdown,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
+  argTypes: {},
 };
 export default Story;
 

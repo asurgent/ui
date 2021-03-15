@@ -5,9 +5,7 @@ import * as Cron from './index';
 const Story = {
   title: 'Helpers/CronEditor',
   component: Cron.Editor,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
+  argTypes: {},
 };
 export default Story;
 

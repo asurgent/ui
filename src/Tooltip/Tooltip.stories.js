@@ -20,9 +20,7 @@ Some other text.
 const Story = {
   title: 'Components/Tooltip',
   component: Tooltip,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
+  argTypes: {},
 };
 export default Story;
 

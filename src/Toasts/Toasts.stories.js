@@ -4,9 +4,7 @@ import { Manager, addToast } from './index';
 const Story = {
   title: 'Components/Toasts',
   component: Manager,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
+  argTypes: {},
 };
 export default Story;
 
