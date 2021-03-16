@@ -4,6 +4,7 @@ import { mdiMenuDown } from '@mdi/js';
 import * as Block from './index';
 import * as List from '../List';
 import * as Button from '../Button';
+import * as C from './components/Block.styled';
 
 const Story = {
   title: 'Components/Block',
@@ -16,67 +17,63 @@ const Story = {
 };
 export default Story;
 
-export const Center = (args) => (<Block.Center {...args}>{args.content}</Block.Center>);
+export const Center = (args) => (<C.Center {...args}>{args.content}</C.Center>);
 Center.args = {
   content: 'hejhej',
 };
 
-export const Left = (args) => <Block.Left {...args}>{args.content}</Block.Left>;
+export const Left = (args) => <C.Left {...args}>{args.content}</C.Left>;
 Left.args = {
   content: 'hejhej',
 };
 
-export const Right = (args) => <Block.Right {...args}>{args.content}</Block.Right>;
+export const Right = (args) => <C.Right {...args}>{args.content}</C.Right>;
 Right.args = {
   content: 'hejhej',
 };
 
-export const Bordered = (args) => (
-  <Block.Bordered {...args}>
-    {args.content}
-  </Block.Bordered>
-);
+export const Bordered = (args) => (<C.Bordered {...args}>{args.content}</C.Bordered>);
 Bordered.args = {
   noShadow: true,
   content: 'hejhej',
 };
 
-export const Plain = (args) => <Block.Plain {...args}>{args.content}</Block.Plain>;
+export const Plain = (args) => <C.Plain {...args}>{args.content}</C.Plain>;
 Plain.args = {
   content: 'hejhej',
 };
 
 export const Stretch = (args) => (
-  <Block.Stretch {...args}>
+  <C.Stretch {...args}>
     <div style={{ border: '1px solid' }}>
       {args.content}
     </div>
-  </Block.Stretch>
+  </C.Stretch>
 );
 Stretch.args = {
   content: 'hejhej',
 };
 
 export const SpaceBetween = (args) => (
-  <Block.SpaceBetween {...args}>
+  <C.SpaceBetween {...args}>
     <span>left</span>
     <span>right</span>
-  </Block.SpaceBetween>
+  </C.SpaceBetween>
 );
 SpaceBetween.args = {};
 
 export const Wrap = (args) => (
-  <Block.Wrap {...args}>
+  <C.Wrap {...args}>
     <div style={{ minWidth: '400px', border: '1px solid', padding: '1rem' }}>I am block #1 (min-width: 400px)</div>
     <div style={{ minWidth: '400px', border: '1px solid', padding: '1rem' }}>I am block #2 (min-width: 400px)</div>
-  </Block.Wrap>
+  </C.Wrap>
 );
 Wrap.args = {
   content: 'hejhej',
   wrapReverse: true,
 };
 export const WrapGrid = (args) => (
-  <Block.WrapGrid {...args}>
+  <C.WrapGrid {...args}>
     <div style={{ border: '1px solid black' }}>
       <div style={{ padding: '10rem' }}>
         Block with lots of content
@@ -87,7 +84,7 @@ export const WrapGrid = (args) => (
         Block with little content
       </div>
     </div>
-  </Block.WrapGrid>
+  </C.WrapGrid>
 );
 WrapGrid.args = {
   content: 'hejhej',
