@@ -8,7 +8,7 @@ import {
   Stretch,
   Wrap,
   WrapGrid,
-} from './components/Block';
+} from './components/Block.styled';
 
 export {
   Center,

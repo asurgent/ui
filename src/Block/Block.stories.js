@@ -31,11 +31,7 @@ Right.args = {
   content: 'hejhej',
 };
 
-export const Bordered = (args) => (
-  <Block.Bordered {...args}>
-    {args.content}
-  </Block.Bordered>
-);
+export const Bordered = (args) => (<Block.Bordered {...args}>{args.content}</Block.Bordered>);
 Bordered.args = {
   noShadow: true,
   content: 'hejhej',
