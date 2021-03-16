@@ -1,19 +1,20 @@
 import React from 'react';
-import Markdown from './index';
+import { Primary } from './index';
 import myMarkdown from './exampleMarkdown.md';
 
 const Story = {
   title: 'Helpers/Markdown',
-  component: Markdown,
+  component: Primary,
   argTypes: {},
 };
 export default Story;
 
-const Template = (args) => <Markdown {...args} />;
+const Template = (args) => <Primary {...args} />;
 
 export const Main = Template.bind({});
 Main.args = {
   className: 'mySpecificClass',
   flavor: 'github',
   markdown: myMarkdown,
+  foldQuotes: true,
 };
