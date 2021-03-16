@@ -1,6 +1,6 @@
 {
   "name": "@asurgent/ui",
-  "version": "1.13.104",
+  "version": "1.13.106",
   "description": "frontend - asurgent UI components",
   "scripts": {
     "start": "start-storybook -p 6006",
@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/asurgent/ui#readme",
   "devDependencies": {
-    "@asurgent/eslint-config-asurgent": "^1.1.6",
+    "@asurgent/eslint-config-asurgent": "^1.2.1",
     "@babel/cli": "^7.13.10",
     "@babel/core": "^7.13.10",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
@@ -99,5 +99,13 @@
     "showdown": "^1.9.1",
     "styled-components": "^5.2.1",
     "web-vitals": "^1.0.1"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.7.2",
+    "react-scripts": "4.0.3",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
   }
 }
