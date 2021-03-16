@@ -9,7 +9,7 @@ const Story = {
 };
 export default Story;
 
-const Template = (args) => <Markdown {...args} />;
+const Template = (args) => <Markdown {...args} foldQuotes />;
 
 export const Main = Template.bind({});
 Main.args = {
