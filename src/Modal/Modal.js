@@ -80,7 +80,6 @@ class Modal extends Component {
             </C.Content>
           </C.Modal>
         </C.Overlay>
-        ,
       </Transition.FadeIn>,
       modalRoot,
     );
