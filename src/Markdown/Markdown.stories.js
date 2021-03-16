@@ -9,11 +9,12 @@ const Story = {
 };
 export default Story;
 
-const Template = (args) => <Primary {...args} foldQuotes />;
+const Template = (args) => <Primary {...args} />;
 
 export const Main = Template.bind({});
 Main.args = {
   className: 'mySpecificClass',
   flavor: 'github',
   markdown: myMarkdown,
+  foldQuotes: true,
 };
