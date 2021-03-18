@@ -14,14 +14,14 @@ const ImagePreview = ({ imgLink, smallIconSize }) => {
 
   return (
     <>
-      <C.ScreenshotSmall
+      <C.SmallImage
         smallIconSize={smallIconSize}
         onClick={handleClick}
       >
         {imgValid
           ? (<img onError={handleError} src={imgLink} alt="small_img" />)
           : (<MdiIcon path={mdiImageBrokenVariant} />)}
-      </C.ScreenshotSmall>
+      </C.SmallImage>
 
       {imgValid && (
         <Modal.Primary
@@ -32,9 +32,9 @@ const ImagePreview = ({ imgLink, smallIconSize }) => {
           withoutHeader
           style={{ width: 'auto', margin: '0', padding: '0' }}
         >
-          <C.ScreenshotLarge onClick={() => setIsEnlarged(!isEnlarged)}>
+          <C.LargeImage onClick={() => setIsEnlarged(!isEnlarged)}>
             <img onError={handleError} src={imgLink} alt="enlarged_img" />
-          </C.ScreenshotLarge>
+          </C.LargeImage>
         </Modal.Primary>
       )}
     </>

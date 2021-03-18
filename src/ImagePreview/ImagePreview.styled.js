@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ScreenshotSmall = styled.div`
+export const SmallImage = styled.div`
     width: ${({ smallIconSize }) => smallIconSize};
     height: ${({ smallIconSize }) => smallIconSize};
     
@@ -22,7 +22,7 @@ export const ScreenshotSmall = styled.div`
     }
 `;
 
-export const ScreenshotLarge = styled.div`
+export const LargeImage = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
