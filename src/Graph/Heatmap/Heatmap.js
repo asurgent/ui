@@ -40,7 +40,7 @@ const defaultProps = {
   color: null,
   emptyColor: '#F2F2F2',
   theme: {},
-  cellGap: 2,
+  cellGap: 4,
   primaryLabel: 'something',
   secondaryLabel: 'something else',
   showLegend: () => true,
