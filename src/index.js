@@ -13,7 +13,7 @@ import * as Spinner from './Spinner';
 import * as Block from './Block';
 import * as Modal from './Modal';
 import * as UserImage from './UserImage';
-import * as ImagePreview from './ImagePreview';
+import ImagePreview from './ImagePreview';
 import * as Moment from './Moment';
 import * as Cron from './Cron';
 import * as Graph from './Graph';
