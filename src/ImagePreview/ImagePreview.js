@@ -28,13 +28,14 @@ const ImagePreview = ({ imgLink, smallIconSize }) => {
           isOpen={isEnlarged}
           transparent
           withActionbar={false}
-          onClose={handleClick}
           withoutHeader
-          style={{ width: 'auto', margin: '0', padding: '0' }}
+          fullscreen
         >
-          <C.LargeImage onClick={() => setIsEnlarged(!isEnlarged)}>
-            <img onError={handleError} src={imgLink} alt="enlarged_img" />
-          </C.LargeImage>
+          <C.ImageContainer onClick={handleClick}>
+            <C.LargeImage onClick={() => setIsEnlarged(!isEnlarged)}>
+              <img onError={handleError} src={imgLink} alt="enlarged_img" />
+            </C.LargeImage>
+          </C.ImageContainer>
         </Modal.Primary>
       )}
     </>
