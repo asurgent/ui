@@ -29,6 +29,7 @@ export const Heatmap = (args) => {
         borderColor="#133A5D"
         primaryLabel="fails"
         secondaryLabel="successes"
+        cellGap={3}
         {...args}
       />
     </div>

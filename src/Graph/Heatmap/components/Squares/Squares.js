@@ -159,12 +159,11 @@ const placeToday = (
       if (color) {
         return color;
       }
-      const colorVal = today.primValue || today.secValue;
-      if (!colorVal) {
+      if (!today.primValue) {
         return emptyColor;
       }
 
-      return getColor(colorVal, emptyColor, legendCategories);
+      return getColor(today.primValue, emptyColor, legendCategories);
     })
     .attr('stroke-width', 4);
 };
