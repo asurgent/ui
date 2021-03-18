@@ -9,15 +9,14 @@ const ImagePreview = ({ imgLink, smallIconSize }) => {
   const [isEnlarged, setIsEnlarged] = useState(false);
   const [imgValid, setImgValid] = useState(true);
 
-  const handleError = () => {
-    setImgValid(false);
-  };
+  const handleError = () => setImgValid(false);
+  const handleClick = () => setIsEnlarged(!isEnlarged);
 
   return (
     <>
       <C.ScreenshotSmall
         smallIconSize={smallIconSize}
-        onClick={() => setIsEnlarged(!isEnlarged)}
+        onClick={handleClick}
       >
         {imgValid
           ? (<img onError={handleError} src={imgLink} alt="small_img" />)
@@ -29,7 +28,7 @@ const ImagePreview = ({ imgLink, smallIconSize }) => {
           isOpen={isEnlarged}
           transparent
           withActionbar={false}
-          onClose={() => setIsEnlarged(!isEnlarged)}
+          onClose={handleClick}
           withoutHeader
           style={{ width: 'auto', margin: '0', padding: '0' }}
         >
