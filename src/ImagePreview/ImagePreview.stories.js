@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImagePreview } from './index';
+import ImagePreview from './index';
 
 const Story = {
   title: 'Graphics/Image Preview',
