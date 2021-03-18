@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { lighten } from 'polished';
+import MdiIcon from '@mdi/react';
 import { Plain } from '../../Button/Button.styled';
 import * as Button from '../../Button';
 import * as T from '../../Typography';
@@ -182,4 +183,11 @@ export const ActionMenu = styled.div`
     justify-content: flex-start;
     align-items: center;
   }
+`;
+
+export const DownloadBtn = styled(MdiIcon)`
+  height: 1.5rem;
+  width: 1.5rem;
+  min-height: 1.5rem;
+  min-width: 1.5rem;
 `;
