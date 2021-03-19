@@ -15,7 +15,7 @@
     "deploy-storybook": "storybook-to-ghpages",
     "patch": "git pull && npm run build && git add dist/ && git commit -m 'patch-version' && npm version patch && git push && git push --tags && npm publish && npm run deploy-storybook",
     "minor": "git pull && npm run build && git add dist/ && git commit -m 'minor-version' && npm version minor && git push && git push --tags && npm publish && npm run deploy-storybook",
-    "copy": "webpack --mode production && cp ./dist/index.js ./../cloudops-portal/node_modules/@asurgent/ui/dist/ && cp ./dist/index.js.map ./../cloudops-portal/node_modules/@asurgent/ui/dist/ && git checkout ./dist/index.js"
+    "copy": "webpack --mode production && cp ./dist/index.js ./../cloudops-portal/node_modules/@asurgent/ui/dist/ && cp ./dist/index.js.map ./../cloudops-portal/node_modules/@asurgent/ui/dist/ && git checkout ./dist"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
