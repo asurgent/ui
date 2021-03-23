@@ -1,4 +1,3 @@
-import { ResizeObserver } from '@juggle/resize-observer';
 import { useRef, useState, useEffect } from 'react';
 
 const isNumber = (value, fallback) => {

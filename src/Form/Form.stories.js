@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+/* eslint-disable react/destructuring-assignment */
 import React, { useEffect } from 'react';
 import moment from 'moment';
 import * as Form from './index';

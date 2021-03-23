@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import MdiIcon from '@mdi/react';
 import { mdiTicketConfirmation } from '@mdi/js';
