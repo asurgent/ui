@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import MdiIcon from '@mdi/react';
 import { mdiMenuDown } from '@mdi/js';
