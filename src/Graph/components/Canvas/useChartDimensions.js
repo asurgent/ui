@@ -55,18 +55,21 @@ export const useChartDimensions = (customDimensions) => {
     const element = ref.current;
     const resizeObserver = new ResizeObserver(
       (entries) => {
-        if (!Array.isArray(entries)) return;
-        if (!entries.length) return;
-        const entry = entries[0];
+        // Wrap it in requestAnimationFrame to avoid "ResizeObserver loop limit exceeded"
+        // which means that ResizeObserver was not able to deliver all
+        // observations within a single animation frame
+        window.requestAnimationFrame(() => {
+          if (!Array.isArray(entries)) return;
+          if (!entries.length) return;
+          const entry = entries[0];
 
-        if (!dimensions.width
-          && width !== entry.contentRect.width) {
-          setWidth(entry.contentRect.width);
-        }
-        if (!dimensions.height
-          && height !== entry.contentRect.height) {
-          setHeight(entry.contentRect.height);
-        }
+          if (!dimensions.width && width !== entry.contentRect.width) {
+            setWidth(entry.contentRect.width);
+          }
+          if (!dimensions.height && height !== entry.contentRect.height) {
+            setHeight(entry.contentRect.height);
+          }
+        });
       },
     );
     resizeObserver.observe(element);
