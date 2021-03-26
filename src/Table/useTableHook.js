@@ -222,10 +222,11 @@ const useTableHook = (payloadOverrides) => {
         const pages = Math.ceil(itemCount / maxItemsPerRequest);
 
         const { callback } = updateTableItems;
-        const { requestString } = filterRequestKeyState;
+        const { filter } = rowRequestState;
+
         const payload = {
           ...defaultPayload,
-          filter: requestString,
+          filter,
           search_string: rowRequestState.search_string,
           page_size: 0,
         };
