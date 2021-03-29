@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { lighten } from 'polished';
 import MdiIcon from '@mdi/react';
-import { Plain } from '../../Button/Button.styled';
 import * as Button from '../../Button';
 import * as T from '../../Typography';
 
