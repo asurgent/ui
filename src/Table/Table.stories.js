@@ -419,6 +419,8 @@ const SeparateTemplate = (args) => {
         withControlls={false}
         historyStatePrefix="tickets"
         tableHook={hook}
+        displayCount
+        canExportResults
         clickRowConfigutation={(row) => clicker(row)}
         headerData={[
           {

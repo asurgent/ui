@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { lighten } from 'polished';
 import MdiIcon from '@mdi/react';
-import { Plain } from '../../Button/Button.styled';
 import * as Button from '../../Button';
 import * as T from '../../Typography';
 
@@ -33,21 +32,11 @@ export const Count = styled.div`
     align-items: center;
     justify-content: flex-start;
     flex-direction: row;
-    
-    ${Plain} {
-      width: 10rem;
-      font-size: 1.4rem;
-      white-space: nowrap;
-    
-      .label {
-        display: flex;
-        align-content: center;
-        color: ${({ theme }) => theme.gray600};
-      
-        svg {
-          margin-left: .8rem;
-        }
-      }
+    width: 10rem;
+    white-space: nowrap;
+    color: ${({ theme }) => theme.gray600}; 
+    svg {
+      margin-left: .8rem;
     }
 `;
 

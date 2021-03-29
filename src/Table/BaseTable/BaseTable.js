@@ -143,8 +143,9 @@ const BaseTable = withTheme((props) => {
     <C.Wrapper>
       <C.Base>
         <C.ActionMenu>
-          { displayCount && (
+
           <C.Count>
+            {displayCount && (`${itemCount} ${t('results', 'asurgentui')}`)}
             { canExportResults && exportResultsAction && (
               <Button.Plain
                 disabled={itemCount === 0}
@@ -152,12 +153,11 @@ const BaseTable = withTheme((props) => {
                 tooltip={t('export', 'asurgentui')}
                 saveToFile={exportResultsAction}
               >
-                {`${itemCount} ${t('results', 'asurgentui')}`}
                 <C.DownloadBtn path={mdiDownload} />
               </Button.Plain>
             )}
           </C.Count>
-          )}
+
           {onAddRemove && (
             <>
               <C.SelectedNumber bold>
