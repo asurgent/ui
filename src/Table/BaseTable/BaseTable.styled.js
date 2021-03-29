@@ -33,21 +33,11 @@ export const Count = styled.div`
     align-items: center;
     justify-content: flex-start;
     flex-direction: row;
-    
-    ${Plain} {
-      width: 10rem;
-      font-size: 1.4rem;
-      white-space: nowrap;
-    
-      .label {
-        display: flex;
-        align-content: center;
-        color: ${({ theme }) => theme.gray600};
-      
-        svg {
-          margin-left: .8rem;
-        }
-      }
+    width: 10rem;
+    white-space: nowrap;
+    color: ${({ theme }) => theme.gray600}; 
+    svg {
+      margin-left: .8rem;
     }
 `;
 
