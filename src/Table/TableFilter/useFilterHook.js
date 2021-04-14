@@ -92,10 +92,10 @@ const useFilterProvider = (filterKeys, tableHook, parser) => {
       // Check if this is the first render-cycle
       // Then we want to set page to 1.
       if (isDirty) {
-        tableHook.update(request, history, trigger);
+        tableHook.update(request, history, trigger, selectedItems);
       } else {
         // Otherwise it's controlled by the URL or component
-        tableHook.update(request, history);
+        tableHook.update(request, history, null, selectedItems);
         setIsDirty(true);
       }
     }
