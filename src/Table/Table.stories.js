@@ -218,11 +218,13 @@ const FilterTemplate = (args) => {
   const hook = Table.useTableHook();
 
   useEffect(() => {
-    hook.registerRowFetchCallback((payload, onSuccess) => {
-      console.log('fetch', payload);
+    hook.registerRowFetchCallback((payload, onSuccess, onError, selectedFilterItems) => {
+      console.log('Current filter state: ', selectedFilterItems);
       onSuccess({ });
     });
-    hook.registerFilterFetchCallback((payload, onSuccess) => {
+
+    hook.registerFilterFetchCallback((payload, onSuccess, onError, _, filterRequestKeyState) => {
+      console.log('Filter key that triggerd request: ', filterRequestKeyState);
       onSuccess({
         guys: [
           { value: 'Mike(1133)', count: 32 },
@@ -294,15 +296,13 @@ const ControllsTemplate = (args) => {
   const hook = Table.useTableHook();
 
   useEffect(() => {
-    hook.registerRowFetchCallback((payload, onSuccess, selectedFilterItems) => {
-      console.log('Current filter state: ', selectedFilterItems);
+    hook.registerRowFetchCallback((payload, onSuccess) => {
       onSuccess({
         result: [...rowDummyData], page: 2, total_pages: 20, total_count: 1000,
       });
     });
 
-    hook.registerFilterFetchCallback((payload, onSuccess, _, filterRequestKeyState) => {
-      console.log('Filter key that triggerd request: ', filterRequestKeyState);
+    hook.registerFilterFetchCallback((payload, onSuccess) => {
       onSuccess({
         gurka: Array.from({ length: 20 }, (_, i) => ({ value: i.toString() })),
         pankaka: [
