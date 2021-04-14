@@ -294,13 +294,15 @@ const ControllsTemplate = (args) => {
   const hook = Table.useTableHook();
 
   useEffect(() => {
-    hook.registerRowFetchCallback((payload, onSuccess) => {
+    hook.registerRowFetchCallback((payload, onSuccess, selectedFilterItems) => {
+      console.log('Current filter state: ', selectedFilterItems);
       onSuccess({
         result: [...rowDummyData], page: 2, total_pages: 20, total_count: 1000,
       });
     });
 
-    hook.registerFilterFetchCallback((payload, onSuccess) => {
+    hook.registerFilterFetchCallback((payload, onSuccess, _, filterRequestKeyState) => {
+      console.log('Filter key that triggerd request: ', filterRequestKeyState);
       onSuccess({
         gurka: Array.from({ length: 20 }, (_, i) => ({ value: i.toString() })),
         pankaka: [
