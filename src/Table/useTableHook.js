@@ -20,6 +20,28 @@ const defaultPayload = {
   page: 1,
 };
 
+const getHistoryState = (router, getQueryParamKey) => {
+  if (router.location) {
+    const { location, queryPrefix } = router;
+    const param = getQueryParamKey(queryPrefix);
+    const { [param]: tableState } = queryString.parse(location.search);
+
+    // Use SQP to parse query-string and pick out the listed keywords below.
+    const searchQueryObj = sqp.parse(tableState, {
+      keywords: ['sort', 'page', 'filter'],
+    });
+
+    // If sqp.parse doesnt match on anything it will simply return a string.
+    // In order to keep the same interface-logic we will return that in an object
+    if (typeof searchQueryObj === 'string') {
+      return { text: searchQueryObj };
+    }
+
+    return searchQueryObj;
+  }
+  return {};
+};
+
 const useTableHook = (payloadOverrides) => {
   // Holds state changes that are set simontainusly wihout a render inbetween
   // A rerender will empty these, but without a rerender setState for rowRequestState &
@@ -39,6 +61,7 @@ const useTableHook = (payloadOverrides) => {
   const [historyState, setHistoryState] = useState({});
   const [rowRequestState, setRowRequestState] = useState({});
   const [filterRequestKeyState, setFilterRequestKeyState] = useState({});
+  const [selectedFilterItems, setSelectedFilterItems] = useState({});
 
   // Independent state that enables a hook to message another hook to change its state
   const [thirdPartyTrigger, setThirdPartyTrigger] = useState({});
@@ -68,7 +91,7 @@ const useTableHook = (payloadOverrides) => {
         Object.assign(payload, payloadOverrides(payload));
       }
 
-      callback(payload, onSuccess, onFail);
+      callback(payload, onSuccess, onFail, selectedFilterItems);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, rowRequestState, thirdPartyTrigger]);
@@ -94,7 +117,7 @@ const useTableHook = (payloadOverrides) => {
         Object.assign(payload, payloadOverrides(payload));
       }
 
-      callback(payload, onSuccess, onFail);
+      callback(payload, onSuccess, onFail, selectedFilterItems, filterRequestKeyState);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, filterRequestKeyState]);
@@ -140,9 +163,12 @@ const useTableHook = (payloadOverrides) => {
     initializationRequestState & initializationHistoryState.
     They will later assign their values to rowRequestState & historyState
   */
-  const updateAction = (request, history, trigger) => {
+  const updateAction = (request, history, trigger, selectedItems) => {
     if (request) {
       const updateRequest = Object.assign(initializationRequestState, rowRequestState, request);
+      if (selectedItems) {
+        setSelectedFilterItems(selectedItems);
+      }
       setRowRequestState(updateRequest);
     }
     if (history) {
@@ -189,27 +215,7 @@ const useTableHook = (payloadOverrides) => {
       // If theses values are set, we will enable history-state support.
       setRouter({ history, location, queryPrefix });
     },
-    getHistoryState: () => {
-      if (router.location) {
-        const { location, queryPrefix } = router;
-        const param = getQueryParamKey(queryPrefix);
-        const { [param]: tableState } = queryString.parse(location.search);
-
-        // Use SQP to parse query-string and pick out the listed keywords below.
-        const searchQueryObj = sqp.parse(tableState, {
-          keywords: ['sort', 'page', 'filter'],
-        });
-
-        // If sqp.parse doesnt match on anything it will simply return a string.
-        // In order to keep the same interface-logic we will return that in an object
-        if (typeof searchQueryObj === 'string') {
-          return { text: searchQueryObj };
-        }
-
-        return searchQueryObj;
-      }
-      return {};
-    },
+    getHistoryState: () => getHistoryState(router, getQueryParamKey),
     exportSearchResult: async () => {
       const totalPages = tableData.total_pages;
       const result = [];

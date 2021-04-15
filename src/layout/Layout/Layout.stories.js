@@ -102,16 +102,16 @@ const MainLayoutTemplate = (args) => {
     table.registerFilterFetchCallback((payload, onSuccess) => {
       onSuccess({
         guys: [
-          { value: 'Mike(1133)' },
-          { value: 'Keen(123)' },
-          { value: 'Ellinor(4465)' },
-          { value: 'Anton(984)' },
+          { value: 'Mike(1133)', count: 123 },
+          { value: 'Keen(123)', count: 123 },
+          { value: 'Ellinor(4465)', count: 123 },
+          { value: 'Anton(984)', count: 123 },
         ],
         pankaka: [
-          { value: 'HeHe' },
-          { value: '123' },
-          { value: '4465' },
-          { value: '984' },
+          { value: 'HeHe', count: 123 },
+          { value: '123', count: 123 },
+          { value: '4465', count: 123 },
+          { value: '984', count: 123 },
         ],
       });
     });

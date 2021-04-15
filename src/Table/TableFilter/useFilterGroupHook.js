@@ -59,9 +59,9 @@ const useFilterProvider = (tableHook, filterHook, filterGroupKey) => {
         const parsedSelectedInGroup = selectedInGroup.reduce((acc, item) => {
           const matched = matchedKeyInFilterList.find(({ value }) => value === item.value);
           if (matched) {
-            acc.matched.push({ ...item, matched });
+            acc.matched.push({ ...item, ...matched });
           } else {
-            acc.unmatched.push({ ...item, matched });
+            acc.unmatched.push({ ...item, ...matched });
           }
           return acc;
         }, { matched: [], unmatched: [] });

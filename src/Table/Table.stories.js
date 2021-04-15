@@ -218,11 +218,13 @@ const FilterTemplate = (args) => {
   const hook = Table.useTableHook();
 
   useEffect(() => {
-    hook.registerRowFetchCallback((payload, onSuccess) => {
-      console.log('fetch', payload);
+    hook.registerRowFetchCallback((payload, onSuccess, onError, selectedFilterItems) => {
+      console.log('Current filter state: ', selectedFilterItems);
       onSuccess({ });
     });
-    hook.registerFilterFetchCallback((payload, onSuccess) => {
+
+    hook.registerFilterFetchCallback((payload, onSuccess, onError, _, filterRequestKeyState) => {
+      console.log('Filter key that triggerd request: ', filterRequestKeyState);
       onSuccess({
         guys: [
           { value: 'Mike(1133)', count: 32 },
