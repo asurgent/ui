@@ -34,6 +34,7 @@ const Navigation = ({
       }) => (
         isDropdownItem ? (
           <C.DropdownNavigationItem
+            key={link}
             to={link}
             onClick={onNavigate}
             isActive={isActive}
