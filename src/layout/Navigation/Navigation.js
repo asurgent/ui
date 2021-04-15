@@ -21,27 +21,48 @@ const Navigation = ({
   withLabel,
   navigationList,
   onNavigate,
-}) => (
-  <C.Wrapper>
-    {
+}) => {
+  console.log('asdf', navigationList);
+  return (
+    <C.Wrapper>
+      {
       navigationList.map(({
         icon,
         tooltip,
         link,
         label,
         isActive,
+        isDropdownItem,
       }) => (
-        <Tooltip.Right tip={tooltip} key={tooltip}>
-          <C.NavigationItem to={link} onClick={onNavigate} isActive={isActive}>
+        isDropdownItem ? (
+          <C.NavigationItem
+            to={link}
+            onClick={onNavigate}
+            isActive={isActive}
+            isDropdownItem
+          >
             <MdiIcon path={icon} size={1.4} />
             {' '}
             {withLabel && (<span>{label}</span>)}
           </C.NavigationItem>
-        </Tooltip.Right>
+        ) : (
+          <Tooltip.Right tip={tooltip} key={tooltip}>
+            <C.NavigationItem
+              to={link}
+              onClick={onNavigate}
+              isActive={isActive}
+            >
+              <MdiIcon path={icon} size={1.4} />
+              {' '}
+              {withLabel && (<span>{label}</span>)}
+            </C.NavigationItem>
+          </Tooltip.Right>
+        )
       ))
     }
-  </C.Wrapper>
-);
+    </C.Wrapper>
+  );
+};
 
 Navigation.propTypes = propTypes;
 Navigation.defaultProps = defaultProps;

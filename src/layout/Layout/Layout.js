@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import MdiIcon from '@mdi/react';
 import { mdiChevronDown } from '@mdi/js';
@@ -64,7 +64,8 @@ CreateList.propTypes = createListPropTypes;
 CreateList.defaultProps = createListDefaultProps;
 
 const Layout = ({ provider, children }) => {
-  const navigation = provider.getNavigationItems();
+  const navigationList = provider.getNavigationItems();
+
   const languages = provider.getAvaliableLanguages();
   const selectedLanguage = provider.getCurrentLanguage();
   const {
@@ -75,6 +76,13 @@ const Layout = ({ provider, children }) => {
 
   const customerName = provider.getCustomerName();
 
+  const sideNavList = useMemo(() => {
+    if (navigationList) {
+      return navigationList.filter((nav) => !nav.isDropdownItem);
+    }
+    return [];
+  }, [navigationList]);
+
   return (
     <C.Main>
       <C.Left>
@@ -84,7 +92,7 @@ const Layout = ({ provider, children }) => {
             activeLinkColor: theme.white,
             linkColor: theme.white,
           })}
-          navigationList={navigation}
+          navigationList={sideNavList}
         />
       </C.Left>
 
@@ -112,7 +120,7 @@ const Layout = ({ provider, children }) => {
               onClose={onClose}
               isOpen={isOpen}
               languages={languages}
-              navigationList={navigation}
+              navigationList={navigationList}
               onNavigate={onClose}
               selectedLanguage={selectedLanguage}
               onChangeLanguage={provider.onChangeLanguage}

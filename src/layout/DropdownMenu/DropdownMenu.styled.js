@@ -82,7 +82,6 @@ export const CreateItem = styled.div`
 `;
 
 export const DesktopMenuFooter = styled.div`
-    padding-top: .8rem;
 `;
 
 export const MobileMenu = styled.div`

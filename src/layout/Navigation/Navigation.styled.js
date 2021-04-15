@@ -9,7 +9,6 @@ export const Wrapper = styled.div`
     padding: .8rem 0;
     border-bottom: 1px solid ${({ theme }) => theme.gray300};
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
-        padding: 0;
         border-bottom: none;
     }
 `;
@@ -25,14 +24,14 @@ export const NavigationItem = styled(NavLink)`
     width: 100%;
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
-        justify-content: center;
-        color: ${({ theme }) => theme.white};
-        padding: 1.6rem 0;
+        justify-content: ${({ isDropdownItem }) => (isDropdownItem ? 'flex-start' : 'center')};
+        color: ${({ theme, isDropdownItem }) => (isDropdownItem ? theme.black : theme.white)};
+        padding: ${({ isDropdownItem }) => (isDropdownItem ? '1.2rem 2.4rem' : '1.6rem 0')};
     }
 
     &:hover {
         background: ${({ theme }) => theme.gray50};
-        @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
+        @media screen and (min-width: ${({ theme, isDropdownItem }) => !isDropdownItem && `${theme.breakPointDesktop * 10}px`}) {
             background: inherit;
         }
     }
