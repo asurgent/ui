@@ -130,7 +130,7 @@ export const MobileMenu = styled.div`
         }
     }
     .wrapper {
-        padding .8rem 0;
+        padding: 0.8rem 0;
     }
 `;
 

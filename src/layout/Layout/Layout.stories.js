@@ -5,7 +5,8 @@ import {
   mdiViewDashboard,
   mdiAndroidMessages,
   mdiTimerOutline,
-  mdiPirate,
+  mdiExitRun,
+  mdiAlienOutline,
 } from '@mdi/js';
 import * as Layout from '../index';
 import * as Block from '../../Block';
@@ -43,10 +44,17 @@ const navigationList = () => [
     link: '/tickets',
   },
   {
-    label: 'Kapten Pirat',
-    tooltip: 'Kapten Pirat',
-    icon: mdiPirate,
-    link: '/pirate',
+    label: 'Gå ut',
+    tooltip: 'Gå ut',
+    icon: mdiExitRun,
+    link: '/irl',
+    isDropdownItem: true,
+  },
+  {
+    label: 'Aliens',
+    tooltip: 'Aliens',
+    icon: mdiAlienOutline,
+    link: '/area51',
     isDropdownItem: true,
   },
 ];
