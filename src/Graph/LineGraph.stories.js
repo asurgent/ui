@@ -18,7 +18,7 @@ export const LineGraph = (args) => (
     </div>
 
     <div style={{ height: '200px' }}>
-      <Graph.LineGraph data={data2} />
+      <Graph.LineGraph data={data2} {...args} />
     </div>
 
     <div style={{ height: '200px' }}>
@@ -35,7 +35,6 @@ export const LineGraph = (args) => (
 );
 LineGraph.args = {
   xProp: 'timestamp',
-  dataTitle: 'Special data set',
   markerLines: [
     { value: 50, title: 'one', color: '#C62929' },
     { value: 10, title: 'two', color: 'orange' },
