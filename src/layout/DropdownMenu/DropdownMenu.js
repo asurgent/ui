@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import MdiIcon from '@mdi/react';
 import { mdiExitToApp, mdiClose } from '@mdi/js';
@@ -60,6 +60,13 @@ const DropdownMenu = ({
     },
   });
 
+  const dropdownNavList = useMemo(() => {
+    if (navigationList) {
+      return navigationList.filter((nav) => nav.isDropdownItem);
+    }
+    return [];
+  }, [navigationList]);
+
   return (
     <U.MenuWrapper>
       <U.Desktop>
@@ -76,6 +83,14 @@ const DropdownMenu = ({
                 onChangeLanguage(values.selectLanguage);
               }}
             />
+
+            {Array.isArray(dropdownNavList) && (
+              <Navigation
+                withLabel
+                onNavigate={onNavigate}
+                navigationList={dropdownNavList}
+              />
+            )}
             <U.DesktopMenuFooter>
               <Button.Plain onClick={onLogout}>
                 <U.CreateItem>
@@ -117,13 +132,6 @@ const DropdownMenu = ({
                 <Navigation
                   withLabel
                   onNavigate={onNavigate}
-                  theme={(theme) => ({
-                    activeBackground: theme.white,
-                    activeLinkColor: theme.blue700,
-                    linkColor: theme.gray800,
-                    menuItemsSpacing: '.8rem',
-                    menuFontSize: '2.2rem',
-                  })}
                   navigationList={navigationList}
                 />
                 )}

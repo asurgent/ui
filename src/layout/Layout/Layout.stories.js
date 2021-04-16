@@ -1,11 +1,12 @@
 /* eslint-disable no-console */
 import React, { useEffect } from 'react';
-import MdiIcon from '@mdi/react';
 import {
   mdiCompass,
   mdiViewDashboard,
   mdiAndroidMessages,
   mdiTimerOutline,
+  mdiExitRun,
+  mdiAlienOutline,
 } from '@mdi/js';
 import * as Layout from '../index';
 import * as Block from '../../Block';
@@ -22,25 +23,39 @@ const Story = {
 };
 export default Story;
 
-const navigationList = (t, customerId) => [
+const navigationList = () => [
   {
-    label: t('linkDashboardLabel'),
-    tooltip: t('linkDashboardTooltip'),
+    label: 'DashboardLabel',
+    tooltip: 'DashboardTooltip',
     active: true,
-    icon: (<MdiIcon path={mdiViewDashboard} size={1.4} />),
+    icon: mdiViewDashboard,
     link: '/dashboard',
   },
   {
-    label: t('linkExploreLabel'),
-    tooltip: t('linkExploreTooltip'),
-    icon: (<MdiIcon path={mdiCompass} size={1.4} />),
-    link: `/my-environment/${customerId || ''}`,
+    label: 'ExploreLabel',
+    tooltip: 'ExploreTooltip',
+    icon: mdiCompass,
+    link: `/my-environment/${1234 || ''}`,
   },
   {
-    label: t('linkTicketsLabel'),
-    tooltip: t('linkTicketsTooltip'),
-    icon: (<MdiIcon path={mdiAndroidMessages} size={1.4} />),
+    label: 'TicketsLabel',
+    tooltip: 'TicketsTooltip',
+    icon: mdiAndroidMessages,
     link: '/tickets',
+  },
+  {
+    label: 'Gå ut',
+    tooltip: 'Gå ut',
+    icon: mdiExitRun,
+    link: '/irl',
+    isDropdownItem: true,
+  },
+  {
+    label: 'Aliens',
+    tooltip: 'Aliens',
+    icon: mdiAlienOutline,
+    link: '/area51',
+    isDropdownItem: true,
   },
 ];
 
@@ -77,6 +92,7 @@ const MainLayoutTemplate = (args) => {
   });
 
   useEffect(() => {
+    provider.setNavigationList(navigationList());
     provider.setCurrentLanguage('sv');
     provider.setCustomerId('1234');
     provider.setCustomerName('Asurgent AB');

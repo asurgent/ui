@@ -82,7 +82,6 @@ export const CreateItem = styled.div`
 `;
 
 export const DesktopMenuFooter = styled.div`
-    padding-top: .8rem;
 `;
 
 export const MobileMenu = styled.div`
@@ -131,7 +130,7 @@ export const MobileMenu = styled.div`
         }
     }
     .wrapper {
-        padding .8rem 0;
+        padding: 0.8rem 0;
     }
 `;
 

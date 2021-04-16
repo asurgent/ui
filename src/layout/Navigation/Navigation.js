@@ -30,14 +30,32 @@ const Navigation = ({
         link,
         label,
         isActive,
+        isDropdownItem,
       }) => (
-        <Tooltip.Right tip={tooltip} key={tooltip}>
-          <C.NavigationItem to={link} onClick={onNavigate} isActive={isActive}>
+        isDropdownItem ? (
+          <C.DropdownNavigationItem
+            key={link}
+            to={link}
+            onClick={onNavigate}
+            isActive={isActive}
+          >
             <MdiIcon path={icon} size={1.4} />
             {' '}
             {withLabel && (<span>{label}</span>)}
-          </C.NavigationItem>
-        </Tooltip.Right>
+          </C.DropdownNavigationItem>
+        ) : (
+          <Tooltip.Right tip={tooltip} key={tooltip}>
+            <C.NavigationItem
+              to={link}
+              onClick={onNavigate}
+              isActive={isActive}
+            >
+              <MdiIcon path={icon} size={1.4} />
+              {' '}
+              {withLabel && (<span>{label}</span>)}
+            </C.NavigationItem>
+          </Tooltip.Right>
+        )
       ))
     }
   </C.Wrapper>
