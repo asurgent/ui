@@ -18,7 +18,7 @@ export const LineGraph = (args) => (
     </div>
 
     <div style={{ height: '200px' }}>
-      <Graph.LineGraph data={data2} />
+      <Graph.LineGraph data={data2} xProp="timestamp" />
     </div>
 
     <div style={{ height: '200px' }}>

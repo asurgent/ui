@@ -57,7 +57,7 @@ const locales = (t) => ({
 export const customTick = (translator) => {
   const formatter = d3.timeFormatLocale(locales(translator));
 
-  const formatHour = formatter.format('%I:%M');
+  const formatHour = formatter.format('%H:%M %p');
   const formatDay = formatter.format('%a %d');
   const formatWeek = formatter.format('%b %d');
   const formatMonth = formatter.format('%B');
