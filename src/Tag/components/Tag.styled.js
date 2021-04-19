@@ -44,6 +44,5 @@ export const TagsCollection = styled.div`
 export const SpillOver = styled.div`
     font-size: 1rem;
     line-height: 1rem;
-    padding: .4rem;
-    padding-left: 0;
+    margin: .4rem;
 `;
