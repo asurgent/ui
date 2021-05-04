@@ -24,6 +24,7 @@ const propTyps = {
   onKeyUp: PropTypes.func,
   onKeyDown: PropTypes.func,
   onKeyUpTimer: PropTypes.func,
+  style: PropTypes.instanceOf(Object),
 };
 
 const defaultProps = {
@@ -38,6 +39,7 @@ const defaultProps = {
   onKeyUp: () => {},
   onKeyDown: () => {},
   onKeyUpTimer: () => {},
+  style: {},
 };
 
 export const FormContext = createContext({ hook: null });
@@ -56,6 +58,7 @@ const Form = (props) => {
     onKeyDown,
     onKeyUpTimer,
     className,
+    style,
   } = props;
 
   const [isDirty, setIsDirty] = useState(false);
@@ -173,6 +176,7 @@ const Form = (props) => {
         eventTrigger({ name, action: onBlur, setDirty: false });
       }}
       className={className}
+      style={style}
     >
       <FormContext.Provider value={{ hook }}>
         { typeof children === 'function' && children({
