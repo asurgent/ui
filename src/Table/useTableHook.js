@@ -42,7 +42,7 @@ const getHistoryState = (router, getQueryParamKey) => {
   return {};
 };
 
-const useTableHook = (payloadOverrides) => {
+const useTableHook = (payloadOverrides, reactQuery) => {
   // Holds state changes that are set simontainusly wihout a render inbetween
   // A rerender will empty these, but without a rerender setState for rowRequestState &
   // filterRequestKeyState would overwrite previous value if no render is executed inbetween
@@ -261,6 +261,42 @@ const useTableHook = (payloadOverrides) => {
       setIsExporting(false);
 
       return result.flat();
+    },
+    setRowData: (res) => {
+      setTableData(res);
+    },
+    setFilterLoading,
+    setFilterData,
+    setIsLoading,
+    setTableData,
+    setRequestFailed,
+    queryHandlers: () => ({
+      onSuccess: (result) => {
+        if (result.facets) {
+          setFilterLoading(false);
+          setFilterData(result.facets);
+        } else {
+          setIsLoading(false);
+          setTableData(result);
+        }
+        setRequestFailed('');
+      },
+      onError: (err, req) => {
+        if (req.facets && req.facets.length > 0) {
+          setFilterLoading(false);
+          setFilterData([]);
+        } else {
+          setIsLoading(false);
+          setTableData(tableDefaults);
+        }
+        setRequestFailed(err);
+      },
+    }),
+    registerQuery: (queryHook) => {
+      const callback = (payload) => { queryHook.mutate({ payload }); };
+      setRowCallback({ callback });
+      setFilterCallback({ callback });
+      setIsReady(true);
     },
     registerRowFetchCallback: (callback) => {
       // Callback success function that changes internal states
