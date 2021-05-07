@@ -42,7 +42,7 @@ const getHistoryState = (router, getQueryParamKey) => {
   return {};
 };
 
-const useTableHook = (payloadOverrides, reactQuery) => {
+const useTableHook = (payloadOverrides) => {
   // Holds state changes that are set simontainusly wihout a render inbetween
   // A rerender will empty these, but without a rerender setState for rowRequestState &
   // filterRequestKeyState would overwrite previous value if no render is executed inbetween
