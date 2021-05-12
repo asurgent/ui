@@ -11,11 +11,10 @@ export const SortWrapper = styled.div`
     }
 
     .custom-table-sort-select {
-        border: 1px solid ${({ theme }) => theme.gray300};
         max-width: 100%;
-        background-color: none;
-        @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
-            border: none;
-        }
+        background-color: ${({ theme }) => theme.gray50};
+        border-radius: 3px;
+        border: none;
+        font-size: 1.4rem;
     }
 `;

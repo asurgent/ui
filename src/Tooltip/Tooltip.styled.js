@@ -64,7 +64,7 @@ export const TooltipCard = styled(TooltipWrapper)`
         pointer-events: none;
 
         border-style: solid;
-        border-width: 1.5rem;
+        border-width: 1rem;
         border-color: transparent;
 
   }
@@ -75,7 +75,7 @@ export const TooltipCard = styled(TooltipWrapper)`
     }
     &.right:after {
         border-right-color: ${({ theme }) => theme.white};
-        left: calc(0% - 3rem);
+        left: calc(0% - 2rem);
         top: calc(50% - 1.5rem);
     }
     &.top:after {
@@ -86,7 +86,7 @@ export const TooltipCard = styled(TooltipWrapper)`
     &.middle:after {
       border-bottom-color: ${({ theme }) => theme.white};
       left: calc(50% - 1.5rem);
-      top: calc(0% - 3rem); 
+      top: calc(0% - 2rem); 
     }
 `;
 

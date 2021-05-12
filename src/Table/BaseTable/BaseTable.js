@@ -152,6 +152,7 @@ const BaseTable = withTheme((props) => {
                 saveToFilename={exportFileName}
                 tooltip={t('export', 'asurgentui')}
                 saveToFile={exportResultsAction}
+                style={{ display: 'flex' }}
               >
                 <C.DownloadBtn path={mdiDownload} />
               </Button.Plain>
