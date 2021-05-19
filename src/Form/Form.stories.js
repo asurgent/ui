@@ -80,12 +80,20 @@ const DefaultTemplate = (args) => {
       label: 'Some Text',
       tooltip: 'hejhej',
       value: 'text text',
+      validator: {
+        condition: (v) => v === 'asdf',
+        errorMessage: 'I did not validate',
+      },
     },
     someTextArea: {
       type: 'textarea',
       label: 'Some Text',
       tooltip: 'hejhej',
       value: 'text area text',
+      validator: {
+        condition: (v) => v === 'asdf',
+        errorMessage: 'I did not validate',
+      },
     },
     someTextMultiple: {
       type: 'textmultiple',
@@ -247,6 +255,7 @@ const DefaultTemplate = (args) => {
       formData.errors([
         { property: 'someText', message: 'You need some text', message_translation_key: 'error1' },
         { property: 'someNumber', message: 'You need a number', message_translation_key: 'error2' },
+        { property: 'someTextArea', message: 'You need a textarea', message_translation_key: 'error2' },
         { property: 'someRadioGroup', message: 'Select something', message_translation_key: 'error3' },
         { property: 'someRadioGroup2', message: 'Select something', message_translation_key: 'error4' },
         { property: 'someDate', message: 'Pick a date', message_translation_key: 'key_doesnt_exist_will_fallback_on_message' },
