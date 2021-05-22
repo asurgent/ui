@@ -262,6 +262,42 @@ const useTableHook = (payloadOverrides) => {
 
       return result.flat();
     },
+    setRowData: (res) => {
+      setTableData(res);
+    },
+    setFilterLoading,
+    setFilterData,
+    setIsLoading,
+    setTableData,
+    setRequestFailed,
+    queryHandlers: () => ({
+      onSuccess: (result) => {
+        if (result.facets) {
+          setFilterLoading(false);
+          setFilterData(result.facets);
+        } else {
+          setIsLoading(false);
+          setTableData(result);
+        }
+        setRequestFailed('');
+      },
+      onError: (err, req) => {
+        if (req.facets && req.facets.length > 0) {
+          setFilterLoading(false);
+          setFilterData([]);
+        } else {
+          setIsLoading(false);
+          setTableData(tableDefaults);
+        }
+        setRequestFailed(err);
+      },
+    }),
+    registerQuery: (queryHook) => {
+      const callback = (payload) => { queryHook.mutate({ payload }); };
+      setRowCallback({ callback });
+      setFilterCallback({ callback });
+      setIsReady(true);
+    },
     registerRowFetchCallback: (callback) => {
       // Callback success function that changes internal states
       const onSuccess = (response) => {
