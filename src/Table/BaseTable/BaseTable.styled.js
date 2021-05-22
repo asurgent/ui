@@ -175,6 +175,7 @@ export const ActionMenu = styled.div`
 `;
 
 export const DownloadBtn = styled(MdiIcon)`
+  display: block;
   height: 1.5rem;
   width: 1.5rem;
   min-height: 1.5rem;

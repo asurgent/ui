@@ -30,6 +30,7 @@ export const Omnibar = styled.div`
 
 export const LeftActions = styled.div`
     justify-content: flex-start;
+    align-items: center;
     display: flex;
     flex: 1;
 
