@@ -77,7 +77,6 @@ const Heatmap = ({
   showLegend,
   theme,
 }) => {
-  console.log('showLegend', showLegend);
   const monthTextRef = useRef(null);
   const groupRef = useRef(null);
   const svgRef = createRef(null);
