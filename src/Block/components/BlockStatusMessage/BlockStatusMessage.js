@@ -24,7 +24,7 @@ const defaultProps = {
 const ErrorMessage = ({
   title, children, ...props
 }) => (
-  <ErrorState  {...props}>
+  <ErrorState {...props}>
     {title && <b className="title">{title}</b>}
     {children}
   </ErrorState>
