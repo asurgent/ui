@@ -88,7 +88,7 @@ const TextMultiple = forwardRef((props, ref) => {
             onChange={({ target }) => handleChange({ target, index })}
           />
           <Button.Icon
-            icon={<MdiIcon path={mdiCancel} size={1.2} />}
+            icon={<MdiIcon path={mdiCancel} size={0.75} />}
             onClick={() => handleRemove({ index })}
           />
         </C.Entry>
@@ -108,7 +108,7 @@ const TextMultiple = forwardRef((props, ref) => {
         <Button.Icon
           disabled={newEntry.length === 0}
           onClick={handleAdd}
-          icon={<MdiIcon path={mdiPlus} size={1.2} />}
+          icon={<MdiIcon path={mdiPlus} size={0.75} />}
         />
       </C.Entry>
     </C.Container>

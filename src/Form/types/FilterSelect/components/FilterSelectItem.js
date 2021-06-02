@@ -20,7 +20,7 @@ const FilterItem = ({
     disabled={filterItem.disabled}
   >
     <C.Active>
-      {filterItem.selected && <MdiIcon path={mdiCheck} size={1.2} />}
+      {filterItem.selected && <MdiIcon path={mdiCheck} size={0.75} />}
     </C.Active>
     <C.FilterLabel>
       <span>{ filterItem.label }</span>

@@ -65,7 +65,7 @@ const EntityTooltipCard = (props) => {
           <C.EntityName hasCloudops={hasCloudops}>
             <MdiIcon
               path={hasCloudops ? mdiEye : mdiEyeOff}
-              size={1}
+              size={0.625}
             />
             <T.P.Main bold>{name}</T.P.Main>
           </C.EntityName>

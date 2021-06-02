@@ -35,7 +35,7 @@ const Tag = ({
         <Button.Plain
           className="delete"
           onClick={onDelete}
-          mainIcon={<MdiIcon size={1} path={mdiClose} />}
+          mainIcon={<MdiIcon size={0.625} path={mdiClose} />}
         />
       )}
     </Styled>

@@ -142,7 +142,7 @@ const Toast = ({
     <C.Toast type={type} onMouseEnter={onCancelTimer} onMouseLeave={onSetTimer}>
       <MdiIcon
         className="icon"
-        size={1.4}
+        size={0.875}
         path={getIconOnType(type)}
         style={{
           background: getColor(theme, type).border,
@@ -150,7 +150,7 @@ const Toast = ({
         }}
       />
       <C.Message>{message}</C.Message>
-      <MdiIcon size={1.4} path={mdiClose} onClick={onRemove} className="close" />
+      <MdiIcon size={0.875} path={mdiClose} onClick={onRemove} className="close" />
       <C.Bar
         type={type}
         done={percentageDone}

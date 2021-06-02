@@ -24,7 +24,8 @@ export const Default = styled.div`
         padding: 0.25rem ;
         text-decoration: none;
         border-left: 1px solid ${({ theme }) => theme.gray300};
-
+        width: auto;
+        
         .label {
             display: none;
         }

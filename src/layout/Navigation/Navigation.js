@@ -39,7 +39,7 @@ const Navigation = ({
             onClick={onNavigate}
             isActive={isActive}
           >
-            <MdiIcon path={icon} size={1.4} />
+            <MdiIcon path={icon} size={0.875} />
             {' '}
             {withLabel && (<span>{label}</span>)}
           </C.DropdownNavigationItem>
@@ -50,7 +50,7 @@ const Navigation = ({
               onClick={onNavigate}
               isActive={isActive}
             >
-              <MdiIcon path={icon} size={1.4} />
+              <MdiIcon path={icon} size={0.875} />
               {' '}
               {withLabel && (<span>{label}</span>)}
             </C.NavigationItem>
