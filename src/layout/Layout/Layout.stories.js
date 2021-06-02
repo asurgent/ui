@@ -165,14 +165,14 @@ const MainLayoutTemplate = (args) => {
               {
                 value: 'Cell 1',
                 sortKey: 'sort-A',
-                size: 'minmax(30rem, 1fr)',
+                size: 'minmax(18.75rem, 1fr)',
               },
               { value: 'B', sortKey: 'sort-B' },
               { value: 'C', sortKey: 'sort-C', render: false },
               {
                 value: 'D',
                 sortKey: 'sort-D',
-                size: 'minmax(8rem, 10rem)',
+                size: 'minmax(5rem, 6.25rem)',
               },
             ]}
             columnConfiguration={(row) => {

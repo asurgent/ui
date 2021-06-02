@@ -39,7 +39,7 @@ export const Primary = (args) => (
 
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
       <p>Not part of component (just for the sake of the Storybook)</p>
-      <button type="button" onClick={() => window.localStorage.removeItem(args.id)}>Clear ID-value (refresh)</button>
+      <button type="button" onClick={() => window.localStorageNaNremoveItem(args.id)}>Clear ID-value (refresh)</button>
     </div>
   </>
 );

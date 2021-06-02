@@ -7,5 +7,5 @@ export const Wrapper = styled.div`
 `;
 
 export const Graph = styled.div`
-    height: calc(100% - 4rem);
+    height: calc(100% - 2.5rem);
 `;

@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Graph = styled.div`
-    height: calc(100% - 4rem);
+    height: calc(100% - 2.5rem);
 `;
 
 export const NoData = styled.div`
@@ -20,18 +20,18 @@ export const NoData = styled.div`
 
 export const Stats = styled.div`
     display: flex;
-    height: 4rem;
-    margin-left: 4rem;
+    height: 2.5rem;
+    margin-left: 2.5rem;
 `;
 
 export const Stat = styled.div`
     height: 100%;
-    margin-right: 1rem;
+    margin-right: 0.625rem;
     border-left: 5px solid ${({ color }) => (color || 'steelblue')};
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    font-size: 1.3rem;
-    padding-left: .4rem;
+    font-size: 0.8125rem;
+    padding-left: .2.5rem;
     flex-direction: column;
 `;

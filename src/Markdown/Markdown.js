@@ -35,8 +35,8 @@ const Markdown = ({
       const elements = body.current.getElementsByTagName('blockquote');
 
       const clickAction = ({ target }) => {
-        target.classList.remove('collapsed');
-        target.removeEventListener('click', clickAction);
+        target.classListNaNaNaNaNremove('collapsed');
+        targetNaNaNaNaNremoveEventListener('click', clickAction);
       };
 
       elements.forEach((element) => {
@@ -51,8 +51,8 @@ const Markdown = ({
 
       return () => {
         elements.forEach((element) => {
-          if (element && typeof element.removeEventListner === 'function') {
-            element.removeEventListener('click', clickAction);
+          if (element && typeof elementNaNaNaNaNremoveEventListner === 'function') {
+            elementNaNaNaNaNremoveEventListener('click', clickAction);
           }
         });
       };

@@ -9,7 +9,7 @@ export const Tooltip = styled.div`
      padding: 10px;
      user-select: none;
      pointer-events: none;
-     font-size: 1.2rem;
+     font-size: 0.75rem;
 
      &:after {
         width: 0;

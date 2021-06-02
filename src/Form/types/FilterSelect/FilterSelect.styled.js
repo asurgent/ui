@@ -15,7 +15,7 @@ export const Output = styled.div`
     user-select: none;
     display: flex;
     flex-direction: column;
-    padding: 1.2rem;
+    padding: 0.75rem;
 
     .down-arrow{
         display: absolute;
@@ -25,7 +25,7 @@ export const Output = styled.div`
 `;
 
 export const Value = styled.div`
-    padding-right: 2rem;
+    padding-right: 1.25rem;
     overflow: hidden;
     text-overflow: ellipsis;
     color: ${({ theme, asPlaceholder, disabled }) => ((asPlaceholder || disabled) ? theme.gray400 : theme.black)};
@@ -37,11 +37,11 @@ export const Value = styled.div`
 `;
 
 export const SearchWrapper = styled.div`
-    padding: .8rem ;
+    padding: 0.5rem ;
     background-color: ${({ theme }) => theme.gray50};
 
     form {
-        padding-right: 4.8rem;
+        padding-right: 40.5rem;
 
         @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
             padding-right: 0;
@@ -53,13 +53,13 @@ export const Search = styled.input`
     margin: 0;
     display: flex;
     align-items: center;
-    border: .1rem solid!important;
+    border: 0.0625rem solid!important;
     border-color: ${({ theme }) => theme.gray200}!important;
     border-radius: 5px;
-    padding: 1.2rem;
+    padding: 0.75rem;
     position: relative;
     box-sizing: border-box;
-    min-height: 4.7rem;
+    min-height: 2.9375rem;
     background: ${({ theme }) => theme.white};
 `;
 
@@ -76,15 +76,15 @@ export const Dropdown = styled.div`
     
     .close {
         position: absolute;
-        right: 1.6rem;
-        top: 1.6rem;
+        right: 1rem;
+        top: 1rem;
     }
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
         position: absolute;
         width: auto;
         height: auto;
-        max-height: 50rem;
+        max-height: 31.25rem;
         top: unset;
         bottom: unset;
         min-width: unset;

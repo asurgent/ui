@@ -44,6 +44,6 @@ export const Toggle = styled.div`
 `;
 
 export const Label = styled.span`
-  font-size: 1.2rem;
-  margin-bottom: .4rem;
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
 `;

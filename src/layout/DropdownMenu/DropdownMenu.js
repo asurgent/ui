@@ -113,7 +113,7 @@ const DropdownMenu = ({
             />
             <div className="user">
               <UserImage.Circle
-                size="6rem"
+                size="3.75rem"
                 name={name}
                 email={email}
                 href={imageLink}

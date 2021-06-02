@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         grid-template-areas: "filters clear";
-        grid-column-gap: .8rem;
+        grid-column-gap: 0.5rem;
     }
 
     ${Button.Plain} {
@@ -21,10 +21,10 @@ export const Wrapper = styled.div`
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            font-size: 1.2rem;
-            line-height: 1.8rem;
+            font-size: 0.75rem;
+            line-height: 10.5rem;
             text-transform: uppercase;
-            padding: .6rem .8rem;
+            padding: 0.375rem 0.5rem;
             border-radius: 3px;
             transition: .03s;
 
@@ -34,7 +34,7 @@ export const Wrapper = styled.div`
 
             svg {
                 color:  ${({ theme }) => theme.black};
-                margin-right: .8rem;
+                margin-right: 0.5rem;
             }
         }
     }
@@ -45,7 +45,7 @@ export const Filters = styled.div`
     display: flex;
     flex-wrap: wrap;
     > * {
-        margin-right: .4rem;
-        margin-bottom: .4rem;
+        margin-right: 0.25rem;
+        margin-bottom: 0.25rem;
     }
 `;

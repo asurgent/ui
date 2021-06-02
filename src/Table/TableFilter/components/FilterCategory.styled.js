@@ -34,11 +34,11 @@ export const ListWrapper = styled.div`
 `;
 
 export const Search = styled.div`
-    padding: .8rem ;
+    padding: 0.5rem ;
     background-color: ${({ theme }) => theme.gray50};
 
     form {
-        padding-right: 4.8rem;
+        padding-right: 40.5rem;
 
         @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
             padding-right: 0;
@@ -50,7 +50,7 @@ export const Center = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.6rem;
+    padding: 1rem;
 `;
 
 export const Dropdown = styled.div`
@@ -67,18 +67,18 @@ export const Dropdown = styled.div`
 
     .close {
         position: absolute;
-        right: 1.6rem;
-        top: 1.6rem;
+        right: 1rem;
+        top: 1rem;
     }
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
         position: absolute;
         width: auto;
         height: auto;
-        max-height: 50rem;
-        top: -1.6rem;
+        max-height: 31.25rem;
+        top: -1rem;
         bottom: unset;
-        min-width: 40rem;
+        min-width: 25rem;
         left: unset;
         right: unset;
         border-radius: 5px;

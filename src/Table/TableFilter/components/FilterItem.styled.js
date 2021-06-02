@@ -4,11 +4,11 @@ export const Base = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1.6rem 0 1.6rem 1.6rem;
+    padding: 0.625rem 0 0.625rem 0.625rem;
 `;
 
 export const Active = styled(Base)`
-    width: 3.2rem;
+    width: 2rem;
 `;
 
 export const FilterItem = styled.div`
@@ -28,13 +28,13 @@ export const FilterLabel = styled.div`
     flex: 1;
     display: block;
     text-align: left;
-    font-size: 1.1rem;
+    font-size: 0.6875rem;
     font-weight: 700;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 1.6rem;
-    max-width: 29.5rem;
+    padding: 0.625rem;
+    max-width: 18.4375rem;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -49,13 +49,13 @@ export const Label = styled.div`
     flex: 1;
     display: block;
     text-align: left;
-    font-size: 1.1rem;
+    font-size: 0.6875rem;
     font-weight: 700;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 1.6rem;
-    max-width: 29.5rem;
+    padding: 0.625rem;
+    max-width: 18.4375rem;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -63,5 +63,5 @@ export const Label = styled.div`
 
 export const SecondaryLabel = styled(Label)`
     color: ${({ theme }) => theme.gray400};
-    font-size: 1rem;
+    font-size: 0.625rem;
 `;

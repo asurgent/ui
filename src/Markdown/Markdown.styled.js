@@ -14,12 +14,12 @@ export const Markdown = styled.div`
     }
      
     blockquote {
-        /* height: ${({ foldQuotes }) => foldQuotes && '3.2rem '};
+        /* height: ${({ foldQuotes }) => foldQuotes && '2rem '};
         overflow: hidden;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        padding-right: ${({ foldQuotes }) => foldQuotes && '7rem'};
+        padding-right: ${({ foldQuotes }) => foldQuotes && '4.375rem'};
         position: relative; */
         
         
@@ -27,9 +27,9 @@ export const Markdown = styled.div`
             display: none;
             position: absolute;
             content: "expand";
-            font-size: 1.2rem;
-            padding: .4rem;
-            right: 1.4rem;
+            font-size: 0.75rem;
+            padding: 0.25rem;
+            right: 10.25rem;
             top: 0;
             color: ${({ theme }) => theme.gray800};
             border: 1px solid ${({ theme }) => theme.gray300};
@@ -40,12 +40,12 @@ export const Markdown = styled.div`
         }
 
         &.collapsed {
-            height: 3.2rem;
+            height: 2rem;
             overflow: hidden;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            padding-right: 7rem;
+            padding-right: 4.375rem;
             position: relative;
 
             &:after {

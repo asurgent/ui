@@ -18,14 +18,14 @@ export const NavigationItem = styled(NavLink)`
     align-items: center;
     text-decoration: none;
     position: relative;
-    padding: 1.2rem 2.4rem;
+    padding: 0.75rem 1.5rem;
     color: ${({ theme }) => theme.black};
     width: 100%;
 
     @media screen and (min-width: ${({ theme }) => `${theme.breakPointDesktop * 10}px`}) {
         justify-content: center;
         color: ${({ theme }) => theme.white};
-        padding: 1.6rem 0;
+        padding: 1rem 0;
     }
 
     &:hover {
@@ -45,14 +45,14 @@ export const NavigationItem = styled(NavLink)`
     }
 
     span {
-         margin-left: 1.6rem;
+         margin-left: 1rem;
 
      }
 `;
 
 export const DropdownNavigationItem = styled(NavigationItem)`
     &:first-child {
-        margin-top: .8rem;
+        margin-top: 0.5rem;
     }
     &:hover {
         background: ${({ theme }) => theme.gray50};
@@ -64,7 +64,7 @@ export const DropdownNavigationItem = styled(NavigationItem)`
    @media screen and (min-width: ${({ theme }) => `${theme.breakPointDesktop * 10}px`}) {
         justify-content: flex-start;
         color: ${({ theme }) => theme.black};
-        padding: 1.2rem 2.4rem;
+        padding: 0.75rem 1.5rem;
     }
 
 `;

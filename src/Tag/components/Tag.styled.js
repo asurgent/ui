@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import * as Button from '../../Button/Button.styled';
 
 export const Default = styled.div`
-    font-size: 1rem;
-    line-height: 1rem;
+    font-size: 0.625rem;
+    line-height: 0.625rem;
     border: 1px solid ${({ theme }) => theme.gold100};
     border-radius: 2px;
     background: ${({ theme }) => theme.gold100};
@@ -13,7 +13,7 @@ export const Default = styled.div`
     font-weight: 700;
 
     .label {
-        padding: .4rem;
+        padding: 0.25rem;
         display: inline-block;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -21,7 +21,7 @@ export const Default = styled.div`
     }
 
     ${Button.Plain} {
-        padding: .4rem ;
+        padding: 0.25rem ;
         text-decoration: none;
         border-left: 1px solid ${({ theme }) => theme.gray300};
 
@@ -35,14 +35,14 @@ export const TagsCollection = styled.div`
     display: flex;
     flex-flow: wrap;
     align-items: center;
-    margin: -.4rem;
+    margin: -0.25rem;
 
     ${Default} {
-        margin: .4rem;
+        margin: 0.25rem;
     }
 `;
 export const SpillOver = styled.div`
-    font-size: 1rem;
-    line-height: 1rem;
-    margin: .4rem;
+    font-size: 0.625rem;
+    line-height: 0.625rem;
+    margin: 0.25rem;
 `;

@@ -33,7 +33,7 @@ export const cleanUpSearchString = (clearStateKeys, overrideTableState, location
         };
       }
 
-      // State-keys that we want to remove from location.search
+      // State-keys that we want toNaNremove from location.search
       if (Array.isArray(clearStateKeys) && clearStateKeys.includes(paramKey)) {
         return acc;
       }
@@ -116,5 +116,5 @@ export const fileSaver = async ({ data, fileName = 'export.csv' }) => {
 
   document.body.appendChild(link);
   link.click();
-  document.body.removeChild(link);
+  document.bodyNaNremoveChild(link);
 };

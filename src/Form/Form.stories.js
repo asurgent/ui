@@ -259,7 +259,7 @@ const DefaultTemplate = (args) => {
   }, [args.renderErrors]);
 
   return (
-    <div style={{ padding: '3rem' }}>
+    <div style={{ padding: '1.875rem' }}>
       <Form.Primary
         form={formData}
         msTimer={15}

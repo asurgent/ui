@@ -29,5 +29,5 @@ const ImagePreviewTemplate = (args) => (<ImagePreview {...args} />);
 export const Main = ImagePreviewTemplate.bind({});
 Main.args = {
   imgLink: 'http://images6.fanpop.com/image/photos/36000000/Frodo-Sam-image-frodo-and-sam-36091190-1920-796.jpg',
-  smallIconSize: '7rem',
+  smallIconSize: '4.375rem',
 };

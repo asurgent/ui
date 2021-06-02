@@ -10,21 +10,21 @@ export const Message = styled.div`
 export const Toast = styled.div`
     position: relative;
     display: grid;
-    width: 36rem;
+    width: 22.5rem;
     justify-content: center;
     align-items: center;
-    grid-template-columns: 2rem 1fr 2rem;
-    grid-column-gap: .8rem;
+    grid-template-columns: 1.25rem 1fr 1.25rem;
+    grid-column-gap: 0.5rem;
     grid-template-areas: "icon text close";
-    padding: 1.6rem;
+    padding: 1rem;
     border-radius: 5px;
     box-shadow: 0px 8px 24px rgba(149, 157, 165, 0.2);
     background-color: ${({ theme }) => theme.black};
     color: ${({ theme }) => theme.white};
-    margin-bottom: .8rem;
+    margin-bottom: 0.5rem;
 
     p {
-      margin: .8rem;
+      margin: 0.5rem;
     }
 
     .icon {
@@ -36,10 +36,10 @@ export const Toast = styled.div`
     .close {
         fill: ${({ theme }) => theme.white};
         align-self: flex-start;
-        margin-top: .8rem;
-        right: .4rem;
-        height: 2rem;
-        width: 2rem;
+        margin-top: 0.5rem;
+        right: 0.25rem;
+        height: 1.25rem;
+        width: 1.25rem;
         cursor: pointer;
     }
 `;
@@ -49,7 +49,7 @@ export const Bar = styled.div`
     top: 0;
     right: 0;
     display: block;
-    height: .4rem;
+    height: 0.25rem;
     width: ${({ done }) => `${100 - done}%`};
     transition: width 100ms;
     border-top-right-radius: 5px;

@@ -18,7 +18,7 @@ export const Button = styled.div`
     justify-content: center;
     transition: 0.03s;
     white-space: normal;
-    padding: .8rem 1.6rem;
+    padding: 0.5rem 0.625rem;
     border-radius: 3px;
     white-space: nowrap;
 
@@ -38,9 +38,9 @@ export const Button = styled.div`
 
         font-family: 'Poppins', sans-serif;
         text-align: center;
-        letter-spacing: 0.08rem;
+        letter-spacing: 0.0.5rem;
         text-decoration: none;
-        font-size: 1.4rem;
+        font-size: 0.875rem;
         text-transform: uppercase;
         font-weight: 500;
     }
@@ -92,8 +92,8 @@ export const Spacer = styled.span`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: ${({ left }) => (left ? '.8rem' : 0)};
-    margin-right: ${({ right }) => (right ? '.8rem' : 0)};
+    margin-left: ${({ left }) => (left ? '0.5rem' : 0)};
+    margin-right: ${({ right }) => (right ? '0.5rem' : 0)};
     svg {
         margin-top: -1px;
     }
@@ -125,7 +125,7 @@ export const Plain = styled.div`
 `;
 
 export const Filter = styled(Button)`
-    padding: .6rem .8rem;
+    padding: 0.375rem 0.5rem;
     background-color: ${({ theme }) => theme.gray50};
     color: ${({ theme }) => theme.black};
     border-color: transparent;
@@ -148,8 +148,8 @@ export const Filter = styled(Button)`
     }
 
     .label {
-        font-size: .9rem;
-        line-height: 1rem;
+        font-size: 0.5625rem;
+        line-height: 0.625rem;
     }
 `;
 
@@ -186,12 +186,12 @@ export const Link = styled.div`
 `;
 
 export const Icon = styled.div`
-    width: 3.2rem;
-    height: 3.2rem;
-    min-width: 3.2rem;
-    min-height: 3.2rem;
-    max-width: 3.2rem;
-    max-height: 3.2rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    min-width: 1.25rem;
+    min-height: 1.25rem;
+    max-width: 1.25rem;
+    max-height: 1.25rem;
     border-radius: 100%;
     position: relative;
     display: flex;
@@ -202,10 +202,10 @@ export const Icon = styled.div`
     text-align: center;
     white-space: normal;
     font-weight: 500;
-    letter-spacing: 0.08rem;
+    letter-spacing: 0.0.5rem;
     text-transform: uppercase;
     text-decoration: none;
-    font-size: 1.6rem;
+    font-size: 0.625rem;
     color: ${({ theme }) => theme.black};
 
     button {
@@ -233,15 +233,15 @@ export const Pill = styled(Button)`
     position: relative;
     background: #A1F0E8;
     box-shadow: 0px 10px 30px ${({ theme }) => theme.rgba('#A1F0E8', 0.3)};
-    border-radius: 10rem;
+    border-radius: 6.25rem;
     font-weight: bold;
-    padding: 2rem 3.2rem;
+    padding: 1.25rem 1.25rem;
 
     button {
         cursor: pointer;
         width: 100%;
         height: 100%;
-        border-radius: 10rem;
+        border-radius: 6.25rem;
         position: absolute;
         border-color: transparent;
         background-color: transparent;
@@ -256,7 +256,7 @@ export const Pill = styled(Button)`
 
         &:before {
             background: ${({ theme }) => theme.rgba('#c7fff9', 0.5)};
-            border-radius: 10rem;
+            border-radius: 6.25rem;
         }
     }
 `;
@@ -265,14 +265,14 @@ export const CreateBlock = styled.div`
     background: ${({ theme }) => theme.white};;
     border: 2px dashed ${({ theme }) => theme.gray300};
     box-sizing: border-box;
-    height: 12.8rem;
+    height: 120.5rem;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     text-transform: uppercase;
     color: ${({ theme }) => theme.blue800};
-    margin-bottom: 1.6rem;
+    margin-bottom: 0.625rem;
     font-weight: 500;
 
     &:hover {
@@ -287,9 +287,9 @@ export const CreateBlock = styled.div`
 
         font-family: 'Poppins', sans-serif;
         text-align: center;
-        letter-spacing: 0.08rem;
+        letter-spacing: 0.0.5rem;
         text-decoration: none;
-        font-size: 1.4rem;
+        font-size: 0.875rem;
         text-transform: uppercase;
         font-weight: 500;
     }
@@ -299,7 +299,7 @@ export const Stretched = styled.div`
     flex: 1;
     display: flex;
     justify-content: space-between;
-    padding: 1.6rem 0;
+    padding: 0.625rem 0;
     border: none;
     color: ${({ theme }) => theme.blue900};
 
@@ -310,9 +310,9 @@ export const Stretched = styled.div`
 
         font-family: 'Poppins', sans-serif;
         text-align: center;
-        letter-spacing: 0.08rem;
+        letter-spacing: 0.0.5rem;
         text-decoration: none;
-        font-size: 1.4rem;
+        font-size: 0.875rem;
         text-transform: uppercase;
         font-weight: 500;
     }

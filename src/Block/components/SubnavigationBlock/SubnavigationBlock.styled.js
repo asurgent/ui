@@ -3,8 +3,8 @@ import * as T from '../../../Typography';
 
 export const Wrapper = styled.div`
     display: grid;
-    padding: 1.6rem;
-    grid-row-gap: 1.6rem;
+    padding: 1rem;
+    grid-row-gap: 1rem;
     grid-template-columns: 1fr;
     grid-template-areas:
         "navigation"
@@ -14,8 +14,8 @@ export const Wrapper = styled.div`
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {
         overflow-x: unset;
-        grid-column-gap: 4rem;
-        grid-template-columns: 25rem minmax(20rem , 101rem);
+        grid-column-gap: 2.5rem;
+        grid-template-columns: 15.625rem minmax(12.5rem , 63.125rem);
         grid-template-areas:
             ". title"
             "navigation content";
@@ -41,7 +41,7 @@ export const Group = styled.div`
     flex-direction: column;
     border: 1px solid ${({ theme }) => theme.gray300};
     border-radius: 3px;
-    margin-top: 1.6rem;
+    margin-top: 1rem;
 
     &:first-of-type{
         margin-top: 0;
@@ -58,11 +58,11 @@ export const NavigationItem = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 4rem;
+    height: 2.5rem;
     color: ${({ theme }) => theme.black};
-    font-size: 1.4rem;
-    line-height: 2rem;
-    padding-left: 1.6rem;
+    font-size: 1.2.5rem;
+    line-height: 1.25rem;
+    padding-left: 1rem;
 
     &:last-of-type {
         border-bottom: none;

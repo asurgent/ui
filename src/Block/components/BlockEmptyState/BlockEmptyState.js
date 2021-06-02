@@ -17,7 +17,7 @@ const defaultProps = {
 
 const Emptystate = ({ title, children }) => (
   <Wrapper>
-    <IconNoTickets width="21.2rem" height="21.2rem" />
+    <IconNoTickets width="13.25rem" height="13.25rem" />
     <h4>{title}</h4>
     {children}
   </Wrapper>

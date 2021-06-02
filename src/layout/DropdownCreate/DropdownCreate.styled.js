@@ -10,10 +10,10 @@ export const DesktopMenu = styled.div`
     flex-direction: column;
     position: absolute;
     width: auto;
-    min-width: 28rem;
+    min-width: 17.5rem;
     height: auto;
-    padding: .8rem 0;
-    margin-top: .8rem;
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
     top: 5px;
     transform: translateY(10px);
     right: -1px;
@@ -24,8 +24,8 @@ export const DesktopMenu = styled.div`
 
     small {
         display: block;
-        margin-top: .8rem;
-        margin-bottom: 1.6rem;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
     }
 `;
 
@@ -42,24 +42,24 @@ export const MobileMenu = styled.div`
 
     .close {
         position: absolute;
-        right: 2.4rem;
-        top: 2.4rem;
+        right: 1.5rem;
+        top: 1.5rem;
     }
 `;
 
 export const CreateTitle = styled.div``;
 export const CreateDescription = styled.div`
     color: ${({ theme }) => theme.gray700};
-    font-size: 1.2rem;
+    font-size: 0.75rem;
 `;
 
 export const CreateItem = styled.div`
     display: grid;
-    grid-template-columns: 4rem 1fr;
+    grid-template-columns: 2.5rem 1fr;
     grid-template-areas:
         "logo title"
         "logo desc";
-    padding: .8rem 2.4rem;
+    padding: 0.5rem 1.5rem;
 
     &:hover {
         background: ${({ theme }) => theme.gray50};
@@ -83,7 +83,7 @@ export const CreateItem = styled.div`
 `;
 
 export const MobileContent = styled.div`
-    margin-top: 6.4rem;
+    margin-top: 6.2.5rem;
 `;
 
 export const Mobile = styled.div`

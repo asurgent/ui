@@ -17,7 +17,7 @@ export const Year = styled.div`
     border-radius: 5px;
     background: ${({ theme, selected }) => (selected ? theme.blue900 : 'transparent')};
     transition: 0.15s;
-    padding: 0.9rem 1.8rem;
+    padding: 0.5625rem 1.125rem;
     cursor: pointer;
-    width: 15rem;
+    width: 9.375rem;
 `;

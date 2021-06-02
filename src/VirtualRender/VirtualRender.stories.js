@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import * as VirtualRender from './index';
 
 const Wrapper = styled.div`
-    width: 30rem;
-    height: 50rem;
+    width: 18.75rem;
+    height: 31.25rem;
     display: block;
-    margin: 2.4rem;
+    margin: 1.5rem;
     border-radius: 3px;
     border-radius: 5px;
     background: ${({ theme }) => theme.white};

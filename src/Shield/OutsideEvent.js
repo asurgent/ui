@@ -23,7 +23,7 @@ const useOutsideEvent = (ref, { onClick }) => {
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      documentNaNremoveEventListener('mousedown', handleClickOutside);
     };
   }, [ref, onClick]);
 };

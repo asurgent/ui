@@ -10,10 +10,10 @@ export const Modal = styled.div`
   background: ${({ theme, transparent }) => (transparent ? 'transparent' : theme.white)};
   display: flex;
   flex-direction: column;
-  padding: 1.6rem;
+  padding: 1rem;
   
   @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
-    padding: 3.2rem 0;
+    padding: 1.25rem 0;
     border-radius: 5px;
     position: relative;
     width: ${({ fullscreen }) => (fullscreen ? '100vw' : '50%')};
@@ -27,11 +27,11 @@ export const ModalTitle = styled.h2`
   width: auto;
   max-width: 100%;
   overflow: hidden;
-  height: 5.2rem;
-  font-size: 2.8rem;
-  line-height: 2.8rem;
-  margin: 0 3.2rem;
-  margin-bottom: 1.6rem;
+  height: 3.25rem;
+  font-size: 1.75rem;
+  line-height: 1.75rem;
+  margin: 0 1.25rem;
+  margin-bottom: 1rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -41,12 +41,12 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  margin-top: 3.2rem;
+  margin-top: 1.25rem;
   justify-content: center;
-  margin-bottom: ${({ withActionbar }) => (withActionbar ? '5.6rem' : '0')};
+  margin-bottom: ${({ withActionbar }) => (withActionbar ? '3.5rem' : '0')};
 
   @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
-    padding: 0 3.2rem;
+    padding: 0 1.25rem;
   }
 `;
 
@@ -56,14 +56,14 @@ export const Close = styled.div`
     padding: .4em;
     position: absolute;
     display: flex;
-    right: .4rem;
-    top: .4rem;
+    right: 0.25rem;
+    top: 0.25rem;
     justify-content: center;
     align-items: center;
     cursor: pointer;
 
     i {
-        font-size: 2rem;
+        font-size: 1.25rem;
     }
 `;
 
@@ -71,7 +71,7 @@ export const Actionbar = styled.div`
     position: absolute;
     left: 0;
     bottom: 0;
-    padding: 3.2rem;
+    padding: 1.25rem;
     width: 100%;
 `;
 
