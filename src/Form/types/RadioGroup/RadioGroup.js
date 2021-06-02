@@ -12,7 +12,6 @@ const propTypes = {
   value: PropTypes.string,
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.instanceOf(Object)),
-  wrapRadios: PropTypes.bool,
   parseOutput: PropTypes.func,
   props: PropTypes.instanceOf(Object),
   disabled: PropTypes.func,
@@ -21,7 +20,6 @@ const propTypes = {
 const defaultProps = {
   value: '',
   options: [],
-  wrapRadios: false,
   props: {},
   parseOutput: (val) => val || '',
   disabled: () => false,
@@ -31,7 +29,6 @@ const RadioGroup = forwardRef((props, ref) => {
   const {
     name,
     options,
-    wrapRadios,
     parseOutput,
     disabled,
   } = props;
@@ -50,7 +47,7 @@ const RadioGroup = forwardRef((props, ref) => {
 
   return (
     <C.FieldSet onChange={({ target }) => setVal(target.value)}>
-      <C.RadioWrapper wrapRadios={wrapRadios}>
+      <C.RadioWrapper vertical={props?.props?.vertical}>
         {options.map((opt) => (
           <C.Label key={opt.label || opt.value}>
             <C.RadioInput

@@ -11,14 +11,15 @@ export const Label = styled.label`
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    
+    max-width: 100%;
 `;
 
 export const RadioWrapper = styled.div`
     display: flex;
-    flex-direction: ${({ wrapRadios }) => (wrapRadios === true ? 'column' : 'row')};
+    flex-direction: ${({ vertical }) => (vertical === true ? 'column' : 'row')};
     align-items: flex-start;
     flex-wrap: wrap;
+    gap: 1.6rem;
 
     ${Label} {
         margin-right: 1rem;

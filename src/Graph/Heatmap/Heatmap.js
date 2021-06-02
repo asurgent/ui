@@ -137,7 +137,7 @@ const Heatmap = ({
 
   const monthHeight = 20;
   const legendHeight = cellSize + 15; // 15 => text height
-  const svgHeight = ((cellSize + cellGap) * 7) + monthHeight + legendHeight;
+  const svgHeight = ((cellSize + cellGap) * 7) + monthHeight + (showLegend() ? legendHeight : 0);
 
   const reduceToObject = (arr) => arr.reduce((acc, cur) => ({ ...acc, [cur.date]: cur.value }), {});
 

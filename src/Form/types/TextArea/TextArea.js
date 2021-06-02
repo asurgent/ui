@@ -1,5 +1,5 @@
 import React, {
-  forwardRef, useState, useEffect, useImperativeHandle,
+  forwardRef, useState, useEffect, useImperativeHandle, createRef,
 } from 'react';
 import PropTypes from 'prop-types';
 
@@ -36,6 +36,7 @@ const TextArea = forwardRef((props, ref) => {
     validator,
     disabled,
   } = props;
+  const input = createRef();
 
   const [value, setValue] = useState(props.value || '');
 
@@ -45,8 +46,10 @@ const TextArea = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     value: () => parseOutput(value),
-    validator: validator.condition(value),
+    validator: () => validator.condition(value),
     validationErrorMessage: validator.errorMessage,
+    focus: () => input.current.focus(),
+    blur: () => input.current.blur(),
   }));
 
   return (
@@ -58,6 +61,7 @@ const TextArea = forwardRef((props, ref) => {
       onChange={({ target }) => setValue(target.value)}
       name={name}
       autoComplete="off"
+      ref={input}
       disabled={disabled()}
     />
   );

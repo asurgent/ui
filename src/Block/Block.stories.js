@@ -97,21 +97,18 @@ export const Error = (args) => <Block.Error {...args}>{args.content}</Block.Erro
 Error.args = {
   title: 'title',
   content: 'hejhej',
-  hideLeftBorder: false,
 };
 
 export const Warning = (args) => <Block.Warning {...args}>{args.content}</Block.Warning>;
 Warning.args = {
   title: 'title',
   content: 'hejhej',
-  hideLeftBorder: false,
 };
 
 export const Info = (args) => <Block.Info {...args}>{args.content}</Block.Info>;
 Info.args = {
   title: 'title',
   content: 'hejhej',
-  hideLeftBorder: false,
   withBottomMargin: false,
 };
 

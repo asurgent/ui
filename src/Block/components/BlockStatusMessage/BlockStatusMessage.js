@@ -8,7 +8,6 @@ const propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
-  hideLeftBorder: PropTypes.bool,
   withMargins: PropTypes.bool,
   withBottomMargin: PropTypes.bool,
   renderTransparent: PropTypes.bool,
@@ -17,16 +16,15 @@ const propTypes = {
 const defaultProps = {
   title: '',
   children: null,
-  hideLeftBorder: false,
   withMargins: false,
   withBottomMargin: false,
   renderTransparent: false,
 };
 
 const ErrorMessage = ({
-  title, hideLeftBorder, children, ...props
+  title, children, ...props
 }) => (
-  <ErrorState hideLeftBorder={hideLeftBorder} {...props}>
+  <ErrorState {...props}>
     {title && <b className="title">{title}</b>}
     {children}
   </ErrorState>
@@ -36,9 +34,9 @@ ErrorMessage.propTypes = propTypes;
 ErrorMessage.defaultProps = defaultProps;
 
 const WarningMessage = ({
-  title, hideLeftBorder, children, ...props
+  title, children, ...props
 }) => (
-  <WarningState hideLeftBorder={hideLeftBorder} {...props}>
+  <WarningState {...props}>
     {title && <b className="title">{title}</b>}
     {children}
   </WarningState>
@@ -48,9 +46,9 @@ WarningMessage.propTypes = propTypes;
 WarningMessage.defaultProps = defaultProps;
 
 const InfoMessage = ({
-  title, hideLeftBorder, children, ...props
+  title, children, ...props
 }) => (
-  <InfoState hideLeftBorder={hideLeftBorder} {...props}>
+  <InfoState {...props}>
     {title && <b className="title">{title}</b>}
     {children}
   </InfoState>
