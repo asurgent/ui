@@ -169,8 +169,11 @@ const DefaultTemplate = (args) => {
       options: [
         { label: 'label1', value: 'value1' },
         { label: 'label2', value: 'value2' },
+        { label: 'label3', value: 'value3' },
+        { label: 'label4', value: 'value4' },
       ],
       value: 'value2',
+      props: { vertical: true },
     },
     someRadioGroup2: {
       type: 'radiogroup',
