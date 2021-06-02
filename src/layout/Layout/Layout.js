@@ -43,7 +43,7 @@ const CreateList = ({ createList }) => {
         onClick={() => setCreateOpen(true)}
         iconRight={(
           <MdiIcon
-            size={1.2}
+            size={0.75}
             path={mdiChevronDown}
             rotate={createOpen ? 180 : 0}
           />

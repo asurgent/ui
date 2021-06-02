@@ -149,7 +149,7 @@ const Multiple = forwardRef((props, ref) => {
           })}
           <C.ButtonContainer>
             <Button.Reject
-              iconLeft={<MdiIcon path={mdiTrashCan} size={1.2} />}
+              iconLeft={<MdiIcon path={mdiTrashCan} size={0.75} />}
               onClick={() => handleRemove({ index })}
             >
               {t('remove', 'asurgentui')}
@@ -182,7 +182,7 @@ const Multiple = forwardRef((props, ref) => {
             ))}
           <C.ButtonContainer>
             <Button.Hollow
-              iconLeft={<MdiIcon path={mdiPlus} size={1.2} />}
+              iconLeft={<MdiIcon path={mdiPlus} size={0.75} />}
               disabled={!canAdd}
               onClick={handleAdd}
             >

@@ -49,7 +49,7 @@ const UserDropdown = ({
             style={{ margin: '0 .4rem' }}
             icon={(
               <MdiIcon
-                size={1.4}
+                size={0.875}
                 path={mdiChevronDown}
                 rotate={open ? 180 : 0}
               />
@@ -62,7 +62,7 @@ const UserDropdown = ({
           onClick={() => setOpen(true)}
           icon={(
             <MdiIcon
-              size={1.2}
+              size={0.75}
               path={mdiMenu}
               rotate={open ? 180 : 0}
             />
