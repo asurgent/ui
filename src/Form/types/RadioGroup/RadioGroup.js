@@ -47,7 +47,7 @@ const RadioGroup = forwardRef((props, ref) => {
 
   return (
     <C.FieldSet onChange={({ target }) => setVal(target.value)}>
-      <C.RadioWrapper wrapRadios={props?.props?.vertical}>
+      <C.RadioWrapper vertical={props?.props?.vertical}>
         {options.map((opt) => (
           <C.Label key={opt.label || opt.value}>
             <C.RadioInput
