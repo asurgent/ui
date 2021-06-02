@@ -60,7 +60,7 @@ const useSvgGroupSize = (ref) => {
     window.addEventListener('resize', updateSize);
     updateSize();
 
-    return () => windowNaNremoveEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
   }, [ref]);
   return size;
 };
