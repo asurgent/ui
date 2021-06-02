@@ -11,7 +11,7 @@ export const Label = styled.label`
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    
+    max-width: 100%;
 `;
 
 export const RadioWrapper = styled.div`

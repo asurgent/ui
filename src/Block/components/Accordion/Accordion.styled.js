@@ -34,8 +34,8 @@ export const Wrapper = styled.div`
     background: ${({ theme }) => theme.white};
     border: 1px solid ${({ theme }) => theme.gray100};
     box-sizing: border-box;
-    box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1.6rem;
+    box-shadow: ${({ compact }) => (compact ? 'none' : '0px 5px 7px rgba(0, 0, 0, 0.1)')};
+    margin-bottom: ${({ compact }) => (compact ? '0' : '1.6rem')};
     width: 100%;
     display: grid;
     overflow: hidden;
