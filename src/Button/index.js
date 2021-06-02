@@ -57,7 +57,7 @@ const Pill = withStyle((theme) => ({
 }))(C.Pill);
 
 const filterPropsMapper = (props) => ({
-  iconRight: (<MdiIcon path={mdiChevronDown} size={1.2} />),
+  iconRight: (<MdiIcon path={mdiChevronDown} size={0.75} />),
   ...props,
 });
 const Filter = withMapProps(filterPropsMapper)(withStyle(() => ({
