@@ -9,8 +9,8 @@ export const DatePicker = styled(KeyboardDatePicker)`
 
     .MuiInputBase-root input {
         box-sizing: border-box;
-        min-height: 4.7rem; 
-        font-size: 1.6rem;    
+        min-height: 2.9375rem; 
+        font-size: 1rem;    
         
     }
 
@@ -24,7 +24,7 @@ export const DatePicker = styled(KeyboardDatePicker)`
     input {
         padding: 0!important;
         margin: 0!important;
-        min-height: 2.4rem!important;
-        padding: 1.2rem!important;
+        min-height: 1.5rem!important;
+        padding: 0.75rem!important;
     }
 `;

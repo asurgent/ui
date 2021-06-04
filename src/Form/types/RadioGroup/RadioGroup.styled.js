@@ -4,8 +4,8 @@ export const Label = styled.label`
     display: flex;
     position: relative;
     align-items: center;
-    font-size: 1.4rem;
-    letter-spacing: .1rem;
+    font-size: 0.875rem;
+    letter-spacing: 0.0625rem;
     color: ${({ theme }) => theme.gray700};
     text-transform: capitalize;
     white-space: nowrap;
@@ -19,10 +19,10 @@ export const RadioWrapper = styled.div`
     flex-direction: ${({ vertical }) => (vertical === true ? 'column' : 'row')};
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 1.6rem;
+    gap: 1rem;
 
     ${Label} {
-        margin-right: 1.6rem;
+        margin-right: 1rem;
     }
 `;
 
@@ -30,17 +30,17 @@ export const FieldSet = styled.fieldset`
     border: none;
     margin: 0;
     padding: 0;
-    padding: 1.05rem 1.2rem;
+    padding: 0.65625rem 0.75rem;
     /* needed for some weird fieldset behavior, overflows otherwise in the background */
     min-width: 0; 
 `;
 
 export const CheckMark = styled.span`
     position: absolute;
-    height: 2rem;
-    width: 2rem;
+    height: 1.25rem;
+    width: 1.25rem;
     background-color: #fff;
-    border: 0.2rem solid black;
+    border: 0.125rem solid black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,19 +56,19 @@ export const CheckMark = styled.span`
 `;
 
 export const Text = styled.span`
-    margin-left: 2.4rem;
-    line-height: 1.6rem;
+    margin-left: 1.5rem;
+    line-height: 1rem;
     overflow: hidden;
     text-overflow: ellipsis;
 `;
 
 export const RadioInput = styled.input`
-    width: 2rem!important;
-    height: 2rem!important;   
+    width: 1.25rem!important;
+    height: 1.25rem!important;   
     margin: 0; 
     /* change border color and draw the dot */
     &:checked + ${CheckMark} {
-    border: ${({ theme, disabled }) => `0.2rem solid ${disabled ? theme.gray400 : theme.blue900}`};
+    border: ${({ theme, disabled }) => `0.125rem solid ${disabled ? theme.gray400 : theme.blue900}`};
         &:after {
             display: block;
         }

@@ -11,10 +11,10 @@ export const Header = styled(C.Cell)`
     flex-direction: row;
     border-color: ${({ theme }) => theme.gray300};
     min-height: unset;
-    padding-bottom: 1.6rem;
+    padding-bottom: 1rem;
 `;
 
 export const HeaderLabel = styled(C.TableCellContent)`
     font-weight: 600;
-    font-size: 1.4rem;
+    font-size: 0.875rem;
 `;

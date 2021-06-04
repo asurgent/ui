@@ -4,19 +4,19 @@ export const EntityName = styled.div`
   display: flex;
   align-items: center;
   svg {
-    margin-right: 1rem;
+    margin-right: 0.625rem;
     margin-top: '4px';
     opacity: ${({ hasCloudops }) => (hasCloudops ? 1 : 0.15)};
   } 
 `;
 export const Header = styled.div`
   p {
-    font-size: 1.4rem;
+    font-size: 0.875rem;
     margin: 0;
   }
   & > p {
-    font-size: 1rem;
-    margin-bottom: 0.8rem;
+    font-size: 0.625rem;
+    margin-bottom: 0.5rem;
   }
   display: flex;
   flex-direction: column;

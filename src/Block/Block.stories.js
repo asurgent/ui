@@ -64,8 +64,8 @@ SpaceBetween.args = {};
 
 export const Wrap = (args) => (
   <Block.Wrap {...args}>
-    <div style={{ minWidth: '400px', border: '1px solid', padding: '1rem' }}>I am block #1 (min-width: 400px)</div>
-    <div style={{ minWidth: '400px', border: '1px solid', padding: '1rem' }}>I am block #2 (min-width: 400px)</div>
+    <div style={{ minWidth: '400px', border: '1px solid', padding: '0.625rem' }}>I am block #1 (min-width: 400px)</div>
+    <div style={{ minWidth: '400px', border: '1px solid', padding: '0.625rem' }}>I am block #2 (min-width: 400px)</div>
   </Block.Wrap>
 );
 Wrap.args = {
@@ -75,12 +75,12 @@ Wrap.args = {
 export const WrapGrid = (args) => (
   <Block.WrapGrid {...args}>
     <div style={{ border: '1px solid black' }}>
-      <div style={{ padding: '10rem' }}>
+      <div style={{ padding: '6.25rem' }}>
         Block with lots of content
       </div>
     </div>
     <div style={{ border: '1px solid black' }}>
-      <div style={{ padding: '2rem' }}>
+      <div style={{ padding: '1.25rem' }}>
         Block with little content
       </div>
     </div>

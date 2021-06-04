@@ -9,7 +9,7 @@ export const Entry = styled.div`
     justify-content: space-between;
     border-bottom: ${({ theme }) => `1px solid ${theme.gray200}`};
     align-items: center;
-    padding-right: 1.2rem;
+    padding-right: 0.75rem;
 `;
 
 export const Container = styled.div`

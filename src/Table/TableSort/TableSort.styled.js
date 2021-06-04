@@ -7,7 +7,7 @@ export const SortWrapper = styled.div`
     flex-direction: row;
 
     ${Button.Icon} {
-        margin: 0 .6rem;
+        margin: 0 0.375rem;
     }
 
     .custom-table-sort-select {

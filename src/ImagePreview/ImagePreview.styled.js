@@ -7,7 +7,7 @@ export const SmallImage = styled.div`
     filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.2));
     border-radius: 5px;
     cursor: pointer;
-    margin: 3rem 1.6rem 3rem 0;
+    margin: 1.875rem 1rem 1.875rem 0;
     display: flex;
     justify-content: center;
     align-items:center;

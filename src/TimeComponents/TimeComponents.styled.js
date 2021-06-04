@@ -21,14 +21,14 @@ export const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 6rem;
+    width: 3.75rem;
     p {
       margin: 0;
     }
     text-align: center;
     color: ${({ hasExpired, theme }) => (hasExpired ? theme.gray600 : theme.black)};
-    margin-right: ${({ marginRight }) => marginRight && '2rem'};
-    margin-left: ${({ marginLeft }) => marginLeft && '2rem'};
+    margin-right: ${({ marginRight }) => marginRight && '1.25rem'};
+    margin-left: ${({ marginLeft }) => marginLeft && '1.25rem'};
 `;
 
 export const Dates = styled.div`
@@ -38,9 +38,9 @@ export const Dates = styled.div`
 `;
 
 export const Calendar = styled.div`
-  width: 6rem;
-  height: 6rem;
-  border-top: 0.8rem solid;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-top: 0.5rem solid;
   border-radius: 5px;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
@@ -62,7 +62,7 @@ export const EndDate = styled(Calendar)`
 export const Time = styled.div`
   background: ${({ theme }) => theme.white};
   width: 100%;
-  padding: 0.2rem 0;
+  padding: 0.125rem 0;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;

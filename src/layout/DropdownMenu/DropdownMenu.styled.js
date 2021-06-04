@@ -10,9 +10,9 @@ export const MenuWrapper = styled.div`
 export const DesktopMenu = styled.div`
     position: absolute;
     width: auto;
-    min-width: 28rem;
+    min-width: 17.5rem;
     height: auto;
-    padding: .8rem 0;
+    padding: 0.5rem 0;
     border-radius: 5px;
     background: ${({ theme }) => theme.white};
     border: 1px solid ${({ theme }) => theme.gray300};
@@ -21,12 +21,12 @@ export const DesktopMenu = styled.div`
     right: -1px;
 
     .user-details {
-      padding: 1.6rem;
+      padding: 1rem;
       border-bottom: 1px solid ${({ theme }) => theme.gray300};
     }
 
     form {
-        padding: 1.6rem;
+        padding: 1rem;
         border-bottom: 1px solid ${({ theme }) => theme.gray300};
     }
 
@@ -42,8 +42,8 @@ export const DesktopMenu = styled.div`
 
     small {
         display: block;
-        font-size: 1.2rem;
-        line-height: 1.6rem;
+        font-size: 0.75rem;
+        line-height: 1rem;
     }
     .plain {
         background: ${({ theme }) => theme.gray100};
@@ -54,12 +54,12 @@ export const CreateTitle = styled.div``;
 
 export const CreateItem = styled.div`
     display: grid;
-    grid-template-columns: 2.1rem 1fr;
-    grid-column-gap: 1.6rem;
+    grid-template-columns: 1.3125rem 1fr;
+    grid-column-gap: 1rem;
     grid-template-areas:
         "logo title"
         "logo desc";
-    padding: 1.2rem 2.4rem;
+    padding: 0.75rem 1.5rem;
     width: 100%;
 
     &:hover {
@@ -97,15 +97,15 @@ export const MobileMenu = styled.div`
 
     .close {
         position: absolute;
-        right: 2.4rem;
-        top: 2.4rem;
+        right: 1.5rem;
+        top: 1.5rem;
     }
     .user {
-        padding: 3.2rem 2.4rem;
+        padding: 2rem 1.5rem;
         height: auto;
         display: grid;
         grid-template-columns: min-content auto;
-        grid-column-gap: 1.6rem;
+        grid-column-gap: 1rem;
         border-bottom: 1px solid ${({ theme }) => theme.gray300};
 
         b {
@@ -115,8 +115,8 @@ export const MobileMenu = styled.div`
         }
         small {
             display: block;
-            font-size: 1.2rem;
-            line-height: 1.6rem;
+            font-size: 0.75rem;
+            line-height: 1rem;
         }
     }
     .menu {
@@ -126,19 +126,19 @@ export const MobileMenu = styled.div`
         display: flex;
 
         form {
-            padding: 2.4rem;
+            padding: 1.5rem;
         }
     }
     .wrapper {
-        padding: 0.8rem 0;
+        padding: 0.5rem 0;
     }
 `;
 
 export const TabButton = styled.div`
     cursor:pointer;
     width: 100%;
-    padding: 1.6rem;
-    font-size: 1.4rem;
+    padding: 1rem;
+    font-size: 0.875rem;
     font-weight: 500;
     background: ${({ active, theme }) => (active ? theme.white : theme.gray100)};
     text-transform: uppercase;

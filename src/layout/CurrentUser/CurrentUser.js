@@ -36,7 +36,7 @@ const UserDropdown = ({
       <U.Desktop>
         <Button.Plain onClick={() => setOpen(!open)}>
           <UserImage.Circle
-            size="3.2rem"
+            size="2rem"
             name={name}
             email={email}
             href={imageLink}
@@ -46,7 +46,7 @@ const UserDropdown = ({
             <small>{customerName}</small>
           </U.Name>
           <Button.Icon
-            style={{ margin: '0 .4rem' }}
+            style={{ margin: '0 0.25rem' }}
             icon={(
               <MdiIcon
                 size={0.875}

@@ -20,15 +20,15 @@ const Story = {
 export default Story;
 
 const NavigationTemplate = (args) => (
-  <div style={{ height: '100vh', background: '#1A77A5', padding: '2rem' }}>
+  <div style={{ height: '100vh', background: '#1A77A5', padding: '1.25rem' }}>
 
     <Navigation
       theme={({ white, blue800 }) => ({
         activeBackground: args.activeBackground || blue800,
         activeLinkColor: args.activeLinkColor || white,
         linkColor: args.linkColor || white,
-        menuItemsSpacing: '.4rem',
-        menuFontSize: '1.6rem',
+        menuItemsSpacing: '0.25rem',
+        menuFontSize: '1rem',
       })}
       navigationList={[
         {

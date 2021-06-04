@@ -9,12 +9,12 @@ export const ErrorState = styled(BaseBlock)`
     border: 1px solid ${({ theme }) => theme.rgba(theme.ruby800, 0.8)};
     border-radius: 5px;
 
-    padding: 1.6rem;
+    padding: 1rem;
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
-        padding: 1.6rem;
+        padding: 1rem;
     }
     > b.title {
-        margin-bottom: 1.6rem;
+        margin-bottom: 1rem;
     }
     p {
         margin: 0;

@@ -26,7 +26,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  size: '2.4rem',
+  size: '1.5rem',
   name: '',
   email: '',
   square: false,

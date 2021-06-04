@@ -7,18 +7,18 @@ export const BaseBlock = styled.div`
     flex-direction: column;
     margin: ${({ withMargins, withBottomMargin }) => {
     if (withMargins) {
-      return '1.6rem';
+      return '1rem';
     }
     if (withBottomMargin) {
-      return '0 0 1.6rem 0';
+      return '0 0 1rem 0';
     }
     return '0';
   }};
-    padding: ${({ withPadding }) => (withPadding ? '1.6rem' : 0)};
+    padding: ${({ withPadding }) => (withPadding ? '1rem' : 0)};
     background: ${({ renderTransparent, theme }) => (renderTransparent === true ? 'transparent' : theme.white)};
     
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointMobile * 10}px`}) {
-        padding: ${({ withPadding }) => (withPadding ? '3.2rem' : 0)};
+        padding: ${({ withPadding }) => (withPadding ? '2rem' : 0)};
     }
 `;
 

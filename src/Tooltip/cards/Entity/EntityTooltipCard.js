@@ -89,7 +89,7 @@ const EntityTooltipCard = (props) => {
             <C.Gray>{`${t('region', 'asurgentui')} `}</C.Gray>
             {region || 'N/A'}
           </T.P.Small>
-          <Tag.Collection tags={tags} maxTags={3} style={{ marginTop: '0.8rem' }} />
+          <Tag.Collection tags={tags} maxTags={3} style={{ marginTop: '0.5rem' }} />
         </C.Content>
       )}
     >
