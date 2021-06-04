@@ -150,6 +150,7 @@ export const Accordion = (args) => (
 );
 Accordion.args = {
   content: 'hejhej',
+  btnTooltip: 'dådå',
 };
 
 const SubnavigationTemplate = (args) => (
