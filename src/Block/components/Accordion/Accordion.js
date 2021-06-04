@@ -18,6 +18,7 @@ const propTypes = {
   description: PropTypes.string,
   compact: PropTypes.bool,
   open: PropTypes.bool,
+  btnTooltip: PropTypes.string,
 };
 
 const defaultProps = {
@@ -26,10 +27,11 @@ const defaultProps = {
   open: false,
   compact: false,
   override: null,
+  btnTooltip: null,
 };
 
 const Accordion = ({
-  title, description, open, children, compact, override,
+  title, description, open, children, compact, override, btnTooltip,
 }) => {
   const [isOpen, setIsOpen] = useState(open);
   const { t } = translation;
@@ -54,7 +56,7 @@ const Accordion = ({
         }}
         isOpen={isOpen}
       >
-        <Tooltip.Middle tip={t('details', 'asurgentui')}>
+        <Tooltip.Middle tip={btnTooltip || t('details', 'asurgentui')}>
           <MdiIcon path={mdiChevronDown} size={1.4} />
         </Tooltip.Middle>
       </C.Arrow>
