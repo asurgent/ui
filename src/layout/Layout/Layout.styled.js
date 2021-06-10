@@ -8,7 +8,7 @@ export const Logo = styled.div`
     left: 0;
     top: 0;
     bottom: 0;
-    width: 6rem;
+    width: 3.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,12 +33,12 @@ export const Logo = styled.div`
 export const Top = styled.div`
     position: relative;
     background: ${({ theme }) => theme.white};
-    padding: 1.6rem;
+    padding: 1rem;
     display:flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    height: 6rem;
+    height: 3.75rem;
     border-bottom: 1px solid ${({ theme }) => theme.gray300};
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
@@ -46,7 +46,7 @@ export const Top = styled.div`
     }
 
     ${User.Wrapper} {
-        margin-left: 3.2rem;
+        margin-left: 2rem;
     }
 `;
 
@@ -82,8 +82,8 @@ export const Main = styled.div`
     background: ${({ theme }) => theme.white};
     position: relative;
 
-    grid-template-columns: 6rem 1fr 1fr;
-    grid-template-rows: 6rem 1fr;
+    grid-template-columns: 3.75rem 1fr 1fr;
+    grid-template-rows: 3.75rem 1fr;
     grid-template-areas:
         "top top top"
         "main main main";

@@ -35,7 +35,7 @@ const CreateItemButton = ({
     onClick={() => { onClick(); onClose(); }}
   >
     <U.CreateItem>
-      <MdiIcon path={icon} className="create-icon" size={1.4} />
+      <MdiIcon path={icon} className="create-icon" size={0.875} />
       <U.CreateTitle>{title}</U.CreateTitle>
       <U.CreateDescription>{description}</U.CreateDescription>
     </U.CreateItem>
@@ -94,7 +94,7 @@ const DropdownCreate = ({
             <Button.Icon
               className="close"
               onClick={onClose}
-              icon={(<MdiIcon size={1.2} path={mdiClose} />)}
+              icon={(<MdiIcon size={0.75} path={mdiClose} />)}
             />
             <U.MobileContent>
               {

@@ -48,7 +48,7 @@ ImagePreview.propTypes = {
 };
 ImagePreview.defaultProps = {
   imgLink: null,
-  smallIconSize: '7rem',
+  smallIconSize: '4.375rem',
 };
 
 export default ImagePreview;

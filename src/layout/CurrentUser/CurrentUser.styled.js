@@ -17,19 +17,19 @@ export const Name = styled.div`
     flex-direction: column;
     align-items: flex-start;
     font-family: Lato;
-    margin: 0 1.6rem;
+    margin: 0 1rem;
 
     b {
         font-style: normal;
-        font-size: 1.6rem;
+        font-size: 1rem;
         font-family: 'Poppins', sans-serif;
         font-weight: 500;
-        line-height: 1.6rem;
+        line-height: 1rem;
     }
 
     small {
         color: ${({ theme }) => theme.gray700};
-        font-size: 1.2rem;
+        font-size: 0.75rem;
     }
     
 `;

@@ -5,7 +5,7 @@ export const Pagination = styled.div`
     display: flex;
     align-items:center;
     justify-content: flex-end;
-    margin-top: 1.6rem;
+    margin-top: 1rem;
 
     &:after {
       display: ${({ isLoading }) => (isLoading ? 'block' : 'none')};
@@ -22,12 +22,12 @@ export const Pagination = styled.div`
 export const Page = styled.div`
     display: flex;
     cursor: ${({ isClickable }) => (isClickable ? 'pointer' : 'default')};
-    width: 3.2rem;
-    height: 3.2rem;
+    width: 2rem;
+    height: 2rem;
     justify-content: center;
     align-items: center;
-    margin-left: .8rem;
-    font-size:1.2rem;
+    margin-left: 0.5rem;
+    font-size:0.75rem;
     font-weight: 600;
     border: 1px solid;
     border-color: ${({ theme, activePage }) => (activePage ? theme.rgba(theme.blue900, 1) : 'transparent')};

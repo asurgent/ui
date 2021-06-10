@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 const content = (
-  <h1 style={{ background: 'pink', padding: '2rem' }}>
+  <h1 style={{ background: 'pink', padding: '1.25rem' }}>
     Click outside me!
   </h1>
 );

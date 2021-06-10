@@ -4,12 +4,12 @@ export const Title = styled.div`
     font-family: "Poppins";
     font-style: normal;
     font-weight: normal;
-    font-size: 1.2rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     display: flex;
     align-items: flex-start;
     word-break: break-all;
-    min-width: 8rem;
+    min-width: 5rem;
     flex-wrap: wrap;
     align-items: center;
     border-bottom: 1px solid ${({ theme }) => theme.gray300};
@@ -18,13 +18,13 @@ export const Title = styled.div`
 export const Value = styled(Title)`
     word-break: break-all;
     font-family: "Lato";
-    font-size: 1.6rem;
+    font-size: 1rem;
     text-transform: unset;
 `;
 
 export const NoValue = styled(Value)`
     color: ${({ theme }) => theme.gray300};
-    font-size: 1.4rem;
+    font-size: 0.875rem;
 `;
 
 export const Wrapper = styled.div`
@@ -36,7 +36,7 @@ export const Wrapper = styled.div`
     border-bottom: 1px solid ${({ theme, borderBottom }) => (borderBottom ? theme.gray300 : 'transparent')};
 
     ${Title} {
-        padding: ${({ compact }) => (compact ? '.4rem .4rem .4rem 0 ' : '1.6rem 1.6rem 1.6rem 0')};
+        padding: ${({ compact }) => (compact ? '0.25rem 0.25rem 0.25rem 0 ' : '1rem 1rem 1rem 0')};
     }
 `;
 

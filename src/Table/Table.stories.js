@@ -9,7 +9,7 @@ const StoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 3.2rem;
+  padding: 2rem;
   height: 100vh;
   width: 100vh;
   max-width: 100%;
@@ -18,8 +18,8 @@ const StoryWrapper = styled.div`
 const CardWrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 6rem;
-  padding: 2rem;
+  height: 3.75rem;
+  padding: 1.25rem;
   border-radius: 5px;
   border: 1px solid orange;
   background: hotpink;
@@ -28,7 +28,7 @@ const CardWrapper = styled.div`
     color: white;
     margin: 0;
     padding: 0;
-    font-size: 2rem;
+    font-size: 1.25rem;
   }
 `;
 
@@ -91,14 +91,14 @@ const cardComponentOverride = ({ card }) => {
   const OverrideCard = styled(card)`
     background: magenta;
     border: 4px solid cyan;
-    padding: 2rem;
+    padding: 1.25rem;
   `;
   return OverrideCard;
 };
 
 const cellComponentOverride = ({ cell }) => {
   const OverrideCell = styled(cell)`
-    padding:  3.2rem .8rem;
+    padding:  2rem 0.5rem;
     &:hover {
       background: magenta;
     }
@@ -125,13 +125,13 @@ const BaseTemplate = (args) => (
       headerData={[
         {
           label: lorem,
-          size: 'minmax(30rem, 1fr)',
+          size: 'minmax(18.75rem, 1fr)',
         },
         { label: 'B', key: 'test' },
         { label: 'C', sortKey: 'sort-C' },
         {
           label: 'D',
-          size: 'minmax(8rem, 10rem)',
+          size: 'minmax(5rem, 6.25rem)',
           props: { style: { textAlign: 'center' } },
         },
       ]}
@@ -427,13 +427,13 @@ const SeparateTemplate = (args) => {
         headerData={[
           {
             label: lorem,
-            size: 'minmax(30rem, 1fr)',
+            size: 'minmax(18.75rem, 1fr)',
           },
           { label: 'B', key: 'test' },
           { label: 'C', sortKey: 'sort-C' },
           {
             label: 'D',
-            size: 'minmax(8rem, 10rem)',
+            size: 'minmax(5rem, 6.25rem)',
             props: { style: { textAlign: 'center' } },
           },
         ]}

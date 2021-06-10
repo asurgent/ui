@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Text = styled.div`
-    padding: ${({ hasOverride }) => !hasOverride && '3.2rem'};
+    padding: ${({ hasOverride }) => !hasOverride && '2rem'};
     overflow: hidden;
     cursor: ${({ isOpen }) => (isOpen ? 'default' : 'pointer')};
 `;
@@ -25,7 +25,7 @@ export const Arrow = styled.div`
 `;
 
 export const Content = styled.div`
-    padding: 3.2rem;
+    padding: 2rem;
     border-top: 1px solid ${({ theme }) => theme.gray200};
     background: ${({ theme }) => theme.gray50};
 `;
@@ -35,11 +35,11 @@ export const Wrapper = styled.div`
     border: 1px solid ${({ theme }) => theme.gray100};
     box-sizing: border-box;
     box-shadow: ${({ compact }) => (compact ? 'none' : '0px 5px 7px rgba(0, 0, 0, 0.1)')};
-    margin-bottom: ${({ compact }) => (compact ? '0' : '1.6rem')};
+    margin-bottom: ${({ compact }) => (compact ? '0' : '1rem')};
     width: 100%;
     display: grid;
     overflow: hidden;
-    grid-template-rows: 1fr auto 5rem;
+    grid-template-rows: 1fr auto 3.125rem;
     grid-template-columns: 1fr;
     grid-template-areas: 
         "text"
@@ -59,12 +59,12 @@ export const Wrapper = styled.div`
     }
 
     :first-of-type {
-        margin-top: 1.6rem;
+        margin-top: 1rem;
     }
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointTablet * 10}px`}) {
         grid-template-rows: 1fr auto;
-        grid-template-columns: 1fr 15rem;
+        grid-template-columns: 1fr 9.375rem;
         grid-template-areas: 
             "text arrow"
             "content content";
@@ -80,12 +80,12 @@ export const Ellipsis = styled.div`
 export const Title = styled(Ellipsis)`
     font-family: "Poppins";
     font-weight: 500;
-    font-size: 1.6rem;
+    font-size: 1rem;
     overflow:hidden;
 `;
 
 export const Description = styled(Ellipsis)`
     font-family: "Lato";
-    font-size: 1.6rem;
+    font-size: 1rem;
     overflow:hidden;
 `;

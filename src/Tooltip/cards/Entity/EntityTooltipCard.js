@@ -65,7 +65,7 @@ const EntityTooltipCard = (props) => {
           <C.EntityName hasCloudops={hasCloudops}>
             <MdiIcon
               path={hasCloudops ? mdiEye : mdiEyeOff}
-              size={1}
+              size={0.625}
             />
             <T.P.Main bold>{name}</T.P.Main>
           </C.EntityName>
@@ -89,7 +89,7 @@ const EntityTooltipCard = (props) => {
             <C.Gray>{`${t('region', 'asurgentui')} `}</C.Gray>
             {region || 'N/A'}
           </T.P.Small>
-          <Tag.Collection tags={tags} maxTags={3} style={{ marginTop: '0.8rem' }} />
+          <Tag.Collection tags={tags} maxTags={3} style={{ marginTop: '0.5rem' }} />
         </C.Content>
       )}
     >

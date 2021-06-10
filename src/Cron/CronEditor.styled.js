@@ -7,41 +7,41 @@ export const Wrapper = styled.div`
 `;
 
 export const Row = styled.div`
-    margin-top: 2.4rem;
+    margin-top: 1.5rem;
     display: grid;
-    grid-gap: 2.4rem;
+    grid-gap: 1.5rem;
     grid-template-columns: 1fr 1fr;
     align-items: flex-end;
 
     .MuiFormHelperText-root.Mui-error.MuiFormHelperText-filled {
         position: absolute;
-        bottom: -2rem;
+        bottom: -1.25rem;
     }
 `;
 
 export const Label = styled.div`
-    margin-top: 2.4rem;
+    margin-top: 1.5rem;
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: center;
     align-items: baseline;
-    font-size: 1.2rem;
+    font-size: 0.75rem;
     white-space: pre;
     
     input {
-        margin: 0 .8rem;
+        margin: 0 0.5rem;
     }
 `;
 
 export const WeekSelector = styled.div`
-    margin-top: 2.4rem;
+    margin-top: 1.5rem;
     display: grid;
     width: 100%;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: 1fr;
-    grid-column-gap: .4rem;
-    grid-row-gap: .4rem;
+    grid-column-gap: 0.25rem;
+    grid-row-gap: 0.25rem;
 `;
 
 export const MonthSlector = styled(WeekSelector)`
@@ -56,8 +56,8 @@ export const Editor = styled.div`
 `;
 
 export const Text = styled.div`
-    margin-bottom: .8rem;
-    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
 `;
 
 export const Columns = styled.div`
@@ -73,20 +73,20 @@ export const Title = styled.h6`
 export const Output = styled.div`
     border-left: 1px solid ${({ theme }) => theme.gray300};
     border-width: ${({ withBorder }) => (withBorder ? 1 : 0)};
-    margin-left: ${({ withBorder }) => (withBorder ? '1.6rem' : '')};
-    padding-left: ${({ withBorder }) => (withBorder ? '1.6rem' : '')};
+    margin-left: ${({ withBorder }) => (withBorder ? '1rem' : '')};
+    padding-left: ${({ withBorder }) => (withBorder ? '1rem' : '')};
 `;
 
 export const Day = styled.div`
     width: 100%;
-    height: 4rem;
+    height: 2.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid ${({ selected, theme }) => (selected ? theme.blue700 : theme.gray800)};
     background:${({ selected, theme }) => (selected ? theme.blue400 : 'transparent')};
     color :${({ selected, theme }) => (selected ? theme.white : theme.gray800)};
-    font-size: 1.4rem;
+    font-size: 0.875rem;
     cursor: pointer;
 
     &:hover {

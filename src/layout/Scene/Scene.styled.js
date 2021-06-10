@@ -6,7 +6,7 @@ export const Scene = styled.div`
     overflow-y: auto;
     overflow-x: hidden;
     display: block;
-    padding-bottom: 3.2rem;
+    padding-bottom: 2rem;
 
     @media screen and (min-width: ${(prop) => `${prop.theme.breakPointDesktop * 10}px`}) {
         margin-top: 0;

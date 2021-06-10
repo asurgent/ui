@@ -19,7 +19,7 @@ export const Heatmap = (args) => {
     <div style={{
       border: '1px solid #dadada',
       borderRadius: '5px',
-      marginTop: '20rem',
+      marginTop: '12.5rem',
       width: '80vw',
     }}
     >

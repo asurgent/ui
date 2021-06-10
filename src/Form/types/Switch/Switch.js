@@ -8,8 +8,8 @@ import React, {
 import PropTypes from 'prop-types';
 import * as C from './Switch.styled';
 
-const defaultSize = 4.8;
-const borderSize = 0.2;
+const defaultSize = 3;
+const borderSize = 0.125;
 
 const propTypes = {
   name: PropTypes.string.isRequired,

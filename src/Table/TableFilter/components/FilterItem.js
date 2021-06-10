@@ -41,8 +41,8 @@ const FilterItem = ({
     >
       {!filterItem.label && (
         <C.Active>
-          {hook.isIncluded() && <MdiIcon size={1.2} path={mdiCheck} />}
-          {hook.isExcluded() && <MdiIcon size={1.2} path={mdiCancel} />}
+          {hook.isIncluded() && <MdiIcon size={0.75} path={mdiCheck} />}
+          {hook.isExcluded() && <MdiIcon size={0.75} path={mdiCancel} />}
         </C.Active>
       )}
       {!filterItem.label && (
