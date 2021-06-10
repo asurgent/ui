@@ -141,17 +141,19 @@ export const Stretched = (args) => (
 );
 Stretched.args = {
   link: '/sdf/2',
+  content: 'knapp',
   onClick: (e) => console.log('Clicked!', e),
 };
 
 export const IconButton = (args) => (
   <Button.Icon
     icon={<MdiIcon path={mdiTicketConfirmation} size={1.4} />}
-    {...args}
+    {...args.content}
   />
 );
 IconButton.args = {
   tooltip: 'Hello',
+  content: 'knapp',
   saveLinkState: true,
   link: '/test',
   onClick: (e) => console.log('Clicked!', e),
@@ -163,6 +165,7 @@ export const Link = (args) => (
   </Button.Link>
 );
 Link.args = {
+  content: 'knapp',
   link: '/test',
   onClick: (e) => console.log('Clicked!', e),
 };
@@ -177,7 +180,7 @@ export const Submit = (args) => (
   </form>
 );
 Submit.args = {
-  content: 'hejhej',
+  content: 'knapp',
 };
 
 export const CreateBlock = (args) => (
@@ -193,7 +196,7 @@ export const CreateBlock = (args) => (
   </Button.CreateBlock>
 );
 CreateBlock.args = {
-  content: 'hejhej',
+  content: 'knapp',
   link: '/sdf/2',
   onClick: (e) => console.log('Clicked!', e),
 };
@@ -204,7 +207,7 @@ export const TooltipButton = (args) => (
   </Button.Primary>
 );
 TooltipButton.args = {
-  content: 'hejhej',
+  content: 'knapp',
   tooltip: 'hello',
   onClick: (e) => console.log('clicked', e),
   tooltipOrientation: 'middle',
@@ -222,10 +225,11 @@ export const SetTableState = (args) => {
 
   return (
     <Button.Primary setTableState={{ key: state }} {...args}>
-      Test link
+      {args.content}
     </Button.Primary>
   );
 };
 SetTableState.args = {
   link: '/123/12',
+  content: 'knapp',
 };
